@@ -9,6 +9,9 @@ namespace MyOrder.Infrastructure.ApiClients
         [Get("/api/orderContext/{basketId}/header")]
         Task<BasketHeaderDto> GetBasketHeaderAsync(string basketId);
 
+        [Get("/api/orderContext/{basketId}/amounts")]
+        Task<BasketAmountsDto> GetBasketAmountsAsync(string basketId);
+
         //[Get("/api/orderContext/{basketId}/notifications")]
         //Task<IEnumerable<NotificationDto>> GetNotificationsAsync(string basketId);
 

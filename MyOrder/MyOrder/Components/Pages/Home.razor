@@ -1,4 +1,5 @@
-﻿@using MyOrder.Components.Childs.Header
+﻿@using MyOrder.Components.Childs.Amounts
+@using MyOrder.Components.Childs.Header
 
 @page "/"
 @rendermode InteractiveServer
@@ -6,5 +7,13 @@
 <PageTitle>MyOrder</PageTitle>
 
 <div class="container-fluid" style="padding: 0; margin: 0; width: 100%;">
-    <Header />
+    <CascadingValue Value="TEST_BASKET_ID">
+        <Header />
+        <Amounts />
+    </CascadingValue>
 </div>
+
+@code
+{
+    private string TEST_BASKET_ID = "P0130625";
+}

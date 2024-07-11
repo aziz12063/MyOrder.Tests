@@ -1,0 +1,51 @@
+﻿
+<div class="row" style="padding: 5px; margin: 0;">
+    <RadzenCard class="card-container">
+        <ChildContent>
+            <RadzenStack Orientation="Orientation.Horizontal" Wrap="FlexWrap.Wrap" JustifyContent="JustifyContent.SpaceBetween" Gap="15px" class="amounts-container">
+                <RadzenFieldset Style="flex: 1; min-width: 200px;">
+                    <RadzenLabel Text="Code Action" class="field-label" />
+                    <RadzenTextBox Placeholder="G092300" class="field-input" />
+                    <RadzenLabel Text="Diff Franco" class="field-label" />
+                    <div style="display: flex; align-items: center;">
+                        <RadzenTextBox @bind-Value="BasketAmountsDto.DiffFranco" class="field-input" />
+                        <RadzenIcon Icon="warning" class="warning-icon" />
+                    </div>
+                    <RadzenLabel Text="Diff KDO" class="field-label" />
+                    <RadzenTextBox @bind-Value="BasketAmountsDto.DiffKdo" class="field-input" />
+                    <RadzenLabel Text="Dispo. Marchandise" class="field-label" />
+                    <RadzenTextBox @bind-Value="BasketAmountsDto.Availability" class="field-input" />
+                </RadzenFieldset>
+
+                <RadzenFieldset Style="flex: 1; min-width: 200px;">
+                    <RadzenLabel Text="Frais de livraison" class="field-label" />
+                    <RadzenTextBox @bind-Value="BasketAmountsDto.DeliveryAmount" class="field-input" />
+                    <RadzenLabel Text="Entrepôts de livraison" class="field-label" />
+                    <RadzenTextBox @bind-Value="BasketAmountsDto.DeliveryMarkupCode" class="field-input" />
+                </RadzenFieldset>
+
+                <RadzenFieldset Style="flex: 1; min-width: 200px;">
+                    <RadzenLabel Text="Montant Total HT" class="field-label" />
+                    <RadzenTextBox @bind-Value="BasketAmountsDto.AmountWithoutVat" class="field-input" />
+                    <RadzenLabel Text="Montant TVA" class="field-label" />
+                    <RadzenTextBox @bind-Value="BasketAmountsDto.VatAmount" class="field-input" />
+                    <RadzenLabel Text="Montant TTC" class="field-label" />
+                    <RadzenTextBox @bind-Value="BasketAmountsDto.TotalPurchasePrice" class="field-input" />
+                    <RadzenLabel Text="Date(s) de livraison" class="field-label" />
+                    <RadzenTextBox @bind-Value="BasketAmountsDto.ReceptionDate" class="field-input" />
+                </RadzenFieldset>
+
+                <RadzenFieldset Style="flex: 1; min-width: 200px;">
+                    <RadzenLabel Text="Remise Cde (%)" class="field-label" />
+                    <RadzenTextBox @bind-Value="BasketAmountsDto.DiscountAmount" class="field-input" />
+                    <RadzenLabel Text="Remise Cde (€)" class="field-label" />
+                    <RadzenTextBox @bind-Value="BasketAmountsDto.DiscountAmount" class="field-input" />
+                    <RadzenLabel Text="Ventes add. (€)" class="field-label" />
+                    <RadzenTextBox @bind-Value="BasketAmountsDto.AdditionalSales" class="field-input" />
+                    <RadzenLabel Text="Poids / Volume" class="field-label" />
+                    <RadzenTextBox Placeholder="9.55 kg / 0.047" @bind-Value="BasketAmountsDto.TotalWeight" class="field-input" />
+                </RadzenFieldset>
+            </RadzenStack>
+        </ChildContent>
+    </RadzenCard>
+</div>

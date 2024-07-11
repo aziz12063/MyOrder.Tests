@@ -2,9 +2,9 @@
 using MyOrder.Infrastructure.Repositories;
 using MyOrder.Shared.Dtos;
 
-namespace MyOrder.Components.Childs.Header
+namespace MyOrder.Components.Childs.Amounts
 {
-    public partial class Header
+    public partial class Amounts
     {
         [CascadingParameter]
         public string TEST_BASKET_ID { get; set; }
@@ -12,22 +12,11 @@ namespace MyOrder.Components.Childs.Header
         [Inject]
         private IBasketRepository BasketRepository { get; set; }
 
-        public BasketHeaderDto? BasketHeaderDto { get; set; } = new();
-
+        public BasketAmountsDto BasketAmountsDto { get; set; } = new();
 
         protected override async Task OnInitializedAsync()
         {
-
-            try
-            {
-                //BasketHeaderDto = await BasketRepository.GetBasketHeaderAsync(TEST_BASKET_ID);
-            }
-            finally
-            {
-            }
-
+            BasketAmountsDto = await BasketRepository.GetBasketAmountsAsync(TEST_BASKET_ID);
         }
-
-
     }
 }

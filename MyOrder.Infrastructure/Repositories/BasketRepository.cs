@@ -26,6 +26,12 @@ namespace MyOrder.Infrastructure.Repositories
             return await apiClient.GetBasketHeaderAsync(basketId);
         }
 
+        public async Task<BasketAmountsDto> GetBasketAmountsAsync(string basketId)
+        {
+            logger.LogInformation("Fetching basket amounts for {BasketId} from repository", basketId);
+            return await apiClient.GetBasketAmountsAsync(basketId);
+        }
+
         /*
         public async Task<IEnumerable<NotificationDto>> GetNotificationsAsync(string basketId)
         {

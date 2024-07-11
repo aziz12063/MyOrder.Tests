@@ -69,3 +69,38 @@ h1:focus {
     justify-content: flex-end;
     margin-top: 5px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+.field-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.field-input {
+    width: 100%;
+}
+
+.warning-icon {
+    color: red;
+    margin-left: 5px;
+}
+
+.amounts-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+
+
