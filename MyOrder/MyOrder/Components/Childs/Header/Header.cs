@@ -10,14 +10,11 @@ namespace MyOrder.Components.Childs.Header
         private const string TEST_BASKET_ID = "P0130625";
         private bool isLoading = false;
 
-        private readonly IBasketRepository basketRepository;
+        [Inject]
+        private IBasketRepository BasketRepository { get; set; }
 
-        public BasketHeaderDto BasketHeaderDto { get; set; }
+        public BasketHeaderDto? BasketHeaderDto { get; set; }
 
-        public Header(IBasketRepository basketRepository)
-        {
-            this.basketRepository = basketRepository;
-        }
 
         protected override async void OnInitialized()
         {
@@ -25,7 +22,7 @@ namespace MyOrder.Components.Childs.Header
 
             try
             {
-                BasketHeaderDto = await basketRepository.GetBasketHeaderAsync(TEST_BASKET_ID);
+                BasketHeaderDto = await BasketRepository.GetBasketHeaderAsync(TEST_BASKET_ID);
             }
             finally
             {
