@@ -1,9 +1,50 @@
-﻿
-        <div class="col-md-3" style="padding: 5px;">
-            <RadzenCard class="card-container">
-                <ChildContent>
-                    <h4 class="card-title">Informations Commerciales</h4>
-                    <!-- Content for Informations Commerciales section -->
-                </ChildContent>
-            </RadzenCard>
-        </div>
+﻿<div class="col-md-3" style="padding: 5px;">
+    <RadzenCard class="card-container">
+        <ChildContent>
+            <h4 class="card-title">Commercial Details</h4>
+            <RadzenFieldset Text="Sales Information" Style="margin-bottom: 20px;">
+                <div class="fieldset-content">
+                    <label class="field-label">Sales Id</label>
+                    <RadzenTextBox @bind-Value="BasketHeaderDto.SalesId" Placeholder="Sales Id" Style="width: 100%;" />
+                </div>
+                <div class="fieldset-content">
+                    <label class="field-label">Sales Responsible</label>
+                    <RadzenTextBox @bind-Value="BasketHeaderDto.SalesResponsible" Placeholder="Sales Responsible" Style="width: 100%;" />
+                </div>
+                <div class="fieldset-content">
+                    <label class="field-label">Sales Status</label>
+                    <RadzenTextBox @bind-Value="SalesStatusString" Placeholder="Sales Status" Style="width: 100%;" />
+                </div>
+                <div class="fieldset-content">
+                    <label class="field-label">Order Date</label>
+                    <RadzenDatePicker @bind-Value="BasketHeaderDto.OrderDate" Placeholder="Select Order Date" Style="width: 100%;" />
+                </div>
+                <div class="fieldset-content">
+                    <label class="field-label">Order Note</label>
+                    <RadzenTextBox @bind-Value="BasketHeaderDto.OrderNote" Placeholder="Order Note" Multiline="true" Rows="4" Style="width: 100%;" />
+                </div>
+            </RadzenFieldset>
+        </ChildContent>
+    </RadzenCard>
+</div>
+
+@code
+{
+    [CascadingParameter]
+    public BasketHeaderDto? BasketHeaderDto { get; set; }
+
+    string SalesStatusString
+    {
+        get => BasketHeaderDto.SalesStatus.ToString();
+        set
+        {
+            // Optionally handle parsing or validation if needed
+            // For example, you could parse the string back to an integer
+            if (int.TryParse(value, out int parsedValue))
+            {
+                BasketHeaderDto.SalesStatus = parsedValue;
+            }
+        }
+    }
+
+}

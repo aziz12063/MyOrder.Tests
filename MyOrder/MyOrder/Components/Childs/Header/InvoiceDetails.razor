@@ -1,8 +1,36 @@
-﻿        <div class="col-md-3" style="padding: 5px;">
-            <RadzenCard class="card-container">
-                <ChildContent>
-                    <h4 class="card-title">Facturation</h4>
-                    <!-- Content for Facturation section -->
-                </ChildContent>
-            </RadzenCard>
-        </div>
+﻿<div class="col-md-3" style="padding: 5px;">
+    <RadzenCard class="card-container">
+        <ChildContent>
+            <h4 class="card-title">Invoice Details</h4>
+            <RadzenFieldset Text="Invoice Information" Style="margin-bottom: 20px;">
+                <div class="fieldset-content">
+                    <label class="field-label">Invoice Id</label>
+                    <RadzenTextBox @bind-Value="BasketHeaderDto.InvoiceId" Placeholder="Invoice Id" Style="width: 100%;" />
+                </div>
+                <div class="fieldset-content">
+                    <label class="field-label">Invoice Account</label>
+                    <RadzenTextBox @bind-Value="BasketHeaderDto.InvoiceAccount" Placeholder="Invoice Account" Style="width: 100%;" />
+                </div>
+                <div class="fieldset-content">
+                    <label class="field-label">Invoice Email</label>
+                    <RadzenTextBox @bind-Value="BasketHeaderDto.InvoiceEmail" Placeholder="Invoice Email" Style="width: 100%;" />
+                </div>
+                <div class="fieldset-content">
+                    <label class="field-label">Invoice Note</label>
+                    <RadzenTextBox @bind-Value="BasketHeaderDto.InvoiceNote" Placeholder="Invoice Note" Multiline="true" Rows="4" Style="width: 100%;" />
+                </div>
+                <div class="fieldset-content">
+                    <label class="field-label">Invoice Ship Mode</label>
+                    <RadzenDropDown @bind-Value="BasketHeaderDto.InvoiceShipMode" Placeholder="Select Ship Mode" TextProperty="Mode" ValueProperty="Id" Style="width: 100%;" />
+                </div>
+            </RadzenFieldset>
+        </ChildContent>
+    </RadzenCard>
+
+</div>
+
+@code
+{
+    [CascadingParameter]
+    public BasketHeaderDto? BasketHeaderDto { get; set; }
+}

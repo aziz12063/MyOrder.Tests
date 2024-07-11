@@ -1,8 +1,44 @@
-﻿        <div class="col-md-3" style="padding: 5px;">
-            <RadzenCard class="card-container">
-                <ChildContent>
-                    <h4 class="card-title">Livraison</h4>
-                    <!-- Content for Livraison section -->
-                </ChildContent>
-            </RadzenCard>
-        </div>
+﻿<div class="col-md-3" style="padding: 5px;">
+    <RadzenCard class="card-container">
+        <ChildContent>
+            <h4 class="card-title">Delivery Details</h4>
+            <RadzenFieldset Text="Delivery Information" Style="margin-bottom: 20px;">
+                <div class="fieldset-content">
+                    <label class="field-label">Delivery Name</label>
+                    <RadzenTextBox @bind-Value="BasketHeaderDto.DeliveryName" Placeholder="Delivery Name" Style="width: 100%;" />
+                </div>
+                <div class="fieldset-content">
+                    <label class="field-label">Delivery Street</label>
+                    <RadzenTextBox @bind-Value="BasketHeaderDto.DeliveryStreet" Placeholder="Delivery Street" Style="width: 100%;" />
+                </div>
+                <div class="fieldset-content">
+                    <label class="field-label">Delivery City</label>
+                    <RadzenTextBox @bind-Value="BasketHeaderDto.DeliveryCity" Placeholder="Delivery City" Style="width: 100%;" />
+                </div>
+                <div class="fieldset-content">
+                    <label class="field-label">Delivery Zip Code</label>
+                    <RadzenTextBox @bind-Value="BasketHeaderDto.DeliveryZipCode" Placeholder="Delivery Zip Code" Style="width: 100%;" />
+                </div>
+                <div class="fieldset-content">
+                    <label class="field-label">Delivery Country/Region</label>
+                    <RadzenDropDown @bind-Value="BasketHeaderDto.DeliveryCountryRegionId" Placeholder="Select Country/Region" TextProperty="Name" ValueProperty="Id" Style="width: 100%;" />
+                </div>
+                <div class="fieldset-content">
+                    <label class="field-label">Delivery County</label>
+                    <RadzenTextBox @bind-Value="BasketHeaderDto.DeliveryCounty" Placeholder="Delivery County" Style="width: 100%;" />
+                </div>
+                <div class="fieldset-content">
+                    <label class="field-label">Delivery Note</label>
+                    <RadzenTextBox @bind-Value="BasketHeaderDto.DeliveryNote" Placeholder="Delivery Note" Multiline="true" Rows="4" Style="width: 100%;" />
+                </div>
+            </RadzenFieldset>
+        </ChildContent>
+    </RadzenCard>
+
+</div>
+
+@code
+{
+    [CascadingParameter]
+    public BasketHeaderDto? BasketHeaderDto { get; set; }
+}

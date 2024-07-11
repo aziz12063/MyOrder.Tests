@@ -1,110 +1,67 @@
-﻿@using MyOrder.Shared.Dtos
-
-        <div class="col-md-3" style="padding: 5px;">
-            <RadzenCard class="card-container">
-                <ChildContent>
-                    <h4 class="card-title">Commande</h4>
-                    <RadzenFieldset Text="Contact client" Style="margin-bottom: 20px;">
-                        <div class="fieldset-content">
-                            <label class="field-label">Select client</label>
-                            <div class="icon-container">
-                                <RadzenDropDown @bind-Value="selectedClient" Placeholder="Select client" Data="@clients" TextProperty="Name" ValueProperty="Id" Style="flex-grow: 1;" />
-                                <RadzenIcon Icon="search" class="icon"  />
-                                <RadzenIcon Icon="cloud" class="icon"  />
-                                <RadzenIcon Icon="phone" class="icon"  />
-                            </div>
-                        </div>
-                        <div class="fieldset-content">
-                            <label class="field-label">Client Name</label>
-                            <RadzenTextBox @bind-Value="BasketHeaderDto.FsName" Placeholder="Name" Style="width: 100%;" />
-                            <div class="button-container">
-                                <RadzenButton Icon="edit" Click="EditClient" Style="margin-right: 10px;" />
-                                <RadzenButton Icon="delete" Click="DeleteClient" />
-                            </div>
-                        </div>
-                        <div class="fieldset-content">
-                            <label class="field-label">Client Phone</label>
-                            <RadzenTextBox @bind-Value="BasketHeaderDto.SponsorPhone" Placeholder="Phone" Style="width: 100%;" />
-                        </div>
-                        <div class="fieldset-content">
-                            <label class="field-label">Client Email</label>
-                            <RadzenTextBox @bind-Value="BasketHeaderDto.EmailAddress" Placeholder="Email" Style="width: 100%;" />
-                        </div>
-                    </RadzenFieldset>
-                    <RadzenFieldset Text="Secteur d'activité" Style="margin-bottom: 20px;">
-                        <p>Commerce de gros (commerce interentreprises) de produits pha</p>
-                    </RadzenFieldset>
-                    <RadzenFieldset Text="Informations générales">
-                        <div class="fieldset-content">
-                            <label class="field-label">Canal de vente</label>
-                            <RadzenDropDown @bind-Value="salesChannel" Placeholder="Select sales channel" Data="@salesChannels" Style="width: 100%;" />
-                        </div>
-                        <div class="fieldset-content">
-                            <label class="field-label">Type de trans.</label>
-                            <RadzenDropDown @bind-Value="transactionType" Placeholder="Select transaction type" Data="@transactionTypes" Style="width: 100%;" />
-                        </div>
-                        <div class="fieldset-content">
-                            <label class="field-label">Référence Client</label>
-                            <RadzenTextBox @bind-Value="clientReference" Placeholder="Client Reference" Style="width: 100%;" />
-                        </div>
-                        <div class="fieldset-content">
-                            <label class="field-label">Commande Web</label>
-                            <RadzenTextBox @bind-Value="webOrderReference" Placeholder="Web Order Reference" Style="width: 100%;" />
-                        </div>
-                        <div>
-                            <label class="field-label">Notes de RC</label>
-                            <RadzenTextBox @bind-Value="notes" Placeholder="Notes" Multiline="true" Rows="4" Style="width: 100%;" />
-                        </div>
-                    </RadzenFieldset>
-                </ChildContent>
-            </RadzenCard>
-        </div>
+﻿
+<div class="col-md-3" style="padding: 5px;">
+    <RadzenCard class="card-container">
+        <ChildContent>
+            <h4 class="card-title">Commande</h4>
+            <RadzenFieldset Text="Contact client" Style="margin-bottom: 20px;">
+                <div class="fieldset-content">
+                    <label class="field-label">Select client</label>
+                    <div class="icon-container">
+                        <RadzenDropDown @bind-Value="BasketHeaderDto.SalesOriginId" Placeholder="Select client" TextProperty="Name" ValueProperty="Id" Style="flex-grow: 1;" />
+                        <RadzenIcon Icon="search" class="icon" />
+                        <RadzenIcon Icon="cloud" class="icon" />
+                        <RadzenIcon Icon="phone" class="icon" />
+                    </div>
+                </div>
+                <div class="fieldset-content">
+                    <label class="field-label">Client Name</label>
+                    <RadzenTextBox @bind-Value="BasketHeaderDto.FsName" Placeholder="Name" Style="width: 100%;" />
+                    <div class="button-container">
+                        <RadzenButton Icon="edit"  Style="margin-right: 10px;" />
+                        <RadzenButton Icon="delete"  />
+                    </div>
+                </div>
+                <div class="fieldset-content">
+                    <label class="field-label">Client Phone</label>
+                    <RadzenTextBox @bind-Value="BasketHeaderDto.SponsorPhone" Placeholder="Phone" Style="width: 100%;" />
+                </div>
+                <div class="fieldset-content">
+                    <label class="field-label">Client Email</label>
+                    <RadzenTextBox @bind-Value="BasketHeaderDto.EmailAddress" Placeholder="Email" Style="width: 100%;" />
+                </div>
+            </RadzenFieldset>
+            <RadzenFieldset Text="Secteur d'activité" Style="margin-bottom: 20px;">
+                <p>Commerce de gros (commerce interentreprises) de produits pha</p>
+            </RadzenFieldset>
+            <RadzenFieldset Text="Informations générales">
+                <div class="fieldset-content">
+                    <label class="field-label">Canal de vente</label>
+                    <RadzenDropDown @bind-Value="BasketHeaderDto.RAJ_WebSalesNotes" Placeholder="Select sales channel"  Style="width: 100%;" />
+                </div>
+                <div class="fieldset-content">
+                    <label class="field-label">Type de trans.</label>
+                    <RadzenDropDown @bind-Value="BasketHeaderDto.PaymMode" Placeholder="Select transaction type"  Style="width: 100%;" />
+                </div>
+                <div class="fieldset-content">
+                    <label class="field-label">Référence Client</label>
+                    <RadzenTextBox @bind-Value="BasketHeaderDto.SponsorZipCode" Placeholder="Client Reference" Style="width: 100%;" />
+                </div>
+                <div class="fieldset-content">
+                    <label class="field-label">Commande Web</label>
+                    <RadzenTextBox @bind-Value="BasketHeaderDto.RAJ_WebSalesId" Placeholder="Web Order Reference" Style="width: 100%;" />
+                </div>
+                <div>
+                    <label class="field-label">Notes de RC</label>
+                    <RadzenTextBox @bind-Value="BasketHeaderDto.SponsorBusRelNote" Placeholder="Notes" Multiline="true" Rows="4" Style="width: 100%;" />
+                </div>
+            </RadzenFieldset>
+        </ChildContent>
+    </RadzenCard>
+</div>
 
 @code
 {
     [CascadingParameter]
     public BasketHeaderDto BasketHeaderDto { get; set; }
-
-    string selectedClient;
-    string clientName = "John Doe";
-    string clientPhone = "123-456-7890";
-    string clientEmail = "john.doe@example.com";
-    string salesChannel = "Phone";
-    string transactionType = "NOR - Normal Order";
-    string clientReference = "REF123456";
-    string webOrderReference = "WEB789012";
-    string notes = "Some notes about the order.";
-
-    List<Client> clients = new List<Client>
-    {
-        new Client { Id = "1", Name = "Client 1" },
-        new Client { Id = "2", Name = "Client 2" }
-    };
-
-    List<string> salesChannels = new List<string> { "Phone", "Email", "In-person" };
-    List<string> transactionTypes = new List<string> { "NOR - Normal Order", "EXP - Express Order" };
-
-    public class Client
-    {
-        public string Id { get; set; }
-        public string Name { get; set; }
-    }
-
-    void EditClient()
-    {
-        // Logic for editing client
-    }
-
-    void DeleteClient()
-    {
-        // Logic for deleting client
-    }
-
-
-    void OnSubmit()
-    {
-        // Logic for form submission
-    }
-}
 
 }
