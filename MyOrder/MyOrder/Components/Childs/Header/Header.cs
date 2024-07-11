@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MyOrder.Infrastructure.Repositories;
 using MyOrder.Shared.Dtos;
-using Radzen;
 
 namespace MyOrder.Components.Childs.Header
 {
@@ -13,7 +12,7 @@ namespace MyOrder.Components.Childs.Header
         [Inject]
         private IBasketRepository BasketRepository { get; set; }
 
-        public BasketHeaderDto? BasketHeaderDto { get; set; }
+        public BasketHeaderDto? BasketHeaderDto { get; set; } = new();
 
 
         protected override async void OnInitialized()

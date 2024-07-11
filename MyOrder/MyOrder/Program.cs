@@ -3,6 +3,7 @@ using MyOrder.Infrastructure.ApiClients;
 using MyOrder.Infrastructure.Repositories;
 using MyOrder.Infrastructure.Resilience;
 using MyOrder.Shared.Dtos;
+using Radzen;
 using Refit;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,15 +13,17 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
 
-
+// Api Client, and Resilience Policies
 builder.Services.AddRefitClient<IBasketApiClient>()
     .ConfigureHttpClient(c => c.BaseAddress = new Uri("http://aliasiisq:8080"))
     .AddPolicyHandler(ResiliencePolicies.GetRetryPolicy())
     .AddPolicyHandler(ResiliencePolicies.GetCircuitBreakerPolicy());
 
+// Repositories
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 
-
+//Radzen and UI elements
+builder.Services.AddRadzenComponents();
 builder.Services.AddCascadingValue(_ => new BasketHeaderDto());
 
 var app = builder.Build();
