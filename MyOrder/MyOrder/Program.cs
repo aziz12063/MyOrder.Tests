@@ -1,3 +1,4 @@
+using Fluxor;
 using MyOrder.Components;
 using MyOrder.Infrastructure.ApiClients;
 using MyOrder.Infrastructure.Repositories;
@@ -18,6 +19,9 @@ builder.Services.AddRefitClient<IBasketApiClient>()
     .ConfigureHttpClient(c => c.BaseAddress = new Uri("http://aliasiisq:8080"))
     .AddPolicyHandler(ResiliencePolicies.GetRetryPolicy())
     .AddPolicyHandler(ResiliencePolicies.GetCircuitBreakerPolicy());
+
+// Enabling Fluxor
+builder.Services.AddFluxor(options => options.ScanAssemblies(typeof(Program).Assembly));
 
 // Repositories
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
