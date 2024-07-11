@@ -18,5 +18,6 @@ namespace MyOrder.Components.Childs.Amounts
         {
             BasketAmountsDto = await BasketRepository.GetBasketAmountsAsync(TEST_BASKET_ID);
         }
+
     }
 }

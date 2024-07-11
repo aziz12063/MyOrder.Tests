@@ -8,6 +8,8 @@
 
 <div class="container-fluid" style="padding: 0; margin: 0; width: 100%;">
     <CascadingValue Value="TEST_BASKET_ID">
+        <RadzenTextBox @bind-Value="TEST_BASKET_ID" Placeholder="Enter Basket Id" />
+        <RadzenButton Text="Search" Click="ChangeText" Style="margin-top: 10px;" />
         <Header />
         <Amounts />
     </CascadingValue>
@@ -16,4 +18,9 @@
 @code
 {
     private string TEST_BASKET_ID = "P0130625";
+
+    private void ChangeText()
+    {
+        StateHasChanged();
+    }
 }
