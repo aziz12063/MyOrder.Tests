@@ -22,13 +22,20 @@ namespace MyOrder.Components.Childs.Amounts
         protected override void OnInitialized()
         {
             base.OnInitialized();
-            Dispatcher.Dispatch(new FetchAmountsDataAction());
+            FetchBasketAmounts(TEST_BASKET_ID);
         }
 
         //protected override async Task OnInitializedAsync()
         //{
         //    BasketAmountsDto = await BasketRepository.GetBasketAmountsAsync(TEST_BASKET_ID);
         //}
+
+
+        public void FetchBasketAmounts(string basketId)
+        {
+            Dispatcher.Dispatch(new FetchAmountsDataRequestAction(basketId));
+        }
+
 
     }
 }
