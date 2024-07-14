@@ -21,8 +21,8 @@ namespace MyOrder.Components.Childs.Amounts
 
         protected override void OnInitialized()
         {
-            base.OnInitialized();
-            FetchBasketAmounts(TEST_BASKET_ID);
+            //base.OnInitialized();
+           // FetchBasketAmounts(TEST_BASKET_ID);
         }
 
         //protected override async Task OnInitializedAsync()
@@ -33,7 +33,7 @@ namespace MyOrder.Components.Childs.Amounts
 
         public void FetchBasketAmounts(string basketId)
         {
-            Dispatcher.Dispatch(new FetchAmountsDataRequestAction(basketId));
+            //Dispatcher.Dispatch(new FetchAmountsDataRequestAction(basketId));
         }
 
 

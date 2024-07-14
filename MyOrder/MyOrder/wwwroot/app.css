@@ -71,6 +71,20 @@ h1:focus {
 }
 
 
+.rz-datatable-thead th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+}
+
+.rz-datatable {
+    border: 1px solid #ddd;
+}
+
+
+
+
 
 
 

@@ -1,5 +1,6 @@
 ﻿@using MyOrder.Components.Childs.Amounts
 @using MyOrder.Components.Childs.Header
+@using MyOrder.Components.Childs.Lines
 
 @page "/"
 @rendermode InteractiveServer
@@ -11,7 +12,9 @@
         <RadzenTextBox @bind-Value="TEST_BASKET_ID" Placeholder="Enter Basket Id" />
         <RadzenButton Text="Search" Click="ChangeText" Style="margin-top: 10px;" />
         <Header />
-        <Amounts />
+        <!--<Amounts />-->
+        <PlaceHolder />
+        <Lines />
     </CascadingValue>
 </div>
 
