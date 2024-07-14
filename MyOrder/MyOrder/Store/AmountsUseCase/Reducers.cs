@@ -8,7 +8,6 @@ namespace MyOrder.Store.AmountsUseCase
 {
     public static class Reducers
     {
-
         [ReducerMethod]
         public static AmountsState ReduceFetchAmountDataAction(AmountsState state, FetchAmountsDataAction action)
         {
@@ -22,8 +21,5 @@ namespace MyOrder.Store.AmountsUseCase
             // You might want to set an error flag or message in your state
             return state;
         }
-
     }
-
-    
 }

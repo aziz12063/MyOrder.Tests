@@ -1,15 +1,15 @@
 ﻿using Fluxor;
 using MyOrder.Infrastructure.Repositories;
 
-namespace MyOrder.Store
+namespace MyOrder.Store.AmountsUseCase
 {
-    public class AmountsEffects
+    public class Effects
     {
 
         private readonly IBasketRepository _basketRepository;
-        private readonly ILogger<AmountsEffects> _logger;
+        private readonly ILogger<Effects> _logger;
 
-        public AmountsEffects(IBasketRepository basketRepository, ILogger<AmountsEffects> logger)
+        public Effects(IBasketRepository basketRepository, ILogger<Effects> logger)
         {
             _basketRepository = basketRepository;
             _logger = logger;

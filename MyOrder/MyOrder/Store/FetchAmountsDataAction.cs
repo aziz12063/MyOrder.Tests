@@ -12,7 +12,6 @@ namespace MyOrder.Store
         }
     }
 
-    // in a complexe type i add those classes
     public class FetchAmountsDataRequestAction
     {
         public string BasketId { get; }
