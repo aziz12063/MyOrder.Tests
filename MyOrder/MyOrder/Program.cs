@@ -13,6 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
+builder.Services.AddScoped<Radzen.DialogService>();
 
 // Api Client, and Resilience Policies
 builder.Services.AddRefitClient<IBasketApiClient>()
