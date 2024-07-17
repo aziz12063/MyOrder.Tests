@@ -1,7 +1,7 @@
 ﻿@using MyOrder.Components.Childs.Amounts
 @using MyOrder.Components.Childs.Header
 @using MyOrder.Components.Childs.Lines
-
+@inject NavigationManager NavManager
 @page "/"
 @rendermode InteractiveServer
 
@@ -11,6 +11,9 @@
     <CascadingValue Value="TEST_BASKET_ID">
         <RadzenTextBox @bind-Value="TEST_BASKET_ID" Placeholder="Enter Basket Id" />
         <RadzenButton Text="Search" Click="ChangeText" Style="margin-top: 10px;" />
+
+        <!--this is a temporary button-->
+        <RadzenButton Text="Admin" Click="GoToAdminPage" Style="margin-top: 10px;" />
         <Header />
         <!--<Amounts />-->
         <PlaceHolder />
@@ -25,5 +28,10 @@
     private void ChangeText()
     {
         StateHasChanged();
+    }
+
+    private void GoToAdminPage()
+    {
+        NavManager.NavigateTo("/admin");
     }
 }

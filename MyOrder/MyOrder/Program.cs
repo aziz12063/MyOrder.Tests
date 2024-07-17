@@ -1,9 +1,12 @@
 using Fluxor;
+using MyOrder;
 using MyOrder.Components;
+using MyOrder.Components.Layout;
 using MyOrder.Infrastructure.ApiClients;
 using MyOrder.Infrastructure.Repositories;
 using MyOrder.Infrastructure.Resilience;
 using MyOrder.Shared.Dtos;
+using MyOrder.Store.AdminUseCase;
 using Radzen;
 using Refit;
 
@@ -22,7 +25,22 @@ builder.Services.AddRefitClient<IBasketApiClient>()
     .AddPolicyHandler(ResiliencePolicies.GetCircuitBreakerPolicy());
 
 // Enabling Fluxor
-builder.Services.AddFluxor(options => options.ScanAssemblies(typeof(Program).Assembly));
+builder.Services.AddFluxor(options =>
+{
+    options.ScanAssemblies(typeof(Program).Assembly);
+    
+});
+
+// Register the generic state for each component type you want to use
+//builder.Services.AddScoped<IFeature, GenericFeature<Adminlayout>>();
+//builder.Services.AddScoped<IState<AdminState>, State<AdminState>>();
+builder.Services.AddScoped<AdminEffects>();
+//builder.Services.AddScoped<IFeature, AdminFeature>();
+builder.Services.AddSingleton<ComponentLoaderService>();
+
+
+
+// Add more component types as needed
 
 // Repositories
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();

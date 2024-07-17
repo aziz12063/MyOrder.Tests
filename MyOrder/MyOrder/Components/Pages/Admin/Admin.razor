@@ -1,0 +1,19 @@
+﻿@page "/admin"
+@using MyOrder.Store.AdminUseCase
+@layout Adminlayout
+@rendermode InteractiveServer
+
+<CascadingValue Value=this>
+    <!-- i want to put here the dynamic component-->
+    @if (ComponentState.Value.CurrentComponent != null)
+    {
+        <DynamicComponent Type="ComponentState.Value.CurrentComponent" Parameters="currentParameters" />
+    }
+    else
+    {
+        <p>Conponent still null</p>
+    }
+    
+</CascadingValue>
+
+
