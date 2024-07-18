@@ -1,8 +1,10 @@
+@inherits LoadableComponent
+
 <RadzenCard Variant="Variant.Outlined">
 
     <RadzenStack Gap="0">
-        <RadzenText TextStyle="TextStyle.Body1" class="rz-display-flex rz-mt-2 rz-my-0"><b>@BstInfo.OrderType @BstInfo.OrderId [@BstInfo.OrderStatus]</b></RadzenText>
-        <RadzenText TextStyle="TextStyle.Body2" class="rz-display-flex rz-mt-4 rz-mb-0">@BstInfo.OrderDate - UserNameNotImplemented</RadzenText>
+        <RadzenText TextStyle="TextStyle.Body1" class="rz-display-flex rz-mt-2 rz-my-0"><b>@BsktInfo.OrderType @BsktInfo.OrderId [@BsktInfo.OrderStatus]</b></RadzenText>
+        <RadzenText TextStyle="TextStyle.Body2" class="rz-display-flex rz-mt-4 rz-mb-0">@BsktInfo.OrderDate - UserNameNotImplemented</RadzenText>
     </RadzenStack>
 
 </RadzenCard>
