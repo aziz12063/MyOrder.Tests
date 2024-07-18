@@ -8,8 +8,6 @@ namespace MyOrder.Components.Childs.Lines
     {
         public LineDto lineItem = new LineDto();
 
-        //[Parameter]
-        //public Action<LineDto> LinesAddedCallback { get; set; }
         [Parameter]
         public EventCallback<LineDto> LineAddedCallback { get; set; }
 

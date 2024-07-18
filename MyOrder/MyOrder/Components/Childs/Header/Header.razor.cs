@@ -6,8 +6,6 @@ namespace MyOrder.Components.Childs.Header
 {
     public partial class Header
     {
-        [CascadingParameter]
-        public string TEST_BASKET_ID { get; set; }
 
         [Inject]
         private IBasketRepository BasketRepository { get; set; }
@@ -24,10 +22,9 @@ namespace MyOrder.Components.Childs.Header
             }
             finally
             {
+
             }
-
         }
-
 
     }
 }

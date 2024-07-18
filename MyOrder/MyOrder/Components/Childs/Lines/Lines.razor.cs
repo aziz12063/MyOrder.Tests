@@ -2,12 +2,10 @@
 using MyOrder.Shared.Dtos.Lines;
 using Radzen;
 using Radzen.Blazor;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace MyOrder.Components.Childs.Lines
 {
-    public partial class Lines : Fluxor.Blazor.Web.Components.FluxorComponent
+    public partial class Lines
     {
         private List<LineDto> lines = new List<LineDto>();
 
@@ -17,7 +15,6 @@ namespace MyOrder.Components.Childs.Lines
 
         private async Task AddLine()
         {
-            //await DialogService.OpenAsync<AddLines>("Add Line");
             await DialogService.OpenAsync<AddLines>("Add Line", new Dictionary<string, object>()
             {
                 { "LineAddedCallback", EventCallback.Factory.Create<LineDto>(this, OnLineAdded) }
@@ -31,7 +28,6 @@ namespace MyOrder.Components.Childs.Lines
             lines.Add(newLine);
             grid.Reload();
             Console.WriteLine("nbr of line = " + lines.Count.ToString());
-            StateHasChanged(); // Ensure UI updates
 
         }
 
