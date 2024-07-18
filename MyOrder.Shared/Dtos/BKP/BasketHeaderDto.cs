@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyOrder.Shared.Dtos
+namespace MyOrder.Shared.Dtos.BKP
 {
     public class BasketHeaderDto
     {

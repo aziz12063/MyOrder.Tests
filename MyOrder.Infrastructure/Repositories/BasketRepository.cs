@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using MyOrder.Infrastructure.ApiClients;
 using MyOrder.Shared.Dtos;
+using MyOrder.Shared.Dtos.BKP;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,16 +21,16 @@ namespace MyOrder.Infrastructure.Repositories
             this.logger = logger;
         }
 
-        public async Task<BasketHeaderDto> GetBasketHeaderAsync(string basketId)
+        public async Task<BasketGeneralInfoDto> GetBasketGeneralInfoAsync(string basketId)
         {
-            logger.LogInformation("Fetching basket header for {BasketId} from repository", basketId);
-            return await apiClient.GetBasketHeaderAsync(basketId);
+            logger.LogInformation("Fetching basket general info for {BasketId} from repository", basketId);
+            return await apiClient.GetBasketGeneralInfoAsync(basketId);
         }
 
-        public async Task<BasketAmountsDto> GetBasketAmountsAsync(string basketId)
+        public async Task<BasketOrderInfoDto> GetBasketOrderInfoAsync(string basketId)
         {
-            logger.LogInformation("Fetching basket amounts for {BasketId} from repository", basketId);
-            return await apiClient.GetBasketAmountsAsync(basketId);
+            logger.LogInformation("Fetching basket order info for {BasketId} from repository", basketId);
+            return await apiClient.GetBasketOrderInfoAsync(basketId);
         }
 
         /*

@@ -14,7 +14,7 @@ namespace MyOrder.Store.AmountsUseCase
             _basketRepository = basketRepository;
             _logger = logger;
         }
-
+        /*
         [EffectMethod]
         public async Task HandleFetchAmountsData(FetchAmountsDataRequestAction action, IDispatcher dispatcher)
         {
@@ -29,7 +29,7 @@ namespace MyOrder.Store.AmountsUseCase
                 _logger.LogError(ex, "Error fetching basket amounts for {BasketId}", action.BasketId);
                 dispatcher.Dispatch(new FetchAmountsDataErrorAction(ex.Message));
             }
-        }
+        }*/
     }
 }
 

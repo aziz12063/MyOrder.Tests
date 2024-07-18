@@ -5,7 +5,7 @@ using MyOrder.Components.Layout;
 using MyOrder.Infrastructure.ApiClients;
 using MyOrder.Infrastructure.Repositories;
 using MyOrder.Infrastructure.Resilience;
-using MyOrder.Shared.Dtos;
+using MyOrder.Shared.Dtos.BKP;
 using MyOrder.Store.AdminUseCase;
 using Radzen;
 using Refit;
@@ -16,7 +16,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
-builder.Services.AddScoped<Radzen.DialogService>();
 
 // Api Client, and Resilience Policies
 builder.Services.AddRefitClient<IBasketApiClient>()
@@ -28,15 +27,16 @@ builder.Services.AddRefitClient<IBasketApiClient>()
 builder.Services.AddFluxor(options =>
 {
     options.ScanAssemblies(typeof(Program).Assembly);
+    options.AddMiddleware<LoggingMiddleware>();
     
 });
 
 // Register the generic state for each component type you want to use
 //builder.Services.AddScoped<IFeature, GenericFeature<Adminlayout>>();
 //builder.Services.AddScoped<IState<AdminState>, State<AdminState>>();
-builder.Services.AddScoped<AdminEffects>();
-//builder.Services.AddScoped<IFeature, AdminFeature>();
-builder.Services.AddSingleton<ComponentLoaderService>();
+//builder.Services.AddScoped<AdminEffects>();
+//builder.Services.AddScoped<IFeature, AdminFeature>(); register state, effect.
+//builder.Services.AddSingleton<ComponentLoaderService>();
 
 
 
@@ -48,6 +48,7 @@ builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 //Radzen and UI elements
 builder.Services.AddRadzenComponents();
 builder.Services.AddCascadingValue(_ => new BasketHeaderDto());
+builder.Services.AddScoped<DialogService>();
 
 var app = builder.Build();
 

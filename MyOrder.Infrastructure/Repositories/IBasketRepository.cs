@@ -1,4 +1,5 @@
 ﻿using MyOrder.Shared.Dtos;
+using MyOrder.Shared.Dtos.BKP;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,8 @@ namespace MyOrder.Infrastructure.Repositories
 {
     public interface IBasketRepository
     {
-        Task<BasketHeaderDto> GetBasketHeaderAsync(string basketId);
-        Task<BasketAmountsDto> GetBasketAmountsAsync(string basketId);
+        Task<BasketGeneralInfoDto> GetBasketGeneralInfoAsync(string basketId);
+        Task<BasketOrderInfoDto> GetBasketOrderInfoAsync(string basketId);
 
         //Task<IEnumerable<NotificationDto>> GetNotificationsAsync(string basketId);
         //Task<IEnumerable<LineItemDto>> GetBasketLinesAsync(string basketId);

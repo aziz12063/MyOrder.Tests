@@ -1,25 +1,28 @@
-﻿@inherits LayoutComponentBase
+﻿@using MyOrder.Components.Childs
+@inherits LayoutComponentBase
 
 <RadzenComponents />
 
 <RadzenLayout style="grid-template-areas: 'rz-sidebar rz-header' 'rz-sidebar rz-body';">
     <RadzenHeader>
-        <RadzenRow JustifyContent="JustifyContent.Start" AlignItems="AlignItems.Center" Gap="0">
-            <RadzenColumn Size="5">
-                <RadzenSidebarToggle Click="@SidebarToggleClick"></RadzenSidebarToggle>
-            </RadzenColumn>
-            <RadzenColumn Size="7">
-                <RadzenStack AlignItems="AlignItems.Center" Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End"></RadzenStack>
-            </RadzenColumn>
-        </RadzenRow>
+
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Start">
+            <RadzenImage Path="images/Raja-Logo.png" AlternateText="Raja Group" />
+            <GeneralInfo />
+        </RadzenStack>
+
+        
+
     </RadzenHeader>
-    <RadzenBody Expanded="@sidebarExpanded">
+
+    <RadzenBody>
         <RadzenRow class="rz-mx-auto" Style="max-width: 2880px; padding: 0;">
             <RadzenColumn Size="12">
                 @Body
             </RadzenColumn>
         </RadzenRow>
     </RadzenBody>
+
 </RadzenLayout>
 
 <div id="blazor-error-ui">
@@ -27,13 +30,3 @@
     <a href="" class="reload">Reload</a>
     <a class="dismiss">🗙</a>
 </div>
-
-@code
-{
-    private bool sidebarExpanded = true;
-
-    void SidebarToggleClick()
-    {
-        sidebarExpanded = !sidebarExpanded;
-    }
-}
