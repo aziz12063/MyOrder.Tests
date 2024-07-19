@@ -6,16 +6,9 @@ using System.Threading.Tasks;
 
 namespace MyOrder.Shared.Dtos
 {
-    public class SalesOriginDto
-    {
-        public string? Code { get; set; }
-        public string? Name { get; set; }
-    }
-
-    public class SaleOrigin
+    public class SalesPoolsDto
     {
         public string? Code { get; set; }
         public string? Name { get; set; }
     }
 }
-

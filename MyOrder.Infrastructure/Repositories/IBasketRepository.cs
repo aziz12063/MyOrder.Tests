@@ -12,7 +12,9 @@ namespace MyOrder.Infrastructure.Repositories
     {
         Task<BasketGeneralInfoDto> GetBasketGeneralInfoAsync(string basketId);
         Task<BasketOrderInfoDto> GetBasketOrderInfoAsync(string basketId);
-        Task<SalesOriginsDto> GetSalesOriginsAsync(string basketId);
+        Task<List<SalesOriginDto>> GetSalesOriginsAsync(string basketId);
+        Task<List<SalesPoolsDto>> GetSalesPoolAsync(string basketId);
+
 
         //Task<IEnumerable<NotificationDto>> GetNotificationsAsync(string basketId);
         //Task<IEnumerable<LineItemDto>> GetBasketLinesAsync(string basketId);

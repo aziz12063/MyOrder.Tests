@@ -14,7 +14,10 @@ namespace MyOrder.Infrastructure.ApiClients
         Task<BasketOrderInfoDto> GetBasketOrderInfoAsync(string basketId);
 
         [Get("/api/orderContext/{basketId}/salesOrigins")]
-        Task<SalesOriginsDto> GetSalesOriginsAsync(string basketId);
+        Task<List<SalesOriginDto>> GetSalesOriginsAsync(string basketId);
+
+        [Get("/api/orderContext/{basketId}/salesPools")]
+        Task<List<SalesPoolsDto>> GetSalesPoolsAsync(string basketId);
 
         //[Get("/api/orderContext/{basketId}/notifications")]
         //Task<IEnumerable<NotificationDto>> GetNotificationsAsync(string basketId);
