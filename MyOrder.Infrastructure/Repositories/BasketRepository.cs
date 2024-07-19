@@ -33,6 +33,12 @@ namespace MyOrder.Infrastructure.Repositories
             return await apiClient.GetBasketOrderInfoAsync(basketId);
         }
 
+        public async Task<SalesOriginsDto> GetSalesOriginsAsync(string basketId)
+        {
+            logger.LogInformation("Fetching basket order info for {BasketId} from repository", basketId);
+            return await apiClient.GetSalesOriginsAsync(basketId);
+        }
+
         /*
         public async Task<IEnumerable<NotificationDto>> GetNotificationsAsync(string basketId)
         {

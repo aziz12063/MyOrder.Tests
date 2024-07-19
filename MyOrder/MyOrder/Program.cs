@@ -1,8 +1,8 @@
+using MudBlazor.Services;
 using MyOrder.Components;
 using MyOrder.Infrastructure.ApiClients;
 using MyOrder.Infrastructure.Repositories;
 using MyOrder.Infrastructure.Resilience;
-using Radzen;
 using Refit;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,8 +23,7 @@ builder.Services.AddRefitClient<IBasketApiClient>()
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 
 //Radzen and UI elements
-builder.Services.AddRadzenComponents();
-builder.Services.AddScoped<DialogService>();
+builder.Services.AddMudServices();
 
 var app = builder.Build();
 

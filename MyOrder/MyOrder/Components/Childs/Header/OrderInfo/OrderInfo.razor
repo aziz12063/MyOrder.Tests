@@ -1,0 +1,110 @@
+﻿@inherits LoadableComponent
+
+<MudItem xs="12" sm="6" md="3">
+    <MudPaper MinWidth="300px;" FlexGow="1" Variant="Variant.Filled" Color="Color.Primary" Class="flexible-paper" Style="">
+        <MudStack Wrap="Wrap.Wrap" StretchItems="StretchItems.All" AlignItems="AlignItems.Start" Justify="Justify.Center" Spacing="3" Row="false">
+            <MudText Typo="Typo.h6" Color="Color.Secondary">Commande</MudText>
+
+            <!-- Contact Client -->
+            <MudText Typo="Typo.subtitle1">Contact client</MudText>
+            <MudField Variant="Variant.Text">@SelectedClient</MudField>
+
+            <MudSelect Label="Client Name" T="string" Variant="Variant.Outlined" @bind-Value="SelectedContact">
+                <MudSelectItem T="string" Value="@SelectedContact"/>
+            </MudSelect>
+            
+            <MudStack Row="true" Spacing="1">
+                <MudIconButton Icon="@Icons.Material.Filled.Phone" />
+                <MudTextField Value="@BsktOrderInfo.Contact.Phone" ReadOnly="true" />
+                <MudIconButton Icon="@Icons.Material.Filled.SpeakerPhone" />
+                <MudTextField Value="@BsktOrderInfo.Contact.CellularPhone" ReadOnly="true" />
+            </MudStack>
+            <MudTextField Label="Email" Value="@BsktOrderInfo.Contact.Email" ReadOnly="true" />
+            
+            <!-- Secteur d'activité -->
+            <MudText Typo="Typo.subtitle1">Secteur d'activité</MudText>
+            <MudField>@BsktOrderInfo.ActivityArea</MudField>
+
+
+            
+            <!-- Informations générales -->
+            <MudText Typo="Typo.subtitle1">Informations générales</MudText>
+            <MudSelect Label="Canal de vente" @bind-Value="BsktOrderInfo.SalesOriginId">
+                <SalesOriginsSelect/>
+            </MudSelect>
+            @*
+            <MudSelect Label="Type de trans." Value="NOR - Commande normale">
+            <MudSelectItem Value="NOR - Commande normale">NOR - Commande normale</MudSelectItem>
+            </MudSelect>
+            <MudTextField Label="Référence Client" />
+            <MudTextField Label="Commande Web" />
+            
+            
+            <!-- Notes de RC -->
+            <MudText Typo="Typo.subtitle1">Notes de RC</MudText>
+            <MudTextField Placeholder="Notes de RC" Lines="4" /> *@
+
+        </MudStack>
+    </MudPaper>
+</MudItem>
+
+@*
+<div class="col-md-3" style="padding: 5px;">
+    <RadzenCard class="card-container">
+        <ChildContent>
+            <h4 class="card-title">Commande</h4>
+            <RadzenFieldset Text="Contact client" Style="margin-bottom: 20px;">
+                <div class="fieldset-content">
+                    <label class="field-label">Select client</label>
+                    <div class="icon-container">
+                        <RadzenDropDown @bind-Value="BsktOrderInfo.Account.AccountNum" Placeholder="Select client" TextProperty="Name" ValueProperty="Id" Style="flex-grow: 1;" />
+                        <RadzenIcon Icon="search" class="icon" />
+                        <RadzenIcon Icon="cloud" class="icon" />
+                        <RadzenIcon Icon="phone" class="icon" />
+                    </div>
+                </div>
+                <div class="fieldset-content">
+                    <label class="field-label">Client Name</label>
+                    <RadzenTextBox @bind-Value="BsktOrderInfo.Account.Name" Placeholder="Name" Style="width: 100%;" />
+                    <div class="button-container">
+                        <RadzenButton Icon="edit" Style="margin-right: 10px;" />
+                        <RadzenButton Icon="delete" />
+                    </div>
+                </div>
+                <div class="fieldset-content">
+                    <label class="field-label">Client Phone</label>
+                    <RadzenTextBox @bind-Value="BsktOrderInfo.Account.Phone" Placeholder="Phone" Style="width: 100%;" />
+                </div>
+                <div class="fieldset-content">
+                    <label class="field-label">Client Email</label>
+                    <RadzenTextBox @bind-Value="BsktOrderInfo.Account.Email" Placeholder="Email" Style="width: 100%;" />
+                </div>
+            </RadzenFieldset>
+            <RadzenFieldset Text="Secteur d'activité" Style="margin-bottom: 20px;">
+                <p>Commerce de gros (commerce interentreprises) de produits pha</p>
+            </RadzenFieldset>
+            <RadzenFieldset Text="Informations générales">
+                <div class="fieldset-content">
+                    <label class="field-label">Canal de vente</label>
+                    <RadzenDropDown @bind-Value="BsktOrderInfo.SalesOriginId" Placeholder="Select sales channel" Style="width: 100%;" />
+                </div>
+                <div class="fieldset-content">
+                    <label class="field-label">Type de trans.</label>
+                    <RadzenDropDown @bind-Value="BsktOrderInfo.SalesPoolId" Placeholder="Select transaction type" Style="width: 100%;" />
+                </div>
+                <div class="fieldset-content">
+                    <label class="field-label">Référence Client</label>
+                    <RadzenTextBox @bind-Value="BsktOrderInfo.PurchOrderFormNum" Placeholder="Client Reference" Style="width: 100%;" />
+                </div>
+                <div class="fieldset-content">
+                    <label class="field-label">Commande Web</label>
+                    <RadzenTextBox @bind-Value="BsktOrderInfo.WebOriginId" Placeholder="Web Order Reference" Style="width: 100%;" />
+                </div>
+                <div>
+                    <label class="field-label">Notes de RC</label>
+                    <RadzenTextBox @bind-Value="BsktOrderInfo.Note" Placeholder="Notes" Multiline="true" Rows="4" Style="width: 100%;" />
+                </div>
+            </RadzenFieldset>
+        </ChildContent>
+    </RadzenCard>
+</div> *@

@@ -1,29 +1,21 @@
 ﻿@using MyOrder.Components.Childs
 @inherits LayoutComponentBase
 
-<RadzenComponents />
+<MudThemeProvider />
+<MudPopoverProvider />
 
-<RadzenLayout style="grid-template-areas: 'rz-sidebar rz-header' 'rz-sidebar rz-body';">
-    <RadzenHeader>
 
-        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Start">
-            <RadzenImage Path="images/Raja-Logo.png" AlternateText="Raja Group" />
-            <GeneralInfo />
-        </RadzenStack>
+<MudLayout>
+    <MudAppBar>
+        @* <img Path="images/Raja-Logo.png" AlternateText="Raja Group" /> *@
+        @* <GeneralInfo />*@
+    </MudAppBar>
 
-        
+    <MudMainContent>
+        @Body
+    </MudMainContent>
+</MudLayout>
 
-    </RadzenHeader>
-
-    <RadzenBody>
-        <RadzenRow class="rz-mx-auto" Style="max-width: 2880px; padding: 0;">
-            <RadzenColumn Size="12">
-                @Body
-            </RadzenColumn>
-        </RadzenRow>
-    </RadzenBody>
-
-</RadzenLayout>
 
 <div id="blazor-error-ui">
     An unhandled error has occurred.
