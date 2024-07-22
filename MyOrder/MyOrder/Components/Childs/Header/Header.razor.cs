@@ -13,18 +13,7 @@ namespace MyOrder.Components.Childs.Header
         public BasketHeaderDto? BasketHeaderDto { get; set; } = new();
 
 
-        protected override async Task OnInitializedAsync()
-        {
-
-            try
-            {
-                //BasketHeaderDto = await BasketRepository.GetBasketHeaderAsync(TEST_BASKET_ID);
-            }
-            finally
-            {
-
-            }
-        }
+        
 
     }
 }

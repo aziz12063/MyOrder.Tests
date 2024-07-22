@@ -1,7 +1,28 @@
-﻿<MudStack Wrap="Wrap.NoWrap" StretchItems="StretchItems.All" Spacing="2" Row="true" AlignItems="AlignItems.Start" Justify="Justify.Center">
-    <OrderInfo />
-    <DeliveryDetails />
-    <InvoiceDetails />
-    <CommercialDetails />
-</MudStack>
+﻿<MudGrid Style="min-width: 1280px;" Spacing="2" Justify="Justify.Center">
+    
+    <MudItem xs="12" sm="3" md="3">
+        <MudPaper Class="flexible-paper">
+            <OrderInfo />
+        </MudPaper>
+    </MudItem>
 
+    <MudItem xs="12" sm="3" md="3">
+        <MudPaper Class="flexible-paper">
+            <DeliveryDetails />
+        </MudPaper>
+    </MudItem>
+    
+
+    <MudItem xs="12" sm="3" md="3">
+        <MudPaper Class="flexible-paper">
+            <InvoiceDetails />
+        </MudPaper>
+    </MudItem>
+    
+    <MudItem xs="12" sm="3" md="3">
+        <MudPaper Class="flexible-paper">
+            <CommercialDetails />
+        </MudPaper>
+    </MudItem>
+    
+</MudGrid>
