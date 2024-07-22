@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace MyOrder.Components
+namespace MyOrder.Components.Childs.Shared
 {
     public abstract class LoadableComponent : ComponentBase
     {

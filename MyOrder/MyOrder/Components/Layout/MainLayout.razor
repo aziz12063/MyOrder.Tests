@@ -1,12 +1,14 @@
-﻿@using MyOrder.Components.Childs
+﻿@using Microsoft.Extensions.Options
+@using MyOrder.Components.Childs
 @inherits LayoutComponentBase
 
-<MudThemeProvider />
+
+<MudThemeProvider Theme="@ThemeConfiguration.MyTheme" />
 <MudPopoverProvider />
 
 
 <MudLayout>
-    <MudAppBar Color="Color.Transparent" Elevation="2">
+    <MudAppBar Elevation="3">
         <MudImage Src="images/Raja-Logo.png" Alt="Raja Group" Style="width: 100px; height: auto; margin-right: 30px;" />
         <GeneralInfo />
     </MudAppBar>

@@ -1,4 +1,6 @@
+using MudBlazor;
 using MudBlazor.Services;
+using MyOrder;
 using MyOrder.Components;
 using MyOrder.Infrastructure.ApiClients;
 using MyOrder.Infrastructure.Repositories;
@@ -22,8 +24,9 @@ builder.Services.AddRefitClient<IBasketApiClient>()
 // Repositories
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 
-//Radzen and UI elements
+//MudBlazor and UI elements
 builder.Services.AddMudServices();
+
 
 var app = builder.Build();
 

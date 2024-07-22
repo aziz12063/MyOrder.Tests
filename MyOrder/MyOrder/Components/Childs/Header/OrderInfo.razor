@@ -1,55 +1,71 @@
 ﻿@inherits LoadableComponent
 
-        <MudStack Wrap="Wrap.Wrap" StretchItems="StretchItems.All" AlignItems="AlignItems.Start" Justify="Justify.Center" Spacing="1" Row="false">
-            <MudText Typo="Typo.h6" Color="Color.Secondary">Commande</MudText>
+<MudContainer Class="p-4">
+    <MudStack Spacing="3">
+        <MudText Typo="Typo.h6" Color="Color.Secondary">Commande</MudText>
 
-            <!-- Contact Client -->
-            <MudText Typo="Typo.subtitle1">Contact client</MudText>
-            <MudField Variant="Variant.Text">@SelectedClient</MudField>
+        <!-- Contact Client -->
+        <MudText Typo="Typo.subtitle1">Contact client</MudText>
+        <MudField Variant="Variant.Text">@SelectedClient</MudField>
+        <MudSelect Label="Client Name" T="string" Variant="Variant.Outlined" @bind-Value="SelectedContact" FullWidth="true">
+            <MudSelectItem T="string" Value="@SelectedContact" />
+        </MudSelect>
 
-            <MudSelect Label="Client Name" T="string" Variant="Variant.Outlined" @bind-Value="SelectedContact" Style="width: 200%;">
-                <MudSelectItem T="string" Value="@SelectedContact"/>
-            </MudSelect>
-            
-            <MudStack Row="true" Spacing="1">
-                <MudIconButton Icon="@Icons.Material.Filled.Phone" />
-                <MudTextField Value="@BsktOrderInfo.Contact.Phone" ReadOnly="true" />
-                <MudIconButton Icon="@Icons.Material.Filled.SpeakerPhone" />
-                <MudTextField Value="@BsktOrderInfo.Contact.CellularPhone" ReadOnly="true" />
-            </MudStack>
-            <MudTextField Style="width: 200%;" Label="Email" Value="@BsktOrderInfo.Contact.Email" ReadOnly="true" />
-            
-            <!-- Secteur d'activité -->
-            <MudText Typo="Typo.subtitle1">Secteur d'activité</MudText>
-            <MudField Style="width: 250%;">@BsktOrderInfo.ActivityArea</MudField>
+        <MudGrid Spacing="2">
+            <MudItem xs="12" sm="6">
+                <MudStack Row="true" Spacing="1">
+                    <MudIconButton Icon="@Icons.Material.Filled.Phone" />
+                    <MudTextField Value="@BsktOrderInfo.Contact.Phone" ReadOnly="true" />
+                </MudStack>
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudStack Row="true" Spacing="1">
+                    <MudIconButton Icon="@Icons.Material.Filled.SpeakerPhone" />
+                    <MudTextField Value="@BsktOrderInfo.Contact.CellularPhone" ReadOnly="true" />
+                </MudStack>
+            </MudItem>
+            <MudItem xs="12">
+                <MudTextField Label="Email" Value="@BsktOrderInfo.Contact.Email" ReadOnly="true" FullWidth="true" />
+            </MudItem>
+        </MudGrid>
 
+        <!-- Secteur d'activité -->
+        <MudText Typo="Typo.subtitle1">Secteur d'activité</MudText>
+        <MudField Style="width: 100%;">@BsktOrderInfo.ActivityArea</MudField>
 
-            
-            <!-- Informations générales -->
-            <MudText Typo="Typo.subtitle1">Informations générales</MudText>
-            <MudSelect Style="width: 200%;" Label="Canal de vente" @bind-Value="BsktOrderInfo.SalesOriginId">
-                @foreach (var item in SalesOrigins)
-                {
-                    <MudSelectItem Value="@item.Code" />
-                }
-            </MudSelect>
-            
-            <MudSelect Label="Type de trans." @bind-Value="BsktOrderInfo.SalesPoolId">
-                @foreach (var item in SalesPools)
-                {
-                    <MudSelectItem Value="@(item.Code + " - " + item.Name)" />
-                }
-            </MudSelect>
+        <!-- Informations générales -->
+        <MudText Typo="Typo.subtitle1">Informations générales</MudText>
+        <MudGrid Spacing="2">
+            <MudItem xs="12" sm="6">
+                <MudSelect Label="Canal de vente" @bind-Value="BsktOrderInfo.SalesOriginId" FullWidth="true">
+                    @foreach (var item in SalesOrigins)
+                    {
+                        <MudSelectItem Value="@item.Code" />
+                    }
+                </MudSelect>
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudSelect Label="Type de trans." @bind-Value="BsktOrderInfo.SalesPoolId" FullWidth="true">
+                    @foreach (var item in SalesPools)
+                    {
+                        <MudSelectItem Value="@(item.Code + " - " + item.Name)" />
+                    }
+                </MudSelect>
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudField Label="Référence Client">@BsktOrderInfo.PurchOrderFormNum</MudField>
+            </MudItem>
+            <MudItem xs="12" sm="6">
+                <MudField Label="Commande Web">NotImplemented</MudField>
+            </MudItem>
+        </MudGrid>
 
-            <MudField Style="width: 200%;"  Label="Référence Client">@BsktOrderInfo.PurchOrderFormNum</MudField>
-            <MudField Style="width: 200%;"  Label="Commande Web">NotImplemented</MudField>
-            
-            
-            <!-- Notes de RC -->
-            <MudText Typo="Typo.subtitle1">Notes de RC</MudText>
-            <MudTextField Placeholder="Notes de RC" Lines="6" Value="@BsktOrderInfo.Note" Style="width: 250%;"/>
+        <!-- Notes de RC -->
+        <MudText Typo="Typo.subtitle1">Notes de RC</MudText>
+        <MudTextField Placeholder="Notes de RC" Lines="6" Value="@BsktOrderInfo.Note" FullWidth="true" />
+    </MudStack>
+</MudContainer>
 
-        </MudStack>
 
 @*
 <div class="col-md-3" style="padding: 5px;">
