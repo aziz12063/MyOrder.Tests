@@ -8,53 +8,28 @@ namespace MyOrder
         {
             PaletteLight = new PaletteLight
             {
-                Primary = "#3B82F6FF",
-                Secondary = "#6366F1FF",
-                Tertiary = "#10B981FF",
-                Info = "#2563EBFF",
-                Success = "#059669FF",
-                Warning = "#F59E0BFF",
-                Error = "#EF4444FF",
-                Background = "#F9FAFBFF",
-                BackgroundGray = "#E0E0E0FF",
-                Surface = "#FFFFFFFF",
-                DrawerBackground = "#F3F4F6FF",
-                AppbarBackground = "#1E293BFF",
-                AppbarText = "#FFFFFFFF",
-                TextPrimary = "#111827FF",
-                TextSecondary = "#6B7280FF",
-                ActionDefault = "#3B82F6FF",
-                ActionDisabled = "#9CA3AFFF",
-                ActionDisabledBackground = "#E5E7EBFF",
-                LinesDefault = "#E0E0E0FF",
-                TableLines = "#E0E0E0FF",
-                OverlayLight = "#FFFFFFB3",
-                OverlayDark = "#00000080"
-            },
-            PaletteDark = new PaletteDark
-            {
-                Primary = "#90CAF9FF",
-                Secondary = "#9FA8DAFF",
-                Tertiary = "#26A69AFF",
-                Info = "#42A5F5FF",
-                Success = "#66BB6AFF",
-                Warning = "#FFA726FF",
-                Error = "#EF5350FF",
-                Background = "#121212FF",
-                BackgroundGray = "#1E1E1EFF",
-                Surface = "#1E1E1EFF",
-                DrawerBackground = "#1E1E1EFF",
-                AppbarBackground = "#212121FF",
-                AppbarText = "#FFFFFFFF",
-                TextPrimary = "#E0E0E0FF",
-                TextSecondary = "#B0BEC5FF",
-                ActionDefault = "#90CAF9FF",
-                ActionDisabled = "#616161FF",
-                ActionDisabledBackground = "#2C2C2CFF",
-                LinesDefault = "#2C2C2CFF",
-                TableLines = "#2C2C2CFF",
-                OverlayLight = "#FFFFFF1A",
-                OverlayDark = "#00000080"
+                Primary = "#1976D2",  // Soft Blue
+                Secondary = "#FF4081",  // Pink Accent
+                Tertiary = "#00BFA5",  // Teal
+                Info = "#2196F3",  // Info Blue
+                Success = "#4CAF50",  // Green
+                Warning = "#FF9800",  // Orange
+                Error = "#F44336",  // Red
+                Background = "#F5F5F5",  // Light Grey
+                BackgroundGray = "#E0E0E0",
+                Surface = "#FFFFFF",  // White
+                DrawerBackground = "#FFFFFF",
+                AppbarBackground = "#FFFFFF",  // White Appbar
+                AppbarText = "#1976D2",  // Soft Blue for Appbar Text
+                TextPrimary = "#212121",  // Dark Grey
+                TextSecondary = "#757575",  // Medium Grey
+                ActionDefault = "#1976D2",
+                ActionDisabled = "#BDBDBD",
+                ActionDisabledBackground = "#E0E0E0",
+                LinesDefault = "#E0E0E0",
+                TableLines = "#E0E0E0",
+                OverlayLight = "rgba(255, 255, 255, 0.7)",
+                OverlayDark = "rgba(0, 0, 0, 0.5)"
             },
             Typography = new Typography
             {
@@ -66,19 +41,42 @@ namespace MyOrder
                     LineHeight = 1.5,
                     LetterSpacing = "0.00938em",
                 },
-                H1 = new H1
+                H6 = new H6
                 {
                     FontFamily = new[] { "Roboto", "Arial", "sans-serif" },
-                    FontSize = "6rem",
-                    FontWeight = 300,
-                    LineHeight = 1.167,
-                    LetterSpacing = "-0.01562em",
+                    FontSize = "1.25rem",
+                    FontWeight = 500,
+                    LineHeight = 1.6,
+                    LetterSpacing = "0.0075em",
                 },
-                // Define other typography elements similarly...
+                Subtitle1 = new Subtitle1
+                {
+                    FontFamily = new[] { "Roboto", "Arial", "sans-serif" },
+                    FontSize = "1rem",  // Smaller font size
+                    FontWeight = 500,
+                    LineHeight = 1.75,  // Adjust line height for better spacing
+                    LetterSpacing = "0.00938em",
+                },
+                Subtitle2 = new Subtitle2
+                {
+                    FontFamily = new[] { "Roboto", "Arial", "sans-serif" },
+                    FontSize = "0.875rem",
+                    FontWeight = 700,
+                    LineHeight = 1.57,
+                    LetterSpacing = "0.00714em",
+                },
+                Body2 = new Body2
+                {
+                    FontFamily = new[] { "Roboto", "Arial", "sans-serif" },
+                    FontSize = "0.875rem",
+                    FontWeight = 400,
+                    LineHeight = 1.43,
+                    LetterSpacing = "0.01071em",
+                },
             },
             LayoutProperties = new LayoutProperties
             {
-                DefaultBorderRadius = "8px"
+                DefaultBorderRadius = "4px",  // Softer borders
             }
         };
 

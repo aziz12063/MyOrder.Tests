@@ -1,0 +1,19 @@
+
+
+.header-cards-height {
+    height: 770px;
+    display: flex;
+    flex-direction: column;
+}
+
+.header-cards-height-content {
+    flex: 1;
+    padding: 12px;
+}
+
+.compact-client-details {
+    padding: 4px 8px;
+    font-size: 0.875rem;
+    background-color: #f5f5f5; 
+    border-radius: 4px;
+}
