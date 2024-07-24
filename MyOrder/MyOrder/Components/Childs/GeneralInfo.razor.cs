@@ -14,7 +14,7 @@ namespace MyOrder.Components.Childs
 
         protected override async Task LoadDataAsync()
         {
-            BsktInfo = await BasketRepository.GetBasketGeneralInfoAsync(GlobalParms.TEST_BASKET_ID);
+            BsktInfo = await BasketRepository.GetBasketGeneralInfoAsync(GlobalParms.TestBasketId);
         }
     }
 }

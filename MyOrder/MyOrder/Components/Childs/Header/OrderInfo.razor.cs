@@ -10,26 +10,10 @@ namespace MyOrder.Components.Childs.Header
         [Inject]
         public IBasketRepository BasketRepository { get; set; }
         private BasketOrderInfoDto BsktOrderInfo { get; set; } = new BasketOrderInfoDto();
-        private List<SalesOriginDto> SalesOrigins { get; set; } = new();
-        private List<SalesPoolsDto> SalesPools { get; set; } = new();
-        private string SelectedClient
-        {
-            get
-            {
-                return BsktOrderInfo.Account.AccountNum + " - " + BsktOrderInfo.Account.Name + " - " + BsktOrderInfo.Account.ZipCode;
-            }
-        }
-        private string SelectedContact
-        {
-            get
-            {
-                return BsktOrderInfo.Contact.FirstName + " - " + BsktOrderInfo.Contact.LastName;
-            }
-            set
-            {
-
-            }
-        }
+        private List<SalesOriginDto> SalesOrigins { get; set; } = [];
+        private List<SalesPoolsDto> SalesPools { get; set; } = [];
+        private string SelectedClient => BsktOrderInfo.Account.AccountNum + " - " + BsktOrderInfo.Account.Name + " - " + BsktOrderInfo.Account.ZipCode;
+        private string SelectedContact => BsktOrderInfo.Contact.FirstName + " - " + BsktOrderInfo.Contact.LastName;
 
         protected override async Task LoadDataAsync()
         {
@@ -45,18 +29,18 @@ namespace MyOrder.Components.Childs.Header
 
         private async Task LoadBasket()
         {
-            BsktOrderInfo = await BasketRepository.GetBasketOrderInfoAsync(GlobalParms.TEST_BASKET_ID);
+            BsktOrderInfo = await BasketRepository.GetBasketOrderInfoAsync(GlobalParms.TestBasketId);
         }
 
         private async Task LoadSalesOrigins()
         {
 
-            SalesOrigins = await BasketRepository.GetSalesOriginsAsync(GlobalParms.TEST_BASKET_ID);
+            SalesOrigins = await BasketRepository.GetSalesOriginsAsync(GlobalParms.TestBasketId);
         }
         private async Task LoadSalesPools()
         {
 
-            SalesPools = await BasketRepository.GetSalesPoolAsync(GlobalParms.TEST_BASKET_ID);
+            SalesPools = await BasketRepository.GetSalesPoolAsync(GlobalParms.TestBasketId);
         }
     }
 }
