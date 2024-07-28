@@ -7,9 +7,7 @@ namespace MyOrder.Components.Childs.Header
 {
     public partial class OrderInfo : LoadableComponent
     {
-        [Inject]
-        public IBasketRepository BasketRepository { get; set; }
-        private BasketOrderInfoDto BsktOrderInfo { get; set; } = new BasketOrderInfoDto();
+        private BasketOrderInfoDto BsktOrderInfo { get; set; } = new ();
         private List<SalesOriginDto> SalesOrigins { get; set; } = [];
         private List<SalesPoolsDto> SalesPools { get; set; } = [];
         private string SelectedClient 

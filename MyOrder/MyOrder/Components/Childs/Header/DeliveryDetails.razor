@@ -1,4 +1,61 @@
-﻿<p>Delivery Details</p>
+﻿@inherits LoadableComponent
+
+<MudContainer Class="pa-0">
+    <MudStack Spacing="5">
+        <MudText Typo="Typo.h6" Color="Color.Secondary">Livraison</MudText>
+
+        <!-- Contact Client -->
+        <MudStack Spacing="2">
+            <MudStack Row="true" Spacing="1" StretchItems="StretchItems.Start">
+                <MudText Typo="Typo.subtitle1">Adresse de livraison</MudText>
+                <MudTooltip Text="Chercher client?">
+                    <MudIconButton Icon="@Icons.Material.Filled.Search" Size="Size.Small" />
+                </MudTooltip>
+                <MudTooltip Text="Copier les informations du client">
+                    <MudIconButton Icon="@Icons.Material.Filled.Description" Size="Size.Small" />
+                </MudTooltip>
+                <MudTooltip Text="Salesforce?">
+                    <MudIconButton Icon="@Icons.Material.Filled.Cloud" Size="Size.Small" />
+                </MudTooltip>
+                <MudTooltip Text="Infos?">
+                    <MudIconButton Icon="@Icons.Material.Filled.Info" Size="Size.Small" />
+                </MudTooltip>
+                <MudTooltip Text="Call?">
+                    <MudIconButton Icon="@Icons.Material.Filled.Phone" Size="Size.Small" />
+                </MudTooltip>
+            </MudStack>
+            <MudText Typo="Typo.body2" Class="compact-client-details">@SelectedAccount</MudText>
+
+            <MudSelect Typo="Typo.body2" Label="Contact commandeur" Margin="Margin.Dense" Dense="true" Variant="Variant.Outlined" FullWidth="true" AnchorOrigin="Origin.BottomCenter" T="string" @bind-Value="SelectedContact">
+                <MudSelectItem T="string" Value="@SelectedContact" />
+            </MudSelect>
+
+            <MudGrid Spacing="2">
+                <MudItem xs="12" sm="6">
+                    <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
+                        <MudIcon Icon="@Icons.Material.Filled.Phone" Size="Size.Small" />
+                        <MudText Typo="Typo.body2">@DeliveryInfo.Contact?.Value.Phone</MudText>
+                    </MudStack>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
+                        <MudIcon Icon="@Icons.Material.Filled.SpeakerPhone" Size="Size.Small" />
+                        <MudText Typo="Typo.body2">@DeliveryInfo.Contact?.Value.CellularPhone</MudText>
+                    </MudStack>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
+                        <MudIcon Icon="@Icons.Material.Filled.Email" Size="Size.Small" />
+                        <MudText Typo="Typo.body2">@DeliveryInfo.Contact?.Value.Email</MudText>
+                    </MudStack>
+                </MudItem>
+            </MudGrid>
+        </MudStack>
+        
+
+        <MudTextField Typo="Typo.caption" Label="Notes de RC" Lines="4" Variant="Variant.Outlined" Value="@DeliveryInfo.Note?.Value" FullWidth="true" Margin="Margin.Dense" />
+    </MudStack>
+</MudContainer>
 @* <div class="col-md-3" style="padding: 5px;">
     <RadzenCard class="card-container">
         <ChildContent>

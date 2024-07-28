@@ -1,5 +1,4 @@
 ﻿using MyOrder.Shared.Dtos;
-using MyOrder.Shared.Dtos.BKP;
 using Refit;
 
 namespace MyOrder.Infrastructure.ApiClients
@@ -18,6 +17,9 @@ namespace MyOrder.Infrastructure.ApiClients
 
         [Get("/api/orderContext/{basketId}/salesPools")]
         Task<List<SalesPoolsDto>> GetSalesPoolsAsync(string basketId);
+
+        [Get("/api/orderContext/{basketId}/deliveryInfo")]
+        Task<BasketDeliveryInfoDto> GetBasketDeliveryInfoAsync(string basketId);
 
         //[Get("/api/orderContext/{basketId}/notifications")]
         //Task<IEnumerable<NotificationDto>> GetNotificationsAsync(string basketId);
