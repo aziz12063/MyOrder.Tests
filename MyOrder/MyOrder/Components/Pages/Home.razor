@@ -1,15 +1,29 @@
 ﻿@using MyOrder.Components.Childs.Amounts
 @using MyOrder.Components.Childs.Header
 @using MyOrder.Components.Childs.Lines
+@using MyOrder.Services
 
-@page "/"
+@page "/Basket/{BasketId}"
+@inject BasketService BasketService
 
 <PageTitle>MyOrder</PageTitle>
 
-<MudContainer Class="mt-14 px-14"  MaxWidth="MaxWidth.ExtraLarge">
+<MudContainer Class="mt-14 px-14" MaxWidth="MaxWidth.ExtraLarge">
     <Header />
     <Amounts />
     <Lines />
 </MudContainer>
 
+@code
+{
+    [Parameter]
+    public string? BasketId { get; set; }
 
+    protected override void OnParametersSet()
+    {
+        if(string.IsNullOrWhiteSpace(BasketId))
+            throw new ArgumentNullException(nameof(BasketId)); //Refactor this to a notification
+
+        BasketService.BasketId = BasketId;
+    }
+}

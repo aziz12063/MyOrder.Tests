@@ -22,7 +22,7 @@ namespace MyOrder.Components.Childs.Header
 
         protected override async Task LoadDataAsync()
         {
-            DeliveryInfo = await BasketRepository.GetBasketDeliveryInfoAsync(GlobalParms.TestBasketId);
+            DeliveryInfo = await BasketRepository.GetBasketDeliveryInfoAsync(BasketId);
         }
     }
 }

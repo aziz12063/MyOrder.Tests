@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MyOrder.Infrastructure.Repositories;
+using MyOrder.Services;
 
 namespace MyOrder.Components.Childs.Shared
 {
@@ -12,6 +13,15 @@ namespace MyOrder.Components.Childs.Shared
         {
             get => _basketRepository ?? throw new Exception("Couldn't retrieve the injected property"); 
             init => _basketRepository = value;
+        }
+
+        [Inject]
+        public BasketService BasketService { get; set; }
+
+        protected string BasketId
+        {
+            get => BasketService.BasketId ?? throw new NullReferenceException("Couldn't retrieve BasketId"); 
+            set => BasketService.BasketId = value;
         }
 
         protected bool IsLoading { get; private set; } = true;

@@ -5,6 +5,7 @@ using MyOrder.Components;
 using MyOrder.Infrastructure.ApiClients;
 using MyOrder.Infrastructure.Repositories;
 using MyOrder.Infrastructure.Resilience;
+using MyOrder.Services;
 using Refit;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
+
+builder.Services.AddScoped<BasketService>();
 
 // Api Client, and Resilience Policies
 builder.Services.AddRefitClient<IBasketApiClient>()
@@ -26,6 +29,7 @@ builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 
 //MudBlazor and UI elements
 builder.Services.AddMudServices();
+
 
 
 var app = builder.Build();

@@ -37,18 +37,18 @@ namespace MyOrder.Components.Childs.Header
 
         private async Task LoadBasket()
         {
-            BsktOrderInfo = await BasketRepository.GetBasketOrderInfoAsync(GlobalParms.TestBasketId);
+            BsktOrderInfo = await BasketRepository.GetBasketOrderInfoAsync(BasketId);
         }
 
         private async Task LoadSalesOrigins()
         {
 
-            SalesOrigins = await BasketRepository.GetSalesOriginsAsync(GlobalParms.TestBasketId);
+            SalesOrigins = await BasketRepository.GetSalesOriginsAsync(BasketId);
         }
         private async Task LoadSalesPools()
         {
 
-            SalesPools = await BasketRepository.GetSalesPoolAsync(GlobalParms.TestBasketId);
+            SalesPools = await BasketRepository.GetSalesPoolAsync(BasketId);
         }
     }
 }

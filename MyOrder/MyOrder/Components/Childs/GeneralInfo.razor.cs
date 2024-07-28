@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
-using MyOrder.Components.Childs.Shared;
-using MyOrder.Infrastructure.Repositories;
+﻿using MyOrder.Components.Childs.Shared;
 using MyOrder.Shared.Dtos;
 
 
@@ -8,13 +6,11 @@ namespace MyOrder.Components.Childs
 {
     public partial class GeneralInfo : LoadableComponent
     {
-        [Inject]
-        public IBasketRepository BasketRepository { get; set; }
-        private BasketGeneralInfoDto BsktInfo { get; set; } = new BasketGeneralInfoDto();
+        private BasketGeneralInfoDto BsktInfo { get; set; } = new ();
 
         protected override async Task LoadDataAsync()
         {
-            BsktInfo = await BasketRepository.GetBasketGeneralInfoAsync(GlobalParms.TestBasketId);
+            BsktInfo = await BasketRepository.GetBasketGeneralInfoAsync(BasketId);
         }
     }
 }
