@@ -7,10 +7,10 @@ namespace MyOrder.Infrastructure.ApiClients
     public interface IBasketApiClient
     {
 
-        [Get("/api/orderContext/{basketId}/basketGeneralInfo")]
+        [Get("/api/orderContext/{basketId}/generalInfo")]
         Task<BasketGeneralInfoDto> GetBasketGeneralInfoAsync(string basketId);
 
-        [Get("/api/orderContext/{basketId}/basketOrderInfo")]
+        [Get("/api/orderContext/{basketId}/orderInfo")]
         Task<BasketOrderInfoDto> GetBasketOrderInfoAsync(string basketId);
 
         [Get("/api/orderContext/{basketId}/salesOrigins")]

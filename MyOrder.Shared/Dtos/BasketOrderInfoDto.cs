@@ -1,28 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
 
 namespace MyOrder.Shared.Dtos
 {
     public class BasketOrderInfoDto
     {
-        public AccountDto Account { get; set; } = new();
-        public ContactDto Contact { get; set; } = new();
-        public string? NafCode { get; set; }
-        public string? ActivityArea { get; set; }
-        public List<string> Tags { get; set; } = [];
-        public string? SalesOriginId { get; set; }
-        public string? WebOriginId { get; set; }
-        public string? SalesPoolId { get; set; }
-        public string? PurchOrderFormNum { get; set; }
-        public string? Note { get; set; }
+        public Field<AccountDto> Account { get; set; } = new() { Value = new AccountDto() };
+        public Field<ContactDto> Contact { get; set; } = new() { Value = new ContactDto() };
+        public Field<string> ActivityArea { get; set; } = new() { Value = string.Empty };
+        public List<string> CustomerTags { get; set; } = [];
+        public Field<string> SalesOriginId { get; set; } = new() { Value = string.Empty };
+        public Field<string> WebOriginId { get; set; } = new() { Value = string.Empty };
+        public Field<string> SalesPoolId { get; set; } = new() { Value = string.Empty };
+        public Field<string> CustomerOrderRef { get; set; } = new() { Value = string.Empty };
+        public Field<string> RelatedLink { get; set; } = new() { Value = string.Empty };
+        public Field<string> Note { get; set; } = new() { Value = string.Empty };
     }
 
     public class AccountDto
     {
-        public string? AccountNum { get; set; }
+        public string? AccountId { get; set; }
         public string? Name { get; set; }
         public string? Recipient { get; set; }
         public string? Building { get; set; }

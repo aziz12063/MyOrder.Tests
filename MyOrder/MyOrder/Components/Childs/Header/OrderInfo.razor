@@ -34,19 +34,19 @@
                 <MudItem xs="12" sm="6">
                     <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
                         <MudIcon Icon="@Icons.Material.Filled.Phone" Size="Size.Small" />
-                        <MudText Typo="Typo.body2">@BsktOrderInfo.Contact.Phone</MudText>
+                        <MudText Typo="Typo.body2">@BsktOrderInfo.Contact.Value.Phone</MudText>
                     </MudStack>
                 </MudItem>
                 <MudItem xs="12" sm="6">
                     <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
                         <MudIcon Icon="@Icons.Material.Filled.SpeakerPhone" Size="Size.Small" />
-                        <MudText Typo="Typo.body2">@BsktOrderInfo.Contact.CellularPhone</MudText>
+                        <MudText Typo="Typo.body2">@BsktOrderInfo.Contact.Value.CellularPhone</MudText>
                     </MudStack>
                 </MudItem>
                 <MudItem xs="12">
                     <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
                         <MudIcon Icon="@Icons.Material.Filled.Email" Size="Size.Small" />
-                        <MudText Typo="Typo.body2">@BsktOrderInfo.Contact.Email</MudText>
+                        <MudText Typo="Typo.body2">@BsktOrderInfo.Contact.Value.Email</MudText>
                     </MudStack>
                 </MudItem>
             </MudGrid>
@@ -54,7 +54,7 @@
         <!-- Secteur d'activité -->
         <MudStack Spacing="2">
             <MudText Typo="Typo.subtitle1">Secteur d'activité</MudText>
-            <MudText Typo="Typo.body1">@BsktOrderInfo.ActivityArea</MudText>
+            <MudText Typo="Typo.body1">@BsktOrderInfo.ActivityArea.Value</MudText>
             <MudStack Row="true" Spacing="3" Justify="Justify.FlexStart">
                 <MudTooltip Text="Info tooltip">
                     <MudIcon Color="Color.Warning" Icon="@Icons.Material.Filled.Info" Size="Size.Large" />
@@ -76,7 +76,7 @@
             <MudText Typo="Typo.subtitle1">Informations générales</MudText>
             <MudGrid Spacing="2">
                 <MudItem xs="12" sm="12">
-                    <MudSelect Typo="Typo.body2" Label="Canal de vente" Margin="Margin.Dense" Dense="true" @bind-Value="BsktOrderInfo.SalesOriginId" FullWidth="true">
+                    <MudSelect Typo="Typo.body2" Label="Canal de vente" Margin="Margin.Dense" Dense="true" @bind-Value="BsktOrderInfo.SalesOriginId.Value" FullWidth="true">
                         @foreach (var item in SalesOrigins)
                         {
                             <MudSelectItem Value="@item.Code" />
@@ -84,7 +84,7 @@
                     </MudSelect>
                 </MudItem>
                 <MudItem xs="12" sm="12">
-                    <MudSelect Typo="Typo.body2" Label="Type de trans." Margin="Margin.Dense" Dense="true" @bind-Value="BsktOrderInfo.SalesPoolId" FullWidth="true">
+                    <MudSelect Typo="Typo.body2" Label="Type de trans." Margin="Margin.Dense" Dense="true" @bind-Value="BsktOrderInfo.SalesPoolId.Value" FullWidth="true">
                         @foreach (var item in SalesPools)
                         {
                             <MudSelectItem Value="@(item.Code + " - " + item.Name)" />
@@ -92,7 +92,7 @@
                     </MudSelect>
                 </MudItem>
                 <MudItem xs="12" sm="12">
-                    <MudTextField Label="Référence Client" Typo="Typo.body2" Margin="Margin.Dense" @bind-Value="BsktOrderInfo.PurchOrderFormNum" />
+                    <MudTextField T="string" Label="Référence Client" Typo="Typo.body2" Margin="Margin.Dense" />
                 </MudItem>
                 <MudItem xs="12" sm="12">
                     <MudTextField Label="Commande Web" Typo="Typo.body2" Margin="Margin.Dense" Variant="Variant.Text" Value='"Not Implemented"' />
@@ -101,67 +101,6 @@
         </MudStack>
         <!-- Notes de RC -->
 
-        <MudTextField Typo="Typo.caption" Label="Notes de RC" Lines="4" Variant="Variant.Outlined" Value="@BsktOrderInfo.Note" FullWidth="true" Margin="Margin.Dense" />
+        <MudTextField Typo="Typo.caption" Label="Notes de RC" Lines="4" Variant="Variant.Outlined" Value="@BsktOrderInfo.Note.Value" FullWidth="true" Margin="Margin.Dense" />
     </MudStack>
 </MudContainer>
-
-@*
-<div class="col-md-3" style="padding: 5px;">
-    <RadzenCard class="card-container">
-        <ChildContent>
-            <h4 class="card-title">Commande</h4>
-            <RadzenFieldset Text="Contact client" Style="margin-bottom: 20px;">
-                <div class="fieldset-content">
-                    <label class="field-label">Select client</label>
-                    <div class="icon-container">
-                        <RadzenDropDown @bind-Value="BsktOrderInfo.Account.AccountNum" Placeholder="Select client" TextProperty="Name" ValueProperty="Id" Style="flex-grow: 1;" />
-                        <RadzenIcon Icon="search" class="icon" />
-                        <RadzenIcon Icon="cloud" class="icon" />
-                        <RadzenIcon Icon="phone" class="icon" />
-                    </div>
-                </div>
-                <div class="fieldset-content">
-                    <label class="field-label">Client Name</label>
-                    <RadzenTextBox @bind-Value="BsktOrderInfo.Account.Name" Placeholder="Name" Style="width: 100%;" />
-                    <div class="button-container">
-                        <RadzenButton Icon="edit" Style="margin-right: 10px;" />
-                        <RadzenButton Icon="delete" />
-                    </div>
-                </div>
-                <div class="fieldset-content">
-                    <label class="field-label">Client Phone</label>
-                    <RadzenTextBox @bind-Value="BsktOrderInfo.Account.Phone" Placeholder="Phone" Style="width: 100%;" />
-                </div>
-                <div class="fieldset-content">
-                    <label class="field-label">Client Email</label>
-                    <RadzenTextBox @bind-Value="BsktOrderInfo.Account.Email" Placeholder="Email" Style="width: 100%;" />
-                </div>
-            </RadzenFieldset>
-            <RadzenFieldset Text="Secteur d'activité" Style="margin-bottom: 20px;">
-                <p>Commerce de gros (commerce interentreprises) de produits pha</p>
-            </RadzenFieldset>
-            <RadzenFieldset Text="Informations générales">
-                <div class="fieldset-content">
-                    <label class="field-label">Canal de vente</label>
-                    <RadzenDropDown @bind-Value="BsktOrderInfo.SalesOriginId" Placeholder="Select sales channel" Style="width: 100%;" />
-                </div>
-                <div class="fieldset-content">
-                    <label class="field-label">Type de trans.</label>
-                    <RadzenDropDown @bind-Value="BsktOrderInfo.SalesPoolId" Placeholder="Select transaction type" Style="width: 100%;" />
-                </div>
-                <div class="fieldset-content">
-                    <label class="field-label">Référence Client</label>
-                    <RadzenTextBox @bind-Value="BsktOrderInfo.PurchOrderFormNum" Placeholder="Client Reference" Style="width: 100%;" />
-                </div>
-                <div class="fieldset-content">
-                    <label class="field-label">Commande Web</label>
-                    <RadzenTextBox @bind-Value="BsktOrderInfo.WebOriginId" Placeholder="Web Order Reference" Style="width: 100%;" />
-                </div>
-                <div>
-                    <label class="field-label">Notes de RC</label>
-                    <RadzenTextBox @bind-Value="BsktOrderInfo.Note" Placeholder="Notes" Multiline="true" Rows="4" Style="width: 100%;" />
-                </div>
-            </RadzenFieldset>
-        </ChildContent>
-    </RadzenCard>
-</div> *@

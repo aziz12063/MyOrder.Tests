@@ -16,6 +16,7 @@ namespace MyOrder.Components.Childs.Shared
             catch (Exception ex)
             {
                 ErrorMessage = $"An error occurred: {ex.Message}";
+                throw;
             }
             finally
             {

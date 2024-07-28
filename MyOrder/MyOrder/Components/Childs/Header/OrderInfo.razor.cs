@@ -12,8 +12,18 @@ namespace MyOrder.Components.Childs.Header
         private BasketOrderInfoDto BsktOrderInfo { get; set; } = new BasketOrderInfoDto();
         private List<SalesOriginDto> SalesOrigins { get; set; } = [];
         private List<SalesPoolsDto> SalesPools { get; set; } = [];
-        private string SelectedClient => BsktOrderInfo.Account.AccountNum + " - " + BsktOrderInfo.Account.Name + " - " + BsktOrderInfo.Account.ZipCode;
-        private string SelectedContact => BsktOrderInfo.Contact.FirstName + " - " + BsktOrderInfo.Contact.LastName;
+        private string SelectedClient 
+        {
+            get => BsktOrderInfo.Account.Value?.AccountId + " - " + BsktOrderInfo.Account.Value?.Name + " - " +
+                   BsktOrderInfo.Account.Value?.ZipCode;
+            set => throw new NotImplementedException();
+        }
+
+        private string SelectedContact
+        {
+            get => BsktOrderInfo.Contact.Value?.FirstName + " - " + BsktOrderInfo.Contact.Value?.LastName;
+            set => throw new NotImplementedException();
+        }
 
         protected override async Task LoadDataAsync()
         {
