@@ -1,4 +1,6 @@
-﻿@inherits LoadableComponent
+﻿@using MyOrder.Store.OrderInfoUseCase
+
+@inherits BaseFluxorComponent<OrderInfoState, FetchOrderInfoAction>
 
 <MudContainer Class="pa-0">
     <MudStack Spacing="5">
@@ -34,19 +36,19 @@
                 <MudItem xs="12" sm="6">
                     <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
                         <MudIcon Icon="@Icons.Material.Filled.Phone" Size="Size.Small" />
-                        <MudText Typo="Typo.body2">@BsktOrderInfo.Contact.Value.Phone</MudText>
+                        <MudText Typo="Typo.body2">@OrderInfoState.Value.BasketOrderInfo.Contact.Value.Phone</MudText>
                     </MudStack>
                 </MudItem>
                 <MudItem xs="12" sm="6">
                     <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
                         <MudIcon Icon="@Icons.Material.Filled.SpeakerPhone" Size="Size.Small" />
-                        <MudText Typo="Typo.body2">@BsktOrderInfo.Contact.Value.CellularPhone</MudText>
+                        <MudText Typo="Typo.body2">@OrderInfoState.Value.BasketOrderInfo.Contact.Value.CellularPhone</MudText>
                     </MudStack>
                 </MudItem>
                 <MudItem xs="12">
                     <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
                         <MudIcon Icon="@Icons.Material.Filled.Email" Size="Size.Small" />
-                        <MudText Typo="Typo.body2">@BsktOrderInfo.Contact.Value.Email</MudText>
+                        <MudText Typo="Typo.body2">@OrderInfoState.Value.BasketOrderInfo.Contact.Value.Email</MudText>
                     </MudStack>
                 </MudItem>
             </MudGrid>
@@ -54,7 +56,7 @@
         <!-- Secteur d'activité -->
         <MudStack Spacing="2">
             <MudText Typo="Typo.subtitle1">Secteur d'activité</MudText>
-            <MudText Typo="Typo.body1">@BsktOrderInfo.ActivityArea.Value</MudText>
+            <MudText Typo="Typo.body1">@OrderInfoState.Value.BasketOrderInfo.ActivityArea.Value</MudText>
             <MudStack Row="true" Spacing="3" Justify="Justify.FlexStart">
                 <MudTooltip Text="Info tooltip">
                     <MudIcon Color="Color.Warning" Icon="@Icons.Material.Filled.Info" Size="Size.Large" />
@@ -76,18 +78,18 @@
             <MudText Typo="Typo.subtitle1">Informations générales</MudText>
             <MudGrid Spacing="2">
                 <MudItem xs="12" sm="12">
-                    <MudSelect Typo="Typo.body2" Label="Canal de vente" Margin="Margin.Dense" Dense="true" @bind-Value="BsktOrderInfo.SalesOriginId.Value" FullWidth="true">
-                        @foreach (var item in SalesOrigins)
+                    <MudSelect Typo="Typo.body2" Label="Canal de vente" Margin="Margin.Dense" Dense="true" @bind-Value="OrderInfoState.Value.BasketOrderInfo.SalesOriginId.Value" FullWidth="true">
+                        @foreach (var item in OrderInfoState.Value.SalesOrigins)
                         {
-                            <MudSelectItem Value="@item.Code" />
+                            <MudSelectItem Value="@item.Value" />
                         }
                     </MudSelect>
                 </MudItem>
                 <MudItem xs="12" sm="12">
-                    <MudSelect Typo="Typo.body2" Label="Type de trans." Margin="Margin.Dense" Dense="true" @bind-Value="BsktOrderInfo.SalesPoolId.Value" FullWidth="true">
-                        @foreach (var item in SalesPools)
+                    <MudSelect Typo="Typo.body2" Label="Type de trans." Margin="Margin.Dense" Dense="true" @bind-Value="OrderInfoState.Value.BasketOrderInfo.SalesPoolId.Value" FullWidth="true">
+                        @foreach (var item in OrderInfoState.Value.SalesPools)
                         {
-                            <MudSelectItem Value="@(item.Code + " - " + item.Name)" />
+                            <MudSelectItem Value="@(item.Value + " - " + item.Description)" />
                         }
                     </MudSelect>
                 </MudItem>
@@ -101,6 +103,6 @@
         </MudStack>
         <!-- Notes de RC -->
 
-        <MudTextField Typo="Typo.caption" Label="Notes de RC" Lines="4" Variant="Variant.Outlined" Value="@BsktOrderInfo.Note.Value" FullWidth="true" Margin="Margin.Dense" />
+        <MudTextField Typo="Typo.caption" Label="Notes de RC" Lines="4" Variant="Variant.Outlined" Value="@OrderInfoState.Value.BasketOrderInfo.Note.Value" FullWidth="true" Margin="Margin.Dense" />
     </MudStack>
 </MudContainer>

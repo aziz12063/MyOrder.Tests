@@ -8,8 +8,8 @@ namespace MyOrder.Shared.Dtos
 {
     public class BasketDeliveryInfoDto
     {
-        public Field<AccountDto?>? Account { get; set; }
-        public Field<ContactDto?>? Contact { get; set; }
+        public Field<AccountDto>? Account { get; set; }
+        public Field<ContactDto>? Contact { get; set; }
         public Field<string>? DeliveryMode { get; set; }
         public Field<bool?>? CompleteDelivery { get; set; }
         public Field<string?>? ImperativeDate { get; set; }

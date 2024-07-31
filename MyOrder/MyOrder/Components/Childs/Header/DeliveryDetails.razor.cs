@@ -3,7 +3,7 @@ using MyOrder.Shared.Dtos;
 
 namespace MyOrder.Components.Childs.Header
 {
-    public partial class DeliveryDetails : LoadableComponent
+    public partial class DeliveryDetails
     {
         public BasketDeliveryInfoDto DeliveryInfo { get; set; } = new();
 
@@ -20,9 +20,9 @@ namespace MyOrder.Components.Childs.Header
             set => throw new NotImplementedException();
         }
 
-        protected override async Task LoadDataAsync()
-        {
-            DeliveryInfo = await BasketRepository.GetBasketDeliveryInfoAsync(BasketId);
-        }
+        //protected override async Task LoadDataAsync()
+        //{
+        //    DeliveryInfo = await BasketRepository.GetBasketDeliveryInfoAsync(BasketId);
+        //}
     }
 }

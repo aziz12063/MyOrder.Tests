@@ -10,8 +10,14 @@ public interface IBasketRepository
     Task<List<SalesOriginDto>> GetSalesOriginsAsync(string basketId);
     Task<List<SalesPoolsDto>> GetSalesPoolAsync(string basketId);
 
+    //Prices info section
+    Task<BasketPricesInfoDto> GetBasketPricesInfoAsync(string basketId);
+
     //Delivery section
     Task<BasketDeliveryInfoDto> GetBasketDeliveryInfoAsync(string basketId);
+
+    //Procedure Call
+    Task<ProcedureCallResponseDto> PostProcedureCallAsync(string basketId, List<string> procedureCall);
 
 
     //Task<IEnumerable<NotificationDto>> GetNotificationsAsync(string basketId);

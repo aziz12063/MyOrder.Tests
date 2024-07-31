@@ -1,10 +1,11 @@
-@inherits LoadableComponent
+@using MyOrder.Store.GeneralInfoUseCase
+@inherits BaseFluxorComponent<GeneralInfoState, FetchGeneralInfoAction>
 
 <MudStack Class="pl-16" Spacing="2">
     <MudText Typo="Typo.body1" Class="d-flex">
-        <b>@BsktInfo.OrderType @BsktInfo.OrderId [@BsktInfo.OrderStatus]</b>
+        <b>@State.Value.GeneralInfo.OrderType @State.Value.GeneralInfo.OrderId [@State.Value.GeneralInfo.OrderStatus]</b>
     </MudText>
     <MudText Typo="Typo.body2" Class="d-flex">
-        @BsktInfo.OrderDate - UserNameNotImplemented
+        @State.Value.GeneralInfo.OrderDate - UserNameNotImplemented
     </MudText>
 </MudStack>

@@ -8,7 +8,7 @@ namespace MyOrder.Shared.Dtos
 {
     public class SalesPoolsDto
     {
-        public string? Code { get; set; }
-        public string? Name { get; set; }
+        public string Description { get; set; } = string.Empty;
+        public string? Value { get; set; } = string.Empty;
     }
 }

@@ -37,10 +37,22 @@ public class BasketRepository(IBasketApiClient apiClient, ILogger<BasketReposito
         return await apiClient.GetSalesPoolsAsync(basketId);
     }
 
+    public async Task<BasketPricesInfoDto> GetBasketPricesInfoAsync(string basketId)
+    {  
+        logger.LogInformation("Fetching basket prices info for {BasketId} from repository", basketId);
+        return await apiClient.GetBasketPricesInfoAsync(basketId);
+    }
+
     public async Task<BasketDeliveryInfoDto> GetBasketDeliveryInfoAsync(string basketId)
     {
         logger.LogInformation("Fetching basket delivery info for {BasketId} from repository", basketId);
         return await apiClient.GetBasketDeliveryInfoAsync(basketId);
+    }
+
+    public async Task<ProcedureCallResponseDto> PostProcedureCallAsync(string basketId, List<string> procedureCall)
+    {
+        logger.LogInformation("Posting procedure call : \n{procedureCall} \nfor {BasketId} to repository", string.Join("\n", procedureCall), basketId);
+        return await apiClient.PostProcedureCallAsync(basketId, procedureCall);
     }
 
     /*

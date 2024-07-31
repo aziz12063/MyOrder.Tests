@@ -1,3 +1,5 @@
+using Fluxor;
+using Fluxor.Blazor.Web.ReduxDevTools;
 using MudBlazor;
 using MudBlazor.Services;
 using MyOrder;
@@ -22,6 +24,14 @@ builder.Services.AddRefitClient<IBasketApiClient>()
     .ConfigureHttpClient(c => c.BaseAddress = new Uri("http://aliasiisq:8080"))
     .AddPolicyHandler(ResiliencePolicies.GetRetryPolicy())
     .AddPolicyHandler(ResiliencePolicies.GetCircuitBreakerPolicy());
+
+//Fluxor
+builder.Services.AddFluxor(options =>
+{
+    options.ScanAssemblies(typeof(Program).Assembly);
+    if(builder.Environment.IsDevelopment())
+        options.UseReduxDevTools();
+});
 
 
 // Repositories

@@ -1,16 +1,17 @@
-﻿using MyOrder.Components.Childs.Shared;
+﻿using Fluxor;
+using Microsoft.AspNetCore.Components;
+using MyOrder.Components.Childs.Shared;
 using MyOrder.Shared.Dtos;
+using MyOrder.Store.GeneralInfoUseCase;
 
 
 namespace MyOrder.Components.Childs
 {
-    public partial class GeneralInfo : LoadableComponent
+    public partial class GeneralInfo : BaseFluxorComponent<GeneralInfoState, FetchGeneralInfoAction>
     {
-        private BasketGeneralInfoDto BsktInfo { get; set; } = new ();
-
-        protected override async Task LoadDataAsync()
+        protected override FetchGeneralInfoAction CreateFetchAction(string basketId)
         {
-            BsktInfo = await BasketRepository.GetBasketGeneralInfoAsync(BasketId);
+            return new FetchGeneralInfoAction(basketId);
         }
     }
 }

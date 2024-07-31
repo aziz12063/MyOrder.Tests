@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace MyOrder.Shared.Dtos
+﻿namespace MyOrder.Shared.Dtos
 {
     public class BasketOrderInfoDto
     {
@@ -14,17 +12,5 @@ namespace MyOrder.Shared.Dtos
         public Field<string> CustomerOrderRef { get; set; } = new() { Value = string.Empty };
         public Field<string> RelatedLink { get; set; } = new() { Value = string.Empty };
         public Field<string> Note { get; set; } = new() { Value = string.Empty };
-    }
-
-
-    public class ContactDto
-    {
-        public string? ContactId { get; set; }
-        public string? SocialTitle { get; set; }
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
-        public string? Email { get; set; }
-        public string? Phone { get; set; }
-        public string? CellularPhone { get; set; }
     }
 }
