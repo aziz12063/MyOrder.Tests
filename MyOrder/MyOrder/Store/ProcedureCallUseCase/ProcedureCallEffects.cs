@@ -5,6 +5,7 @@ using MyOrder.Store.GeneralInfoUseCase;
 using MyOrder.Store.InvoiceInfoUseCase;
 using MyOrder.Store.OrderInfoUseCase;
 using MyOrder.Store.PricesInfoUseCase;
+using MyOrder.Store.TradeInfoUseCase;
 
 namespace MyOrder.Store.ProcedureCallUseCase;
 
@@ -16,10 +17,9 @@ public class ProcedureCallEffects(IBasketRepository basketRepository, ILogger<Or
             { "orderInfo", (dispatcher, basketId) => dispatcher.Dispatch(new FetchOrderInfoAction(basketId)) },
             { "deliveryInfo", (dispatcher, basketId) => dispatcher.Dispatch(new FetchDeliveryInfoAction(basketId)) },
             { "invoiceInfo", (dispatcher, basketId) => dispatcher.Dispatch(new FetchInvoiceInfoAction(basketId)) },
-            { "tradeInfo", (dispatcher, basketId) => dispatcher.Dispatch(new FetchInvoiceInfoAction(basketId)) },
+            { "tradeInfo", (dispatcher, basketId) => dispatcher.Dispatch(new FetchTradeInfoAction(basketId)) },
             { "pricesInfo", (dispatcher, basketId) => dispatcher.Dispatch(new FetchPricesInfoAction(basketId)) },
             //{ "notifications", dispatcher => dispatcher.Dispatch(new FetchNotificationsAction()) },
-            //{ "invoiceInfo", dispatcher => dispatcher.Dispatch(new FetchInvoiceInfoAction()) }
         };
 
     [EffectMethod]
