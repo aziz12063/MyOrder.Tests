@@ -1,7 +1,6 @@
 ﻿@using MyOrder.Store.OrderInfoUseCase
 
 @inherits BaseFluxorComponent<OrderInfoState, FetchOrderInfoAction>
-
 <MudContainer Class="pa-0">
     <MudStack Spacing="5">
         <MudText Typo="Typo.h6" Color="Color.Secondary">Commande</MudText>
@@ -9,46 +8,92 @@
         <!-- Contact Client -->
         <MudStack Spacing="2">
             <MudStack Row="true" Spacing="1" StretchItems="StretchItems.Start">
-                <MudText Typo="Typo.subtitle1">Contact client</MudText>
-                <MudTooltip Text="Chercher client?">
+                <MudText Typo="Typo.subtitle1">@BasketOrderInfo.Account.Name</MudText>
+                <MudTooltip Text="Chercher client? -Not Implemented">
                     <MudIconButton Icon="@Icons.Material.Filled.Search" Size="Size.Small" />
                 </MudTooltip>
-                <MudTooltip Text="Copier les informations du client">
+                <MudTooltip Text="Copier les informations du client -Not Implemented">
                     <MudIconButton Icon="@Icons.Material.Filled.Description" Size="Size.Small" />
                 </MudTooltip>
-                <MudTooltip Text="Salesforce?">
+                <MudTooltip Text="Salesforce? -Not Implemented">
                     <MudIconButton Icon="@Icons.Material.Filled.Cloud" Size="Size.Small" />
                 </MudTooltip>
-                <MudTooltip Text="Infos?">
+                <MudTooltip Text="Infos? -Not Implemented">
                     <MudIconButton Icon="@Icons.Material.Filled.Info" Size="Size.Small" />
                 </MudTooltip>
-                <MudTooltip Text="Call?">
+                <MudTooltip Text="Call? -Not Implemented">
                     <MudIconButton Icon="@Icons.Material.Filled.Phone" Size="Size.Small" />
                 </MudTooltip>
             </MudStack>
-            <MudText Typo="Typo.body2" Class="compact-client-details">@SelectedClient</MudText>
 
-            <MudSelect Typo="Typo.body2" Label="Contact commandeur" Margin="Margin.Dense" Dense="true" Variant="Variant.Outlined" FullWidth="true" AnchorOrigin="Origin.BottomCenter" T="string" @bind-Value="SelectedContact">
-                <MudSelectItem T="string" Value="@SelectedContact" />
-            </MudSelect>
+            @if (AccountAddress != null && AccountAddress.Any())
+            {
+                <MudTooltip RootStyle="width: 100%;" Duration="1000">
+                    <ChildContent>
+                        <MudText Typo="Typo.body2" Class="compact-client-details">@SelectedClient</MudText>
+                    </ChildContent>
+                    <TooltipContent>
+                        @for (var i = 0; i < AccountAddress.Count - 2; i++)
+                        {
+                            var x = i;
+                            <MudText Typo="Typo.caption">@AccountAddress[x]</MudText>
+                            <br />
+                        }
+                        @if (AccountAddress.Count > 1)
+                        {
+                            <MudText Typo="Typo.caption">@AccountAddress[AccountAddress.Count() - 2]</MudText>
+                            <br />
+                            <MudText Typo="Typo.caption">@AccountAddress.Last()</MudText>
+                        }
+                        else
+                        {
+                            <MudText Typo="Typo.caption">@AccountAddress.Last()</MudText>
+                        }
+                    </TooltipContent>
+                </MudTooltip>
+            }
+            else
+            {
+                <MudText Typo="Typo.body2" Class="compact-client-details">@SelectedClient</MudText>
+            }
+
+            <MudHidden bind-Hidden="@IsHidden(BasketOrderInfo.Contact)">
+                <MudSelect Typo="Typo.body2"
+                           Label="@BasketOrderInfo.Contact.Name"
+                           Margin="Margin.Dense"
+                           Dense="true"
+                           Variant="Variant.Outlined"
+                           FullWidth="true"
+                           AnchorOrigin="Origin.CenterCenter"
+                           Required="@IsRequired(@BasketOrderInfo.Contact)"
+                           ReadOnly="@IsReadOnly(BasketOrderInfo.Contact)"
+                           OnBlur="@OnBlurHandler(UpdateContactProcedureCall(BasketOrderInfo.Contact.ProcedureCall, BasketOrderInfo.Contact.Value?.ContactId))"
+                           T="ContactDto"
+                           @bind-value="@BasketOrderInfo.Contact.Value">
+                    @foreach (var item in @Contacts)
+                    {
+                        <MudSelectItem T="ContactDto" Value="@item">@item</MudSelectItem>
+                    }
+                </MudSelect>
+            </MudHidden>
 
             <MudGrid Spacing="2">
                 <MudItem xs="12" sm="6">
                     <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
                         <MudIcon Icon="@Icons.Material.Filled.Phone" Size="Size.Small" />
-                        <MudText Typo="Typo.body2">@OrderInfoState.Value.BasketOrderInfo.Contact.Value.Phone</MudText>
+                        <MudText Typo="Typo.body2">@BasketOrderInfo.Contact.Value.Phone</MudText>
                     </MudStack>
                 </MudItem>
                 <MudItem xs="12" sm="6">
                     <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
                         <MudIcon Icon="@Icons.Material.Filled.SpeakerPhone" Size="Size.Small" />
-                        <MudText Typo="Typo.body2">@OrderInfoState.Value.BasketOrderInfo.Contact.Value.CellularPhone</MudText>
+                        <MudText Typo="Typo.body2">@BasketOrderInfo.Contact.Value.CellularPhone</MudText>
                     </MudStack>
                 </MudItem>
                 <MudItem xs="12">
                     <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
                         <MudIcon Icon="@Icons.Material.Filled.Email" Size="Size.Small" />
-                        <MudText Typo="Typo.body2">@OrderInfoState.Value.BasketOrderInfo.Contact.Value.Email</MudText>
+                        <MudText Typo="Typo.body2">@BasketOrderInfo.Contact.Value.Email</MudText>
                     </MudStack>
                 </MudItem>
             </MudGrid>
@@ -56,7 +101,7 @@
         <!-- Secteur d'activité -->
         <MudStack Spacing="2">
             <MudText Typo="Typo.subtitle1">Secteur d'activité</MudText>
-            <MudText Typo="Typo.body1">@OrderInfoState.Value.BasketOrderInfo.ActivityArea.Value</MudText>
+            <MudText Typo="Typo.body1">@BasketOrderInfo.ActivityArea.Value</MudText>
             <MudStack Row="true" Spacing="3" Justify="Justify.FlexStart">
                 <MudTooltip Text="Info tooltip">
                     <MudIcon Color="Color.Warning" Icon="@Icons.Material.Filled.Info" Size="Size.Large" />
@@ -78,16 +123,16 @@
             <MudText Typo="Typo.subtitle1">Informations générales</MudText>
             <MudGrid Spacing="2">
                 <MudItem xs="12" sm="12">
-                    <MudSelect Typo="Typo.body2" Label="Canal de vente" Margin="Margin.Dense" Dense="true" @bind-Value="OrderInfoState.Value.BasketOrderInfo.SalesOriginId.Value" FullWidth="true">
-                        @foreach (var item in OrderInfoState.Value.SalesOrigins)
+                    <MudSelect Typo="Typo.body2" Label="Canal de vente" Margin="Margin.Dense" Dense="true" @bind-Value="BasketOrderInfo.SalesOriginId.Value" FullWidth="true">
+                        @foreach (var item in SalesOrigins)
                         {
                             <MudSelectItem Value="@item.Value" />
                         }
                     </MudSelect>
                 </MudItem>
                 <MudItem xs="12" sm="12">
-                    <MudSelect Typo="Typo.body2" Label="Type de trans." Margin="Margin.Dense" Dense="true" @bind-Value="OrderInfoState.Value.BasketOrderInfo.SalesPoolId.Value" FullWidth="true">
-                        @foreach (var item in OrderInfoState.Value.SalesPools)
+                    <MudSelect Typo="Typo.body2" Label="Type de trans." Margin="Margin.Dense" Dense="true" @bind-Value="BasketOrderInfo.SalesPoolId.Value" FullWidth="true">
+                        @foreach (var item in SalesPools)
                         {
                             <MudSelectItem Value="@(item.Value + " - " + item.Description)" />
                         }
@@ -103,6 +148,6 @@
         </MudStack>
         <!-- Notes de RC -->
 
-        <MudTextField Typo="Typo.caption" Label="Notes de RC" Lines="4" Variant="Variant.Outlined" Value="@OrderInfoState.Value.BasketOrderInfo.Note.Value" FullWidth="true" Margin="Margin.Dense" />
+        <MudTextField Typo="Typo.caption" Label="Notes de RC" Lines="4" Variant="Variant.Outlined" Value="@BasketOrderInfo.Note.Value" FullWidth="true" Margin="Margin.Dense" />
     </MudStack>
 </MudContainer>

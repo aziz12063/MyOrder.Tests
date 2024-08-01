@@ -15,6 +15,9 @@ namespace MyOrder.Infrastructure.ApiClients
         [Get("/api/orderContext/{basketId}/orderInfo")]
         Task<BasketOrderInfoDto> GetBasketOrderInfoAsync(string basketId);
 
+        [Get("/api/orderContext/{basketId}/orderByContacts")]
+        Task<List<ContactDto>> GetOrderByContactsAsync(string basketId);
+
         [Get("/api/orderContext/{basketId}/customerTags")]
         Task<List<BasketValueDto>> GetCustomerTagsAsync(string basketId);
 

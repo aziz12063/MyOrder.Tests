@@ -23,6 +23,12 @@ public class BasketRepository(IBasketApiClient apiClient, ILogger<BasketReposito
         return await apiClient.GetBasketOrderInfoAsync(basketId);
     }
 
+    public async Task<List<ContactDto>> GetOrderByContactsAsync(string basketId)
+    {
+        logger.LogInformation("Fetching order by contacts for {BasketId} from repository", basketId);
+        return await apiClient.GetOrderByContactsAsync(basketId);
+    }
+
     public async Task<List<BasketValueDto>> GetCustomerTagsAsync(string basketId)
     {
         logger.LogInformation("Fetching customer tags for {BasketId} from repository", basketId);

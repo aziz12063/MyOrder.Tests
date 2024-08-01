@@ -37,37 +37,38 @@ namespace MyOrder.Components.Childs.Shared
             Dispatcher.Dispatch(CreateFetchAction(basketId));
         }
 
-        protected void OnBlurHandler(Field<object> field)
+        protected bool IsHidden<T>(Field<T> field) => field.Status == "hidden";
+
+        protected bool IsReadOnly<T>(Field<T> field) => field.Status == "readOnly";
+
+        protected bool IsReadWrite<T>(Field<T> field) => field.Status == "readWrite";
+
+        protected bool IsRequired<T>(Field<T> field) => field.Status == "required";
+
+
+        protected virtual EventCallback OnBlurHandler(List<string> procedureCall)
         {
-            // Check if ProcedureCall is null or has less than 4 items
-            if (field.ProcedureCall is null || field.ProcedureCall.Count < 4)
+            if (procedureCall is null || procedureCall.Count < 1)
             {
-                logger.LogWarning("ProcedureCall is either null or has less than 4 items.");
-                return;
+                logger.LogWarning("ProcedureCall is either null or has 0 item.");
+                return EventCallback.Empty;
             }
+
+            logger.LogInformation("OnBlurHandler called for {procedure}", procedureCall);
 
             try
             {
-                // Create a copy of the ProcedureCall list to ensure it's not modified in the process
-                var procedureCall = field.ProcedureCall.ToList();
+                // ToList() to Create a copy of the ProcedureCall list ensuring it's not modified in the process
+                Dispatcher.Dispatch(new PostProcedureCallAction(BasketId, procedureCall.ToList()));
 
-                var lastIndex = procedureCall.Count - 1;
-
-                if (field.Value != null)
-                {
-                    procedureCall[lastIndex] = (string)field.Value;
-
-                    Dispatcher.Dispatch(new PostProcedureCallAction(BasketId, procedureCall));
-                }
-                else
-                {
-                    logger.LogWarning("Field value is null.");
-                }
+                logger.LogWarning("Field value is null.");
             }
             catch (Exception ex)
             {
-                logger.LogError("An error occurred in OnBlurHandler.", ex);
+                logger.LogError("An error occurred in OnBlurHandler. {ex}", ex);
             }
+
+            return EventCallback.Empty;
         }
 
         public void Dispose()

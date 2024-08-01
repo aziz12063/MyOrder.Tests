@@ -9,6 +9,7 @@ public interface IBasketRepository
     //Order Info Section
     //=======================================================================================================
     Task<BasketOrderInfoDto> GetBasketOrderInfoAsync(string basketId);
+    Task<List<ContactDto>> GetOrderByContactsAsync(string basketId);
     Task<List<BasketValueDto>> GetCustomerTagsAsync(string basketId);
     Task<List<SalesOriginDto>> GetSalesOriginsAsync(string basketId);
     Task<List<BasketValueDto>> GetSalesPoolAsync(string basketId);
