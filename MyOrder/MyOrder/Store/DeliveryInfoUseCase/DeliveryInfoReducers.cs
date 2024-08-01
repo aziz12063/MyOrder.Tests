@@ -5,15 +5,11 @@ namespace MyOrder.Store.DeliveryInfoUseCase
     public static class DeliveryInfoReducers
     {
         [ReducerMethod]
-        public static DeliveryInfoState ReduceFetchDeliveryInfoSuccessAction(DeliveryInfoState state, FetchDeliveryInfoSuccessAction action)
-        {
-            return new DeliveryInfoState(action.BasketDeliveryInfo);
-        }
+        public static DeliveryInfoState ReduceFetchDeliveryInfoSuccessAction(DeliveryInfoState state, FetchDeliveryInfoSuccessAction action) =>
+            new (action.BasketDeliveryInfo, action.DeliverToAccounts, action.DeliverToContacts, action.DeliveryModes);
 
         [ReducerMethod]
-        public static DeliveryInfoState ReduceFetchDeliveryInfoFailureAction(DeliveryInfoState state, FetchDeliveryInfoFailureAction action)
-        {
-            return new DeliveryInfoState();
-        }
+        public static DeliveryInfoState ReduceFetchDeliveryInfoFailureAction(DeliveryInfoState state, FetchDeliveryInfoFailureAction action) =>
+             new ();
     }
 }

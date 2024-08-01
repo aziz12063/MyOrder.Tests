@@ -1,8 +1,6 @@
 using Fluxor;
 using Fluxor.Blazor.Web.ReduxDevTools;
-using MudBlazor;
 using MudBlazor.Services;
-using MyOrder;
 using MyOrder.Components;
 using MyOrder.Infrastructure.ApiClients;
 using MyOrder.Infrastructure.Repositories;

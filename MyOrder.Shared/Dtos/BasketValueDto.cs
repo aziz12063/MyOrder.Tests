@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace MyOrder.Shared.Dtos
 {
-    public class SalesPoolsDto
+    public class BasketValueDto
     {
         public string Description { get; set; } = string.Empty;
-        public string? Value { get; set; } = string.Empty;
+        public string Value { get; set; } = string.Empty;
     }
 }

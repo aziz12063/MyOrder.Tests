@@ -6,11 +6,13 @@ namespace MyOrder.Store.OrderInfoUseCase
     {
         public string BasketId { get; } = basketId;
     }
-    public class FetchOrderInfoSuccessAction(BasketOrderInfoDto basketOrderInfo, List<SalesOriginDto> salesOrigin, List<SalesPoolsDto> salesPools)
+    public class FetchOrderInfoSuccessAction(BasketOrderInfoDto basketOrderInfo, List<BasketValueDto> customerTags,
+        List<SalesOriginDto> salesOrigin, List<BasketValueDto> salesPools)
     {
         public BasketOrderInfoDto BasketOrderInfo { get; } = basketOrderInfo;
+        public List<BasketValueDto> CustomerTags { get; set; } = customerTags;
         public List<SalesOriginDto> SalesOrigins { get; set; } = salesOrigin;
-        public List<SalesPoolsDto> SalesPoolsDto { get; set; } = salesPools;
+        public List<BasketValueDto> SalesPoolsDto { get; set; } = salesPools;
     }
     public class FetchOrderInfoFailureAction(string errorMessage)
     {

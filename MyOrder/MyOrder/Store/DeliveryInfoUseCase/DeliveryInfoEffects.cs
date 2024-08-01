@@ -11,8 +11,18 @@ public class DeliveryInfoEffects(IBasketRepository basketRepository, ILogger<Del
     {
         try
         {
-            var basketDeliveryInfo = await basketRepository.GetBasketDeliveryInfoAsync(action.BasketId);
-            dispatcher.Dispatch(new FetchDeliveryInfoSuccessAction(basketDeliveryInfo));
+            var basketId = action.BasketId;
+
+            // Run all the async operations in parallel
+            var basketDeliveryInfoTask = basketRepository.GetBasketDeliveryInfoAsync(basketId);
+            var deliverToAccountsTask = basketRepository.GetDeliverToAccountsAsync(basketId);
+            var deliverToContactsTask = basketRepository.GetDeliverToContactsAsync(basketId);
+            var deliveryModesTask = basketRepository.GetDeliveryModesAsync(basketId);
+
+            await Task.WhenAll(basketDeliveryInfoTask, deliverToAccountsTask, deliverToContactsTask, deliveryModesTask);
+
+            dispatcher.Dispatch(new FetchDeliveryInfoSuccessAction(basketDeliveryInfoTask.Result, deliverToAccountsTask.Result,
+                deliverToContactsTask.Result, deliveryModesTask.Result));
         }
         catch (Exception ex)
         {

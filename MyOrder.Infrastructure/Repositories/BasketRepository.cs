@@ -1,11 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using MyOrder.Infrastructure.ApiClients;
 using MyOrder.Shared.Dtos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyOrder.Infrastructure.Repositories;
 
@@ -19,10 +14,19 @@ public class BasketRepository(IBasketApiClient apiClient, ILogger<BasketReposito
         return await apiClient.GetBasketGeneralInfoAsync(basketId);
     }
 
+    //=======================================================================================================
+    //Order Info Section
+    //=======================================================================================================
     public async Task<BasketOrderInfoDto> GetBasketOrderInfoAsync(string basketId)
     {
         logger.LogInformation("Fetching basket order info for {BasketId} from repository", basketId);
         return await apiClient.GetBasketOrderInfoAsync(basketId);
+    }
+
+    public async Task<List<BasketValueDto>> GetCustomerTagsAsync(string basketId)
+    {
+        logger.LogInformation("Fetching customer tags for {BasketId} from repository", basketId);
+        return await apiClient.GetCustomerTagsAsync(basketId);
     }
 
     public async Task<List<SalesOriginDto>> GetSalesOriginsAsync(string basketId)
@@ -31,27 +35,90 @@ public class BasketRepository(IBasketApiClient apiClient, ILogger<BasketReposito
         return await apiClient.GetSalesOriginsAsync(basketId);
     }
 
-    public async Task<List<SalesPoolsDto>> GetSalesPoolAsync(string basketId)
+    public async Task<List<BasketValueDto>> GetSalesPoolAsync(string basketId)
     {
         logger.LogInformation("Fetching SalesPools info for {BasketId} from repository", basketId);
         return await apiClient.GetSalesPoolsAsync(basketId);
     }
 
-    public async Task<BasketPricesInfoDto> GetBasketPricesInfoAsync(string basketId)
-    {  
-        logger.LogInformation("Fetching basket prices info for {BasketId} from repository", basketId);
-        return await apiClient.GetBasketPricesInfoAsync(basketId);
-    }
-
+    //=======================================================================================================
+    //Delivery section
+    //=======================================================================================================
     public async Task<BasketDeliveryInfoDto> GetBasketDeliveryInfoAsync(string basketId)
     {
         logger.LogInformation("Fetching basket delivery info for {BasketId} from repository", basketId);
         return await apiClient.GetBasketDeliveryInfoAsync(basketId);
     }
 
+    public async Task<List<AccountDto>> GetDeliverToAccountsAsync(string basketId)
+    {
+        logger.LogInformation("Fetching deliver to accounts for {BasketId} from repository", basketId);
+        return await apiClient.GetDeliverToAccountsAsync(basketId);
+    }
+
+    public async Task<List<ContactDto>> GetDeliverToContactsAsync(string basketId)
+    {
+        logger.LogInformation("Fetching deliver to contacts for {BasketId} from repository", basketId);
+        return await apiClient.GetDeliverToContactsAsync(basketId);
+    }
+
+    public async Task<List<BasketValueDto>> GetDeliveryModesAsync(string basketId)
+    {
+        logger.LogInformation("Fetching delivery modes for {BasketId} from repository", basketId);
+        return await apiClient.GetDeliveryModesAsync(basketId);
+    }
+
+    //=======================================================================================================
+    //Invoice info section
+    //=======================================================================================================
+    public async Task<BasketInvoiceInfoDto> GetBasketInvoiceInfoAsync(string basketId)
+    {
+        logger.LogInformation("Fetching basket invoice info for {BasketId} from repository", basketId);
+        return await apiClient.GetBasketInvoiceInfoAsync(basketId);
+    }
+
+    public async Task<List<AccountDto>> GetInvoiceToAccountsAsync(string basketId)
+    {
+        logger.LogInformation("Fetching invoice to accounts for {BasketId} from repository", basketId);
+        return await apiClient.GetInvoiceToAccountsAsync(basketId);
+    }
+
+    public async Task<List<BasketValueDto>> GetTaxGroupsAsync(string basketId)
+    {
+        logger.LogInformation("Fetching tax groups for {BasketId} from repository", basketId);
+        return await apiClient.GetTaxGroupsAsync(basketId);
+    }
+
+    public async Task<List<BasketValueDto>> GetPaymentModesAsync(string basketId)
+    {
+        logger.LogInformation("Fetching payment modes for {BasketId} from repository", basketId);
+        return await apiClient.GetPaymentModesAsync(basketId);
+    }
+
+    //=======================================================================================================
+    // Trade Info Section
+    //=======================================================================================================
+    public async Task<BasketTradeInfoDto> GetBasketTradeInfoAsync(string basketId)
+    {
+        logger.LogInformation("Fetching basket trade info for {BasketId} from repository", basketId);
+        return await apiClient.GetBasketTradeInfoAsync(basketId);
+    }
+
+    //=======================================================================================================
+    //Prices info section
+    //=======================================================================================================
+    public async Task<BasketPricesInfoDto> GetBasketPricesInfoAsync(string basketId)
+    {
+        logger.LogInformation("Fetching basket prices info for {BasketId} from repository", basketId);
+        return await apiClient.GetBasketPricesInfoAsync(basketId);
+    }
+
+    //=======================================================================================================
+    //Procedure Call
+    //=======================================================================================================
     public async Task<ProcedureCallResponseDto> PostProcedureCallAsync(string basketId, List<string> procedureCall)
     {
-        logger.LogInformation("Posting procedure call : \n{procedureCall} \nfor {BasketId} to repository", string.Join("\n", procedureCall), basketId);
+        logger.LogInformation("Posting procedure call : \n{procedureCall} \nfor {BasketId} from repository", string.Join("\n", procedureCall), basketId);
         return await apiClient.PostProcedureCallAsync(basketId, procedureCall);
     }
 
