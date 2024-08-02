@@ -40,6 +40,9 @@ public interface IBasketRepository
     //Prices info section
     //=======================================================================================================
     Task<BasketPricesInfoDto> GetBasketPricesInfoAsync(string basketId);
+    Task<List<BasketValueDto>> GetCouponsAsync(string basketId);
+    Task<List<BasketValueDto>> GetWarrantyCostOptionsAsync(string basketId);
+    Task<List<BasketValueDto>> GetShippingCostOptionsAsync(string basketId);
 
     //=======================================================================================================
     //Procedure Call

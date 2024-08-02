@@ -72,6 +72,15 @@ namespace MyOrder.Infrastructure.ApiClients
         [Get("/api/orderContext/{basketId}/pricesInfo")]
         Task<BasketPricesInfoDto> GetBasketPricesInfoAsync(string basketId);
 
+        [Get("/api/orderContext/{basketId}/coupons")]
+        Task<List<BasketValueDto>> GetCouponsAsync(string basketId);
+
+        [Get("/api/orderContext/{basketId}/warrantyCostOptions")]
+        Task<List<BasketValueDto>> GetWarrantyCostOptionsAsync(string basketId);
+
+        [Get("/api/orderContext/{basketId}/shippingCostOptions")]
+        Task<List<BasketValueDto>> GetShippingCostOptionsAsync(string basketId);
+
         //=======================================================================================================
         // Procedure Call Section
         //=======================================================================================================

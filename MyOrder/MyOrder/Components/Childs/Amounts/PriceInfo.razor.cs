@@ -7,6 +7,9 @@ namespace MyOrder.Components.Childs.Amounts
     public partial class PriceInfo : BaseFluxorComponent<PricesInfoState, FetchPricesInfoAction>
     {
         private BasketPricesInfoDto BasketPricesInfo => State.Value.PricesInfo;
+        private List<BasketValueDto> Coupons => State.Value.Coupons;
+        private List<BasketValueDto> WarrantyCostOptions => State.Value.WarrantyCostOptions;
+        private List<BasketValueDto> ShippingCostOptions => State.Value.ShippingCostOptions;
        
 
         public string TotalVolumeAndWeight

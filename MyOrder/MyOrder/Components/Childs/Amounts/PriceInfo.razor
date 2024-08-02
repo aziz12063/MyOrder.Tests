@@ -14,9 +14,9 @@
                         <MudText Typo="Typo.body2">Code Action</MudText>
                     </MudItem>
                     <MudItem xs="8">
-                        <MudTextField Margin="Margin.Dense" T="string" ReadOnly="true"
+                        <MudSelect Margin="Margin.Dense" T="string" ReadOnly="true"
                                       Variant="Variant.Outlined" FullWidth="true"
-                                      @bind-Value="CouponValue"> </MudTextField>
+                                      @bind-Value="CouponValue"> </MudSelect>
                     </MudItem>
                 </MudGrid>
                 <!--2-->
@@ -196,7 +196,7 @@
                     <MudItem xs="8">
                         <MudTextField Margin="Margin.Dense" T="decimal" 
                                     Variant="Variant.Outlined" Width="200px"
-                                      @bind-Value="BasketPricesInfo.DdiscountAmount.Value"></MudTextField>
+                                      @bind-Value="BasketPricesInfo.DiscountAmount.Value"></MudTextField>
                     </MudItem>
                 </MudGrid>
                 <!--4-->

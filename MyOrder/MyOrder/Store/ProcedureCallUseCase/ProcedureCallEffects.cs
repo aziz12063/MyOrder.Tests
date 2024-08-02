@@ -19,6 +19,8 @@ public class ProcedureCallEffects(IBasketRepository basketRepository, ILogger<Or
             { "invoiceInfo", (dispatcher, basketId) => dispatcher.Dispatch(new FetchInvoiceInfoAction(basketId)) },
             { "tradeInfo", (dispatcher, basketId) => dispatcher.Dispatch(new FetchTradeInfoAction(basketId)) },
             { "pricesInfo", (dispatcher, basketId) => dispatcher.Dispatch(new FetchPricesInfoAction(basketId)) },
+            //{ "coupons" , (dispatcher, basketId) => dispatcher.Dispatch(new FetchPricesInfoAction(basketId)) },
+            //{ "warrantyC"
             //{ "notifications", dispatcher => dispatcher.Dispatch(new FetchNotificationsAction()) },
         };
 

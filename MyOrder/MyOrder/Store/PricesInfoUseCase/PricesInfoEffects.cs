@@ -10,8 +10,15 @@ namespace MyOrder.Store.PricesInfoUseCase
         {
             try
             {
-                var pricesInfo = await basketRepository.GetBasketPricesInfoAsync(action.BasketId);
-                dispatcher.Dispatch(new FetchPricesInfoSuccessAction(pricesInfo));
+                var pricesInfoTask = basketRepository.GetBasketPricesInfoAsync(action.BasketId);
+                var couponsTask = basketRepository.GetCouponsAsync(action.BasketId);
+                var warrantyCostOptionsTask = basketRepository.GetWarrantyCostOptionsAsync(action.BasketId);
+                var shippingCostOptionsTask = basketRepository.GetShippingCostOptionsAsync(action.BasketId);
+
+                await Task.WhenAll(pricesInfoTask, couponsTask, warrantyCostOptionsTask, shippingCostOptionsTask);
+
+                dispatcher.Dispatch(new FetchPricesInfoSuccessAction(pricesInfoTask.Result, couponsTask.Result,
+                    warrantyCostOptionsTask.Result, shippingCostOptionsTask.Result));
             }
             catch (Exception e)
             {

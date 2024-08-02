@@ -125,6 +125,24 @@ public class BasketRepository(IBasketApiClient apiClient, ILogger<BasketReposito
         return await apiClient.GetBasketPricesInfoAsync(basketId);
     }
 
+    public async Task<List<BasketValueDto>> GetCouponsAsync(string basketId)
+    {
+        logger.LogInformation("Fetching coupons for {BasketId} from repository", basketId);
+        return await apiClient.GetCouponsAsync(basketId);
+    }
+
+    public async Task<List<BasketValueDto>> GetWarrantyCostOptionsAsync(string basketId)
+    {
+        logger.LogInformation("Fetching warranty cost options for {BasketId} from repository", basketId);
+        return await apiClient.GetWarrantyCostOptionsAsync(basketId);
+    }
+
+    public async Task<List<BasketValueDto>> GetShippingCostOptionsAsync(string basketId)
+    {
+        logger.LogInformation("Fetching shipping cost options for {BasketId} from repository", basketId);
+        return await apiClient.GetShippingCostOptionsAsync(basketId);
+    }
+
     //=======================================================================================================
     //Procedure Call
     //=======================================================================================================
