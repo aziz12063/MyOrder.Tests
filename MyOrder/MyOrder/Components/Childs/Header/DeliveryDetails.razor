@@ -1,99 +1,122 @@
-﻿<MudContainer Class="pa-0">
-    <MudStack Spacing="5">
+﻿@using MyOrder.Store.DeliveryInfoUseCase
+@inherits BaseFluxorComponent<DeliveryInfoState, FetchDeliveryInfoAction>
+
+<MudContainer Class="pa-0">
+    <MudStack Spacing="4">
         <MudText Typo="Typo.h6" Color="Color.Secondary">Livraison</MudText>
 
-        <!-- Contact Client -->
+        <!-- Compte Livraison -->
         <MudStack Spacing="2">
             <MudStack Row="true" Spacing="1" StretchItems="StretchItems.Start">
-                <MudText Typo="Typo.subtitle1">Adresse de livraison</MudText>
-                <MudTooltip Text="Chercher client?">
+                <MudText Typo="Typo.subtitle1">@BasketDeliveryInfo.Account.Name</MudText>
+                <MudTooltip Text="Chercher client? -Not Implemented">
                     <MudIconButton Icon="@Icons.Material.Filled.Search" Size="Size.Small" />
                 </MudTooltip>
-                <MudTooltip Text="Copier les informations du client">
+                <MudTooltip Text="Copier les informations du client -Not Implemented">
                     <MudIconButton Icon="@Icons.Material.Filled.Description" Size="Size.Small" />
                 </MudTooltip>
-                <MudTooltip Text="Salesforce?">
+                <MudTooltip Text="Salesforce? -Not Implemented">
                     <MudIconButton Icon="@Icons.Material.Filled.Cloud" Size="Size.Small" />
                 </MudTooltip>
-                <MudTooltip Text="Infos?">
+                <MudTooltip Text="Infos? -Not Implemented">
                     <MudIconButton Icon="@Icons.Material.Filled.Info" Size="Size.Small" />
                 </MudTooltip>
-                <MudTooltip Text="Call?">
+                <MudTooltip Text="Call? -Not Implemented">
                     <MudIconButton Icon="@Icons.Material.Filled.Phone" Size="Size.Small" />
                 </MudTooltip>
             </MudStack>
-            <MudText Typo="Typo.body2" Class="compact-client-details">@SelectedAccount</MudText>
 
-            <MudSelect Typo="Typo.body2" Label="Contact commandeur" Margin="Margin.Dense" Dense="true" Variant="Variant.Outlined" FullWidth="true" AnchorOrigin="Origin.BottomCenter" T="string" @bind-Value="SelectedContact">
-                <MudSelectItem T="string" Value="@SelectedContact" />
+            @if (AccountAddress != null && AccountAddress is { Count: > 0 })
+            {
+                <MudTooltip RootStyle="width: 100%;" Duration="1000">
+                    <ChildContent>
+                        <MudText Typo="Typo.body2" Class="compact-client-details">@SelectedAccount</MudText>
+                    </ChildContent>
+                    <TooltipContent>
+                        @for (var i = 0; i < AccountAddress.Count - 2; i++)
+                        {
+                            var x = i;
+                            <MudText Typo="Typo.caption">@AccountAddress[x]</MudText>
+                            <br />
+                        }
+                        @if (AccountAddress.Count > 1)
+                        {
+                            <MudText Typo="Typo.caption">@AccountAddress[AccountAddress.Count() - 2]</MudText>
+                            <br />
+                            <MudText Typo="Typo.caption">@AccountAddress[^1]</MudText>
+                        }
+                        else
+                        {
+                            <MudText Typo="Typo.caption">@AccountAddress[^1]</MudText>
+                        }
+                    </TooltipContent>
+                </MudTooltip>
+            }
+            else
+            {
+                <MudText Typo="Typo.body2" Class="compact-client-details">@SelectedAccount</MudText>
+            }
+            
+            <MudTextField Typo="Typo.caption"
+                          Lines="5"
+                          Variant="Variant.Outlined"
+                          FullWidth="true"
+                          Margin="Margin.Dense"
+                          ReadOnly="true"
+                          Value="DisplayAddress" />
+
+            
+            <!-- Contact Livraison -->
+
+            <MudSelect Typo="Typo.body2"
+                       Label="@BasketDeliveryInfo.Contact.Name"
+                       Margin="Margin.Dense"
+                       Dense="true"
+                       Variant="Variant.Outlined"
+                       FullWidth="true"
+                       AnchorOrigin="Origin.CenterCenter"
+                       Required="@IsRequired(@BasketDeliveryInfo.Contact)"
+                       ReadOnly="@IsReadOnly(BasketDeliveryInfo.Contact)"
+                       T="ContactDto"
+                       @bind-Value="ContactValue">
+                @foreach (var item in @Contacts)
+                {
+                    <MudSelectItem T="ContactDto" Value="@item">@item</MudSelectItem>
+                }
             </MudSelect>
 
             <MudGrid Spacing="2">
                 <MudItem xs="12" sm="6">
                     <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
-                        <MudIcon Icon="@Icons.Material.Filled.Phone" Size="Size.Small" />
-                        <MudText Typo="Typo.body2">@DeliveryInfo.Contact?.Value.Phone</MudText>
+                        <MudIcon Title="Téléphone" Icon="@Icons.Material.Filled.Phone" Color="Color.Success" Size="Size.Small" />
+                        <MudText Typo="Typo.body2">@NullOrWhiteSpaceHelper(BasketDeliveryInfo?.Contact?.Value?.Phone)</MudText>
                     </MudStack>
                 </MudItem>
                 <MudItem xs="12" sm="6">
                     <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
-                        <MudIcon Icon="@Icons.Material.Filled.SpeakerPhone" Size="Size.Small" />
-                        <MudText Typo="Typo.body2">@DeliveryInfo.Contact?.Value.CellularPhone</MudText>
+                        <MudIcon Title="Mobile" Icon="@Icons.Material.Filled.PhoneIphone" Color="Color.Info" Size="Size.Small" />
+                        <MudText Typo="Typo.body2">@NullOrWhiteSpaceHelper(BasketDeliveryInfo?.Contact?.Value?.CellularPhone)</MudText>
                     </MudStack>
                 </MudItem>
                 <MudItem xs="12">
                     <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
-                        <MudIcon Icon="@Icons.Material.Filled.Email" Size="Size.Small" />
-                        <MudText Typo="Typo.body2">@DeliveryInfo.Contact?.Value.Email</MudText>
+                        <MudIcon Title="Email" Icon="@Icons.Material.Filled.Email" Color="Color.Surface" Size="Size.Small" />
+                        <MudText Typo="Typo.body2">@NullOrWhiteSpaceHelper(BasketDeliveryInfo?.Contact?.Value?.Email)</MudText>
                     </MudStack>
                 </MudItem>
             </MudGrid>
         </MudStack>
         
 
-        <MudTextField Typo="Typo.caption" Label="Notes de RC" Lines="4" Variant="Variant.Outlined" Value="@DeliveryInfo.Note?.Value" FullWidth="true" Margin="Margin.Dense" />
+        <!-- Notes de RC -->
+        <MudTextField Typo="Typo.caption"
+                      Lines="4"
+                      Variant="Variant.Outlined"
+                      FullWidth="true"
+                      Margin="Margin.Dense"
+                      Required="@IsRequired(@BasketDeliveryInfo.Contact)"
+                      ReadOnly="@IsReadOnly(BasketDeliveryInfo.Contact)"
+                      Label="@BasketDeliveryInfo.Note.Name"
+                      Value="@NoteValue" />
     </MudStack>
 </MudContainer>
-@* <div class="col-md-3" style="padding: 5px;">
-    <RadzenCard class="card-container">
-        <ChildContent>
-            <h4 class="card-title">Delivery Details</h4>
-            <RadzenFieldset Text="Delivery Information" Style="margin-bottom: 20px;">
-                <div class="fieldset-content">
-                    <label class="field-label">Delivery Name</label>
-                    <RadzenTextBox @bind-Value="BasketHeaderDto.DeliveryName" Placeholder="Delivery Name" Style="width: 100%;" />
-                </div>
-                <div class="fieldset-content">
-                    <label class="field-label">Delivery Street</label>
-                    <RadzenTextBox @bind-Value="BasketHeaderDto.DeliveryStreet" Placeholder="Delivery Street" Style="width: 100%;" />
-                </div>
-                <div class="fieldset-content">
-                    <label class="field-label">Delivery City</label>
-                    <RadzenTextBox @bind-Value="BasketHeaderDto.DeliveryCity" Placeholder="Delivery City" Style="width: 100%;" />
-                </div>
-                <div class="fieldset-content">
-                    <label class="field-label">Delivery Zip Code</label>
-                    <RadzenTextBox @bind-Value="BasketHeaderDto.DeliveryZipCode" Placeholder="Delivery Zip Code" Style="width: 100%;" />
-                </div>
-                <div class="fieldset-content">
-                    <label class="field-label">Delivery Country/Region</label>
-                    <RadzenDropDown @bind-Value="BasketHeaderDto.DeliveryCountryRegionId" Placeholder="Select Country/Region" TextProperty="Name" ValueProperty="Id" Style="width: 100%;" />
-                </div>
-                <div class="fieldset-content">
-                    <label class="field-label">Delivery County</label>
-                    <RadzenTextBox @bind-Value="BasketHeaderDto.DeliveryCounty" Placeholder="Delivery County" Style="width: 100%;" />
-                </div>
-                <div class="fieldset-content">
-                    <label class="field-label">Delivery Note</label>
-                    <RadzenTextBox @bind-Value="BasketHeaderDto.DeliveryNote" Placeholder="Delivery Note" Multiline="true" Rows="4" Style="width: 100%;" />
-                </div>
-            </RadzenFieldset>
-        </ChildContent>
-    </RadzenCard>
-
-</div>
-
-@code
-{
-    public BasketHeaderDto? BasketHeaderDto { get; set; } = new();
-} *@

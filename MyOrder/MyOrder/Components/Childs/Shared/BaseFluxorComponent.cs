@@ -45,7 +45,14 @@ namespace MyOrder.Components.Childs.Shared
 
         protected bool IsRequired<T>(Field<T> field) => field.Status == "required";
 
-
+        protected void UpdateProcedureCall(string? newValue, List<string> procedureCall)
+        {
+            if (procedureCall is { Count: > 0 })
+            {
+                procedureCall[^1] = newValue ?? string.Empty; // Update with the new value or empty string if null
+                OnPropertyUpdatedHandler(procedureCall);
+            }
+        }
         protected void OnPropertyUpdatedHandler(List<string> procedureCall)
         {
             if (procedureCall is null || procedureCall.Count < 1)
@@ -66,7 +73,7 @@ namespace MyOrder.Components.Childs.Shared
                 logger.LogError("An error occurred in OnPropertyUpdatedHandler. {ex}", ex);
             }
         }
-
+        protected static string NullOrWhiteSpaceHelper(string? value) => string.IsNullOrWhiteSpace(value) ? "-" : value;
         public void Dispose()
         {
             State.StateChanged -= OnStateChanged;

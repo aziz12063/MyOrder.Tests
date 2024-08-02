@@ -138,24 +138,12 @@ public partial class OrderInfo : BaseFluxorComponent<OrderInfoState, FetchOrderI
             UpdateProcedureCall(value, BasketOrderInfo.RelatedLink.ProcedureCall);
         }
     }
-    private void UpdateProcedureCall(string? newValue, List<string> procedureCall)
-    {
-        if (procedureCall is { Count: > 0 })
-        {
-            procedureCall[^1] = newValue ?? string.Empty; // Update with the new value or empty string if null
-            OnPropertyUpdatedHandler(procedureCall);
-        }
-    }
-
-    private static string NullOrWhiteSpaceHelper(string? value) => string.IsNullOrWhiteSpace(value) ? "-" : value;
-
     private static Color CustomerTagColorHelper(string value) => value switch
     {
         "vip" => Color.Primary,
         "noGift" => Color.Error,
         _ => Color.Warning
     };
-
     private static string CustomerTagIconHelper(string value) =>
         value switch
         {
@@ -163,15 +151,5 @@ public partial class OrderInfo : BaseFluxorComponent<OrderInfoState, FetchOrderI
             "noGift" => Icons.Material.Filled.CardGiftcard,
             _ => Icons.Material.Filled.Warning
         };
-
-    private string SelectedContact
-    {
-        get
-        {
-            var contact = BasketOrderInfo?.Contact?.Value;
-            return contact == null ? string.Empty :
-                $"{contact.FirstName} - {contact.LastName}";
-        }
-    }
 
 }

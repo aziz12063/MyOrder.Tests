@@ -1,6 +1,6 @@
 ﻿@using MyOrder.Store.OrderInfoUseCase
-
 @inherits BaseFluxorComponent<OrderInfoState, FetchOrderInfoAction>
+
 <MudContainer Class="pa-0">
     <MudStack Spacing="4">
         <MudText Typo="Typo.h6" Color="Color.Secondary">Commande</MudText>
@@ -26,7 +26,7 @@
                 </MudTooltip>
             </MudStack>
 
-            @if (AccountAddress != null && AccountAddress.Any())
+            @if (AccountAddress != null && AccountAddress is {Count: >0})
             {
                 <MudTooltip RootStyle="width: 100%;" Duration="1000">
                     <ChildContent>
@@ -43,11 +43,11 @@
                         {
                             <MudText Typo="Typo.caption">@AccountAddress[AccountAddress.Count() - 2]</MudText>
                             <br />
-                            <MudText Typo="Typo.caption">@AccountAddress.Last()</MudText>
+                            <MudText Typo="Typo.caption">@AccountAddress[^1]</MudText>
                         }
                         else
                         {
-                            <MudText Typo="Typo.caption">@AccountAddress.Last()</MudText>
+                            <MudText Typo="Typo.caption">@AccountAddress[^1]</MudText>
                         }
                     </TooltipContent>
                 </MudTooltip>
