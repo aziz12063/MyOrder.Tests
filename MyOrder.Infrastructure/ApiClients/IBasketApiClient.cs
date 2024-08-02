@@ -24,6 +24,9 @@ namespace MyOrder.Infrastructure.ApiClients
         [Get("/api/orderContext/{basketId}/salesOrigins")]
         Task<List<SalesOriginDto>> GetSalesOriginsAsync(string basketId);
 
+        [Get("/api/orderContext/{basketId}/webOrigins")]
+        Task<List<BasketValueDto>> GetWebOriginsAsync(string basketId);
+
         [Get("/api/orderContext/{basketId}/salesPools")]
         Task<List<BasketValueDto>> GetSalesPoolsAsync(string basketId);
 

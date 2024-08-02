@@ -12,6 +12,7 @@ public interface IBasketRepository
     Task<List<ContactDto>> GetOrderByContactsAsync(string basketId);
     Task<List<BasketValueDto>> GetCustomerTagsAsync(string basketId);
     Task<List<SalesOriginDto>> GetSalesOriginsAsync(string basketId);
+    Task<List<BasketValueDto>> GetWebOriginsAsync(string basketId);
     Task<List<BasketValueDto>> GetSalesPoolAsync(string basketId);
 
     //=======================================================================================================

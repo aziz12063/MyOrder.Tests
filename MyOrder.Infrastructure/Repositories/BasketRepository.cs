@@ -41,6 +41,12 @@ public class BasketRepository(IBasketApiClient apiClient, ILogger<BasketReposito
         return await apiClient.GetSalesOriginsAsync(basketId);
     }
 
+    public async Task<List<BasketValueDto>> GetWebOriginsAsync(string basketId)
+    {
+        logger.LogInformation("Fetching WebOrigins info for {BasketId} from repository", basketId);
+        return await apiClient.GetWebOriginsAsync(basketId);
+    }
+
     public async Task<List<BasketValueDto>> GetSalesPoolAsync(string basketId)
     {
         logger.LogInformation("Fetching SalesPools info for {BasketId} from repository", basketId);

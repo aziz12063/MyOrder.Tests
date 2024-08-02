@@ -16,6 +16,7 @@ public partial class OrderInfo : BaseFluxorComponent<OrderInfoState, FetchOrderI
     private BasketOrderInfoDto BasketOrderInfo => State.Value.BasketOrderInfo;
     private List<ContactDto> Contacts => State.Value.ContactList;
     private List<SalesOriginDto> SalesOrigins => State.Value.SalesOrigins;
+    private List<BasketValueDto> WebOrigins => State.Value.WebOrigins;
     private List<BasketValueDto> SalesPools => State.Value.SalesPools;
 
     protected override FetchOrderInfoAction CreateFetchAction(string basketId)
@@ -74,6 +75,95 @@ public partial class OrderInfo : BaseFluxorComponent<OrderInfoState, FetchOrderI
         }
     }
 
+    private ContactDto? ContactValue
+    {
+        get => BasketOrderInfo.Contact.Value;
+        set
+        {
+            BasketOrderInfo.Contact.Value = value;
+            UpdateProcedureCall(value?.ContactId, BasketOrderInfo.Contact.ProcedureCall);
+        }
+    }
+    private string SalesOriginIdValue
+    {
+        get => NullOrWhiteSpaceHelper(BasketOrderInfo.SalesOriginId.Value);
+        set
+        {
+            BasketOrderInfo.SalesOriginId.Value = value;
+            UpdateProcedureCall(value, BasketOrderInfo.SalesOriginId.ProcedureCall);
+        }
+    }
+    private string WebOriginIdValue
+    {
+        get => NullOrWhiteSpaceHelper(BasketOrderInfo.WebOriginId.Value);
+        set
+        {
+            BasketOrderInfo.WebOriginId.Value = value;
+            UpdateProcedureCall(value, BasketOrderInfo.WebOriginId.ProcedureCall);
+        }
+    }
+    private string SalesPoolId
+    {
+        get => NullOrWhiteSpaceHelper(BasketOrderInfo.SalesPoolId.Value);
+        set
+        {
+            BasketOrderInfo.SalesPoolId.Value = value;
+            UpdateProcedureCall(value, BasketOrderInfo.SalesPoolId.ProcedureCall);
+        }
+    }
+    private string CustomerOrderRefValue
+    {
+        get => NullOrWhiteSpaceHelper(BasketOrderInfo.CustomerOrderRef.Value);
+        set
+        {
+            BasketOrderInfo.CustomerOrderRef.Value = value;
+            UpdateProcedureCall(value, BasketOrderInfo.CustomerOrderRef.ProcedureCall);
+        }
+    }
+    private string WebSalesIdValue
+    {
+        get => NullOrWhiteSpaceHelper(BasketOrderInfo.WebSalesId.Value);
+        set
+        {
+            BasketOrderInfo.WebSalesId.Value = value;
+            UpdateProcedureCall(value, BasketOrderInfo.WebSalesId.ProcedureCall);
+        }
+    }
+    private string RelatedLinkValue
+    {
+        get => NullOrWhiteSpaceHelper(BasketOrderInfo.RelatedLink.Value);
+        set
+        {
+            BasketOrderInfo.RelatedLink.Value = value;
+            UpdateProcedureCall(value, BasketOrderInfo.RelatedLink.ProcedureCall);
+        }
+    }
+    private void UpdateProcedureCall(string? newValue, List<string> procedureCall)
+    {
+        if (procedureCall is { Count: > 0 })
+        {
+            procedureCall[^1] = newValue ?? string.Empty; // Update with the new value or empty string if null
+            OnPropertyUpdatedHandler(procedureCall);
+        }
+    }
+
+    private static string NullOrWhiteSpaceHelper(string? value) => string.IsNullOrWhiteSpace(value) ? "-" : value;
+
+    private static Color CustomerTagColorHelper(string value) => value switch
+    {
+        "vip" => Color.Primary,
+        "noGift" => Color.Error,
+        _ => Color.Warning
+    };
+
+    private static string CustomerTagIconHelper(string value) =>
+        value switch
+        {
+            "vip" => Icons.Material.Filled.Star,
+            "noGift" => Icons.Material.Filled.CardGiftcard,
+            _ => Icons.Material.Filled.Warning
+        };
+
     private string SelectedContact
     {
         get
@@ -84,18 +174,4 @@ public partial class OrderInfo : BaseFluxorComponent<OrderInfoState, FetchOrderI
         }
     }
 
-    private List<string>? UpdateContactProcedureCall(List<string>? procedureCall, string value)
-    {
-        if (procedureCall == null || procedureCall.Count == 0)
-        {
-            return null;
-        }
-        procedureCall[^1] = value;
-        return procedureCall;
-    }
-    //private string SelectedContact
-    //{
-    //    get => OrderInfoState.Value.BasketOrderInfo.Contact.Value?.FirstName + " - " + OrderInfoState.Value.BasketOrderInfo.Contact.Value?.LastName;
-    //    set => throw new NotImplementedException();
-    //}
 }

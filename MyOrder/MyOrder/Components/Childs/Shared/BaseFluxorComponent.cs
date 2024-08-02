@@ -46,29 +46,25 @@ namespace MyOrder.Components.Childs.Shared
         protected bool IsRequired<T>(Field<T> field) => field.Status == "required";
 
 
-        protected virtual EventCallback OnBlurHandler(List<string> procedureCall)
+        protected void OnPropertyUpdatedHandler(List<string> procedureCall)
         {
             if (procedureCall is null || procedureCall.Count < 1)
             {
                 logger.LogWarning("ProcedureCall is either null or has 0 item.");
-                return EventCallback.Empty;
+                return;
             }
 
-            logger.LogInformation("OnBlurHandler called for {procedure}", procedureCall);
+            logger.LogInformation("OnPropertyUpdatedHandler called for {procedure}", procedureCall);
 
             try
             {
                 // ToList() to Create a copy of the ProcedureCall list ensuring it's not modified in the process
                 Dispatcher.Dispatch(new PostProcedureCallAction(BasketId, procedureCall.ToList()));
-
-                logger.LogWarning("Field value is null.");
             }
             catch (Exception ex)
             {
-                logger.LogError("An error occurred in OnBlurHandler. {ex}", ex);
+                logger.LogError("An error occurred in OnPropertyUpdatedHandler. {ex}", ex);
             }
-
-            return EventCallback.Empty;
         }
 
         public void Dispose()
