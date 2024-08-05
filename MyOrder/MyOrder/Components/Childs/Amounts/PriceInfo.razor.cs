@@ -23,7 +23,7 @@ namespace MyOrder.Components.Childs.Amounts
             return new FetchPricesInfoAction(basketId);
         }
 
-
+        // i think to make this as a method to avoid call it a lot
         private string CouponValue        {
             get => NullOrWhiteSpaceHelper(BasketPricesInfo.Coupon.Value);
             set
@@ -32,16 +32,60 @@ namespace MyOrder.Components.Childs.Amounts
                 UpdateProcedureCall(value, BasketPricesInfo.Coupon.ProcedureCall);
             }
         }
-
-        private static string NullOrWhiteSpaceHelper(string? value) => string.IsNullOrWhiteSpace(value) ? "-" : value;
-        // make it in BaseFluxorComponent, we use it twice 
-        private void UpdateProcedureCall(string? newValue, List<string> procedureCall)
-        {
-            if (procedureCall is { Count: > 0 })
+        private string WarrantyCostOptionsValue
+        { 
+            get => NullOrWhiteSpaceHelper(BasketPricesInfo.WarrantyCostOption.Value);
+            set
             {
-                procedureCall[^1] = newValue ?? string.Empty; // Update with the new value or empty string if null
-                OnPropertyUpdatedHandler(procedureCall);
+                BasketPricesInfo.WarrantyCostOption.Value = value;
+                UpdateProcedureCall(value, BasketPricesInfo.WarrantyCostOption.ProcedureCall);
             }
         }
+        private string ShippingCostOptionValue
+        {
+            get => NullOrWhiteSpaceHelper(BasketPricesInfo.ShippingCostOption.Value);
+            set
+            {
+                BasketPricesInfo.ShippingCostOption.Value = value;
+                UpdateProcedureCall(value, BasketPricesInfo.ShippingCostOption.ProcedureCall);
+            }
+        }
+
+        private decimal ShippingCostAmountValue
+        {
+            get => NullOrWhiteSpaceHelper(BasketPricesInfo.ShippingCostAmount.Value);
+            set
+            {
+                BasketPricesInfo.ShippingCostAmount.Value = value;
+                UpdateProcedureCall(value.ToString(), BasketPricesInfo.ShippingCostAmount.ProcedureCall);
+            }
+        }
+
+        private int OrderDiscountRateValue
+        {
+            get => NullOrWhiteSpaceHelper(BasketPricesInfo.OrderDiscountRate.Value);
+            set
+            {
+                BasketPricesInfo.OrderDiscountRate.Value = value;
+                UpdateProcedureCall(value.ToString(), BasketPricesInfo.OrderDiscountRate.ProcedureCall);
+            }
+        }
+
+        private bool OrderLastColumnDiscountValue
+        {
+            get => NullOrWhiteSpaceHelper(BasketPricesInfo.OrderLastColumnDiscount.Value); // check this
+            set
+            {
+                BasketPricesInfo.OrderLastColumnDiscount.Value = value;
+                UpdateProcedureCall(value.ToString(), BasketPricesInfo.OrderLastColumnDiscount.ProcedureCall);
+            }
+        }
+
+
+
+        // make them in BaseFluxorComponent??
+        private static decimal NullOrWhiteSpaceHelper(decimal value) => value == null || value == 0 ? 0 : value;
+        private static int NullOrWhiteSpaceHelper(int value) => value == null || value == 0 ? 0 : value;
+        private static bool NullOrWhiteSpaceHelper(bool value) => value == null || value == false ? false : value;// i make just value if we keep the init value as false
     }
 }

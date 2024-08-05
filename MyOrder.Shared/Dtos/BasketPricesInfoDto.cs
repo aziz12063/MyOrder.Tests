@@ -26,7 +26,7 @@ namespace MyOrder.Shared.Dtos;
     public Field<decimal> VatAmount { get; set; }= new() { Value = 0 };
     public Field<decimal> TotalGrossAmount { get; set; } = new() { Value = 0 };
     public Field<string> FirstDeliveryDate { get; set; } = new() { Value = string.Empty };
-    public Field<string?> FastDeliveryDate { get; set; } = new() { Value = null };
+    public Field<string?> LastDeliveryDate { get; set; } = new() { Value = null };
 
     // Column 4
     public Field<int> OrderDiscountRate { get; set; } = new() { Value = 0 };
