@@ -7,9 +7,9 @@ namespace MyOrder.Store.GeneralInfoUseCase
         public string BasketId { get; } = basketId;
     }
 
-    public class FetchGeneralInfoSuccessAction(BasketGeneralInfoDto basketGeneralInfo)
+    public class FetchGeneralInfoSuccessAction(BasketGeneralInfoDto? basketGeneralInfo)
     {
-        public BasketGeneralInfoDto BasketGeneralInfo { get; } = basketGeneralInfo;
+        public BasketGeneralInfoDto? BasketGeneralInfo { get; } = basketGeneralInfo;
     }
 
     public class FetchGeneralInfoFailureAction(string errorMessage)

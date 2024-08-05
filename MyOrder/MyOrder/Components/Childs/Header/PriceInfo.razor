@@ -14,7 +14,7 @@
                         <MudText Typo="Typo.body2">Code Action</MudText>
                     </MudItem>
                     <MudItem xs="8">
-                        <MudHidden bind-Hidden="@IsHidden(BasketPricesInfo.Coupon)">
+                        <MudHidden bind-Hidden="@IsHidden(BasketPricesInfo?.Coupon)">
                             <MudSelect Margin="Margin.Dense"
                                        T="string"
                                        Variant="Variant.Outlined"
@@ -51,7 +51,8 @@
                         <MudTextField Margin="Margin.Dense" T="decimal?"
                                       Variant="Variant.Outlined" Width="200px"
                                       Disabled="false"
-                                      @bind-Value="BasketPricesInfo.GiftAmountThreshold.Value"></MudTextField>
+                                      @bind-Value="BasketPricesInfo.GiftAmountThreshold.Value">
+                        </MudTextField>
                     </MudItem>
                 </MudGrid>
                 <!--4-->
@@ -62,7 +63,8 @@
                     <MudItem xs="8">
                         <MudTextField Margin="Margin.Dense" T="string"
                                       Variant="Variant.Outlined" Width="200px"
-                                      @bind-Value="BasketPricesInfo.ProductsInfo.Value"></MudTextField>
+                                      @bind-Value="BasketPricesInfo.ProductsInfo.Value">
+                        </MudTextField>
                     </MudItem>
                 </MudGrid>
             </MudItem>
@@ -75,9 +77,10 @@
                         <MudText Typo="Typo.caption">Marchandise HT</MudText>
                     </MudItem>
                     <MudItem xs="8">
-                        <MudTextField Margin="Margin.Dense" T="decimal"
+                        <MudTextField Margin="Margin.Dense" T="decimal?"
                                       Variant="Variant.Outlined" FullWidth="true"
-                                      @bind-Value="BasketPricesInfo.ProductsNetAmount.Value"> </MudTextField>
+                                      @bind-Value="BasketPricesInfo.ProductsNetAmount.Value">
+                        </MudTextField>
                     </MudItem>
                 </MudGrid>
                 <!--2 et 3-->
@@ -98,7 +101,7 @@
                         </MudHidden>
                     </MudItem>
                     <MudItem xs="8">
-                        <MudTextField Margin="Margin.Dense" T="decimal"
+                        <MudTextField Margin="Margin.Dense" T="decimal?"
                                       Variant="Variant.Outlined" Width="200px"
                                       @bind-Value="BasketPricesInfo.WarrantyCostAmount.Value"></MudTextField>
                     </MudItem>
@@ -121,7 +124,7 @@
                     </MudItem>
                     <MudItem xs="8">
                         <MudHidden bind-Hidden="@IsHidden(BasketPricesInfo.ShippingCostAmount)">
-                            <MudTextField Margin="Margin.Dense" T="decimal"
+                            <MudTextField Margin="Margin.Dense" T="decimal?"
                                           Variant="Variant.Outlined" Width="200px"
                                           Required="@IsRequired(BasketPricesInfo.ShippingCostAmount)"
                                           ReadOnly="@IsReadOnly(BasketPricesInfo.ShippingCostAmount)"
@@ -151,7 +154,7 @@
                         <MudText Typo="Typo.caption">Montant total HT</MudText>
                     </MudItem>
                     <MudItem xs="8">
-                        <MudTextField Margin="Margin.Dense" T="decimal"
+                        <MudTextField Margin="Margin.Dense" T="decimal?"
                                       Variant="Variant.Outlined" FullWidth="true"
                                       @bind-Value="BasketPricesInfo.TotalNetAmount.Value"> </MudTextField>
                     </MudItem>
@@ -162,7 +165,7 @@
                         <MudText Typo="Typo.caption">Montant TVA</MudText>
                     </MudItem>
                     <MudItem xs="8">
-                        <MudTextField Margin="Margin.Dense" T="decimal"
+                        <MudTextField Margin="Margin.Dense" T="decimal?"
                                       Variant="Variant.Outlined" Width="200px"
                                       @bind-Value="BasketPricesInfo.VatAmount.Value">
                         </MudTextField>
@@ -174,7 +177,7 @@
                         <MudText Typo="Typo.caption">Montant TTC</MudText>
                     </MudItem>
                     <MudItem xs="8">
-                        <MudTextField Margin="Margin.Dense" T="decimal"
+                        <MudTextField Margin="Margin.Dense" T="decimal?"
                                       Variant="Variant.Outlined" Width="200px"
                                       @bind-Value="BasketPricesInfo.TotalGrossAmount.Value"></MudTextField>
                     </MudItem>
@@ -211,7 +214,7 @@
                     </MudItem>
                     <MudItem xs="3">
                         <MudHidden bind-Hidden="@IsHidden(BasketPricesInfo.OrderDiscountRate)">
-                            <MudTextField Margin="Margin.Dense" T="int"
+                            <MudTextField Margin="Margin.Dense" T="int?"
                                           Variant="Variant.Outlined" FullWidth="true"
                                           Required="@IsRequired(BasketPricesInfo.OrderDiscountRate)"
                                           ReadOnly="@IsReadOnly(BasketPricesInfo.OrderDiscountRate)"
@@ -238,7 +241,7 @@
                         <MudText Typo="Typo.caption">Remise Cde(E)</MudText>
                     </MudItem>
                     <MudItem xs="8">
-                        <MudTextField Margin="Margin.Dense" T="decimal"
+                        <MudTextField Margin="Margin.Dense" T="decimal?"
                                       Variant="Variant.Outlined" Width="200px"
                                       @bind-Value="BasketPricesInfo.DiscountAmount.Value"></MudTextField>
                     </MudItem>
@@ -249,7 +252,7 @@
                         <MudText Typo="Typo.caption">Ventes add(E)</MudText>
                     </MudItem>
                     <MudItem xs="8">
-                        <MudTextField Margin="Margin.Dense" T="decimal"
+                        <MudTextField Margin="Margin.Dense" T="decimal?"
                                       Variant="Variant.Outlined" Width="200px"
                                       @bind-Value="BasketPricesInfo.AdditionalSalesAmount.Value"></MudTextField>
                     </MudItem>
@@ -260,7 +263,7 @@
                         <MudText>Poids</MudText>
                     </MudItem>
                     <MudItem xs="8">
-                        <MudTextField Margin="Margin.Dense" T="decimal"
+                        <MudTextField Margin="Margin.Dense" T="decimal?"
                                       Variant="Variant.Outlined" Width="200px"
                                       @bind-value="BasketPricesInfo.TotalWeight.Value"></MudTextField>
                     </MudItem>
@@ -273,9 +276,10 @@
                         <MudText>Volume</MudText>
                     </MudItem>
                     <MudItem xs="8">
-                        <MudTextField Margin="Margin.Dense" T="decimal"
+                        <MudTextField Margin="Margin.Dense" T="decimal?"
                                       Variant="Variant.Outlined" Width="200px"
-                                      @bind-value="BasketPricesInfo.TotalVolume.Value"></MudTextField>
+                                      @bind-value="BasketPricesInfo.TotalVolume.Value">
+                        </MudTextField>
                     </MudItem>
                 </MudGrid>
             </MudItem>

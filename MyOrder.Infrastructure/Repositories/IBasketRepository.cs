@@ -9,27 +9,27 @@ public interface IBasketRepository
     //Order Info Section
     //=======================================================================================================
     Task<BasketOrderInfoDto> GetBasketOrderInfoAsync(string basketId);
-    Task<List<ContactDto>> GetOrderByContactsAsync(string basketId);
-    Task<List<BasketValueDto>> GetCustomerTagsAsync(string basketId);
-    Task<List<SalesOriginDto>> GetSalesOriginsAsync(string basketId);
-    Task<List<BasketValueDto>> GetWebOriginsAsync(string basketId);
-    Task<List<BasketValueDto>> GetSalesPoolAsync(string basketId);
+    Task<List<ContactDto?>> GetOrderByContactsAsync(string basketId);
+    Task<List<BasketValueDto?>> GetCustomerTagsAsync(string basketId);
+    Task<List<SalesOriginDto?>> GetSalesOriginsAsync(string basketId);
+    Task<List<BasketValueDto?>> GetWebOriginsAsync(string basketId);
+    Task<List<BasketValueDto?>> GetSalesPoolAsync(string basketId);
 
     //=======================================================================================================
     //Delivery section
     //=======================================================================================================
     Task<BasketDeliveryInfoDto> GetBasketDeliveryInfoAsync(string basketId);
-    Task<List<AccountDto>> GetDeliverToAccountsAsync(string basketId);
-    Task<List<ContactDto>> GetDeliverToContactsAsync(string basketId);
-    Task<List<BasketValueDto>> GetDeliveryModesAsync(string basketId);
+    Task<List<AccountDto?>> GetDeliverToAccountsAsync(string basketId);
+    Task<List<ContactDto?>> GetDeliverToContactsAsync(string basketId);
+    Task<List<BasketValueDto?>> GetDeliveryModesAsync(string basketId);
 
     //=======================================================================================================
     //Invoice info section
     //=======================================================================================================
     Task<BasketInvoiceInfoDto> GetBasketInvoiceInfoAsync(string basketId);
-    Task<List<AccountDto>> GetInvoiceToAccountsAsync(string basketId);
-    Task<List<BasketValueDto>> GetTaxGroupsAsync(string basketId);
-    Task<List<BasketValueDto>> GetPaymentModesAsync(string basketId);
+    Task<List<AccountDto?>> GetInvoiceToAccountsAsync(string basketId);
+    Task<List<BasketValueDto?>> GetTaxGroupsAsync(string basketId);
+    Task<List<BasketValueDto?>> GetPaymentModesAsync(string basketId);
 
     //=======================================================================================================
     // Trade Info Section
@@ -40,9 +40,9 @@ public interface IBasketRepository
     //Prices info section
     //=======================================================================================================
     Task<BasketPricesInfoDto> GetBasketPricesInfoAsync(string basketId);
-    Task<List<BasketValueDto>> GetCouponsAsync(string basketId);
-    Task<List<BasketValueDto>> GetWarrantyCostOptionsAsync(string basketId);
-    Task<List<BasketValueDto>> GetShippingCostOptionsAsync(string basketId);
+    Task<List<BasketValueDto?>> GetCouponsAsync(string basketId);
+    Task<List<BasketValueDto?>> GetWarrantyCostOptionsAsync(string basketId);
+    Task<List<BasketValueDto?>> GetShippingCostOptionsAsync(string basketId);
 
     //=======================================================================================================
     //Procedure Call

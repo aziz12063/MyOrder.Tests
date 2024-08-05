@@ -23,31 +23,31 @@ public class BasketRepository(IBasketApiClient apiClient, ILogger<BasketReposito
         return await apiClient.GetBasketOrderInfoAsync(basketId);
     }
 
-    public async Task<List<ContactDto>> GetOrderByContactsAsync(string basketId)
+    public async Task<List<ContactDto?>> GetOrderByContactsAsync(string basketId)
     {
         logger.LogInformation("Fetching order by contacts for {BasketId} from repository", basketId);
         return await apiClient.GetOrderByContactsAsync(basketId);
     }
 
-    public async Task<List<BasketValueDto>> GetCustomerTagsAsync(string basketId)
+    public async Task<List<BasketValueDto?>> GetCustomerTagsAsync(string basketId)
     {
         logger.LogInformation("Fetching customer tags for {BasketId} from repository", basketId);
         return await apiClient.GetCustomerTagsAsync(basketId);
     }
 
-    public async Task<List<SalesOriginDto>> GetSalesOriginsAsync(string basketId)
+    public async Task<List<SalesOriginDto?>> GetSalesOriginsAsync(string basketId)
     {
         logger.LogInformation("Fetching SalesOrigins info for {BasketId} from repository", basketId);
         return await apiClient.GetSalesOriginsAsync(basketId);
     }
 
-    public async Task<List<BasketValueDto>> GetWebOriginsAsync(string basketId)
+    public async Task<List<BasketValueDto?>> GetWebOriginsAsync(string basketId)
     {
         logger.LogInformation("Fetching WebOrigins info for {BasketId} from repository", basketId);
         return await apiClient.GetWebOriginsAsync(basketId);
     }
 
-    public async Task<List<BasketValueDto>> GetSalesPoolAsync(string basketId)
+    public async Task<List<BasketValueDto?>> GetSalesPoolAsync(string basketId)
     {
         logger.LogInformation("Fetching SalesPools info for {BasketId} from repository", basketId);
         return await apiClient.GetSalesPoolsAsync(basketId);
@@ -62,19 +62,19 @@ public class BasketRepository(IBasketApiClient apiClient, ILogger<BasketReposito
         return await apiClient.GetBasketDeliveryInfoAsync(basketId);
     }
 
-    public async Task<List<AccountDto>> GetDeliverToAccountsAsync(string basketId)
+    public async Task<List<AccountDto?>> GetDeliverToAccountsAsync(string basketId)
     {
         logger.LogInformation("Fetching deliver to accounts for {BasketId} from repository", basketId);
         return await apiClient.GetDeliverToAccountsAsync(basketId);
     }
 
-    public async Task<List<ContactDto>> GetDeliverToContactsAsync(string basketId)
+    public async Task<List<ContactDto?>> GetDeliverToContactsAsync(string basketId)
     {
         logger.LogInformation("Fetching deliver to contacts for {BasketId} from repository", basketId);
         return await apiClient.GetDeliverToContactsAsync(basketId);
     }
 
-    public async Task<List<BasketValueDto>> GetDeliveryModesAsync(string basketId)
+    public async Task<List<BasketValueDto?>> GetDeliveryModesAsync(string basketId)
     {
         logger.LogInformation("Fetching delivery modes for {BasketId} from repository", basketId);
         return await apiClient.GetDeliveryModesAsync(basketId);
@@ -89,19 +89,19 @@ public class BasketRepository(IBasketApiClient apiClient, ILogger<BasketReposito
         return await apiClient.GetBasketInvoiceInfoAsync(basketId);
     }
 
-    public async Task<List<AccountDto>> GetInvoiceToAccountsAsync(string basketId)
+    public async Task<List<AccountDto?>> GetInvoiceToAccountsAsync(string basketId)
     {
         logger.LogInformation("Fetching invoice to accounts for {BasketId} from repository", basketId);
         return await apiClient.GetInvoiceToAccountsAsync(basketId);
     }
 
-    public async Task<List<BasketValueDto>> GetTaxGroupsAsync(string basketId)
+    public async Task<List<BasketValueDto?>> GetTaxGroupsAsync(string basketId)
     {
         logger.LogInformation("Fetching tax groups for {BasketId} from repository", basketId);
         return await apiClient.GetTaxGroupsAsync(basketId);
     }
 
-    public async Task<List<BasketValueDto>> GetPaymentModesAsync(string basketId)
+    public async Task<List<BasketValueDto?>> GetPaymentModesAsync(string basketId)
     {
         logger.LogInformation("Fetching payment modes for {BasketId} from repository", basketId);
         return await apiClient.GetPaymentModesAsync(basketId);
@@ -125,19 +125,19 @@ public class BasketRepository(IBasketApiClient apiClient, ILogger<BasketReposito
         return await apiClient.GetBasketPricesInfoAsync(basketId);
     }
 
-    public async Task<List<BasketValueDto>> GetCouponsAsync(string basketId)
+    public async Task<List<BasketValueDto?>> GetCouponsAsync(string basketId)
     {
         logger.LogInformation("Fetching coupons for {BasketId} from repository", basketId);
         return await apiClient.GetCouponsAsync(basketId);
     }
 
-    public async Task<List<BasketValueDto>> GetWarrantyCostOptionsAsync(string basketId)
+    public async Task<List<BasketValueDto?>> GetWarrantyCostOptionsAsync(string basketId)
     {
         logger.LogInformation("Fetching warranty cost options for {BasketId} from repository", basketId);
         return await apiClient.GetWarrantyCostOptionsAsync(basketId);
     }
 
-    public async Task<List<BasketValueDto>> GetShippingCostOptionsAsync(string basketId)
+    public async Task<List<BasketValueDto?>> GetShippingCostOptionsAsync(string basketId)
     {
         logger.LogInformation("Fetching shipping cost options for {BasketId} from repository", basketId);
         return await apiClient.GetShippingCostOptionsAsync(basketId);

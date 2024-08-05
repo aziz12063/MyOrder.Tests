@@ -2,7 +2,7 @@
 
 public class ContactDto
 {
-    public string ContactId { get; set; } = string.Empty;
+    public string? ContactId { get; set; }
     public string? SocialTitle { get; set; }
     public string? FirstName { get; set; }
     public string? LastName { get; set; }

@@ -1,5 +1,6 @@
 ﻿using Fluxor;
 using MyOrder.Infrastructure.Repositories;
+using MyOrder.Shared.Dtos;
 
 namespace MyOrder.Store.PricesInfoUseCase
 {

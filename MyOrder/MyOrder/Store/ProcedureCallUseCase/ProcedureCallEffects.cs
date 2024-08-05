@@ -43,7 +43,7 @@ public class ProcedureCallEffects(IBasketRepository basketRepository, ILogger<Or
     public async Task HandlePostProcedureCallSuccessAction(PostProcedureCallSuccessAction receivedAction,
         IDispatcher dispatcher)
     {
-        if (receivedAction.ProcedureCallResponse.RefreshCalls is null || receivedAction.ProcedureCallResponse.RefreshCalls.Count < 1)
+        if (receivedAction?.ProcedureCallResponse?.RefreshCalls is null || receivedAction.ProcedureCallResponse.RefreshCalls.Count < 1)
         {
             logger.LogInformation("RefreshCall property is empty. No refresh calls to make.");
             return;

@@ -7,9 +7,9 @@ namespace MyOrder.Store.TradeInfoUseCase
         public string BasketId { get; } = basketId;
     }
 
-    public class FetchTradeInfoSuccessAction(BasketTradeInfoDto basketTradeInfo)
+    public class FetchTradeInfoSuccessAction(BasketTradeInfoDto? basketTradeInfo)
     {
-        public BasketTradeInfoDto BasketTradeInfo { get; } = basketTradeInfo;
+        public BasketTradeInfoDto? BasketTradeInfo { get; } = basketTradeInfo;
     }
 
     public class FetchTradeInfoFailureAction(string errorMessage)
