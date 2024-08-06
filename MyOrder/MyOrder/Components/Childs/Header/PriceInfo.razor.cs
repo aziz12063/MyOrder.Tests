@@ -10,6 +10,7 @@ namespace MyOrder.Components.Childs.Header
         private List<BasketValueDto?>? Coupons => State.Value.Coupons;
         private List<BasketValueDto?>? WarrantyCostOptions => State.Value.WarrantyCostOptions;
         private List<BasketValueDto?>? ShippingCostOptions => State.Value.ShippingCostOptions;
+        private bool IsLoading => State.Value.IsLoading;
 
 
         public string TotalVolumeAndWeight
@@ -24,9 +25,11 @@ namespace MyOrder.Components.Childs.Header
         }
 
         // i think to make this as a method to avoid call it a lot
+
+
         private string CouponValue
         {
-            get => NullOrWhiteSpaceHelper(BasketPricesInfo.Coupon.Value);
+            get => NullOrWhiteSpaceHelper(BasketPricesInfo?.Coupon?.Value);
             set
             {
 
@@ -53,7 +56,7 @@ namespace MyOrder.Components.Childs.Header
             }
         }
 
-        private decimal? ShippingCostAmountValue
+        private decimal ShippingCostAmountValue
         {
             get => NullOrWhiteSpaceHelper(BasketPricesInfo.ShippingCostAmount.Value);
             set
@@ -63,7 +66,7 @@ namespace MyOrder.Components.Childs.Header
             }
         }
 
-        private int? OrderDiscountRateValue
+        private int OrderDiscountRateValue
         {
             get => NullOrWhiteSpaceHelper(BasketPricesInfo.OrderDiscountRate.Value);
             set
@@ -74,9 +77,9 @@ namespace MyOrder.Components.Childs.Header
             }
         }
 
-        private bool? OrderLastColumnDiscountValue
+        private bool OrderLastColumnDiscountValue
         {
-            get => NullOrWhiteSpaceHelper(BasketPricesInfo?.OrderLastColumnDiscount?.Value); // check this
+            get => NullOrWhiteSpaceHelper(BasketPricesInfo.OrderLastColumnDiscount.Value); // check this
             set
             {
                 BasketPricesInfo.OrderLastColumnDiscount.Value = value;
@@ -87,8 +90,8 @@ namespace MyOrder.Components.Childs.Header
 
 
         // make them in BaseFluxorComponent??
-        private static decimal? NullOrWhiteSpaceHelper(decimal? value) => value == null || value == 0 ? 0 : value;
-        private static int? NullOrWhiteSpaceHelper(int? value) => value == null || value == 0 ? 0 : value;
-        private static bool? NullOrWhiteSpaceHelper(bool? value) => value == null || value == false ? false : value;// i make just value if we keep the init value as false
+        private static decimal NullOrWhiteSpaceHelper(decimal value) => value == null || value == 0 ? 0 : value;
+        private static int NullOrWhiteSpaceHelper(int value) => value == null || value == 0 ? 0 : value;
+        private static bool NullOrWhiteSpaceHelper(bool value) => value == null || value == false ? false : value;// i make just value if we keep the init value as false
     }
 }

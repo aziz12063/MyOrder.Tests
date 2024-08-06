@@ -27,7 +27,7 @@ namespace MyOrder.Components.Childs.Shared
             Dispatcher.Dispatch(CreateFetchAction(BasketId));
         }
 
-        protected virtual void OnStateChanged(object sender, EventArgs e)
+        protected virtual void OnStateChanged(object? sender, EventArgs e)
         {
             InvokeAsync(StateHasChanged);
         }
@@ -37,13 +37,13 @@ namespace MyOrder.Components.Childs.Shared
             Dispatcher.Dispatch(CreateFetchAction(basketId));
         }
 
-        protected bool IsHidden<T>(Field<T> field) => field.Status == "hidden";
+        protected bool IsHidden<T>(Field<T>? field) => field?.Status == "hidden";
 
-        protected bool IsReadOnly<T>(Field<T> field) => field.Status == "readOnly";
+        protected bool IsReadOnly<T>(Field<T>? field) => field?.Status == "readOnly";
 
-        protected bool IsReadWrite<T>(Field<T> field) => field.Status == "readWrite";
+        protected bool IsReadWrite<T>(Field<T>? field) => field?.Status == "readWrite";
 
-        protected bool IsRequired<T>(Field<T> field) => field.Status == "required";
+        protected bool IsRequired<T>(Field<T>? field) => field?.Status == "required";
 
         protected void UpdateProcedureCall(string? newValue, List<string>? procedureCall)
         {

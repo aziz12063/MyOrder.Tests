@@ -15,13 +15,13 @@ namespace MyOrder.Store.PricesInfoUseCase
         public PricesInfoState() { }
 
         public PricesInfoState(BasketPricesInfoDto? pricesInfo, List<BasketValueDto?>? coupons,
-            List<BasketValueDto?>? warrantyCostOptions, List<BasketValueDto?>? shippingCostOptions)
+            List<BasketValueDto?>? warrantyCostOptions, List<BasketValueDto?>? shippingCostOptions, bool isLoading)
         {
             PricesInfo = pricesInfo;
             Coupons = coupons;
             WarrantyCostOptions = warrantyCostOptions;
             ShippingCostOptions = shippingCostOptions;
-            IsLoading = false;
+            IsLoading = isLoading;
         }
     }
 }

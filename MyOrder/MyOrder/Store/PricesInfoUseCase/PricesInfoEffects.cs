@@ -18,8 +18,11 @@ namespace MyOrder.Store.PricesInfoUseCase
 
                 await Task.WhenAll(pricesInfoTask, couponsTask, warrantyCostOptionsTask, shippingCostOptionsTask);
 
-                dispatcher.Dispatch(new FetchPricesInfoSuccessAction(pricesInfoTask.Result, couponsTask.Result,
-                    warrantyCostOptionsTask.Result, shippingCostOptionsTask.Result));
+                if (pricesInfoTask is not null && couponsTask is not null && warrantyCostOptionsTask is not null && shippingCostOptionsTask is not null)
+                {
+                    dispatcher.Dispatch(new FetchPricesInfoSuccessAction(pricesInfoTask.Result, couponsTask.Result,
+                   warrantyCostOptionsTask.Result, shippingCostOptionsTask.Result));
+                }
             }
             catch (Exception e)
             {
