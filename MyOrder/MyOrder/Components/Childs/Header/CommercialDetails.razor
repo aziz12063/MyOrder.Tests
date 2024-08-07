@@ -1,50 +1,40 @@
-﻿<p>Informations Commerciales</p>
-@* <div class="col-md-3" style="padding: 5px;">
-    <RadzenCard class="card-container">
-        <ChildContent>
-            <h4 class="card-title">Commercial Details</h4>
-            <RadzenFieldset Text="Sales Information" Style="margin-bottom: 20px;">
-                <div class="fieldset-content">
-                    <label class="field-label">Sales Id</label>
-                    <RadzenTextBox @bind-Value="BasketHeaderDto.SalesId" Placeholder="Sales Id" Style="width: 100%;" />
-                </div>
-                <div class="fieldset-content">
-                    <label class="field-label">Sales Responsible</label>
-                    <RadzenTextBox @bind-Value="BasketHeaderDto.SalesResponsible" Placeholder="Sales Responsible" Style="width: 100%;" />
-                </div>
-                <div class="fieldset-content">
-                    <label class="field-label">Sales Status</label>
-                    <RadzenTextBox @bind-Value="SalesStatusString" Placeholder="Sales Status" Style="width: 100%;" />
-                </div>
-                <div class="fieldset-content">
-                    <label class="field-label">Order Date</label>
-                    <RadzenDatePicker @bind-Value="BasketHeaderDto.OrderDate" Placeholder="Select Order Date" Style="width: 100%;" />
-                </div>
-                <div class="fieldset-content">
-                    <label class="field-label">Order Note</label>
-                    <RadzenTextBox @bind-Value="BasketHeaderDto.OrderNote" Placeholder="Order Note" Multiline="true" Rows="4" Style="width: 100%;" />
-                </div>
-            </RadzenFieldset>
-        </ChildContent>
-    </RadzenCard>
-</div>
+﻿@* @using MyOrder.Store.TradeInfoUseCase
+@inherits BaseFluxorComponent<TradeInfoState, FetchTradeInfoAction>
+ *@
+<MudContainer Class="pa-0">
+    <MudStack Spacing="8">
+        <MudText Typo="Typo.h6" Color="Color.Secondary">Commercial info</MudText>
+        <MudStack Spacing="2">
+            <MudText Typo="Typo.body2" Color="Color.Secondary">FieldNameForChiffreD'Affaire</MudText>
+            <MudDataGrid Items="@Turnover" Filterable="false" SortMode="@SortMode.None" Groupable="false">
+                <Columns>
+                    <PropertyColumn Property="x => x.Name" />
+                    <PropertyColumn Property="x => x.Ytd" />
+                    <PropertyColumn Property="x => x.YtdN1" />
+                    <PropertyColumn Property="x => x.N1" />
+                    <PropertyColumn Property="x => x.N2" />
+                </Columns>
+            </MudDataGrid>
+        </MudStack>
 
-@code
-{
-    public BasketHeaderDto? BasketHeaderDto { get; set; } = new();
+        <MudStack Spacing="2" >
+            <MudText Typo="Typo.body2" Color="Color.Secondary">FieldNameForSecteur d'activité</MudText>
+            <MudTextField Margin="Margin.Dense"
+                          T="string"
+                          Variant="Variant.Outlined" 
+                          Style="Width:200px;"
+                          Value="string.Empty">
 
-    string SalesStatusString
-    {
-        get => BasketHeaderDto.SalesStatus.ToString();
-        set
-        {
-            // Optionally handle parsing or validation if needed
-            // For example, you could parse the string back to an integer
-            if (int.TryParse(value, out int parsedValue))
-            {
-                BasketHeaderDto.SalesStatus = parsedValue;
-            }
-        }
-    }
-
-} *@
+            </MudTextField>
+        </MudStack>
+        <MudStack Spacing="2">
+            <MudText Typo="Typo.body2" Color="Color.Secondary">FieldNameForContrats en cours</MudText>
+            <MudTextField Margin="Margin.Dense"
+                          T="string"
+                          Variant="Variant.Outlined" 
+                          Style="Width:200px;"
+                          Value="string.Empty">
+            </MudTextField>
+        </MudStack>
+    </MudStack>
+</MudContainer>
