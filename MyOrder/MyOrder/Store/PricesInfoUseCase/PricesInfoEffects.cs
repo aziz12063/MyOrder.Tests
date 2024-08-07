@@ -11,18 +11,26 @@ namespace MyOrder.Store.PricesInfoUseCase
         {
             try
             {
-                var pricesInfoTask = basketRepository.GetBasketPricesInfoAsync(action.BasketId);
-                var couponsTask = basketRepository.GetCouponsAsync(action.BasketId);
-                var warrantyCostOptionsTask = basketRepository.GetWarrantyCostOptionsAsync(action.BasketId);
-                var shippingCostOptionsTask = basketRepository.GetShippingCostOptionsAsync(action.BasketId);
+                //var pricesInfoTask = basketRepository.GetBasketPricesInfoAsync(action.BasketId);
+                //var couponsTask = basketRepository.GetCouponsAsync(action.BasketId);
+                //var warrantyCostOptionsTask = basketRepository.GetWarrantyCostOptionsAsync(action.BasketId);
+                //var shippingCostOptionsTask = basketRepository.GetShippingCostOptionsAsync(action.BasketId);
 
-                await Task.WhenAll(pricesInfoTask, couponsTask, warrantyCostOptionsTask, shippingCostOptionsTask);
+                //await Task.WhenAll(pricesInfoTask, couponsTask, warrantyCostOptionsTask, shippingCostOptionsTask);
 
-                if (pricesInfoTask is not null && couponsTask is not null && warrantyCostOptionsTask is not null && shippingCostOptionsTask is not null)
-                {
-                    dispatcher.Dispatch(new FetchPricesInfoSuccessAction(pricesInfoTask.Result, couponsTask.Result,
-                   warrantyCostOptionsTask.Result, shippingCostOptionsTask.Result));
-                }
+                //if (pricesInfoTask is not null && couponsTask is not null && warrantyCostOptionsTask is not null && shippingCostOptionsTask is not null)
+                //{
+                //    dispatcher.Dispatch(new FetchPricesInfoSuccessAction(pricesInfoTask.Result, couponsTask.Result,
+                //   warrantyCostOptionsTask.Result, shippingCostOptionsTask.Result));
+                //}
+
+                // to delete
+               
+                    logger.LogInformation("in NoDataLoadedAction");
+                    dispatcher.Dispatch(new NoDataLoadedAction());
+                    
+              
+
             }
             catch (Exception e)
             {

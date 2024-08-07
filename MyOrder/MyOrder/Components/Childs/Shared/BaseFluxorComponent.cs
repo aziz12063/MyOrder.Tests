@@ -45,9 +45,13 @@ namespace MyOrder.Components.Childs.Shared
 
         protected bool IsRequired<T>(Field<T>? field) => field?.Status == "required";
 
-        protected void UpdateProcedureCall(string? newValue, List<string>? procedureCall)
+        protected void UpdateProcedureCall(string newValue, List<string>? procedureCall)
         {
-            if (procedureCall == null) return;
+            if (procedureCall == null)
+            {
+                logger.LogWarning("ProcedureCall is  null ");
+                return;
+            }
 
             if (procedureCall is { Count: > 0 })
             {
@@ -55,9 +59,10 @@ namespace MyOrder.Components.Childs.Shared
                 OnPropertyUpdatedHandler(procedureCall);
             }
         }
-        protected void OnPropertyUpdatedHandler(List<string> procedureCall)
+        protected void OnPropertyUpdatedHandler(List<string> procedureCall)// this method is called only from UpdateProcedureCall
+                                                                           // and we already check for:  if (procedureCall is { Count: > 0 })
         {
-            if (procedureCall is null || procedureCall.Count < 1)
+            if (procedureCall is null || procedureCall.Count < 1)           // so no need for this check
             {
                 logger.LogWarning("ProcedureCall is either null or has 0 item.");
                 return;

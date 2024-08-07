@@ -1,6 +1,8 @@
 ﻿using MyOrder.Components.Childs.Shared;
 using MyOrder.Shared.Dtos;
 using MyOrder.Store.PricesInfoUseCase;
+using System.Formats.Asn1;
+using static MudBlazor.Colors;
 
 namespace MyOrder.Components.Childs.Header
 {
@@ -11,7 +13,7 @@ namespace MyOrder.Components.Childs.Header
         private List<BasketValueDto?>? WarrantyCostOptions => State.Value.WarrantyCostOptions;
         private List<BasketValueDto?>? ShippingCostOptions => State.Value.ShippingCostOptions;
         private bool IsLoading => State.Value.IsLoading;
-
+        
 
         public string TotalVolumeAndWeight
         {
@@ -25,21 +27,60 @@ namespace MyOrder.Components.Childs.Header
         }
 
         // i think to make this as a method to avoid call it a lot
+        private bool SetValue<T>(Field<T> field, object obj)
+        {
+            if (obj == null)
+            {
+                logger.LogWarning($"the obj is null .");
+                return false;
+            }
+            else if (field == null)
+            {
+                logger.LogWarning($"the field is null .");
+                return false;
+            }
+            else if (field.Value == null)
+            {
+                logger.LogWarning($"the field.Value is null .");
+                return false;
+            }
+            else return true;
+           
+        }
 
-
+        
         private string CouponValue
         {
             get => NullOrWhiteSpaceHelper(BasketPricesInfo?.Coupon?.Value);
             set
             {
+                // i filter the list befor set the list to the mudselect
+                //so i will never set a null value
 
-                BasketPricesInfo.Coupon.Value = value;
-                UpdateProcedureCall(value, BasketPricesInfo.Coupon.ProcedureCall);
+                //if(BasketPricesInfo == null)
+                //{
+                //    logger.LogWarning($"the BasketPricesInfo is null .");
+                //}
+                //else if (BasketPricesInfo.Coupon == null)
+                //{
+                //    logger.LogWarning($"the BasketPricesInfo.Coupon is null .");
+                //}
+                //else if(BasketPricesInfo.Coupon.Value == null)  
+                //{
+                //    logger.LogWarning($"the BasketPricesInfo.Coupon.Value is null .");
+                //}
+                if(SetValue<string>(BasketPricesInfo.Coupon, BasketPricesInfo))
+                {
+                    logger.LogWarning($"the CouponValue  is not null .");
+                    BasketPricesInfo.Coupon.Value = value;
+                    UpdateProcedureCall(value, BasketPricesInfo.Coupon.ProcedureCall);
+                }
+
             }
         }
         private string WarrantyCostOptionsValue
         {
-            get => NullOrWhiteSpaceHelper(BasketPricesInfo.WarrantyCostOption.Value);
+            get => NullOrWhiteSpaceHelper(BasketPricesInfo?.WarrantyCostOption?.Value);
             set
             {
                 BasketPricesInfo.WarrantyCostOption.Value = value;
@@ -48,7 +89,7 @@ namespace MyOrder.Components.Childs.Header
         }
         private string ShippingCostOptionValue
         {
-            get => NullOrWhiteSpaceHelper(BasketPricesInfo.ShippingCostOption.Value);
+            get => NullOrWhiteSpaceHelper(BasketPricesInfo?.ShippingCostOption?.Value);
             set
             {
                 BasketPricesInfo.ShippingCostOption.Value = value;
@@ -56,9 +97,9 @@ namespace MyOrder.Components.Childs.Header
             }
         }
 
-        private decimal ShippingCostAmountValue
+        private decimal? ShippingCostAmountValue
         {
-            get => NullOrWhiteSpaceHelper(BasketPricesInfo.ShippingCostAmount.Value);
+            get => NullOrWhiteSpaceHelper(BasketPricesInfo?.ShippingCostAmount?.Value);
             set
             {
                 BasketPricesInfo.ShippingCostAmount.Value = value;
@@ -66,9 +107,9 @@ namespace MyOrder.Components.Childs.Header
             }
         }
 
-        private int OrderDiscountRateValue
+        private int? OrderDiscountRateValue
         {
-            get => NullOrWhiteSpaceHelper(BasketPricesInfo.OrderDiscountRate.Value);
+            get => NullOrWhiteSpaceHelper(BasketPricesInfo?.OrderDiscountRate?.Value);
             set
             {
                 BasketPricesInfo.OrderDiscountRate.Value = value;
@@ -77,9 +118,9 @@ namespace MyOrder.Components.Childs.Header
             }
         }
 
-        private bool OrderLastColumnDiscountValue
+        private bool? OrderLastColumnDiscountValue
         {
-            get => NullOrWhiteSpaceHelper(BasketPricesInfo.OrderLastColumnDiscount.Value); // check this
+            get => NullOrWhiteSpaceHelper(BasketPricesInfo?.OrderLastColumnDiscount?.Value); // check this
             set
             {
                 BasketPricesInfo.OrderLastColumnDiscount.Value = value;
@@ -87,11 +128,9 @@ namespace MyOrder.Components.Childs.Header
             }
         }
 
-
-
         // make them in BaseFluxorComponent??
-        private static decimal NullOrWhiteSpaceHelper(decimal value) => value == null || value == 0 ? 0 : value;
-        private static int NullOrWhiteSpaceHelper(int value) => value == null || value == 0 ? 0 : value;
-        private static bool NullOrWhiteSpaceHelper(bool value) => value == null || value == false ? false : value;// i make just value if we keep the init value as false
+        private static decimal? NullOrWhiteSpaceHelper(decimal? value) => value == null || value == 0 ? 0 : value;
+        private static int? NullOrWhiteSpaceHelper(int? value) => value == null || value == 0 ? 0 : value;
+        private static bool? NullOrWhiteSpaceHelper(bool? value) => value == null || value == false ? false : value;// i make just value if we keep the init value as false
     }
 }
