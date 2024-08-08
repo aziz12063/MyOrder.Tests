@@ -1,4 +1,150 @@
-﻿<p>Invoice Details</p>
+﻿@using MyOrder.Store.InvoiceInfoUseCase
+@inherits BaseFluxorComponent<InvoiceInfoState, FetchInvoiceInfoAction>
+
+<MudContainer Class="pa-0">
+    <MudStack Spacing="4">
+        <MudText Typo="Typo.body2" Color="Color.Secondary">Facturation</MudText>
+        <MudItem xs="10">
+            <!--Compte facturé-->
+            <MudText Typo="Typo.body2" Color="Color.Secondary">Compte facturé</MudText>
+            <MudGrid Spacing="0">
+                
+                    <MudItem xs="12">
+                        <MudSelect Margin="Margin.Dense"
+                                   T="string"
+                                   Variant="Variant.Outlined"
+                                   @bind-Value="@BasketInvoiceInfo.Account.Value.AccountId">
+                        @foreach (var item in InvoiceToAccounts)
+                        {
+                            <MudSelectItem T="string" Value="@item.AccountId">@item.AccountId</MudSelectItem>
+                        }
+                        </MudSelect>
+                    </MudItem>
+                    <MudItem xs="12">
+                        <MudTextField Typo="Typo.caption"
+                                      Lines="4"
+                                      Variant="Variant.Outlined"
+                                      FullWidth="true"
+                                      Margin="Margin.Dense"
+                                      ReadOnly="true"
+                                      Value="string.Empty" />
+                    </MudItem>
+               
+            </MudGrid>
+
+            <!--Siret-->
+            <MudGrid>
+                <MudItem xs="4">
+                    <MudText>Siret</MudText>
+                </MudItem>
+                <MudItem xs="8">
+                    <MudTextField Margin="Margin.Dense" T="string"
+                                  Variant="Variant.Outlined" Width="200px"
+                                  Disabled="false"
+                                  Value="@BasketInvoiceInfo.SiretId.Value">
+                    </MudTextField>
+                </MudItem>
+            </MudGrid>
+            <!--Groupe de taxe-->
+            <MudGrid>
+                <MudItem xs="4">
+                    <MudText Typo="Typo.body2">Groupe de taxe</MudText>
+                </MudItem>
+                <MudItem xs="8">
+                    <MudSelect Margin="Margin.Dense"
+                               T="string"
+                               Variant="Variant.Outlined"
+                               @bind-Value="@BasketInvoiceInfo.TaxGroup.Value">
+                        @foreach (var item in TaxGroups)
+                        {
+                            <MudSelectItem T="string" Value="@item.Value">@item.Value</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+            </MudGrid>
+
+            <!--Paiment du client-->
+            <MudText Typo="Typo.body2" Color="Color.Secondary">Paiment du client</MudText>
+            <MudGrid Spacing="1">
+                <MudItem xs="4">
+                    <MudText Typo="Typo.body2">Conditions</MudText>
+                </MudItem>
+                <MudItem xs="8">
+                    <MudSelect Margin="Margin.Dense"
+                               T="string"
+                               Variant="Variant.Outlined"
+                               Value="@BasketInvoiceInfo.PaymentTerm.Value">
+                        
+                    </MudSelect>
+                </MudItem>
+            </MudGrid>
+            <MudGrid Spacing="1">
+                <MudItem xs="4">
+                    <MudText Typo="Typo.body2">Mode</MudText>
+                </MudItem>
+                <MudItem xs="8">
+                    <MudSelect Margin="Margin.Dense"
+                               T="string"
+                               Variant="Variant.Outlined"
+                               @bind-Value="@BasketInvoiceInfo.PaymentTerm.Value">
+                        @foreach (var item in PaymentModes)
+                        {
+                            <MudSelectItem T="string" Value="@item.Value">@item.Value</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+            </MudGrid>
+
+            <!--Entities public/Chorus-->
+            <MudText Typo="Typo.body2" Color="Color.Secondary">Entities public/Chorus</MudText>
+            <MudGrid Spacing="1">
+                <MudItem xs="4">
+                    <MudText Typo="Typo.body2">Service exéc</MudText>
+                </MudItem>
+                <MudItem xs="8">
+                    <MudTextField Margin="Margin.Dense"
+                               T="string"
+                               Variant="Variant.Outlined"
+                               Required="@IsPublicEntityValue"
+                               ReadOnly="@(!IsPublicEntityValue)"
+                                  Value="@(IsPublicEntityValue &&
+                                        BasketInvoiceInfo != null &&
+                                        BasketInvoiceInfo.PublicEntityExecutingService != null &&
+                                        BasketInvoiceInfo.PublicEntityExecutingService.Value != null ?
+                                        BasketInvoiceInfo.PublicEntityExecutingService.Value : "")">
+                    </MudTextField>
+                </MudItem>
+            </MudGrid>
+            <MudGrid Spacing="1">
+                <MudItem xs="4">
+                    <MudText Typo="Typo.body2">Eng.juridique</MudText>
+                </MudItem>
+                <MudItem xs="8">
+                    <MudTextField Margin="Margin.Dense"
+                               T="string"
+                               Variant="Variant.Outlined"
+                                  Value="@BasketInvoiceInfo.PublicEntityLegalCommitment.Value">
+                    </MudTextField>
+                </MudItem>
+            </MudGrid>
+
+            <!--Notes de facturation-->
+            <MudText Typo="Typo.body2" Color="Color.Secondary">Notes de facturation</MudText>
+            <MudGrid Spacing="1">
+                <MudItem xs="8">
+                    <MudTextField Typo="Typo.caption"
+                                  Lines="4"
+                                  Variant="Variant.Outlined"
+                                  FullWidth="true"
+                                  Margin="Margin.Dense"
+                                  ReadOnly="true"
+                                  Value="@BasketInvoiceInfo.Note.Value">
+                    </MudTextField>
+                </MudItem>
+            </MudGrid>
+        </MudItem>
+    </MudStack>
+</MudContainer>
 
 @* <div class="col-md-3" style="padding: 5px;">
     <RadzenCard class="card-container">

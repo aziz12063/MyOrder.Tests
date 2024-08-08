@@ -81,6 +81,9 @@ namespace MyOrder.Components.Childs.Shared
             }
         }
         protected static string NullOrWhiteSpaceHelper(string? value) => string.IsNullOrWhiteSpace(value) ? "-" : value;
+        protected static decimal? NullOrWhiteSpaceHelper(decimal? value) => value == null || value == 0 ? 0 : value;// i will make the return non-nullable
+        protected static int? NullOrWhiteSpaceHelper(int? value) => value == null || value == 0 ? 0 : value;// i will make the return non-nullable
+        protected static bool? NullOrWhiteSpaceHelper(bool? value) => value ?? false;// i will make the return non-nullable
         public void Dispose()
         {
             State.StateChanged -= OnStateChanged;

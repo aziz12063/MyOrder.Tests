@@ -25,7 +25,7 @@ namespace MyOrder.Store.PricesInfoUseCase
     }
 
     // to delete
-    public class NoDataLoadedAction
+    public class NoDataLoadedPriceInfoAction
     {
 
         public BasketPricesInfoDto? PricesInfo = new()

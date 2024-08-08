@@ -1,8 +1,8 @@
-﻿@* @using MyOrder.Store.TradeInfoUseCase
+﻿@using MyOrder.Store.TradeInfoUseCase
 @inherits BaseFluxorComponent<TradeInfoState, FetchTradeInfoAction>
- *@
+
 <MudContainer Class="pa-0">
-    <MudStack Spacing="8">
+    <MudStack Spacing="4">
         <MudText Typo="Typo.h6" Color="Color.Secondary">Commercial info</MudText>
         <MudStack Spacing="2">
             <MudText Typo="Typo.body2" Color="Color.Secondary">FieldNameForChiffreD'Affaire</MudText>
@@ -18,22 +18,96 @@
         </MudStack>
 
         <MudStack Spacing="2" >
-            <MudText Typo="Typo.body2" Color="Color.Secondary">FieldNameForSecteur d'activité</MudText>
-            <MudTextField Margin="Margin.Dense"
+            @* <MudText Typo="Typo.body2" Color="Color.Secondary">FieldNameForSecteur d'activité</MudText> *@
+            <MudTextField Label="FieldNameForSecteur d'activité"
+                          Margin="Margin.None"
+                          T="string"
+                          Variant="Variant.Outlined"
+                          Style="Width:200px; height: 35px"
+                          Value="@(BasketTradeInfoDto != null &&
+                                   BasketTradeInfoDto.Contract != null &&
+                                   BasketTradeInfoDto.Contract.ContractId != null &&
+                                   BasketTradeInfoDto.Contract.ContractId.Value != null ?
+                                   BasketTradeInfoDto.Contract.ContractId.Value : "Aucun contrat en cours")">
+
+            </MudTextField>
+        </MudStack>
+        <MudStack Spacing="2">
+            <MudText Typo="Typo.body2" Color="Color.Secondary">FieldNameForContrats en cours</MudText>
+            <MudTextField Margin="Margin.None"
                           T="string"
                           Variant="Variant.Outlined" 
-                          Style="Width:200px;"
-                          Value="string.Empty">
-
+                          Style="Width:200px;height: 35px;"
+                          Value="@(BasketTradeInfoDto != null &&
+                                   BasketTradeInfoDto.Contract != null &&
+                                   BasketTradeInfoDto.Contract.ContractId != null &&
+                                   BasketTradeInfoDto.Contract.ContractId.Value != null ?
+                                   BasketTradeInfoDto.Contract.ContractId.Value : "Aucun contrat en cours")">
             </MudTextField>
         </MudStack>
         <MudStack Spacing="2">
             <MudText Typo="Typo.body2" Color="Color.Secondary">FieldNameForContrats en cours</MudText>
             <MudTextField Margin="Margin.Dense"
                           T="string"
-                          Variant="Variant.Outlined" 
-                          Style="Width:200px;"
-                          Value="string.Empty">
+                          Variant="Variant.Outlined"
+                          Style="Width:200px; height: 35px;"
+                          Value="@(BasketTradeInfoDto != null &&
+                                   BasketTradeInfoDto.Contract != null &&
+                                   BasketTradeInfoDto.Contract.ContractId != null &&
+                                   BasketTradeInfoDto.Contract.ContractId.Value != null ?
+                                   BasketTradeInfoDto.Contract.ContractId.Value : "Aucun contrat en cours")">
+            </MudTextField>
+        </MudStack>
+        <MudStack Spacing="2">
+            <MudText Typo="Typo.body2" Color="Color.Secondary">FieldNameForContrats en cours</MudText>
+            <MudTextField Margin="Margin.Dense"
+                          T="string"
+                          Variant="Variant.Outlined"
+                          Style="Width:200px;height: 35px;"
+                          Value="@(BasketTradeInfoDto != null &&
+                                   BasketTradeInfoDto.Contract != null &&
+                                   BasketTradeInfoDto.Contract.ContractId != null &&
+                                   BasketTradeInfoDto.Contract.ContractId.Value != null ?
+                                   BasketTradeInfoDto.Contract.ContractId.Value : "Aucun contrat en cours")">
+            </MudTextField>
+        </MudStack>
+        <MudStack Spacing="2">
+            <MudText Typo="Typo.body2" Color="Color.Secondary">FieldNameForContrats en cours</MudText>
+            <MudTextField Margin="Margin.Dense"
+                          T="string"
+                          Variant="Variant.Outlined"
+                          Style="Width:200px;height: 35px;"
+                          Value="@(BasketTradeInfoDto != null &&
+                                   BasketTradeInfoDto.Contract != null &&
+                                   BasketTradeInfoDto.Contract.ContractId != null &&
+                                   BasketTradeInfoDto.Contract.ContractId.Value != null ?
+                                   BasketTradeInfoDto.Contract.ContractId.Value : "Aucun contrat en cours")">
+            </MudTextField>
+        </MudStack>
+        <MudStack Spacing="2">
+            <MudText Typo="Typo.body2" Color="Color.Secondary">FieldNameForContrats en cours</MudText>
+            <MudTextField Margin="Margin.Dense"
+                          T="string"
+                          Variant="Variant.Outlined"
+                          Style="Width:200px;height: 35px;"
+                          Value="@(BasketTradeInfoDto != null &&
+                                   BasketTradeInfoDto.Contract != null &&
+                                   BasketTradeInfoDto.Contract.ContractId != null &&
+                                   BasketTradeInfoDto.Contract.ContractId.Value != null ?
+                                   BasketTradeInfoDto.Contract.ContractId.Value : "Aucun contrat en cours")">
+            </MudTextField>
+        </MudStack>
+        <MudStack Spacing="2">
+            <MudText Typo="Typo.body2" Color="Color.Secondary">FieldNameForContrats en cours</MudText>
+            <MudTextField Margin="Margin.Dense"
+                          T="string"
+                          Variant="Variant.Outlined"
+                          Style="Width:200px;height: 35px;"
+                          Value="@(BasketTradeInfoDto != null &&
+                                   BasketTradeInfoDto.Contract != null &&
+                                   BasketTradeInfoDto.Contract.ContractId != null &&
+                                   BasketTradeInfoDto.Contract.ContractId.Value != null ?
+                                   BasketTradeInfoDto.Contract.ContractId.Value : "Aucun contrat en cours")">
             </MudTextField>
         </MudStack>
     </MudStack>

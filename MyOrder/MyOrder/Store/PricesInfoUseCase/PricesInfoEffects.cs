@@ -27,7 +27,7 @@ namespace MyOrder.Store.PricesInfoUseCase
                 // to delete
                
                     logger.LogInformation("in NoDataLoadedAction");
-                    dispatcher.Dispatch(new NoDataLoadedAction());
+                    dispatcher.Dispatch(new NoDataLoadedPriceInfoAction());
                     
               
 
