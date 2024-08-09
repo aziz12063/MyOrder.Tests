@@ -47,12 +47,6 @@ namespace MyOrder.Components.Childs.Shared
 
         protected void UpdateProcedureCall(string newValue, List<string>? procedureCall)
         {
-            if (procedureCall == null)
-            {
-                logger.LogWarning("ProcedureCall is  null ");
-                return;
-            }
-
             if (procedureCall is { Count: > 0 })
             {
                 procedureCall[^1] = newValue ?? string.Empty; // Update with the new value or empty string if null

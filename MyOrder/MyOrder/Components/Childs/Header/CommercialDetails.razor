@@ -5,7 +5,7 @@
     <MudStack Spacing="4">
         <MudText Typo="Typo.h6" Color="Color.Secondary">Commercial info</MudText>
         <MudStack Spacing="2">
-            <MudText Typo="Typo.body2" Color="Color.Secondary">FieldNameForChiffreD'Affaire</MudText>
+            <MudText Typo="Typo.body2" Color="Color.Secondary">ChiffreD'Affaire</MudText>
             <MudDataGrid Items="@Turnover" Filterable="false" SortMode="@SortMode.None" Groupable="false">
                 <Columns>
                     <PropertyColumn Property="x => x.Name" />
@@ -17,91 +17,11 @@
             </MudDataGrid>
         </MudStack>
 
-        <MudStack Spacing="2" >
-            @* <MudText Typo="Typo.body2" Color="Color.Secondary">FieldNameForSecteur d'activité</MudText> *@
-            <MudTextField Label="FieldNameForSecteur d'activité"
-                          Margin="Margin.None"
-                          T="string"
-                          Variant="Variant.Outlined"
-                          Style="Width:200px; height: 35px"
-                          Value="@(BasketTradeInfoDto != null &&
-                                   BasketTradeInfoDto.Contract != null &&
-                                   BasketTradeInfoDto.Contract.ContractId != null &&
-                                   BasketTradeInfoDto.Contract.ContractId.Value != null ?
-                                   BasketTradeInfoDto.Contract.ContractId.Value : "Aucun contrat en cours")">
-
-            </MudTextField>
-        </MudStack>
         <MudStack Spacing="2">
-            <MudText Typo="Typo.body2" Color="Color.Secondary">FieldNameForContrats en cours</MudText>
+            <MudText Typo="Typo.body2" Color="Color.Secondary">Contrats en cours</MudText>
             <MudTextField Margin="Margin.None"
                           T="string"
                           Variant="Variant.Outlined" 
-                          Style="Width:200px;height: 35px;"
-                          Value="@(BasketTradeInfoDto != null &&
-                                   BasketTradeInfoDto.Contract != null &&
-                                   BasketTradeInfoDto.Contract.ContractId != null &&
-                                   BasketTradeInfoDto.Contract.ContractId.Value != null ?
-                                   BasketTradeInfoDto.Contract.ContractId.Value : "Aucun contrat en cours")">
-            </MudTextField>
-        </MudStack>
-        <MudStack Spacing="2">
-            <MudText Typo="Typo.body2" Color="Color.Secondary">FieldNameForContrats en cours</MudText>
-            <MudTextField Margin="Margin.Dense"
-                          T="string"
-                          Variant="Variant.Outlined"
-                          Style="Width:200px; height: 35px;"
-                          Value="@(BasketTradeInfoDto != null &&
-                                   BasketTradeInfoDto.Contract != null &&
-                                   BasketTradeInfoDto.Contract.ContractId != null &&
-                                   BasketTradeInfoDto.Contract.ContractId.Value != null ?
-                                   BasketTradeInfoDto.Contract.ContractId.Value : "Aucun contrat en cours")">
-            </MudTextField>
-        </MudStack>
-        <MudStack Spacing="2">
-            <MudText Typo="Typo.body2" Color="Color.Secondary">FieldNameForContrats en cours</MudText>
-            <MudTextField Margin="Margin.Dense"
-                          T="string"
-                          Variant="Variant.Outlined"
-                          Style="Width:200px;height: 35px;"
-                          Value="@(BasketTradeInfoDto != null &&
-                                   BasketTradeInfoDto.Contract != null &&
-                                   BasketTradeInfoDto.Contract.ContractId != null &&
-                                   BasketTradeInfoDto.Contract.ContractId.Value != null ?
-                                   BasketTradeInfoDto.Contract.ContractId.Value : "Aucun contrat en cours")">
-            </MudTextField>
-        </MudStack>
-        <MudStack Spacing="2">
-            <MudText Typo="Typo.body2" Color="Color.Secondary">FieldNameForContrats en cours</MudText>
-            <MudTextField Margin="Margin.Dense"
-                          T="string"
-                          Variant="Variant.Outlined"
-                          Style="Width:200px;height: 35px;"
-                          Value="@(BasketTradeInfoDto != null &&
-                                   BasketTradeInfoDto.Contract != null &&
-                                   BasketTradeInfoDto.Contract.ContractId != null &&
-                                   BasketTradeInfoDto.Contract.ContractId.Value != null ?
-                                   BasketTradeInfoDto.Contract.ContractId.Value : "Aucun contrat en cours")">
-            </MudTextField>
-        </MudStack>
-        <MudStack Spacing="2">
-            <MudText Typo="Typo.body2" Color="Color.Secondary">FieldNameForContrats en cours</MudText>
-            <MudTextField Margin="Margin.Dense"
-                          T="string"
-                          Variant="Variant.Outlined"
-                          Style="Width:200px;height: 35px;"
-                          Value="@(BasketTradeInfoDto != null &&
-                                   BasketTradeInfoDto.Contract != null &&
-                                   BasketTradeInfoDto.Contract.ContractId != null &&
-                                   BasketTradeInfoDto.Contract.ContractId.Value != null ?
-                                   BasketTradeInfoDto.Contract.ContractId.Value : "Aucun contrat en cours")">
-            </MudTextField>
-        </MudStack>
-        <MudStack Spacing="2">
-            <MudText Typo="Typo.body2" Color="Color.Secondary">FieldNameForContrats en cours</MudText>
-            <MudTextField Margin="Margin.Dense"
-                          T="string"
-                          Variant="Variant.Outlined"
                           Style="Width:200px;height: 35px;"
                           Value="@(BasketTradeInfoDto != null &&
                                    BasketTradeInfoDto.Contract != null &&

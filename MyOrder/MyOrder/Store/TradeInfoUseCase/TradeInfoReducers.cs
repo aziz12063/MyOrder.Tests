@@ -13,11 +13,4 @@ public static class TradeInfoReducers
     public static TradeInfoState ReduceFetchTradeInfoFailureAction(TradeInfoState state, FetchTradeInfoFailureAction action) =>
         new ();
 
-
-    // to delete
-    [ReducerMethod]
-    public static TradeInfoState ReduceNoDataLoadedPriceInfoAction(TradeInfoState state, NoDataLoadedTradeInfoAction action)
-    {
-        return new(action.BasketTradeInfo);
-    }
 }

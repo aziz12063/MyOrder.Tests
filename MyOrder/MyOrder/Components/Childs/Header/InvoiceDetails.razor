@@ -8,28 +8,32 @@
             <!--Compte facturé-->
             <MudText Typo="Typo.body2" Color="Color.Secondary">Compte facturé</MudText>
             <MudGrid Spacing="0">
-                
-                    <MudItem xs="12">
-                        <MudSelect Margin="Margin.Dense"
-                                   T="string"
-                                   Variant="Variant.Outlined"
-                                   @bind-Value="@BasketInvoiceInfo.Account.Value.AccountId">
-                        @foreach (var item in InvoiceToAccounts)
+                <MudItem xs="12">
+                    <MudSelect Margin="Margin.Dense"
+                               T="string"
+                               Variant="Variant.Outlined"
+                               ReadOnly="false"
+                               @bind-Value="@SelectedCompte">
+                        @if (InvoiceToAccounts != null)
+                            @foreach (var item in InvoiceToAccounts)
+                            {
+                                <MudSelectItem T="string" Value="@GetInvoiceAccount(item)">@GetInvoiceAccount(item)</MudSelectItem>
+                            }
+                        else
                         {
-                            <MudSelectItem T="string" Value="@item.AccountId">@item.AccountId</MudSelectItem>
+                            <MudSelectItem T="string" Value="string.Empty">string.Empty</MudSelectItem>
                         }
-                        </MudSelect>
-                    </MudItem>
-                    <MudItem xs="12">
-                        <MudTextField Typo="Typo.caption"
-                                      Lines="4"
-                                      Variant="Variant.Outlined"
-                                      FullWidth="true"
-                                      Margin="Margin.Dense"
-                                      ReadOnly="true"
-                                      Value="string.Empty" />
-                    </MudItem>
-               
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudTextField Typo="Typo.caption"
+                                  Lines="4"
+                                  Variant="Variant.Outlined"
+                                  FullWidth="true"
+                                  Margin="Margin.Dense"
+                                  ReadOnly="true"
+                                  Value="@AccountAddress" />
+                </MudItem>
             </MudGrid>
 
             <!--Siret-->
@@ -73,8 +77,10 @@
                     <MudSelect Margin="Margin.Dense"
                                T="string"
                                Variant="Variant.Outlined"
+                               ReadOnly="true"
                                Value="@BasketInvoiceInfo.PaymentTerm.Value">
-                        
+                        <MudSelectItem T="string" >Not implemented</MudSelectItem>
+
                     </MudSelect>
                 </MudItem>
             </MudGrid>
@@ -86,7 +92,7 @@
                     <MudSelect Margin="Margin.Dense"
                                T="string"
                                Variant="Variant.Outlined"
-                               @bind-Value="@BasketInvoiceInfo.PaymentTerm.Value">
+                               @bind-Value="@BasketInvoiceInfo.PaymentMode.Value">
                         @foreach (var item in PaymentModes)
                         {
                             <MudSelectItem T="string" Value="@item.Value">@item.Value</MudSelectItem>
@@ -96,17 +102,24 @@
             </MudGrid>
 
             <!--Entities public/Chorus-->
-            <MudText Typo="Typo.body2" Color="Color.Secondary">Entities public/Chorus</MudText>
+            <MudGrid Spacing="2">
+                <MudText Typo="Typo.body2" Color="Color.Secondary">Entities public/Chorus</MudText>
+                <MudCheckBox Label="IsPublicEntity"
+                             LabelPosition="LabelPosition.Start"
+                             @bind-Value="@BasketInvoiceInfo.IsPublicEntity">
+                </MudCheckBox>
+            </MudGrid>
+           
             <MudGrid Spacing="1">
                 <MudItem xs="4">
                     <MudText Typo="Typo.body2">Service exéc</MudText>
                 </MudItem>
                 <MudItem xs="8">
                     <MudTextField Margin="Margin.Dense"
-                               T="string"
-                               Variant="Variant.Outlined"
-                               Required="@IsPublicEntityValue"
-                               ReadOnly="@(!IsPublicEntityValue)"
+                                  T="string"
+                                  Variant="Variant.Outlined"
+                                  Required="@IsPublicEntityValue"
+                                  ReadOnly="@(!IsPublicEntityValue)"
                                   Value="@(IsPublicEntityValue &&
                                         BasketInvoiceInfo != null &&
                                         BasketInvoiceInfo.PublicEntityExecutingService != null &&
@@ -121,9 +134,15 @@
                 </MudItem>
                 <MudItem xs="8">
                     <MudTextField Margin="Margin.Dense"
-                               T="string"
-                               Variant="Variant.Outlined"
-                                  Value="@BasketInvoiceInfo.PublicEntityLegalCommitment.Value">
+                                  T="string"
+                                  Variant="Variant.Outlined"
+                                  Required="@IsPublicEntityValue"
+                                  ReadOnly="@(!IsPublicEntityValue)"
+                                  Value="@(IsPublicEntityValue &&
+                                        BasketInvoiceInfo != null &&
+                                        BasketInvoiceInfo.PublicEntityLegalCommitment != null &&
+                                        BasketInvoiceInfo.PublicEntityLegalCommitment.Value != null ?
+                                        BasketInvoiceInfo.PublicEntityLegalCommitment.Value : "")">
                     </MudTextField>
                 </MudItem>
             </MudGrid>
@@ -137,7 +156,6 @@
                                   Variant="Variant.Outlined"
                                   FullWidth="true"
                                   Margin="Margin.Dense"
-                                  ReadOnly="true"
                                   Value="@BasketInvoiceInfo.Note.Value">
                     </MudTextField>
                 </MudItem>

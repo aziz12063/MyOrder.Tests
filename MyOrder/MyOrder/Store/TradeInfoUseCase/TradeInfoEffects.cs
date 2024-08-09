@@ -10,12 +10,8 @@ public class TradeInfoEffects(IBasketRepository basketRepository, ILogger<TradeI
     {
         try
         {
-            // uncomment this after deleting the NoData
-            //var tradeInfo = await basketRepository.GetBasketTradeInfoAsync(action.BasketId);
-            //dispatcher.Dispatch(new FetchTradeInfoSuccessAction(tradeInfo));
-
-            // delete this NoData
-            dispatcher.Dispatch(new NoDataLoadedTradeInfoAction());
+            var tradeInfo = await basketRepository.GetBasketTradeInfoAsync(action.BasketId);
+            dispatcher.Dispatch(new FetchTradeInfoSuccessAction(tradeInfo));
         }
         catch (Exception e)
         {

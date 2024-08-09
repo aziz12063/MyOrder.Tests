@@ -18,13 +18,5 @@ public static class PricesInfoReducers
     {
         return new(null, null, null, null, true );
     }
-
-    // to delete
-    [ReducerMethod]
-    public static PricesInfoState ReduceNoDataLoadedAction(PricesInfoState state, NoDataLoadedPriceInfoAction action) =>
-        new(action.PricesInfo, action.Coupons, action.WarrantyCostOptions,
-            action.ShippingCostOptions, false);
-
-
 }
 

@@ -54,21 +54,7 @@ namespace MyOrder.Components.Childs.Header
             get => NullOrWhiteSpaceHelper(BasketPricesInfo?.Coupon?.Value);
             set
             {
-                // i filter the list befor set the list to the mudselect
-                //so i will never set a null value
-
-                //if(BasketPricesInfo == null)
-                //{
-                //    logger.LogWarning($"the BasketPricesInfo is null .");
-                //}
-                //else if (BasketPricesInfo.Coupon == null)
-                //{
-                //    logger.LogWarning($"the BasketPricesInfo.Coupon is null .");
-                //}
-                //else if(BasketPricesInfo.Coupon.Value == null)  
-                //{
-                //    logger.LogWarning($"the BasketPricesInfo.Coupon.Value is null .");
-                //}
+               
                 if(SetValue<string>(BasketPricesInfo.Coupon, BasketPricesInfo))
                 {
                     logger.LogWarning($"the CouponValue  is not null .");
