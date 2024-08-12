@@ -19,9 +19,9 @@ public partial class OrderInfo : BaseFluxorComponent<OrderInfoState, FetchOrderI
     private List<BasketValueDto> WebOrigins => State.Value.WebOrigins;
     private List<BasketValueDto> SalesPools => State.Value.SalesPools;
 
-    protected override FetchOrderInfoAction CreateFetchAction(string basketId)
+    protected override FetchOrderInfoAction CreateFetchAction(OrderInfoState state, string basketId)
     {
-        return new FetchOrderInfoAction(basketId);
+        return new FetchOrderInfoAction(state, basketId);
     }
 
     private string SelectedClient

@@ -8,15 +8,10 @@ public static class PricesInfoReducers
     [ReducerMethod]
     public static PricesInfoState ReduceFetchPricesInfoSuccessAction(PricesInfoState state, FetchPricesInfoSuccessAction action) =>
         new(action.PricesInfo, action.Coupons, action.WarrantyCostOptions,
-            action.ShippingCostOptions, false);
+            action.ShippingCostOptions);
 
     [ReducerMethod]
     public static PricesInfoState ReduceFetchPricesInfoFailureAction(PricesInfoState state, FetchPricesInfoFailureAction action) =>
         new();
-    [ReducerMethod]
-    public static PricesInfoState ReduceFetchPricesInfoAction(PricesInfoState state, FetchPricesInfoAction action)
-    {
-        return new(null, null, null, null, true );
-    }
 }
 

@@ -11,9 +11,9 @@ namespace MyOrder.Components.Childs.Header
         private BasketTradeInfoDto? BasketTradeInfoDto => State.Value.BasketTradeInfo;
         private List<BasketTurnoverLineDto?>? Turnover => BasketTradeInfoDto?.Turnover?.Value;
 
-        protected override FetchTradeInfoAction CreateFetchAction(string basketId)
+        protected override FetchTradeInfoAction CreateFetchAction(TradeInfoState state, string basketId)
         {
-            return new FetchTradeInfoAction(basketId);
+            return new FetchTradeInfoAction(state, basketId); ;
         }
 
 

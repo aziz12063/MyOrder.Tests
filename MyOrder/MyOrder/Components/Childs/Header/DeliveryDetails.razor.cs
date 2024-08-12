@@ -12,9 +12,9 @@ public partial class DeliveryDetails : BaseFluxorComponent<DeliveryInfoState, Fe
     private List<ContactDto> Contacts => State.Value.DeliverToContacts;
     private List<BasketValueDto> WebOrigins => State.Value.DeliveryModes;
 
-    protected override FetchDeliveryInfoAction CreateFetchAction(string basketId)
+    protected override FetchDeliveryInfoAction CreateFetchAction(DeliveryInfoState state, string basketId)
     {
-        return new FetchDeliveryInfoAction(basketId);
+        return new FetchDeliveryInfoAction(state, basketId);
     }
 
     private string SelectedAccount

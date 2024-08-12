@@ -2,6 +2,7 @@
 using MyOrder.Shared.Dtos;
 using MyOrder.Store.PricesInfoUseCase;
 using System.Formats.Asn1;
+using MyOrder.Shared.Dtos.SharedComponents;
 using static MudBlazor.Colors;
 
 namespace MyOrder.Components.Childs.Header
@@ -21,9 +22,9 @@ namespace MyOrder.Components.Childs.Header
             get => BasketPricesInfo.TotalVolume.Value.ToString() + "kg/" + @BasketPricesInfo.TotalWeight.Value.ToString();
         }
 
-        protected override FetchPricesInfoAction CreateFetchAction(string basketId)
+        protected override FetchPricesInfoAction CreateFetchAction(PricesInfoState state, string basketId)
         {
-            return new FetchPricesInfoAction(basketId);
+            return new FetchPricesInfoAction(state, basketId);
         }
 
         // i think to make this as a method to avoid call it a lot

@@ -16,6 +16,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
 
 builder.Services.AddScoped<BasketService>();
+builder.Services.AddSingleton<IStateResolver, StateResolver>();
 
 // Api Client, and Resilience Policies
 builder.Services.AddRefitClient<IBasketApiClient>()

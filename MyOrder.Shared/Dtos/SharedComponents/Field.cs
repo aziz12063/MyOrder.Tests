@@ -1,4 +1,4 @@
-﻿namespace MyOrder.Shared.Dtos;
+﻿namespace MyOrder.Shared.Dtos.SharedComponents;
 
 public class Field<T>
 {

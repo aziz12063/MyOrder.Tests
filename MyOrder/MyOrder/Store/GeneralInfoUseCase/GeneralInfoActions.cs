@@ -1,8 +1,9 @@
 ﻿using MyOrder.Shared.Dtos;
+using MyOrder.Store.Base;
 
 namespace MyOrder.Store.GeneralInfoUseCase
 {
-    public class FetchGeneralInfoAction(string basketId)
+    public class FetchGeneralInfoAction(GeneralInfoState state, string basketId) : FetchDataActionBase(state)
     {
         public string BasketId { get; } = basketId;
     }

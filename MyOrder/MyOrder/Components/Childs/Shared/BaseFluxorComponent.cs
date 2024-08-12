@@ -3,6 +3,7 @@ using Fluxor;
 using Microsoft.AspNetCore.Components;
 using MyOrder.Services;
 using MyOrder.Shared.Dtos;
+using MyOrder.Shared.Dtos.SharedComponents;
 using MyOrder.Store.ProcedureCallUseCase;
 
 namespace MyOrder.Components.Childs.Shared
@@ -20,11 +21,13 @@ namespace MyOrder.Components.Childs.Shared
 
         protected string BasketId => BasketService.BasketId;
 
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
             State.StateChanged += OnStateChanged;
             BasketService.BasketIdChanged += OnBasketIdChanged;
-            Dispatcher.Dispatch(CreateFetchAction(BasketId));
+            Dispatcher.Dispatch(CreateFetchAction(State.Value, BasketId));
+
+            await base.OnInitializedAsync();
         }
 
         protected virtual void OnStateChanged(object? sender, EventArgs e)
@@ -34,7 +37,7 @@ namespace MyOrder.Components.Childs.Shared
 
         private void OnBasketIdChanged(string basketId)
         {
-            Dispatcher.Dispatch(CreateFetchAction(basketId));
+            Dispatcher.Dispatch(CreateFetchAction(State.Value, basketId));
         }
 
         protected bool IsHidden<T>(Field<T>? field) => field?.Status == "hidden";
@@ -84,7 +87,7 @@ namespace MyOrder.Components.Childs.Shared
             BasketService.BasketIdChanged -= OnBasketIdChanged;
         }
 
-        protected abstract TAction CreateFetchAction(string basketId);
+        protected abstract TAction CreateFetchAction(TState state, string basketId);
     }
 
 }

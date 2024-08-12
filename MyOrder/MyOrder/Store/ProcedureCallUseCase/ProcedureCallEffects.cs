@@ -1,29 +1,12 @@
 ﻿using Fluxor;
 using MyOrder.Infrastructure.Repositories;
-using MyOrder.Store.DeliveryInfoUseCase;
-using MyOrder.Store.GeneralInfoUseCase;
-using MyOrder.Store.InvoiceInfoUseCase;
+using MyOrder.Services;
 using MyOrder.Store.OrderInfoUseCase;
-using MyOrder.Store.PricesInfoUseCase;
-using MyOrder.Store.TradeInfoUseCase;
 
 namespace MyOrder.Store.ProcedureCallUseCase;
 
-public class ProcedureCallEffects(IBasketRepository basketRepository, ILogger<OrderInfoEffects> logger)
+public class ProcedureCallEffects(IBasketRepository basketRepository, ILogger<OrderInfoEffects> logger, IStateResolver stateResolver)
 {
-    private readonly Dictionary<string, Action<IDispatcher, string>> _refreshCallActions = new()
-        {
-            { "generalInfo", (dispatcher, basketId) => dispatcher.Dispatch(new FetchGeneralInfoAction(basketId)) },
-            { "orderInfo", (dispatcher, basketId) => dispatcher.Dispatch(new FetchOrderInfoAction(basketId)) },
-            { "deliveryInfo", (dispatcher, basketId) => dispatcher.Dispatch(new FetchDeliveryInfoAction(basketId)) },
-            { "invoiceInfo", (dispatcher, basketId) => dispatcher.Dispatch(new FetchInvoiceInfoAction(basketId)) },
-            { "tradeInfo", (dispatcher, basketId) => dispatcher.Dispatch(new FetchTradeInfoAction(basketId)) },
-            { "pricesInfo", (dispatcher, basketId) => dispatcher.Dispatch(new FetchPricesInfoAction(basketId)) },
-            //{ "coupons" , (dispatcher, basketId) => dispatcher.Dispatch(new FetchPricesInfoAction(basketId)) },
-            //{ "warrantyC"
-            //{ "notifications", dispatcher => dispatcher.Dispatch(new FetchNotificationsAction()) },
-        };
-
     [EffectMethod]
     public async Task HandlePostProcedureCallAction(PostProcedureCallAction action, IDispatcher dispatcher)
     {
@@ -57,14 +40,7 @@ public class ProcedureCallEffects(IBasketRepository basketRepository, ILogger<Or
                 continue;
             }
 
-            if (_refreshCallActions.TryGetValue(call, out var refreshAction))
-            {
-                refreshAction(dispatcher, receivedAction.BasketId);
-            }
-            else
-            {
-                logger.LogError("No action mapped for refresh call: {call}", call);
-            }
+            stateResolver.DispatchRefreshAction(call, dispatcher, receivedAction.BasketId);
         }
     }
 }

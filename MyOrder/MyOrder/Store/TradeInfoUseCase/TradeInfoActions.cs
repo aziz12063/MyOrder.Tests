@@ -1,8 +1,9 @@
 ﻿using MyOrder.Shared.Dtos;
+using MyOrder.Store.Base;
 
 namespace MyOrder.Store.TradeInfoUseCase
 {
-    public class FetchTradeInfoAction(string basketId)
+    public class FetchTradeInfoAction(TradeInfoState state, string basketId) : FetchDataActionBase(state)
     {
         public string BasketId { get; } = basketId;
     }

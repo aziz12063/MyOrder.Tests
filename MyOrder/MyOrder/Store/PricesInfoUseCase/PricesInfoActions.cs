@@ -1,9 +1,10 @@
 ﻿using MyOrder.Components.Childs.Header;
 using MyOrder.Shared.Dtos;
+using MyOrder.Store.Base;
 
 namespace MyOrder.Store.PricesInfoUseCase
 {
-    public class FetchPricesInfoAction(string basketId)
+    public class FetchPricesInfoAction(PricesInfoState state, string basketId) : FetchDataActionBase(state)
     {
         public string BasketId { get; } = basketId;
     }

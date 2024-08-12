@@ -14,9 +14,9 @@ namespace MyOrder.Components.Childs.Header
         public List<BasketValueDto?>? TaxGroups => State.Value.TaxGroups;
         public List<BasketValueDto?>? PaymentModes => State.Value.PaymentModes;
 
-        protected override FetchInvoiceInfoAction CreateFetchAction(string basketId)
+        protected override FetchInvoiceInfoAction CreateFetchAction(InvoiceInfoState state, string basketId)
         {
-            return new FetchInvoiceInfoAction(basketId);
+            return new FetchInvoiceInfoAction(state, basketId);
         }
 
         private bool IsPublicEntityValue

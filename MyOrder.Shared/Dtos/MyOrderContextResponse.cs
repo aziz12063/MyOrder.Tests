@@ -1,5 +1,4 @@
-﻿
-namespace MyOrder.Shared.Dtos;
+﻿namespace MyOrder.Shared.Dtos;
 
 public abstract class MyOrderContextResponse
 {
