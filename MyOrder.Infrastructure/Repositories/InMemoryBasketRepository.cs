@@ -14,26 +14,24 @@ namespace MyOrder.Infrastructure.Repositories
         private static readonly Dictionary<string, BasketGeneralInfoDto> _basketsGeneralInfoDtos = [];
         private static readonly Dictionary<string, BasketOrderInfoDto> _basketsOrderInfoDtos = [];
         private static readonly Dictionary<string, BasketDeliveryInfoDto> _basketsDeliveryInfoDtos = [];
-        private static readonly Dictionary<string, BasketInvoiceInfoDto> _basketsInvoiceInfoDtos = new();
-
-        private static readonly Dictionary<string, BasketTradeInfoDto> _basketsTradeInfoDtos = new();
-
-        private static readonly Dictionary<string, BasketPricesInfoDto> _basketsPricesInfoDtos = new();
-        private static readonly Dictionary<string, List<ContactDto?>> _basketsOrderByContacts = new();
-        private static readonly Dictionary<string, List<BasketValueDto?>> _basketsCustomerTags = new();
-        private static readonly Dictionary<string, List<SalesOriginDto?>> _basketsSalesOrigins = new();
-        private static readonly Dictionary<string, List<BasketValueDto?>> _basketsWebOrigins = new();
-        private static readonly Dictionary<string, List<BasketValueDto?>> _basketsSalesPool = new();
-        private static readonly Dictionary<string, List<AccountDto?>> _basketsDeliverToAccounts = new();
-        private static readonly Dictionary<string, List<ContactDto?>> _basketsDeliverToContacts = new();
-        private static readonly Dictionary<string, List<BasketValueDto?>> _basketsDeliveryModes = new();
-        private static readonly Dictionary<string, List<BasketValueDto?>> _basketsTaxGroups = new();
-        private static readonly Dictionary<string, List<BasketValueDto?>> _basketsPaymentModes = new();
-        private static readonly Dictionary<string, List<BasketValueDto?>> _basketsCoupons = new();
-        private static readonly Dictionary<string, List<BasketValueDto?>> _basketsWarrantyCostOptions = new();
-        private static readonly Dictionary<string, List<BasketValueDto?>> _basketsShippingCostOptions = new();
-        private static readonly Dictionary<string, ProcedureCallResponseDto> _basketsProcedureCall = new();
-        private static readonly Dictionary<string, List<AccountDto?>> _basketsInvoiceToAccounts = new();
+        private static readonly Dictionary<string, BasketInvoiceInfoDto> _basketsInvoiceInfoDtos = [];
+        private static readonly Dictionary<string, BasketTradeInfoDto> _basketsTradeInfoDtos = [];
+        private static readonly Dictionary<string, BasketPricesInfoDto> _basketsPricesInfoDtos = [];
+        private static readonly Dictionary<string, List<ContactDto?>> _basketsOrderByContacts = [];
+        private static readonly Dictionary<string, List<BasketValueDto?>> _basketsCustomerTags = [];
+        private static readonly Dictionary<string, List<SalesOriginDto?>> _basketsSalesOrigins = [];
+        private static readonly Dictionary<string, List<BasketValueDto?>> _basketsWebOrigins = [];
+        private static readonly Dictionary<string, List<BasketValueDto?>> _basketsSalesPool = [];
+        private static readonly Dictionary<string, List<AccountDto?>> _basketsDeliverToAccounts = [];
+        private static readonly Dictionary<string, List<ContactDto?>> _basketsDeliverToContacts = [];
+        private static readonly Dictionary<string, List<BasketValueDto?>> _basketsDeliveryModes = [];
+        private static readonly Dictionary<string, List<BasketValueDto?>> _basketsTaxGroups = [];
+        private static readonly Dictionary<string, List<BasketValueDto?>> _basketsPaymentModes = [];
+        private static readonly Dictionary<string, List<BasketValueDto?>> _basketsCoupons = [];
+        private static readonly Dictionary<string, List<BasketValueDto?>> _basketsWarrantyCostOptions = [];
+        private static readonly Dictionary<string, List<BasketValueDto?>> _basketsShippingCostOptions = [];
+        private static readonly Dictionary<string, ProcedureCallResponseDto> _basketsProcedureCall = [];
+        private static readonly Dictionary<string, List<AccountDto?>> _basketsInvoiceToAccounts = [];
 
         public InMemoryBasketRepository()
         {
@@ -171,7 +169,6 @@ namespace MyOrder.Infrastructure.Repositories
         // Seed Data
         //==================================================================================================//
 
-
         private static void SeedBasketGeneralInfoData()
         {
             _basketsGeneralInfoDtos.Add("P0130738", new BasketGeneralInfoDto()
@@ -184,8 +181,11 @@ namespace MyOrder.Infrastructure.Repositories
                 OrderDate = "2024-07-15 17:04:31",
                 SalesResponsible = "CEDRIC REVILLON"
             });
+            _basketsGeneralInfoDtos.Add("P0130140", SomeData.generalInfoP0130140);
+            _basketsGeneralInfoDtos.Add("P0130512", SomeData.generalInfoP0130512);
+            _basketsGeneralInfoDtos.Add("P0130863", SomeData.generalInfoP0130863);
+            _basketsGeneralInfoDtos.Add("P0130652", SomeData.generalInfoP0130652);
         }
-
         private static void SeedBasketOrderInfoData()
         {
             _basketsOrderInfoDtos.Add("P0130738", new BasketOrderInfoDto()
@@ -245,7 +245,7 @@ namespace MyOrder.Infrastructure.Repositories
                     Name = "Canal de vente",
                     Status = "readWrite",
                     Value = "Internet",
-                    ProcedureCall = new List<string>
+                    ProcedureCall = new List<string?>
                     {
                         "UpdateOrderTablePropertyValue",
                         "SalesOriginId",
@@ -258,7 +258,7 @@ namespace MyOrder.Infrastructure.Repositories
                     Name = "Origine e-commerce",
                     Status = "readWrite",
                     Value = "DESKTOP",
-                    ProcedureCall = new List<string>
+                    ProcedureCall = new List<string?>
                     {
                         "UpdateOrderTablePropertyValue",
                         "RAJ_WebOriginId",
@@ -271,7 +271,7 @@ namespace MyOrder.Infrastructure.Repositories
                     Name = "Type de transaction",
                     Status = "readWrite",
                     Value = "NOR",
-                    ProcedureCall = new List<string>
+                    ProcedureCall = new List<string?>
                     {
                         "UpdateOrderTablePropertyValue",
                         "SalesPoolId",
@@ -283,8 +283,8 @@ namespace MyOrder.Infrastructure.Repositories
                 {
                     Name = "Référence Client",
                     Status = "readWrite",
-                    Value = "", // Empty as per JSON data
-                    ProcedureCall = new List<string>
+                    Value = "", 
+                    ProcedureCall = new List<string?>
                     {
                         "UpdateOrderTablePropertyValue",
                         "PurchOrderFormNum",
@@ -297,7 +297,7 @@ namespace MyOrder.Infrastructure.Repositories
                     Name = "Commande Web",
                     Status = "readWrite",
                     Value = "WC999075",
-                    ProcedureCall = new List<string>
+                    ProcedureCall = new List<string?>
                     {
                         "UpdateOrderTablePropertyValue",
                         "RAJ_WebSalesId",
@@ -318,8 +318,11 @@ namespace MyOrder.Infrastructure.Repositories
                     Value = "" // Empty as per JSON data
                 }
             });
+            _basketsOrderInfoDtos.Add("P0130140", SomeData.orderInfoP0130140);
+            _basketsOrderInfoDtos.Add("P0130512", SomeData.orderInfoP0130512);
+            _basketsOrderInfoDtos.Add("P0130863", SomeData.orderInfoP0130863);
+            _basketsOrderInfoDtos.Add("P0130652", SomeData.orderInfoP0130652);
         }
-
         private static void SeedBasketDeliveryInfoData()
         {
             _basketsDeliveryInfoDtos.Add("P0130738", new BasketDeliveryInfoDto()
@@ -437,8 +440,11 @@ namespace MyOrder.Infrastructure.Repositories
                     Url = null
                 }
             });
+            _basketsDeliveryInfoDtos.Add("P0130140", SomeData.deliveryInfoP0130140);
+            _basketsDeliveryInfoDtos.Add("P0130512", SomeData.deliveryInfoP0130512);
+            _basketsDeliveryInfoDtos.Add("P0130863", SomeData.deliveryInfoP0130863);
+            _basketsDeliveryInfoDtos.Add("P0130652", SomeData.deliveryInfoP0130652);
         }
-
         private static void SeedBasketInvoiceInfoData()
         {
             _basketsInvoiceInfoDtos.Add("P0130738", new BasketInvoiceInfoDto()
@@ -548,8 +554,11 @@ namespace MyOrder.Infrastructure.Repositories
                     Url = null
                 }
             });
+            _basketsInvoiceInfoDtos.Add("P0130140", SomeData.invoiceInfoP0130140);
+            _basketsInvoiceInfoDtos.Add("P0130512", SomeData.invoiceInfoP0130512);
+            _basketsInvoiceInfoDtos.Add("P0130863", SomeData.invoiceInfoP0130863);
+            _basketsInvoiceInfoDtos.Add("P0130652", SomeData.invoiceInfoP0130652);
         }
-
         private static void SeedBasketTradeInfoData()
         {
             _basketsTradeInfoDtos.Add(_basketId, new BasketTradeInfoDto()
@@ -697,6 +706,10 @@ namespace MyOrder.Infrastructure.Repositories
                     }
                 }
             });
+            _basketsTradeInfoDtos.Add("P0130140", SomeData.tradeInfoP0130140);
+            _basketsTradeInfoDtos.Add("P0130512", SomeData.tradeInfoP0130512);
+            _basketsTradeInfoDtos.Add("P0130863", SomeData.tradeInfoP0130863);
+            _basketsTradeInfoDtos.Add("P0130652", SomeData.tradeInfoP0130652);
         }
         private static void SeedBasketPriceInfoData()
         {
@@ -941,11 +954,13 @@ namespace MyOrder.Infrastructure.Repositories
                     Url = null
                 }
             });
-
+            _basketsPricesInfoDtos.Add("P0130140", SomeData.pricesInfoP0130140);
+            _basketsPricesInfoDtos.Add("P0130512", SomeData.pricesInfoP0130512);
+            _basketsPricesInfoDtos.Add("P0130863", SomeData.pricesInfoP0130863);
+            _basketsPricesInfoDtos.Add("P0130652", SomeData.pricesInfoP0130652);
         }
         private static void SeedBasketOrderByContactsData()
         {
-
             _basketsOrderByContacts.Add(_basketId, new List<ContactDto?>()
             {
                 new ContactDto
@@ -970,11 +985,13 @@ namespace MyOrder.Infrastructure.Repositories
     },
     null // Example of a nullable ContactDto
             });
-
+            _basketsOrderByContacts.Add("P0130140", SomeData.orderByContactsP0130140);
+            _basketsOrderByContacts.Add("P0130512", SomeData.orderByContactsP0130512);
+            _basketsOrderByContacts.Add("P0130863", SomeData.orderByContactsP0130863);
+            _basketsOrderByContacts.Add("P0130652", SomeData.orderByContactsP0130652);
         }
         private static void SeedBasketCustomerTagsData()
         {
-
             _basketsCustomerTags.Add(_basketId, new List<BasketValueDto?>()
             {
                  new BasketValueDto
@@ -994,11 +1011,13 @@ namespace MyOrder.Infrastructure.Repositories
     },
     null // Example of a nullable BasketValueDto
             });
+            _basketsCustomerTags.Add("P0130140", SomeData.customerTagsP0130140);
+            _basketsCustomerTags.Add("P0130512", SomeData.customerTagsP0130512);
+            _basketsCustomerTags.Add("P0130863", SomeData.customerTagsP0130863);
+            _basketsCustomerTags.Add("P0130652", SomeData.customerTagsP0130652);
         }
         private static void SeedBasketSalesOriginsData()
         {
-
-
             _basketsSalesOrigins.Add(_basketId, new List<SalesOriginDto?>()
             {
                 new SalesOriginDto
@@ -1015,12 +1034,13 @@ namespace MyOrder.Infrastructure.Repositories
     },
     null // Example of a nullable SalesOriginDto
             });
-
+            _basketsSalesOrigins.Add("P0130140", SomeData.salesOriginsP0130140);
+            _basketsSalesOrigins.Add("P0130512", SomeData.salesOriginsP0130512);
+            _basketsSalesOrigins.Add("P0130863", SomeData.salesOriginsP0130863);
+            _basketsSalesOrigins.Add("P0130652", SomeData.salesOriginsP0130652);
         }
         private static void SeedBasketWebOriginsData()
         {
-
-
             _basketsWebOrigins.Add(_basketId, new List<BasketValueDto?>()
             {
                  new BasketValueDto
@@ -1040,13 +1060,13 @@ namespace MyOrder.Infrastructure.Repositories
     },
     null // Example of a nullable BasketValueDto
             });
-
+            _basketsWebOrigins.Add("P0130140", SomeData.webOriginsP0130140);
+            _basketsWebOrigins.Add("P0130512", SomeData.webOriginsP0130512);
+            _basketsWebOrigins.Add("P0130863", SomeData.webOriginsP0130863);
+            _basketsWebOrigins.Add("P0130652", SomeData.webOriginsP0130652);
         }
-
         private static void SeedBasketSalesPoolData()
         {
-
-
             _basketsSalesPool.Add(_basketId, new List<BasketValueDto?>()
             {
                  new BasketValueDto
@@ -1066,7 +1086,10 @@ namespace MyOrder.Infrastructure.Repositories
     },
     null // Example of a nullable BasketValueDto
             });
-
+            _basketsSalesPool.Add("P0130140", SomeData.salesPoolsP0130140);
+            _basketsSalesPool.Add("P0130512", SomeData.salesPoolsP0130512);
+            _basketsSalesPool.Add("P0130863", SomeData.salesPoolsP0130863);
+            _basketsSalesPool.Add("P0130652", SomeData.salesPoolsP0130652);
         }
         private static void SeedBasketDeliverToAccountsData()
         {
@@ -1106,6 +1129,10 @@ namespace MyOrder.Infrastructure.Repositories
     },
                 null // Example of a nullable AccountDto
             });
+            _basketsDeliverToAccounts.Add("P0130140", SomeData.deliverToAccountsP0130140);
+            _basketsDeliverToAccounts.Add("P0130512", SomeData.deliverToAccountsP0130512);
+            _basketsDeliverToAccounts.Add("P0130863", SomeData.deliverToAccountsP0130863);
+            _basketsDeliverToAccounts.Add("P0130652", SomeData.deliverToAccountsP0130652);
         }
         private static void SeedBasketDeliverToContactsData()
         {
@@ -1133,6 +1160,10 @@ namespace MyOrder.Infrastructure.Repositories
     },
     null // Example of a nullable ContactDto
             });
+            _basketsDeliverToContacts.Add("P0130140", SomeData.deliverToContactsP0130140);
+            _basketsDeliverToContacts.Add("P0130863", SomeData.deliverToContactsP0130863);
+            _basketsDeliverToContacts.Add("P0130652", SomeData.deliverToContactsP0130652);
+            _basketsDeliverToContacts.Add("P0130512", SomeData.deliverToContactsP0130512);
         }
         private static void SeedBasketDeliveryModesData()
         {
@@ -1155,11 +1186,13 @@ namespace MyOrder.Infrastructure.Repositories
     },
     null // Example of a nullable BasketValueDto
             });
+            _basketsDeliveryModes.Add("P0130140", SomeData.deliveryModesP0130140);
+            _basketsDeliveryModes.Add("P0130512", SomeData.deliveryModesP0130512);
+            _basketsDeliveryModes.Add("P0130863", SomeData.deliveryModesP0130863);
+            _basketsDeliveryModes.Add("P0130652", SomeData.deliveryModesP0130652);
         }
         private static void SeedBasketTaxGroupsData()
         {
-
-
             _basketsTaxGroups.Add(_basketId, new List<BasketValueDto?>()
             {
                  new BasketValueDto
@@ -1179,6 +1212,10 @@ namespace MyOrder.Infrastructure.Repositories
     },
     null // Example of a nullable BasketValueDto
             });
+            _basketsTaxGroups.Add("P0130140", SomeData.taxGroupsP0130140);
+            _basketsTaxGroups.Add("P0130512", SomeData.taxGroupsP0130512);
+            _basketsTaxGroups.Add("P0130863", SomeData.taxGroupsP0130863);
+            _basketsTaxGroups.Add("P0130652", SomeData.taxGroupsP0130652);
 
         }
         private static void SeedBasketPaymentModesData()
@@ -1202,6 +1239,10 @@ namespace MyOrder.Infrastructure.Repositories
     },
     null // Example of a nullable BasketValueDto
             });
+            _basketsPaymentModes.Add("P0130140", SomeData.paymentModesP0130140);
+            _basketsPaymentModes.Add("P0130512", SomeData.paymentModesP0130512);
+            _basketsPaymentModes.Add("P0130863", SomeData.paymentModesP0130863);
+            _basketsPaymentModes.Add("P0130652", SomeData.paymentModesP0130652);
         }
         private static void SeedBasketCouponsData()
         {
@@ -1224,6 +1265,10 @@ namespace MyOrder.Infrastructure.Repositories
     },
     null // Example of a nullable BasketValueDto
             });
+            _basketsCoupons.Add("P0130140", SomeData.couponsP0130140);
+            _basketsCoupons.Add("P0130512", SomeData.couponsP0130512);
+            _basketsCoupons.Add("P0130863", SomeData.couponsP0130863);
+            _basketsCoupons.Add("P0130652", SomeData.couponsP0130652);
         }
         private static void SeedBasketWarrantyCostOptionsData()
         {
@@ -1246,6 +1291,10 @@ namespace MyOrder.Infrastructure.Repositories
     },
     null // Example of a nullable BasketValueDto
             });
+            _basketsWarrantyCostOptions.Add("P0130140", SomeData.warrantyCostOptionsP0130140);
+            _basketsWarrantyCostOptions.Add("P0130512", SomeData.warrantyCostOptionsP0130512);
+            _basketsWarrantyCostOptions.Add("P0130863", SomeData.warrantyCostOptionsP0130863);
+            _basketsWarrantyCostOptions.Add("P0130652", SomeData.warrantyCostOptionsP0130652);
         }
         private static void SeedBasketShippingCostOptionsData()
         {
@@ -1268,6 +1317,10 @@ namespace MyOrder.Infrastructure.Repositories
     },
     null // Example of a nullable BasketValueDto
             });
+            _basketsShippingCostOptions.Add("P0130140", SomeData.shippingCostOptionsP0130140);
+            _basketsShippingCostOptions.Add("P0130512", SomeData.shippingCostOptionsP0130512);
+            _basketsShippingCostOptions.Add("P0130863", SomeData.shippingCostOptionsP0130863);
+            _basketsShippingCostOptions.Add("P0130652", SomeData.shippingCostOptionsP0130652);
         }
         private static void SeedProcedureCallData()
         {
@@ -1279,6 +1332,10 @@ namespace MyOrder.Infrastructure.Repositories
                 UpdateDone = true,
                 RefreshCalls = new List<string?> { "Call1", "Call2", null }
             });
+            _basketsProcedureCall.Add("P0130140", SomeData.procedureCallResponseP0130140_3);
+            _basketsProcedureCall.Add("P0130512", SomeData.procedureCallResponseP0130512_3);
+            _basketsProcedureCall.Add("P0130863", SomeData.procedureCallResponseP0130863_3);
+            _basketsProcedureCall.Add("P0130652", SomeData.procedureCallResponseP0130652_3);
         }
         private static void SeedInvoiceToAccountData()
         {
@@ -1318,7 +1375,17 @@ namespace MyOrder.Infrastructure.Repositories
     },
                 null // Example of a nullable AccountDto
             });
+            _basketsInvoiceToAccounts.Add("P0130140", SomeData.invoiceToAccountsP0130140);
+            _basketsInvoiceToAccounts.Add("P0130512", SomeData.invoiceToAccountsP0130512);
+            _basketsInvoiceToAccounts.Add("P0130863", SomeData.invoiceToAccountsP0130863);
+            _basketsInvoiceToAccounts.Add("P0130652", SomeData.invoiceToAccountsP0130652);
         }
 
     }
+
 }
+
+
+
+
+
