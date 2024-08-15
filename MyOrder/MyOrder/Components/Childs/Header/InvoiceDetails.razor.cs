@@ -4,6 +4,7 @@ using MyOrder.Shared.Dtos;
 using MyOrder.Store.InvoiceInfoUseCase;
 using MyOrder.Store.PricesInfoUseCase;
 using System.Text;
+using MyOrder.Utils;
 
 namespace MyOrder.Components.Childs.Header
 {
@@ -21,11 +22,9 @@ namespace MyOrder.Components.Childs.Header
 
         private bool IsPublicEntityValue
         {
-            get => NullOrWhiteSpaceHelper(BasketInvoiceInfo.IsPublicEntity);
+            get => FieldUtility.NullOrWhiteSpaceHelper(BasketInvoiceInfo.IsPublicEntity);
            
         }
-
-        private static bool NullOrWhiteSpaceHelper(bool? value) => value ?? false;
 
         private string SelectedCompte
         {

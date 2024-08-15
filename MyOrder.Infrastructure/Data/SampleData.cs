@@ -1,7 +1,7 @@
 ﻿using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.SharedComponents;
 
-namespace MyOrder.Infrastructure.SampleData
+namespace MyOrder.Infrastructure.Data
 {
     public static class SampleData
     {

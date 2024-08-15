@@ -4,16 +4,22 @@
 @if (State.Value.IsLoading)
 {
     <MudStack Class="pl-16" Spacing="2">
-        <MudText Typo="Typo.body1" Class="d-flex">
-            <MudSkeleton Animation="Animation.Pulse" SkeletonType="SkeletonType.Rectangle" />
-        </MudText>
-        <MudText Typo="Typo.body2" Class="d-flex">
-            <MudSkeleton Animation="Animation.Pulse" SkeletonType="SkeletonType.Rectangle" /> - <MudSkeleton Animation="Animation.Pulse" SkeletonType="SkeletonType.Rectangle" />
-        </MudText>
+        <MudSkeleton Animation="Animation.Pulse" SkeletonType="SkeletonType.Rectangle" Width="175px" Height="24px" Style="background-color: rgb(240 248 255 / 11%)" />
+        <MudSkeleton Animation="Animation.Pulse" SkeletonType="SkeletonType.Rectangle" Width="250px" Height="20px" Style="background-color: rgb(240 248 255 / 11%)" />
     </MudStack>
-    <MudSkeleton Animation="Animation.Pulse" SkeletonType="SkeletonType.Rectangle"  />
     return;
 }
+
+@if (State.Value.GeneralInfo is null)
+{
+    <LogAndAlert LogLevel="LogLevel.Error"
+                 Exception="new NullReferenceException()"
+                 StackTrace="@LogUtility.GetStackTrace()"
+                 LogMessage="Unexpected null for GeneralInfo object."
+                 AlertMessage="Une erreur est survenue" />
+    return;
+}
+
 <MudStack Class="pl-16" Spacing="2">
     <MudText Typo="Typo.body1" Class="d-flex">
         <b>@State.Value.GeneralInfo.OrderType @State.Value.GeneralInfo.OrderId [@State.Value.GeneralInfo.OrderStatus]</b>

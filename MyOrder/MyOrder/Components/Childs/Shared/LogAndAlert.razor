@@ -1,0 +1,46 @@
+﻿@inject ILogger<LogAndAlert> Logger
+@inject ISnackbar Snackbar
+
+
+@code{
+
+    private const string LogTemplate = "LogAndAlert message: {Message}\n{Stack}";
+    
+    [Parameter, EditorRequired]
+    public string LogMessage { get; set; } = "An error occurred";
+
+    [Parameter, EditorRequired]
+    public LogLevel LogLevel { get; set; }
+
+    [Parameter, EditorRequired]
+    public string AlertMessage { get; set; } = "An error occurred";
+
+    [Parameter]
+    public Exception? Exception { get; set; }
+
+    [Parameter]
+    public string StackTrace { get; set; } = "StackTrace wasn't set";
+
+    protected override void OnInitialized()
+    {
+        switch(LogLevel)
+        {
+            case LogLevel.Critical:
+                Logger.LogCritical(Exception, LogTemplate, LogMessage, StackTrace);
+                Snackbar.Add(AlertMessage, Severity.Error);
+                break;
+            case LogLevel.Error:
+                Logger.LogError(Exception, LogTemplate, LogMessage, StackTrace);
+                Snackbar.Add(AlertMessage, Severity.Error);
+                break;
+            case LogLevel.Warning:
+                Logger.LogWarning(Exception, LogTemplate, LogMessage, StackTrace);
+                Snackbar.Add(AlertMessage, Severity.Warning);
+                break;
+            default:
+                Logger.LogInformation(Exception, LogTemplate, LogMessage, StackTrace);
+                break;
+        }
+            
+    }
+}

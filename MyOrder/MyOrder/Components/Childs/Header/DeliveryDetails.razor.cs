@@ -3,6 +3,7 @@ using MyOrder.Shared.Dtos;
 using MyOrder.Store.DeliveryInfoUseCase;
 using MyOrder.Store.OrderInfoUseCase;
 using System.Text;
+using MyOrder.Utils;
 
 namespace MyOrder.Components.Childs.Header;
 public partial class DeliveryDetails : BaseFluxorComponent<DeliveryInfoState, FetchDeliveryInfoAction>
@@ -78,7 +79,7 @@ public partial class DeliveryDetails : BaseFluxorComponent<DeliveryInfoState, Fe
     }
     private string NoteValue
     {
-        get => NullOrWhiteSpaceHelper(BasketDeliveryInfo.Note.Value);
+        get => FieldUtility.NullOrWhiteSpaceHelper(BasketDeliveryInfo.Note.Value);
         set
         {
             BasketDeliveryInfo.Note.Value = value;

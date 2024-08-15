@@ -7,8 +7,16 @@ using MyOrder.Infrastructure.Repositories;
 using MyOrder.Infrastructure.Resilience;
 using MyOrder.Services;
 using Refit;
+using Serilog;
+using Serilog.Exceptions;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Configure Logging
+builder.Logging.ClearProviders();
+builder.Host.UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
+    .ReadFrom.Configuration(hostingContext.Configuration)
+    .Enrich.WithExceptionDetails());
 
 // Add services to the container.
 builder.Services.AddRazorComponents()

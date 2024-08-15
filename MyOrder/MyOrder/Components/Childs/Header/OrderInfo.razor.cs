@@ -8,6 +8,7 @@ using MyOrder.Services;
 using MyOrder.Shared.Dtos;
 using MyOrder.Store.OrderInfoUseCase;
 using System.Text;
+using MyOrder.Utils;
 
 namespace MyOrder.Components.Childs.Header;
 
@@ -86,7 +87,7 @@ public partial class OrderInfo : BaseFluxorComponent<OrderInfoState, FetchOrderI
     }
     private string SalesOriginIdValue
     {
-        get => NullOrWhiteSpaceHelper(BasketOrderInfo.SalesOriginId.Value);
+        get => FieldUtility.NullOrWhiteSpaceHelper(BasketOrderInfo.SalesOriginId.Value);
         set
         {
             BasketOrderInfo.SalesOriginId.Value = value;
@@ -95,7 +96,7 @@ public partial class OrderInfo : BaseFluxorComponent<OrderInfoState, FetchOrderI
     }
     private string WebOriginIdValue
     {
-        get => NullOrWhiteSpaceHelper(BasketOrderInfo.WebOriginId.Value);
+        get => FieldUtility.NullOrWhiteSpaceHelper(BasketOrderInfo.WebOriginId.Value);
         set
         {
             BasketOrderInfo.WebOriginId.Value = value;
@@ -104,7 +105,7 @@ public partial class OrderInfo : BaseFluxorComponent<OrderInfoState, FetchOrderI
     }
     private string SalesPoolId
     {
-        get => NullOrWhiteSpaceHelper(BasketOrderInfo.SalesPoolId.Value);
+        get => FieldUtility.NullOrWhiteSpaceHelper(BasketOrderInfo.SalesPoolId.Value);
         set
         {
             BasketOrderInfo.SalesPoolId.Value = value;
@@ -113,7 +114,7 @@ public partial class OrderInfo : BaseFluxorComponent<OrderInfoState, FetchOrderI
     }
     private string CustomerOrderRefValue
     {
-        get => NullOrWhiteSpaceHelper(BasketOrderInfo.CustomerOrderRef.Value);
+        get => FieldUtility.NullOrWhiteSpaceHelper(BasketOrderInfo.CustomerOrderRef.Value);
         set
         {
             BasketOrderInfo.CustomerOrderRef.Value = value;
@@ -122,7 +123,7 @@ public partial class OrderInfo : BaseFluxorComponent<OrderInfoState, FetchOrderI
     }
     private string WebSalesIdValue
     {
-        get => NullOrWhiteSpaceHelper(BasketOrderInfo.WebSalesId.Value);
+        get => FieldUtility.NullOrWhiteSpaceHelper(BasketOrderInfo.WebSalesId.Value);
         set
         {
             BasketOrderInfo.WebSalesId.Value = value;
@@ -131,7 +132,7 @@ public partial class OrderInfo : BaseFluxorComponent<OrderInfoState, FetchOrderI
     }
     private string RelatedLinkValue
     {
-        get => NullOrWhiteSpaceHelper(BasketOrderInfo.RelatedLink.Value);
+        get => FieldUtility.NullOrWhiteSpaceHelper(BasketOrderInfo.RelatedLink.Value);
         set
         {
             BasketOrderInfo.RelatedLink.Value = value;

@@ -3,6 +3,7 @@ using MyOrder.Shared.Dtos;
 using MyOrder.Store.PricesInfoUseCase;
 using System.Formats.Asn1;
 using MyOrder.Shared.Dtos.SharedComponents;
+using MyOrder.Utils;
 using static MudBlazor.Colors;
 
 namespace MyOrder.Components.Childs.Header
@@ -32,17 +33,17 @@ namespace MyOrder.Components.Childs.Header
         {
             if (obj == null)
             {
-                logger.LogWarning($"the obj is null .");
+                Logger.LogWarning($"the obj is null .");
                 return false;
             }
             else if (field == null)
             {
-                logger.LogWarning($"the field is null .");
+                Logger.LogWarning($"the field is null .");
                 return false;
             }
             else if (field.Value == null)
             {
-                logger.LogWarning($"the field.Value is null .");
+                Logger.LogWarning($"the field.Value is null .");
                 return false;
             }
             else return true;
@@ -52,13 +53,13 @@ namespace MyOrder.Components.Childs.Header
         
         private string CouponValue
         {
-            get => NullOrWhiteSpaceHelper(BasketPricesInfo?.Coupon?.Value);
+            get => FieldUtility.NullOrWhiteSpaceHelper(BasketPricesInfo?.Coupon?.Value);
             set
             {
                
                 if(SetValue<string>(BasketPricesInfo.Coupon, BasketPricesInfo))
                 {
-                    logger.LogWarning($"the CouponValue  is not null .");
+                    Logger.LogWarning($"the CouponValue  is not null .");
                     BasketPricesInfo.Coupon.Value = value;
                     UpdateProcedureCall(value, BasketPricesInfo.Coupon.ProcedureCall);
                 }
@@ -67,7 +68,7 @@ namespace MyOrder.Components.Childs.Header
         }
         private string WarrantyCostOptionsValue
         {
-            get => NullOrWhiteSpaceHelper(BasketPricesInfo?.WarrantyCostOption?.Value);
+            get => FieldUtility.NullOrWhiteSpaceHelper(BasketPricesInfo?.WarrantyCostOption?.Value);
             set
             {
                 BasketPricesInfo.WarrantyCostOption.Value = value;
@@ -76,7 +77,7 @@ namespace MyOrder.Components.Childs.Header
         }
         private string ShippingCostOptionValue
         {
-            get => NullOrWhiteSpaceHelper(BasketPricesInfo?.ShippingCostOption?.Value);
+            get => FieldUtility.NullOrWhiteSpaceHelper(BasketPricesInfo?.ShippingCostOption?.Value);
             set
             {
                 BasketPricesInfo.ShippingCostOption.Value = value;
@@ -86,7 +87,7 @@ namespace MyOrder.Components.Childs.Header
 
         private decimal? ShippingCostAmountValue
         {
-            get => NullOrWhiteSpaceHelper(BasketPricesInfo?.ShippingCostAmount?.Value);
+            get => FieldUtility.NullOrWhiteSpaceHelper(BasketPricesInfo?.ShippingCostAmount?.Value);
             set
             {
                 BasketPricesInfo.ShippingCostAmount.Value = value;
@@ -96,7 +97,7 @@ namespace MyOrder.Components.Childs.Header
 
         private int? OrderDiscountRateValue
         {
-            get => NullOrWhiteSpaceHelper(BasketPricesInfo?.OrderDiscountRate?.Value);
+            get => FieldUtility.NullOrWhiteSpaceHelper(BasketPricesInfo?.OrderDiscountRate?.Value);
             set
             {
                 BasketPricesInfo.OrderDiscountRate.Value = value;
@@ -107,7 +108,7 @@ namespace MyOrder.Components.Childs.Header
 
         private bool? OrderLastColumnDiscountValue
         {
-            get => NullOrWhiteSpaceHelper(BasketPricesInfo?.OrderLastColumnDiscount?.Value); // check this
+            get => FieldUtility.NullOrWhiteSpaceHelper(BasketPricesInfo?.OrderLastColumnDiscount?.Value); // check this
             set
             {
                 BasketPricesInfo.OrderLastColumnDiscount.Value = value;

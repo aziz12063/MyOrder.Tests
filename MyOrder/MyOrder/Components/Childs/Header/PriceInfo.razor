@@ -15,13 +15,13 @@
                             <MudText Typo="Typo.body2">Code Action</MudText>
                         </MudItem>
                         <MudItem xs="8">
-                            <MudHidden bind-Hidden="@IsHidden(BasketPricesInfo?.Coupon)">
+                            <MudHidden bind-Hidden="@FieldUtility.IsHidden(BasketPricesInfo?.Coupon)">
                                 <MudSelect Margin="Margin.Dense"
                                            T="string"
                                            Variant="Variant.Outlined"
                                            FullWidth="true"
-                                           Required="@IsRequired(BasketPricesInfo?.Coupon)"
-                                           ReadOnly="@IsReadOnly(BasketPricesInfo?.Coupon)"
+                                           Required="@FieldUtility.IsRequired(BasketPricesInfo?.Coupon)"
+                                           ReadOnly="@FieldUtility.IsReadOnly(BasketPricesInfo?.Coupon)"
                                            @bind-Value="@CouponValue">
                                     @if (Coupons != null)
                                     {
@@ -29,7 +29,7 @@
 
                                         @if (FiltredList.Count == 0)
                                         {
-                                            logger.LogWarning($"the Coupons list  contain only null items.");
+                                            Logger.LogWarning($"the Coupons list  contain only null items.");
                                             <MudSelectItem T="string" Value="string.Empty">@string.Empty</MudSelectItem>
                                         }
                                         else
@@ -41,12 +41,12 @@
                                         }
                                         if (Coupons.Count > FiltredList.Count)
                                         {
-                                            logger.LogWarning($"the Coupons list  contain some null items.");
+                                            Logger.LogWarning($"the Coupons list  contain some null items.");
                                         }
                                     }
                                     else
                                     {
-                                        logger.LogWarning($"the Coupons list  is null.");
+                                        Logger.LogWarning($"the Coupons list  is null.");
                                         <MudSelectItem T="string" Value="string.Empty">@string.Empty</MudSelectItem>
                                     }
 
@@ -121,11 +121,11 @@
                     <!--2 et 3-->
                     <MudGrid>
                         <MudItem xs="4">
-                            <MudHidden bind-Hidden="@IsHidden(BasketPricesInfo?.WarrantyCostOption)">
+                            <MudHidden bind-Hidden="@FieldUtility.IsHidden(BasketPricesInfo?.WarrantyCostOption)">
                                 <MudSelect Margin="Margin.Dense" T="string"
                                            Variant="Variant.Outlined" Width="200px"
-                                           Required="@IsRequired(BasketPricesInfo?.WarrantyCostOption)"
-                                           ReadOnly="@IsReadOnly(BasketPricesInfo?.WarrantyCostOption)"
+                                           Required="@FieldUtility.IsRequired(BasketPricesInfo?.WarrantyCostOption)"
+                                           ReadOnly="@FieldUtility.IsReadOnly(BasketPricesInfo?.WarrantyCostOption)"
                                            @bind-Value="WarrantyCostOptionsValue">
                                     @if (WarrantyCostOptions != null)
                                     {
@@ -133,7 +133,7 @@
 
                                         @if (FiltredList.Count == 0)
                                         {
-                                            logger.LogWarning($"the WarrantyCostOptions list  contain only null items.");
+                                            Logger.LogWarning($"the WarrantyCostOptions list  contain only null items.");
                                             <MudSelectItem T="string" Value="string.Empty">@string.Empty</MudSelectItem>
                                         }
                                         else
@@ -145,12 +145,12 @@
                                         }
                                         if (WarrantyCostOptions.Count > FiltredList.Count)
                                         {
-                                            logger.LogWarning($"the WarrantyCostOptions list  contain some null items.");
+                                            Logger.LogWarning($"the WarrantyCostOptions list  contain some null items.");
                                         }
                                     }
                                     else
                                     {
-                                        logger.LogWarning($"the WarrantyCostOptions list  is null.");
+                                        Logger.LogWarning($"the WarrantyCostOptions list  is null.");
                                         <MudSelectItem T="string" Value="string.Empty">@string.Empty</MudSelectItem>
                                     }
 
@@ -168,11 +168,11 @@
                     <!--4 et 5-->
                     <MudGrid>
                         <MudItem xs="4">
-                            <MudHidden bind-Hidden="@IsHidden(BasketPricesInfo?.ShippingCostOption)">
+                            <MudHidden bind-Hidden="@FieldUtility.IsHidden(BasketPricesInfo?.ShippingCostOption)">
                                 <MudSelect Margin="Margin.Dense" T="string"
                                            Variant="Variant.Outlined" Width="200px"
-                                           Required="@IsRequired(BasketPricesInfo?.ShippingCostOption)"
-                                           ReadOnly="@IsReadOnly(BasketPricesInfo?.ShippingCostOption)"
+                                           Required="@FieldUtility.IsRequired(BasketPricesInfo?.ShippingCostOption)"
+                                           ReadOnly="@FieldUtility.IsReadOnly(BasketPricesInfo?.ShippingCostOption)"
                                            @bind-Value="ShippingCostOptionValue">
                                     @if (ShippingCostOptions != null)
                                     {
@@ -180,7 +180,7 @@
 
                                         @if (FiltredList.Count == 0)
                                         {
-                                            logger.LogWarning($"the ShippingCostOptions list  contain only null items.");
+                                            Logger.LogWarning($"the ShippingCostOptions list  contain only null items.");
                                             <MudSelectItem T="string" Value="string.Empty">@string.Empty</MudSelectItem>
                                         }
                                         else
@@ -192,23 +192,23 @@
                                         }
                                         if (ShippingCostOptions.Count > FiltredList.Count)
                                         {
-                                            logger.LogWarning($"the ShippingCostOptions list  contain some null items.");
+                                            Logger.LogWarning($"the ShippingCostOptions list  contain some null items.");
                                         }
                                     }
                                     else
                                     {
-                                        logger.LogWarning($"the ShippingCostOptions list  is null.");
+                                        Logger.LogWarning($"the ShippingCostOptions list  is null.");
                                         <MudSelectItem T="string" Value="string.Empty">@string.Empty</MudSelectItem>
                                     }
                                 </MudSelect>
                             </MudHidden>
                         </MudItem>
                         <MudItem xs="8">
-                            <MudHidden bind-Hidden="@IsHidden(BasketPricesInfo?.ShippingCostAmount)">
+                            <MudHidden bind-Hidden="@FieldUtility.IsHidden(BasketPricesInfo?.ShippingCostAmount)">
                                 <MudTextField Margin="Margin.Dense" T="decimal?"
                                               Variant="Variant.Outlined" Width="200px"
-                                              Required="@IsRequired(BasketPricesInfo?.ShippingCostAmount)"
-                                              ReadOnly="@IsReadOnly(BasketPricesInfo?.ShippingCostAmount)"
+                                              Required="@FieldUtility.IsRequired(BasketPricesInfo?.ShippingCostAmount)"
+                                              ReadOnly="@FieldUtility.IsReadOnly(BasketPricesInfo?.ShippingCostAmount)"
                                               @bind-Value="ShippingCostAmountValue">
                                 </MudTextField>
                             </MudHidden>
@@ -306,21 +306,21 @@
                             <MudText Typo="Typo.caption">Remise Cde(%)</MudText>
                         </MudItem>
                         <MudItem xs="3">
-                            <MudHidden bind-Hidden="@IsHidden(BasketPricesInfo?.OrderDiscountRate)">
+                            <MudHidden bind-Hidden="@FieldUtility.IsHidden(BasketPricesInfo?.OrderDiscountRate)">
                                 <MudTextField Margin="Margin.Dense" T="int?"
                                               Variant="Variant.Outlined" FullWidth="true"
-                                              Required="@IsRequired(BasketPricesInfo?.OrderDiscountRate)"
-                                              ReadOnly="@IsReadOnly(BasketPricesInfo?.OrderDiscountRate)"
+                                              Required="@FieldUtility.IsRequired(BasketPricesInfo?.OrderDiscountRate)"
+                                              ReadOnly="@FieldUtility.IsReadOnly(BasketPricesInfo?.OrderDiscountRate)"
                                               @bind-Value="OrderDiscountRateValue">
                                 </MudTextField>
                             </MudHidden>
                         </MudItem>
 
                         <MudItem xs="4">
-                            <MudHidden bind-Hidden="@IsHidden(BasketPricesInfo?.OrderLastColumnDiscount)">
+                            <MudHidden bind-Hidden="@FieldUtility.IsHidden(BasketPricesInfo?.OrderLastColumnDiscount)">
                                 <MudCheckBox Label="label"
-                                             Required="@IsRequired(BasketPricesInfo?.OrderLastColumnDiscount)"
-                                             ReadOnly="@IsReadOnly(BasketPricesInfo?.OrderLastColumnDiscount)"
+                                             Required="@FieldUtility.IsRequired(BasketPricesInfo?.OrderLastColumnDiscount)"
+                                             ReadOnly="@FieldUtility.IsReadOnly(BasketPricesInfo?.OrderLastColumnDiscount)"
                                              LabelPosition="LabelPosition.Start"
                                              @bind-Value="OrderLastColumnDiscountValue">
                                 </MudCheckBox>

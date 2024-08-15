@@ -1,6 +1,6 @@
 {
-  "name": "MyOrderStudio",
-  "short_name": "MyOrderStudio",
+  "name": "MyOrder",
+  "short_name": "MyOrder",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#ffffff",

@@ -1,10 +1,15 @@
-﻿@using Microsoft.Extensions.Options
-@using MyOrder.Components.Childs
+﻿@using MyOrder.Components.Childs
 @inherits LayoutComponentBase
 
-
+@* Required *@
 <MudThemeProvider Theme="@ThemeConfiguration.MyTheme" />
 <MudPopoverProvider />
+
+@* Needed for dialogs *@
+<MudDialogProvider />
+
+@* Needed for snackbars *@
+<MudSnackbarProvider />
 
 
 <MudLayout>
