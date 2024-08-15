@@ -181,10 +181,10 @@ namespace MyOrder.Infrastructure.Repositories
                 OrderDate = "2024-07-15 17:04:31",
                 SalesResponsible = "CEDRIC REVILLON"
             });
-            _basketsGeneralInfoDtos.Add("P0130140", SomeData.generalInfoP0130140);
-            _basketsGeneralInfoDtos.Add("P0130512", SomeData.generalInfoP0130512);
-            _basketsGeneralInfoDtos.Add("P0130863", SomeData.generalInfoP0130863);
-            _basketsGeneralInfoDtos.Add("P0130652", SomeData.generalInfoP0130652);
+            _basketsGeneralInfoDtos.Add("P0130140", SampleData.generalInfoP0130140);
+            _basketsGeneralInfoDtos.Add("P0130512", SampleData.generalInfoP0130512);
+            _basketsGeneralInfoDtos.Add("P0130863", SampleData.generalInfoP0130863);
+            _basketsGeneralInfoDtos.Add("P0130652", SampleData.generalInfoP0130652);
         }
         private static void SeedBasketOrderInfoData()
         {
@@ -318,10 +318,10 @@ namespace MyOrder.Infrastructure.Repositories
                     Value = "" // Empty as per JSON data
                 }
             });
-            _basketsOrderInfoDtos.Add("P0130140", SomeData.orderInfoP0130140);
-            _basketsOrderInfoDtos.Add("P0130512", SomeData.orderInfoP0130512);
-            _basketsOrderInfoDtos.Add("P0130863", SomeData.orderInfoP0130863);
-            _basketsOrderInfoDtos.Add("P0130652", SomeData.orderInfoP0130652);
+            _basketsOrderInfoDtos.Add("P0130140", SampleData.orderInfoP0130140);
+            _basketsOrderInfoDtos.Add("P0130512", SampleData.orderInfoP0130512);
+            _basketsOrderInfoDtos.Add("P0130863", SampleData.orderInfoP0130863);
+            _basketsOrderInfoDtos.Add("P0130652", SampleData.orderInfoP0130652);
         }
         private static void SeedBasketDeliveryInfoData()
         {
@@ -440,10 +440,10 @@ namespace MyOrder.Infrastructure.Repositories
                     Url = null
                 }
             });
-            _basketsDeliveryInfoDtos.Add("P0130140", SomeData.deliveryInfoP0130140);
-            _basketsDeliveryInfoDtos.Add("P0130512", SomeData.deliveryInfoP0130512);
-            _basketsDeliveryInfoDtos.Add("P0130863", SomeData.deliveryInfoP0130863);
-            _basketsDeliveryInfoDtos.Add("P0130652", SomeData.deliveryInfoP0130652);
+            _basketsDeliveryInfoDtos.Add("P0130140", SampleData.deliveryInfoP0130140);
+            _basketsDeliveryInfoDtos.Add("P0130512", SampleData.deliveryInfoP0130512);
+            _basketsDeliveryInfoDtos.Add("P0130863", SampleData.deliveryInfoP0130863);
+            _basketsDeliveryInfoDtos.Add("P0130652", SampleData.deliveryInfoP0130652);
         }
         private static void SeedBasketInvoiceInfoData()
         {
@@ -554,10 +554,10 @@ namespace MyOrder.Infrastructure.Repositories
                     Url = null
                 }
             });
-            _basketsInvoiceInfoDtos.Add("P0130140", SomeData.invoiceInfoP0130140);
-            _basketsInvoiceInfoDtos.Add("P0130512", SomeData.invoiceInfoP0130512);
-            _basketsInvoiceInfoDtos.Add("P0130863", SomeData.invoiceInfoP0130863);
-            _basketsInvoiceInfoDtos.Add("P0130652", SomeData.invoiceInfoP0130652);
+            _basketsInvoiceInfoDtos.Add("P0130140", SampleData.invoiceInfoP0130140);
+            _basketsInvoiceInfoDtos.Add("P0130512", SampleData.invoiceInfoP0130512);
+            _basketsInvoiceInfoDtos.Add("P0130863", SampleData.invoiceInfoP0130863);
+            _basketsInvoiceInfoDtos.Add("P0130652", SampleData.invoiceInfoP0130652);
         }
         private static void SeedBasketTradeInfoData()
         {
@@ -706,10 +706,10 @@ namespace MyOrder.Infrastructure.Repositories
                     }
                 }
             });
-            _basketsTradeInfoDtos.Add("P0130140", SomeData.tradeInfoP0130140);
-            _basketsTradeInfoDtos.Add("P0130512", SomeData.tradeInfoP0130512);
-            _basketsTradeInfoDtos.Add("P0130863", SomeData.tradeInfoP0130863);
-            _basketsTradeInfoDtos.Add("P0130652", SomeData.tradeInfoP0130652);
+            _basketsTradeInfoDtos.Add("P0130140", SampleData.tradeInfoP0130140);
+            _basketsTradeInfoDtos.Add("P0130512", SampleData.tradeInfoP0130512);
+            _basketsTradeInfoDtos.Add("P0130863", SampleData.tradeInfoP0130863);
+            _basketsTradeInfoDtos.Add("P0130652", SampleData.tradeInfoP0130652);
         }
         private static void SeedBasketPriceInfoData()
         {
@@ -954,10 +954,10 @@ namespace MyOrder.Infrastructure.Repositories
                     Url = null
                 }
             });
-            _basketsPricesInfoDtos.Add("P0130140", SomeData.pricesInfoP0130140);
-            _basketsPricesInfoDtos.Add("P0130512", SomeData.pricesInfoP0130512);
-            _basketsPricesInfoDtos.Add("P0130863", SomeData.pricesInfoP0130863);
-            _basketsPricesInfoDtos.Add("P0130652", SomeData.pricesInfoP0130652);
+            _basketsPricesInfoDtos.Add("P0130140", SampleData.pricesInfoP0130140);
+            _basketsPricesInfoDtos.Add("P0130512", SampleData.pricesInfoP0130512);
+            _basketsPricesInfoDtos.Add("P0130863", SampleData.pricesInfoP0130863);
+            _basketsPricesInfoDtos.Add("P0130652", SampleData.pricesInfoP0130652);
         }
         private static void SeedBasketOrderByContactsData()
         {
@@ -985,10 +985,10 @@ namespace MyOrder.Infrastructure.Repositories
     },
     null // Example of a nullable ContactDto
             });
-            _basketsOrderByContacts.Add("P0130140", SomeData.orderByContactsP0130140);
-            _basketsOrderByContacts.Add("P0130512", SomeData.orderByContactsP0130512);
-            _basketsOrderByContacts.Add("P0130863", SomeData.orderByContactsP0130863);
-            _basketsOrderByContacts.Add("P0130652", SomeData.orderByContactsP0130652);
+            _basketsOrderByContacts.Add("P0130140", SampleData.orderByContactsP0130140);
+            _basketsOrderByContacts.Add("P0130512", SampleData.orderByContactsP0130512);
+            _basketsOrderByContacts.Add("P0130863", SampleData.orderByContactsP0130863);
+            _basketsOrderByContacts.Add("P0130652", SampleData.orderByContactsP0130652);
         }
         private static void SeedBasketCustomerTagsData()
         {
@@ -1011,10 +1011,10 @@ namespace MyOrder.Infrastructure.Repositories
     },
     null // Example of a nullable BasketValueDto
             });
-            _basketsCustomerTags.Add("P0130140", SomeData.customerTagsP0130140);
-            _basketsCustomerTags.Add("P0130512", SomeData.customerTagsP0130512);
-            _basketsCustomerTags.Add("P0130863", SomeData.customerTagsP0130863);
-            _basketsCustomerTags.Add("P0130652", SomeData.customerTagsP0130652);
+            _basketsCustomerTags.Add("P0130140", SampleData.customerTagsP0130140);
+            _basketsCustomerTags.Add("P0130512", SampleData.customerTagsP0130512);
+            _basketsCustomerTags.Add("P0130863", SampleData.customerTagsP0130863);
+            _basketsCustomerTags.Add("P0130652", SampleData.customerTagsP0130652);
         }
         private static void SeedBasketSalesOriginsData()
         {
@@ -1034,10 +1034,10 @@ namespace MyOrder.Infrastructure.Repositories
     },
     null // Example of a nullable SalesOriginDto
             });
-            _basketsSalesOrigins.Add("P0130140", SomeData.salesOriginsP0130140);
-            _basketsSalesOrigins.Add("P0130512", SomeData.salesOriginsP0130512);
-            _basketsSalesOrigins.Add("P0130863", SomeData.salesOriginsP0130863);
-            _basketsSalesOrigins.Add("P0130652", SomeData.salesOriginsP0130652);
+            _basketsSalesOrigins.Add("P0130140", SampleData.salesOriginsP0130140);
+            _basketsSalesOrigins.Add("P0130512", SampleData.salesOriginsP0130512);
+            _basketsSalesOrigins.Add("P0130863", SampleData.salesOriginsP0130863);
+            _basketsSalesOrigins.Add("P0130652", SampleData.salesOriginsP0130652);
         }
         private static void SeedBasketWebOriginsData()
         {
@@ -1060,10 +1060,10 @@ namespace MyOrder.Infrastructure.Repositories
     },
     null // Example of a nullable BasketValueDto
             });
-            _basketsWebOrigins.Add("P0130140", SomeData.webOriginsP0130140);
-            _basketsWebOrigins.Add("P0130512", SomeData.webOriginsP0130512);
-            _basketsWebOrigins.Add("P0130863", SomeData.webOriginsP0130863);
-            _basketsWebOrigins.Add("P0130652", SomeData.webOriginsP0130652);
+            _basketsWebOrigins.Add("P0130140", SampleData.webOriginsP0130140);
+            _basketsWebOrigins.Add("P0130512", SampleData.webOriginsP0130512);
+            _basketsWebOrigins.Add("P0130863", SampleData.webOriginsP0130863);
+            _basketsWebOrigins.Add("P0130652", SampleData.webOriginsP0130652);
         }
         private static void SeedBasketSalesPoolData()
         {
@@ -1086,10 +1086,10 @@ namespace MyOrder.Infrastructure.Repositories
     },
     null // Example of a nullable BasketValueDto
             });
-            _basketsSalesPool.Add("P0130140", SomeData.salesPoolsP0130140);
-            _basketsSalesPool.Add("P0130512", SomeData.salesPoolsP0130512);
-            _basketsSalesPool.Add("P0130863", SomeData.salesPoolsP0130863);
-            _basketsSalesPool.Add("P0130652", SomeData.salesPoolsP0130652);
+            _basketsSalesPool.Add("P0130140", SampleData.salesPoolsP0130140);
+            _basketsSalesPool.Add("P0130512", SampleData.salesPoolsP0130512);
+            _basketsSalesPool.Add("P0130863", SampleData.salesPoolsP0130863);
+            _basketsSalesPool.Add("P0130652", SampleData.salesPoolsP0130652);
         }
         private static void SeedBasketDeliverToAccountsData()
         {
@@ -1129,10 +1129,10 @@ namespace MyOrder.Infrastructure.Repositories
     },
                 null // Example of a nullable AccountDto
             });
-            _basketsDeliverToAccounts.Add("P0130140", SomeData.deliverToAccountsP0130140);
-            _basketsDeliverToAccounts.Add("P0130512", SomeData.deliverToAccountsP0130512);
-            _basketsDeliverToAccounts.Add("P0130863", SomeData.deliverToAccountsP0130863);
-            _basketsDeliverToAccounts.Add("P0130652", SomeData.deliverToAccountsP0130652);
+            _basketsDeliverToAccounts.Add("P0130140", SampleData.deliverToAccountsP0130140);
+            _basketsDeliverToAccounts.Add("P0130512", SampleData.deliverToAccountsP0130512);
+            _basketsDeliverToAccounts.Add("P0130863", SampleData.deliverToAccountsP0130863);
+            _basketsDeliverToAccounts.Add("P0130652", SampleData.deliverToAccountsP0130652);
         }
         private static void SeedBasketDeliverToContactsData()
         {
@@ -1160,10 +1160,10 @@ namespace MyOrder.Infrastructure.Repositories
     },
     null // Example of a nullable ContactDto
             });
-            _basketsDeliverToContacts.Add("P0130140", SomeData.deliverToContactsP0130140);
-            _basketsDeliverToContacts.Add("P0130863", SomeData.deliverToContactsP0130863);
-            _basketsDeliverToContacts.Add("P0130652", SomeData.deliverToContactsP0130652);
-            _basketsDeliverToContacts.Add("P0130512", SomeData.deliverToContactsP0130512);
+            _basketsDeliverToContacts.Add("P0130140", SampleData.deliverToContactsP0130140);
+            _basketsDeliverToContacts.Add("P0130863", SampleData.deliverToContactsP0130863);
+            _basketsDeliverToContacts.Add("P0130652", SampleData.deliverToContactsP0130652);
+            _basketsDeliverToContacts.Add("P0130512", SampleData.deliverToContactsP0130512);
         }
         private static void SeedBasketDeliveryModesData()
         {
@@ -1186,10 +1186,10 @@ namespace MyOrder.Infrastructure.Repositories
     },
     null // Example of a nullable BasketValueDto
             });
-            _basketsDeliveryModes.Add("P0130140", SomeData.deliveryModesP0130140);
-            _basketsDeliveryModes.Add("P0130512", SomeData.deliveryModesP0130512);
-            _basketsDeliveryModes.Add("P0130863", SomeData.deliveryModesP0130863);
-            _basketsDeliveryModes.Add("P0130652", SomeData.deliveryModesP0130652);
+            _basketsDeliveryModes.Add("P0130140", SampleData.deliveryModesP0130140);
+            _basketsDeliveryModes.Add("P0130512", SampleData.deliveryModesP0130512);
+            _basketsDeliveryModes.Add("P0130863", SampleData.deliveryModesP0130863);
+            _basketsDeliveryModes.Add("P0130652", SampleData.deliveryModesP0130652);
         }
         private static void SeedBasketTaxGroupsData()
         {
@@ -1212,10 +1212,10 @@ namespace MyOrder.Infrastructure.Repositories
     },
     null // Example of a nullable BasketValueDto
             });
-            _basketsTaxGroups.Add("P0130140", SomeData.taxGroupsP0130140);
-            _basketsTaxGroups.Add("P0130512", SomeData.taxGroupsP0130512);
-            _basketsTaxGroups.Add("P0130863", SomeData.taxGroupsP0130863);
-            _basketsTaxGroups.Add("P0130652", SomeData.taxGroupsP0130652);
+            _basketsTaxGroups.Add("P0130140", SampleData.taxGroupsP0130140);
+            _basketsTaxGroups.Add("P0130512", SampleData.taxGroupsP0130512);
+            _basketsTaxGroups.Add("P0130863", SampleData.taxGroupsP0130863);
+            _basketsTaxGroups.Add("P0130652", SampleData.taxGroupsP0130652);
 
         }
         private static void SeedBasketPaymentModesData()
@@ -1239,10 +1239,10 @@ namespace MyOrder.Infrastructure.Repositories
     },
     null // Example of a nullable BasketValueDto
             });
-            _basketsPaymentModes.Add("P0130140", SomeData.paymentModesP0130140);
-            _basketsPaymentModes.Add("P0130512", SomeData.paymentModesP0130512);
-            _basketsPaymentModes.Add("P0130863", SomeData.paymentModesP0130863);
-            _basketsPaymentModes.Add("P0130652", SomeData.paymentModesP0130652);
+            _basketsPaymentModes.Add("P0130140", SampleData.paymentModesP0130140);
+            _basketsPaymentModes.Add("P0130512", SampleData.paymentModesP0130512);
+            _basketsPaymentModes.Add("P0130863", SampleData.paymentModesP0130863);
+            _basketsPaymentModes.Add("P0130652", SampleData.paymentModesP0130652);
         }
         private static void SeedBasketCouponsData()
         {
@@ -1265,10 +1265,10 @@ namespace MyOrder.Infrastructure.Repositories
     },
     null // Example of a nullable BasketValueDto
             });
-            _basketsCoupons.Add("P0130140", SomeData.couponsP0130140);
-            _basketsCoupons.Add("P0130512", SomeData.couponsP0130512);
-            _basketsCoupons.Add("P0130863", SomeData.couponsP0130863);
-            _basketsCoupons.Add("P0130652", SomeData.couponsP0130652);
+            _basketsCoupons.Add("P0130140", SampleData.couponsP0130140);
+            _basketsCoupons.Add("P0130512", SampleData.couponsP0130512);
+            _basketsCoupons.Add("P0130863", SampleData.couponsP0130863);
+            _basketsCoupons.Add("P0130652", SampleData.couponsP0130652);
         }
         private static void SeedBasketWarrantyCostOptionsData()
         {
@@ -1291,10 +1291,10 @@ namespace MyOrder.Infrastructure.Repositories
     },
     null // Example of a nullable BasketValueDto
             });
-            _basketsWarrantyCostOptions.Add("P0130140", SomeData.warrantyCostOptionsP0130140);
-            _basketsWarrantyCostOptions.Add("P0130512", SomeData.warrantyCostOptionsP0130512);
-            _basketsWarrantyCostOptions.Add("P0130863", SomeData.warrantyCostOptionsP0130863);
-            _basketsWarrantyCostOptions.Add("P0130652", SomeData.warrantyCostOptionsP0130652);
+            _basketsWarrantyCostOptions.Add("P0130140", SampleData.warrantyCostOptionsP0130140);
+            _basketsWarrantyCostOptions.Add("P0130512", SampleData.warrantyCostOptionsP0130512);
+            _basketsWarrantyCostOptions.Add("P0130863", SampleData.warrantyCostOptionsP0130863);
+            _basketsWarrantyCostOptions.Add("P0130652", SampleData.warrantyCostOptionsP0130652);
         }
         private static void SeedBasketShippingCostOptionsData()
         {
@@ -1317,10 +1317,10 @@ namespace MyOrder.Infrastructure.Repositories
     },
     null // Example of a nullable BasketValueDto
             });
-            _basketsShippingCostOptions.Add("P0130140", SomeData.shippingCostOptionsP0130140);
-            _basketsShippingCostOptions.Add("P0130512", SomeData.shippingCostOptionsP0130512);
-            _basketsShippingCostOptions.Add("P0130863", SomeData.shippingCostOptionsP0130863);
-            _basketsShippingCostOptions.Add("P0130652", SomeData.shippingCostOptionsP0130652);
+            _basketsShippingCostOptions.Add("P0130140", SampleData.shippingCostOptionsP0130140);
+            _basketsShippingCostOptions.Add("P0130512", SampleData.shippingCostOptionsP0130512);
+            _basketsShippingCostOptions.Add("P0130863", SampleData.shippingCostOptionsP0130863);
+            _basketsShippingCostOptions.Add("P0130652", SampleData.shippingCostOptionsP0130652);
         }
         private static void SeedProcedureCallData()
         {
@@ -1332,10 +1332,10 @@ namespace MyOrder.Infrastructure.Repositories
                 UpdateDone = true,
                 RefreshCalls = new List<string?> { "Call1", "Call2", null }
             });
-            _basketsProcedureCall.Add("P0130140", SomeData.procedureCallResponseP0130140_3);
-            _basketsProcedureCall.Add("P0130512", SomeData.procedureCallResponseP0130512_3);
-            _basketsProcedureCall.Add("P0130863", SomeData.procedureCallResponseP0130863_3);
-            _basketsProcedureCall.Add("P0130652", SomeData.procedureCallResponseP0130652_3);
+            _basketsProcedureCall.Add("P0130140", SampleData.procedureCallResponseP0130140_3);
+            _basketsProcedureCall.Add("P0130512", SampleData.procedureCallResponseP0130512_3);
+            _basketsProcedureCall.Add("P0130863", SampleData.procedureCallResponseP0130863_3);
+            _basketsProcedureCall.Add("P0130652", SampleData.procedureCallResponseP0130652_3);
         }
         private static void SeedInvoiceToAccountData()
         {
@@ -1375,10 +1375,10 @@ namespace MyOrder.Infrastructure.Repositories
     },
                 null // Example of a nullable AccountDto
             });
-            _basketsInvoiceToAccounts.Add("P0130140", SomeData.invoiceToAccountsP0130140);
-            _basketsInvoiceToAccounts.Add("P0130512", SomeData.invoiceToAccountsP0130512);
-            _basketsInvoiceToAccounts.Add("P0130863", SomeData.invoiceToAccountsP0130863);
-            _basketsInvoiceToAccounts.Add("P0130652", SomeData.invoiceToAccountsP0130652);
+            _basketsInvoiceToAccounts.Add("P0130140", SampleData.invoiceToAccountsP0130140);
+            _basketsInvoiceToAccounts.Add("P0130512", SampleData.invoiceToAccountsP0130512);
+            _basketsInvoiceToAccounts.Add("P0130863", SampleData.invoiceToAccountsP0130863);
+            _basketsInvoiceToAccounts.Add("P0130652", SampleData.invoiceToAccountsP0130652);
         }
 
     }

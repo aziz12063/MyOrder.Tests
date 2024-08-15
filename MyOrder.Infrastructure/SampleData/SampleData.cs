@@ -1,11 +1,10 @@
 ﻿using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.SharedComponents;
 
-namespace MyOrder.Infrastructure.Repositories
+namespace MyOrder.Infrastructure.SampleData
 {
-    public static class SomeData
+    public static class SampleData
     {
-
         //P0130140
 
         //  api/orderContext/P0130140/generalInfo   P0130140
@@ -66,7 +65,7 @@ namespace MyOrder.Infrastructure.Repositories
                 Status = "onlyForDisplay",
                 Value = null
             },
-            CustomerTags = new List<BasketValueDto>(), 
+            CustomerTags = new List<BasketValueDto>(),
             SalesOriginId = new Field<string>
             {
                 Name = "Canal de vente",
