@@ -165,9 +165,9 @@ namespace MyOrder.Infrastructure.Repositories
         }
 
 
-                                //**********************************************************//
-                                                    // Seed Data
-                                //*********************************************************//
+        //**********************************************************//
+        // Seed Data
+        //*********************************************************//
 
         //=======================================================================================================
         //General Info Section
@@ -911,8 +911,7 @@ namespace MyOrder.Infrastructure.Repositories
         Phone = "234-567-8901",
         CellularPhone = "876-543-2109",
         Blocked = false
-    },
-                null // Example of a nullable AccountDto
+    }
             });
             _basketsInvoiceToAccounts.Add("P0130140", SampleData.invoiceToAccountsP0130140);
             _basketsInvoiceToAccounts.Add("P0130512", SampleData.invoiceToAccountsP0130512);
@@ -1435,10 +1434,10 @@ namespace MyOrder.Infrastructure.Repositories
         }
 
 
-        
-        
-       
-        
+
+
+
+
 
     }
 

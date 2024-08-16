@@ -4,7 +4,7 @@
 <MudContainer Class="pa-0">
     <MudStack Spacing="4">
         <MudText Typo="Typo.body2" Color="Color.Secondary">Facturation</MudText>
-        @if (State.Value.IsLoading)
+         @if (State.Value.IsLoading)
         {
             <MudStack Class="pl-16" Spacing="2">
                 <MudSkeleton Animation="Animation.Pulse" SkeletonType="SkeletonType.Rectangle" Width="175px" Height="24px" Style="background-color: rgb(240 248 255 / 11%)" />
@@ -21,7 +21,7 @@
                          LogMessage="Unexpected null for GeneralInfo object."
                          AlertMessage="Une erreur est survenue" />
             return;
-        }
+        } 
 
         <MudItem xs="10">
             <!--Compte facturé-->
@@ -34,14 +34,32 @@
                                ReadOnly="false"
                                @bind-Value="@SelectedCompte">
                         @if (InvoiceToAccounts != null)
-                            @foreach (var item in InvoiceToAccounts)
+                        {
+                            List<AccountDto> FiltredList = InvoiceToAccounts.Where(item => item != null).Cast<AccountDto>().ToList();
+
+                            @if (FiltredList.Count == 0)
                             {
-                                <MudSelectItem T="string" Value="@GetInvoiceAccount(item)">@GetInvoiceAccount(item)</MudSelectItem>
+                                Logger.LogWarning($"the InvoiceToAccounts list  contain only null items.");
+                                <MudSelectItem T="string" >@string.Empty</MudSelectItem>
                             }
+                            else
+                            {
+                                @foreach (var item in FiltredList)
+                                {
+                                    <MudSelectItem T="string" Value="@GetInvoiceAccount(item)">@GetInvoiceAccount(item)</MudSelectItem>
+                                }
+                            }
+                            if (InvoiceToAccounts.Count > FiltredList.Count)
+                            {
+                                Logger.LogWarning($"the InvoiceToAccounts list  contain some null items.");
+                            }
+                        }
                         else
                         {
-                            <MudSelectItem T="string" Value="string.Empty">string.Empty</MudSelectItem>
+                            Logger.LogWarning($"the InvoiceToAccounts list  is null.");
+                            <MudSelectItem T="AccountDto" >@string.Empty</MudSelectItem>
                         }
+                       
                     </MudSelect>
                 </MudItem>
                 <MudItem xs="12">
@@ -85,7 +103,7 @@
 
                             @if (FiltredList.Count == 0)
                             {
-                                Logger.LogWarning($"the Coupons list  contain only null items.");
+                                Logger.LogWarning($"the TaxGroups list  contain only null items.");
                                 <MudSelectItem T="string" Value="string.Empty">@string.Empty</MudSelectItem>
                             }
                             else
@@ -97,15 +115,15 @@
                             }
                             if (TaxGroups.Count > FiltredList.Count)
                             {
-                                Logger.LogWarning($"the Coupons list  contain some null items.");
+                                Logger.LogWarning($"the TaxGroups list  contain some null items.");
                             }
                         }
                         else
                         {
-                            Logger.LogWarning($"the Coupons list  is null.");
+                            Logger.LogWarning($"the TaxGroups list  is null.");
                             <MudSelectItem T="string" Value="string.Empty">@string.Empty</MudSelectItem>
                         }
-                        
+
                     </MudSelect>
                 </MudItem>
             </MudGrid>
@@ -122,7 +140,7 @@
                                Variant="Variant.Outlined"
                                ReadOnly="true"
                                Value="@BasketInvoiceInfo.PaymentTerm.Value">
-                        <MudSelectItem T="string" >Not implemented</MudSelectItem>
+                        <MudSelectItem T="string">Not implemented</MudSelectItem>
 
                     </MudSelect>
                 </MudItem>
@@ -142,7 +160,7 @@
 
                             @if (FiltredList.Count == 0)
                             {
-                                Logger.LogWarning($"the Coupons list  contain only null items.");
+                                Logger.LogWarning($"the PaymentModes list  contain only null items.");
                                 <MudSelectItem T="string" Value="string.Empty">@string.Empty</MudSelectItem>
                             }
                             else
@@ -154,15 +172,15 @@
                             }
                             if (PaymentModes.Count > FiltredList.Count)
                             {
-                                Logger.LogWarning($"the Coupons list  contain some null items.");
+                                Logger.LogWarning($"the PaymentModes list  contain some null items.");
                             }
                         }
                         else
                         {
-                            Logger.LogWarning($"the Coupons list  is null.");
+                            Logger.LogWarning($"the PaymentModes list  is null.");
                             <MudSelectItem T="string" Value="string.Empty">@string.Empty</MudSelectItem>
                         }
-                       
+
                     </MudSelect>
                 </MudItem>
             </MudGrid>
@@ -175,7 +193,7 @@
                              @bind-Value="@BasketInvoiceInfo.IsPublicEntity">
                 </MudCheckBox>
             </MudGrid>
-           
+
             <MudGrid Spacing="1">
                 <MudItem xs="4">
                     <MudText Typo="Typo.body2">Service exéc</MudText>
@@ -222,7 +240,10 @@
                                   Variant="Variant.Outlined"
                                   FullWidth="true"
                                   Margin="Margin.Dense"
-                                  Value="@BasketInvoiceInfo.Note.Value">
+                                  Value="@(BasketInvoiceInfo != null &&
+                                        BasketInvoiceInfo.Note != null &&
+                                        BasketInvoiceInfo.Note.Value != null ?
+                                        BasketInvoiceInfo.Note.Value : "")">
                     </MudTextField>
                 </MudItem>
             </MudGrid>

@@ -25,10 +25,10 @@ namespace MyOrder.Shared.Dtos
 
     public class BasketContractInfoDto
     {
-        public Field<string>? ContractId { get; set; }
-        public Field<string>? ContractType { get; set; }
-        public Field<string>? ContractGroup { get; set; }
-        public Field<string>? Status { get; set; }
+        public Field<string>? ContractId { get; set; }// .Value => Contract and under the table position2
+        public Field<string>? ContractType { get; set; }// under the table position1: ContractId.Name + ContractType.Value
+        public Field<string>? ContractGroup { get; set; }// in the table .Valu => ContractGroup.Value
+        public Field<string>? Status { get; set; }// on the table, Contracts + Status.Value
         public Field<string>? StartDate { get; set; }
         public Field<string>? EndDate { get; set; }
         public Field<string>? CampaignId { get; set; }
