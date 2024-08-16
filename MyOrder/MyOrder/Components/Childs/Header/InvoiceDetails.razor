@@ -4,6 +4,25 @@
 <MudContainer Class="pa-0">
     <MudStack Spacing="4">
         <MudText Typo="Typo.body2" Color="Color.Secondary">Facturation</MudText>
+        @if (State.Value.IsLoading)
+        {
+            <MudStack Class="pl-16" Spacing="2">
+                <MudSkeleton Animation="Animation.Pulse" SkeletonType="SkeletonType.Rectangle" Width="175px" Height="24px" Style="background-color: rgb(240 248 255 / 11%)" />
+                <MudSkeleton Animation="Animation.Pulse" SkeletonType="SkeletonType.Rectangle" Width="250px" Height="20px" Style="background-color: rgb(240 248 255 / 11%)" />
+            </MudStack>
+            return;
+        }
+
+        @if (State.Value.BasketInvoiceInfo is null)
+        {
+            <LogAndAlert LogLevel="LogLevel.Error"
+                         Exception="new NullReferenceException()"
+                         StackTrace="@LogUtility.GetStackTrace()"
+                         LogMessage="Unexpected null for GeneralInfo object."
+                         AlertMessage="Une erreur est survenue" />
+            return;
+        }
+
         <MudItem xs="10">
             <!--Compte facturé-->
             <MudText Typo="Typo.body2" Color="Color.Secondary">Compte facturé</MudText>
@@ -59,10 +78,34 @@
                                T="string"
                                Variant="Variant.Outlined"
                                @bind-Value="@BasketInvoiceInfo.TaxGroup.Value">
-                        @foreach (var item in TaxGroups)
+
+                        @if (TaxGroups != null)
                         {
-                            <MudSelectItem T="string" Value="@item.Value">@item.Value</MudSelectItem>
+                            List<BasketValueDto> FiltredList = TaxGroups.Where(item => item != null).Cast<BasketValueDto>().ToList();
+
+                            @if (FiltredList.Count == 0)
+                            {
+                                Logger.LogWarning($"the Coupons list  contain only null items.");
+                                <MudSelectItem T="string" Value="string.Empty">@string.Empty</MudSelectItem>
+                            }
+                            else
+                            {
+                                @foreach (var item in FiltredList)
+                                {
+                                    <MudSelectItem T="string" Value="@item.Value">@item.Value</MudSelectItem>
+                                }
+                            }
+                            if (TaxGroups.Count > FiltredList.Count)
+                            {
+                                Logger.LogWarning($"the Coupons list  contain some null items.");
+                            }
                         }
+                        else
+                        {
+                            Logger.LogWarning($"the Coupons list  is null.");
+                            <MudSelectItem T="string" Value="string.Empty">@string.Empty</MudSelectItem>
+                        }
+                        
                     </MudSelect>
                 </MudItem>
             </MudGrid>
@@ -93,10 +136,33 @@
                                T="string"
                                Variant="Variant.Outlined"
                                @bind-Value="@BasketInvoiceInfo.PaymentMode.Value">
-                        @foreach (var item in PaymentModes)
+                        @if (PaymentModes != null)
                         {
-                            <MudSelectItem T="string" Value="@item.Value">@item.Value</MudSelectItem>
+                            List<BasketValueDto> FiltredList = PaymentModes.Where(item => item != null).Cast<BasketValueDto>().ToList();
+
+                            @if (FiltredList.Count == 0)
+                            {
+                                Logger.LogWarning($"the Coupons list  contain only null items.");
+                                <MudSelectItem T="string" Value="string.Empty">@string.Empty</MudSelectItem>
+                            }
+                            else
+                            {
+                                @foreach (var item in FiltredList)
+                                {
+                                    <MudSelectItem T="string" Value="@item.Value">@item.Value</MudSelectItem>
+                                }
+                            }
+                            if (PaymentModes.Count > FiltredList.Count)
+                            {
+                                Logger.LogWarning($"the Coupons list  contain some null items.");
+                            }
                         }
+                        else
+                        {
+                            Logger.LogWarning($"the Coupons list  is null.");
+                            <MudSelectItem T="string" Value="string.Empty">@string.Empty</MudSelectItem>
+                        }
+                       
                     </MudSelect>
                 </MudItem>
             </MudGrid>

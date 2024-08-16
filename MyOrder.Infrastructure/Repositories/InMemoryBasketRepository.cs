@@ -10,7 +10,7 @@ namespace MyOrder.Infrastructure.Repositories
 {
     public class InMemoryBasketRepository : IBasketRepository
     {
-        public const string _basketId = "P0130738";
+        public const string _basketId = "P0130938";
         private static readonly Dictionary<string, BasketGeneralInfoDto> _basketsGeneralInfoDtos = [];
         private static readonly Dictionary<string, BasketOrderInfoDto> _basketsOrderInfoDtos = [];
         private static readonly Dictionary<string, BasketDeliveryInfoDto> _basketsDeliveryInfoDtos = [];
@@ -165,17 +165,21 @@ namespace MyOrder.Infrastructure.Repositories
         }
 
 
-        //==================================================================================================//
-        // Seed Data
-        //==================================================================================================//
+                                //**********************************************************//
+                                                    // Seed Data
+                                //*********************************************************//
 
+        //=======================================================================================================
+        //General Info Section
+        //=======================================================================================================
         private static void SeedBasketGeneralInfoData()
         {
-            _basketsGeneralInfoDtos.Add("P0130738", new BasketGeneralInfoDto()
+            _basketsGeneralInfoDtos.Clear();
+            _basketsGeneralInfoDtos.Add(_basketId, new BasketGeneralInfoDto()
             {
 
                 OrderType = "Panier",
-                BasketId = "P0130738",
+                BasketId = _basketId,
                 OrderId = "WC999075",
                 OrderStatus = "Nouveau",
                 OrderDate = "2024-07-15 17:04:31",
@@ -186,9 +190,15 @@ namespace MyOrder.Infrastructure.Repositories
             _basketsGeneralInfoDtos.Add("P0130863", SampleData.generalInfoP0130863);
             _basketsGeneralInfoDtos.Add("P0130652", SampleData.generalInfoP0130652);
         }
+
+
+        //=================================================================================================//
+        //Order Info Section
+        //============================================================================================//
         private static void SeedBasketOrderInfoData()
         {
-            _basketsOrderInfoDtos.Add("P0130738", new BasketOrderInfoDto()
+            _basketsOrderInfoDtos.Clear();
+            _basketsOrderInfoDtos.Add(_basketId, new BasketOrderInfoDto()
             {
                 Account = new Field<AccountDto>
                 {
@@ -225,7 +235,7 @@ namespace MyOrder.Infrastructure.Repositories
                         Phone = null,
                         CellularPhone = null
                     },
-                    ProcedureCall = new List<string>
+                    ProcedureCall = new List<string?>
                     {
                         "UpdateContact",
                         "OrderBy",
@@ -283,7 +293,7 @@ namespace MyOrder.Infrastructure.Repositories
                 {
                     Name = "Référence Client",
                     Status = "readWrite",
-                    Value = "", 
+                    Value = "",
                     ProcedureCall = new List<string?>
                     {
                         "UpdateOrderTablePropertyValue",
@@ -323,9 +333,152 @@ namespace MyOrder.Infrastructure.Repositories
             _basketsOrderInfoDtos.Add("P0130863", SampleData.orderInfoP0130863);
             _basketsOrderInfoDtos.Add("P0130652", SampleData.orderInfoP0130652);
         }
+        private static void SeedBasketOrderByContactsData()
+        {
+            _basketsOrderByContacts.Clear();
+            _basketsOrderByContacts.Add(_basketId, new List<ContactDto?>()
+            {
+                new ContactDto
+    {
+        ContactId = "C001",
+        SocialTitle = "Mr.",
+        FirstName = "John",
+        LastName = "Doe",
+        Email = "john.doe@example.com",
+        Phone = "123-456-7890",
+        CellularPhone = "987-654-3210"
+    },
+    new ContactDto
+    {
+        ContactId = "C002",
+        SocialTitle = "Ms.",
+        FirstName = "Jane",
+        LastName = "Smith",
+        Email = "jane.smith@example.com",
+        Phone = "234-567-8901",
+        CellularPhone = "876-543-2109"
+    },
+    null // Example of a nullable ContactDto
+            });
+            _basketsOrderByContacts.Add("P0130140", SampleData.orderByContactsP0130140);
+            _basketsOrderByContacts.Add("P0130512", SampleData.orderByContactsP0130512);
+            _basketsOrderByContacts.Add("P0130863", SampleData.orderByContactsP0130863);
+            _basketsOrderByContacts.Add("P0130652", SampleData.orderByContactsP0130652);
+        }
+        private static void SeedBasketCustomerTagsData()
+        {
+            _basketsCustomerTags.Clear();
+            _basketsCustomerTags.Add(_basketId, new List<BasketValueDto?>()
+            {
+                 new BasketValueDto
+    {
+        Description = "Discount",
+        Value = "10%"
+    },
+    new BasketValueDto
+    {
+        Description = "Shipping Cost",
+        Value = "$5.99"
+    },
+    new BasketValueDto
+    {
+        Description = "Total",
+        Value = "$100.00"
+    },
+    null // Example of a nullable BasketValueDto
+            });
+            _basketsCustomerTags.Add("P0130140", SampleData.customerTagsP0130140);
+            _basketsCustomerTags.Add("P0130512", SampleData.customerTagsP0130512);
+            _basketsCustomerTags.Add("P0130863", SampleData.customerTagsP0130863);
+            _basketsCustomerTags.Add("P0130652", SampleData.customerTagsP0130652);
+        }
+        private static void SeedBasketSalesOriginsData()
+        {
+            _basketsSalesOrigins.Clear();
+            _basketsSalesOrigins.Add(_basketId, new List<SalesOriginDto?>()
+            {
+                new SalesOriginDto
+    {
+        Value = "Online"
+    },
+    new SalesOriginDto
+    {
+        Value = "In-Store"
+    },
+    new SalesOriginDto
+    {
+        Value = "Referral"
+    },
+    null // Example of a nullable SalesOriginDto
+            });
+            _basketsSalesOrigins.Add("P0130140", SampleData.salesOriginsP0130140);
+            _basketsSalesOrigins.Add("P0130512", SampleData.salesOriginsP0130512);
+            _basketsSalesOrigins.Add("P0130863", SampleData.salesOriginsP0130863);
+            _basketsSalesOrigins.Add("P0130652", SampleData.salesOriginsP0130652);
+        }
+        private static void SeedBasketWebOriginsData()
+        {
+            _basketsWebOrigins.Clear();
+            _basketsWebOrigins.Add(_basketId, new List<BasketValueDto?>()
+            {
+                 new BasketValueDto
+    {
+        Description = "Discount",
+        Value = "10%"
+    },
+    new BasketValueDto
+    {
+        Description = "Shipping Cost",
+        Value = "$5.99"
+    },
+    new BasketValueDto
+    {
+        Description = "Total",
+        Value = "$100.00"
+    },
+    null // Example of a nullable BasketValueDto
+            });
+            _basketsWebOrigins.Add("P0130140", SampleData.webOriginsP0130140);
+            _basketsWebOrigins.Add("P0130512", SampleData.webOriginsP0130512);
+            _basketsWebOrigins.Add("P0130863", SampleData.webOriginsP0130863);
+            _basketsWebOrigins.Add("P0130652", SampleData.webOriginsP0130652);
+        }
+        private static void SeedBasketSalesPoolData()
+        {
+            _basketsSalesPool.Clear();
+            _basketsSalesPool.Add(_basketId, new List<BasketValueDto?>()
+            {
+                 new BasketValueDto
+    {
+        Description = "Discount",
+        Value = "10%"
+    },
+    new BasketValueDto
+    {
+        Description = "Shipping Cost",
+        Value = "$5.99"
+    },
+    new BasketValueDto
+    {
+        Description = "Total",
+        Value = "$100.00"
+    },
+    null // Example of a nullable BasketValueDto
+            });
+            _basketsSalesPool.Add("P0130140", SampleData.salesPoolsP0130140);
+            _basketsSalesPool.Add("P0130512", SampleData.salesPoolsP0130512);
+            _basketsSalesPool.Add("P0130863", SampleData.salesPoolsP0130863);
+            _basketsSalesPool.Add("P0130652", SampleData.salesPoolsP0130652);
+        }
+
+
+        //=======================================================================================================
+        //Delivery section
+        //=======================================================================================================
         private static void SeedBasketDeliveryInfoData()
         {
-            _basketsDeliveryInfoDtos.Add("P0130738", new BasketDeliveryInfoDto()
+            _basketsDeliveryInfoDtos.Clear();
+            _basketsDeliveryInfoDtos.Add(_basketId, new BasketDeliveryInfoDto()
             {
                 Account = new Field<AccountDto>
                 {
@@ -406,12 +559,12 @@ namespace MyOrder.Infrastructure.Repositories
                     Description = "Required Delivery Date",
                     Url = null
                 },
-                OrderDocuments = new Field<List<string>>
+                OrderDocuments = new Field<List<string?>>
                 {
                     Name = "Order Documents",
                     Status = "Complete",
                     Type = "List<string>",
-                    Value = new List<string> { "Doc1", "Doc2", "Doc3" },
+                    Value = new List<string?> { "Doc1", "Doc2", "Doc3" },
                     ProcedureCall = new List<string?> { "DocumentProcedure1" },
                     Error = null,
                     Description = "Associated Order Documents",
@@ -445,9 +598,117 @@ namespace MyOrder.Infrastructure.Repositories
             _basketsDeliveryInfoDtos.Add("P0130863", SampleData.deliveryInfoP0130863);
             _basketsDeliveryInfoDtos.Add("P0130652", SampleData.deliveryInfoP0130652);
         }
+        private static void SeedBasketDeliverToAccountsData()
+        {
+            _basketsDeliverToAccounts.Clear();
+            _basketsDeliverToAccounts.Add(_basketId, new List<AccountDto?>()
+            {
+                new AccountDto
+    {
+        AccountId = "A001",
+        Name = "John Doe",
+        Recipient = "John Doe",
+        Building = "Building 1",
+        Street = "123 Main St",
+        Locality = "Downtown",
+        ZipCode = "12345",
+        City = "Metropolis",
+        Country = "USA",
+        Email = "john.doe@example.com",
+        Phone = "123-456-7890",
+        CellularPhone = "987-654-3210",
+        Blocked = false
+    },
+                new AccountDto
+    {
+        AccountId = "A002",
+        Name = "Jane Smith",
+        Recipient = "Jane Smith",
+        Building = "Building 2",
+        Street = "456 Elm St",
+        Locality = "Uptown",
+        ZipCode = "67890",
+        City = "Gotham",
+        Country = "USA",
+        Email = "jane.smith@example.com",
+        Phone = "234-567-8901",
+        CellularPhone = "876-543-2109",
+        Blocked = false
+    },
+                null // Example of a nullable AccountDto
+            });
+            _basketsDeliverToAccounts.Add("P0130140", SampleData.deliverToAccountsP0130140);
+            _basketsDeliverToAccounts.Add("P0130512", SampleData.deliverToAccountsP0130512);
+            _basketsDeliverToAccounts.Add("P0130863", SampleData.deliverToAccountsP0130863);
+            _basketsDeliverToAccounts.Add("P0130652", SampleData.deliverToAccountsP0130652);
+        }
+        private static void SeedBasketDeliverToContactsData()
+        {
+            _basketsDeliverToContacts.Clear();
+            _basketsDeliverToContacts.Add(_basketId, new List<ContactDto?>()
+            {
+                new ContactDto
+    {
+        ContactId = "C001",
+        SocialTitle = "Mr.",
+        FirstName = "John",
+        LastName = "Doe",
+        Email = "john.doe@example.com",
+        Phone = "123-456-7890",
+        CellularPhone = "987-654-3210"
+    },
+    new ContactDto
+    {
+        ContactId = "C002",
+        SocialTitle = "Ms.",
+        FirstName = "Jane",
+        LastName = "Smith",
+        Email = "jane.smith@example.com",
+        Phone = "234-567-8901",
+        CellularPhone = "876-543-2109"
+    },
+    null // Example of a nullable ContactDto
+            });
+            _basketsDeliverToContacts.Add("P0130140", SampleData.deliverToContactsP0130140);
+            _basketsDeliverToContacts.Add("P0130863", SampleData.deliverToContactsP0130863);
+            _basketsDeliverToContacts.Add("P0130652", SampleData.deliverToContactsP0130652);
+            _basketsDeliverToContacts.Add("P0130512", SampleData.deliverToContactsP0130512);
+        }
+        private static void SeedBasketDeliveryModesData()
+        {
+            _basketsDeliveryModes.Clear();
+            _basketsDeliveryModes.Add(_basketId, new List<BasketValueDto?>()
+            {
+                 new BasketValueDto
+    {
+        Description = "Discount",
+        Value = "10%"
+    },
+    new BasketValueDto
+    {
+        Description = "Shipping Cost",
+        Value = "$5.99"
+    },
+    new BasketValueDto
+    {
+        Description = "Total",
+        Value = "$100.00"
+    },
+    null // Example of a nullable BasketValueDto
+            });
+            _basketsDeliveryModes.Add("P0130140", SampleData.deliveryModesP0130140);
+            _basketsDeliveryModes.Add("P0130512", SampleData.deliveryModesP0130512);
+            _basketsDeliveryModes.Add("P0130863", SampleData.deliveryModesP0130863);
+            _basketsDeliveryModes.Add("P0130652", SampleData.deliveryModesP0130652);
+        }
+
+        //=======================================================================================================
+        //Invoice info section
+        //=======================================================================================================
         private static void SeedBasketInvoiceInfoData()
         {
-            _basketsInvoiceInfoDtos.Add("P0130738", new BasketInvoiceInfoDto()
+            _basketsInvoiceInfoDtos.Clear();
+            _basketsInvoiceInfoDtos.Add(_basketId, new BasketInvoiceInfoDto()
             {
                 Account = new Field<AccountDto>
                 {
@@ -559,8 +820,113 @@ namespace MyOrder.Infrastructure.Repositories
             _basketsInvoiceInfoDtos.Add("P0130863", SampleData.invoiceInfoP0130863);
             _basketsInvoiceInfoDtos.Add("P0130652", SampleData.invoiceInfoP0130652);
         }
+        private static void SeedBasketTaxGroupsData()
+        {
+            _basketsTaxGroups.Clear();
+            _basketsTaxGroups.Add(_basketId, new List<BasketValueDto?>()
+            {
+                 new BasketValueDto
+    {
+        Description = "Discount",
+        Value = "10%"
+    },
+    new BasketValueDto
+    {
+        Description = "Shipping Cost",
+        Value = "$5.99"
+    },
+    new BasketValueDto
+    {
+        Description = "Total",
+        Value = "$100.00"
+    },
+    null // Example of a nullable BasketValueDto
+            });
+            _basketsTaxGroups.Add("P0130140", SampleData.taxGroupsP0130140);
+            _basketsTaxGroups.Add("P0130512", SampleData.taxGroupsP0130512);
+            _basketsTaxGroups.Add("P0130863", SampleData.taxGroupsP0130863);
+            _basketsTaxGroups.Add("P0130652", SampleData.taxGroupsP0130652);
+
+        }
+        private static void SeedBasketPaymentModesData()
+        {
+            _basketsPaymentModes.Clear();
+            _basketsPaymentModes.Add(_basketId, new List<BasketValueDto?>()
+            {
+                 new BasketValueDto
+    {
+        Description = "Discount",
+        Value = "10%"
+    },
+    new BasketValueDto
+    {
+        Description = "Shipping Cost",
+        Value = "$5.99"
+    },
+    new BasketValueDto
+    {
+        Description = "Total",
+        Value = "$100.00"
+    },
+    null // Example of a nullable BasketValueDto
+            });
+            _basketsPaymentModes.Add("P0130140", SampleData.paymentModesP0130140);
+            _basketsPaymentModes.Add("P0130512", SampleData.paymentModesP0130512);
+            _basketsPaymentModes.Add("P0130863", SampleData.paymentModesP0130863);
+            _basketsPaymentModes.Add("P0130652", SampleData.paymentModesP0130652);
+        }
+        private static void SeedInvoiceToAccountData()
+        {
+            _basketsInvoiceToAccounts.Clear();
+            _basketsInvoiceToAccounts.Add(_basketId, new List<AccountDto?>()
+            {
+                new AccountDto
+    {
+        AccountId = "A001",
+        Name = "John Doe",
+        Recipient = "John Doe",
+        Building = "Building 1",
+        Street = "123 Main St",
+        Locality = "Downtown",
+        ZipCode = "12345",
+        City = "Metropolis",
+        Country = "USA",
+        Email = "john.doe@example.com",
+        Phone = "123-456-7890",
+        CellularPhone = "987-654-3210",
+        Blocked = false
+    },
+                new AccountDto
+    {
+        AccountId = "A002",
+        Name = "Jane Smith",
+        Recipient = "Jane Smith",
+        Building = "Building 2",
+        Street = "456 Elm St",
+        Locality = "Uptown",
+        ZipCode = "67890",
+        City = "Gotham",
+        Country = "USA",
+        Email = "jane.smith@example.com",
+        Phone = "234-567-8901",
+        CellularPhone = "876-543-2109",
+        Blocked = false
+    },
+                null // Example of a nullable AccountDto
+            });
+            _basketsInvoiceToAccounts.Add("P0130140", SampleData.invoiceToAccountsP0130140);
+            _basketsInvoiceToAccounts.Add("P0130512", SampleData.invoiceToAccountsP0130512);
+            _basketsInvoiceToAccounts.Add("P0130863", SampleData.invoiceToAccountsP0130863);
+            _basketsInvoiceToAccounts.Add("P0130652", SampleData.invoiceToAccountsP0130652);
+        }
+
+
+        //=======================================================================================================
+        // Trade Info Section
+        //=======================================================================================================
         private static void SeedBasketTradeInfoData()
         {
+            _basketsTradeInfoDtos.Clear();
             _basketsTradeInfoDtos.Add(_basketId, new BasketTradeInfoDto()
             {
                 Turnover = new Field<List<BasketTurnoverLineDto?>>
@@ -594,7 +960,7 @@ namespace MyOrder.Infrastructure.Repositories
                 },
                 Contract = new BasketContractInfoDto
                 {
-                    ContractId = new Field<string?>
+                    ContractId = new Field<string>
                     {
                         Name = "Contract ID",
                         Status = "Active",
@@ -605,7 +971,7 @@ namespace MyOrder.Infrastructure.Repositories
                         Description = "Unique identifier for the contract",
                         Url = null
                     },
-                    ContractType = new Field<string?>
+                    ContractType = new Field<string>
                     {
                         Name = "Contract Type",
                         Status = "Active",
@@ -616,7 +982,7 @@ namespace MyOrder.Infrastructure.Repositories
                         Description = "Type of the contract",
                         Url = null
                     },
-                    ContractGroup = new Field<string?>
+                    ContractGroup = new Field<string>
                     {
                         Name = "Contract Group",
                         Status = "Active",
@@ -627,7 +993,7 @@ namespace MyOrder.Infrastructure.Repositories
                         Description = "Group classification of the contract",
                         Url = null
                     },
-                    Status = new Field<string?>
+                    Status = new Field<string>
                     {
                         Name = "Status",
                         Status = "Active",
@@ -638,7 +1004,7 @@ namespace MyOrder.Infrastructure.Repositories
                         Description = "Current status of the contract",
                         Url = null
                     },
-                    StartDate = new Field<string?>
+                    StartDate = new Field<string>
                     {
                         Name = "Start Date",
                         Status = "Active",
@@ -649,7 +1015,7 @@ namespace MyOrder.Infrastructure.Repositories
                         Description = "Start date of the contract",
                         Url = null
                     },
-                    EndDate = new Field<string?>
+                    EndDate = new Field<string>
                     {
                         Name = "End Date",
                         Status = "Active",
@@ -660,7 +1026,7 @@ namespace MyOrder.Infrastructure.Repositories
                         Description = "End date of the contract",
                         Url = null
                     },
-                    CampaignId = new Field<string?>
+                    CampaignId = new Field<string>
                     {
                         Name = "Campaign ID",
                         Status = "Active",
@@ -671,7 +1037,7 @@ namespace MyOrder.Infrastructure.Repositories
                         Description = "Identifier for the associated campaign",
                         Url = null
                     },
-                    MainContact = new Field<string?>
+                    MainContact = new Field<string>
                     {
                         Name = "Main Contact",
                         Status = "Active",
@@ -682,7 +1048,7 @@ namespace MyOrder.Infrastructure.Repositories
                         Description = "Primary contact person for the contract",
                         Url = null
                     },
-                    OfficeExecutive = new Field<string?>
+                    OfficeExecutive = new Field<string>
                     {
                         Name = "Office Executive",
                         Status = "Active",
@@ -711,8 +1077,14 @@ namespace MyOrder.Infrastructure.Repositories
             _basketsTradeInfoDtos.Add("P0130863", SampleData.tradeInfoP0130863);
             _basketsTradeInfoDtos.Add("P0130652", SampleData.tradeInfoP0130652);
         }
+
+
+        //=======================================================================================================
+        //Prices info section
+        //=======================================================================================================
         private static void SeedBasketPriceInfoData()
         {
+            _basketsPricesInfoDtos.Clear();
             _basketsPricesInfoDtos.Add(_basketId, new BasketPricesInfoDto()
             {
                 // Column 1
@@ -959,293 +1331,9 @@ namespace MyOrder.Infrastructure.Repositories
             _basketsPricesInfoDtos.Add("P0130863", SampleData.pricesInfoP0130863);
             _basketsPricesInfoDtos.Add("P0130652", SampleData.pricesInfoP0130652);
         }
-        private static void SeedBasketOrderByContactsData()
-        {
-            _basketsOrderByContacts.Add(_basketId, new List<ContactDto?>()
-            {
-                new ContactDto
-    {
-        ContactId = "C001",
-        SocialTitle = "Mr.",
-        FirstName = "John",
-        LastName = "Doe",
-        Email = "john.doe@example.com",
-        Phone = "123-456-7890",
-        CellularPhone = "987-654-3210"
-    },
-    new ContactDto
-    {
-        ContactId = "C002",
-        SocialTitle = "Ms.",
-        FirstName = "Jane",
-        LastName = "Smith",
-        Email = "jane.smith@example.com",
-        Phone = "234-567-8901",
-        CellularPhone = "876-543-2109"
-    },
-    null // Example of a nullable ContactDto
-            });
-            _basketsOrderByContacts.Add("P0130140", SampleData.orderByContactsP0130140);
-            _basketsOrderByContacts.Add("P0130512", SampleData.orderByContactsP0130512);
-            _basketsOrderByContacts.Add("P0130863", SampleData.orderByContactsP0130863);
-            _basketsOrderByContacts.Add("P0130652", SampleData.orderByContactsP0130652);
-        }
-        private static void SeedBasketCustomerTagsData()
-        {
-            _basketsCustomerTags.Add(_basketId, new List<BasketValueDto?>()
-            {
-                 new BasketValueDto
-    {
-        Description = "Discount",
-        Value = "10%"
-    },
-    new BasketValueDto
-    {
-        Description = "Shipping Cost",
-        Value = "$5.99"
-    },
-    new BasketValueDto
-    {
-        Description = "Total",
-        Value = "$100.00"
-    },
-    null // Example of a nullable BasketValueDto
-            });
-            _basketsCustomerTags.Add("P0130140", SampleData.customerTagsP0130140);
-            _basketsCustomerTags.Add("P0130512", SampleData.customerTagsP0130512);
-            _basketsCustomerTags.Add("P0130863", SampleData.customerTagsP0130863);
-            _basketsCustomerTags.Add("P0130652", SampleData.customerTagsP0130652);
-        }
-        private static void SeedBasketSalesOriginsData()
-        {
-            _basketsSalesOrigins.Add(_basketId, new List<SalesOriginDto?>()
-            {
-                new SalesOriginDto
-    {
-        Value = "Online"
-    },
-    new SalesOriginDto
-    {
-        Value = "In-Store"
-    },
-    new SalesOriginDto
-    {
-        Value = "Referral"
-    },
-    null // Example of a nullable SalesOriginDto
-            });
-            _basketsSalesOrigins.Add("P0130140", SampleData.salesOriginsP0130140);
-            _basketsSalesOrigins.Add("P0130512", SampleData.salesOriginsP0130512);
-            _basketsSalesOrigins.Add("P0130863", SampleData.salesOriginsP0130863);
-            _basketsSalesOrigins.Add("P0130652", SampleData.salesOriginsP0130652);
-        }
-        private static void SeedBasketWebOriginsData()
-        {
-            _basketsWebOrigins.Add(_basketId, new List<BasketValueDto?>()
-            {
-                 new BasketValueDto
-    {
-        Description = "Discount",
-        Value = "10%"
-    },
-    new BasketValueDto
-    {
-        Description = "Shipping Cost",
-        Value = "$5.99"
-    },
-    new BasketValueDto
-    {
-        Description = "Total",
-        Value = "$100.00"
-    },
-    null // Example of a nullable BasketValueDto
-            });
-            _basketsWebOrigins.Add("P0130140", SampleData.webOriginsP0130140);
-            _basketsWebOrigins.Add("P0130512", SampleData.webOriginsP0130512);
-            _basketsWebOrigins.Add("P0130863", SampleData.webOriginsP0130863);
-            _basketsWebOrigins.Add("P0130652", SampleData.webOriginsP0130652);
-        }
-        private static void SeedBasketSalesPoolData()
-        {
-            _basketsSalesPool.Add(_basketId, new List<BasketValueDto?>()
-            {
-                 new BasketValueDto
-    {
-        Description = "Discount",
-        Value = "10%"
-    },
-    new BasketValueDto
-    {
-        Description = "Shipping Cost",
-        Value = "$5.99"
-    },
-    new BasketValueDto
-    {
-        Description = "Total",
-        Value = "$100.00"
-    },
-    null // Example of a nullable BasketValueDto
-            });
-            _basketsSalesPool.Add("P0130140", SampleData.salesPoolsP0130140);
-            _basketsSalesPool.Add("P0130512", SampleData.salesPoolsP0130512);
-            _basketsSalesPool.Add("P0130863", SampleData.salesPoolsP0130863);
-            _basketsSalesPool.Add("P0130652", SampleData.salesPoolsP0130652);
-        }
-        private static void SeedBasketDeliverToAccountsData()
-        {
-            _basketsDeliverToAccounts.Add(_basketId, new List<AccountDto?>()
-            {
-                new AccountDto
-    {
-        AccountId = "A001",
-        Name = "John Doe",
-        Recipient = "John Doe",
-        Building = "Building 1",
-        Street = "123 Main St",
-        Locality = "Downtown",
-        ZipCode = "12345",
-        City = "Metropolis",
-        Country = "USA",
-        Email = "john.doe@example.com",
-        Phone = "123-456-7890",
-        CellularPhone = "987-654-3210",
-        Blocked = false
-    },
-                new AccountDto
-    {
-        AccountId = "A002",
-        Name = "Jane Smith",
-        Recipient = "Jane Smith",
-        Building = "Building 2",
-        Street = "456 Elm St",
-        Locality = "Uptown",
-        ZipCode = "67890",
-        City = "Gotham",
-        Country = "USA",
-        Email = "jane.smith@example.com",
-        Phone = "234-567-8901",
-        CellularPhone = "876-543-2109",
-        Blocked = false
-    },
-                null // Example of a nullable AccountDto
-            });
-            _basketsDeliverToAccounts.Add("P0130140", SampleData.deliverToAccountsP0130140);
-            _basketsDeliverToAccounts.Add("P0130512", SampleData.deliverToAccountsP0130512);
-            _basketsDeliverToAccounts.Add("P0130863", SampleData.deliverToAccountsP0130863);
-            _basketsDeliverToAccounts.Add("P0130652", SampleData.deliverToAccountsP0130652);
-        }
-        private static void SeedBasketDeliverToContactsData()
-        {
-            _basketsDeliverToContacts.Add(_basketId, new List<ContactDto?>()
-            {
-                new ContactDto
-    {
-        ContactId = "C001",
-        SocialTitle = "Mr.",
-        FirstName = "John",
-        LastName = "Doe",
-        Email = "john.doe@example.com",
-        Phone = "123-456-7890",
-        CellularPhone = "987-654-3210"
-    },
-    new ContactDto
-    {
-        ContactId = "C002",
-        SocialTitle = "Ms.",
-        FirstName = "Jane",
-        LastName = "Smith",
-        Email = "jane.smith@example.com",
-        Phone = "234-567-8901",
-        CellularPhone = "876-543-2109"
-    },
-    null // Example of a nullable ContactDto
-            });
-            _basketsDeliverToContacts.Add("P0130140", SampleData.deliverToContactsP0130140);
-            _basketsDeliverToContacts.Add("P0130863", SampleData.deliverToContactsP0130863);
-            _basketsDeliverToContacts.Add("P0130652", SampleData.deliverToContactsP0130652);
-            _basketsDeliverToContacts.Add("P0130512", SampleData.deliverToContactsP0130512);
-        }
-        private static void SeedBasketDeliveryModesData()
-        {
-            _basketsDeliveryModes.Add(_basketId, new List<BasketValueDto?>()
-            {
-                 new BasketValueDto
-    {
-        Description = "Discount",
-        Value = "10%"
-    },
-    new BasketValueDto
-    {
-        Description = "Shipping Cost",
-        Value = "$5.99"
-    },
-    new BasketValueDto
-    {
-        Description = "Total",
-        Value = "$100.00"
-    },
-    null // Example of a nullable BasketValueDto
-            });
-            _basketsDeliveryModes.Add("P0130140", SampleData.deliveryModesP0130140);
-            _basketsDeliveryModes.Add("P0130512", SampleData.deliveryModesP0130512);
-            _basketsDeliveryModes.Add("P0130863", SampleData.deliveryModesP0130863);
-            _basketsDeliveryModes.Add("P0130652", SampleData.deliveryModesP0130652);
-        }
-        private static void SeedBasketTaxGroupsData()
-        {
-            _basketsTaxGroups.Add(_basketId, new List<BasketValueDto?>()
-            {
-                 new BasketValueDto
-    {
-        Description = "Discount",
-        Value = "10%"
-    },
-    new BasketValueDto
-    {
-        Description = "Shipping Cost",
-        Value = "$5.99"
-    },
-    new BasketValueDto
-    {
-        Description = "Total",
-        Value = "$100.00"
-    },
-    null // Example of a nullable BasketValueDto
-            });
-            _basketsTaxGroups.Add("P0130140", SampleData.taxGroupsP0130140);
-            _basketsTaxGroups.Add("P0130512", SampleData.taxGroupsP0130512);
-            _basketsTaxGroups.Add("P0130863", SampleData.taxGroupsP0130863);
-            _basketsTaxGroups.Add("P0130652", SampleData.taxGroupsP0130652);
-
-        }
-        private static void SeedBasketPaymentModesData()
-        {
-            _basketsPaymentModes.Add(_basketId, new List<BasketValueDto?>()
-            {
-                 new BasketValueDto
-    {
-        Description = "Discount",
-        Value = "10%"
-    },
-    new BasketValueDto
-    {
-        Description = "Shipping Cost",
-        Value = "$5.99"
-    },
-    new BasketValueDto
-    {
-        Description = "Total",
-        Value = "$100.00"
-    },
-    null // Example of a nullable BasketValueDto
-            });
-            _basketsPaymentModes.Add("P0130140", SampleData.paymentModesP0130140);
-            _basketsPaymentModes.Add("P0130512", SampleData.paymentModesP0130512);
-            _basketsPaymentModes.Add("P0130863", SampleData.paymentModesP0130863);
-            _basketsPaymentModes.Add("P0130652", SampleData.paymentModesP0130652);
-        }
         private static void SeedBasketCouponsData()
         {
+            _basketsCoupons.Clear();
             _basketsCoupons.Add(_basketId, new List<BasketValueDto?>()
             {
                  new BasketValueDto
@@ -1272,6 +1360,7 @@ namespace MyOrder.Infrastructure.Repositories
         }
         private static void SeedBasketWarrantyCostOptionsData()
         {
+            _basketsWarrantyCostOptions.Clear();
             _basketsWarrantyCostOptions.Add(_basketId, new List<BasketValueDto?>()
             {
                  new BasketValueDto
@@ -1298,6 +1387,7 @@ namespace MyOrder.Infrastructure.Repositories
         }
         private static void SeedBasketShippingCostOptionsData()
         {
+            _basketsShippingCostOptions.Clear();
             _basketsShippingCostOptions.Add(_basketId, new List<BasketValueDto?>()
             {
                  new BasketValueDto
@@ -1322,8 +1412,14 @@ namespace MyOrder.Infrastructure.Repositories
             _basketsShippingCostOptions.Add("P0130863", SampleData.shippingCostOptionsP0130863);
             _basketsShippingCostOptions.Add("P0130652", SampleData.shippingCostOptionsP0130652);
         }
+
+
+        //=======================================================================================================
+        //Procedure Call
+        //=======================================================================================================
         private static void SeedProcedureCallData()
         {
+            _basketsProcedureCall.Clear();
             _basketsProcedureCall.Add(_basketId, new ProcedureCallResponseDto()
             {
                 Success = true,
@@ -1337,49 +1433,12 @@ namespace MyOrder.Infrastructure.Repositories
             _basketsProcedureCall.Add("P0130863", SampleData.procedureCallResponseP0130863_3);
             _basketsProcedureCall.Add("P0130652", SampleData.procedureCallResponseP0130652_3);
         }
-        private static void SeedInvoiceToAccountData()
-        {
-            _basketsInvoiceToAccounts.Add(_basketId, new List<AccountDto?>()
-            {
-                new AccountDto
-    {
-        AccountId = "A001",
-        Name = "John Doe",
-        Recipient = "John Doe",
-        Building = "Building 1",
-        Street = "123 Main St",
-        Locality = "Downtown",
-        ZipCode = "12345",
-        City = "Metropolis",
-        Country = "USA",
-        Email = "john.doe@example.com",
-        Phone = "123-456-7890",
-        CellularPhone = "987-654-3210",
-        Blocked = false
-    },
-                new AccountDto
-    {
-        AccountId = "A002",
-        Name = "Jane Smith",
-        Recipient = "Jane Smith",
-        Building = "Building 2",
-        Street = "456 Elm St",
-        Locality = "Uptown",
-        ZipCode = "67890",
-        City = "Gotham",
-        Country = "USA",
-        Email = "jane.smith@example.com",
-        Phone = "234-567-8901",
-        CellularPhone = "876-543-2109",
-        Blocked = false
-    },
-                null // Example of a nullable AccountDto
-            });
-            _basketsInvoiceToAccounts.Add("P0130140", SampleData.invoiceToAccountsP0130140);
-            _basketsInvoiceToAccounts.Add("P0130512", SampleData.invoiceToAccountsP0130512);
-            _basketsInvoiceToAccounts.Add("P0130863", SampleData.invoiceToAccountsP0130863);
-            _basketsInvoiceToAccounts.Add("P0130652", SampleData.invoiceToAccountsP0130652);
-        }
+
+
+        
+        
+       
+        
 
     }
 

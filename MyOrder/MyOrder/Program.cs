@@ -42,11 +42,11 @@ builder.Services.AddFluxor(options =>
 
 
 // Repositories
-builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+//builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+builder.Services.AddSingleton<IBasketRepository, InMemoryBasketRepository>();
 
 //MudBlazor and UI elements
 builder.Services.AddMudServices();
-
 
 
 var app = builder.Build();
