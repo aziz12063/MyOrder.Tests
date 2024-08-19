@@ -2,6 +2,12 @@
 
 @inherits BaseFluxorComponent<DeliveryInfoState, FetchDeliveryInfoAction>
 
+@if (State.Value.IsLoading)
+{
+    <HeaderElementLoadingSkeleton />
+    return;
+}
+
 <MudContainer Class="pa-0">
     <MudStack Spacing="4">
         <MudText Typo="Typo.h6" Color="Color.Secondary">Livraison</MudText>

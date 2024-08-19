@@ -32,6 +32,7 @@ namespace MyOrder.Infrastructure.Repositories
         private static readonly Dictionary<string, List<BasketValueDto?>> _basketsShippingCostOptions = [];
         private static readonly Dictionary<string, ProcedureCallResponseDto> _basketsProcedureCall = [];
         private static readonly Dictionary<string, List<AccountDto?>> _basketsInvoiceToAccounts = [];
+        private int _millisecondsTimeout = 500;
 
         public InMemoryBasketRepository()
         {
@@ -60,107 +61,128 @@ namespace MyOrder.Infrastructure.Repositories
 
         public Task<BasketGeneralInfoDto> GetBasketGeneralInfoAsync(string basketId)
         {
+            Thread.Sleep(_millisecondsTimeout); 
             return Task.FromResult(_basketsGeneralInfoDtos[basketId]);
         }
 
         public Task<BasketOrderInfoDto> GetBasketOrderInfoAsync(string basketId)
         {
+            Thread.Sleep(_millisecondsTimeout); 
             return Task.FromResult(_basketsOrderInfoDtos[basketId]);
         }
 
         public Task<List<ContactDto?>> GetOrderByContactsAsync(string basketId)
         {
+            Thread.Sleep(_millisecondsTimeout); 
             return Task.FromResult(_basketsOrderByContacts[basketId]);
         }
 
         public Task<List<BasketValueDto?>> GetCustomerTagsAsync(string basketId)
         {
+            Thread.Sleep(_millisecondsTimeout); 
             return Task.FromResult(_basketsCustomerTags[basketId]);
         }
 
         public Task<List<SalesOriginDto?>> GetSalesOriginsAsync(string basketId)
         {
+            Thread.Sleep(_millisecondsTimeout); 
             return Task.FromResult(_basketsSalesOrigins[basketId]);
         }
 
         public Task<List<BasketValueDto?>> GetWebOriginsAsync(string basketId)
         {
+            Thread.Sleep(_millisecondsTimeout); 
             return Task.FromResult(_basketsWebOrigins[basketId]);
         }
 
         public Task<List<BasketValueDto?>> GetSalesPoolAsync(string basketId)
         {
+            Thread.Sleep(_millisecondsTimeout); 
             return Task.FromResult(_basketsSalesPool[basketId]);
         }
 
         public Task<BasketDeliveryInfoDto> GetBasketDeliveryInfoAsync(string basketId)
         {
+            Thread.Sleep(_millisecondsTimeout); 
             return Task.FromResult(_basketsDeliveryInfoDtos[basketId]);
         }
 
         public Task<List<AccountDto?>> GetDeliverToAccountsAsync(string basketId)
         {
+            Thread.Sleep(_millisecondsTimeout); 
             return Task.FromResult(_basketsDeliverToAccounts[basketId]);
         }
 
         public Task<List<ContactDto?>> GetDeliverToContactsAsync(string basketId)
         {
+            Thread.Sleep(_millisecondsTimeout); 
             return Task.FromResult(_basketsDeliverToContacts[basketId]);
         }
 
         public Task<List<BasketValueDto?>> GetDeliveryModesAsync(string basketId)
         {
+            Thread.Sleep(_millisecondsTimeout); 
             return Task.FromResult(_basketsDeliveryModes[basketId]);
         }
 
         public Task<BasketInvoiceInfoDto> GetBasketInvoiceInfoAsync(string basketId)
         {
+            Thread.Sleep(_millisecondsTimeout); 
             return Task.FromResult(_basketsInvoiceInfoDtos[basketId]);
         }
 
         public Task<List<AccountDto?>> GetInvoiceToAccountsAsync(string basketId)
         {
+            Thread.Sleep(_millisecondsTimeout); 
             return Task.FromResult(_basketsInvoiceToAccounts[basketId]);
         }
 
         public Task<List<BasketValueDto?>> GetTaxGroupsAsync(string basketId)
         {
+            Thread.Sleep(_millisecondsTimeout); 
             return Task.FromResult(_basketsTaxGroups[basketId]);
         }
 
         public Task<List<BasketValueDto?>> GetPaymentModesAsync(string basketId)
         {
+            Thread.Sleep(_millisecondsTimeout); 
             return Task.FromResult(_basketsPaymentModes[basketId]);
         }
 
         public Task<BasketTradeInfoDto> GetBasketTradeInfoAsync(string basketId)
         {
+            Thread.Sleep(_millisecondsTimeout); 
             return Task.FromResult(_basketsTradeInfoDtos[basketId]);
         }
 
         public Task<BasketPricesInfoDto> GetBasketPricesInfoAsync(string basketId)
         {
+            Thread.Sleep(_millisecondsTimeout); 
             return Task.FromResult(_basketsPricesInfoDtos[basketId]);
         }
 
         public Task<List<BasketValueDto?>> GetCouponsAsync(string basketId)
         {
+            Thread.Sleep(_millisecondsTimeout); 
             return Task.FromResult(_basketsCoupons[basketId]);
         }
 
         public Task<List<BasketValueDto?>> GetWarrantyCostOptionsAsync(string basketId)
         {
+            Thread.Sleep(_millisecondsTimeout); 
             return Task.FromResult(_basketsWarrantyCostOptions[basketId]);
         }
 
         public Task<List<BasketValueDto?>> GetShippingCostOptionsAsync(string basketId)
         {
 
+            Thread.Sleep(_millisecondsTimeout); 
             return Task.FromResult(_basketsShippingCostOptions[basketId]);
         }
 
         public Task<ProcedureCallResponseDto> PostProcedureCallAsync(string basketId, List<string> procedureCall)
         {
+            Thread.Sleep(_millisecondsTimeout); 
             return Task.FromResult(_basketsProcedureCall[basketId]);
         }
 

@@ -1,6 +1,11 @@
 ﻿@using MyOrder.Store.OrderInfoUseCase
-
 @inherits BaseFluxorComponent<OrderInfoState, FetchOrderInfoAction>
+
+@if (State.Value.IsLoading)
+{
+    <HeaderElementLoadingSkeleton />
+    return;
+}
 
 <MudContainer Class="pa-0">
     <MudStack Spacing="4">

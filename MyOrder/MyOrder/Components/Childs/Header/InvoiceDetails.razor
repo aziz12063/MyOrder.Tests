@@ -1,6 +1,12 @@
 ﻿@using MyOrder.Store.InvoiceInfoUseCase
 @inherits BaseFluxorComponent<InvoiceInfoState, FetchInvoiceInfoAction>
 
+@if (State.Value.IsLoading)
+{
+    <HeaderElementLoadingSkeleton />
+    return;
+}
+
 <MudContainer Class="pa-0">
     <MudStack Spacing="4">
         <MudText Typo="Typo.body2" Color="Color.Secondary">Facturation</MudText>

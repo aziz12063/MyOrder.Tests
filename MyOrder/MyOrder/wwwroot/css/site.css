@@ -25,3 +25,7 @@
     width: 100%; 
     display: inline-block;
 }
+
+.full-height-container {
+    height: 100%;
+}
