@@ -1,150 +1,111 @@
-﻿using Fluxor;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-using MudBlazor;
+﻿using MudBlazor;
 using MyOrder.Components.Childs.Shared;
-using MyOrder.Infrastructure.Repositories;
-using MyOrder.Services;
 using MyOrder.Shared.Dtos;
 using MyOrder.Store.OrderInfoUseCase;
-using System.Text;
 using MyOrder.Utils;
 
 namespace MyOrder.Components.Childs.Header;
 
 public partial class OrderInfo : BaseFluxorComponent<OrderInfoState, FetchOrderInfoAction>
 {
-    private BasketOrderInfoDto BasketOrderInfo => State.Value.BasketOrderInfo;
-    private List<ContactDto> Contacts => State.Value.ContactList;
-    private List<SalesOriginDto> SalesOrigins => State.Value.SalesOrigins;
-    private List<BasketValueDto> WebOrigins => State.Value.WebOrigins;
-    private List<BasketValueDto> SalesPools => State.Value.SalesPools;
+    private BasketOrderInfoDto? BasketOrderInfo => State.Value.BasketOrderInfo;
+    private List<ContactDto?>? Contacts => State.Value.ContactList;
+    private List<SalesOriginDto?>? SalesOrigins => State.Value.SalesOrigins;
+    private List<BasketValueDto?>? WebOrigins => State.Value.WebOrigins;
+    private List<BasketValueDto?>? SalesPools => State.Value.SalesPools;
 
-    protected override FetchOrderInfoAction CreateFetchAction(OrderInfoState state, string basketId)
-    {
-        return new FetchOrderInfoAction(state, basketId);
-    }
+    protected override FetchOrderInfoAction CreateFetchAction(OrderInfoState state, string basketId) => new(state, basketId);
 
-    private string SelectedClient
-    {
-        get
-        {
-            var account = BasketOrderInfo?.Account?.Value;
-            return account == null ? string.Empty :
-                $"{account.AccountId} - {account.Name} - {account.ZipCode}";
-        }
-    }
-
-    private List<string>? AccountAddress
-    {
-        get
-        {
-            var account = BasketOrderInfo?.Account?.Value;
-            if (account == null)
-            {
-                return null;
-            }
-
-            var addressBuilder = new StringBuilder();
-
-            if (!string.IsNullOrWhiteSpace(account.Recipient))
-            {
-                addressBuilder.AppendLine(account.Recipient);
-            }
-
-            if (!string.IsNullOrWhiteSpace(account.Building))
-            {
-                addressBuilder.AppendLine(account.Building);
-            }
-
-            if (!string.IsNullOrWhiteSpace(account.Street))
-            {
-                addressBuilder.AppendLine(account.Street);
-            }
-
-            if (!string.IsNullOrWhiteSpace(account.ZipCode) && !string.IsNullOrWhiteSpace(account.City))
-            {
-                addressBuilder.AppendLine($"{account.ZipCode} - {account.City}");
-            }
-
-            if (!string.IsNullOrWhiteSpace(account.Country))
-            {
-                addressBuilder.AppendLine(account.Country);
-            }
-
-            return addressBuilder.ToString().Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries).ToList();
-        }
-    }
-
+    private string SelectedClient => BasketOrderInfo?.Account?.Value is var account && account is not null
+        ? $"{account.AccountId} - {account.Name} - {account.ZipCode}"
+        : string.Empty;
+    private List<string>? AccountAddress => FieldUtility.CreateAddressList(BasketOrderInfo?.Account?.Value);
     private ContactDto? ContactValue
     {
-        get => BasketOrderInfo.Contact.Value;
+        get => BasketOrderInfo?.Contact?.Value;
         set
         {
-            BasketOrderInfo.Contact.Value = value;
-            UpdateProcedureCall(value?.ContactId, BasketOrderInfo.Contact.ProcedureCall);
+            if (BasketOrderInfo == null)
+                throw new InvalidOperationException("BasketOrderInfo is null.");
+
+            SetBasketOrderValue(BasketOrderInfo.Contact, value, value?.ContactId);
         }
     }
     private string SalesOriginIdValue
     {
-        get => FieldUtility.NullOrWhiteSpaceHelper(BasketOrderInfo.SalesOriginId.Value);
+        get => GetFieldValue(BasketOrderInfo?.SalesOriginId?.Value);
         set
         {
-            BasketOrderInfo.SalesOriginId.Value = value;
-            UpdateProcedureCall(value, BasketOrderInfo.SalesOriginId.ProcedureCall);
+            if (BasketOrderInfo == null)
+                throw new InvalidOperationException("BasketOrderInfo is null.");
+
+            SetBasketOrderValue(field: BasketOrderInfo.SalesOriginId, value: value, procedureCallValue: value);
         }
     }
     private string WebOriginIdValue
     {
-        get => FieldUtility.NullOrWhiteSpaceHelper(BasketOrderInfo.WebOriginId.Value);
+        get => GetFieldValue(BasketOrderInfo?.WebOriginId?.Value);
         set
         {
-            BasketOrderInfo.WebOriginId.Value = value;
-            UpdateProcedureCall(value, BasketOrderInfo.WebOriginId.ProcedureCall);
+            if (BasketOrderInfo == null)
+                throw new InvalidOperationException("BasketOrderInfo is null.");
+
+            SetBasketOrderValue(field: BasketOrderInfo.WebOriginId, value: value, procedureCallValue: value);
         }
     }
     private string SalesPoolId
     {
-        get => FieldUtility.NullOrWhiteSpaceHelper(BasketOrderInfo.SalesPoolId.Value);
+        get => GetFieldValue(BasketOrderInfo?.SalesPoolId?.Value);
         set
         {
-            BasketOrderInfo.SalesPoolId.Value = value;
-            UpdateProcedureCall(value, BasketOrderInfo.SalesPoolId.ProcedureCall);
+            if (BasketOrderInfo == null)
+                throw new InvalidOperationException("BasketOrderInfo is null.");
+
+            SetBasketOrderValue(field: BasketOrderInfo.SalesPoolId, value: value, procedureCallValue: value);
         }
     }
     private string CustomerOrderRefValue
     {
-        get => FieldUtility.NullOrWhiteSpaceHelper(BasketOrderInfo.CustomerOrderRef.Value);
+        get => GetFieldValue(BasketOrderInfo?.CustomerOrderRef?.Value);
         set
         {
-            BasketOrderInfo.CustomerOrderRef.Value = value;
-            UpdateProcedureCall(value, BasketOrderInfo.CustomerOrderRef.ProcedureCall);
+            if (BasketOrderInfo == null)
+                throw new InvalidOperationException("BasketOrderInfo is null.");
+
+            SetBasketOrderValue(field: BasketOrderInfo.CustomerOrderRef, value: value, procedureCallValue: value);
         }
     }
     private string WebSalesIdValue
     {
-        get => FieldUtility.NullOrWhiteSpaceHelper(BasketOrderInfo.WebSalesId.Value);
+        get => GetFieldValue(BasketOrderInfo?.WebSalesId?.Value);
         set
         {
-            BasketOrderInfo.WebSalesId.Value = value;
-            UpdateProcedureCall(value, BasketOrderInfo.WebSalesId.ProcedureCall);
+            if (BasketOrderInfo == null)
+                throw new InvalidOperationException("BasketOrderInfo is null.");
+
+            SetBasketOrderValue(field: BasketOrderInfo.WebSalesId, value: value, procedureCallValue: value);
         }
     }
     private string RelatedLinkValue
     {
-        get => FieldUtility.NullOrWhiteSpaceHelper(BasketOrderInfo.RelatedLink.Value);
+        get => GetFieldValue(BasketOrderInfo?.RelatedLink?.Value);
         set
         {
-            BasketOrderInfo.RelatedLink.Value = value;
-            UpdateProcedureCall(value, BasketOrderInfo.RelatedLink.ProcedureCall);
+            if (BasketOrderInfo == null)
+                throw new InvalidOperationException("BasketOrderInfo is null.");
+
+            SetBasketOrderValue(field: BasketOrderInfo.RelatedLink, value: value, procedureCallValue: value);
+
         }
     }
+
     private static Color CustomerTagColorHelper(string value) => value switch
     {
         "vip" => Color.Primary,
         "noGift" => Color.Error,
         _ => Color.Warning
     };
+
     private static string CustomerTagIconHelper(string value) =>
         value switch
         {
@@ -152,5 +113,4 @@ public partial class OrderInfo : BaseFluxorComponent<OrderInfoState, FetchOrderI
             "noGift" => Icons.Material.Filled.CardGiftcard,
             _ => Icons.Material.Filled.Warning
         };
-
 }

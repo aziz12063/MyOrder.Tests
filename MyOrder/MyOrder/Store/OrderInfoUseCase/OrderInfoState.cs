@@ -8,7 +8,7 @@ namespace MyOrder.Store.OrderInfoUseCase;
 public class OrderInfoState : StateBase
 {
     public BasketOrderInfoDto? BasketOrderInfo { get; }
-    public List<ContactDto?>? ContactList { get; set; }
+    public List<ContactDto?>? ContactList { get; }
     public List<BasketValueDto?>? CustomerTags { get; }
     public List<SalesOriginDto?>? SalesOrigins { get; }
     public List<BasketValueDto?>? WebOrigins { get; }
