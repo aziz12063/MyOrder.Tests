@@ -24,7 +24,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
 
 builder.Services.AddScoped<BasketService>();
-builder.Services.AddSingleton<IStateResolver, StateResolver>();
+builder.Services.AddScoped<IStateResolver, StateResolver>();// i change this from singleton to scoped for the state issue
 
 // Api Client, and Resilience Policies
 builder.Services.AddRefitClient<IBasketApiClient>()

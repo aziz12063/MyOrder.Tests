@@ -22,6 +22,11 @@ namespace MyOrder.Components.Childs.Header
             get => $"{Contract.StartDate.Value}  - {Contract.EndDate.Value}";
         }
 
+        private string ContractDescription
+        {
+            get => $"{Contract.ContractId.Name} {Contract.ContractType.Value}";
+        }
+
 
         private string DiscountListValue
         {
@@ -34,43 +39,26 @@ namespace MyOrder.Components.Childs.Header
             set { }
         }
 
-        private List<string> ContractList
+        private List<BasketContractInfoDto> ContractList
         {
             get
             {
-
-                var list = new List<string>();
+                var list = new List<BasketContractInfoDto>();
 
                 if (Contract != null)
                 {
-                    if (Contract.ContractId != null)
+                    if (Contract.ContractId != null  && Contract.ContractGroup != null && Contract.Status != null)
                     {
-                        if (Contract.ContractId.Value != null)
+                        if (Contract.ContractId.Value != null && Contract.Status.Value != null && Contract.ContractGroup.Name != null)
                         {
-                            list.Add(Contract.ContractId.Value);
+                            list.Add(Contract);
+
                         }
                     }
-
-                    if (Contract.ContractGroup != null)
-                        if (Contract.ContractGroup.Name != null)
-                        {
-                            list.Add(Contract.ContractGroup.Name);
-                        }
-
-                    if (Contract.Status != null)
-                        if (Contract.Status.Value != null)
-                        {
-                            list.Add(Contract.Status.Value);
-                        }
                 }
-
                 return list;
             }
         }
-
-
-
-
     }
 }
 

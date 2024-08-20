@@ -61,128 +61,128 @@ namespace MyOrder.Infrastructure.Repositories
 
         public async Task<BasketGeneralInfoDto> GetBasketGeneralInfoAsync(string basketId)
         {
-            await Task.Delay(_millisecondsTimeout); 
+            await Task.Delay(_millisecondsTimeout);
             return _basketsGeneralInfoDtos[basketId];
         }
 
         public async Task<BasketOrderInfoDto> GetBasketOrderInfoAsync(string basketId)
         {
-            await Task.Delay(_millisecondsTimeout); 
+            await Task.Delay(_millisecondsTimeout);
             return _basketsOrderInfoDtos[basketId];
         }
 
         public async Task<List<ContactDto?>> GetOrderByContactsAsync(string basketId)
         {
-            await Task.Delay(_millisecondsTimeout); 
+            await Task.Delay(_millisecondsTimeout);
             return _basketsOrderByContacts[basketId];
         }
 
         public async Task<List<BasketValueDto?>> GetCustomerTagsAsync(string basketId)
         {
-            await Task.Delay(_millisecondsTimeout); 
+            await Task.Delay(_millisecondsTimeout);
             return _basketsCustomerTags[basketId];
         }
 
         public async Task<List<SalesOriginDto?>> GetSalesOriginsAsync(string basketId)
         {
-            await Task.Delay(_millisecondsTimeout); 
+            await Task.Delay(_millisecondsTimeout);
             return _basketsSalesOrigins[basketId];
         }
 
         public async Task<List<BasketValueDto?>> GetWebOriginsAsync(string basketId)
         {
-            await Task.Delay(_millisecondsTimeout); 
+            await Task.Delay(_millisecondsTimeout);
             return _basketsWebOrigins[basketId];
         }
 
         public async Task<List<BasketValueDto?>> GetSalesPoolAsync(string basketId)
         {
-            await Task.Delay(_millisecondsTimeout); 
+            await Task.Delay(_millisecondsTimeout);
             return _basketsSalesPool[basketId];
         }
 
         public async Task<BasketDeliveryInfoDto> GetBasketDeliveryInfoAsync(string basketId)
         {
-            await Task.Delay(_millisecondsTimeout); 
+            await Task.Delay(_millisecondsTimeout);
             return _basketsDeliveryInfoDtos[basketId];
         }
 
         public async Task<List<AccountDto?>> GetDeliverToAccountsAsync(string basketId)
         {
-            await Task.Delay(_millisecondsTimeout); 
+            await Task.Delay(_millisecondsTimeout);
             return _basketsDeliverToAccounts[basketId];
         }
 
         public async Task<List<ContactDto?>> GetDeliverToContactsAsync(string basketId)
         {
-            await Task.Delay(_millisecondsTimeout); 
+            await Task.Delay(_millisecondsTimeout);
             return _basketsDeliverToContacts[basketId];
         }
 
         public async Task<List<BasketValueDto?>> GetDeliveryModesAsync(string basketId)
         {
-            await Task.Delay(_millisecondsTimeout); 
+            await Task.Delay(_millisecondsTimeout);
             return _basketsDeliveryModes[basketId];
         }
 
         public async Task<BasketInvoiceInfoDto> GetBasketInvoiceInfoAsync(string basketId)
         {
-            await Task.Delay(_millisecondsTimeout); 
+            await Task.Delay(_millisecondsTimeout);
             return _basketsInvoiceInfoDtos[basketId];
         }
 
         public async Task<List<AccountDto?>> GetInvoiceToAccountsAsync(string basketId)
         {
-            await Task.Delay(_millisecondsTimeout); 
+            await Task.Delay(_millisecondsTimeout);
             return _basketsInvoiceToAccounts[basketId];
         }
 
         public async Task<List<BasketValueDto?>> GetTaxGroupsAsync(string basketId)
         {
-            await Task.Delay(_millisecondsTimeout); 
+            await Task.Delay(_millisecondsTimeout);
             return _basketsTaxGroups[basketId];
         }
 
         public async Task<List<BasketValueDto?>> GetPaymentModesAsync(string basketId)
         {
-            await Task.Delay(_millisecondsTimeout); 
+            await Task.Delay(_millisecondsTimeout);
             return _basketsPaymentModes[basketId];
         }
 
         public async Task<BasketTradeInfoDto> GetBasketTradeInfoAsync(string basketId)
         {
-            await Task.Delay(_millisecondsTimeout); 
+            await Task.Delay(_millisecondsTimeout);
             return _basketsTradeInfoDtos[basketId];
         }
 
         public async Task<BasketPricesInfoDto> GetBasketPricesInfoAsync(string basketId)
         {
-            await Task.Delay(_millisecondsTimeout); 
+            await Task.Delay(_millisecondsTimeout);
             return _basketsPricesInfoDtos[basketId];
         }
 
         public async Task<List<BasketValueDto?>> GetCouponsAsync(string basketId)
         {
-            await Task.Delay(_millisecondsTimeout); 
+            await Task.Delay(_millisecondsTimeout);
             return _basketsCoupons[basketId];
         }
 
         public async Task<List<BasketValueDto?>> GetWarrantyCostOptionsAsync(string basketId)
         {
-            await Task.Delay(_millisecondsTimeout); 
+            await Task.Delay(_millisecondsTimeout);
             return _basketsWarrantyCostOptions[basketId];
         }
 
         public async Task<List<BasketValueDto?>> GetShippingCostOptionsAsync(string basketId)
         {
 
-            await Task.Delay(_millisecondsTimeout); 
+            await Task.Delay(_millisecondsTimeout);
             return _basketsShippingCostOptions[basketId];
         }
 
         public async Task<ProcedureCallResponseDto> PostProcedureCallAsync(string basketId, List<string> procedureCall)
         {
-            await Task.Delay(_millisecondsTimeout); 
+            await Task.Delay(_millisecondsTimeout);
             return _basketsProcedureCall[basketId];
         }
 
@@ -1114,7 +1114,7 @@ namespace MyOrder.Infrastructure.Repositories
                     Name = "Coupon",
                     Status = "Active",
                     Type = "String",
-                    Value = "SUMMER2024",
+                    Value = "10%",
                     ProcedureCall = new List<string?> { "CouponProcedure" },
                     Error = null,
                     Description = "Seasonal discount coupon",
@@ -1447,7 +1447,7 @@ namespace MyOrder.Infrastructure.Repositories
                 Message = "Procedure completed successfully.",
                 ErrorCause = null,
                 UpdateDone = true,
-                RefreshCalls = new List<string?> { "Call1", "Call2", null }
+                RefreshCalls = new List<string?> { "pricesInfo" }
             });
             _basketsProcedureCall.Add("P0130140", SampleData.procedureCallResponseP0130140_3);
             _basketsProcedureCall.Add("P0130512", SampleData.procedureCallResponseP0130512_3);

@@ -49,8 +49,6 @@ namespace MyOrder.Components.Childs.Header
             else return true;
            
         }
-
-        
         private string CouponValue
         {
             get => FieldUtility.NullOrWhiteSpaceHelper(BasketPricesInfo?.Coupon?.Value);

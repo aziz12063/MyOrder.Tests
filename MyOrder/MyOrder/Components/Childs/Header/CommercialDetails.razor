@@ -12,8 +12,8 @@
         <MudText Typo="Typo.h6" Color="Color.Secondary">Commercial info</MudText>
         <MudStack Spacing="2">
             <MudText Typo="Typo.body2" Color="Color.Secondary">ChiffreD'Affaire</MudText>
-            <MudDataGrid Items="@Turnover" Filterable="false" SortMode="@SortMode.None" Groupable="false">
-                <Columns>
+            <MudDataGrid Items="@Turnover" Filterable="false" SortMode="@SortMode.None" Groupable="false" Dense="true">
+                <Columns >
                     <PropertyColumn Property="x => x.Name" />
                     <PropertyColumn Property="x => x.Ytd" />
                     <PropertyColumn Property="x => x.YtdN1" />
@@ -37,108 +37,144 @@
             </MudItem>
         </MudGrid>
         <!--Contract en cours-->
-        <!--Take(1) because it shows 3 rows i don't know why-->
-        <!--if it can be a list of contacts, we modify take, and the contractlist-->
-        <MudStack Spacing="0">
-            <MudText Typo="Typo.body2" Color="Color.Secondary">Contrats en cours, change the color if it's found'</MudText>
-            <MudTable Items="ContractList.Take(1)" Bordered="true" Hover="true">
-                <HeaderContent>
-                    <MudTh></MudTh>
-                    <MudTh>Contrat</MudTh>
-                    <MudTh>Groupe de contrat</MudTh>
-                    <MudTh>Statut</MudTh>
-                </HeaderContent>
-                <RowTemplate>
-                    <MudTh><MudIconButton Icon="@Icons.Material.Filled.ArrowForward" Color="Color.Primary" /></MudTh>
-                    <MudTd>@ContractList[0]</MudTd>
-                    <MudTd>@ContractList[1]</MudTd>
-                    <MudTd>@ContractList[2]</MudTd>
-                </RowTemplate>
-            </MudTable>
-        </MudStack>
+        @if (ContractList.Count > 0)
+        {
+            <MudStack Spacing="0">
+                <MudText Typo="Typo.h6"
+                         Style="color:red;
+                                font-family: Arial;
+                                font-size: 18px;
+                                font-weight: bold">
+                    Contrats en cours
+                </MudText>
 
+                <!--Contract dataGrid-->
+                <MudDataGrid Items="@ContractList"
+                             Filterable="false"
+                             SortMode="@SortMode.None"
+                             Groupable="false"
+                             Bordered="true"
+                             Dense="true"
+                             Class="my-data-grid">
+                    <Columns>
+                        <TemplateColumn Width="40px">
+                            <CellTemplate>
+                                <MudIconButton Icon="@Icons.Material.Filled.ArrowForward" Color="Color.Primary" />
+                            </CellTemplate>
+                        </TemplateColumn>
+                        <PropertyColumn Property="x => x.ContractId.Value" Title="Contrat" />
+                        <PropertyColumn Property="x => x.ContractGroup.Name" Title="Groupe de contrat" />
+                        <PropertyColumn Property="x => x.Status.Value" Title="Statut" />
 
-        <!--Contract en cours details if it's not null-->
-        <MudStack Spacing="1">
-            <MudText Typo="Typo.body2" Color="Color.Secondary">Contract, implement the variable</MudText>
-            <MudText Typo="Typo.body2" Color="Color.Secondary"> make this as string in the cs file: Contract.ContractId.Value </MudText>
-            <MudGrid>
-                <MudItem xs="4">
-                    <MudText>Date</MudText>
-                </MudItem>
-                <MudItem xs="8">
-                    <MudTextField Margin="Margin.Dense" T="string"
-                                  Variant="Variant.Outlined" Width="200px"
-                                  Disabled="false"
-                                  Value="@(BasketTradeInfoDto != null &&
+                    </Columns>
+                </MudDataGrid>
+
+            </MudStack>
+            <!--Contract en cours details if it's not null-->
+            <MudStack Spacing="0">
+                <MudText Typo="Typo.h6"
+                         Style="color:red;
+                                font-family: Arial;
+                                font-size: 18px;
+                                font-weight: bold">@ContractDescription</MudText>
+                <MudText Typo="Typo.h6"
+                         Style="color:red;
+                                font-family: Arial;
+                                font-size: 18px;
+                                font-weight: bold">@Contract.ContractId.Value</MudText>
+                <!--Date-->
+                <MudGrid >
+                    <MudItem xs="4" >
+                        <MudText Style="font-size: 13px">Date</MudText>
+                    </MudItem>
+                    <MudItem xs="8">
+                        <MudTextField Margin="Margin.Dense" T="string"
+                                      Variant="Variant.Outlined" Width="200px"
+                                      Disabled="false"
+                                      Style="font-size: 13px; height:22px;"
+                                      Value="@(BasketTradeInfoDto != null &&
                                            Contract != null &&
                                            Contract.StartDate != null &&
                                            Contract.EndDate != null &&
                                            Contract.StartDate.Value != null &&
                                            Contract.EndDate.Value != null ?
                                            DateValue : "")">
-                    </MudTextField>
-                </MudItem>
-            </MudGrid>
-            <MudGrid>
-                <MudItem xs="4">
-                    <MudText>Campagne de prix</MudText>
-                </MudItem>
-                <MudItem xs="8">
-                    <MudTextField Margin="Margin.Dense" T="string"
-                                  Variant="Variant.Outlined" Width="200px"
-                                  Disabled="false"
-                                  Value="@(BasketTradeInfoDto != null &&
+                        </MudTextField>
+                    </MudItem>
+                </MudGrid>
+                <MudGrid>
+                    <MudItem xs="4">
+                        <MudText Style="font-size: 13px">Campagne de prix</MudText>
+                    </MudItem>
+                    <MudItem xs="8">
+                        <MudTextField Margin="Margin.Dense" T="string"
+                                      Variant="Variant.Outlined" Width="200px"
+                                      Disabled="false"
+                                      Style="font-size: 13px; height:22px;"
+                                      Value="@(BasketTradeInfoDto != null &&
                                            Contract != null &&
                                            Contract.CampaignId != null &&
                                            Contract.CampaignId.Value != null ?
                                            Contract.CampaignId.Value : "")">
-                    </MudTextField>
-                </MudItem>
-            </MudGrid>
-            <MudGrid>
-                <MudItem xs="4">
-                    <MudText>Commercial terrain</MudText>
-                </MudItem>
-                <MudItem xs="8">
-                    <MudTextField Margin="Margin.Dense" T="string"
-                                  Variant="Variant.Outlined" Width="200px"
-                                  Disabled="false"
-                                  Value="@(BasketTradeInfoDto != null &&
+                        </MudTextField>
+                    </MudItem>
+                </MudGrid>
+                <MudGrid>
+                    <MudItem xs="4">
+                        <MudText Style="font-size: 13px">Commercial terrain</MudText>
+                    </MudItem>
+                    <MudItem xs="8">
+                        <MudTextField Margin="Margin.Dense" T="string"
+                                      Variant="Variant.Outlined" Width="200px"
+                                      Disabled="false"
+                                      Style="font-size: 13px; height:22px;"
+                                      Value="@(BasketTradeInfoDto != null &&
                                            Contract != null &&
                                            Contract.MainContact != null &&
                                            Contract.MainContact.Value != null ?
                                            Contract.MainContact.Value : "")">
-                    </MudTextField>
-                </MudItem>
-            </MudGrid>
-            <MudGrid>
-                <MudItem xs="4">
-                    <MudText>Commercial sédentaire</MudText>
-                </MudItem>
-                <MudItem xs="8">
-                    <MudTextField Margin="Margin.Dense" T="string"
-                                  Variant="Variant.Outlined" Width="200px"
-                                  Disabled="false"
-                                  Value="@(BasketTradeInfoDto != null &&
+                        </MudTextField>
+                    </MudItem>
+                </MudGrid>
+                <MudGrid>
+                    <MudItem xs="4">
+                        <MudText Style="font-size: 13px">Commercial sédentaire</MudText>
+                    </MudItem>
+                    <MudItem xs="8">
+                        <MudTextField Margin="Margin.Dense" T="string"
+                                      Variant="Variant.Outlined" Width="200px"
+                                      Disabled="false"
+                                      Style="font-size: 13px; height:22px;"
+                                      Value="@(BasketTradeInfoDto != null &&
                                            Contract != null &&
                                            Contract.OfficeExecutive != null &&
                                            Contract.OfficeExecutive.Value != null ?
                                            Contract.OfficeExecutive.Value : "")">
-                    </MudTextField>
-                </MudItem>
-            </MudGrid>
-            <MudText>Détail des remises</MudText>
-            <MudGrid>
-                <MudItem xs="8">
-                    <MudTextField Margin="Margin.Dense" T="string"
-                                  Lines="2"
-                                  Variant="Variant.Outlined" Width="200px"
-                                  Disabled="false"
-                                  Value="DiscountListValue">
-                    </MudTextField>
-                </MudItem>
-            </MudGrid>
-        </MudStack>
+                        </MudTextField>
+                    </MudItem>
+                </MudGrid>
+                <MudText>Détail des remises</MudText>
+                <MudGrid>
+                    <MudItem xs="8">
+                        <MudTextField Margin="Margin.Dense" T="string"
+                                      Lines="2"
+                                      Variant="Variant.Outlined" Width="200px"
+                                      Disabled="false"
+                                      Style="font-size: 13px;"
+                                      Value="DiscountListValue">
+                        </MudTextField>
+                    </MudItem>
+                </MudGrid>
+            </MudStack>
+        }
+
+        else
+        {
+            <MudStack Spacing="0">
+                <MudText Typo="Typo.body2" Style="color:black; font-family: Arial; font-size: 12px">Contrats en cours</MudText>
+                <MudText Typo="Typo.body2">Aucune contrat en cours</MudText>
+            </MudStack>
+        }
+
     </MudStack>
 </MudContainer>
