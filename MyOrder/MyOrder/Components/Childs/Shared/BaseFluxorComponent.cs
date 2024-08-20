@@ -31,10 +31,25 @@ public abstract class BaseFluxorComponent<TState, TAction> : ComponentBase, IDis
         await base.OnInitializedAsync();
     }
 
+    /// <summary>
+    /// Handles state changes in the component by ensuring state fields are cached before triggering a UI update.
+    /// </summary>
+    /// <param name="sender">The source of the event.</param>
+    /// <param name="e">Event arguments.</param>
     protected virtual void OnStateChanged(object? sender, EventArgs e)
     {
-        InvokeAsync(StateHasChanged);
-        CacheNewFields();
+        // Schedule the execution of this code on the Blazor UI thread. This ensures that any UI-related operations
+        // are executed within the appropriate synchronization context, preventing potential threading issues.
+        InvokeAsync(async () =>
+        {
+            // Cache the relevant state fields first to ensure they are up-to-date before the UI is re-rendered.
+            // This prevents potential null reference issues when the Razor view attempts to access these fields.
+            CacheNewFields();
+
+            // Trigger a re-render of the component to reflect the updated state in the UI.
+            // Awaiting this ensures that the state update happens after caching, maintaining consistency.
+            await InvokeAsync(StateHasChanged);
+        });
     }
 
     protected abstract void CacheNewFields();

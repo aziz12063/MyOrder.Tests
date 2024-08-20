@@ -10,54 +10,56 @@ namespace MyOrder.Components.Childs.Header
 {
     public partial class InvoiceDetails : BaseFluxorComponent<InvoiceInfoState, FetchInvoiceInfoAction>
     {
-        public BasketInvoiceInfoDto? BasketInvoiceInfo => State.Value.BasketInvoiceInfo;
-        public List<AccountDto?>? InvoiceToAccounts => State.Value.InvoiceToAccounts;
-        public List<BasketValueDto?>? TaxGroups => State.Value.TaxGroups;
-        public List<BasketValueDto?>? PaymentModes => State.Value.PaymentModes;
+        public BasketInvoiceInfoDto? BasketInvoiceInfo { get; set; }
+        public List<AccountDto?>? InvoiceToAccounts { get; set; }
+        public List<BasketValueDto?>? TaxGroups { get; set; }
+        public List<BasketValueDto?>? PaymentModes { get; set; }
+        private string SelectedClient { get; set; } = string.Empty;
+        private List<string>? AccountAddress { get; set; }
+        private string DisplayAddress { get; set; }
 
         protected override FetchInvoiceInfoAction CreateFetchAction(InvoiceInfoState state, string basketId)
         {
             return new FetchInvoiceInfoAction(state, basketId);
         }
 
+        protected override void CacheNewFields()
+        {
+            BasketInvoiceInfo = State.Value.BasketInvoiceInfo ?? throw new NullReferenceException("Unexpected null for BasketInvoiceInfo object.");
+            InvoiceToAccounts = State.Value.InvoiceToAccounts;
+            TaxGroups = State.Value.TaxGroups;
+            PaymentModes = State.Value.PaymentModes;
+
+            SelectedClient = FieldUtility.SelectedAccount(BasketInvoiceInfo?.Account?.Value);
+            AccountAddress = FieldUtility.CreateAddressList(BasketInvoiceInfo?.Account?.Value);
+            DisplayAddress = FieldUtility.DisplayAddress(AccountAddress);
+        }
+
         private bool IsPublicEntityValue
         {
-            get => FieldUtility.NullOrWhiteSpaceHelper(BasketInvoiceInfo.IsPublicEntity);
-           
+            get => FieldUtility.NullOrWhiteSpaceHelper(BasketInvoiceInfo?.IsPublicEntity);
+
         }
 
-        private string SelectedCompte
+        private AccountDto SelectedAccount
         {
-            get
+            get => BasketInvoiceInfo?.Account?.Value;
+
+            set
             {
-                var account = BasketInvoiceInfo?.Account?.Value;
-                return account == null ? string.Empty :
-                    $"{account.AccountId} - {account.Name} - {account.ZipCode}";
-            }
-            set 
-            {
-               
+                if (BasketInvoiceInfo == null)
+                    throw new InvalidOperationException("BasketInvoiceInfo is null");
+
+                //BasketInvoiceInfo.Account.Value = value;
+                //AccountAddress = FieldUtility.CreateAddressList(BasketInvoiceInfo?.Account?.Value);
+                //DisplayAddress = FieldUtility.DisplayAddress(AccountAddress);
+
+                SetBasketOrderValue(field: BasketInvoiceInfo.Account, value: value, procedureCallValue: value.AccountId);
             }
         }
 
-        private string GetInvoiceAccount(AccountDto accountDto)
-        {
-            string account = accountDto == null ? string.Empty : $"{accountDto.AccountId} - {accountDto.Name} - {accountDto.ZipCode}";
-            return account;
-        }
 
-        private string AccountAddress
-        {
-            get
-            {
-                var account = BasketInvoiceInfo?.Account?.Value;
-                return account == null ? string.Empty :
-                    $"{account.Building} - {account.Street} \n" +
-                    $"{account.ZipCode} -  {account.City}\n" +
-                    $"{account.Country}";
-            }
-            set { }
-        }
+
 
 
     }

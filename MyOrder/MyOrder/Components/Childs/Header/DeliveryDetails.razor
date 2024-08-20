@@ -71,10 +71,14 @@
                        ReadOnly="@FieldUtility.IsReadOnly(basketDeliveryInfo.Contact)"
                        T="ContactDto"
                        @bind-Value="ContactValue">
-                @foreach (var item in @Contacts)
+                @if (Contacts != null)
                 {
-                    <MudSelectItem T="ContactDto" Value="@item">@item</MudSelectItem>
+                    @foreach (var item in @Contacts)
+                    {
+                        <MudSelectItem T="ContactDto" Value="@item">@item</MudSelectItem>
+                    }
                 }
+                
             </MudSelect>
 
             <MudGrid Spacing="2">

@@ -6,39 +6,33 @@
     <HeaderElementLoadingSkeleton />
     return;
 }
+@{
+    var BasketInvoiceInfo = State.Value.BasketInvoiceInfo;
+    if (BasketInvoiceInfo is null)
+{
+    <LogAndAlert LogLevel="LogLevel.Error"
+                 Exception="new NullReferenceException()"
+                 StackTrace="@LogUtility.GetStackTrace()"
+                 LogMessage="Unexpected null for BasketInvoiceInfo object."
+                 AlertMessage="Une erreur est survenue" />
+    return;
+}}
+
+
 
 <MudContainer Class="pa-0">
     <MudStack Spacing="4">
         <MudText Typo="Typo.body2" Color="Color.Secondary">Facturation</MudText>
-         @if (State.Value.IsLoading)
-        {
-            <MudStack Class="pl-16" Spacing="2">
-                <MudSkeleton Animation="Animation.Pulse" SkeletonType="SkeletonType.Rectangle" Width="175px" Height="24px" Style="background-color: rgb(240 248 255 / 11%)" />
-                <MudSkeleton Animation="Animation.Pulse" SkeletonType="SkeletonType.Rectangle" Width="250px" Height="20px" Style="background-color: rgb(240 248 255 / 11%)" />
-            </MudStack>
-            return;
-        }
-
-        @if (State.Value.BasketInvoiceInfo is null)
-        {
-            <LogAndAlert LogLevel="LogLevel.Error"
-                         Exception="new NullReferenceException()"
-                         StackTrace="@LogUtility.GetStackTrace()"
-                         LogMessage="Unexpected null for GeneralInfo object."
-                         AlertMessage="Une erreur est survenue" />
-            return;
-        } 
-
         <MudItem xs="10">
             <!--Compte facturé-->
             <MudText Typo="Typo.body2" Color="Color.Secondary">Compte facturé</MudText>
             <MudGrid Spacing="0">
                 <MudItem xs="12">
                     <MudSelect Margin="Margin.Dense"
-                               T="string"
+                               T="AccountDto"
                                Variant="Variant.Outlined"
                                ReadOnly="false"
-                               @bind-Value="@SelectedCompte">
+                               @bind-Value="@SelectedAccount">
                         @if (InvoiceToAccounts != null)
                         {
                             List<AccountDto> FiltredList = InvoiceToAccounts.Where(item => item != null).Cast<AccountDto>().ToList();
@@ -46,13 +40,14 @@
                             @if (FiltredList.Count == 0)
                             {
                                 Logger.LogWarning($"the InvoiceToAccounts list  contain only null items.");
-                                <MudSelectItem T="string" >@string.Empty</MudSelectItem>
+                               
                             }
                             else
                             {
                                 @foreach (var item in FiltredList)
                                 {
-                                    <MudSelectItem T="string" Value="@GetInvoiceAccount(item)">@GetInvoiceAccount(item)</MudSelectItem>
+                                    <MudSelectItem T="AccountDto" Value="@item">@item</MudSelectItem>
+                                    @* <MudSelectItem T="string" Value="@GetInvoiceAccount(item)">@GetInvoiceAccount(item)</MudSelectItem> *@
                                 }
                             }
                             if (InvoiceToAccounts.Count > FiltredList.Count)
@@ -75,8 +70,10 @@
                                   FullWidth="true"
                                   Margin="Margin.Dense"
                                   ReadOnly="true"
-                                  Value="@AccountAddress" />
+                                  Value="@DisplayAddress" />
                 </MudItem>
+
+               
             </MudGrid>
 
             <!--Siret-->

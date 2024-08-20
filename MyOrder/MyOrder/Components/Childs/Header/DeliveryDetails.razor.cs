@@ -8,21 +8,32 @@ using MyOrder.Utils;
 namespace MyOrder.Components.Childs.Header;
 public partial class DeliveryDetails : BaseFluxorComponent<DeliveryInfoState, FetchDeliveryInfoAction>
 {
-    private BasketDeliveryInfoDto? BasketDeliveryInfo => State.Value.BasketDeliveryInfo;
-    private List<AccountDto>? Accounts => State.Value.DeliverToAccounts;
-    private List<ContactDto>? Contacts => State.Value.DeliverToContacts;
-    private List<BasketValueDto>? WebOrigins => State.Value.DeliveryModes;
+    private BasketDeliveryInfoDto? BasketDeliveryInfo { get; set; }
+    private List<AccountDto>? Accounts { get; set; }
+    private List<ContactDto>? Contacts { get; set; }
+    private List<BasketValueDto>? WebOrigins { get; set; }
+    private string SelectedAccount { get; set; }
+    private List<string>? AccountAddress { get; set; }
+    private string DisplayAddress { get; set; }
 
-    //override
+    protected override void CacheNewFields()
+    {
+        BasketDeliveryInfo = State.Value.BasketDeliveryInfo ?? throw new NullReferenceException("Unexpected null for BasketOrderInfo object.");
+        Accounts = State.Value.DeliverToAccounts;
+        Contacts = State.Value.DeliverToContacts; ;
+        WebOrigins = State.Value.DeliveryModes;
+
+        SelectedAccount = FieldUtility.SelectedAccount(BasketDeliveryInfo?.Account?.Value);
+        AccountAddress = FieldUtility.CreateAddressList(BasketDeliveryInfo?.Account?.Value);
+        DisplayAddress = FieldUtility.DisplayAddress(AccountAddress);
+    }
 
     protected override FetchDeliveryInfoAction CreateFetchAction(DeliveryInfoState state, string basketId) => new(state, basketId);
 
-    private string SelectedAccount => FieldUtility.SelectedAccount(BasketDeliveryInfo?.Account?.Value);
-    private List<string>? AccountAddress => FieldUtility.CreateAddressList(BasketDeliveryInfo?.Account?.Value);
-    private string DisplayAddress => FieldUtility.DisplayAddress(AccountAddress);
+
     private ContactDto? ContactValue
     {
-        get => BasketDeliveryInfo.Contact.Value;
+        get => BasketDeliveryInfo?.Contact?.Value;
         set
         {
             BasketDeliveryInfo.Contact.Value = value;
@@ -31,7 +42,7 @@ public partial class DeliveryDetails : BaseFluxorComponent<DeliveryInfoState, Fe
     }
     private string NoteValue
     {
-        get => FieldUtility.NullOrWhiteSpaceHelper(BasketDeliveryInfo.Note.Value);
+        get => FieldUtility.NullOrWhiteSpaceHelper(BasketDeliveryInfo?.Note?.Value);
         set
         {
             BasketDeliveryInfo.Note.Value = value;

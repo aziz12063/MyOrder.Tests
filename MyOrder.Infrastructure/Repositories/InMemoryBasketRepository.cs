@@ -243,16 +243,16 @@ namespace MyOrder.Infrastructure.Repositories
                         Blocked = false
                     }
                 },
-                Contact = new Field<ContactDto>
+                Contact = new Field<ContactDto?>
                 {
                     Name = "Contact commandeur",
                     Status = "readWrite",
                     Value = new ContactDto
                     {
-                        ContactId = null,
-                        SocialTitle = null,
-                        FirstName = null,
-                        LastName = null,
+                        ContactId = "imad",
+                        SocialTitle = "aziz",
+                        FirstName = "adam",
+                        LastName = "Boug",
                         Email = null,
                         Phone = null,
                         CellularPhone = null
@@ -753,7 +753,7 @@ namespace MyOrder.Infrastructure.Repositories
                         CellularPhone = "345-678-9012",
                         Blocked = false
                     },
-                    ProcedureCall = new List<string?> { "AccountProcedure1" },
+                    ProcedureCall = new List<string?> { "invoiceInfo" },
                     Error = null,
                     Description = "Primary billing account",
                     Url = "http://example.com/billingaccount"

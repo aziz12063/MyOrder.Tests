@@ -10,12 +10,23 @@ namespace MyOrder.Components.Childs.Header
 {
     public partial class PriceInfo : BaseFluxorComponent<PricesInfoState, FetchPricesInfoAction>
     {
-        private BasketPricesInfoDto? BasketPricesInfo => State.Value.PricesInfo;
-        private List<BasketValueDto?>? Coupons => State.Value.Coupons;
-        private List<BasketValueDto?>? WarrantyCostOptions => State.Value.WarrantyCostOptions;
-        private List<BasketValueDto?>? ShippingCostOptions => State.Value.ShippingCostOptions;
-        private bool IsLoading => State.Value.IsLoading;
-        
+        private BasketPricesInfoDto? BasketPricesInfo { get; set; }
+        private List<BasketValueDto?>? Coupons { get; set; }
+        private List<BasketValueDto?>? WarrantyCostOptions { get; set; }
+        private List<BasketValueDto?>? ShippingCostOptions { get; set; }
+        private bool IsLoading { get; set; }
+
+
+        protected override void CacheNewFields()
+        {
+            BasketPricesInfo = State.Value.PricesInfo ?? throw new NullReferenceException("Unexpected null for BasketOrderInfo object.");
+            Coupons = State.Value.Coupons;
+            WarrantyCostOptions = State.Value.WarrantyCostOptions;
+            ShippingCostOptions = State.Value.ShippingCostOptions;
+            IsLoading = State.Value.IsLoading;
+
+           
+        }
 
         public string TotalVolumeAndWeight
         {
@@ -47,21 +58,18 @@ namespace MyOrder.Components.Childs.Header
                 return false;
             }
             else return true;
-           
         }
         private string CouponValue
         {
-            get => FieldUtility.NullOrWhiteSpaceHelper(BasketPricesInfo?.Coupon?.Value);
+            get => GetFieldValue(BasketPricesInfo?.Coupon?.Value);
             set
             {
-               
                 if(SetValue<string>(BasketPricesInfo.Coupon, BasketPricesInfo))
                 {
                     Logger.LogWarning($"the CouponValue  is not null .");
                     BasketPricesInfo.Coupon.Value = value;
                     UpdateProcedureCall(value, BasketPricesInfo.Coupon.ProcedureCall);
                 }
-
             }
         }
         private string WarrantyCostOptionsValue

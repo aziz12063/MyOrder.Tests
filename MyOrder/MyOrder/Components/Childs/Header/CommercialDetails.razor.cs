@@ -3,19 +3,30 @@ using MyOrder.Components.Childs.Shared;
 using MyOrder.Shared.Dtos;
 using MyOrder.Store.PricesInfoUseCase;
 using MyOrder.Store.TradeInfoUseCase;
+using MyOrder.Utils;
 
 namespace MyOrder.Components.Childs.Header
 {
     public partial class CommercialDetails : BaseFluxorComponent<TradeInfoState, FetchTradeInfoAction>
     {
-        private BasketTradeInfoDto? BasketTradeInfoDto => State.Value.BasketTradeInfo;
-        private List<BasketTurnoverLineDto?>? Turnover => BasketTradeInfoDto?.Turnover?.Value;
-        private BasketContractInfoDto? Contract => BasketTradeInfoDto?.Contract;
+        private BasketTradeInfoDto? BasketTradeInfoDto { get; set; }
+        private List<BasketTurnoverLineDto?>? Turnover { get; set; }
+        private BasketContractInfoDto? Contract { get; set; }
 
         protected override FetchTradeInfoAction CreateFetchAction(TradeInfoState state, string basketId)
         {
             return new FetchTradeInfoAction(state, basketId); ;
         }
+        protected override void CacheNewFields()
+        {
+            BasketTradeInfoDto = State.Value.BasketTradeInfo ?? throw new NullReferenceException("Unexpected null for BasketOrderInfo object.");
+            Turnover = BasketTradeInfoDto?.Turnover?.Value;
+            Contract = BasketTradeInfoDto?.Contract;
+          
+           
+        }
+
+
 
         private string DateValue
         {
