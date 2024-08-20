@@ -24,7 +24,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
 
 builder.Services.AddScoped<BasketService>();
-builder.Services.AddScoped<IStateResolver, StateResolver>();// i change this from singleton to scoped for the state issue
+builder.Services.AddScoped<IStateResolver, StateResolver>();// Check if this should be singleton or scoped !!!!
 
 // Api Client, and Resilience Policies
 builder.Services.AddRefitClient<IBasketApiClient>()
@@ -42,8 +42,8 @@ builder.Services.AddFluxor(options =>
 
 
 // Repositories
-builder.Services.AddScoped<IBasketRepository, BasketRepository>();
-//builder.Services.AddSingleton<IBasketRepository, InMemoryBasketRepository>();
+//builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+builder.Services.AddSingleton<IBasketRepository, InMemoryBasketRepository>();
 
 //MudBlazor and UI elements
 builder.Services.AddMudServices();

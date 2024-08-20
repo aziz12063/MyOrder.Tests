@@ -99,14 +99,15 @@ public partial class OrderInfo : BaseFluxorComponent<OrderInfoState, FetchOrderI
         }
     }
 
-    private static Color CustomerTagColorHelper(string value) => value switch
-    {
-        "vip" => Color.Primary,
-        "noGift" => Color.Error,
-        _ => Color.Warning
-    };
+    private static Color CustomerTagColorHelper(string? value) =>
+        value switch
+        {
+            "vip" => Color.Primary,
+            "noGift" => Color.Error,
+            _ => Color.Warning
+        };
 
-    private static string CustomerTagIconHelper(string value) =>
+    private static string CustomerTagIconHelper(string? value) =>
         value switch
         {
             "vip" => Icons.Material.Filled.Star,
