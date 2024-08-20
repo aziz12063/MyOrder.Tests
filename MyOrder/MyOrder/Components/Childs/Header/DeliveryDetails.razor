@@ -7,6 +7,18 @@
     <HeaderElementLoadingSkeleton />
     return;
 }
+@{
+    var basketDeliveryInfo = State.Value.BasketDeliveryInfo;
+    if (basketDeliveryInfo == null)
+    {
+        <LogAndAlert LogLevel="LogLevel.Error"
+                     Exception="new NullReferenceException()"
+                     StackTrace="@LogUtility.GetStackTrace()"
+                     LogMessage="Unexpected null for BasketOrderInfo object."
+                     AlertMessage="Une erreur est survenue..." />
+        return;
+    }
+}
 
 <MudContainer Class="pa-0">
     <MudStack Spacing="4">
@@ -15,7 +27,7 @@
         <!-- Compte Livraison -->
         <MudStack Spacing="2">
             <MudStack Row="true" Spacing="1" StretchItems="StretchItems.Start">
-                <MudText Typo="Typo.subtitle1">@BasketDeliveryInfo.Account.Name</MudText>
+                <MudText Typo="Typo.subtitle1">@basketDeliveryInfo.Account?.Name</MudText>
                 <MudTooltip Text="Chercher client? -Not Implemented">
                     <MudIconButton Icon="@Icons.Material.Filled.Search" Size="Size.Small" />
                 </MudTooltip>
@@ -32,37 +44,10 @@
                     <MudIconButton Icon="@Icons.Material.Filled.Phone" Size="Size.Small" />
                 </MudTooltip>
             </MudStack>
-
-            @if (AccountAddress != null && AccountAddress is { Count: > 0 })
-            {
-                <MudTooltip RootStyle="width: 100%;" Duration="1000">
-                    <ChildContent>
-                        <MudText Typo="Typo.body2" Class="compact-client-details">@SelectedAccount</MudText>
-                    </ChildContent>
-                    <TooltipContent>
-                        @for (var i = 0; i < AccountAddress.Count - 2; i++)
-                        {
-                            var x = i;
-                            <MudText Typo="Typo.caption">@AccountAddress[x]</MudText>
-                            <br />
-                        }
-                        @if (AccountAddress.Count > 1)
-                        {
-                            <MudText Typo="Typo.caption">@AccountAddress[AccountAddress.Count() - 2]</MudText>
-                            <br />
-                            <MudText Typo="Typo.caption">@AccountAddress[^1]</MudText>
-                        }
-                        else
-                        {
-                            <MudText Typo="Typo.caption">@AccountAddress[^1]</MudText>
-                        }
-                    </TooltipContent>
-                </MudTooltip>
-            }
-            else
-            {
+            
+            <AddressTooltip AccountAddress="AccountAddress">
                 <MudText Typo="Typo.body2" Class="compact-client-details">@SelectedAccount</MudText>
-            }
+            </AddressTooltip>
             
             <MudTextField Typo="Typo.caption"
                           Lines="5"
@@ -76,14 +61,14 @@
             <!-- Contact Livraison -->
 
             <MudSelect Typo="Typo.body2"
-                       Label="@BasketDeliveryInfo.Contact.Name"
+                       Label="@basketDeliveryInfo.Contact?.Name"
                        Margin="Margin.Dense"
                        Dense="true"
                        Variant="Variant.Outlined"
                        FullWidth="true"
                        AnchorOrigin="Origin.CenterCenter"
-                       Required="@FieldUtility.IsRequired(@BasketDeliveryInfo.Contact)"
-                       ReadOnly="@FieldUtility.IsReadOnly(BasketDeliveryInfo.Contact)"
+                       Required="@FieldUtility.IsRequired(basketDeliveryInfo.Contact)"
+                       ReadOnly="@FieldUtility.IsReadOnly(basketDeliveryInfo.Contact)"
                        T="ContactDto"
                        @bind-Value="ContactValue">
                 @foreach (var item in @Contacts)
@@ -96,19 +81,19 @@
                 <MudItem xs="12" sm="6">
                     <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
                         <MudIcon Title="Téléphone" Icon="@Icons.Material.Filled.Phone" Color="Color.Success" Size="Size.Small" />
-                        <MudText Typo="Typo.body2">@FieldUtility.NullOrWhiteSpaceHelper(BasketDeliveryInfo?.Contact?.Value?.Phone)</MudText>
+                        <MudText Typo="Typo.body2">@FieldUtility.NullOrWhiteSpaceHelper(basketDeliveryInfo.Contact?.Value?.Phone)</MudText>
                     </MudStack>
                 </MudItem>
                 <MudItem xs="12" sm="6">
                     <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
                         <MudIcon Title="Mobile" Icon="@Icons.Material.Filled.PhoneIphone" Color="Color.Info" Size="Size.Small" />
-                        <MudText Typo="Typo.body2">@FieldUtility.NullOrWhiteSpaceHelper(BasketDeliveryInfo?.Contact?.Value?.CellularPhone)</MudText>
+                        <MudText Typo="Typo.body2">@FieldUtility.NullOrWhiteSpaceHelper(basketDeliveryInfo.Contact?.Value?.CellularPhone)</MudText>
                     </MudStack>
                 </MudItem>
                 <MudItem xs="12">
                     <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
                         <MudIcon Title="Email" Icon="@Icons.Material.Filled.Email" Color="Color.Surface" Size="Size.Small" />
-                        <MudText Typo="Typo.body2">@FieldUtility.NullOrWhiteSpaceHelper(BasketDeliveryInfo?.Contact?.Value?.Email)</MudText>
+                        <MudText Typo="Typo.body2">@FieldUtility.NullOrWhiteSpaceHelper(basketDeliveryInfo.Contact?.Value?.Email)</MudText>
                     </MudStack>
                 </MudItem>
             </MudGrid>
@@ -121,9 +106,9 @@
                       Variant="Variant.Outlined"
                       FullWidth="true"
                       Margin="Margin.Dense"
-                      Required="@FieldUtility.IsRequired(@BasketDeliveryInfo.Contact)"
-                      ReadOnly="@FieldUtility.IsReadOnly(BasketDeliveryInfo.Contact)"
-                      Label="@BasketDeliveryInfo.Note.Name"
+                      Required="@FieldUtility.IsRequired(basketDeliveryInfo.Contact)"
+                      ReadOnly="@FieldUtility.IsReadOnly(basketDeliveryInfo.Contact)"
+                      Label="@basketDeliveryInfo.Note?.Name"
                       Value="@NoteValue" />
     </MudStack>
 </MudContainer>

@@ -16,6 +16,7 @@ public static class FieldUtility
     public static int? NullOrWhiteSpaceHelper(int? value) => value == null || value == 0 ? 0 : value;// i will make the return non-nullable
     public static bool NullOrWhiteSpaceHelper(bool? value) => value ?? false;// i will make the return non-nullable
 
+    public static string SelectedAccount(AccountDto? account) => account?.ToString() ?? string.Empty;
     public static List<string>? CreateAddressList(AccountDto? account)
     {
         if (account == null) return null;
@@ -38,4 +39,7 @@ public static class FieldUtility
             }
         }
     }
+    public static string DisplayAddress(List<string>? address) => address is var addressList && addressList != null 
+        ? string.Join("\n", addressList) 
+        : string.Empty;
 }

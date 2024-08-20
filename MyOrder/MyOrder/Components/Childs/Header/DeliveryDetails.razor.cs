@@ -8,66 +8,18 @@ using MyOrder.Utils;
 namespace MyOrder.Components.Childs.Header;
 public partial class DeliveryDetails : BaseFluxorComponent<DeliveryInfoState, FetchDeliveryInfoAction>
 {
-    private BasketDeliveryInfoDto BasketDeliveryInfo => State.Value.BasketDeliveryInfo;
-    private List<AccountDto> Accounts => State.Value.DeliverToAccounts;
-    private List<ContactDto> Contacts => State.Value.DeliverToContacts;
-    private List<BasketValueDto> WebOrigins => State.Value.DeliveryModes;
+    private BasketDeliveryInfoDto? BasketDeliveryInfo => State.Value.BasketDeliveryInfo;
+    private List<AccountDto>? Accounts => State.Value.DeliverToAccounts;
+    private List<ContactDto>? Contacts => State.Value.DeliverToContacts;
+    private List<BasketValueDto>? WebOrigins => State.Value.DeliveryModes;
 
-    protected override FetchDeliveryInfoAction CreateFetchAction(DeliveryInfoState state, string basketId)
-    {
-        return new FetchDeliveryInfoAction(state, basketId);
-    }
+    //override
 
-    private string SelectedAccount
-    {
-        get
-        {
-            var account = BasketDeliveryInfo?.Account?.Value;
-            return account == null ? string.Empty :
-                $"{account.AccountId} - {account.Name} - {account.ZipCode}";
-        }
-    }
-    private List<string>? AccountAddress
-    {
-        get
-        {
-            var account = BasketDeliveryInfo?.Account?.Value;
-            if (account == null)
-            {
-                return null;
-            }
+    protected override FetchDeliveryInfoAction CreateFetchAction(DeliveryInfoState state, string basketId) => new(state, basketId);
 
-            var addressBuilder = new StringBuilder();
-
-            if (!string.IsNullOrWhiteSpace(account.Recipient))
-            {
-                addressBuilder.AppendLine(account.Recipient);
-            }
-
-            if (!string.IsNullOrWhiteSpace(account.Building))
-            {
-                addressBuilder.AppendLine(account.Building);
-            }
-
-            if (!string.IsNullOrWhiteSpace(account.Street))
-            {
-                addressBuilder.AppendLine(account.Street);
-            }
-
-            if (!string.IsNullOrWhiteSpace(account.ZipCode) && !string.IsNullOrWhiteSpace(account.City))
-            {
-                addressBuilder.AppendLine($"{account.ZipCode} - {account.City}");
-            }
-
-            if (!string.IsNullOrWhiteSpace(account.Country))
-            {
-                addressBuilder.AppendLine(account.Country);
-            }
-
-            return addressBuilder.ToString().Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries).ToList();
-        }
-    }
-    private string DisplayAddress => string.Join("\n", AccountAddress);
+    private string SelectedAccount => FieldUtility.SelectedAccount(BasketDeliveryInfo?.Account?.Value);
+    private List<string>? AccountAddress => FieldUtility.CreateAddressList(BasketDeliveryInfo?.Account?.Value);
+    private string DisplayAddress => FieldUtility.DisplayAddress(AccountAddress);
     private ContactDto? ContactValue
     {
         get => BasketDeliveryInfo.Contact.Value;

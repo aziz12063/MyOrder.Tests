@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,5 +22,7 @@ public class AccountDto
     public string? Phone { get; set; }
     public string? CellularPhone { get; set; }
     public bool? Blocked { get; set; }
+
+    public override string ToString() => $"{AccountId} - {Name} - {ZipCode}";
 }
 

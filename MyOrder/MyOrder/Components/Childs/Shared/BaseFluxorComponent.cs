@@ -31,8 +31,13 @@ public abstract class BaseFluxorComponent<TState, TAction> : ComponentBase, IDis
         await base.OnInitializedAsync();
     }
 
-    protected virtual void OnStateChanged(object? sender, EventArgs e) => InvokeAsync(StateHasChanged);
+    protected virtual void OnStateChanged(object? sender, EventArgs e)
+    {
+        InvokeAsync(StateHasChanged);
+        CacheNewFields();
+    }
 
+    protected abstract void CacheNewFields();
 
     private void OnBasketIdChanged(string basketId) => Dispatcher.Dispatch(CreateFetchAction(State.Value, basketId));
 

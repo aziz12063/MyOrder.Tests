@@ -8,18 +8,27 @@ namespace MyOrder.Components.Childs.Header;
 
 public partial class OrderInfo : BaseFluxorComponent<OrderInfoState, FetchOrderInfoAction>
 {
-    private BasketOrderInfoDto? BasketOrderInfo => State.Value.BasketOrderInfo;
-    private List<ContactDto?>? Contacts => State.Value.ContactList;
-    private List<SalesOriginDto?>? SalesOrigins => State.Value.SalesOrigins;
-    private List<BasketValueDto?>? WebOrigins => State.Value.WebOrigins;
-    private List<BasketValueDto?>? SalesPools => State.Value.SalesPools;
+    private BasketOrderInfoDto? BasketOrderInfo { get; set; }
+    private List<ContactDto?>? Contacts { get; set; }
+    private List<SalesOriginDto?>? SalesOrigins { get; set; }
+    private List<BasketValueDto?>? WebOrigins { get; set; }
+    private List<BasketValueDto?>? SalesPools { get; set; }
+    private string SelectedClient { get; set; } = string.Empty;
+    private List<string>? AccountAddress { get; set; }
 
     protected override FetchOrderInfoAction CreateFetchAction(OrderInfoState state, string basketId) => new(state, basketId);
 
-    private string SelectedClient => BasketOrderInfo?.Account?.Value is var account && account is not null
-        ? $"{account.AccountId} - {account.Name} - {account.ZipCode}"
-        : string.Empty;
-    private List<string>? AccountAddress => FieldUtility.CreateAddressList(BasketOrderInfo?.Account?.Value);
+    protected override void CacheNewFields()
+    {
+        BasketOrderInfo = State.Value.BasketOrderInfo ?? throw new NullReferenceException("Unexpected null for BasketOrderInfo object.");
+        Contacts = State.Value.ContactList;
+        SalesOrigins = State.Value.SalesOrigins;
+        WebOrigins = State.Value.WebOrigins;
+        SalesPools = State.Value.SalesPools;
+        SelectedClient = FieldUtility.SelectedAccount(BasketOrderInfo?.Account?.Value);
+        AccountAddress = FieldUtility.CreateAddressList(BasketOrderInfo?.Account?.Value);
+    }
+
     private ContactDto? ContactValue
     {
         get => BasketOrderInfo?.Contact?.Value;
