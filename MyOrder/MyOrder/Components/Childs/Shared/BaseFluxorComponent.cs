@@ -36,35 +36,48 @@ public abstract class BaseFluxorComponent<TState, TAction> : ComponentBase, IDis
 
     private void OnBasketIdChanged(string basketId) => Dispatcher.Dispatch(CreateFetchAction(State.Value, basketId));
 
-    protected void UpdateProcedureCall(string newValue, List<string>? procedureCall)
+    protected void SetBasketOrderValue<T>(Field<T>? field, T value, string? procedureCallValue)
     {
-        if (procedureCall is { Count: > 0 })
+        if (field == null)
         {
-            procedureCall[^1] = newValue ?? string.Empty; // Update with the new value or empty string if null
-            OnPropertyUpdatedHandler(procedureCall);
+            Logger.LogWarning("Trying to update a null field at {StackTrace}", LogUtility.GetStackTrace());
+            return;
         }
+
+        // Set the field value
+        field.Value = value;
+
+#pragma warning disable CS0618 // Type or member is obsolete
+        UpdateProcedureCall(procedureCallValue, field.ProcedureCall);
+#pragma warning restore CS0618 // Type or member is obsolete
     }
-    protected void OnPropertyUpdatedHandler(List<string> procedureCall)// this method is called only from UpdateProcedureCall
-                                                                       // and we already check for:  if (procedureCall is { Count: > 0 })
+
+    // This method should only be called from SetBasketOrderValue, make private and remove the Obsolete attribute once the method is no longer used
+    [Obsolete("Use SetBasketOrderValue instead", false)]
+    protected void UpdateProcedureCall(string? newValue, List<string?>? procedureCall)
     {
-        if (procedureCall is null || procedureCall.Count < 1)           // so no need for this check
+        if (procedureCall is null || procedureCall.Count < 1)
         {
             Logger.LogWarning("ProcedureCall is either null or has 0 item.");
             return;
         }
 
+        procedureCall[^1] = newValue ?? string.Empty; // Update with the new value or empty string if null
+        OnPropertyUpdatedHandler(procedureCall);
+    }
+
+    private void OnPropertyUpdatedHandler(List<string?> procedureCall)
+    {
+        if (procedureCall.Any(item => item == null))
+            Logger.LogWarning("ProcedureCall contains a null item.");
+
         Logger.LogInformation("OnPropertyUpdatedHandler called for {procedure}", procedureCall);
 
-        try
-        {
-            // ToList() to Create a copy of the ProcedureCall list ensuring it's not modified in the process
-            Dispatcher.Dispatch(new PostProcedureCallAction(BasketId, procedureCall.ToList()));
-        }
-        catch (Exception ex)
-        {
-            Logger.LogError("An error occurred in OnPropertyUpdatedHandler. {ex}", ex);
-        }
+        // ToList() to Create a copy of the ProcedureCall list ensuring it's not modified in the process
+        Dispatcher.Dispatch(new PostProcedureCallAction(BasketId, procedureCall.ToList()));
     }
+
+    protected static string GetFieldValue(string? value) => FieldUtility.NullOrWhiteSpaceHelper(value);
 
     public void Dispose()
     {
