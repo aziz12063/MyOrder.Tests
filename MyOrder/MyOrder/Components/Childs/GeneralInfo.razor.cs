@@ -1,5 +1,4 @@
-﻿
-using MyOrder.Components.Shared;
+﻿using MyOrder.Components.Common;
 using MyOrder.Store.GeneralInfoUseCase;
 using MyOrder.Utils;
 

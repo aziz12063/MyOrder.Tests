@@ -1,7 +1,7 @@
-﻿using MyOrder.Components.Shared;
-using MyOrder.Shared.Dtos;
+﻿using MyOrder.Shared.Dtos;
 using MyOrder.Store.PricesInfoUseCase;
 using System.Formats.Asn1;
+using MyOrder.Components.Common;
 using MyOrder.Shared.Dtos.SharedComponents;
 using MyOrder.Utils;
 using static MudBlazor.Colors;

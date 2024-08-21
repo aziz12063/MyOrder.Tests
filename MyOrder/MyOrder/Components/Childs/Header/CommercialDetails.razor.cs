@@ -1,6 +1,5 @@
 ﻿using Fluxor;
-
-using MyOrder.Components.Shared;
+using MyOrder.Components.Common;
 using MyOrder.Shared.Dtos;
 using MyOrder.Store.PricesInfoUseCase;
 using MyOrder.Store.TradeInfoUseCase;
