@@ -1,5 +1,9 @@
 ﻿@using MyOrder.Components.Childs
+@using MyOrder.Services
 @inherits LayoutComponentBase
+
+@inject NavigationManager NavigationManager
+@inject BasketService BasketService
 
 @* Required for MudBlazor framework *@
 <MudThemeProvider Theme="@ThemeConfiguration.MyTheme" />
@@ -36,3 +40,16 @@
     <a href="" class="reload">Reload</a>
     <a class="dismiss">🗙</a>
 </div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        var uri = new Uri(NavigationManager.Uri);
+        var queryParams = System.Web.HttpUtility.ParseQueryString(uri.Query);
+        var basketId = queryParams["basketId"];
+        if (!string.IsNullOrEmpty(basketId))
+        {
+            BasketService.BasketId = basketId; // Cache the basket ID in a service
+        }
+    }
+}
