@@ -1,8 +1,8 @@
-﻿using MyOrder.Components.Childs.Shared;
-using MyOrder.Shared.Dtos;
+﻿using MyOrder.Shared.Dtos;
 using MyOrder.Store.DeliveryInfoUseCase;
 using MyOrder.Store.OrderInfoUseCase;
 using System.Text;
+using MyOrder.Components.Common;
 using MyOrder.Utils;
 
 namespace MyOrder.Components.Childs.Header;

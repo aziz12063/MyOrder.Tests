@@ -1,5 +1,5 @@
 ﻿@using MyOrder.Store.TradeInfoUseCase
-@inherits BaseFluxorComponent<TradeInfoState, FetchTradeInfoAction>
+@inherits MyOrder.Components.Common.BaseFluxorComponent<TradeInfoState, FetchTradeInfoAction>
 
 @if (State.Value.IsLoading)
 {

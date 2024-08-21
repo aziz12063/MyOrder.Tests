@@ -1,6 +1,10 @@
 ﻿using Fluxor;
+<<<<<<< HEAD
 
 using MyOrder.Components.Childs.Shared;
+=======
+using MyOrder.Components.Common;
+>>>>>>> 96f92eb9ab0f425c015aa512e9c88e8e6a75f2f6
 using MyOrder.Shared.Dtos;
 using MyOrder.Store.PricesInfoUseCase;
 using MyOrder.Store.TradeInfoUseCase;

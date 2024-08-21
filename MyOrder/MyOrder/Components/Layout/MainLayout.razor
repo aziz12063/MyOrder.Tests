@@ -1,7 +1,7 @@
 ﻿@using MyOrder.Components.Childs
 @inherits LayoutComponentBase
 
-@* Required *@
+@* Required for MudBlazor framework *@
 <MudThemeProvider Theme="@ThemeConfiguration.MyTheme" />
 <MudPopoverProvider />
 
@@ -14,12 +14,19 @@
 
 <MudLayout>
     <MudAppBar Elevation="2">
-        <MudImage Src="images/Raja-Logo.png" Alt="Raja Group" Class="logo"  />
-        <GeneralInfo/>
+        <MudImage Src="images/Raja-Logo.png" Alt="Raja Group" Class="logo" />
+        <GeneralInfo />
     </MudAppBar>
 
     <MudMainContent>
-        @Body
+        <ErrorBoundary>
+            <ChildContent>
+                @Body
+            </ChildContent>
+            <ErrorContent>
+                // Error message
+            </ErrorContent>
+        </ErrorBoundary>
     </MudMainContent>
 </MudLayout>
 

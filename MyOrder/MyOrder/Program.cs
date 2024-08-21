@@ -6,6 +6,7 @@ using MyOrder.Infrastructure.ApiClients;
 using MyOrder.Infrastructure.Repositories;
 using MyOrder.Infrastructure.Resilience;
 using MyOrder.Services;
+using MyOrder.Shared.Services;
 using Refit;
 using Serilog;
 using Serilog.Exceptions;
@@ -22,6 +23,8 @@ builder.Host.UseSerilog((hostingContext, loggerConfiguration) => loggerConfigura
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
+builder.Services.AddScoped<IExceptionHandler, GlobalExceptionHandlerService>();
+
 
 builder.Services.AddScoped<BasketService>();
 builder.Services.AddScoped<IStateResolver, StateResolver>();
@@ -42,8 +45,8 @@ builder.Services.AddFluxor(options =>
 
 
 // Repositories
-//builder.Services.AddScoped<IBasketRepository, BasketRepository>();
-builder.Services.AddSingleton<IBasketRepository, InMemoryBasketRepository>();
+builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+//sbuilder.Services.AddSingleton<IBasketRepository, InMemoryBasketRepository>();
 
 //MudBlazor and UI elements
 builder.Services.AddMudServices();

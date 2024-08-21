@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
-namespace MyOrder.Components.Childs.Shared
+namespace MyOrder.Components.Common
 {
     public class HoverableMudPaperBase : MudPaper
     {

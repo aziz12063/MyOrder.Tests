@@ -1,13 +1,11 @@
-﻿using System.Collections.Immutable;
-using Fluxor;
+﻿using Fluxor;
 using Microsoft.AspNetCore.Components;
 using MyOrder.Services;
-using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.SharedComponents;
 using MyOrder.Store.ProcedureCallUseCase;
 using MyOrder.Utils;
 
-namespace MyOrder.Components.Childs.Shared;
+namespace MyOrder.Components.Common;
 
 public abstract class BaseFluxorComponent<TState, TAction> : ComponentBase, IDisposable where TState : class
 {

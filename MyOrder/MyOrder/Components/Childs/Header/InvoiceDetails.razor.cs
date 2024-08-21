@@ -1,9 +1,9 @@
 ﻿using Fluxor;
-using MyOrder.Components.Childs.Shared;
 using MyOrder.Shared.Dtos;
 using MyOrder.Store.InvoiceInfoUseCase;
 using MyOrder.Store.PricesInfoUseCase;
 using System.Text;
+using MyOrder.Components.Common;
 using MyOrder.Utils;
 
 namespace MyOrder.Components.Childs.Header

@@ -1,6 +1,6 @@
 ﻿@using MyOrder.Store.DeliveryInfoUseCase
 
-@inherits BaseFluxorComponent<DeliveryInfoState, FetchDeliveryInfoAction>
+@inherits MyOrder.Components.Common.BaseFluxorComponent<DeliveryInfoState, FetchDeliveryInfoAction>
 
 @if (State.Value.IsLoading)
 {
