@@ -1,5 +1,6 @@
 ﻿using Fluxor;
-using MyOrder.Components.Childs.Shared;
+
+using MyOrder.Components.Shared;
 using MyOrder.Shared.Dtos;
 using MyOrder.Store.PricesInfoUseCase;
 using MyOrder.Store.TradeInfoUseCase;

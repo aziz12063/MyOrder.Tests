@@ -7,7 +7,7 @@ using MyOrder.Shared.Dtos.SharedComponents;
 using MyOrder.Store.ProcedureCallUseCase;
 using MyOrder.Utils;
 
-namespace MyOrder.Components.Childs.Shared;
+namespace MyOrder.Components.Shared;
 
 public abstract class BaseFluxorComponent<TState, TAction> : ComponentBase, IDisposable where TState : class
 {

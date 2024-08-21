@@ -1,5 +1,5 @@
 ﻿using MudBlazor;
-using MyOrder.Components.Childs.Shared;
+using MyOrder.Components.Shared;
 using MyOrder.Shared.Dtos;
 using MyOrder.Store.OrderInfoUseCase;
 using MyOrder.Utils;
