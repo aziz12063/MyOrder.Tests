@@ -32,7 +32,7 @@ namespace MyOrder.Components.Childs.Header
 
             SelectedClient = FieldUtility.SelectedAccount(BasketInvoiceInfo?.Account?.Value);
             AccountAddress = FieldUtility.CreateAddressList(BasketInvoiceInfo?.Account?.Value);
-            DisplayAddress = FieldUtility.DisplayAddress(AccountAddress);
+            DisplayAddress = FieldUtility.DisplayAddress(AccountAddress);            
         }
 
         private bool IsPublicEntityValue
@@ -49,11 +49,7 @@ namespace MyOrder.Components.Childs.Header
             {
                 if (BasketInvoiceInfo == null)
                     throw new InvalidOperationException("BasketInvoiceInfo is null");
-
-                //BasketInvoiceInfo.Account.Value = value;
-                //AccountAddress = FieldUtility.CreateAddressList(BasketInvoiceInfo?.Account?.Value);
-                //DisplayAddress = FieldUtility.DisplayAddress(AccountAddress);
-
+           
                 SetBasketOrderValue(field: BasketInvoiceInfo.Account, value: value, procedureCallValue: value.AccountId);
             }
         }

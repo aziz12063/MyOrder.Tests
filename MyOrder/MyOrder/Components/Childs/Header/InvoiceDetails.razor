@@ -26,10 +26,11 @@
         <MudItem xs="10">
             <!--Compte facturé-->
             <MudText Typo="Typo.body2" Color="Color.Secondary">Compte facturé</MudText>
-            <MudGrid Spacing="0">
+            <MudGrid Spacing="3">
                 <MudItem xs="12">
                     <MudSelect Margin="Margin.Dense"
                                T="AccountDto"
+                               Style="font-size: 10px; height:21px;"
                                Variant="Variant.Outlined"
                                ReadOnly="false"
                                @bind-Value="@SelectedAccount">
@@ -65,8 +66,9 @@
                 </MudItem>
                 <MudItem xs="12">
                     <MudTextField Typo="Typo.caption"
-                                  Lines="4"
+                                  Lines="5"
                                   Variant="Variant.Outlined"
+                                  Style="font-size: 10px; height:90px;"
                                   FullWidth="true"
                                   Margin="Margin.Dense"
                                   ReadOnly="true"
@@ -79,25 +81,28 @@
             <!--Siret-->
             <MudGrid>
                 <MudItem xs="4">
-                    <MudText>Siret</MudText>
+                    <MudText Style="font-size: 13px; height:22px;">Siret</MudText>
                 </MudItem>
                 <MudItem xs="8">
                     <MudTextField Margin="Margin.Dense" T="string"
-                                  Variant="Variant.Outlined" Width="200px"
+                                  Variant="Variant.Outlined"
+                                  Style="font-size: 13px; height:22px;"
                                   Disabled="false"
                                   Value="@BasketInvoiceInfo.SiretId.Value">
                     </MudTextField>
                 </MudItem>
             </MudGrid>
+
             <!--Groupe de taxe-->
             <MudGrid>
                 <MudItem xs="4">
-                    <MudText Typo="Typo.body2">Groupe de taxe</MudText>
+                    <MudText Typo="Typo.body2" Style="font-size: 13px; height:22px;">Groupe de taxe</MudText>
                 </MudItem>
                 <MudItem xs="8">
-                    <MudSelect Margin="Margin.Dense"
+                    <MudSelect  Margin="Margin.Dense"
                                T="string"
                                Variant="Variant.Outlined"
+                               
                                @bind-Value="@BasketInvoiceInfo.TaxGroup.Value">
 
                         @if (TaxGroups != null)

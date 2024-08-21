@@ -82,16 +82,6 @@ h1:focus {
     border: 1px solid #ddd;
 }
 
-.my-data-grid .mud-data-grid-header th,
-.my-data-grid .mud-data-grid-cell {
-    border: 1px solid blue; /* Adjust the border color and style as needed */
-}
-
-/* Optional: Add border color and style to the rows and columns as well */
-.my-data-grid .mud-data-grid-row {
-    border-bottom: 1px solid blue; /* Add a bottom border to rows */
-}
-
 
 
 

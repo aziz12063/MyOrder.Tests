@@ -222,7 +222,7 @@ namespace MyOrder.Infrastructure.Repositories
             _basketsOrderInfoDtos.Clear();
             _basketsOrderInfoDtos.Add(_basketId, new BasketOrderInfoDto()
             {
-                Account = new Field<AccountDto>
+                Account = new Field<AccountDto?>
                 {
                     Name = "Compte commandeur",
                     Status = "onlyForDisplay",
@@ -1447,7 +1447,7 @@ namespace MyOrder.Infrastructure.Repositories
                 Message = "Procedure completed successfully.",
                 ErrorCause = null,
                 UpdateDone = true,
-                RefreshCalls = new List<string?> { "pricesInfo" }
+                RefreshCalls = new List<string?> { "pricesInfo", "invoiceInfo" }
             });
             _basketsProcedureCall.Add("P0130140", SampleData.procedureCallResponseP0130140_3);
             _basketsProcedureCall.Add("P0130512", SampleData.procedureCallResponseP0130512_3);
