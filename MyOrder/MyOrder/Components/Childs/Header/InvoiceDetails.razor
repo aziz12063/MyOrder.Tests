@@ -7,7 +7,7 @@
     return;
 }
 @{
-    var BasketInvoiceInfo = State.Value.BasketInvoiceInfo;
+    
     if (BasketInvoiceInfo is null)
 {
     <LogAndAlert LogLevel="LogLevel.Error"
@@ -102,8 +102,7 @@
                     <MudSelect  Margin="Margin.Dense"
                                T="string"
                                Variant="Variant.Outlined"
-                               
-                               @bind-Value="@BasketInvoiceInfo.TaxGroup.Value">
+                               @bind-Value="@TaxGroupValue">
 
                         @if (TaxGroups != null)
                         {
@@ -112,7 +111,7 @@
                             @if (FiltredList.Count == 0)
                             {
                                 Logger.LogWarning($"the TaxGroups list  contain only null items.");
-                                <MudSelectItem T="string" Value="string.Empty">@string.Empty</MudSelectItem>
+                                
                             }
                             else
                             {
@@ -161,7 +160,7 @@
                     <MudSelect Margin="Margin.Dense"
                                T="string"
                                Variant="Variant.Outlined"
-                               @bind-Value="@BasketInvoiceInfo.PaymentMode.Value">
+                               @bind-Value="@PaymentModesValue">
                         @if (PaymentModes != null)
                         {
                             List<BasketValueDto> FiltredList = PaymentModes.Where(item => item != null).Cast<BasketValueDto>().ToList();

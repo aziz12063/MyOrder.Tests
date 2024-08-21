@@ -1,4 +1,5 @@
 ﻿using Fluxor;
+
 using MyOrder.Components.Childs.Shared;
 using MyOrder.Shared.Dtos;
 using MyOrder.Store.PricesInfoUseCase;
@@ -9,9 +10,11 @@ namespace MyOrder.Components.Childs.Header
 {
     public partial class CommercialDetails : BaseFluxorComponent<TradeInfoState, FetchTradeInfoAction>
     {
+
         private BasketTradeInfoDto? BasketTradeInfoDto { get; set; }
         private List<BasketTurnoverLineDto?>? Turnover { get; set; }
         private BasketContractInfoDto? Contract { get; set; }
+        private string? DiscountDetails { get; set; }
 
         protected override FetchTradeInfoAction CreateFetchAction(TradeInfoState state, string basketId)
         {
@@ -21,13 +24,10 @@ namespace MyOrder.Components.Childs.Header
         {
             BasketTradeInfoDto = State.Value.BasketTradeInfo ?? throw new NullReferenceException("Unexpected null for BasketOrderInfo object.");
             Turnover = BasketTradeInfoDto?.Turnover?.Value;
-            Contract = BasketTradeInfoDto?.Contract;
-          
-           
+            Contract = BasketTradeInfoDto?.Contract;    
+            DiscountDetails = FieldUtility.DisplayListNoSpace(Contract.DiscountList.Value);
         }
-
-
-
+       
         private string DateValue
         {
             get => $"{Contract.StartDate.Value}  - {Contract.EndDate.Value}";
@@ -36,18 +36,6 @@ namespace MyOrder.Components.Childs.Header
         private string ContractDescription
         {
             get => $"{Contract.ContractId.Name} {Contract.ContractType.Value}";
-        }
-
-
-        private string DiscountListValue
-        {
-            get
-            {
-                // log some thing if account is null
-                var discount = Contract?.DiscountList?.Value ?? new();
-                return string.Join("", discount); ;
-            }
-            set { }
         }
 
         private List<BasketContractInfoDto> ContractList

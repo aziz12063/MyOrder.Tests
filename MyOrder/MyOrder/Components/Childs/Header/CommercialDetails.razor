@@ -22,20 +22,7 @@
                 </Columns>
             </MudDataGrid>
         </MudStack>
-        <MudGrid Spacing="0">
-            <MudItem xs="12">
-                <MudText Typo="Typo.body2" Color="Color.Secondary">Secteur d'activité</MudText>
-            </MudItem>
-            <MudItem xs="12">
-                <MudTextField Typo="Typo.caption"
-                              Lines="2"
-                              Variant="Variant.Text"
-                              FullWidth="true"
-                              Margin="Margin.Dense"
-                              ReadOnly="true"
-                              Value="string.Empty" />
-            </MudItem>
-        </MudGrid>
+       
         <!--Contract en cours-->
         @if (ContractList.Count > 0)
         {
@@ -161,7 +148,7 @@
                                       Variant="Variant.Outlined" Width="200px"
                                       Disabled="false"
                                       Style="font-size: 13px;"
-                                      Value="DiscountListValue">
+                                      Value="DiscountDetails">
                         </MudTextField>
                     </MudItem>
                 </MudGrid>

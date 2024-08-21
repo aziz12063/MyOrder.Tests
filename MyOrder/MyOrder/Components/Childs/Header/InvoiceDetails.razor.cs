@@ -16,7 +16,7 @@ namespace MyOrder.Components.Childs.Header
         public List<BasketValueDto?>? PaymentModes { get; set; }
         private string SelectedClient { get; set; } = string.Empty;
         private List<string>? AccountAddress { get; set; }
-        private string DisplayAddress { get; set; }
+        private string? DisplayAddress { get; set; }
 
         protected override FetchInvoiceInfoAction CreateFetchAction(InvoiceInfoState state, string basketId)
         {
@@ -54,9 +54,33 @@ namespace MyOrder.Components.Childs.Header
             }
         }
 
+        private string TaxGroupValue
+        {
+            get => BasketInvoiceInfo?.TaxGroup?.Value;
 
+            set
+            {
+                if (BasketInvoiceInfo == null)
+                    throw new InvalidOperationException("BasketInvoiceInfo is null");
 
+                SetBasketOrderValue(field: BasketInvoiceInfo.TaxGroup, value: value, procedureCallValue: value);
+            }
+        }
 
+        private string PaymentModesValue
+        {
+            get => BasketInvoiceInfo?.PaymentMode?.Value;
+
+            set
+            {
+                if (BasketInvoiceInfo == null)
+                    throw new InvalidOperationException("BasketInvoiceInfo is null");
+
+                SetBasketOrderValue(field: BasketInvoiceInfo.PaymentMode, value: value, procedureCallValue: value);
+            }
+        }
+
+        
 
     }
 }

@@ -56,6 +56,7 @@ namespace MyOrder.Components.Childs.Header
             {
                 Logger.LogWarning($"the field.Value is null .");
                 return false;
+                //return true; // i will test this later
             }
             else return true;
         }
@@ -66,9 +67,8 @@ namespace MyOrder.Components.Childs.Header
             {
                 if(SetValue<string>(BasketPricesInfo.Coupon, BasketPricesInfo))
                 {
-                    Logger.LogWarning($"the CouponValue  is not null .");
-                    BasketPricesInfo.Coupon.Value = value;
-                    UpdateProcedureCall(value, BasketPricesInfo.Coupon.ProcedureCall);
+                    SetBasketOrderValue(field: BasketPricesInfo.Coupon, value: value, procedureCallValue: value);
+                    
                 }
             }
         }
