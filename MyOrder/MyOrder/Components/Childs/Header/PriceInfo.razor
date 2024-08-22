@@ -26,11 +26,13 @@
             <MudItem xs="3">
                 <!--1-->
                 <MudGrid>
+                    <!--Code Action-->
                     <MudItem xs="4">
-                        <MudText Typo="Typo.body2">Code Action</MudText>
+                        <MudText Typo="Typo.body2">@BasketPricesInfo.Coupon.Name</MudText>
                     </MudItem>
-                    <MudItem xs="8">
-                        <MudHidden bind-Hidden="@FieldUtility.IsHidden(BasketPricesInfo?.Coupon)">
+                    @if (FieldUtility.IsHidden(BasketPricesInfo?.Coupon))
+                    {
+                        <MudItem xs="8">
                             <MudSelect Margin="Margin.Dense"
                                        T="string"
                                        Variant="Variant.Outlined"
@@ -66,52 +68,47 @@
                                 }
 
                             </MudSelect>
-                        </MudHidden>
-                    </MudItem>
+                        </MudItem>
+                    }
                 </MudGrid>
                 <!--2-->
                 <MudGrid>
+                    <!--Diff Franco-->
                     <MudItem xs="4">
-                        <MudText>Diff Franco</MudText>
+                        <MudText>@BasketPricesInfo.FreeShippingAmountThreshold?.Name</MudText>
                     </MudItem>
                     <MudItem xs="8">
                         <MudTextField Margin="Margin.Dense"
                                       T="decimal?"
-                                      Variant="Variant.Outlined" Width="200px"
-                                      Value="@(BasketPricesInfo != null &&
-                                                   BasketPricesInfo.FreeShippingAmountThreshold != null &&
-                                                   BasketPricesInfo.FreeShippingAmountThreshold.Value != null ?
-                                                   BasketPricesInfo.FreeShippingAmountThreshold.Value : 0)">
+                                      Variant="Variant.Outlined"
+                                      ReadOnly="true"
+                                      Value="@FreeShippingAmountThresholdValue">
                         </MudTextField>
                     </MudItem>
                 </MudGrid>
                 <!--3-->
                 <MudGrid>
                     <MudItem xs="4">
-                        <MudText>Diff KDO</MudText>
+                        <MudText>@BasketPricesInfo.GiftAmountThreshold?.Name</MudText>
                     </MudItem>
                     <MudItem xs="8">
                         <MudTextField Margin="Margin.Dense" T="decimal?"
-                                      Variant="Variant.Outlined" Width="200px"
-                                      Disabled="false"
-                                      Value="@(BasketPricesInfo != null &&  BasketPricesInfo.GiftAmountThreshold != null &&
-                                                   BasketPricesInfo.GiftAmountThreshold.Value != null ?
-                                                   BasketPricesInfo.GiftAmountThreshold.Value : 0)">
+                                      Variant="Variant.Outlined"
+                                      ReadOnly="true"
+                                      Value="@GiftAmountThresholdValue">
                         </MudTextField>
                     </MudItem>
                 </MudGrid>
                 <!--4-->
                 <MudGrid>
                     <MudItem xs="4">
-                        <MudText Typo="Typo.caption">Dispo.Marchandise</MudText>
+                        <MudText Typo="Typo.caption">@BasketPricesInfo.ProductsInfo?.Name</MudText>
                     </MudItem>
                     <MudItem xs="8">
                         <MudTextField Margin="Margin.Dense" T="string"
-                                      Variant="Variant.Outlined" Width="200px"
-                                      Value="@(BasketPricesInfo != null &&
-                                                   BasketPricesInfo.ProductsInfo != null &&
-                                                   BasketPricesInfo.ProductsInfo.Value != null ?
-                                                   BasketPricesInfo.ProductsInfo.Value : "")">
+                                      Variant="Variant.Outlined"
+                                      ReadOnly="true"
+                                      Value="@ProductsInfoValue">
                         </MudTextField>
                     </MudItem>
                 </MudGrid>
@@ -122,21 +119,21 @@
                 <!--1-->
                 <MudGrid>
                     <MudItem xs="4">
-                        <MudText Typo="Typo.caption">Marchandise HT</MudText>
+                        <MudText Typo="Typo.caption">@BasketPricesInfo.ProductsNetAmount?.Name</MudText>
                     </MudItem>
                     <MudItem xs="8">
                         <MudTextField Margin="Margin.Dense" T="decimal?"
                                       Variant="Variant.Outlined" FullWidth="true"
-                                      Value="@(BasketPricesInfo != null && BasketPricesInfo.ProductsNetAmount != null &&
-                                                   BasketPricesInfo.ProductsNetAmount.Value != null ?
-                                                   BasketPricesInfo.ProductsNetAmount.Value : 0)">
+                                      ReadOnly="true"
+                                      Value="@ProductsNetAmountValue">
                         </MudTextField>
                     </MudItem>
                 </MudGrid>
                 <!--2 et 3-->
                 <MudGrid>
-                    <MudItem xs="4">
-                        <MudHidden bind-Hidden="@FieldUtility.IsHidden(BasketPricesInfo?.WarrantyCostOption)">
+                    @if (!FieldUtility.IsHidden(BasketPricesInfo?.WarrantyCostOption))
+                    {
+                        <MudItem xs="4">
                             <MudSelect Margin="Margin.Dense" T="string"
                                        Variant="Variant.Outlined" Width="200px"
                                        Required="@FieldUtility.IsRequired(BasketPricesInfo?.WarrantyCostOption)"
@@ -168,22 +165,23 @@
                                     Logger.LogWarning($"the WarrantyCostOptions list  is null.");
                                     <MudSelectItem T="string" Value="string.Empty">@string.Empty</MudSelectItem>
                                 }
-
                             </MudSelect>
-                        </MudHidden>
-                    </MudItem>
+
+                        </MudItem>
+                    }
                     <MudItem xs="8">
                         <MudTextField Margin="Margin.Dense" T="decimal?"
                                       Variant="Variant.Outlined" Width="200px"
-                                      Value="@(BasketPricesInfo != null &&  BasketPricesInfo.WarrantyCostAmount != null &&
-                                                   BasketPricesInfo.WarrantyCostAmount.Value != null ?
-                                                   BasketPricesInfo.WarrantyCostAmount.Value : 0)"></MudTextField>
+                                      ReadOnly="true"
+                                      Value="@WarrantyCostAmountValue"></MudTextField>
                     </MudItem>
                 </MudGrid>
+
                 <!--4 et 5-->
                 <MudGrid>
-                    <MudItem xs="4">
-                        <MudHidden bind-Hidden="@FieldUtility.IsHidden(BasketPricesInfo?.ShippingCostOption)">
+                    @if (!FieldUtility.IsHidden(BasketPricesInfo?.ShippingCostOption))
+                    {
+                        <MudItem xs="4">
                             <MudSelect Margin="Margin.Dense" T="string"
                                        Variant="Variant.Outlined" Width="200px"
                                        Required="@FieldUtility.IsRequired(BasketPricesInfo?.ShippingCostOption)"
@@ -216,31 +214,33 @@
                                     <MudSelectItem T="string" Value="string.Empty">@string.Empty</MudSelectItem>
                                 }
                             </MudSelect>
-                        </MudHidden>
-                    </MudItem>
-                    <MudItem xs="8">
-                        <MudHidden bind-Hidden="@FieldUtility.IsHidden(BasketPricesInfo?.ShippingCostAmount)">
+                        </MudItem>
+                    }
+
+                    @if (!FieldUtility.IsHidden(BasketPricesInfo?.ShippingCostAmount))
+                    {
+                        <MudItem xs="8">
+
                             <MudTextField Margin="Margin.Dense" T="decimal?"
                                           Variant="Variant.Outlined" Width="200px"
                                           Required="@FieldUtility.IsRequired(BasketPricesInfo?.ShippingCostAmount)"
                                           ReadOnly="@FieldUtility.IsReadOnly(BasketPricesInfo?.ShippingCostAmount)"
                                           @bind-Value="ShippingCostAmountValue">
                             </MudTextField>
-                        </MudHidden>
-                    </MudItem>
+
+                        </MudItem>
+                    }
                 </MudGrid>
 
                 <!--6-->
                 <MudGrid>
                     <MudItem xs="4">
-                        <MudText Typo="Typo.caption">Entrepot de livraison</MudText>
+                        <MudText Typo="Typo.caption">@BasketPricesInfo.LogisticInfo?.Name</MudText>
                     </MudItem>
                     <MudItem xs="8">
                         <MudTextField Margin="Margin.Dense" T="string"
                                       Variant="Variant.Outlined" Width="200px"
-                                      Value="@(BasketPricesInfo != null &&  BasketPricesInfo.LogisticInfo != null &&
-                                                   BasketPricesInfo.LogisticInfo.Value != null ?
-                                                   BasketPricesInfo.LogisticInfo.Value : "")"></MudTextField>
+                                      Value="@LogisticInfoValue"></MudTextField>
                     </MudItem>
                 </MudGrid>
             </MudItem>
@@ -249,67 +249,62 @@
                 <!--1-->
                 <MudGrid>
                     <MudItem xs="4">
-                        <MudText Typo="Typo.caption">Montant total HT</MudText>
+                        <MudText Typo="Typo.caption">@BasketPricesInfo?.TotalNetAmount?.Name</MudText>
                     </MudItem>
                     <MudItem xs="8">
                         <MudTextField Margin="Margin.Dense" T="decimal?"
                                       Variant="Variant.Outlined" FullWidth="true"
-                                      Value="@(BasketPricesInfo != null &&  BasketPricesInfo.TotalNetAmount != null &&
-                                                   BasketPricesInfo.TotalNetAmount.Value != null ?
-                                                   BasketPricesInfo.TotalNetAmount.Value : 0)"> </MudTextField>
+                                      ReadOnly="true"
+                                      Value="@TotalNetAmountValue"> </MudTextField>
                     </MudItem>
                 </MudGrid>
                 <!--2-->
                 <MudGrid>
                     <MudItem xs="4">
-                        <MudText Typo="Typo.caption">Montant TVA</MudText>
+                        <MudText Typo="Typo.caption">@BasketPricesInfo?.VatAmount?.Name</MudText>
                     </MudItem>
                     <MudItem xs="8">
                         <MudTextField Margin="Margin.Dense" T="decimal?"
-                                      Variant="Variant.Outlined" Width="200px"
-                                      Value="@(BasketPricesInfo != null &&  BasketPricesInfo.VatAmount != null &&
-                                                   BasketPricesInfo.VatAmount.Value != null ?
-                                                   BasketPricesInfo.VatAmount.Value : 0)">
+                                      Variant="Variant.Outlined"
+                                      ReadOnly="true"
+                                      Value="@VatAmountValue">
                         </MudTextField>
                     </MudItem>
                 </MudGrid>
                 <!--3-->
                 <MudGrid>
                     <MudItem xs="4">
-                        <MudText Typo="Typo.caption">Montant TTC</MudText>
+                        <MudText Typo="Typo.caption">@BasketPricesInfo?.TotalGrossAmount?.Name</MudText>
                     </MudItem>
                     <MudItem xs="8">
                         <MudTextField Margin="Margin.Dense" T="decimal?"
-                                      Variant="Variant.Outlined" Width="200px"
-                                      Value="@(BasketPricesInfo != null &&  BasketPricesInfo.TotalGrossAmount != null &&
-                                                   BasketPricesInfo.TotalGrossAmount.Value != null ?
-                                                   BasketPricesInfo.TotalGrossAmount.Value : 0)"></MudTextField>
+                                      Variant="Variant.Outlined"
+                                      ReadOnly="true"
+                                      Value="@TotalGrossAmountValue"></MudTextField>
                     </MudItem>
                 </MudGrid>
                 <!--4-->
                 <MudGrid>
                     <MudItem xs="4">
-                        <MudText Typo="Typo.caption">1èr Date de livraison</MudText>
+                        <MudText Typo="Typo.caption">@BasketPricesInfo?.FirstDeliveryDate?.Name</MudText>
                     </MudItem>
                     <MudItem xs="8">
                         <MudTextField Margin="Margin.Dense" T="string"
-                                      Variant="Variant.Outlined" Width="200px"
-                                      Value="@(BasketPricesInfo != null &&  BasketPricesInfo.FirstDeliveryDate != null &&
-                                                   BasketPricesInfo.FirstDeliveryDate.Value != null ?
-                                                   BasketPricesInfo.FirstDeliveryDate.Value : "")"></MudTextField>
+                                      Variant="Variant.Outlined"
+                                      ReadOnly="true"
+                                      Value="@FirstDeliveryDateValue"></MudTextField>
                     </MudItem>
                 </MudGrid>
                 <!--5-->
                 <MudGrid>
                     <MudItem xs="4">
-                        <MudText Typo="Typo.caption">Date de livraison rapide</MudText>
+                        <MudText Typo="Typo.caption">@BasketPricesInfo?.LastDeliveryDate?.Name</MudText>
                     </MudItem>
                     <MudItem xs="8">
                         <MudTextField Margin="Margin.Dense" T="string"
-                                      Variant="Variant.Outlined" Width="200px"
-                                      Value="@(BasketPricesInfo != null &&  BasketPricesInfo.LastDeliveryDate != null &&
-                                                   BasketPricesInfo.LastDeliveryDate.Value != null ?
-                                                   BasketPricesInfo.LastDeliveryDate.Value : "")"></MudTextField>
+                                      Variant="Variant.Outlined"
+                                      ReadOnly="true"
+                                      Value="@LastDeliveryDateValue"></MudTextField>
                     </MudItem>
                 </MudGrid>
             </MudItem>
@@ -318,68 +313,70 @@
                 <!--1-->
                 <MudGrid>
                     <MudItem xs="4">
-                        <MudText Typo="Typo.caption">Remise Cde(%)</MudText>
+                        <MudText Typo="Typo.caption">@BasketPricesInfo?.OrderDiscountRate?.Name</MudText>
                     </MudItem>
-                    <MudItem xs="3">
-                        <MudHidden bind-Hidden="@FieldUtility.IsHidden(BasketPricesInfo?.OrderDiscountRate)">
+                    @if (!FieldUtility.IsHidden(BasketPricesInfo?.OrderDiscountRate))
+                    {
+                        <MudItem xs="3">
+
                             <MudTextField Margin="Margin.Dense" T="int?"
                                           Variant="Variant.Outlined" FullWidth="true"
                                           Required="@FieldUtility.IsRequired(BasketPricesInfo?.OrderDiscountRate)"
                                           ReadOnly="@FieldUtility.IsReadOnly(BasketPricesInfo?.OrderDiscountRate)"
                                           @bind-Value="OrderDiscountRateValue">
                             </MudTextField>
-                        </MudHidden>
-                    </MudItem>
 
-                    <MudItem xs="4">
-                        <MudHidden bind-Hidden="@FieldUtility.IsHidden(BasketPricesInfo?.OrderLastColumnDiscount)">
-                            <MudCheckBox Label="label"
+                        </MudItem>
+                    }
+                    @if (!FieldUtility.IsHidden(BasketPricesInfo?.OrderLastColumnDiscount))
+                    {
+                        <MudItem xs="4">
+
+                            <MudCheckBox Label="@BasketPricesInfo?.OrderLastColumnDiscount?.Name" Size="Size.Small"
                                          Required="@FieldUtility.IsRequired(BasketPricesInfo?.OrderLastColumnDiscount)"
                                          ReadOnly="@FieldUtility.IsReadOnly(BasketPricesInfo?.OrderLastColumnDiscount)"
                                          LabelPosition="LabelPosition.Start"
                                          @bind-Value="OrderLastColumnDiscountValue">
                             </MudCheckBox>
-                        </MudHidden>
-                    </MudItem>
+
+                        </MudItem>
+                    }
                 </MudGrid>
 
                 <!--3-->
                 <MudGrid>
                     <MudItem xs="4">
-                        <MudText Typo="Typo.caption">Remise Cde(E)</MudText>
+                        <MudText Typo="Typo.caption">@BasketPricesInfo?.DiscountAmount?.Name</MudText>
                     </MudItem>
                     <MudItem xs="8">
                         <MudTextField Margin="Margin.Dense" T="decimal?"
-                                      Variant="Variant.Outlined" Width="200px"
-                                      Value="@(BasketPricesInfo != null &&  BasketPricesInfo.DiscountAmount != null &&
-                                                   BasketPricesInfo.DiscountAmount.Value != null ?
-                                                   BasketPricesInfo.DiscountAmount.Value : 0)"></MudTextField>
+                                      Variant="Variant.Outlined"
+                                      ReadOnly="true"
+                                      Value="@DiscountAmountValue"></MudTextField>
                     </MudItem>
                 </MudGrid>
                 <!--4-->
                 <MudGrid>
                     <MudItem xs="4">
-                        <MudText Typo="Typo.caption">Ventes add(E)</MudText>
+                        <MudText Typo="Typo.caption">@BasketPricesInfo?.AdditionalSalesAmount?.Name</MudText>
                     </MudItem>
                     <MudItem xs="8">
                         <MudTextField Margin="Margin.Dense" T="decimal?"
-                                      Variant="Variant.Outlined" Width="200px"
-                                      Value="@(BasketPricesInfo != null &&  BasketPricesInfo.AdditionalSalesAmount != null &&
-                                                   BasketPricesInfo.AdditionalSalesAmount.Value != null ?
-                                                   BasketPricesInfo.AdditionalSalesAmount.Value : 0)"></MudTextField>
+                                      Variant="Variant.Outlined"
+                                      ReadOnly="true"
+                                      Value="@AdditionalSalesAmountValue"></MudTextField>
                     </MudItem>
                 </MudGrid>
                 <!--5-->
                 <MudGrid>
                     <MudItem xs="4">
-                        <MudText>Poids</MudText>
+                        <MudText>@BasketPricesInfo?.TotalWeight?.Name</MudText>
                     </MudItem>
                     <MudItem xs="8">
                         <MudTextField Margin="Margin.Dense" T="decimal?"
-                                      Variant="Variant.Outlined" Width="200px"
-                                      Value="@(BasketPricesInfo != null &&  BasketPricesInfo.TotalWeight != null &&
-                                                   BasketPricesInfo.TotalWeight.Value != null ?
-                                                   BasketPricesInfo.TotalWeight.Value : 0)"></MudTextField>
+                                      Variant="Variant.Outlined"
+                                      ReadOnly="true"
+                                      Value="@TotalWeightValue"></MudTextField>
                     </MudItem>
                 </MudGrid>
                 <!--6-->
@@ -387,15 +384,14 @@
                 with this string as  bind: TotalVolumeAndWeight, then delete the 5-->
                 <MudGrid>
                     <MudItem xs="4">
-                        <MudText>Volume</MudText>
+                        <MudText>@BasketPricesInfo?.TotalVolume?.Name</MudText>
                     </MudItem>
 
                     <MudItem xs="8">
                         <MudTextField Margin="Margin.Dense" T="decimal?"
-                                      Variant="Variant.Outlined" Width="200px"
-                                      Value="@(BasketPricesInfo != null &&  BasketPricesInfo.TotalVolume != null &&
-                                                   BasketPricesInfo.TotalVolume.Value != null ?
-                                                   BasketPricesInfo.TotalVolume.Value : 0)">
+                                      Variant="Variant.Outlined"
+                                      ReadOnly="true"
+                                      Value="@TotalVolumeValue">
                         </MudTextField>
                     </MudItem>
                 </MudGrid>

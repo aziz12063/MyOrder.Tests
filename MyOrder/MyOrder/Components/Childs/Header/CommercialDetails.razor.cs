@@ -24,17 +24,37 @@ namespace MyOrder.Components.Childs.Header
             BasketTradeInfoDto = State.Value.BasketTradeInfo ?? throw new NullReferenceException("Unexpected null for BasketOrderInfo object.");
             Turnover = BasketTradeInfoDto?.Turnover?.Value;
             Contract = BasketTradeInfoDto?.Contract;    
-            DiscountDetails = FieldUtility.DisplayListNoSpace(Contract.DiscountList.Value);
+            DiscountDetails = FieldUtility.DisplayListNoSpace(Contract?.DiscountList?.Value);
         }
        
         private string DateValue
         {
-            get => $"{Contract.StartDate.Value}  - {Contract.EndDate.Value}";
+            get
+            {
+                var startDate = FieldUtility.NullOrWhiteSpaceHelper(Contract?.StartDate?.Value);
+                var endDate = FieldUtility.NullOrWhiteSpaceHelper(Contract?.EndDate?.Value);
+                return $"{startDate}  - {endDate}";
+            }
+        }
+
+        private string CampaignIdValue
+        {
+            get => FieldUtility.NullOrWhiteSpaceHelper(BasketTradeInfoDto?.Contract?.CampaignId?.Value);
+        }
+
+        private string MainContactValue
+        {
+            get => FieldUtility.NullOrWhiteSpaceHelper(BasketTradeInfoDto?.Contract?.MainContact?.Value);
+        }
+
+        private string OfficeExecutiveValue
+        {
+            get => FieldUtility.NullOrWhiteSpaceHelper(BasketTradeInfoDto?.Contract?.OfficeExecutive?.Value);
         }
 
         private string ContractDescription
         {
-            get => $"{Contract.ContractId.Name} {Contract.ContractType.Value}";
+            get => $"{Contract?.ContractId?.Name} {Contract?.ContractType?.Value}";
         }
 
         private List<BasketContractInfoDto> ContractList

@@ -50,13 +50,13 @@ namespace MyOrder.Components.Childs.Header
                 if (BasketInvoiceInfo == null)
                     throw new InvalidOperationException("BasketInvoiceInfo is null");
            
-                SetBasketOrderValue(field: BasketInvoiceInfo.Account, value: value, procedureCallValue: value.AccountId);
+                SetBasketOrderValue(field: BasketInvoiceInfo.Account, value: value, procedureCallValue: value?.AccountId);
             }
         }
 
         private string TaxGroupValue
         {
-            get => BasketInvoiceInfo?.TaxGroup?.Value;
+            get => FieldUtility.NullOrWhiteSpaceHelper(BasketInvoiceInfo?.TaxGroup?.Value);
 
             set
             {
@@ -69,7 +69,7 @@ namespace MyOrder.Components.Childs.Header
 
         private string PaymentModesValue
         {
-            get => BasketInvoiceInfo?.PaymentMode?.Value;
+            get => FieldUtility.NullOrWhiteSpaceHelper(BasketInvoiceInfo?.PaymentMode?.Value);
 
             set
             {
@@ -80,7 +80,20 @@ namespace MyOrder.Components.Childs.Header
             }
         }
 
-        
+        private string PublicEntityExecutingServiceValue
+        {
+            get => FieldUtility.NullOrWhiteSpaceHelper(BasketInvoiceInfo?.PublicEntityExecutingService?.Value);
+        }
+
+        private string PublicEntityLegalCommitmentValue
+        {
+            get => FieldUtility.NullOrWhiteSpaceHelper(BasketInvoiceInfo?.PublicEntityLegalCommitment?.Value);
+        }
+
+        private string NoteValue
+        {
+            get => FieldUtility.NullOrWhiteSpaceHelper(BasketInvoiceInfo?.Note?.Value);
+        }
 
     }
 }
