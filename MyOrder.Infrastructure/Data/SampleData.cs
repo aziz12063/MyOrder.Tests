@@ -463,7 +463,7 @@ namespace MyOrder.Infrastructure.Data
                 ProcedureCall = new List<string?> { "UpdateOrderTablePropertyValue", "RAJ_GenericDlvMode", "System.String", "<one of /deliveryModes value>" }
 
             },
-            CompleteDelivery = new Field<bool>
+            CompleteDelivery = new Field<bool?>
             {
                 Name = "Livraison complète",
                 Status = "readWrite",
@@ -494,7 +494,7 @@ namespace MyOrder.Infrastructure.Data
                 ProcedureCall = new List<string?> { "UpdateOrderTablePropertyValue", "DeliveryNote", "System.DateTime", "<value>" }
 
             },
-            NoteMustBeSaved = new Field<bool>
+            NoteMustBeSaved = new Field<bool?>
             {
                 Name = "Sauvegarde note de liv.",
                 Status = "readWrite",
@@ -1892,7 +1892,7 @@ namespace MyOrder.Infrastructure.Data
                 Status = "readOnly",
                 Value = null
             },
-            CompleteDelivery = new Field<bool>
+            CompleteDelivery = new Field<bool?>
             {
                 Name = "Livraison complète",
                 Status = "readOnly",
@@ -1916,7 +1916,7 @@ namespace MyOrder.Infrastructure.Data
                 Status = "readOnly",
                 Value = null
             },
-            NoteMustBeSaved = new Field<bool>
+            NoteMustBeSaved = new Field<bool?>
             {
                 Name = "Sauvegarde note de liv.",
                 Status = "readOnly",
@@ -3219,7 +3219,7 @@ namespace MyOrder.Infrastructure.Data
                 Status = "readOnly",
                 Value = "Normal"
             },
-            CompleteDelivery = new Field<bool>
+            CompleteDelivery = new Field<bool?>
             {
                 Name = "Livraison complète",
                 Status = "readOnly",
@@ -3246,7 +3246,7 @@ namespace MyOrder.Infrastructure.Data
                 Status = "readOnly",
                 Value = ""
             },
-            NoteMustBeSaved = new Field<bool>
+            NoteMustBeSaved = new Field<bool?>
             {
                 Name = "Sauvegarde note de liv.",
                 Status = "readOnly",
@@ -4922,7 +4922,7 @@ namespace MyOrder.Infrastructure.Data
             "<one of /deliveryModes value>"
         }
             },
-            CompleteDelivery = new Field<bool>
+            CompleteDelivery = new Field<bool?>
             {
                 Name = "Livraison complète",
                 Status = "readWrite",
@@ -4960,7 +4960,7 @@ namespace MyOrder.Infrastructure.Data
             "<value>"
         }
             },
-            NoteMustBeSaved = new Field<bool>
+            NoteMustBeSaved = new Field<bool?>
             {
                 Name = "Sauvegarde note de liv.",
                 Status = "readWrite",
@@ -6832,7 +6832,7 @@ namespace MyOrder.Infrastructure.Data
             "<one of /deliveryModes value>"
         }
             },
-            CompleteDelivery = new Field<bool>
+            CompleteDelivery = new Field<bool?>
             {
                 Name = "Livraison complète",
                 Status = "readWrite",
@@ -6875,7 +6875,7 @@ namespace MyOrder.Infrastructure.Data
             "<value>"
         }
             },
-            NoteMustBeSaved = new Field<bool>
+            NoteMustBeSaved = new Field<bool?>
             {
                 Name = "Sauvegarde note de liv.",
                 Status = "readWrite",
@@ -8311,7 +8311,7 @@ namespace MyOrder.Infrastructure.Data
     //            Status = "readOnly",
     //            Value = null
     //        },
-    //        IsCustomDeliveryDate = new Field<bool>
+    //        IsCustomDeliveryDate = new Field<bool?>
     //        {
     //            Name = "Date de liv. manuelle",
     //            Status = "readOnly",
@@ -8513,7 +8513,7 @@ namespace MyOrder.Infrastructure.Data
     //            Status = "readOnly",
     //            Value = null
     //        },
-    //        IsCustomDeliveryDate = new Field<bool>
+    //        IsCustomDeliveryDate = new Field<bool?>
     //        {
     //            Name = "Date de liv. manuelle",
     //            Status = "readOnly",
@@ -9024,7 +9024,7 @@ namespace MyOrder.Infrastructure.Data
     //            Status = "readOnly",
     //            Value = null
     //        },
-    //        IsCustomDeliveryDate = new Field<bool>
+    //        IsCustomDeliveryDate = new Field<bool?>
     //        {
     //            Name = "Date de liv. manuelle",
     //            Status = "readOnly",
@@ -9226,7 +9226,7 @@ namespace MyOrder.Infrastructure.Data
     //            Status = "readOnly",
     //            Value = null
     //        },
-    //        IsCustomDeliveryDate = new Field<bool>
+    //        IsCustomDeliveryDate = new Field<bool?>
     //        {
     //            Name = "Date de liv. manuelle",
     //            Status = "readOnly",
@@ -9585,7 +9585,7 @@ namespace MyOrder.Infrastructure.Data
     //                QuantityAtPaletteThreshold = new Field<int> { Name = "Diff Palette", Status = "onlyForDisplay", Value = 0 },
     //                ItemType = new Field<string> { Name = "Type d'article", Status = "onlyForDisplay", Value = "Standard" },
     //                DeliveryDate = new Field<DateTime?> { Name = "Date de liv.", Status = "readOnly", Value = null },
-    //                IsCustomDeliveryDate = new Field<bool> { Name = "Date de liv. manuelle", Status = "readWrite", Value = false },
+    //                IsCustomDeliveryDate = new Field<bool?> { Name = "Date de liv. manuelle", Status = "readWrite", Value = false },
     //                ItemPhysicalInventQuantity = new Field<int> { Name = "Stock total", Status = "onlyForDisplay", Value = 0 },
     //                ItemReservPhysicalQuantity = new Field<int> { Name = "Stock réservé", Status = "onlyForDisplay", Value = 0 },
     //                ItemPhysicalAvailableQuantity = new Field<int> { Name = "Stock réservé", Status = "onlyForDisplay", Value = 0 },
@@ -9632,7 +9632,7 @@ namespace MyOrder.Infrastructure.Data
     //                QuantityAtPaletteThreshold = new Field<int> { Name = "Diff Palette", Status = "onlyForDisplay", Value = 0 },
     //                ItemType = new Field<string> { Name = "Type d'article", Status = "onlyForDisplay", Value = "Standard" },
     //                DeliveryDate = new Field<DateTime?> { Name = "Date de liv.", Status = "readOnly", Value = null },
-    //                IsCustomDeliveryDate = new Field<bool> { Name = "Date de liv. manuelle", Status = "readWrite", Value = false },
+    //                IsCustomDeliveryDate = new Field<bool?> { Name = "Date de liv. manuelle", Status = "readWrite", Value = false },
     //                ItemPhysicalInventQuantity = new Field<int> { Name = "Stock total", Status = "onlyForDisplay", Value = 0 },
     //                ItemReservPhysicalQuantity = new Field<int> { Name = "Stock réservé", Status = "onlyForDisplay", Value = 0 },
     //                ItemPhysicalAvailableQuantity = new Field<int> { Name = "Stock réservé", Status = "onlyForDisplay", Value = 0 },
@@ -10025,7 +10025,7 @@ namespace MyOrder.Infrastructure.Data
     //            Status = "readWrite",
     //            Value = null
     //        },
-    //        IsCustomDeliveryDate = new Field<bool>
+    //        IsCustomDeliveryDate = new Field<bool?>
     //        {
     //            Name = "Date de liv. manuelle",
     //            Status = "readWrite",
@@ -10227,7 +10227,7 @@ namespace MyOrder.Infrastructure.Data
     //            Status = "readWrite",
     //            Value = null
     //        },
-    //        IsCustomDeliveryDate = new Field<bool>
+    //        IsCustomDeliveryDate = new Field<bool?>
     //        {
     //            Name = "Date de liv. manuelle",
     //            Status = "readWrite",
@@ -10604,7 +10604,7 @@ namespace MyOrder.Infrastructure.Data
     //                QuantityAtPaletteThreshold = new Field<int> { Name = "Diff Palette", Status = "onlyForDisplay", Value = 0 },
     //                ItemType = new Field<string> { Name = "Type d'article", Status = "onlyForDisplay", Value = "Standard" },
     //                DeliveryDate = new Field<DateTime?> { Name = "Date de liv.", Status = "readOnly", Value = null },
-    //                IsCustomDeliveryDate = new Field<bool> { Name = "Date de liv. manuelle", Status = "readWrite", Value = false },
+    //                IsCustomDeliveryDate = new Field<bool?> { Name = "Date de liv. manuelle", Status = "readWrite", Value = false },
     //                ItemPhysicalInventQuantity = new Field<int> { Name = "Stock total", Status = "onlyForDisplay", Value = 0 },
     //                ItemReservPhysicalQuantity = new Field<int> { Name = "Stock réservé", Status = "onlyForDisplay", Value = 0 },
     //                ItemPhysicalAvailableQuantity = new Field<int> { Name = "Stock réservé", Status = "onlyForDisplay", Value = 0 },
@@ -10651,7 +10651,7 @@ namespace MyOrder.Infrastructure.Data
     //                QuantityAtPaletteThreshold = new Field<int> { Name = "Diff Palette", Status = "onlyForDisplay", Value = 0 },
     //                ItemType = new Field<string> { Name = "Type d'article", Status = "onlyForDisplay", Value = "Standard" },
     //                DeliveryDate = new Field<DateTime?> { Name = "Date de liv.", Status = "readOnly", Value = null },
-    //                IsCustomDeliveryDate = new Field<bool> { Name = "Date de liv. manuelle", Status = "readWrite", Value = false },
+    //                IsCustomDeliveryDate = new Field<bool?> { Name = "Date de liv. manuelle", Status = "readWrite", Value = false },
     //                ItemPhysicalInventQuantity = new Field<int> { Name = "Stock total", Status = "onlyForDisplay", Value = 0 },
     //                ItemReservPhysicalQuantity = new Field<int> { Name = "Stock réservé", Status = "onlyForDisplay", Value = 0 },
     //                ItemPhysicalAvailableQuantity = new Field<int> { Name = "Stock réservé", Status = "onlyForDisplay", Value = 0 },
@@ -11044,7 +11044,7 @@ namespace MyOrder.Infrastructure.Data
     //            Status = "readWrite",
     //            Value = null
     //        },
-    //        IsCustomDeliveryDate = new Field<bool>
+    //        IsCustomDeliveryDate = new Field<bool?>
     //        {
     //            Name = "Date de liv. manuelle",
     //            Status = "readWrite",
@@ -11246,7 +11246,7 @@ namespace MyOrder.Infrastructure.Data
     //            Status = "readWrite",
     //            Value = null
     //        },
-    //        IsCustomDeliveryDate = new Field<bool>
+    //        IsCustomDeliveryDate = new Field<bool?>
     //        {
     //            Name = "Date de liv. manuelle",
     //            Status = "readWrite",

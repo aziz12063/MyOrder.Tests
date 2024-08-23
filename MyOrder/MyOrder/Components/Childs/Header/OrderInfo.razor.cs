@@ -20,8 +20,8 @@ public partial class OrderInfo : BaseFluxorComponent<OrderInfoState, FetchOrderI
 
     protected override void CacheNewFields()
     {
-        BasketOrderInfo = State.Value.BasketOrderInfo ?? 
-                          throw new ArgumentNullException(nameof(State.Value.BasketOrderInfo),"Unexpected null for BasketOrderInfo object.");
+        BasketOrderInfo = State.Value.BasketOrderInfo ??
+                          throw new ArgumentNullException(nameof(State.Value.BasketOrderInfo), "Unexpected null for BasketOrderInfo object.");
         Contacts = State.Value.ContactList;
         SalesOrigins = State.Value.SalesOrigins;
         WebOrigins = State.Value.WebOrigins;
@@ -33,7 +33,7 @@ public partial class OrderInfo : BaseFluxorComponent<OrderInfoState, FetchOrderI
     private ContactDto? ContactValue
     {
         get => BasketOrderInfo?.Contact?.Value;
-        set => SetBasketOrderValue(BasketOrderInfo!.Contact, value, value?.ContactId);
+        set => SetBasketOrderValue(field: BasketOrderInfo!.Contact, value: value, procedureCallValue: value?.ContactId);
     }
     private string SalesOriginIdValue
     {

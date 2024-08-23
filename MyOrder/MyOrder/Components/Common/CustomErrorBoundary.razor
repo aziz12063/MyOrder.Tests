@@ -4,15 +4,11 @@
     <ChildContent>
         @ChildContent
     </ChildContent>
-    <ErrorContent>
-        @if (CurrentException != null)
-        {
-            // Display the error using the LogAndAlert component
+    <ErrorContent Context="Exception">
             <LogAndAlert LogLevel="LogLevel.Error"
-                         Exception="CurrentException"
-                         StackTrace="CurrentException.StackTrace"
+                         Exception="Exception"
+                         StackTrace="Exception.StackTrace"
                          LogMessage="An unexpected error occurred in the application."
                          AlertMessage="Une erreur est survenue" />
-        }
     </ErrorContent>
 </ErrorBoundary>

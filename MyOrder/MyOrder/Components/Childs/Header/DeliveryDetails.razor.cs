@@ -21,7 +21,7 @@ public partial class DeliveryDetails : BaseFluxorComponent<DeliveryInfoState, Fe
         BasketDeliveryInfo = State.Value.BasketDeliveryInfo
                              ?? throw new ArgumentNullException(nameof(State.Value.BasketDeliveryInfo), "Unexpected null for BasketOrderInfo object.");
         Accounts = State.Value.DeliverToAccounts;
-        Contacts = State.Value.DeliverToContacts; ;
+        Contacts = State.Value.DeliverToContacts;
         WebOrigins = State.Value.DeliveryModes;
 
         SelectedAccount = FieldUtility.SelectedAccount(BasketDeliveryInfo?.Account?.Value);
@@ -35,11 +35,7 @@ public partial class DeliveryDetails : BaseFluxorComponent<DeliveryInfoState, Fe
     private ContactDto? ContactValue
     {
         get => BasketDeliveryInfo?.Contact?.Value;
-        set
-        {
-            BasketDeliveryInfo.Contact.Value = value;
-            UpdateProcedureCall(value?.ContactId, BasketDeliveryInfo.Contact.ProcedureCall);
-        }
+        set => SetBasketOrderValue(field: BasketDeliveryInfo!.Contact, value: value, procedureCallValue: value?.ContactId);
     }
     private string NoteValue
     {

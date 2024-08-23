@@ -1,0 +1,36 @@
+﻿@using MyOrder.Shared.Dtos.SharedComponents
+@typeparam T
+
+@if (!IsHidden)
+{
+    <MudSelect T="T"
+               Typo="Typo.body2"
+               Label="@Field?.Name"
+               Margin="Margin.Dense"
+               Dense="true"
+               Variant="@Variant"
+               FullWidth="true"
+               AnchorOrigin="Origin.CenterCenter"
+               Required="@IsRequired"
+               ReadOnly="@IsReadOnly"
+               @bind-Value="BoundValue">
+        @if (Items is not null)
+        {
+            foreach (var item in Items)
+            {
+                <MudSelectItem T="T" Value="@item"/>
+            }
+        }
+    </MudSelect>
+}
+
+@code {
+    [Parameter, EditorRequired] public T? BoundValue { get; set; }
+    [Parameter, EditorRequired] public Field<T>? Field { get; set; }
+    [Parameter, EditorRequired] public List<T>? Items { get; set; }
+    [Parameter] public Variant Variant { get; set; } = 0;
+
+    private bool IsHidden => FieldUtility.IsHidden(Field);
+    private bool IsReadOnly => FieldUtility.IsReadOnly(Field);
+    private bool IsRequired => FieldUtility.IsRequired(Field);
+}

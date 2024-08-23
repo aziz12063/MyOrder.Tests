@@ -7,18 +7,6 @@
     <HeaderElementLoadingSkeleton />
     return;
 }
-@{
-    var basketDeliveryInfo = State.Value.BasketDeliveryInfo;
-    if (basketDeliveryInfo == null)
-    {
-        <LogAndAlert LogLevel="LogLevel.Error"
-                     Exception="new NullReferenceException()"
-                     StackTrace="@LogUtility.GetStackTrace()"
-                     LogMessage="Unexpected null for BasketOrderInfo object."
-                     AlertMessage="Une erreur est survenue..." />
-        return;
-    }
-}
 
 <MudContainer Class="pa-0">
     <MudStack Spacing="4">
@@ -27,7 +15,7 @@
         <!-- Compte Livraison -->
         <MudStack Spacing="2">
             <MudStack Row="true" Spacing="1" StretchItems="StretchItems.Start">
-                <MudText Typo="Typo.subtitle1">@basketDeliveryInfo.Account?.Name</MudText>
+                <MudText Typo="Typo.subtitle1">@BasketDeliveryInfo!.Account?.Name</MudText>
                 <MudTooltip Text="Chercher client? -Not Implemented">
                     <MudIconButton Icon="@Icons.Material.Filled.Search" Size="Size.Small" />
                 </MudTooltip>
@@ -45,9 +33,11 @@
                 </MudTooltip>
             </MudStack>
             
-            <AddressTooltip AccountAddress="AccountAddress">
-                <MudText Typo="Typo.body2" Class="compact-client-details">@SelectedAccount</MudText>
-            </AddressTooltip>
+            <GenericMudSelect T="ContactDto"
+                              Field="BasketDeliveryInfo!.Contact"
+                              Items="Contacts"
+                              BoundValue="ContactValue"
+                              Variant="Variant.Outlined"/>
             
             <MudTextField Typo="Typo.caption"
                           Lines="5"
@@ -57,47 +47,23 @@
                           ReadOnly="true"
                           Value="DisplayAddress" />
 
-            
-            <!-- Contact Livraison -->
-
-            <MudSelect Typo="Typo.body2"
-                       Label="@basketDeliveryInfo.Contact?.Name"
-                       Margin="Margin.Dense"
-                       Dense="true"
-                       Variant="Variant.Outlined"
-                       FullWidth="true"
-                       AnchorOrigin="Origin.CenterCenter"
-                       Required="@FieldUtility.IsRequired(basketDeliveryInfo.Contact)"
-                       ReadOnly="@FieldUtility.IsReadOnly(basketDeliveryInfo.Contact)"
-                       T="ContactDto"
-                       @bind-Value="ContactValue">
-                @if (Contacts != null)
-                {
-                    @foreach (var item in @Contacts)
-                    {
-                        <MudSelectItem T="ContactDto" Value="@item">@item</MudSelectItem>
-                    }
-                }
-                
-            </MudSelect>
-
             <MudGrid Spacing="2">
                 <MudItem xs="12" sm="6">
                     <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
                         <MudIcon Title="Téléphone" Icon="@Icons.Material.Filled.Phone" Color="Color.Success" Size="Size.Small" />
-                        <MudText Typo="Typo.body2">@FieldUtility.NullOrWhiteSpaceHelper(basketDeliveryInfo.Contact?.Value?.Phone)</MudText>
+                        <MudText Typo="Typo.body2">@FieldUtility.NullOrWhiteSpaceHelper(BasketDeliveryInfo.Contact?.Value?.Phone)</MudText>
                     </MudStack>
                 </MudItem>
                 <MudItem xs="12" sm="6">
                     <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
                         <MudIcon Title="Mobile" Icon="@Icons.Material.Filled.PhoneIphone" Color="Color.Info" Size="Size.Small" />
-                        <MudText Typo="Typo.body2">@FieldUtility.NullOrWhiteSpaceHelper(basketDeliveryInfo.Contact?.Value?.CellularPhone)</MudText>
+                        <MudText Typo="Typo.body2">@FieldUtility.NullOrWhiteSpaceHelper(BasketDeliveryInfo.Contact?.Value?.CellularPhone)</MudText>
                     </MudStack>
                 </MudItem>
                 <MudItem xs="12">
                     <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
                         <MudIcon Title="Email" Icon="@Icons.Material.Filled.Email" Color="Color.Surface" Size="Size.Small" />
-                        <MudText Typo="Typo.body2">@FieldUtility.NullOrWhiteSpaceHelper(basketDeliveryInfo.Contact?.Value?.Email)</MudText>
+                        <MudText Typo="Typo.body2">@FieldUtility.NullOrWhiteSpaceHelper(BasketDeliveryInfo.Contact?.Value?.Email)</MudText>
                     </MudStack>
                 </MudItem>
             </MudGrid>
@@ -110,9 +76,9 @@
                       Variant="Variant.Outlined"
                       FullWidth="true"
                       Margin="Margin.Dense"
-                      Required="@FieldUtility.IsRequired(basketDeliveryInfo.Contact)"
-                      ReadOnly="@FieldUtility.IsReadOnly(basketDeliveryInfo.Contact)"
-                      Label="@basketDeliveryInfo.Note?.Name"
+                      Required="@FieldUtility.IsRequired(BasketDeliveryInfo.Contact)"
+                      ReadOnly="@FieldUtility.IsReadOnly(BasketDeliveryInfo.Contact)"
+                      Label="@BasketDeliveryInfo.Note?.Name"
                       Value="@NoteValue" />
     </MudStack>
 </MudContainer>
