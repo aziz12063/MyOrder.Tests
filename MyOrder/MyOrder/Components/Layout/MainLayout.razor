@@ -15,24 +15,18 @@
 @* Needed for snackbars *@
 <MudSnackbarProvider />
 
+<CustomErrorBoundary>
+        <MudLayout>
+            <MudAppBar Elevation="2">
+                <MudImage Src="images/Raja-Logo.png" Alt="Raja Group" Class="logo" />
+                <GeneralInfo />
+            </MudAppBar>
 
-<MudLayout>
-    <MudAppBar Elevation="2">
-        <MudImage Src="images/Raja-Logo.png" Alt="Raja Group" Class="logo" />
-        <GeneralInfo />
-    </MudAppBar>
-
-    <MudMainContent>
-        <ErrorBoundary>
-            <ChildContent>
+            <MudMainContent>
                 @Body
-            </ChildContent>
-            <ErrorContent>
-                // Error message
-            </ErrorContent>
-        </ErrorBoundary>
-    </MudMainContent>
-</MudLayout>
+            </MudMainContent>
+        </MudLayout>
+</CustomErrorBoundary>
 
 
 <div id="blazor-error-ui">

@@ -9,16 +9,17 @@ namespace MyOrder.Components.Childs.Header;
 public partial class DeliveryDetails : BaseFluxorComponent<DeliveryInfoState, FetchDeliveryInfoAction>
 {
     private BasketDeliveryInfoDto? BasketDeliveryInfo { get; set; }
-    private List<AccountDto>? Accounts { get; set; }
-    private List<ContactDto>? Contacts { get; set; }
-    private List<BasketValueDto>? WebOrigins { get; set; }
-    private string SelectedAccount { get; set; }
+    private List<AccountDto?>? Accounts { get; set; }
+    private List<ContactDto?>? Contacts { get; set; }
+    private List<BasketValueDto?>? WebOrigins { get; set; }
+    private string SelectedAccount { get; set; } = string.Empty;
     private List<string>? AccountAddress { get; set; }
-    private string DisplayAddress { get; set; }
+    private string DisplayAddress { get; set; } = string.Empty;
 
     protected override void CacheNewFields()
     {
-        BasketDeliveryInfo = State.Value.BasketDeliveryInfo ?? throw new NullReferenceException("Unexpected null for BasketOrderInfo object.");
+        BasketDeliveryInfo = State.Value.BasketDeliveryInfo
+                             ?? throw new ArgumentNullException(nameof(State.Value.BasketDeliveryInfo), "Unexpected null for BasketOrderInfo object.");
         Accounts = State.Value.DeliverToAccounts;
         Contacts = State.Value.DeliverToContacts; ;
         WebOrigins = State.Value.DeliveryModes;

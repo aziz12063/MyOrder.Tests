@@ -20,7 +20,8 @@ public partial class OrderInfo : BaseFluxorComponent<OrderInfoState, FetchOrderI
 
     protected override void CacheNewFields()
     {
-        BasketOrderInfo = State.Value.BasketOrderInfo ?? throw new NullReferenceException("Unexpected null for BasketOrderInfo object.");
+        BasketOrderInfo = State.Value.BasketOrderInfo ?? 
+                          throw new ArgumentNullException(nameof(State.Value.BasketOrderInfo),"Unexpected null for BasketOrderInfo object.");
         Contacts = State.Value.ContactList;
         SalesOrigins = State.Value.SalesOrigins;
         WebOrigins = State.Value.WebOrigins;
@@ -32,80 +33,38 @@ public partial class OrderInfo : BaseFluxorComponent<OrderInfoState, FetchOrderI
     private ContactDto? ContactValue
     {
         get => BasketOrderInfo?.Contact?.Value;
-        set
-        {
-            if (BasketOrderInfo == null)
-                throw new InvalidOperationException("BasketOrderInfo is null.");
-
-            SetBasketOrderValue(BasketOrderInfo.Contact, value, value?.ContactId);
-        }
+        set => SetBasketOrderValue(BasketOrderInfo!.Contact, value, value?.ContactId);
     }
     private string SalesOriginIdValue
     {
         get => GetFieldValue(BasketOrderInfo?.SalesOriginId?.Value);
-        set
-        {
-            if (BasketOrderInfo == null)
-                throw new InvalidOperationException("BasketOrderInfo is null.");
+        set => SetBasketOrderValue(field: BasketOrderInfo!.SalesOriginId, value: value, procedureCallValue: value);
 
-            SetBasketOrderValue(field: BasketOrderInfo.SalesOriginId, value: value, procedureCallValue: value);
-        }
     }
     private string WebOriginIdValue
     {
         get => GetFieldValue(BasketOrderInfo?.WebOriginId?.Value);
-        set
-        {
-            if (BasketOrderInfo == null)
-                throw new InvalidOperationException("BasketOrderInfo is null.");
-
-            SetBasketOrderValue(field: BasketOrderInfo.WebOriginId, value: value, procedureCallValue: value);
-        }
+        set => SetBasketOrderValue(field: BasketOrderInfo!.WebOriginId, value: value, procedureCallValue: value);
     }
     private string SalesPoolId
     {
         get => GetFieldValue(BasketOrderInfo?.SalesPoolId?.Value);
-        set
-        {
-            if (BasketOrderInfo == null)
-                throw new InvalidOperationException("BasketOrderInfo is null.");
-
-            SetBasketOrderValue(field: BasketOrderInfo.SalesPoolId, value: value, procedureCallValue: value);
-        }
+        set => SetBasketOrderValue(field: BasketOrderInfo!.SalesPoolId, value: value, procedureCallValue: value);
     }
     private string CustomerOrderRefValue
     {
         get => GetFieldValue(BasketOrderInfo?.CustomerOrderRef?.Value);
-        set
-        {
-            if (BasketOrderInfo == null)
-                throw new InvalidOperationException("BasketOrderInfo is null.");
-
-            SetBasketOrderValue(field: BasketOrderInfo.CustomerOrderRef, value: value, procedureCallValue: value);
-        }
+        set => SetBasketOrderValue(field: BasketOrderInfo!.CustomerOrderRef, value: value, procedureCallValue: value);
     }
     private string WebSalesIdValue
     {
         get => GetFieldValue(BasketOrderInfo?.WebSalesId?.Value);
-        set
-        {
-            if (BasketOrderInfo == null)
-                throw new InvalidOperationException("BasketOrderInfo is null.");
-
-            SetBasketOrderValue(field: BasketOrderInfo.WebSalesId, value: value, procedureCallValue: value);
-        }
+        set => SetBasketOrderValue(field: BasketOrderInfo!.WebSalesId, value: value, procedureCallValue: value);
     }
     private string RelatedLinkValue
     {
         get => GetFieldValue(BasketOrderInfo?.RelatedLink?.Value);
-        set
-        {
-            if (BasketOrderInfo == null)
-                throw new InvalidOperationException("BasketOrderInfo is null.");
-
-            SetBasketOrderValue(field: BasketOrderInfo.RelatedLink, value: value, procedureCallValue: value);
-
-        }
+        set => SetBasketOrderValue(field: BasketOrderInfo!.RelatedLink, value: value, procedureCallValue: value);
     }
 
     private static Color CustomerTagColorHelper(string? value) =>

@@ -1,7 +1,4 @@
-﻿@using MyOrder.Shared.Services
-
-@inherits ErrorBoundary
-@inject IExceptionHandler ErrorHandler
+﻿@inherits ErrorBoundary
 
 <ErrorBoundary>
     <ChildContent>
@@ -10,15 +7,12 @@
     <ErrorContent>
         @if (CurrentException != null)
         {
-            // Handle the exception by logging and displaying it
-            ErrorHandler.HandleException(CurrentException);
-
             // Display the error using the LogAndAlert component
             <LogAndAlert LogLevel="LogLevel.Error"
                          Exception="CurrentException"
                          StackTrace="CurrentException.StackTrace"
                          LogMessage="An unexpected error occurred in the application."
-                         AlertMessage="An unexpected error occurred. Please try again or contact support." />
+                         AlertMessage="Une erreur est survenue" />
         }
     </ErrorContent>
 </ErrorBoundary>
