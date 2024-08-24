@@ -12,7 +12,7 @@
     <MudStack Spacing="4">
         <MudText Typo="Typo.h6" Color="Color.Secondary">Livraison</MudText>
 
-        <!-- Compte Livraison -->
+        <!-- Compte de livraison -->
         <MudStack Spacing="2">
             <MudStack Row="true" Spacing="1" StretchItems="StretchItems.Start">
                 <MudText Typo="Typo.subtitle1">@BasketDeliveryInfo!.Account?.Name</MudText>
@@ -33,12 +33,12 @@
                 </MudTooltip>
             </MudStack>
             
-            <GenericMudSelect T="ContactDto"
-                              Field="BasketDeliveryInfo!.Contact"
-                              Items="Contacts"
-                              BoundValue="ContactValue"
-                              Variant="Variant.Outlined"/>
-            
+            <GenericMudSelect T="AccountDto"
+                              Field="BasketDeliveryInfo!.Account"
+                              Items="Accounts"
+                              @bind-BoundValue="AccountValue"
+                              Variant="Variant.Outlined" />
+
             <MudTextField Typo="Typo.caption"
                           Lines="5"
                           Variant="Variant.Outlined"
@@ -47,26 +47,14 @@
                           ReadOnly="true"
                           Value="DisplayAddress" />
 
-            <MudGrid Spacing="2">
-                <MudItem xs="12" sm="6">
-                    <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
-                        <MudIcon Title="Téléphone" Icon="@Icons.Material.Filled.Phone" Color="Color.Success" Size="Size.Small" />
-                        <MudText Typo="Typo.body2">@FieldUtility.NullOrWhiteSpaceHelper(BasketDeliveryInfo.Contact?.Value?.Phone)</MudText>
-                    </MudStack>
-                </MudItem>
-                <MudItem xs="12" sm="6">
-                    <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
-                        <MudIcon Title="Mobile" Icon="@Icons.Material.Filled.PhoneIphone" Color="Color.Info" Size="Size.Small" />
-                        <MudText Typo="Typo.body2">@FieldUtility.NullOrWhiteSpaceHelper(BasketDeliveryInfo.Contact?.Value?.CellularPhone)</MudText>
-                    </MudStack>
-                </MudItem>
-                <MudItem xs="12">
-                    <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
-                        <MudIcon Title="Email" Icon="@Icons.Material.Filled.Email" Color="Color.Surface" Size="Size.Small" />
-                        <MudText Typo="Typo.body2">@FieldUtility.NullOrWhiteSpaceHelper(BasketDeliveryInfo.Contact?.Value?.Email)</MudText>
-                    </MudStack>
-                </MudItem>
-            </MudGrid>
+            <!-- Contact  de livraison-->
+            <GenericMudSelect T="ContactDto"
+                              Field="BasketDeliveryInfo!.Contact"
+                              Items="Contacts"
+                              @bind-BoundValue="ContactValue"
+                              Variant="Variant.Outlined"/>
+
+            <ContactInfo Contact="BasketDeliveryInfo!.Contact?.Value"/>
         </MudStack>
         
 
@@ -76,9 +64,9 @@
                       Variant="Variant.Outlined"
                       FullWidth="true"
                       Margin="Margin.Dense"
-                      Required="@FieldUtility.IsRequired(BasketDeliveryInfo.Contact)"
-                      ReadOnly="@FieldUtility.IsReadOnly(BasketDeliveryInfo.Contact)"
-                      Label="@BasketDeliveryInfo.Note?.Name"
-                      Value="@NoteValue" />
+                      Required="@FieldUtility.IsRequired(BasketDeliveryInfo!.Note)"
+                      ReadOnly="@FieldUtility.IsReadOnly(BasketDeliveryInfo!.Note)"
+                      Label="@BasketDeliveryInfo!.Note?.Name"
+                      @bind-Value="@NoteValue" />
     </MudStack>
 </MudContainer>

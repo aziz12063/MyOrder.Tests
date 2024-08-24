@@ -35,57 +35,21 @@
             <AddressTooltip AccountAddress="AccountAddress">
                 <MudText Typo="Typo.body2" Class="compact-client-details">@SelectedClient</MudText>
             </AddressTooltip>
+            
+            <GenericMudSelect Variant="Variant.Outlined"
+                              T="ContactDto"
+                              @bind-BoundValue="ContactValue"
+                              Field="BasketOrderInfo!.Contact"
+                              Items="Contacts" />
 
-            @if (!FieldUtility.IsHidden(BasketOrderInfo!.Contact))
-            {
-                <MudSelect Typo="Typo.body2"
-                           Label="@BasketOrderInfo.Contact?.Name"
-                           Margin="Margin.Dense"
-                           Dense="true"
-                           Variant="Variant.Outlined"
-                           FullWidth="true"
-                           AnchorOrigin="Origin.CenterCenter"
-                           Required="@FieldUtility.IsRequired(BasketOrderInfo.Contact)"
-                           ReadOnly="@FieldUtility.IsReadOnly(BasketOrderInfo.Contact)"
-                           T="ContactDto"
-                           @bind-value="@ContactValue">
-                    @if (Contacts is not null)
-                    {
-                        foreach (var item in Contacts)
-                        {
-                            <MudSelectItem T="ContactDto" Value="@item">@item</MudSelectItem>
-                        }
-                    }
-                </MudSelect>
-            }
-
-            <MudGrid Spacing="2">
-                <MudItem xs="12" sm="6">
-                    <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
-                        <MudIcon Title="Téléphone" Icon="@Icons.Material.Filled.Phone" Color="Color.Success" Size="Size.Small" />
-                        <MudText Typo="Typo.body2">@FieldUtility.NullOrWhiteSpaceHelperWithDash(BasketOrderInfo.Contact?.Value?.Phone)</MudText>
-                    </MudStack>
-                </MudItem>
-                <MudItem xs="12" sm="6">
-                    <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
-                        <MudIcon Title="Mobile" Icon="@Icons.Material.Filled.PhoneIphone" Color="Color.Info" Size="Size.Small" />
-                        <MudText Typo="Typo.body2">@FieldUtility.NullOrWhiteSpaceHelperWithDash(BasketOrderInfo.Contact?.Value?.CellularPhone)</MudText>
-                    </MudStack>
-                </MudItem>
-                <MudItem xs="12">
-                    <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
-                        <MudIcon Title="Email" Icon="@Icons.Material.Filled.Email" Color="Color.Surface" Size="Size.Small" />
-                        <MudText Typo="Typo.body2">@FieldUtility.NullOrWhiteSpaceHelperWithDash(BasketOrderInfo.Contact?.Value?.Email)</MudText>
-                    </MudStack>
-                </MudItem>
-            </MudGrid>
+            <ContactInfo Contact="BasketOrderInfo!.Contact?.Value"/>
         </MudStack>
 
         <!-- Secteur d'activité -->
         <MudStack Spacing="1">
             <MudText Typo="Typo.subtitle1">@BasketOrderInfo!.ActivityArea?.Name</MudText>
-            <MudTooltip Text="@FieldUtility.NullOrWhiteSpaceHelperWithDash(BasketOrderInfo.ActivityArea?.Description)">
-                <MudText Typo="Typo.body2">@FieldUtility.NullOrWhiteSpaceHelperWithDash(BasketOrderInfo.ActivityArea?.Value)</MudText>
+            <MudTooltip Text="@FieldUtility.NullOrWhiteSpaceHelperWithDash(BasketOrderInfo!.ActivityArea?.Description)">
+                <MudText Typo="Typo.body2">@FieldUtility.NullOrWhiteSpaceHelperWithDash(BasketOrderInfo!.ActivityArea?.Value)</MudText>
             </MudTooltip>
             @if (BasketOrderInfo.CustomerTags is { Count: > 0 })
             {
@@ -110,14 +74,14 @@
                 <MudStack Row="true" Justify="Justify.SpaceEvenly">
                     <MudItem>
                         <GenericMudSelect T="string"
-                                          BoundValue="SalesOriginIdValue"
+                                          @bind-BoundValue="SalesOriginIdValue"
                                           Field="BasketOrderInfo!.SalesOriginId"
                                           Items="SalesOrigins?.Select( item => item?.Value).ToList()" />
 
                     </MudItem>
                     <MudItem>
                         <GenericMudSelect T="string"
-                                          BoundValue="WebOriginIdValue"
+                                          @bind-BoundValue="WebOriginIdValue"
                                           Field="BasketOrderInfo!.WebOriginId"
                                           Items="WebOrigins?.Select( item => item?.Value).ToList()" />
 
@@ -125,7 +89,7 @@
                 </MudStack>
                 <MudItem xs="12" sm="12">
                     <GenericMudSelect T="string"
-                                      BoundValue="SalesPoolId"
+                                      @bind-BoundValue="SalesPoolId"
                                       Field="BasketOrderInfo!.SalesPoolId"
                                       Items="SalesPools?.Select( item => item?.Value).ToList()" />
 

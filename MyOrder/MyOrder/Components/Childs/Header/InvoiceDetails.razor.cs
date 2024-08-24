@@ -32,7 +32,7 @@ namespace MyOrder.Components.Childs.Header
 
             SelectedClient = FieldUtility.SelectedAccount(BasketInvoiceInfo?.Account?.Value);
             AccountAddress = FieldUtility.CreateAddressList(BasketInvoiceInfo?.Account?.Value);
-            DisplayAddress = FieldUtility.DisplayAddress(AccountAddress);            
+            DisplayAddress = FieldUtility.DisplayAddress(AccountAddress);
         }
 
         private bool IsPublicEntityValue
@@ -41,43 +41,22 @@ namespace MyOrder.Components.Childs.Header
 
         }
 
-        private AccountDto SelectedAccount
+        private AccountDto? SelectedAccount
         {
             get => BasketInvoiceInfo?.Account?.Value;
-
-            set
-            {
-                if (BasketInvoiceInfo == null)
-                    throw new InvalidOperationException("BasketInvoiceInfo is null");
-           
-                SetBasketOrderValue(field: BasketInvoiceInfo.Account, value: value, procedureCallValue: value?.AccountId);
-            }
+            set => SetBasketOrderValue(field: BasketInvoiceInfo!.Account, value: value, procedureCallValue: value?.AccountId);
         }
 
         private string TaxGroupValue
         {
             get => FieldUtility.NullOrWhiteSpaceHelper(BasketInvoiceInfo?.TaxGroup?.Value);
-
-            set
-            {
-                if (BasketInvoiceInfo == null)
-                    throw new InvalidOperationException("BasketInvoiceInfo is null");
-
-                SetBasketOrderValue(field: BasketInvoiceInfo.TaxGroup, value: value, procedureCallValue: value);
-            }
+            set => SetBasketOrderValue(field: BasketInvoiceInfo!.TaxGroup, value: value, procedureCallValue: value);
         }
 
         private string PaymentModesValue
         {
             get => FieldUtility.NullOrWhiteSpaceHelper(BasketInvoiceInfo?.PaymentMode?.Value);
-
-            set
-            {
-                if (BasketInvoiceInfo == null)
-                    throw new InvalidOperationException("BasketInvoiceInfo is null");
-
-                SetBasketOrderValue(field: BasketInvoiceInfo.PaymentMode, value: value, procedureCallValue: value);
-            }
+            set => SetBasketOrderValue(field: BasketInvoiceInfo!.PaymentMode, value: value, procedureCallValue: value);
         }
 
         private string PublicEntityExecutingServiceValue

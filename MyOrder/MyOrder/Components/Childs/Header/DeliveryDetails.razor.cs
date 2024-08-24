@@ -31,7 +31,11 @@ public partial class DeliveryDetails : BaseFluxorComponent<DeliveryInfoState, Fe
 
     protected override FetchDeliveryInfoAction CreateFetchAction(DeliveryInfoState state, string basketId) => new(state, basketId);
 
-
+    private AccountDto? AccountValue
+    {
+        get => BasketDeliveryInfo?.Account?.Value;
+        set => SetBasketOrderValue(field: BasketDeliveryInfo!.Account, value: value, procedureCallValue: value?.AccountId);
+    }
     private ContactDto? ContactValue
     {
         get => BasketDeliveryInfo?.Contact?.Value;
@@ -40,11 +44,7 @@ public partial class DeliveryDetails : BaseFluxorComponent<DeliveryInfoState, Fe
     private string NoteValue
     {
         get => FieldUtility.NullOrWhiteSpaceHelper(BasketDeliveryInfo?.Note?.Value);
-        set
-        {
-            BasketDeliveryInfo.Note.Value = value;
-            UpdateProcedureCall(value, BasketDeliveryInfo.Note.ProcedureCall);
-        }
+        set => SetBasketOrderValue(field: BasketDeliveryInfo!.Note, value: value, procedureCallValue: value);
     }
 }
 

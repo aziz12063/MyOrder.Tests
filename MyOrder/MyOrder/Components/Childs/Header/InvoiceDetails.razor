@@ -6,19 +6,6 @@
     <HeaderElementLoadingSkeleton />
     return;
 }
-@{
-
-    if (BasketInvoiceInfo is null)
-    {
-        <LogAndAlert LogLevel="LogLevel.Error"
-                     Exception="new NullReferenceException()"
-                     StackTrace="@LogUtility.GetStackTrace()"
-                     LogMessage="Unexpected null for BasketInvoiceInfo object."
-                     AlertMessage="Une erreur est survenue" />
-        return;
-    }
-}
-
 
 
 <MudContainer Class="pa-0">

@@ -24,8 +24,9 @@ public class StateResolver : IStateResolver
             { "deliveryInfo", CreateDispatchAction<DeliveryInfoState, FetchDeliveryInfoAction> },
             { "invoiceInfo", CreateDispatchAction<InvoiceInfoState, FetchInvoiceInfoAction> },
             { "tradeInfo", CreateDispatchAction<TradeInfoState, FetchTradeInfoAction> },
-            { "pricesInfo", CreateDispatchAction<PricesInfoState, FetchPricesInfoAction> }
-            // Add other mappings here as needed : Coupons, Warranty, Notifications, etc.
+            { "pricesInfo", CreateDispatchAction<PricesInfoState, FetchPricesInfoAction> },
+            { "notifications", CreateDispatchAction<GeneralInfoState, FetchGeneralInfoAction> }
+        // Add other mappings here as needed : Coupons, Warranty, Notifications, etc.
         };
     }
 

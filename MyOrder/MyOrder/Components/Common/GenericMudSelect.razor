@@ -13,12 +13,13 @@
                AnchorOrigin="Origin.CenterCenter"
                Required="@IsRequired"
                ReadOnly="@IsReadOnly"
-               @bind-Value="BoundValue">
+               @bind-Value="BoundValue"
+               @bind-Value:after="BoundValueChangedHandler">
         @if (Items is not null)
         {
             foreach (var item in Items)
             {
-                <MudSelectItem T="T" Value="@item"/>
+                <MudSelectItem T="T" Value="@item" />
             }
         }
     </MudSelect>
@@ -29,6 +30,9 @@
     [Parameter, EditorRequired] public Field<T>? Field { get; set; }
     [Parameter, EditorRequired] public List<T>? Items { get; set; }
     [Parameter] public Variant Variant { get; set; } = 0;
+    [Parameter] public EventCallback<T> BoundValueChanged { get; set; }
+
+    private async Task BoundValueChangedHandler() => await BoundValueChanged.InvokeAsync(BoundValue);
 
     private bool IsHidden => FieldUtility.IsHidden(Field);
     private bool IsReadOnly => FieldUtility.IsReadOnly(Field);

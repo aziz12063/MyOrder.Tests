@@ -39,7 +39,7 @@ public class ProcedureCallEffects(IBasketRepository basketRepository, ILogger<Or
                 logger.LogError("Refresh call is null");
                 continue;
             }
-
+            logger.LogInformation("Dispatching refresh action for {Call}", call);
             stateResolver.DispatchRefreshAction(call, dispatcher, receivedAction.BasketId);
         }
     }
