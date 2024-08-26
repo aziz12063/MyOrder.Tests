@@ -18,8 +18,8 @@
 else
 {
     <p><strong>User Name:</strong> @user?.Identity?.Name</p>
-    <p><strong>Is Authenticated:</strong> @user.Identity.IsAuthenticated</p>
-    <p><strong>Authentication Type:</strong> @user.Identity.AuthenticationType</p>
+    <p><strong>Is Authenticated:</strong> @user?.Identity?.IsAuthenticated</p>
+    <p><strong>Authentication Type:</strong> @user?.Identity?.AuthenticationType</p>
 }
 
 <MudContainer Class="mt-14 px-14" MaxWidth="MaxWidth.ExtraLarge">

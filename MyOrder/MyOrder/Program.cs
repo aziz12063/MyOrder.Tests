@@ -1,9 +1,9 @@
 using Fluxor;
 using Fluxor.Blazor.Web.ReduxDevTools;
-using Microsoft.AspNetCore.Authentication.Negotiate;
 using MudBlazor.Services;
 using MyOrder.Components;
 using MyOrder.Infrastructure.ApiClients;
+using MyOrder.Infrastructure.HttpHandlers;
 using MyOrder.Infrastructure.Repositories;
 using MyOrder.Infrastructure.Resilience;
 using MyOrder.Services;
@@ -19,10 +19,6 @@ builder.Host.UseSerilog((hostingContext, loggerConfiguration) => loggerConfigura
     .ReadFrom.Configuration(hostingContext.Configuration)
     .Enrich.WithExceptionDetails());
 
-// AddAuthentication
-builder.Services.AddAuthentication(NegotiateDefaults.AuthenticationScheme)
-    .AddNegotiate();
-
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
@@ -32,8 +28,11 @@ builder.Services.AddScoped<BasketService>();
 builder.Services.AddScoped<IStateResolver, StateResolver>();
 
 // Api Client, and Resilience Policies
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddTransient<UserNameHandler>();
 builder.Services.AddRefitClient<IBasketApiClient>()
-    .ConfigureHttpClient(c => c.BaseAddress = new Uri("http://aliasiisq:8080"))
+    .AddHttpMessageHandler<UserNameHandler>()
+    .ConfigureHttpClient(c => c.BaseAddress = new Uri("http://aliasiisq:8080")) // Refactor to use https only
     .AddPolicyHandler(ResiliencePolicies.GetRetryPolicy())
     .AddPolicyHandler(ResiliencePolicies.GetCircuitBreakerPolicy());
 
@@ -80,10 +79,6 @@ else
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
-
-app.UseAuthentication();
-app.UseAuthorization();
-
 app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
