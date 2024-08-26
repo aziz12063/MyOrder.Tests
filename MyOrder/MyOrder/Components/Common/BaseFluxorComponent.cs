@@ -64,10 +64,17 @@ public abstract class BaseFluxorComponent<TState, TAction> : ComponentBase, IDis
 
         // Set the field value
         field.Value = value;
-
+        try
+        {
 #pragma warning disable CS0618 // Type or member is obsolete
-        UpdateProcedureCall(procedureCallValue, field.ProcedureCall);
+            UpdateProcedureCall(procedureCallValue, field.ProcedureCall);
 #pragma warning restore CS0618 // Type or member is obsolete
+        }
+        catch (ArgumentNullException e)
+        {
+            Logger.LogError(e, "Error while updating procedure call for {Field}", field);
+        }
+    
     }
 
     // This method should only be called from SetBasketOrderValue, make private and remove the Obsolete attribute once the method is no longer used
@@ -76,8 +83,7 @@ public abstract class BaseFluxorComponent<TState, TAction> : ComponentBase, IDis
     {
         if (procedureCall is null || procedureCall.Count < 1)
         {
-            Logger.LogWarning("ProcedureCall is either null or has 0 item.");
-            return;
+            throw new ArgumentNullException(nameof(procedureCall), "ProcedureCall is either null or has 0 item.");
         }
 
         procedureCall[^1] = newValue ?? string.Empty; // Update with the new value or empty string if null

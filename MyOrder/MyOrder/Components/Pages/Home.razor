@@ -1,13 +1,38 @@
-﻿@using MyOrder.Components.Childs.Header
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@using MyOrder.Components.Childs.Header
 @using MyOrder.Components.Childs.Lines
 @using MyOrder.Services
 
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
 @page "/"
-@inject BasketService BasketService
 
 <PageTitle>MyOrder</PageTitle>
+
+<h3>Authenticated User Information</h3>
+
+@if (user == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <p><strong>User Name:</strong> @user?.Identity?.Name</p>
+    <p><strong>Is Authenticated:</strong> @user.Identity.IsAuthenticated</p>
+    <p><strong>Authentication Type:</strong> @user.Identity.AuthenticationType</p>
+}
 
 <MudContainer Class="mt-14 px-14" MaxWidth="MaxWidth.ExtraLarge">
     <Header/> 
     <Lines />
 </MudContainer>
+
+@code {
+    private System.Security.Claims.ClaimsPrincipal user;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        user = authState.User;
+    }
+}

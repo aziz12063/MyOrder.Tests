@@ -6,32 +6,21 @@
     <PricesAndLinesElementLoadingSkeleton />
     return;
 }
-@{
 
-    if (BasketPricesInfo is null)
-    {
-        <LogAndAlert LogLevel="LogLevel.Error"
-                     Exception="new NullReferenceException()"
-                     StackTrace="@LogUtility.GetStackTrace()"
-                     LogMessage="Unexpected null for BasketPricesInfo object."
-                     AlertMessage="Une erreur est survenue" />
-        return;
-    }
-}
 <MudContainer Class="pa-0">
     <MudStack Spacing="5">
-        <MudText Typo="Typo.body2" Color="Color.Secondary">Totaus et prix</MudText>
+        <MudText Typo="Typo.h6" Color="Color.Secondary">Totaux et prix</MudText>
         <MudGrid Spacing="3" Justify="Justify.SpaceAround">
             <!--Column1-->
             <MudItem xs="3">
                 <!--1-->
                 <MudGrid>
                     <!--Code Action-->
-                    <MudItem xs="4">
-                        <MudText Typo="Typo.body2">@BasketPricesInfo.Coupon.Name</MudText>
-                    </MudItem>
                     @if (FieldUtility.IsHidden(BasketPricesInfo?.Coupon))
                     {
+                        <MudItem xs="4">
+                            <MudText Typo="Typo.body2">@BasketPricesInfo.Coupon.Name</MudText>
+                        </MudItem>
                         <MudItem xs="8">
                             <MudSelect Margin="Margin.Dense"
                                        T="string"

@@ -1,5 +1,6 @@
 using Fluxor;
 using Fluxor.Blazor.Web.ReduxDevTools;
+using Microsoft.AspNetCore.Authentication.Negotiate;
 using MudBlazor.Services;
 using MyOrder.Components;
 using MyOrder.Infrastructure.ApiClients;
@@ -18,11 +19,14 @@ builder.Host.UseSerilog((hostingContext, loggerConfiguration) => loggerConfigura
     .ReadFrom.Configuration(hostingContext.Configuration)
     .Enrich.WithExceptionDetails());
 
+// AddAuthentication
+builder.Services.AddAuthentication(NegotiateDefaults.AuthenticationScheme)
+    .AddNegotiate();
+
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
-
 
 builder.Services.AddScoped<BasketService>();
 builder.Services.AddScoped<IStateResolver, StateResolver>();
@@ -76,6 +80,10 @@ else
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.UseAntiforgery();
 
 app.MapRazorComponents<App>()

@@ -11,7 +11,7 @@ public partial class DeliveryDetails : BaseFluxorComponent<DeliveryInfoState, Fe
     private BasketDeliveryInfoDto? BasketDeliveryInfo { get; set; }
     private List<AccountDto?>? Accounts { get; set; }
     private List<ContactDto?>? Contacts { get; set; }
-    private List<BasketValueDto?>? WebOrigins { get; set; }
+    private List<BasketValueDto?>? DeliveryModes { get; set; }
     private string SelectedAccount { get; set; } = string.Empty;
     private List<string>? AccountAddress { get; set; }
     private string DisplayAddress { get; set; } = string.Empty;
@@ -22,7 +22,7 @@ public partial class DeliveryDetails : BaseFluxorComponent<DeliveryInfoState, Fe
                              ?? throw new ArgumentNullException(nameof(State.Value.BasketDeliveryInfo), "Unexpected null for BasketOrderInfo object.");
         Accounts = State.Value.DeliverToAccounts;
         Contacts = State.Value.DeliverToContacts;
-        WebOrigins = State.Value.DeliveryModes;
+        DeliveryModes = State.Value.DeliveryModes;
 
         SelectedAccount = FieldUtility.SelectedAccount(BasketDeliveryInfo?.Account?.Value);
         AccountAddress = FieldUtility.CreateAddressList(BasketDeliveryInfo?.Account?.Value);
@@ -40,6 +40,25 @@ public partial class DeliveryDetails : BaseFluxorComponent<DeliveryInfoState, Fe
     {
         get => BasketDeliveryInfo?.Contact?.Value;
         set => SetBasketOrderValue(field: BasketDeliveryInfo!.Contact, value: value, procedureCallValue: value?.ContactId);
+    }
+    private string DeliveryModeValue
+    {
+        get => GetFieldValue(BasketDeliveryInfo?.DeliveryMode?.Value);
+        set => SetBasketOrderValue(field: BasketDeliveryInfo!.DeliveryMode, value: value, procedureCallValue: value);
+    }
+    private bool? CompleteDelivery
+    {
+        get => BasketDeliveryInfo?.CompleteDelivery?.Value;
+        set => SetBasketOrderValue(field: BasketDeliveryInfo!.CompleteDelivery, value: value, procedureCallValue: value.ToString());
+    }
+    private DateTime? ImperativeDateValue
+    {
+        get; //=> BasketDeliveryInfo?.ImperativeDate?.Value;
+        set; //=> SetBasketOrderValue(field: BasketDeliveryInfo!.ImperativeDate, value: value, procedureCallValue: value?.ToString("yyyy-MM-dd"));
+    }
+    public bool? SaveNoteForFutureOrders {
+        get => BasketDeliveryInfo?.NoteMustBeSaved?.Value;
+        set => SetBasketOrderValue(field: BasketDeliveryInfo!.NoteMustBeSaved, value: value, procedureCallValue: value.ToString());
     }
     private string NoteValue
     {

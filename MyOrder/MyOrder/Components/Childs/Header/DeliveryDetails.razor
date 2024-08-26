@@ -32,7 +32,7 @@
                     <MudIconButton Icon="@Icons.Material.Filled.Phone" Size="Size.Small" />
                 </MudTooltip>
             </MudStack>
-            
+
             <GenericMudSelect T="AccountDto"
                               Field="BasketDeliveryInfo!.Account"
                               Items="Accounts"
@@ -40,7 +40,7 @@
                               Variant="Variant.Outlined" />
 
             <MudTextField Typo="Typo.caption"
-                          Lines="5"
+                          Lines=" AccountAddress != null? AccountAddress.Count : 1"
                           Variant="Variant.Outlined"
                           FullWidth="true"
                           Margin="Margin.Dense"
@@ -52,13 +52,71 @@
                               Field="BasketDeliveryInfo!.Contact"
                               Items="Contacts"
                               @bind-BoundValue="ContactValue"
-                              Variant="Variant.Outlined"/>
+                              Variant="Variant.Outlined" />
 
-            <ContactInfo Contact="BasketDeliveryInfo!.Contact?.Value"/>
+            <ContactInfo Contact="BasketDeliveryInfo!.Contact?.Value" />
         </MudStack>
-        
+
+        <!-- Informations de livraison -->
+        <MudStack Spacing="2">
+            <MudText Typo="Typo.subtitle1">Informations de livraison</MudText>
+            <MudItem>
+                <GenericMudSelect T="string"
+                                  @bind-BoundValue="DeliveryModeValue"
+                                  Field="BasketDeliveryInfo!.DeliveryMode"
+                                  Items="DeliveryModes?.Select( item => item?.Value).ToList()" />
+
+            </MudItem>
+            @if (!FieldUtility.IsHidden(BasketDeliveryInfo!.CompleteDelivery))
+            {
+                <MudItem>
+                    <MudCheckBox Dense="true"
+                                 Style="display:inline-block;"
+                                 Label="@BasketDeliveryInfo!.CompleteDelivery?.Name"
+                                 LabelPosition="LabelPosition.Start"
+                                 ReadOnly="@FieldUtility.IsReadOnly(BasketDeliveryInfo!.CompleteDelivery)"
+                                 Disabled="@FieldUtility.IsHidden(BasketDeliveryInfo!.CompleteDelivery)"
+                                 @bind-Value="CompleteDelivery" />
+                </MudItem>
+            }
+            @if (!FieldUtility.IsHidden(BasketDeliveryInfo!.ImperativeDate))
+            {
+                <MudItem>
+                    <MudDatePicker Label="@BasketDeliveryInfo!.ImperativeDate?.Name"
+                                   ReadOnly="@FieldUtility.IsReadOnly(BasketDeliveryInfo!.ImperativeDate)"
+                                   Disabled="@FieldUtility.IsHidden(BasketDeliveryInfo!.ImperativeDate)"
+                                   Required="@FieldUtility.IsRequired(BasketDeliveryInfo!.ImperativeDate)"
+                                   @bind-Date="ImperativeDateValue" />
+                </MudItem>
+            }
+            @if (!FieldUtility.IsHidden(BasketDeliveryInfo!.OrderDocuments))
+            {
+                <MudItem>
+                    <MudTextField Typo="Typo.caption"
+                                  Lines="2"
+                                  Variant="Variant.Outlined"
+                                  FullWidth="true"
+                                  Margin="Margin.Dense"
+                                  ReadOnly="true"
+                                  Label="@BasketDeliveryInfo.OrderDocuments?.Name"
+                                  Value="FieldUtility.DisplayAddress(BasketDeliveryInfo!.OrderDocuments?.Value)" />
+                </MudItem>
+            }
+        </MudStack>
 
         <!-- Notes de RC -->
+        @if (!FieldUtility.IsHidden(BasketDeliveryInfo!.NoteMustBeSaved))
+        {
+            <MudItem>
+                <MudCheckBox Dense="true"
+                             Style="display:inline-block;"
+                             Label="@BasketDeliveryInfo!.NoteMustBeSaved?.Name"
+                             LabelPosition="LabelPosition.Start"
+                             ReadOnly="@FieldUtility.IsReadOnly(BasketDeliveryInfo!.NoteMustBeSaved)"
+                             Disabled="@FieldUtility.IsHidden(BasketDeliveryInfo!.NoteMustBeSaved)"
+                             @bind-Value="SaveNoteForFutureOrders" />
+            </MudItem>
+        }
         <MudTextField Typo="Typo.caption"
                       Lines="4"
                       Variant="Variant.Outlined"

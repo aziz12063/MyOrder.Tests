@@ -1,32 +1,34 @@
-﻿<MudGrid Style="min-width: 1150px;" Spacing="2" Justify="Justify.Center">
+﻿<!-- Refactor Style="overflow-y: auto;" and put it in the right place -->
+
+<MudGrid Style="min-width: 1150px;" Spacing="2" Justify="Justify.Center">
 
     <MudItem xs="12" sm="3" md="3">
-        <HoverableMudPaper Class="flexible-paper header-cards-height header-cards-height-content">
+        <HoverableMudPaper Class="flexible-paper header-cards-height header-cards-height-content" Style="overflow-y: auto;">
             <OrderInfo />
         </HoverableMudPaper>
     </MudItem>
 
     <MudItem xs="12" sm="3" md="3">
-        <HoverableMudPaper Class="flexible-paper header-cards-height header-cards-height-content">
+        <HoverableMudPaper Class="flexible-paper header-cards-height header-cards-height-content" Style="overflow-y: auto;">
             <DeliveryDetails />
         </HoverableMudPaper>
     </MudItem>
 
 
     <MudItem xs="12" sm="3" md="3">
-        <HoverableMudPaper Class="flexible-paper header-cards-height">
+        <HoverableMudPaper Class="flexible-paper header-cards-height header-cards-height-content" Style="overflow-y: auto;">
             <InvoiceDetails />
         </HoverableMudPaper>
     </MudItem>
 
     <MudItem xs="12" sm="3" md="3">
-        <HoverableMudPaper Class="flexible-paper header-cards-height">
+        <HoverableMudPaper Class="flexible-paper header-cards-height header-cards-height-content" Style="overflow-y: auto;">
             <CommercialDetails />
         </HoverableMudPaper>
     </MudItem>
 
     <MudItem xs="12">
-        <HoverableMudPaper Class="flexible-paper header-cards-height">
+        <HoverableMudPaper Class="flexible-paper">
             <PriceInfo />
         </HoverableMudPaper>
     </MudItem>

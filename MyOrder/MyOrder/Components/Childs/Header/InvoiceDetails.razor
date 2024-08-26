@@ -1,4 +1,5 @@
 ﻿@using MyOrder.Store.InvoiceInfoUseCase
+
 @inherits MyOrder.Components.Common.BaseFluxorComponent<InvoiceInfoState, FetchInvoiceInfoAction>
 
 @if (State.Value.IsLoading)
@@ -7,263 +8,141 @@
     return;
 }
 
-
 <MudContainer Class="pa-0">
     <MudStack Spacing="4">
         <MudText Typo="Typo.h6" Color="Color.Secondary">Facturation</MudText>
-        <MudItem xs="10">
-            <!--Compte facturé-->
-            <MudStack>
-                <MudText Typo="Typo.subtitle1" >@BasketInvoiceInfo.Account?.Name</MudText>
+
+        <!--Compte facturé-->
+        <MudStack Spacing="2">
+            <MudStack Row="true" Spacing="1" StretchItems="StretchItems.Start">
+                <MudText Typo="Typo.subtitle1">@BasketInvoiceInfo!.Account?.Name</MudText>
+                <MudTooltip Text="Chercher client? -Not Implemented">
+                    <MudIconButton Icon="@Icons.Material.Filled.Search" Size="Size.Small" />
+                </MudTooltip>
+                <MudTooltip Text="Copier les informations du client -Not Implemented">
+                    <MudIconButton Icon="@Icons.Material.Filled.Description" Size="Size.Small" />
+                </MudTooltip>
+                <MudTooltip Text="Salesforce? -Not Implemented">
+                    <MudIconButton Icon="@Icons.Material.Filled.Cloud" Size="Size.Small" />
+                </MudTooltip>
+                <MudTooltip Text="Infos? -Not Implemented">
+                    <MudIconButton Icon="@Icons.Material.Filled.Info" Size="Size.Small" />
+                </MudTooltip>
+                <MudTooltip Text="Call? -Not Implemented">
+                    <MudIconButton Icon="@Icons.Material.Filled.Phone" Size="Size.Small" />
+                </MudTooltip>
             </MudStack>
 
-            <AddressTooltip AccountAddress="AccountAddress">
-                <MudSelect Class="change-mudselect-font" Margin="Margin.Dense"
-                           T="AccountDto"                      
-                           Variant="Variant.Outlined"
-                           @bind-Value="@SelectedAccount">
-                    @if (InvoiceToAccounts != null)
-                    {
-                        List<AccountDto> FiltredList = InvoiceToAccounts.Where(item => item != null).Cast<AccountDto>().ToList();
+            <GenericMudSelect T="AccountDto"
+                              Field="BasketInvoiceInfo!.Account"
+                              Items="InvoiceToAccounts"
+                              @bind-BoundValue="AccountValue"
+                              Variant="Variant.Outlined" />
 
-                        @if (FiltredList.Count == 0)
-                        {
-                            Logger.LogWarning($"the InvoiceToAccounts list  contain only null items.");
-                        }
-                        else
-                        {
-                            @foreach (var item in FiltredList)
-                            {
-                                <MudSelectItem T="AccountDto" Value="@item">@item</MudSelectItem>                                
-                            }
-                        }
-                        if (InvoiceToAccounts.Count > FiltredList.Count)
-                        {
-                            Logger.LogWarning($"the InvoiceToAccounts list  contain some null items.");
-                        }
-                    }
-                    else
-                    {
-                        Logger.LogWarning($"the InvoiceToAccounts list  is null.");
-                        <MudSelectItem T="AccountDto">@string.Empty</MudSelectItem>
-                    }
-
-                </MudSelect>
-            </AddressTooltip>
-            <MudItem xs="12">
-                <MudTextField Typo="Typo.caption"
-                              Lines="5"
-                              Variant="Variant.Outlined"
-                              Style="font-size: 10px; height:90px;"
-                              FullWidth="true"
-                              Margin="Margin.Dense"
-                              ReadOnly="true"
-                              Value="@DisplayAddress" />
-            </MudItem>
+            <MudTextField Typo="Typo.caption"
+                          Lines=" AccountAddress != null? AccountAddress.Count : 1"
+                          Variant="Variant.Outlined"
+                          FullWidth="true"
+                          Margin="Margin.Dense"
+                          ReadOnly="true"
+                          Value="DisplayAddress" />
 
             <!--Siret-->
-            <MudGrid>
-                <MudItem xs="4">
-                    <MudText Style="font-size: 13px; height:22px;">@BasketInvoiceInfo.SiretId?.Name</MudText>
+            @if (!FieldUtility.IsHidden(BasketInvoiceInfo!.SiretId))
+            {
+                <MudItem>
+                    <MudTextField Typo="Typo.body2"
+                                  Margin="Margin.Dense"
+                                  Variant="Variant.Text"
+                                  FullWidth="true"
+                                  ReadOnly="@FieldUtility.IsReadOnly(BasketInvoiceInfo.SiretId)"
+                                  Disabled="@FieldUtility.IsDisabled(BasketInvoiceInfo.SiretId)"
+                                  Label="@BasketInvoiceInfo.SiretId?.Name"
+                                  Value="@BasketInvoiceInfo.SiretId?.Value" />
                 </MudItem>
-                <MudItem xs="8">
-                    <MudTextField Margin="Margin.Dense" T="string"
-                                  Variant="Variant.Outlined"
-                                  Style="font-size: 13px; height:22px;"
-                                  Disabled="false"                                  
-                                  ReadOnly="true"
-                                  Value="@BasketInvoiceInfo.SiretId?.Value">
-                    </MudTextField>
-                </MudItem>
-            </MudGrid>
+            }
 
             <!--Groupe de taxe-->
-            <MudGrid>
-                <MudItem xs="4">
-                    <MudText Typo="Typo.body2" Style="font-size: 13px; height:22px;">@BasketInvoiceInfo.TaxGroup?.Name</MudText>
-                </MudItem>
-                <MudItem xs="8">
-                    <MudSelect Margin="Margin.Dense"
-                               T="string"
-                               Variant="Variant.Outlined"
-                               @bind-Value="@TaxGroupValue">
+            <GenericMudSelect T="string"
+                              Field="BasketInvoiceInfo!.TaxGroup"
+                              Items="TaxGroups?.Select( item => item?.Value).ToList()"
+                              @bind-BoundValue="TaxGroupValue"
+                              Variant="Variant.Outlined" />
+        </MudStack>
 
-                        @if (TaxGroups != null)
-                        {
-                            List<BasketValueDto> FiltredList = TaxGroups.Where(item => item != null).Cast<BasketValueDto>().ToList();
 
-                            @if (FiltredList.Count == 0)
-                            {
-                                Logger.LogWarning($"the TaxGroups list  contain only null items.");
-
-                            }
-                            else
-                            {
-                                @foreach (var item in FiltredList)
-                                {
-                                    <MudSelectItem T="string" Value="@item.Value">@item.Value</MudSelectItem>
-                                }
-                            }
-                            if (TaxGroups.Count > FiltredList.Count)
-                            {
-                                Logger.LogWarning($"the TaxGroups list  contain some null items.");
-                            }
-                        }
-                        else
-                        {
-                            Logger.LogWarning($"the TaxGroups list  is null.");
-                            <MudSelectItem T="string" Value="string.Empty">@string.Empty</MudSelectItem>
-                        }
-
-                    </MudSelect>
-                </MudItem>
-            </MudGrid>
-
-            <!--Paiment du client-->
-            <MudText Typo="Typo.subtitle1">Paiment du client</MudText>
-            <MudGrid Spacing="1">
-                <MudItem xs="4">
-                    <MudText Typo="Typo.body2">@BasketInvoiceInfo.PaymentTerm?.Name</MudText>
-                </MudItem>
-                <MudItem xs="8">
-                    <MudSelect Margin="Margin.Dense"
-                               T="string"
-                               Variant="Variant.Outlined"
-                               ReadOnly="true"
-                               Value="@BasketInvoiceInfo.PaymentTerm?.Value">
-                        <MudSelectItem T="string">Not implemented</MudSelectItem>
-
-                    </MudSelect>
-                </MudItem>
-            </MudGrid>
-            <MudGrid Spacing="1">
-                <MudItem xs="4">
-                    <MudText Typo="Typo.body2">@BasketInvoiceInfo.PaymentMode?.Name</MudText>
-                </MudItem>
-                <MudItem xs="8">
-                    <MudSelect Margin="Margin.Dense"
-                               T="string"
-                               Variant="Variant.Outlined"
-                               @bind-Value="@PaymentModesValue">
-                        @if (PaymentModes != null)
-                        {
-                            List<BasketValueDto> FiltredList = PaymentModes.Where(item => item != null).Cast<BasketValueDto>().ToList();
-
-                            @if (FiltredList.Count == 0)
-                            {
-                                Logger.LogWarning($"the PaymentModes list  contain only null items.");
-                                <MudSelectItem T="string" Value="string.Empty">@string.Empty</MudSelectItem>
-                            }
-                            else
-                            {
-                                @foreach (var item in FiltredList)
-                                {
-                                    <MudSelectItem T="string" Value="@item.Value">@item.Value</MudSelectItem>
-                                }
-                            }
-                            if (PaymentModes.Count > FiltredList.Count)
-                            {
-                                Logger.LogWarning($"the PaymentModes list  contain some null items.");
-                            }
-                        }
-                        else
-                        {
-                            Logger.LogWarning($"the PaymentModes list  is null.");
-                            <MudSelectItem T="string" Value="string.Empty">@string.Empty</MudSelectItem>
-                        }
-
-                    </MudSelect>
-                </MudItem>
-            </MudGrid>
-
-            <!--Entities public/Chorus-->
-            <MudGrid Spacing="2">
-                <MudText Typo="Typo.subtitle1">Entities public/Chorus</MudText>
-                @* <MudCheckBox Label="IsPublicEntity"
-                             LabelPosition="LabelPosition.Start"
-                             @bind-Value="@BasketInvoiceInfo.IsPublicEntity">
-                </MudCheckBox> *@
-            </MudGrid>
-
-            <MudGrid Spacing="1">
-                <MudItem xs="4">
-                    <MudText Typo="Typo.body2">@BasketInvoiceInfo.PublicEntityExecutingService?.Name</MudText>
-                </MudItem>
-                <MudItem xs="8">
-                    <MudTextField Margin="Margin.Dense"
-                                  T="string"
-                                  Variant="Variant.Outlined"
-                                  Required="@IsPublicEntityValue"
-                                  ReadOnly="@(!IsPublicEntityValue)"
-                                  Value="@PublicEntityExecutingServiceValue">
-                    </MudTextField>
-                </MudItem>
-            </MudGrid>
-            <MudGrid Spacing="1">
-                <MudItem xs="4">
-                    <MudText Typo="Typo.body2">@BasketInvoiceInfo.PublicEntityLegalCommitment?.Name</MudText>
-                </MudItem>
-                <MudItem xs="8">
-                    <MudTextField Margin="Margin.Dense"
-                                  T="string"
-                                  Variant="Variant.Outlined"
-                                  Required="@IsPublicEntityValue"
-                                  ReadOnly="@(!IsPublicEntityValue)"
-                                  Value="@PublicEntityLegalCommitmentValue">
-                    </MudTextField>
-                </MudItem>
-            </MudGrid>
-
-            <!--Notes de facturation-->
-            <MudText Typo="Typo.body2" Color="Color.Secondary">@BasketInvoiceInfo.Note?.Name</MudText>
-            <MudGrid Spacing="1">
-                <MudItem xs="8">
-                    <MudTextField Typo="Typo.caption"
-                                  Lines="4"
-                                  Variant="Variant.Outlined"
-                                  FullWidth="true"
+        <!--Paiment du client-->
+        <MudStack Spacing="2">
+            <MudText Typo="Typo.subtitle1">Paiement du client</MudText>
+            @if (!FieldUtility.IsHidden(BasketInvoiceInfo!.PaymentTerm))
+            {
+                <MudItem>
+                    <MudTextField Typo="Typo.body2"
                                   Margin="Margin.Dense"
-                                  ReadOnly="true"
-                                  Value="@NoteValue">
-                    </MudTextField>
+                                  Variant="Variant.Text"
+                                  FullWidth="true"
+                                  ReadOnly="@FieldUtility.IsReadOnly(BasketInvoiceInfo.PaymentTerm)"
+                                  Disabled="@FieldUtility.IsDisabled(BasketInvoiceInfo.PaymentTerm)"
+                                  Label="@BasketInvoiceInfo.PaymentTerm?.Name"
+                                  Value="@BasketInvoiceInfo.PaymentTerm?.Value" />
                 </MudItem>
-            </MudGrid>
-        </MudItem>
+            }
+            <MudItem>
+                <GenericMudSelect T="string"
+                                  @bind-BoundValue="PaymentModeValue"
+                                  Field="BasketInvoiceInfo!.PaymentMode"
+                                  Items="PaymentModes?.Select( item => item?.Value).ToList()" />
+
+            </MudItem>
+        </MudStack>
+
+        <!--Entities public/Chorus-->
+        <MudStack Spacing="2">
+            <MudText Typo="Typo.subtitle1">Entités publiques / Chorus</MudText>
+            <MudItem>
+                <MudCheckBox Dense="true"
+                             Style="display:inline-block;"
+                             Label="Entité publique (Not Implemented)"
+                             LabelPosition="LabelPosition.Start"
+                             Disabled="true"
+                             Value="IsPublicEntityValue" />
+            </MudItem>
+            @if (!FieldUtility.IsHidden(BasketInvoiceInfo!.PublicEntityExecutingService))
+            {
+                <MudItem>
+                    <MudTextField Typo="Typo.body2"
+                                  Margin="Margin.Dense"
+                                  Variant="Variant.Text"
+                                  FullWidth="true"
+                                  ReadOnly="@FieldUtility.IsReadOnly(BasketInvoiceInfo!.PublicEntityExecutingService)"
+                                  Disabled="@FieldUtility.IsDisabled(BasketInvoiceInfo!.PublicEntityExecutingService)"
+                                  Label="@BasketInvoiceInfo!.PublicEntityExecutingService?.Name"
+                                  @bind-Value="PublicEntityExecutingServiceValue" />
+                </MudItem>
+            }
+            @if (!FieldUtility.IsHidden(BasketInvoiceInfo!.PublicEntityLegalCommitment))
+            {
+                <MudItem>
+                    <MudTextField Typo="Typo.body2"
+                                  Margin="Margin.Dense"
+                                  Variant="Variant.Text"
+                                  FullWidth="true"
+                                  ReadOnly="@FieldUtility.IsReadOnly(BasketInvoiceInfo!.PublicEntityLegalCommitment)"
+                                  Disabled="@FieldUtility.IsDisabled(BasketInvoiceInfo!.PublicEntityLegalCommitment)"
+                                  Label="@BasketInvoiceInfo!.PublicEntityLegalCommitment?.Name"
+                                  @bind-Value="@PublicEntityLegalCommitmentValue" />
+                </MudItem>
+            }
+        </MudStack>
+
+        <!--Notes de facturation-->
+        <MudTextField Typo="Typo.caption"
+                      Lines="4"
+                      Variant="Variant.Filled"
+                      FullWidth="true"
+                      Margin="Margin.Dense"
+                      ReadOnly="true"
+                      Label="@BasketInvoiceInfo!.Note?.Name"
+                      Value="@BasketInvoiceInfo!.Note?.Value" />
     </MudStack>
 </MudContainer>
-
-@* <div class="col-md-3" style="padding: 5px;">
-    <RadzenCard class="card-container">
-        <ChildContent>
-            <h4 class="card-title">Invoice Details</h4>
-            <RadzenFieldset Text="Invoice Information" Style="margin-bottom: 20px;">
-                <div class="fieldset-content">
-                    <label class="field-label">Invoice Id</label>
-                    <RadzenTextBox @bind-Value="BasketHeaderDto.InvoiceId" Placeholder="Invoice Id" Style="width: 100%;" />
-                </div>
-                <div class="fieldset-content">
-                    <label class="field-label">Invoice Account</label>
-                    <RadzenTextBox @bind-Value="BasketHeaderDto.InvoiceAccount" Placeholder="Invoice Account" Style="width: 100%;" />
-                </div>
-                <div class="fieldset-content">
-                    <label class="field-label">Invoice Email</label>
-                    <RadzenTextBox @bind-Value="BasketHeaderDto.InvoiceEmail" Placeholder="Invoice Email" Style="width: 100%;" />
-                </div>
-                <div class="fieldset-content">
-                    <label class="field-label">Invoice Note</label>
-                    <RadzenTextBox @bind-Value="BasketHeaderDto.InvoiceNote" Placeholder="Invoice Note" Multiline="true" Rows="4" Style="width: 100%;" />
-                </div>
-                <div class="fieldset-content">
-                    <label class="field-label">Invoice Ship Mode</label>
-                    <RadzenDropDown @bind-Value="BasketHeaderDto.InvoiceShipMode" Placeholder="Select Ship Mode" TextProperty="Mode" ValueProperty="Id" Style="width: 100%;" />
-                </div>
-            </RadzenFieldset>
-        </ChildContent>
-    </RadzenCard>
-
-</div>
-
-@code
-{
-    public BasketHeaderDto? BasketHeaderDto { get; set; } = new();
-} *@
