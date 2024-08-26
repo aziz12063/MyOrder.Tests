@@ -1,4 +1,5 @@
 ﻿using MyOrder.Shared.Dtos;
+using MyOrder.Shared.Dtos.Lines;
 
 namespace MyOrder.Infrastructure.Repositories;
 public interface IBasketRepository
@@ -51,5 +52,5 @@ public interface IBasketRepository
 
 
     //Task<IEnumerable<NotificationDto>> GetNotificationsAsync(string basketId);
-    //Task<IEnumerable<LineItemDto>> GetBasketLinesAsync(string basketId);
+    Task<IEnumerable<BasketLineDto?>> GetBasketLinesAsync(string basketId);
 }

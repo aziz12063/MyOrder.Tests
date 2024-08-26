@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using MyOrder.Infrastructure.Data;
 using MyOrder.Shared.Dtos.SharedComponents;
+using MyOrder.Shared.Dtos.Lines;
 
 namespace MyOrder.Infrastructure.Repositories
 {
@@ -32,6 +33,8 @@ namespace MyOrder.Infrastructure.Repositories
         private static readonly Dictionary<string, List<BasketValueDto?>> _basketsShippingCostOptions = [];
         private static readonly Dictionary<string, ProcedureCallResponseDto> _basketsProcedureCall = [];
         private static readonly Dictionary<string, List<AccountDto?>> _basketsInvoiceToAccounts = [];
+        private static readonly Dictionary<string, List<BasketLineDto?>> _basketsBasketLineDto = [];
+
         private int _millisecondsTimeout = 500;
 
         public InMemoryBasketRepository()
@@ -57,6 +60,7 @@ namespace MyOrder.Infrastructure.Repositories
             SeedBasketShippingCostOptionsData();
             SeedProcedureCallData();
             SeedInvoiceToAccountData();
+            SeedbasketsBasketLineDtoData();
         }
 
         public async Task<BasketGeneralInfoDto> GetBasketGeneralInfoAsync(string basketId)
@@ -184,6 +188,13 @@ namespace MyOrder.Infrastructure.Repositories
         {
             await Task.Delay(_millisecondsTimeout);
             return _basketsProcedureCall[basketId];
+        }
+
+      
+        public async Task<IEnumerable<BasketLineDto?>> GetBasketLinesAsync(string basketId)
+        {
+            await Task.Delay(_millisecondsTimeout);
+            return _basketsBasketLineDto[basketId];
         }
 
 
@@ -414,8 +425,15 @@ namespace MyOrder.Infrastructure.Repositories
             _basketsProcedureCall.Add("P0130652", SampleData.procedureCallResponseP0130652_3);
         }
 
-
-
+        //=======================================================================================================
+        //Lines
+        //=======================================================================================================
+        
+        private static void SeedbasketsBasketLineDtoData()
+        {
+            _basketsBasketLineDto.Clear();
+            _basketsBasketLineDto.Add(_basketId, SampleData.basketLineDtosP0130938);
+        }
 
 
 

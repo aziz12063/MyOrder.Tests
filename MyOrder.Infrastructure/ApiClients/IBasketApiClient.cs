@@ -1,4 +1,5 @@
 ﻿using MyOrder.Shared.Dtos;
+using MyOrder.Shared.Dtos.Lines;
 using Refit;
 
 namespace MyOrder.Infrastructure.ApiClients
@@ -90,7 +91,7 @@ namespace MyOrder.Infrastructure.ApiClients
         //[Get("/api/orderContext/{basketId}/notifications")]
         //Task<IEnumerable<NotificationDto>> GetNotificationsAsync(string basketId);
 
-        //[Get("/api/orderContext/{basketId}/lines")]
-        //Task<IEnumerable<LineItemDto>> GetBasketLinesAsync(string basketId);
+        [Get("/api/orderContext/{basketId}/lines")]
+        Task<IEnumerable<BasketLineDto>> GetBasketLinesAsync(string basketId);
     }
 }

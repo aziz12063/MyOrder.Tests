@@ -62,14 +62,9 @@ namespace MyOrder.Components.Childs.Header
         private string CouponValue
         {
             get => GetFieldValue(BasketPricesInfo?.Coupon?.Value);
-            set
-            {
-                if(SetValue<string>(BasketPricesInfo.Coupon, BasketPricesInfo))
-                {
-                    SetBasketOrderValue(field: BasketPricesInfo.Coupon, value: value, procedureCallValue: value);
+            set => SetBasketOrderValue(field: BasketPricesInfo!.Coupon, value: value, procedureCallValue: value);
                     
-                }
-            }
+                
         }
 
         private decimal? FreeShippingAmountThresholdValue

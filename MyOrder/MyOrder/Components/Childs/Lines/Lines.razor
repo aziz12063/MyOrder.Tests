@@ -1,4 +1,57 @@
-﻿@* <div class="row" style="padding: 5px; margin: 0;">
+﻿
+<MudContainer Class="pa-0">
+    <MudStack Spacing="2">
+        <MudText Typo="Typo.h6" Color="Color.Secondary">Lines</MudText>
+        <MudStack Row="true" Spacing="1" StretchItems="StretchItems.Start">
+            <MudTooltip Text="Chercher client? -Not Implemented">
+                <MudIconButton Icon="@Icons.Material.Filled.Search" Size="Size.Small" />
+            </MudTooltip>
+            <MudTooltip Text="Copier les informations du client -Not Implemented">
+                <MudIconButton Icon="@Icons.Material.Filled.Description" Size="Size.Small" />
+            </MudTooltip>
+            <MudTooltip Text="Salesforce? -Not Implemented">
+                <MudIconButton Icon="@Icons.Material.Filled.Cloud" Size="Size.Small" />
+            </MudTooltip>
+            <MudTooltip Text="Infos? -Not Implemented">
+                <MudIconButton Icon="@Icons.Material.Filled.Info" Size="Size.Small" />
+            </MudTooltip>
+            <MudTooltip Text="Call? -Not Implemented">
+                <MudIconButton Icon="@Icons.Material.Filled.Phone" Size="Size.Small" />
+            </MudTooltip>
+        </MudStack>
+        <MudDataGrid Items="@list"
+                     Filterable="false"
+                     SortMode="@SortMode.None"
+                     Groupable="false"
+                     Bordered="true"
+                     Dense="true"
+                     Class="my-data-grid">
+            <Columns>
+                <TemplateColumn Width="40px">
+                    <CellTemplate>
+                        <MudIconButton Icon="@Icons.Material.Filled.ArrowForward" Color="Color.Primary" />
+                    </CellTemplate>
+                </TemplateColumn>
+                <PropertyColumn Property="x => x.LineNum.Name " Title="Ligne" />
+                <PropertyColumn Property="x => x.ItemId.Name" Title="CodeArticle" />
+                <PropertyColumn Property="x => x.Name.Value" Title="Description" />
+                <PropertyColumn Property="x => x.InventLocationId.Value " Title="Entrepôt" />
+                <PropertyColumn Property="x => x.SalesQuantity.Name" Title="Quantité" />
+                <PropertyColumn Property="x => x.SalesPrice.Value" Title="Prix Unitaire" />
+                <PropertyColumn Property="x => x.LineAmount.Name" Title="Tarification" />
+                <PropertyColumn Property="x => x.UpdateReason.Value" Title="Montant HT" />
+
+            </Columns>
+        </MudDataGrid>
+
+    </MudStack>
+</MudContainer>
+
+@code{
+    List<BasketLineDto> list = new();
+}
+
+@* <div class="row" style="padding: 5px; margin: 0;">
     <RadzenCard class="card-container">
         <ChildContent>
             <RadzenStack Orientation="Orientation.Horizontal" Wrap="FlexWrap.Wrap" JustifyContent="JustifyContent.Start" Gap="15px" class="buttons-container">
@@ -8,14 +61,14 @@
 
             <RadzenDataGrid @ref="grid" Data="@lines" TItem="LineDto" Style="width: 100%;">
                 <Columns>
-                    <RadzenDataGridColumn TItem="LineDto" Property="Ligne" Title="Ligne" Width="50px" />
-                    <RadzenDataGridColumn TItem="LineDto" Property="CodeArticle" Title="Code Article" />
-                    <RadzenDataGridColumn TItem="LineDto" Property="Description" Title="Description" />
-                    <RadzenDataGridColumn TItem="LineDto" Property="Entrepot" Title="Entrepôt" />
-                    <RadzenDataGridColumn TItem="LineDto" Property="Quantite" Title="Quantité" />
-                    <RadzenDataGridColumn TItem="LineDto" Property="PrixUnitaire" Title="Prix Unitaire" />
-                    <RadzenDataGridColumn TItem="LineDto" Property="Tarification" Title="Tarification" />
-                    <RadzenDataGridColumn TItem="LineDto" Property="MontantHT" Title="Montant HT" />
+                    <RadzenDataGridColumn TItem="LineDto" Property="Ligne" Title="" Width="50px" />
+                    <RadzenDataGridColumn TItem="LineDto" Property="CodeArticle" Title="" />
+                    <RadzenDataGridColumn TItem="LineDto" Property="Description" Title="" />
+                    <RadzenDataGridColumn TItem="LineDto" Property="Entrepot" Title="" />
+                    <RadzenDataGridColumn TItem="LineDto" Property="Quantite" Title="" />
+                    <RadzenDataGridColumn TItem="LineDto" Property="PrixUnitaire" Title="" />
+                    <RadzenDataGridColumn TItem="LineDto" Property="Tarification" Title="" />
+                    <RadzenDataGridColumn TItem="LineDto" Property="MontantHT" Title="" />
                 </Columns>
             </RadzenDataGrid>
         </ChildContent>

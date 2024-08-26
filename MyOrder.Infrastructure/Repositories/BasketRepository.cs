@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using MyOrder.Infrastructure.ApiClients;
 using MyOrder.Shared.Dtos;
+using MyOrder.Shared.Dtos.Lines;
 
 namespace MyOrder.Infrastructure.Repositories;
 
@@ -157,12 +158,12 @@ public class BasketRepository(IBasketApiClient apiClient, ILogger<BasketReposito
     {
         _logger.LogInformation("Fetching notifications for {BasketId} from repository", basketId);
         return await _apiClient.GetNotificationsAsync(basketId);
-    }
+    }*/
 
-    public async Task<IEnumerable<LineItemDto>> GetBasketLinesAsync(string basketId)
+    public async Task<IEnumerable<BasketLineDto?>> GetBasketLinesAsync(string basketId)
     {
-        _logger.LogInformation("Fetching basket lines for {BasketId} from repository", basketId);
-        return await _apiClient.GetBasketLinesAsync(basketId);
+        logger.LogInformation("Fetching basket lines for {BasketId} from repository", basketId);
+        return await apiClient.GetBasketLinesAsync(basketId);
     }
-    */
+    
 }
