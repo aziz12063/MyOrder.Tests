@@ -160,7 +160,7 @@ public class BasketRepository(IBasketApiClient apiClient, ILogger<BasketReposito
         return await _apiClient.GetNotificationsAsync(basketId);
     }*/
 
-    public async Task<IEnumerable<BasketLineDto?>> GetBasketLinesAsync(string basketId)
+    public async Task<BasketOrderLinesDto> GetBasketLinesAsync(string basketId)
     {
         logger.LogInformation("Fetching basket lines for {BasketId} from repository", basketId);
         return await apiClient.GetBasketLinesAsync(basketId);

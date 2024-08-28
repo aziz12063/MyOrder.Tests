@@ -52,5 +52,5 @@ public interface IBasketRepository
 
 
     //Task<IEnumerable<NotificationDto>> GetNotificationsAsync(string basketId);
-    Task<IEnumerable<BasketLineDto?>> GetBasketLinesAsync(string basketId);
+    Task<BasketOrderLinesDto> GetBasketLinesAsync(string basketId);
 }

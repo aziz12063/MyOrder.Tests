@@ -1388,74 +1388,76 @@ namespace MyOrder.Infrastructure.Data
             };
 
         // Lines P0130938
-        public static List<BasketLineDto?> basketLineDtosP0130938 = new List<BasketLineDto?>()
+        public static BasketOrderLinesDto basketLineDtosP0130938 = new()
         {
+            lines = new List<BasketLineDto?>()
+            {
             new BasketLineDto
             {
-                LineNum = new Field<int>
+                LineNum = new Field<int?>
                 {
                     Name = "N° de ligne",
                     Status = "readWrite",
                     Value = 1
                 },
         IsCustomLineNum = false,
-        LineTags = new List<string>(),
-        ItemId = new Field<string>
+        LineTags = new List<BasketValueDto?>(),
+        ItemId = new Field<string?>
         {
             Name = "Code article",
             Status = "readWrite",
             Value = "CAS12"
         },
-        Name = new Field<string>
+        Name = new Field<string?>
         {
             Name = "Description",
             Status = "readWrite",
             Value = "C.A SC10 27X19X12 BRUN"
         },
-        InventLocationId = new Field<string>
+        InventLocationId = new Field<string?>
         {
             Name = "Entrepôt",
             Status = "readWrite",
             Value = "PN2"
         },
-        SalesQuantity = new Field<int>
+        SalesQuantity = new Field<int?>
         {
             Name = "Quantité",
             Status = "readWrite",
             Value = 25
         },
-        SalesPrice = new Field<decimal>
+        SalesPrice = new Field<decimal?>
         {
             Name = "Prix unitaire",
             Status = "readWrite",
             Value = 0.68m
         },
-        DiscountType = new Field<string>
+        DiscountType = new Field<string?>
         {
             Name = "Tarification",
             Status = "readWrite",
             Value = "Default"
         },
-        LineAmount = new Field<decimal>
+        LineAmount = new Field<decimal?>
         {
             Name = "Montant HT",
             Status = "readWrite",
             Value = 17m
         },
-        UpdateReason = new Field<string>
+        UpdateReason = new Field<string?>
         {
             Name = "Motif Modif.",
             Status = "readWrite",
             Value = ""
         },
-        InitialSalesQuantity = new Field<int>
+        InitialSalesQuantity = new Field<int?>
         {
             Name = "Qté initiale",
             Status = "readWrite",
             Value = 0
         },
         MultipleQuantity = null,
-        VatRate = new Field<decimal>
+        VatRate = new Field<decimal?>
         {
             Name = "Taux de TVA",
             Status = "readWrite",
@@ -1464,37 +1466,37 @@ namespace MyOrder.Infrastructure.Data
         Note = null,
         ProductInfo = null,
         IsCustomLogisticFlow = false,
-        LogisticFlow = new Field<string>
+        LogisticFlow = new Field<string?>
         {
             Name = "Flux logistique",
             Status = "readWrite",
             Value = "Stock"
         },
-        PhysicalAvailableQuantity = new Field<int>
+        PhysicalAvailableQuantity = new Field<int?>
         {
             Name = "Livré maintenant",
             Status = "onlyForDisplay",
             Value = 0
         },
-        OnOrderQuantity = new Field<int>
+        OnOrderQuantity = new Field<int?>
         {
             Name = "A livrer plus tard",
             Status = "onlyForDisplay",
             Value = 25
         },
-        PaletteQuantity = new Field<int>
+        PaletteQuantity = new Field<int?>
         {
             Name = "Quantité/palette",
             Status = "onlyForDisplay",
             Value = 1100
         },
-        QuantityAtPaletteThreshold = new Field<int>
+        QuantityAtPaletteThreshold = new Field<int?>
         {
             Name = "Diff Palette",
             Status = "onlyForDisplay",
             Value = 1075
         },
-        ItemType = new Field<string>
+        ItemType = new Field<string?>
         {
             Name = "Type d'article",
             Status = "onlyForDisplay",
@@ -1506,85 +1508,85 @@ namespace MyOrder.Infrastructure.Data
             Status = "readWrite",
             Value = null
         },
-        IsCustomDeliveryDate = new Field<bool>
+        IsCustomDeliveryDate = new Field<bool?>
         {
             Name = "Date de liv. manuelle",
             Status = "readWrite",
             Value = false
         },
-        ItemPhysicalInventQuantity = new Field<int>
+        ItemPhysicalInventQuantity = new Field<int?>
         {
             Name = "Stock total",
             Status = "onlyForDisplay",
             Value = 3000
         },
-        ItemReservPhysicalQuantity = new Field<int>
+        ItemReservPhysicalQuantity = new Field<int?>
         {
             Name = "Stock réservé",
             Status = "onlyForDisplay",
             Value = 3000
         },
-        ItemPhysicalAvailableQuantity = new Field<int>
+        ItemPhysicalAvailableQuantity = new Field<int?>
         {
             Name = "Stock réservé",
             Status = "onlyForDisplay",
             Value = 0
         },
-        ItemOnOrderQuantity = new Field<int>
+        ItemOnOrderQuantity = new Field<int?>
         {
             Name = "Commandé total",
             Status = "onlyForDisplay",
             Value = 700
         },
-        ItemOrderedQuantity = new Field<int>
+        ItemOrderedQuantity = new Field<int?>
         {
             Name = "Commandé total",
             Status = "onlyForDisplay",
             Value = 0
         },
-        ItemOrderedAvailableQuantity = new Field<int>
+        ItemOrderedAvailableQuantity = new Field<int?>
         {
             Name = "Commandé total",
             Status = "onlyForDisplay",
             Value = 0
         },
-        SupplyFamily = new Field<string>
+        SupplyFamily = new Field<string?>
         {
             Name = "Famille d'appro.",
             Status = "onlyForDisplay",
             Value = "C1 - CAISSES ET CONTAINERS"
         },
-        ItemManager = new Field<string>
+        ItemManager = new Field<string?>
         {
             Name = "Gestionnaire",
             Status = "onlyForDisplay",
             Value = "ERIC DAVACH"
         },
-        TransportMode = new Field<string>
+        TransportMode = new Field<string?>
         {
             Name = "Mode de transport",
             Status = "onlyForDisplay",
             Value = "PAR DÉFAUT"
         },
-        PurchaseId = new Field<string>
+        PurchaseId = new Field<string?>
         {
             Name = "Commande d'achat",
             Status = "hidden",
             Value = ""
         },
-        DiscountDescription = new Field<string>
+        DiscountDescription = new Field<string?>
         {
             Name = "Description Tarif",
             Status = "onlyForDisplay",
             Value = "10% DC sur tout le Catalogue"
         },
-        DiscountRate = new Field<decimal>
+        DiscountRate = new Field<decimal?>
         {
             Name = "Remise sup.",
             Status = "readOnly",
             Value = 35
         },
-        DiscountPrice = new Field<decimal>
+        DiscountPrice = new Field<decimal?>
         {
             Name = "PU HT",
             Status = "readOnly",
@@ -1594,70 +1596,70 @@ namespace MyOrder.Infrastructure.Data
     },
     new BasketLineDto
     {
-        LineNum = new Field<int>
+        LineNum = new Field<int?>
         {
             Name = "N° de ligne",
             Status = "readWrite",
             Value = 2
         },
         IsCustomLineNum = false,
-        LineTags = new List<string>(),
-        ItemId = new Field<string>
+        LineTags = new List<BasketValueDto?>(),
+        ItemId = new Field<string?>
         {
             Name = "Code article",
             Status = "readWrite",
             Value = "CAS10"
         },
-        Name = new Field<string>
+        Name = new Field<string?>
         {
             Name = "Description",
             Status = "readWrite",
             Value = "C.A SC10 25X25X25 BRUN"
         },
-        InventLocationId = new Field<string>
+        InventLocationId = new Field<string?>
         {
             Name = "Entrepôt",
             Status = "readWrite",
             Value = "PN2"
         },
-        SalesQuantity = new Field<int>
+        SalesQuantity = new Field<int?>
         {
             Name = "Quantité",
             Status = "readWrite",
             Value = 50
         },
-        SalesPrice = new Field<decimal>
+        SalesPrice = new Field<decimal?>
         {
             Name = "Prix unitaire",
             Status = "readWrite",
             Value = 1.2m
         },
-        DiscountType = new Field<string>
+        DiscountType = new Field<string?>
         {
             Name = "Tarification",
             Status = "readWrite",
             Value = "Default"
         },
-        LineAmount = new Field<decimal>
+        LineAmount = new Field<decimal?>
         {
             Name = "Montant HT",
             Status = "readWrite",
             Value = 60m
         },
-        UpdateReason = new Field<string>
+        UpdateReason = new Field<string?>
         {
             Name = "Motif Modif.",
             Status = "readWrite",
             Value = ""
         },
-        InitialSalesQuantity = new Field<int>
+        InitialSalesQuantity = new Field<int?>
         {
             Name = "Qté initiale",
             Status = "readWrite",
             Value = 0
         },
         MultipleQuantity = null,
-        VatRate = new Field<decimal>
+        VatRate = new Field<decimal?>
         {
             Name = "Taux de TVA",
             Status = "readWrite",
@@ -1666,37 +1668,37 @@ namespace MyOrder.Infrastructure.Data
         Note = null,
         ProductInfo = null,
         IsCustomLogisticFlow = false,
-        LogisticFlow = new Field<string>
+        LogisticFlow = new Field<string?>
         {
             Name = "Flux logistique",
             Status = "readWrite",
             Value = "Stock"
         },
-        PhysicalAvailableQuantity = new Field<int>
+        PhysicalAvailableQuantity = new Field<int?>
         {
             Name = "Livré maintenant",
             Status = "onlyForDisplay",
             Value = 50
         },
-        OnOrderQuantity = new Field<int>
+        OnOrderQuantity = new Field<int?>
         {
             Name = "A livrer plus tard",
             Status = "onlyForDisplay",
             Value = 0
         },
-        PaletteQuantity = new Field<int>
+        PaletteQuantity = new Field<int?>
         {
             Name = "Quantité/palette",
             Status = "onlyForDisplay",
             Value = 1100
         },
-        QuantityAtPaletteThreshold = new Field<int>
+        QuantityAtPaletteThreshold = new Field<int?>
         {
             Name = "Diff Palette",
             Status = "onlyForDisplay",
             Value = 1050
         },
-        ItemType = new Field<string>
+        ItemType = new Field<string?>
         {
             Name = "Type d'article",
             Status = "onlyForDisplay",
@@ -1708,85 +1710,85 @@ namespace MyOrder.Infrastructure.Data
             Status = "readWrite",
             Value = null
         },
-        IsCustomDeliveryDate = new Field<bool>
+        IsCustomDeliveryDate = new Field<bool?>
         {
             Name = "Date de liv. manuelle",
             Status = "readWrite",
             Value = false
         },
-        ItemPhysicalInventQuantity = new Field<int>
+        ItemPhysicalInventQuantity = new Field<int?>
         {
             Name = "Stock total",
             Status = "onlyForDisplay",
             Value = 9075
         },
-        ItemReservPhysicalQuantity = new Field<int>
+        ItemReservPhysicalQuantity = new Field<int?>
         {
             Name = "Stock réservé",
             Status = "onlyForDisplay",
             Value = 1330
         },
-        ItemPhysicalAvailableQuantity = new Field<int>
+        ItemPhysicalAvailableQuantity = new Field<int?>
         {
             Name = "Stock réservé",
             Status = "onlyForDisplay",
             Value = 7745
         },
-        ItemOnOrderQuantity = new Field<int>
+        ItemOnOrderQuantity = new Field<int?>
         {
             Name = "Commandé total",
             Status = "onlyForDisplay",
             Value = 1045
         },
-        ItemOrderedQuantity = new Field<int>
+        ItemOrderedQuantity = new Field<int?>
         {
             Name = "Commandé total",
             Status = "onlyForDisplay",
             Value = 0
         },
-        ItemOrderedAvailableQuantity = new Field<int>
+        ItemOrderedAvailableQuantity = new Field<int?>
         {
             Name = "Commandé total",
             Status = "onlyForDisplay",
             Value = 0
         },
-        SupplyFamily = new Field<string>
+        SupplyFamily = new Field<string?>
         {
             Name = "Famille d'appro.",
             Status = "onlyForDisplay",
             Value = "C1 - CAISSES ET CONTAINERS"
         },
-        ItemManager = new Field<string>
+        ItemManager = new Field<string?>
         {
             Name = "Gestionnaire",
             Status = "onlyForDisplay",
             Value = "ANTOINE STEGEL"
         },
-        TransportMode = new Field<string>
+        TransportMode = new Field<string?>
         {
             Name = "Mode de transport",
             Status = "onlyForDisplay",
             Value = "PAR DÉFAUT"
         },
-        PurchaseId = new Field<string>
+        PurchaseId = new Field<string?>
         {
             Name = "Commande d'achat",
             Status = "hidden",
             Value = ""
         },
-        DiscountDescription = new Field<string>
+        DiscountDescription = new Field<string?>
         {
             Name = "Description Tarif",
             Status = "onlyForDisplay",
             Value = "10% DC sur tout le Catalogue"
         },
-        DiscountRate = new Field<decimal>
+        DiscountRate = new Field<decimal?>
         {
             Name = "Remise sup.",
             Status = "readOnly",
             Value = 34
         },
-        DiscountPrice = new Field<decimal>
+        DiscountPrice = new Field<decimal?>
         {
             Name = "PU HT",
             Status = "readOnly",
@@ -1794,6 +1796,7 @@ namespace MyOrder.Infrastructure.Data
         },
         Prices = null
     }
+        }
         };
 
 
