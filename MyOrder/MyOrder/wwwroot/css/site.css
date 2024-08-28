@@ -46,3 +46,11 @@
     font-size: .75rem;
     
 }
+
+.header-style {
+    text-align: center;
+    margin: 5% auto;
+    font-weight: bold;
+    font-size: 10px;
+    color: red;
+}

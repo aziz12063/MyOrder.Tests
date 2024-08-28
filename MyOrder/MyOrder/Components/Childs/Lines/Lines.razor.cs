@@ -11,11 +11,13 @@ namespace MyOrder.Components.Childs.Lines
     {
        
         private BasketOrderLinesDto? BasketOrderLinesDto {  get; set; }
-        BasketLineDto? basketLineDto { get; set; }
+        private BasketLineDto? basketLineDto { get; set; }
+        private List<BasketLineDto>? selectedBasketLineDto { get; set; }
 
         protected override void CacheNewFields()
         {
             BasketOrderLinesDto = State.Value.BasketOrderLines ?? throw new NullReferenceException("Unexpected null for BasketOrderLines object.");
+            selectedBasketLineDto = new List<BasketLineDto>();
         }
 
         protected override FetchLinesAction CreateFetchAction(LinesState state, string basketId)
