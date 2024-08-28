@@ -91,7 +91,7 @@ namespace MyOrder.Infrastructure.ApiClients
         //[Get("/api/orderContext/{basketId}/notifications")]
         //Task<IEnumerable<NotificationDto>> GetNotificationsAsync(string basketId);
 
-        [Get("/api/orderContext/{basketId}/lines")]
+        [Get("/api/orderContext/{basketId}/orderLines")]
         Task<BasketOrderLinesDto> GetBasketLinesAsync(string basketId);
     }
 }

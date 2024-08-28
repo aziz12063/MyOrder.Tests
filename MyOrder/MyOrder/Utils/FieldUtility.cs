@@ -42,12 +42,13 @@ public static class FieldUtility
             }
         }
     }
-    public static string DisplayAddress(List<string>? address) => address is var addressList && addressList != null 
+
+    public static string DisplayAddress(List<string?>? address) => address is var addressList && addressList != null 
         ? string.Join("\n", addressList) 
         : string.Empty;
 
-    public static string DisplayListNoSpace(List<string>? list) => list is var newList && newList != null
-        ? string.Join(" ", newList)
+    public static string DisplayListNoSpace(List<string?>? list) => list is var newList && newList != null
+        ? string.Join("\n", newList)
         : string.Empty;
 
     

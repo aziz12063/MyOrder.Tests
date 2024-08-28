@@ -15,10 +15,9 @@ namespace MyOrder.Components.Childs.Header
         private BasketContractInfoDto? Contract { get; set; }
         private string? DiscountDetails { get; set; }
 
-        protected override FetchTradeInfoAction CreateFetchAction(TradeInfoState state, string basketId)
-        {
-            return new FetchTradeInfoAction(state, basketId); ;
-        }
+        protected override FetchTradeInfoAction CreateFetchAction(TradeInfoState state, string basketId) 
+            => new (state, basketId);
+  
         protected override void CacheNewFields()
         {
             BasketTradeInfoDto = State.Value.BasketTradeInfo ?? throw new NullReferenceException("Unexpected null for BasketOrderInfo object.");
