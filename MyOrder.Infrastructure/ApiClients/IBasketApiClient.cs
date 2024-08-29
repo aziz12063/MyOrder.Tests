@@ -88,10 +88,21 @@ namespace MyOrder.Infrastructure.ApiClients
         [Post("/api/orderContext/{basketId}/procedureCall")]
         Task<ProcedureCallResponseDto> PostProcedureCallAsync(string basketId, [Body] List<string> procedureCall);
 
-        //[Get("/api/orderContext/{basketId}/notifications")]
-        //Task<IEnumerable<NotificationDto>> GetNotificationsAsync(string basketId);
 
+        //=======================================================================================================
+        //Lines Section
+        //=======================================================================================================
         [Get("/api/orderContext/{basketId}/orderLines")]
         Task<BasketOrderLinesDto> GetBasketLinesAsync(string basketId);
+
+        [Get("/api/orderContext/{basketId}/lineUpdateReasons")]
+        Task<List<BasketValueDto>> GetlineUpdateReasonsAsync(string basketId);
+
+        [Get("/api/orderContext/{basketId}/logisticFlows")]
+        Task<List<BasketValueDto>> GetlogisticFlowsAsync(string basketId);
+
+
+        //[Get("/api/orderContext/{basketId}/notifications")]
+        //Task<IEnumerable<NotificationDto>> GetNotificationsAsync(string basketId);
     }
 }

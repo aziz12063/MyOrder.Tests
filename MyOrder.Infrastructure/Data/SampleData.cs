@@ -1800,6 +1800,25 @@ namespace MyOrder.Infrastructure.Data
         };
 
 
+        public static List<BasketValueDto?> UpdateReasonsP0130938 = new List<BasketValueDto?>()
+            {
+                 new BasketValueDto
+                 {
+
+                 }
+
+            };
+
+
+        public static List<BasketValueDto?> logisticFlowsP0130938 = new List<BasketValueDto?>()
+            {
+                 new BasketValueDto
+                 {
+        
+                 }
+
+            };
+
 
         //P0130140
 

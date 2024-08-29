@@ -34,6 +34,8 @@ namespace MyOrder.Infrastructure.Repositories
         private static readonly Dictionary<string, ProcedureCallResponseDto> _basketsProcedureCall = [];
         private static readonly Dictionary<string, List<AccountDto?>> _basketsInvoiceToAccounts = [];
         private static readonly Dictionary<string, BasketOrderLinesDto> _basketsBasketLineDto = [];
+        private static readonly Dictionary<string, List<BasketValueDto?>> _basketslogisticFlows = [];
+        private static readonly Dictionary<string, List<BasketValueDto?>> _basketsUpdateReasons = [];
 
         private int _millisecondsTimeout = 500;
 
@@ -435,9 +437,18 @@ namespace MyOrder.Infrastructure.Repositories
             _basketsBasketLineDto.Add(_basketId, SampleData.basketLineDtosP0130938);
         }
 
+        public static void SeedlineUpdateReasonsAsync()
+        {
+           
+            _basketsUpdateReasons.Clear();
+            _basketsUpdateReasons.Add(_basketId, SampleData.UpdateReasonsP0130938);
+        }
 
-
-
+        public static void SeedlogisticFlowsAsync()
+        {
+            _basketslogisticFlows.Clear();
+            _basketslogisticFlows.Add(_basketId, SampleData.logisticFlowsP0130938);
+        }
     }
 
 }

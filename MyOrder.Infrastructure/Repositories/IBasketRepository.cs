@@ -1,5 +1,6 @@
 ﻿using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.Lines;
+using Refit;
 
 namespace MyOrder.Infrastructure.Repositories;
 public interface IBasketRepository
@@ -50,7 +51,14 @@ public interface IBasketRepository
     //=======================================================================================================
     Task<ProcedureCallResponseDto> PostProcedureCallAsync(string basketId, List<string> procedureCall);
 
+    //=======================================================================================================
+    //Lines
+    //=======================================================================================================
+    Task<BasketOrderLinesDto> GetBasketLinesAsync(string basketId);
+    Task<List<BasketValueDto>> GetlineUpdateReasonsAsync(string basketId);
+    Task<List<BasketValueDto>> GetlogisticFlowsAsync(string basketId);
+
 
     //Task<IEnumerable<NotificationDto>> GetNotificationsAsync(string basketId);
-    Task<BasketOrderLinesDto> GetBasketLinesAsync(string basketId);
+
 }

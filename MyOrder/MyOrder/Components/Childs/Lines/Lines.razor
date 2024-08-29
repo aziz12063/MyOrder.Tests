@@ -29,18 +29,21 @@
         </MudStack>
         <!--Grid-->
         <MudDataGrid T="BasketLineDto"
-                     Items="@BasketOrderLinesDto!.lines"
-                     SortMode="@SortMode.None"
-                     RowStyleFunc="@((item, idx) => BackgroundColor(item, idx))"
                      Bordered="true"
                      Dense="true"
-                     @ondblclick="(args => HandleRowDoubleClick(args, dataGrid.SelectedItem))"
                      Elevation="0"
+                     Items="@BasketOrderLinesDto!.lines"
+                     SortMode="@SortMode.None"
+                     RowStyleFunc="@((item, idx) => BackgroundColor(item, idx))"                     
+                     @ondblclick="(args => HandleRowDoubleClick(args, dataGrid.SelectedItem))"                     
                      RowClick="@RowClicked"
                      SelectedItemsChanged="@SelectedItemsChanged"
-                     Hover="true">
+                     Hover="true"
+                     ReadOnly="true">
             <Columns>
+               
                 <SelectColumn T="BasketLineDto" Size="Size.Small" />
+                <HierarchyColumn T="BasketLineDto" />
                 <TemplateColumn CellClass="header-style">
                     <CellTemplate>
                         @{
@@ -118,26 +121,50 @@
                                 HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
                                 CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
                                 CellClass="pa-1 ma-1" />
-
             </Columns>
+            <ChildRowContent>
+                <MudStack Row="true" Spacing="3">
+                    <MudPaper Class="pa-3">
+                        <MudGrid>
+                            <MudItem>
+                                <MudTextField Margin="Margin.Dense"
+                                              T="string"
+                                              Typo="Typo.body2"
+                                              Label="@context.Item.ItemId?.Name"
+                                              Style="font-size: 13px; height:30px;"
+                                              Variant="Variant.Outlined"
+                                              ReadOnly="true"
+                                              Value="@context.Item.ItemId?.Value">
+                                </MudTextField>
+                            </MudItem>
+                            <MudItem>
+                                <MudTextField Margin="Margin.Dense"
+                                              T="int?"
+                                              Typo="Typo.body2"
+                                              Label="@context.Item.LineNum?.Name"
+                                              Style="font-size: 13px; height:30px;"
+                                              Variant="Variant.Outlined"
+                                              ReadOnly="true"
+                                              Value="@context.Item.LineNum?.Value">
+                                </MudTextField>
+                            </MudItem>
+                        </MudGrid>
+                        <MudTextField Margin="Margin.Dense" T="int?"
+                                      Variant="Variant.Outlined" Width="200px"
+                                      Disabled="false"
+                                      Style="font-size: 13px; height:22px;"
+                                      Value="@context.Item?.LineNum?.Value"></MudTextField>
+                    </MudPaper>
+                    <MudPaper Class="pa-3">
+                        Item 2
+                    </MudPaper>
+                    <MudPaper Class="pa-3">
+                        Item 3
+                    </MudPaper>
+                </MudStack>
+            </ChildRowContent>
         </MudDataGrid>
-
     </MudStack>
-    @* <MudStack Row="true" Spacing="3">
-    <MudPaper Class="pa-3">
-    <MudTextField Margin="Margin.Dense" T="int?"
-    Variant="Variant.Outlined" Width="200px"
-    Disabled="false"
-    Style="font-size: 13px; height:22px;"
-    Value="@basketLineDto?.LineNum?.Value"></MudTextField>
-    </MudPaper>
-    <MudPaper Class="pa-3">
-    Item 2
-    </MudPaper>
-    <MudPaper Class="pa-3">
-    Item 3
-    </MudPaper>
-    </MudStack> *@
 </MudContainer>
 
 @code {
