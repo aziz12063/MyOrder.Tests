@@ -13,6 +13,7 @@
                AnchorOrigin="Origin.CenterCenter"
                Required="@IsRequired"
                ReadOnly="@IsReadOnly"
+               Disabled="@IsDisabled"
                @bind-Value="BoundValue"
                @bind-Value:after="BoundValueChangedHandler">
         @if (Items is not null)
@@ -37,4 +38,5 @@
     private bool IsHidden => FieldUtility.IsHidden(Field);
     private bool IsReadOnly => FieldUtility.IsReadOnly(Field);
     private bool IsRequired => FieldUtility.IsRequired(Field);
+    private bool IsDisabled => FieldUtility.IsDisabled(Field);
 }

@@ -5,7 +5,7 @@ namespace MyOrder.Infrastructure.HttpHandlers;
 
 public class UserNameHandler(IHttpContextAccessor httpContextAccessor, ILogger<UserNameHandler> logger) : DelegatingHandler
 {
-    private const string USER_IDENTITY_NAME_HEADER = "User-Identity-Name";
+    private const string HEADER_PARAM_AUTHENTICATED_USER = "X-Authenticated-User";
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
         try
@@ -21,11 +21,11 @@ public class UserNameHandler(IHttpContextAccessor httpContextAccessor, ILogger<U
 
                     if (!string.IsNullOrEmpty(userName))
                     {
-                        if (!request.Headers.Contains(USER_IDENTITY_NAME_HEADER))
+                        if (!request.Headers.Contains(HEADER_PARAM_AUTHENTICATED_USER))
                         {
-                            request.Headers.Add(USER_IDENTITY_NAME_HEADER, userName);
+                            request.Headers.Add(HEADER_PARAM_AUTHENTICATED_USER, userName);
                             logger.LogInformation("Added {UserIdentityName} header with value {UserName}",
-                                USER_IDENTITY_NAME_HEADER, userName);
+                                HEADER_PARAM_AUTHENTICATED_USER, userName);
                         }
                     }
                     else

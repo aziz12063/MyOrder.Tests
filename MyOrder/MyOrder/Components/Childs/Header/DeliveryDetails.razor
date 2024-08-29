@@ -13,41 +13,72 @@
         <MudText Typo="Typo.h6" Color="Color.Secondary">Livraison</MudText>
 
         <!-- Compte de livraison -->
-        <MudStack Spacing="2">
-            <MudStack Row="true" Spacing="1" StretchItems="StretchItems.Start">
-                <MudText Typo="Typo.subtitle1">@BasketDeliveryInfo!.Account?.Name</MudText>
-                <MudTooltip Text="Chercher client? -Not Implemented">
-                    <MudIconButton Icon="@Icons.Material.Filled.Search" Size="Size.Small" />
-                </MudTooltip>
-                <MudTooltip Text="Copier les informations du client -Not Implemented">
-                    <MudIconButton Icon="@Icons.Material.Filled.Description" Size="Size.Small" />
-                </MudTooltip>
-                <MudTooltip Text="Salesforce? -Not Implemented">
-                    <MudIconButton Icon="@Icons.Material.Filled.Cloud" Size="Size.Small" />
-                </MudTooltip>
-                <MudTooltip Text="Infos? -Not Implemented">
-                    <MudIconButton Icon="@Icons.Material.Filled.Info" Size="Size.Small" />
-                </MudTooltip>
-                <MudTooltip Text="Call? -Not Implemented">
-                    <MudIconButton Icon="@Icons.Material.Filled.Phone" Size="Size.Small" />
-                </MudTooltip>
-            </MudStack>
+        <MudStack Spacing="0">
+            
+                <MudStack Row="true" Spacing="1" StretchItems="StretchItems.Start">
+                    <MudText Typo="Typo.subtitle1">@BasketDeliveryInfo!.Account?.Name</MudText>
+                    <MudTooltip Text="Chercher client? -Not Implemented">
+                        <MudIconButton Icon="@Icons.Material.Filled.Search" Size="Size.Small" />
+                    </MudTooltip>
+                    <MudTooltip Text="Copier les informations du client -Not Implemented">
+                        <MudIconButton Icon="@Icons.Material.Filled.Description" Size="Size.Small" />
+                    </MudTooltip>
+                    <MudTooltip Text="Salesforce? -Not Implemented">
+                        <MudIconButton Icon="@Icons.Material.Filled.Cloud" Size="Size.Small" />
+                    </MudTooltip>
+                    <MudTooltip Text="Infos? -Not Implemented">
+                        <MudIconButton Icon="@Icons.Material.Filled.Info" Size="Size.Small" />
+                    </MudTooltip>
+                    <MudTooltip Text="Call? -Not Implemented">
+                        <MudIconButton Icon="@Icons.Material.Filled.Phone" Size="Size.Small" />
+                    </MudTooltip>
+                </MudStack>
 
-            <GenericMudSelect T="AccountDto"
-                              Field="BasketDeliveryInfo!.Account"
-                              Items="Accounts"
-                              @bind-BoundValue="AccountValue"
-                              Variant="Variant.Outlined" />
+                <GenericMudSelect T="AccountDto"
+                                  Field="BasketDeliveryInfo!.Account"
+                                  Items="Accounts"
+                                  @bind-BoundValue="AccountValue"
+                                  Variant="Variant.Outlined" />
 
-            <MudTextField Typo="Typo.caption"
-                          Lines=" AccountAddress != null? AccountAddress.Count : 1"
-                          Variant="Variant.Outlined"
-                          FullWidth="true"
-                          Margin="Margin.Dense"
-                          ReadOnly="true"
-                          Value="DisplayAddress" />
+                <MudTextField Typo="Typo.caption"
+                              Lines=" AccountAddress != null? AccountAddress.Count : 1"
+                              Variant="Variant.Outlined"
+                              FullWidth="true"
+                              Margin="Margin.Dense"
+                              ReadOnly="true"
+                              Value="DisplayAddress" />
+           
 
-            <!-- Contact  de livraison-->
+        </MudStack>
+        <MudDivider />
+        <!-- Contact  de livraison-->
+        <MudCard Elevation="0" Class="pa-1">
+            <MudCardHeader Class="pa-0 ma-n1">
+                <CardHeaderContent>
+                    <MudText Typo="Typo.subtitle1">Contact de livraison</MudText>
+                </CardHeaderContent>
+                <CardHeaderActions>
+                    <MudTooltip Text="Chercher client? -Not Implemented">
+                        <MudIconButton Icon="@Icons.Material.Filled.Search" Size="Size.Small" />
+                    </MudTooltip>
+                    <MudTooltip Text="Copier les informations du client -Not Implemented">
+                        <MudIconButton Icon="@Icons.Material.Filled.Description" Size="Size.Small" />
+                    </MudTooltip>
+                    <MudTooltip Text="Salesforce? -Not Implemented">
+                        <MudIconButton Icon="@Icons.Material.Filled.Cloud" Size="Size.Small" />
+                    </MudTooltip>
+                    <MudTooltip Text="Infos? -Not Implemented">
+                        <MudIconButton Icon="@Icons.Material.Filled.Info" Size="Size.Small" />
+                    </MudTooltip>
+                    <MudTooltip Text="Call? -Not Implemented">
+                        <MudIconButton Icon="@Icons.Material.Filled.Phone" Size="Size.Small" />
+                    </MudTooltip>
+
+                </CardHeaderActions>
+            </MudCardHeader>
+                <MudCardContent>
+
+
             <GenericMudSelect T="ContactDto"
                               Field="BasketDeliveryInfo!.Contact"
                               Items="Contacts"
@@ -55,8 +86,8 @@
                               Variant="Variant.Outlined" />
 
             <ContactInfo Contact="BasketDeliveryInfo!.Contact?.Value" />
-        </MudStack>
-
+            </MudCardContent>
+        </MudCard>
         <!-- Informations de livraison -->
         <MudStack Spacing="2">
             <MudText Typo="Typo.subtitle1">Informations de livraison</MudText>

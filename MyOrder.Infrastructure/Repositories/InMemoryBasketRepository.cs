@@ -441,13 +441,23 @@ namespace MyOrder.Infrastructure.Repositories
         {
            
             _basketsUpdateReasons.Clear();
-            _basketsUpdateReasons.Add(_basketId, SampleData.UpdateReasonsP0130938);
+            //_basketsUpdateReasons.Add(_basketId, SampleData.UpdateReasonsP0130938);
         }
 
         public static void SeedlogisticFlowsAsync()
         {
             _basketslogisticFlows.Clear();
-            _basketslogisticFlows.Add(_basketId, SampleData.logisticFlowsP0130938);
+            //_basketslogisticFlows.Add(_basketId, SampleData.logisticFlowsP0130938);
+        }
+
+        public Task<List<BasketValueDto>> GetlineUpdateReasonsAsync(string basketId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<BasketValueDto>> GetlogisticFlowsAsync(string basketId)
+        {
+            throw new NotImplementedException();
         }
     }
 

@@ -7,164 +7,135 @@
     <HeaderElementLoadingSkeleton />
     return;
 }
-<MudContainer Class="pa-0">
-    <MudStack Spacing="2">
-        <MudText Typo="Typo.h6" Color="Color.Secondary">Lines</MudText>
-        <MudStack Row="true" Spacing="1" StretchItems="StretchItems.Start">
-            <MudTooltip Text="Chercher client? -Not Implemented">
-                <MudIconButton Icon="@Icons.Material.Filled.Search" Size="Size.Small" />
-            </MudTooltip>
-            <MudTooltip Text="Copier les informations du client -Not Implemented">
-                <MudIconButton Icon="@Icons.Material.Filled.Description" Size="Size.Small" />
-            </MudTooltip>
-            <MudTooltip Text="Salesforce? -Not Implemented">
-                <MudIconButton Icon="@Icons.Material.Filled.Cloud" Size="Size.Small" />
-            </MudTooltip>
-            <MudTooltip Text="Infos? -Not Implemented">
-                <MudIconButton Icon="@Icons.Material.Filled.Info" Size="Size.Small" />
-            </MudTooltip>
-            <MudTooltip Text="Call? -Not Implemented">
-                <MudIconButton Icon="@Icons.Material.Filled.Phone" Size="Size.Small" />
-            </MudTooltip>
-        </MudStack>
-        <!--Grid-->
-        <MudDataGrid T="BasketLineDto"
-                     Bordered="true"
-                     Dense="true"
-                     Elevation="0"
-                     Items="@BasketOrderLinesDto!.lines"
-                     SortMode="@SortMode.None"
-                     RowStyleFunc="@((item, idx) => BackgroundColor(item, idx))"                     
-                     @ondblclick="(args => HandleRowDoubleClick(args, dataGrid.SelectedItem))"                     
-                     RowClick="@RowClicked"
-                     SelectedItemsChanged="@SelectedItemsChanged"
-                     Hover="true"
-                     ReadOnly="true">
-            <Columns>
-               
-                <SelectColumn T="BasketLineDto" Size="Size.Small" />
-                <HierarchyColumn T="BasketLineDto" />
-                <TemplateColumn CellClass="header-style">
-                    <CellTemplate>
-                        @{
-                            var val = context.Item;
-                            string CodeArticle = val.ItemId.Value;
-                            string url = "https://www.raja.fr/a_sku" + CodeArticle + ".html";
+<MudContainer Class="pa-0 ma-0" Style="max-width: none;">
+    <!--Grid-->
+    <MudDataGrid 
+        T="BasketLineDto"
+                 Bordered="true"
+                 Dense="true"
+                 Hover="true"
+                 Striped="true"
+                 Elevation="4"
+                 Items="@BasketOrderLinesDto!.lines"
+                 SortMode="@SortMode.Single"
+                 DragDropColumnReordering="true"
+                 ApplyDropClassesOnDragStarted="true"
+                 DragIndicatorIcon="@Icons.Material.Filled.DragIndicator"
+                 ColumnsPanelReordering="true"
+                 ShowMenuIcon="true"
+                 Hideable="true"
+                 @ondblclick="(args => HandleRowDoubleClick(args, dataGrid.SelectedItem))"
+                 SelectedItemsChanged="@SelectedItemsChanged"
+
+                 EditMode="@DataGridEditMode.Cell"
+                 ReadOnly="false">
+        <Columns>
+
+            <SelectColumn T="BasketLineDto" Size="Size.Small" />
+            <HierarchyColumn T="BasketLineDto" />
+            <PropertyColumn Property="x => x.LineNum.Value " Title="Ligne"
+                            HeaderClass="header-style"
+                            CellStyle="text-align: center; margin: 5% auto; font-size: 12px;" />
+
+            <TemplateColumn Title="not impl" CellClass="pa-1 ma-1" CellStyle="text-align: center; margin: 5% auto; font-size: 12px;">
+                <CellTemplate>
+                    @{
+                        var val = context.Item;
+                        if (val.OnOrderQuantity?.Value > 0)
+                        {
+                            <MudIcon Icon="@Icons.Material.Filled.BackHand" Color="Color.Error" Size="Size.Small" />
                         }
-                        <MudGrid Spacing="1" Justify="Justify.Center" >
-                            <MudItem xs="6" Class="d-flex align-center justify-center mud-width-full">
-                                <MudIconButton Icon="@Icons.Material.Filled.Link" Href="@url" Size="Size.Small" Target="blank" Color="Color.Primary" />
-                            </MudItem>
-                            <MudItem xs="6" Style="font-size:10px; width:20px;" Class="d-flex align-center justify-center mud-width-full">
-                                @val?.LineNum?.Value
-                            </MudItem>
-                           
-
-                        </MudGrid>
-                          </CellTemplate>
-                </TemplateColumn>
-                <PropertyColumn Property="x => x.LineNum.Value " Title="Ligne" 
-                                HeaderClass="header-style"
-                                CellStyle="text-align: center; margin: 5% auto; font-size: 12px;" />
-
-                <TemplateColumn Title="not impl" CellClass="pa-1 ma-1" CellStyle="text-align: center; margin: 5% auto; font-size: 12px;">
-                    <CellTemplate>
-                        @{
-                            var val = context.Item;
-                            if (val.OnOrderQuantity?.Value > 0)
-                            {
-                                <MudIcon Icon="@Icons.Material.Filled.BackHand" Color="Color.Error" Size="Size.Small" />
-                            }
-                            if (val.OnOrderQuantity?.Value == 0 && val.PhysicalAvailableQuantity?.Value > 0)
-                            {
-
-                            }
-                            if (val.OnOrderQuantity?.Value == 0 && val.PhysicalAvailableQuantity?.Value == 0)
-                            {
-                                <MudIcon Icon="@Icons.Material.Filled.Done" Color="Color.Primary" />
-                            }
-
+                        if (val.OnOrderQuantity?.Value == 0 && val.PhysicalAvailableQuantity?.Value > 0)
+                        {
 
                         }
+                        if (val.OnOrderQuantity?.Value == 0 && val.PhysicalAvailableQuantity?.Value == 0)
+                        {
+                            <MudIcon Icon="@Icons.Material.Filled.Done" Color="Color.Primary" />
+                        }
 
-                    </CellTemplate>
-                </TemplateColumn>
-                <PropertyColumn Property="x => x.ItemId.Value" Title="CodeArticle"
-                                HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
-                                CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
-                                CellClass="pa-1 ma-1" />
-                <PropertyColumn Property="x => x.Name.Value" Title="Description"
-                                HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
-                                CellStyle="text-align: center; margin: 5% auto; font-size: 11px;"
-                                CellClass="pa-1 ma-1" />
-                <PropertyColumn Property="x => x.InventLocationId.Value " Title="Entrepôt"
-                                HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
-                                CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
-                                CellClass="pa-1 ma-1" />
-                <PropertyColumn Property="x => x.ItemOnOrderQuantity.Value " Title="Commandé"
-                                HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
-                                CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
-                                CellClass="pa-1 ma-1" />
-                <PropertyColumn Property="x => x.SalesQuantity.Value" Title="Quantité"
-                                HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
-                                CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
-                                CellClass="pa-1 ma-1" />
-                <PropertyColumn Property="x => x.SalesPrice.Value" Title="Prix Unitaire"
-                                HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
-                                CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
-                                CellClass="pa-1 ma-1" />
-                <PropertyColumn Property="x => x.DiscountType.Value" Title="Tarification"
-                                HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
-                                CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
-                                CellClass="pa-1 ma-1" />
-                <PropertyColumn Property="x => x.LineAmount.Value" Title="Montant HT"
-                                HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
-                                CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
-                                CellClass="pa-1 ma-1" />
-            </Columns>
-            <ChildRowContent>
-                <MudStack Row="true" Spacing="3">
-                    <MudPaper Class="pa-3">
-                        <MudGrid>
-                            <MudItem>
-                                <MudTextField Margin="Margin.Dense"
-                                              T="string"
-                                              Typo="Typo.body2"
-                                              Label="@context.Item.ItemId?.Name"
-                                              Style="font-size: 13px; height:30px;"
-                                              Variant="Variant.Outlined"
-                                              ReadOnly="true"
-                                              Value="@context.Item.ItemId?.Value">
-                                </MudTextField>
-                            </MudItem>
-                            <MudItem>
-                                <MudTextField Margin="Margin.Dense"
-                                              T="int?"
-                                              Typo="Typo.body2"
-                                              Label="@context.Item.LineNum?.Name"
-                                              Style="font-size: 13px; height:30px;"
-                                              Variant="Variant.Outlined"
-                                              ReadOnly="true"
-                                              Value="@context.Item.LineNum?.Value">
-                                </MudTextField>
-                            </MudItem>
-                        </MudGrid>
-                        <MudTextField Margin="Margin.Dense" T="int?"
-                                      Variant="Variant.Outlined" Width="200px"
-                                      Disabled="false"
-                                      Style="font-size: 13px; height:22px;"
-                                      Value="@context.Item?.LineNum?.Value"></MudTextField>
-                    </MudPaper>
-                    <MudPaper Class="pa-3">
-                        Item 2
-                    </MudPaper>
-                    <MudPaper Class="pa-3">
-                        Item 3
-                    </MudPaper>
-                </MudStack>
-            </ChildRowContent>
-        </MudDataGrid>
-    </MudStack>
+
+                    }
+
+                </CellTemplate>
+            </TemplateColumn>
+            <PropertyColumn Property="x => x.ItemId.Value" Title="CodeArticle"
+                            HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
+                            CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
+                            CellClass="pa-1 ma-1"
+                            Editable="true" />
+            <PropertyColumn Property="x => x.Name.Value" Title="Description"
+                            HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
+                            CellStyle="text-align: center; margin: 5% auto; font-size: 11px;"
+                            CellClass="pa-1 ma-1" />
+            <PropertyColumn Property="x => x.InventLocationId.Value " Title="Entrepôt"
+                            HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
+                            CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
+                            CellClass="pa-1 ma-1" />
+            <PropertyColumn Property="x => x.ItemOnOrderQuantity.Value " Title="Commandé"
+                            HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
+                            CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
+                            CellClass="pa-1 ma-1" />
+            <PropertyColumn Property="x => x.SalesQuantity.Value" Title="Quantité"
+                            HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
+                            CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
+                            CellClass="pa-1 ma-1" />
+            <PropertyColumn Property="x => x.SalesPrice.Value" Title="Prix Unitaire"
+                            HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
+                            CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
+                            CellClass="pa-1 ma-1" />
+            <PropertyColumn Property="x => x.DiscountType.Value" Title="Tarification"
+                            HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
+                            CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
+                            CellClass="pa-1 ma-1" />
+            <PropertyColumn Property="x => x.LineAmount.Value" Title="Montant HT"
+                            HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
+                            CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
+                            CellClass="pa-1 ma-1" />
+        </Columns>
+        <ChildRowContent>
+            <MudStack Row="true" Spacing="3">
+                <MudPaper Class="pa-3">
+                    <MudGrid>
+                        <MudItem>
+                            <MudTextField Margin="Margin.Dense"
+                                          T="string"
+                                          Typo="Typo.body2"
+                                          Label="@context.Item.ItemId?.Name"
+                                          Style="font-size: 13px; height:30px;"
+                                          Variant="Variant.Outlined"
+                                          ReadOnly="true"
+                                          Value="@context.Item.ItemId?.Value">
+                            </MudTextField>
+                        </MudItem>
+                        <MudItem>
+                            <MudTextField Margin="Margin.Dense"
+                                          T="int?"
+                                          Typo="Typo.body2"
+                                          Label="@context.Item.LineNum?.Name"
+                                          Style="font-size: 13px; height:30px;"
+                                          Variant="Variant.Outlined"
+                                          ReadOnly="true"
+                                          Value="@context.Item.LineNum?.Value">
+                            </MudTextField>
+                        </MudItem>
+                    </MudGrid>
+                    <MudTextField Margin="Margin.Dense" T="int?"
+                                  Variant="Variant.Outlined" Width="200px"
+                                  Disabled="false"
+                                  Style="font-size: 13px; height:22px;"
+                                  Value="@context.Item?.LineNum?.Value"></MudTextField>
+                </MudPaper>
+                <MudPaper Class="pa-3">
+                    Item 2
+                </MudPaper>
+                <MudPaper Class="pa-3">
+                    Item 3
+                </MudPaper>
+            </MudStack>
+        </ChildRowContent>
+    </MudDataGrid>
+
 </MudContainer>
 
 @code {
@@ -210,7 +181,7 @@
     int selectedIndex = -1;
     string BackgroundColor(BasketLineDto arg, int index) // it's called twice i don't know why
     {
-        
+
         // if(index == selectedIndex)
         // {
         //     return "";
@@ -225,3 +196,6 @@
         return "";
     }
 }
+
+
+
