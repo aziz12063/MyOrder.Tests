@@ -1003,7 +1003,7 @@ namespace MyOrder.Infrastructure.Data
             },
             Contract = new BasketContractInfoDto
             {
-                ContractId = new Field<string>
+                ContractId = new Field<string?>
                 {
                     Name = "Contrat",
                     Status = "onlyForDisplay",
@@ -1011,7 +1011,7 @@ namespace MyOrder.Infrastructure.Data
                     Value = "CT072408"
 
                 },
-                ContractType = new Field<string>
+                ContractType = new Field<string?>
                 {
                     Name = "Type",
                     Status = "onlyForDisplay",
@@ -1019,49 +1019,49 @@ namespace MyOrder.Infrastructure.Data
                     Value = "Conditions Spéciales"
 
                 },
-                ContractGroup = new Field<string>
+                ContractGroup = new Field<string?>
                 {
                     Name = "Groupe de contrat",
                     Status = "onlyForDisplay",
                     Type = "String",
                     Value = "CHRONOPOST SA"
                 },
-                Status = new Field<string>
+                Status = new Field<string?>
                 {
                     Name = "Statut",
                     Status = "onlyForDisplay",
                     Type = "String",
                     Value = "En cours"
                 },
-                StartDate = new Field<string>
+                StartDate = new Field<string?>
                 {
                     Name = "Date de début",
                     Status = "onlyForDisplay",
                     Type = "String",
                     Value = "2024-04-08 00:00:00"
                 },
-                EndDate = new Field<string>
+                EndDate = new Field<string?>
                 {
                     Name = "Date de fin",
                     Status = "onlyForDisplay",
                     Type = "String",
                     Value = "2024-08-31 00:00:00"
                 },
-                CampaignId = new Field<string>
+                CampaignId = new Field<string?>
                 {
                     Name = "Campagne de prix",
                     Status = "onlyForDisplay",
                     Type = "String",
                     Value = null
                 },
-                MainContact = new Field<string>
+                MainContact = new Field<string?>
                 {
                     Name = "Commercial terrain",
                     Status = "onlyForDisplay",
                     Type = "String",
                     Value = "ISABELLE LASNIER"
                 },
-                OfficeExecutive = new Field<string>
+                OfficeExecutive = new Field<string?>
                 {
                     Name = "Commercial sédentaire",
                     Status = "onlyForDisplay",

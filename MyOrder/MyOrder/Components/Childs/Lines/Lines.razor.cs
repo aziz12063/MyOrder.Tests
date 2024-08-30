@@ -1,6 +1,7 @@
 ﻿using Fluxor;
 using Microsoft.AspNetCore.Components;
 using MyOrder.Components.Common;
+using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.Lines;
 using MyOrder.Store.LinesUseCase;
 
@@ -11,13 +12,18 @@ namespace MyOrder.Components.Childs.Lines
     {
        
         private BasketOrderLinesDto? BasketOrderLinesDto {  get; set; }
+        private List<BasketValueDto?>? UpdateReasons { get; set; }
+        private List<BasketValueDto?>? LogisticFlows { get; set; }
         private BasketLineDto? basketLineDto { get; set; }
         private List<BasketLineDto>? selectedBasketLineDto { get; set; }
 
         protected override void CacheNewFields()
         {
             BasketOrderLinesDto = State.Value.BasketOrderLines ?? throw new NullReferenceException("Unexpected null for BasketOrderLines object.");
+            UpdateReasons = State.Value.UpdateReasons;
+            LogisticFlows = State.Value.LogisticFlows;
             selectedBasketLineDto = new List<BasketLineDto>();
+            basketLineDto = new();
         }
 
         protected override FetchLinesAction CreateFetchAction(LinesState state, string basketId)
@@ -25,6 +31,19 @@ namespace MyOrder.Components.Childs.Lines
             return new FetchLinesAction(state, basketId);
         }
 
+        private string UpdateReasonString
+        {
+            get => GetFieldValue(basketLineDto?.UpdateReason?.Value);
+            set => SetBasketOrderValue(field: basketLineDto?.UpdateReason, value: value, procedureCallValue: value);
+
+        }
+
+        private string LogisticFlowString
+        {
+            get => GetFieldValue(basketLineDto?.LogisticFlow?.Value);
+            set => SetBasketOrderValue(field: basketLineDto?.LogisticFlow, value: value, procedureCallValue: value);
+
+        }
 
 
         //private async Task AddLine()
