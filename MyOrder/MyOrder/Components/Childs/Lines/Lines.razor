@@ -30,7 +30,6 @@
                  EditMode="@DataGridEditMode.Cell"
                  ReadOnly="false">
         <Columns>
-
             <SelectColumn T="BasketLineDto" Size="Size.Small" />
             <HierarchyColumn T="BasketLineDto" />
             <PropertyColumn Property="x => x.LineNum.Value " Title="Ligne"
@@ -53,8 +52,6 @@
                         {
                             <MudIcon Icon="@Icons.Material.Filled.Done" Color="Color.Primary" />
                         }
-
-
                     }
 
                 </CellTemplate>

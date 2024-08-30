@@ -7,7 +7,7 @@ namespace MyOrder.Store.LinesUseCase
     {
         [ReducerMethod]
         public static LinesState ReduceFetchLinesSuccessAction(LinesState state, FetchLinesSuccessAction action) =>
-            new(action.BasketOrderLinesDto);
+            new(action.BasketOrderLinesDto, action.UpdateReasons, action.LogisticFlows);
 
         [ReducerMethod]
         public static LinesState ReduceFetchLinesFailureAction(LinesState state, FetchLinesFailureAction action) =>

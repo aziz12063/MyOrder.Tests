@@ -165,12 +165,12 @@ public class BasketRepository(IBasketApiClient apiClient, ILogger<BasketReposito
         return await apiClient.GetBasketLinesAsync(basketId);
     }
 
-    public async Task<List<BasketValueDto>> GetlineUpdateReasonsAsync(string basketId)
+    public async Task<List<BasketValueDto?>> GetlineUpdateReasonsAsync(string basketId)
     {
         logger.LogInformation("Fetching UpdateReasons for {BasketId} from repository", basketId);
         return await apiClient.GetlineUpdateReasonsAsync(basketId);
     }
-    public async Task<List<BasketValueDto>> GetlogisticFlowsAsync(string basketId)
+    public async Task<List<BasketValueDto?>> GetlogisticFlowsAsync(string basketId)
     {
         logger.LogInformation("Fetching logisticFlows for {BasketId} from repository", basketId);
         return await apiClient.GetlogisticFlowsAsync(basketId);

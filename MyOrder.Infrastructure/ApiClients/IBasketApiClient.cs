@@ -96,10 +96,10 @@ namespace MyOrder.Infrastructure.ApiClients
         Task<BasketOrderLinesDto> GetBasketLinesAsync(string basketId);
 
         [Get("/api/orderContext/{basketId}/lineUpdateReasons")]
-        Task<List<BasketValueDto>> GetlineUpdateReasonsAsync(string basketId);
+        Task<List<BasketValueDto?>> GetlineUpdateReasonsAsync(string basketId);
 
         [Get("/api/orderContext/{basketId}/logisticFlows")]
-        Task<List<BasketValueDto>> GetlogisticFlowsAsync(string basketId);
+        Task<List<BasketValueDto?>> GetlogisticFlowsAsync(string basketId);
 
 
         //[Get("/api/orderContext/{basketId}/notifications")]

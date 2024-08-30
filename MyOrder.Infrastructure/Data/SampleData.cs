@@ -65,7 +65,7 @@ namespace MyOrder.Infrastructure.Data
                         "<one of /orderByContacts contactId>"
                     }
             },
-            ActivityArea = new Field<string>
+            ActivityArea = new Field<string?>
             {
                 Name = "Secteur d'activité",
                 Status = "onlyForDisplay",
@@ -85,7 +85,7 @@ namespace MyOrder.Infrastructure.Data
             Value = "noGift"
         }
     },
-            SalesOriginId = new Field<string>
+            SalesOriginId = new Field<string?>
             {
                 Name = "Canal de vente",
                 Status = "readWrite",
@@ -98,7 +98,7 @@ namespace MyOrder.Infrastructure.Data
                         "<one of /salesOrigins value>"
                     }
             },
-            WebOriginId = new Field<string>
+            WebOriginId = new Field<string?>
             {
                 Name = "Origine e-commerce",
                 Status = "readWrite",
@@ -111,7 +111,7 @@ namespace MyOrder.Infrastructure.Data
                         "<one of /webOrigins value>"
                     }
             },
-            SalesPoolId = new Field<string>
+            SalesPoolId = new Field<string?>
             {
                 Name = "Type de transaction",
                 Status = "readWrite",
@@ -124,7 +124,7 @@ namespace MyOrder.Infrastructure.Data
                         "<one of /salesPools value>"
                     }
             },
-            CustomerOrderRef = new Field<string>
+            CustomerOrderRef = new Field<string?>
             {
                 Name = "Référence Client",
                 Status = "readWrite",
@@ -137,7 +137,7 @@ namespace MyOrder.Infrastructure.Data
                         "<value>"
                     }
             },
-            WebSalesId = new Field<string>
+            WebSalesId = new Field<string?>
             {
                 Name = "Commande Web",
                 Status = "required",
@@ -151,13 +151,13 @@ namespace MyOrder.Infrastructure.Data
             "<value>"
         }
             },
-            RelatedLink = new Field<string>
+            RelatedLink = new Field<string?>
             {
                 Name = "Devis",
                 Status = "hidden",
                 Value = ""
             },
-            Note = new Field<string>
+            Note = new Field<string?>
             {
                 Name = "Note de RC",
                 Status = "onlyForDisplay",
@@ -1803,9 +1803,204 @@ namespace MyOrder.Infrastructure.Data
         public static List<BasketValueDto?> UpdateReasonsP0130938 = new List<BasketValueDto?>()
             {
                  new BasketValueDto
-                 {
-
-                 }
+                {
+                    Value = ""
+                },
+new BasketValueDto
+{
+    Description = "ADD FOLIES",
+    Value = "ADD FOLIES"
+},
+new BasketValueDto
+{
+    Description = "ADD LIGNE",
+    Value = "ADD LIGNE"
+},
+new BasketValueDto
+{
+    Description = "ADD QTE",
+    Value = "ADD QTE"
+},
+new BasketValueDto
+{
+    Description = "ALS",
+    Value = "ALS"
+},
+new BasketValueDto
+{
+    Description = "ATT",
+    Value = "ATT"
+},
+new BasketValueDto
+{
+    Description = "BPS",
+    Value = "BPS"
+},
+new BasketValueDto
+{
+    Description = "BVN",
+    Value = "BVN"
+},
+new BasketValueDto
+{
+    Description = "CAD",
+    Value = "CAD"
+},
+new BasketValueDto
+{
+    Description = "CROSS",
+    Value = "CROSS"
+},
+new BasketValueDto
+{
+    Description = "CS",
+    Value = "CS"
+},
+new BasketValueDto
+{
+    Description = "DAV",
+    Value = "DAV"
+},
+new BasketValueDto
+{
+    Description = "DEF",
+    Value = "DEF"
+},
+new BasketValueDto
+{
+    Description = "ECH",
+    Value = "ECH"
+},
+new BasketValueDto
+{
+    Description = "EXP",
+    Value = "EXP"
+},
+new BasketValueDto
+{
+    Description = "FAC",
+    Value = "FAC"
+},
+new BasketValueDto
+{
+    Description = "FID",
+    Value = "FID"
+},
+new BasketValueDto
+{
+    Description = "FIN",
+    Value = "FIN"
+},
+new BasketValueDto
+{
+    Description = "FS",
+    Value = "FS"
+},
+new BasketValueDto
+{
+    Description = "GCO",
+    Value = "GCO"
+},
+new BasketValueDto
+{
+    Description = "GRT",
+    Value = "GRT"
+},
+new BasketValueDto
+{
+    Description = "GSC",
+    Value = "GSC"
+},
+new BasketValueDto
+{
+    Description = "KC",
+    Value = "KC"
+},
+new BasketValueDto
+{
+    Description = "LOC",
+    Value = "LOC"
+},
+new BasketValueDto
+{
+    Description = "MKG",
+    Value = "MKG"
+},
+new BasketValueDto
+{
+    Description = "MY ORDER",
+    Value = "MY ORDER"
+},
+new BasketValueDto
+{
+    Description = "NC",
+    Value = "NC"
+},
+new BasketValueDto
+{
+    Description = "NCM",
+    Value = "NCM"
+},
+new BasketValueDto
+{
+    Description = "NDI",
+    Value = "NDI"
+},
+new BasketValueDto
+{
+    Description = "OFF",
+    Value = "OFF"
+},
+new BasketValueDto
+{
+    Description = "PRA",
+    Value = "PRA"
+},
+new BasketValueDto
+{
+    Description = "PRV",
+    Value = "PRV"
+},
+new BasketValueDto
+{
+    Description = "PRW",
+    Value = "PRW"
+},
+new BasketValueDto
+{
+    Description = "REP",
+    Value = "REP"
+},
+new BasketValueDto
+{
+    Description = "RFA",
+    Value = "RFA"
+},
+new BasketValueDto
+{
+    Description = "RPL",
+    Value = "RPL"
+},
+new BasketValueDto
+{
+    Description = "SAV",
+    Value = "SAV"
+},
+new BasketValueDto
+{
+    Description = "VU",
+    Value = "VU"
+},
+new BasketValueDto
+{
+    Description = "WEB",
+    Value = "WEB"
+},
+new BasketValueDto
+{
+    Description = "XC",
+    Value = "XC"
+}
 
             };
 
@@ -1814,9 +2009,20 @@ namespace MyOrder.Infrastructure.Data
             {
                  new BasketValueDto
                  {
-        
-                 }
+                     Description = "Stock",
+                     Value = "Stock"
+                 },
+                 new BasketValueDto
+                 {
+                     Description = "Livraison directe",
+                     Value = "DropShipped"
+                 },
 
+                 new BasketValueDto
+                 {
+                     Description = "Passage en stock",
+                     Value = "CrossDocked"
+                 }
             };
 
 
