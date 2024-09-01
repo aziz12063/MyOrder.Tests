@@ -2,6 +2,7 @@
 using MudBlazor;
 using MyOrder.Shared.Dtos;
 using MyOrder.Store.Base;
+using System.Security.Claims;
 
 namespace MyOrder.Store.GeneralInfoUseCase;
 
@@ -9,11 +10,13 @@ namespace MyOrder.Store.GeneralInfoUseCase;
 public class GeneralInfoState : StateBase
 {
     public BasketGeneralInfoDto? GeneralInfo { get; }
+    public ClaimsPrincipal? User { get; }
 
     public GeneralInfoState() : base(true) { } 
 
-    public GeneralInfoState(BasketGeneralInfoDto? generalInfo) : base(false)
+    public GeneralInfoState(BasketGeneralInfoDto? generalInfo, ClaimsPrincipal? user) : base(false)
     {
         GeneralInfo = generalInfo;
+        User = user;
     }
 }

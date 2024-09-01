@@ -1,10 +1,12 @@
 ﻿using Fluxor;
+using Microsoft.AspNetCore.Components.Authorization;
 using MyOrder.Infrastructure.Repositories;
 using MyOrder.Store.OrderInfoUseCase;
 
 namespace MyOrder.Store.GeneralInfoUseCase
 {
-    public class GeneralInfoEffects(IBasketRepository basketRepository, ILogger<GeneralInfoEffects> logger)
+    public class GeneralInfoEffects(IBasketRepository basketRepository, ILogger<GeneralInfoEffects> logger
+        , AuthenticationStateProvider authenticationStateProvider)
     {
         [EffectMethod]
         public async Task HandleFetchGeneralInfo(FetchGeneralInfoAction action, IDispatcher dispatcher)
@@ -13,7 +15,11 @@ namespace MyOrder.Store.GeneralInfoUseCase
             {
                 logger.LogInformation("Fetching general info for {BasketId}", action.BasketId);
                 var basketGeneralInfo = await basketRepository.GetBasketGeneralInfoAsync(action.BasketId);
-                dispatcher.Dispatch(new FetchGeneralInfoSuccessAction(basketGeneralInfo));
+
+                logger.LogInformation("Retrieving authenticated user info.");
+                var authState = await authenticationStateProvider.GetAuthenticationStateAsync();
+
+                dispatcher.Dispatch(new FetchGeneralInfoSuccessAction(basketGeneralInfo, authState.User));
             }
             catch (Exception ex)
             {

@@ -11,7 +11,7 @@ namespace MyOrder.Infrastructure.Repositories
 {
     public class InMemoryBasketRepository : IBasketRepository
     {
-        public const string _basketId = "P0130938";
+        public const string _basketId = "P0131385";
         private static readonly Dictionary<string, BasketGeneralInfoDto> _basketsGeneralInfoDtos = [];
         private static readonly Dictionary<string, BasketOrderInfoDto> _basketsOrderInfoDtos = [];
         private static readonly Dictionary<string, BasketDeliveryInfoDto> _basketsDeliveryInfoDtos = [];

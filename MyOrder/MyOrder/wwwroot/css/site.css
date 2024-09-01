@@ -7,9 +7,7 @@
 }
 
 .header-cards-height {
-    height: 790px;
-    display: flex;
-    flex-direction: column;
+    height: 100%;
 }
 
 .header-cards-height-content {
@@ -29,6 +27,23 @@
 .full-height-container {
     height: 100%;
 }
+
+.mud-input-control.mud-input-control-margin-dense {
+    margin: 0px !important;
+    margin-block: 4px !important;
+}
+
+.mudcard-details-info-background {
+    background: #edf1f533 !important;
+    box-shadow: inset 0px 0px 5px #0000001a !important;
+}
+
+.input-background {
+    background-color: #f7f9fc;
+    border-radius: 8px;
+    border: 1px solid #dfe3e8;
+}
+
 
 
 /*===============*/

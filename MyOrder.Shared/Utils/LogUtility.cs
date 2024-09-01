@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace MyOrder.Utils;
+namespace MyOrder.Shared.Utils;
 
 public static class LogUtility
 {

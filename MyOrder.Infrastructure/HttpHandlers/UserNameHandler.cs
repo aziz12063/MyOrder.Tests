@@ -6,6 +6,7 @@ namespace MyOrder.Infrastructure.HttpHandlers;
 public class UserNameHandler(IHttpContextAccessor httpContextAccessor, ILogger<UserNameHandler> logger) : DelegatingHandler
 {
     private const string HEADER_PARAM_AUTHENTICATED_USER = "X-Authenticated-User";
+
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
         try
@@ -51,5 +52,4 @@ public class UserNameHandler(IHttpContextAccessor httpContextAccessor, ILogger<U
 
         return await base.SendAsync(request, cancellationToken);
     }
-
 }
