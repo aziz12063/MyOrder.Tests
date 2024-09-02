@@ -3,8 +3,6 @@
 @using MyOrder.Components.Childs.Lines
 @using MyOrder.Services
 
-@inject AuthenticationStateProvider AuthenticationStateProvider
-
 @page "/"
 
 <PageTitle>MyOrder</PageTitle>
@@ -15,13 +13,3 @@
         <Lines />
     </MudStack>
 </MudContainer>
-
-@code {
-    private System.Security.Claims.ClaimsPrincipal user;
-
-    protected override async Task OnInitializedAsync()
-    {
-        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        user = authState.User;
-    }
-}
