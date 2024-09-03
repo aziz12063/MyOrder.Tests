@@ -1,23 +1,25 @@
-﻿<MudGrid Spacing="2">
-    <MudItem xs="12" sm="6">
-        <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
+﻿<MudPaper Outlined="true" Class="pa-2 mt-n1 mudcard-details-info-background">
+    <MudGrid Spacing="2">
+        <MudItem xs="12" sm="6">
+            <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
                 <MudIcon Title="Téléphone" Icon="@Icons.Material.Filled.Phone" Color="Color.Success" Size="Size.Small" />
                 <MudText Typo="Typo.body2">@FieldValue(Contact?.Phone)</MudText>
-        </MudStack>
-    </MudItem>
-    <MudItem xs="12" sm="6">
-        <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
+            </MudStack>
+        </MudItem>
+        <MudItem xs="12" sm="6">
+            <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
                 <MudIcon Title="Mobile" Icon="@Icons.Material.Filled.PhoneIphone" Color="Color.Info" Size="Size.Small" />
                 <MudText Typo="Typo.body2">@FieldUtility.NullOrWhiteSpaceHelperWithDash(Contact?.CellularPhone)</MudText>
-        </MudStack>
-    </MudItem>
-    <MudItem xs="12">
-        <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
+            </MudStack>
+        </MudItem>
+        <MudItem xs="12">
+            <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
                 <MudIcon Title="Email" Icon="@Icons.Material.Filled.Email" Color="Color.Surface" Size="Size.Small" />
                 <MudText Typo="Typo.body2">@FieldUtility.NullOrWhiteSpaceHelperWithDash(Contact?.Email)</MudText>
-        </MudStack>
-    </MudItem>
-</MudGrid>
+            </MudStack>
+        </MudItem>
+    </MudGrid>
+</MudPaper>
 
 @code {
     [Parameter, EditorRequired] public ContactDto? Contact { get; set; }

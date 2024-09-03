@@ -1,20 +1,20 @@
 ﻿@using MyOrder.Store.OrderInfoUseCase
-@inherits MyOrder.Components.Common.BaseFluxorComponent<OrderInfoState, FetchOrderInfoAction>
+@inherits BaseFluxorComponent<OrderInfoState, FetchOrderInfoAction>
 
 @if (State.Value.IsLoading)
 {
     <HeaderElementLoadingSkeleton />
     return;
 }
+<MudStack Justify="Justify.SpaceBetween" Style="height: inherit;">
 
-<MudContainer Class="pa-0">
-    <MudStack Spacing="4">
-        <MudText Typo="Typo.h6" Color="Color.Secondary">Commande</MudText>
+    <div>
+        <MudText Typo="Typo.h6" Color="Color.Secondary" Class="pb-4">Commande</MudText>
 
         <!-- Contact Client -->
-        <MudStack Spacing="2">
-            <MudStack Row="true" Spacing="1" StretchItems="StretchItems.Start">
-                <MudText Typo="Typo.subtitle1">@BasketOrderInfo!.Account?.Name</MudText>
+        <CustomHeaderCard>
+            <HeaderContent>
+                <MudText Typo="Typo.subtitle1">Contact Commandeur</MudText>
                 <MudTooltip Text="Chercher client? -Not Implemented">
                     <MudIconButton Icon="@Icons.Material.Filled.Search" Size="Size.Small" />
                 </MudTooltip>
@@ -30,107 +30,142 @@
                 <MudTooltip Text="Call? -Not Implemented">
                     <MudIconButton Icon="@Icons.Material.Filled.Phone" Size="Size.Small" />
                 </MudTooltip>
-            </MudStack>
-
-            <AddressTooltip AccountAddress="AccountAddress">
-                <MudText Typo="Typo.body2" Class="compact-client-details">@SelectedClient</MudText>
-            </AddressTooltip>
-            
-            <GenericMudSelect Variant="Variant.Outlined"
-                              T="ContactDto"
-                              @bind-BoundValue="ContactValue"
-                              Field="BasketOrderInfo!.Contact"
-                              Items="Contacts" />
-
-            <ContactInfo Contact="BasketOrderInfo!.Contact?.Value"/>
-        </MudStack>
-
-        <!-- Secteur d'activité -->
-        <MudStack Spacing="1">
-            <MudText Typo="Typo.subtitle1">@BasketOrderInfo!.ActivityArea?.Name</MudText>
-            <MudTooltip Text="@FieldUtility.NullOrWhiteSpaceHelperWithDash(BasketOrderInfo!.ActivityArea?.Description)">
-                <MudText Typo="Typo.body2">@FieldUtility.NullOrWhiteSpaceHelperWithDash(BasketOrderInfo!.ActivityArea?.Value)</MudText>
-            </MudTooltip>
-            @if (BasketOrderInfo.CustomerTags is { Count: > 0 })
-            {
-                <MudStack Row="true" Spacing="3" Justify="Justify.FlexStart">
-                    @foreach (var item in BasketOrderInfo.CustomerTags)
-                    {
-                        if (item is not null)
-                        {
-                            <MudTooltip Text="@FieldUtility.NullOrWhiteSpaceHelperWithDash(item.Description)">
-                                <MudIcon Color="@CustomerTagColorHelper(item.Value)" Icon="@CustomerTagIconHelper(item.Value)" Size="Size.Large" />
-                            </MudTooltip>
-                        }
-                    }
-                </MudStack>
-            }
-        </MudStack>
-
-        <!-- Informations générales -->
-        <MudStack Spacing="2">
-            <MudText Typo="Typo.subtitle1">Informations générales</MudText>
-            <MudGrid Spacing="2">
-                <MudStack Row="true" Justify="Justify.SpaceEvenly">
-                    <MudItem>
-                        <GenericMudSelect T="string"
-                                          @bind-BoundValue="SalesOriginIdValue"
-                                          Field="BasketOrderInfo!.SalesOriginId"
-                                          Items="SalesOrigins?.Select( item => item?.Value).ToList()" />
-
-                    </MudItem>
-                    <MudItem>
-                        <GenericMudSelect T="string"
-                                          @bind-BoundValue="WebOriginIdValue"
-                                          Field="BasketOrderInfo!.WebOriginId"
-                                          Items="WebOrigins?.Select( item => item?.Value).ToList()" />
-
-                    </MudItem>
-                </MudStack>
-                <MudItem xs="12" sm="12">
-                    <GenericMudSelect T="string"
-                                      @bind-BoundValue="SalesPoolId"
-                                      Field="BasketOrderInfo!.SalesPoolId"
-                                      Items="SalesPools?.Select( item => item?.Value).ToList()" />
-
-                </MudItem>
-                <MudItem xs="12" sm="12">
-                    <MudTextField T="string"
-                                  Typo="Typo.body2"
-                                  Margin="Margin.Dense"
-                                  Label="@BasketOrderInfo!.CustomerOrderRef?.Name"
-                                  Required="@FieldUtility.IsRequired(BasketOrderInfo.CustomerOrderRef)"
-                                  ReadOnly="@FieldUtility.IsReadOnly(BasketOrderInfo.CustomerOrderRef)"
-                                  Disabled="@FieldUtility.IsHidden(BasketOrderInfo.CustomerOrderRef)"
-                                  @bind-Value="CustomerOrderRefValue" />
-                </MudItem>
-                <MudItem xs="12" sm="12">
+            </HeaderContent>
+            <BodyContent>
+                <AddressTooltip AccountAddress="AccountAddress">
                     <MudTextField Typo="Typo.body2"
+                                  Variant="Variant.Outlined"
                                   Margin="Margin.Dense"
-                                  Variant="Variant.Text"
-                                  Label="@BasketOrderInfo!.WebSalesId?.Name"
-                                  Required="@FieldUtility.IsRequired(BasketOrderInfo.WebSalesId)"
-                                  ReadOnly="@FieldUtility.IsReadOnly(BasketOrderInfo.WebSalesId)"
-                                  Disabled="@FieldUtility.IsHidden(BasketOrderInfo.WebSalesId)"
-                                  @bind-Value="WebSalesIdValue" />
-                </MudItem>
-            </MudGrid>
-        </MudStack>
+                                  ReadOnly="true"
+                                  Value="SelectedClient"
+                                  Label="Compte Commandeur"
+                                  Style="text-align-last: center;" />
 
-        <!-- Related Link-->
-        @if (!FieldUtility.IsHidden(BasketOrderInfo!.RelatedLink))
-        {
-            <MudTextField Typo="Typo.body2"
-                          Margin="Margin.Dense"
-                          Variant="Variant.Text"
-                          FullWidth="true"
-                          Required="@FieldUtility.IsRequired(BasketOrderInfo.RelatedLink)"
-                          ReadOnly="@FieldUtility.IsReadOnly(BasketOrderInfo.RelatedLink)"
-                          Label="@BasketOrderInfo.RelatedLink?.Name"
-                          @bind-Value="@RelatedLinkValue" />
-        }
+                </AddressTooltip>
 
-        <!-- Notes de RC -->
+                <GenericMudSelect Variant="Variant.Outlined"
+                                  T="ContactDto"
+                                  @bind-BoundValue="ContactValue"
+                                  Field="BasketOrderInfo!.Contact"
+                                  Items="Contacts" />
+
+                <ContactInfo Contact="BasketOrderInfo!.Contact?.Value" />
+            </BodyContent>
+        </CustomHeaderCard>
+    </div>
+
+    <!-- Informations générales -->
+    <MudCard Elevation="0" Class="pa-2" Style="background-color: transparent;">
+        <MudCardHeader Class="px-1 py-2 ma-n1">
+            <CardHeaderContent>
+                <MudText Typo="Typo.subtitle1">Informations générales</MudText>
+            </CardHeaderContent>
+            <CardHeaderActions>
+                @if (BasketOrderInfo?.CustomerTags is { Count: > 0 })
+                {
+                    <MudStack Row="true" Spacing="3" Justify="Justify.FlexStart">
+                        @foreach (var item in BasketOrderInfo.CustomerTags)
+                        {
+                            if (item is not null)
+                            {
+                                <MudTooltip Text="@FieldUtility.NullOrWhiteSpaceHelperWithDash(item.Description)">
+                                    <MudIcon Color="@CustomerTagColorHelper(item.Value)" Icon="@CustomerTagIconHelper(item.Value)" Size="Size.Large" />
+                                </MudTooltip>
+                            }
+                        }
+                    </MudStack>
+                }
+            </CardHeaderActions>
+        </MudCardHeader>
+        <MudCardContent Class="pa-0">
+            <MudStack Spacing="2">
+
+                <MudTextField Typo="Typo.body2"
+                              Class="px-0"
+                              Label="@BasketOrderInfo!.ActivityArea?.Name"
+                              Value="FieldUtility.NullOrWhiteSpaceHelperWithDash(BasketOrderInfo!.ActivityArea?.Value)"
+                              ReadOnly="true"
+                              Disabled="string.IsNullOrWhiteSpace(BasketOrderInfo!.ActivityArea?.Value)"
+                              Variant="Variant.Outlined"
+                              Margin="Margin.Dense"
+                              HelperText="@FieldUtility.NullOrWhiteSpaceHelperWithDash(BasketOrderInfo!.ActivityArea?.Description)" />
+
+
+
+                <MudGrid Spacing="1">
+                    <MudItem xs="12">
+                        <MudGrid Justify="Justify.SpaceBetween">
+                            <MudItem xs="6">
+                                <GenericMudSelect T="string"
+                                                  @bind-BoundValue="SalesOriginIdValue"
+                                                  Field="BasketOrderInfo!.SalesOriginId"
+                                                  Items="SalesOrigins?.Select( item => item?.Value).ToList()" />
+
+                            </MudItem>
+                            <MudItem xs="6">
+                                <GenericMudSelect T="string"
+                                                  @bind-BoundValue="WebOriginIdValue"
+                                                  Field="BasketOrderInfo!.WebOriginId"
+                                                  Items="WebOrigins?.Select( item => item?.Value).ToList()" />
+                            </MudItem>
+                        </MudGrid>
+                    </MudItem>
+                    <MudItem xs="12">
+                        <GenericMudSelect T="string"
+                                          @bind-BoundValue="SalesPoolId"
+                                          Field="BasketOrderInfo!.SalesPoolId"
+                                          Items="SalesPools?.Select( item => item?.Value).ToList()" />
+
+                    </MudItem>
+                    <!-- Customer Ref-->
+                    <MudItem xs="12">
+                        <MudTextField T="string"
+                                      Typo="Typo.body2"
+                                      Margin="Margin.Dense"
+                                      Variant="Variant.Text"
+                                      Class="input-background"
+                                      Label="@BasketOrderInfo!.CustomerOrderRef?.Name"
+                                      Required="@FieldUtility.IsRequired(BasketOrderInfo.CustomerOrderRef)"
+                                      ReadOnly="@FieldUtility.IsReadOnly(BasketOrderInfo.CustomerOrderRef)"
+                                      Disabled="@FieldUtility.IsHidden(BasketOrderInfo.CustomerOrderRef)"
+                                      @bind-Value="CustomerOrderRefValue" />
+                    </MudItem>
+                    <!-- Web Sales-->
+                    <MudItem xs="12">
+                        <MudTextField Typo="Typo.body2"
+                                      Margin="Margin.Dense"
+                                      Variant="Variant.Text"
+                                      Class="input-background"
+                                      Label="@BasketOrderInfo!.WebSalesId?.Name"
+                                      Required="@FieldUtility.IsRequired(BasketOrderInfo.WebSalesId)"
+                                      ReadOnly="@FieldUtility.IsReadOnly(BasketOrderInfo.WebSalesId)"
+                                      Disabled="@FieldUtility.IsHidden(BasketOrderInfo.WebSalesId)"
+                                      @bind-Value="WebSalesIdValue" />
+                    </MudItem>
+                    <!-- Related Link-->
+                    <MudItem xs="12">
+                        @if (!FieldUtility.IsHidden(BasketOrderInfo!.RelatedLink))
+                        {
+                            <MudTextField Typo="Typo.body2"
+                                          Margin="Margin.Dense"
+                                          Variant="Variant.Text"
+                                          FullWidth="true"
+                                          Required="@FieldUtility.IsRequired(BasketOrderInfo.RelatedLink)"
+                                          ReadOnly="@FieldUtility.IsReadOnly(BasketOrderInfo.RelatedLink)"
+                                          Label="@BasketOrderInfo.RelatedLink?.Name"
+                                          @bind-Value="@RelatedLinkValue" />
+                        }
+                    </MudItem>
+                </MudGrid>
+            </MudStack>
+        </MudCardContent>
+    </MudCard>
+
+
+    <MudDivider />
+
+    <!-- SUBSECTION : Notes de RC -->
+    <div>
         <MudTextField Typo="Typo.caption"
                       Lines="4"
                       Variant="Variant.Filled"
@@ -139,5 +174,5 @@
                       ReadOnly="true"
                       Label="@BasketOrderInfo.Note?.Name"
                       Value="@BasketOrderInfo.Note?.Value" />
-    </MudStack>
-</MudContainer>
+    </div>
+</MudStack>

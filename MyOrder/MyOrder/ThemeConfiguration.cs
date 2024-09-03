@@ -36,7 +36,7 @@ namespace MyOrder
                 Default = new Default
                 {
                     FontFamily = new[] { "Roboto", "Arial", "sans-serif" },
-                    FontSize = "0.75rem",
+                    FontSize = "0.875rem",
                     FontWeight = 400,
                     LineHeight = 1.5,
                     LetterSpacing = "0.00938em",
@@ -52,7 +52,7 @@ namespace MyOrder
                 Subtitle1 = new Subtitle1
                 {
                     FontFamily = new[] { "Roboto", "Arial", "sans-serif" },
-                    FontSize = "0.875rem",
+                    FontSize = "1rem",
                     FontWeight = 600,  // Slightly bolder font weight
                     LineHeight = 1.75,
                     LetterSpacing = "0.00938em",
@@ -60,7 +60,7 @@ namespace MyOrder
                 Subtitle2 = new Subtitle2
                 {
                     FontFamily = new[] { "Roboto", "Arial", "sans-serif" },
-                    FontSize = "0.75rem",
+                    FontSize = "0.875rem",
                     FontWeight = 500,
                     LineHeight = 1.57,
                     LetterSpacing = "0.00714em",
@@ -68,15 +68,15 @@ namespace MyOrder
                 Body2 = new Body2
                 {
                     FontFamily = new[] { "Roboto", "Arial", "sans-serif" },
-                    FontSize = "0.75rem",
+                    FontSize = "0.875rem",
                     FontWeight = 400,
                     LineHeight = 1.43,
-                    LetterSpacing = "0.00714em",
+                    LetterSpacing = "0.01071em",
                 },
                 Caption = new Caption
                 {
                     FontFamily = new[] { "Roboto", "Arial", "sans-serif" },
-                    FontSize = "0.6875rem",
+                    FontSize = "0.75rem",
                     FontWeight = 400,
                     LineHeight = 1.66,
                     LetterSpacing = "0.03333em",

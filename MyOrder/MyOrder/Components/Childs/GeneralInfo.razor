@@ -9,22 +9,13 @@
     </MudStack>
     return;
 }
-
-@if (State.Value.GeneralInfo is null)
-{
-    <LogAndAlert LogLevel="LogLevel.Error"
-                 Exception="new NullReferenceException()"
-                 StackTrace="@LogUtility.GetStackTrace()"
-                 LogMessage="Unexpected null for GeneralInfo object."
-                 AlertMessage="Une erreur est survenue" />
-    return;
-}
-
+<MudTooltip Text="@AuthentifiedUser">
 <MudStack Class="pl-16" Spacing="2">
     <MudText Typo="Typo.body1" Class="d-flex">
-        <b>@State.Value.GeneralInfo.OrderType @State.Value.GeneralInfo.OrderId [@State.Value.GeneralInfo.OrderStatus]</b>
+        <b>@BasketGeneralInfo!.OrderType @BasketGeneralInfo!.OrderId [@BasketGeneralInfo!.OrderStatus]</b>
     </MudText>
     <MudText Typo="Typo.body2" Class="d-flex">
-        @State.Value.GeneralInfo.OrderDate - UserNameNotImplemented
+        @BasketGeneralInfo!.OrderDate - @BasketGeneralInfo!.SalesResponsible
     </MudText>
 </MudStack>
+</MudTooltip>

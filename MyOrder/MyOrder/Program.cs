@@ -29,25 +29,34 @@ builder.Services.AddScoped<IStateResolver, StateResolver>();
 
 // Api Client, and Resilience Policies
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddTransient<UserNameHandler>();
-builder.Services.AddRefitClient<IBasketApiClient>()
-    .AddHttpMessageHandler<UserNameHandler>()
+if (builder.Environment.IsDevelopment())
+
+    builder.Services.AddTransient<UserNameHandlerDev>();
+else
+    builder.Services.AddTransient<UserNameHandler>();
+
+var httpBuilder = builder.Services.AddRefitClient<IBasketApiClient>()
     .ConfigureHttpClient(c => c.BaseAddress = new Uri("http://aliasiisq:8080")) // Refactor to use https only
     .AddPolicyHandler(ResiliencePolicies.GetRetryPolicy())
     .AddPolicyHandler(ResiliencePolicies.GetCircuitBreakerPolicy());
+
+if (builder.Environment.IsDevelopment())
+    httpBuilder.AddHttpMessageHandler<UserNameHandlerDev>();
+else
+    httpBuilder.AddHttpMessageHandler<UserNameHandler>();
 
 //Fluxor
 builder.Services.AddFluxor(options =>
 {
     options.ScanAssemblies(typeof(Program).Assembly);
-    if(builder.Environment.IsDevelopment())
+    if (builder.Environment.IsDevelopment())
         options.UseReduxDevTools();
 });
 
 
 // Repositories
-//builder.Services.AddScoped<IBasketRepository, BasketRepository>();
-builder.Services.AddSingleton<IBasketRepository, InMemoryBasketRepository>();
+builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+//builder.Services.AddSingleton<IBasketRepository, InMemoryBasketRepository>();
 
 //MudBlazor and UI elements
 builder.Services.AddMudServices();

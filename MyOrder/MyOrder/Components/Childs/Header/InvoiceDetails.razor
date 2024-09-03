@@ -8,49 +8,98 @@
     return;
 }
 
-<MudContainer Class="pa-0">
-    <MudStack Spacing="4">
-        <MudText Typo="Typo.h6" Color="Color.Secondary">Facturation</MudText>
+<MudStack Justify="Justify.SpaceBetween" Style="height: inherit;">
+    <!--Compte facturé-->
+    <div>
+        <MudText Typo="Typo.h6" Color="Color.Secondary" Class="pb-4">Facturation</MudText>
+        <CustomHeaderCard>
+            <HeaderContent>
+                <MudStack Row="true" Spacing="1" StretchItems="StretchItems.Start" Class="pb-2">
+                    <MudText Typo="Typo.subtitle1">@BasketInvoiceInfo!.Account?.Name</MudText>
+                    <MudTooltip Text="Chercher client? -Not Implemented">
+                        <MudIconButton Icon="@Icons.Material.Filled.Search" Size="Size.Small" />
+                    </MudTooltip>
+                    <MudTooltip Text="Copier les informations du client -Not Implemented">
+                        <MudIconButton Icon="@Icons.Material.Filled.Description" Size="Size.Small" />
+                    </MudTooltip>
+                    <MudTooltip Text="Salesforce? -Not Implemented">
+                        <MudIconButton Icon="@Icons.Material.Filled.Cloud" Size="Size.Small" />
+                    </MudTooltip>
+                    <MudTooltip Text="Infos? -Not Implemented">
+                        <MudIconButton Icon="@Icons.Material.Filled.Info" Size="Size.Small" />
+                    </MudTooltip>
+                    <MudTooltip Text="Call? -Not Implemented">
+                        <MudIconButton Icon="@Icons.Material.Filled.Phone" Size="Size.Small" />
+                    </MudTooltip>
+                </MudStack>
+            </HeaderContent>
+            <BodyContent>
+                <GenericMudSelect T="AccountDto"
+                                  Field="BasketInvoiceInfo!.Account"
+                                  Items="InvoiceToAccounts"
+                                  @bind-BoundValue="AccountValue"
+                                  Variant="Variant.Outlined" />
 
-        <!--Compte facturé-->
-        <MudStack Spacing="2">
-            <MudStack Row="true" Spacing="1" StretchItems="StretchItems.Start">
-                <MudText Typo="Typo.subtitle1">@BasketInvoiceInfo!.Account?.Name</MudText>
-                <MudTooltip Text="Chercher client? -Not Implemented">
-                    <MudIconButton Icon="@Icons.Material.Filled.Search" Size="Size.Small" />
-                </MudTooltip>
-                <MudTooltip Text="Copier les informations du client -Not Implemented">
-                    <MudIconButton Icon="@Icons.Material.Filled.Description" Size="Size.Small" />
-                </MudTooltip>
-                <MudTooltip Text="Salesforce? -Not Implemented">
-                    <MudIconButton Icon="@Icons.Material.Filled.Cloud" Size="Size.Small" />
-                </MudTooltip>
-                <MudTooltip Text="Infos? -Not Implemented">
-                    <MudIconButton Icon="@Icons.Material.Filled.Info" Size="Size.Small" />
-                </MudTooltip>
-                <MudTooltip Text="Call? -Not Implemented">
-                    <MudIconButton Icon="@Icons.Material.Filled.Phone" Size="Size.Small" />
-                </MudTooltip>
-            </MudStack>
+                <MudTextField Typo="Typo.caption"
+                              Style="margin-top: -4px !important;"
+                              Lines=" AccountAddress != null? AccountAddress.Count : 1"
+                              Variant="Variant.Outlined"
+                              FullWidth="true"
+                              Margin="Margin.Dense"
+                              ReadOnly="true"
+                              Value="DisplayAddress" />
+            </BodyContent>
+        </CustomHeaderCard>
+            </div>
 
-            <GenericMudSelect T="AccountDto"
-                              Field="BasketInvoiceInfo!.Account"
-                              Items="InvoiceToAccounts"
-                              @bind-BoundValue="AccountValue"
-                              Variant="Variant.Outlined" />
+    <!-- SUBSECTION: Paiment du client-->
+    <MudCard Elevation="0" Class="pa-2" Style="background-color: transparent;">
+        <MudCardHeader Class="px-1 py-1 ma-n1">
+            <CardHeaderContent>
+                <MudText Typo="Typo.subtitle1">Paiement du client</MudText>
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent Class="pa-0">
 
-            <MudTextField Typo="Typo.caption"
-                          Lines=" AccountAddress != null? AccountAddress.Count : 1"
-                          Variant="Variant.Outlined"
-                          FullWidth="true"
-                          Margin="Margin.Dense"
-                          ReadOnly="true"
-                          Value="DisplayAddress" />
+            <MudGrid Justify="Justify.SpaceBetween">
 
-            <!--Siret-->
-            @if (!FieldUtility.IsHidden(BasketInvoiceInfo!.SiretId))
-            {
-                <MudItem>
+                @if (!FieldUtility.IsHidden(BasketInvoiceInfo!.PaymentTerm))
+                {
+                    <MudItem xs="6">
+                        <MudTextField Typo="Typo.body2"
+                                      Margin="Margin.Dense"
+                                      Variant="Variant.Text"
+                                      FullWidth="true"
+                                      ReadOnly="@FieldUtility.IsReadOnly(BasketInvoiceInfo.PaymentTerm)"
+                                      Disabled="@FieldUtility.IsDisabled(BasketInvoiceInfo.PaymentTerm)"
+                                      Label="@BasketInvoiceInfo.PaymentTerm?.Name"
+                                      Value="@BasketInvoiceInfo.PaymentTerm?.Value" />
+                    </MudItem>
+                }
+                <MudItem xs="6">
+                    <GenericMudSelect T="string"
+                                      @bind-BoundValue="PaymentModeValue"
+                                      Field="BasketInvoiceInfo!.PaymentMode"
+                                      Items="PaymentModes?.Select( item => item?.Value).ToList()" />
+
+                </MudItem>
+
+            </MudGrid>
+        </MudCardContent>
+    </MudCard>
+
+    <!-- SUBSECTION: Informations de facturation -->
+    <MudCard Elevation="0" Class="pa-2" Style="background-color: transparent;">
+        <MudCardHeader Class="px-1 py-2 ma-n1">
+            <CardHeaderContent>
+                <MudText Typo="Typo.subtitle1">Informations de facturation</MudText>
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent Class="pa-0">
+            <MudStack Spacing="1">
+                <!--Siret-->
+                @if (!FieldUtility.IsHidden(BasketInvoiceInfo!.SiretId))
+                {
                     <MudTextField Typo="Typo.body2"
                                   Margin="Margin.Dense"
                                   Variant="Variant.Text"
@@ -59,58 +108,17 @@
                                   Disabled="@FieldUtility.IsDisabled(BasketInvoiceInfo.SiretId)"
                                   Label="@BasketInvoiceInfo.SiretId?.Name"
                                   Value="@BasketInvoiceInfo.SiretId?.Value" />
-                </MudItem>
-            }
+                }
 
-            <!--Groupe de taxe-->
-            <GenericMudSelect T="string"
-                              Field="BasketInvoiceInfo!.TaxGroup"
-                              Items="TaxGroups?.Select( item => item?.Value).ToList()"
-                              @bind-BoundValue="TaxGroupValue"
-                              Variant="Variant.Outlined" />
-        </MudStack>
-
-
-        <!--Paiment du client-->
-        <MudStack Spacing="2">
-            <MudText Typo="Typo.subtitle1">Paiement du client</MudText>
-            @if (!FieldUtility.IsHidden(BasketInvoiceInfo!.PaymentTerm))
-            {
-                <MudItem>
-                    <MudTextField Typo="Typo.body2"
-                                  Margin="Margin.Dense"
-                                  Variant="Variant.Text"
-                                  FullWidth="true"
-                                  ReadOnly="@FieldUtility.IsReadOnly(BasketInvoiceInfo.PaymentTerm)"
-                                  Disabled="@FieldUtility.IsDisabled(BasketInvoiceInfo.PaymentTerm)"
-                                  Label="@BasketInvoiceInfo.PaymentTerm?.Name"
-                                  Value="@BasketInvoiceInfo.PaymentTerm?.Value" />
-                </MudItem>
-            }
-            <MudItem>
+                <!--Groupe de taxe-->
                 <GenericMudSelect T="string"
-                                  @bind-BoundValue="PaymentModeValue"
-                                  Field="BasketInvoiceInfo!.PaymentMode"
-                                  Items="PaymentModes?.Select( item => item?.Value).ToList()" />
-
-            </MudItem>
-        </MudStack>
-
-        <!--Entities public/Chorus-->
-        <MudStack Spacing="2">
-            <MudText Typo="Typo.subtitle1">Entités publiques / Chorus</MudText>
-            <MudItem>
-                <MudCheckBox Dense="true"
-                             Size="Size.Small"
-                             Style="display:inline-block;"
-                             Label="Entité publique (Not Implemented)"
-                             LabelPosition="LabelPosition.Start"
-                             Disabled="true"
-                             Value="IsPublicEntityValue" />
-            </MudItem>
-            @if (!FieldUtility.IsHidden(BasketInvoiceInfo!.PublicEntityExecutingService))
-            {
-                <MudItem>
+                                  Field="BasketInvoiceInfo!.TaxGroup"
+                                  Items="TaxGroups?.Select( item => item?.Value).ToList()"
+                                  @bind-BoundValue="TaxGroupValue"
+                                  Variant="Variant.Outlined" />
+                <!--Executing Service-->
+                @if (!FieldUtility.IsHidden(BasketInvoiceInfo!.PublicEntityExecutingService))
+                {
                     <MudTextField Typo="Typo.body2"
                                   Margin="Margin.Dense"
                                   Variant="Variant.Text"
@@ -119,11 +127,10 @@
                                   Disabled="@FieldUtility.IsDisabled(BasketInvoiceInfo!.PublicEntityExecutingService)"
                                   Label="@BasketInvoiceInfo!.PublicEntityExecutingService?.Name"
                                   @bind-Value="PublicEntityExecutingServiceValue" />
-                </MudItem>
-            }
-            @if (!FieldUtility.IsHidden(BasketInvoiceInfo!.PublicEntityLegalCommitment))
-            {
-                <MudItem>
+                }
+                <!--Legal Commitment-->
+                @if (!FieldUtility.IsHidden(BasketInvoiceInfo!.PublicEntityLegalCommitment))
+                {
                     <MudTextField Typo="Typo.body2"
                                   Margin="Margin.Dense"
                                   Variant="Variant.Text"
@@ -132,18 +139,20 @@
                                   Disabled="@FieldUtility.IsDisabled(BasketInvoiceInfo!.PublicEntityLegalCommitment)"
                                   Label="@BasketInvoiceInfo!.PublicEntityLegalCommitment?.Name"
                                   @bind-Value="@PublicEntityLegalCommitmentValue" />
-                </MudItem>
-            }
-        </MudStack>
+                }
+            </MudStack>
+        </MudCardContent>
+    </MudCard>
 
-        <!--Notes de facturation-->
-        <MudTextField Typo="Typo.caption"
-                      Lines="4"
-                      Variant="Variant.Filled"
-                      FullWidth="true"
-                      Margin="Margin.Dense"
-                      ReadOnly="true"
-                      Label="@BasketInvoiceInfo!.Note?.Name"
-                      Value="@BasketInvoiceInfo!.Note?.Value" />
-    </MudStack>
-</MudContainer>
+    <MudDivider />
+    <!--Notes de facturation-->
+    <MudTextField Typo="Typo.caption"
+                  Lines="4"
+                  Variant="Variant.Filled"
+                  FullWidth="true"
+                  Margin="Margin.Dense"
+                  ReadOnly="true"
+                  Label="@BasketInvoiceInfo!.Note?.Name"
+                  Value="@BasketInvoiceInfo!.Note?.Value" />
+
+</MudStack>
