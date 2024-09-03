@@ -26,12 +26,15 @@
                  @ondblclick="(args => HandleRowDoubleClick(args, dataGrid.SelectedItem))"
                  SelectedItemsChanged="@SelectedItemsChanged"
                  EditMode="@DataGridEditMode.Cell"
-                 ReadOnly="false">
+                 ReadOnly="false"> 
         <Columns>
+            
             <SelectColumn T="BasketLineDto" Size="Size.Small" />
             <HierarchyColumn T="BasketLineDto" />
-            <PropertyColumn Property="x => x.LineNum.Value " Title="Ligne"
+            <PropertyColumn Property="x => x.LineNum.Value"
+                            Title="Ligne"
                             HeaderClass="header-style"
+                            Editable="true"
                             CellStyle="text-align: center; margin: 5% auto; font-size: 12px;" />
 
             <TemplateColumn Title="not impl" CellClass="pa-1 ma-1" CellStyle="text-align: center; margin: 5% auto; font-size: 12px;">
@@ -89,61 +92,85 @@
                             CellClass="pa-1 ma-1" />
         </Columns>
         <ChildRowContent>
-            @{
 
-                basketLineDto = context.Item;
-                Console.WriteLine("basketLineDto Line N° est" + basketLineDto?.LineNum?.Value);
-            }
             <MudStack Row="true" Justify="Justify.SpaceBetween">
                 <MudPaper Class="pa-3">
                     <MudGrid>
                         <!--Code article-->
-                        <MudItem>
-                            <MudTextField Margin="Margin.Dense"
-                                          T="string"
-                                          Typo="Typo.body2"
-                                          Label="@context.Item.ItemId?.Name"
-                                          Style="font-size: 13px; height:30px;"
-                                          Variant="Variant.Outlined"
-                                          ReadOnly="true"
-                                          Value="@context.Item.ItemId?.Value">
-                            </MudTextField>
-                        </MudItem>
-                        <!--N de ligne-->
-                        <MudItem>
-                            <MudTextField Margin="Margin.Dense"
-                                          T="int?"
-                                          Typo="Typo.body2"
-                                          Label="@context.Item.LineNum?.Name"
-                                          Style="font-size: 13px; height:30px;"
-                                          Variant="Variant.Outlined"
-                                          ReadOnly="true"
-                                          Value="@context.Item.LineNum?.Value">
-                            </MudTextField>
-                        </MudItem>
-                    </MudGrid>
+                        @if (!FieldUtility.IsHidden(context.Item.ItemId))
+                        {
+                            <MudItem>
+                                <MudTextField Margin="Margin.Dense"
+                                              T="string"
+                                              Typo="Typo.body2"
+                                              Label="@context.Item.ItemId?.Name"
+                                              Style="font-size: 13px; height:30px;"
+                                              Variant="Variant.Outlined"
+                                              Required="@FieldUtility.IsRequired(context.Item.ItemId)"
+                                              ReadOnly="@FieldUtility.IsReadOnly(context.Item.ItemId)"
+                                              Disabled="@FieldUtility.IsHidden(context.Item.ItemId)"
+                                              Value="@context.Item.ItemId?.Value"
+                                              ValueChanged="(x => OnValueChange(x, context.Item, context.Item.ItemId, context.Item.LineNum.Value))">
+                                </MudTextField>
+                            </MudItem>
+                        }
 
+                        <!--N de ligne-->
+                        @if (!FieldUtility.IsHidden(context.Item.LineNum))
+                        {
+                            <MudItem>
+                                <MudTextField Margin="Margin.Dense"
+                                              T="int?"
+                                              Typo="Typo.body2"
+                                              Label="@context.Item.LineNum?.Name"
+                                              Style="font-size: 13px; height:30px;"
+                                              Variant="Variant.Outlined"
+                                              Required="@FieldUtility.IsRequired(context.Item.LineNum)"
+                                              ReadOnly="@FieldUtility.IsReadOnly(context.Item.LineNum)"
+                                              Disabled="@FieldUtility.IsHidden(context.Item.LineNum)"
+                                              Value="@context.Item.LineNum?.Value"
+                                              ValueChanged="(x => OnValueChange(x, context.Item, context.Item.LineNum, context.Item.LineNum.Value))">
+                                </MudTextField>
+                            </MudItem>
+                        }
+                    </MudGrid>
                     <MudGrid>
                         <!--Motif Modif-->
-                        <MudItem>
-                            <GenericMudSelect Variant="Variant.Outlined"
-                                              T="string"
-                                              @bind-BoundValue="UpdateReasonString"
-                                              Field="context.Item.UpdateReason"
-                                              Items="UpdateReasons?.Select(item => item?.Value).ToList()" />
-                        </MudItem>
+                        @if (!FieldUtility.IsHidden(context.Item.UpdateReason))
+                        {
+                            <MudItem>
+                                <GenericMudSelect Variant="Variant.Outlined"
+                                                  T="string"
+                                                  @bind-BoundValue="context.Item.UpdateReason.Value"
+                                                  @bind-BoundValue:after="(() =>
+                                                                    OnValueChange(context.Item.UpdateReason.Value,
+                                                                    context.Item,
+                                                                    context.Item.UpdateReason,
+                                                                    context.Item.LineNum.Value))"
+                                                  Field="context.Item.UpdateReason"
+                                                  Items="UpdateReasons?.Select(item => item?.Value).ToList()" />
+                            </MudItem>
+                        }
+
                         <!--Quantité initiale-->
-                        <MudItem>
-                            <MudTextField Margin="Margin.Dense"
-                                          T="int?"
-                                          Typo="Typo.body2"
-                                          Label="@context.Item.InitialSalesQuantity?.Name"
-                                          Style="font-size: 13px; height:30px;"
-                                          Variant="Variant.Outlined"
-                                          ReadOnly="true"
-                                          Value="@context.Item.InitialSalesQuantity?.Value">
-                            </MudTextField>
-                        </MudItem>
+                        @if (!FieldUtility.IsHidden(context.Item.InitialSalesQuantity))
+                        {
+                            <MudItem>
+                                <MudTextField Margin="Margin.Dense"
+                                              T="int?"
+                                              Typo="Typo.body2"
+                                              Label="@context.Item.InitialSalesQuantity?.Name"
+                                              Style="font-size: 13px; height:30px;"
+                                              Variant="Variant.Outlined"
+                                              Required="@FieldUtility.IsRequired(context.Item.InitialSalesQuantity)"
+                                              ReadOnly="@FieldUtility.IsReadOnly(context.Item.InitialSalesQuantity)"
+                                              Disabled="@FieldUtility.IsHidden(context.Item.InitialSalesQuantity)"
+                                              Value="@context.Item.InitialSalesQuantity?.Value"
+                                              ValueChanged="(x => OnValueChange(x, context.Item, context.Item.InitialSalesQuantity, context.Item.LineNum.Value))">
+                                </MudTextField>
+                            </MudItem>
+                        }
+
                     </MudGrid>
                     <MudGrid>
                         <!--Vendu par-->
@@ -159,42 +186,62 @@
                             </MudTextField>
                         </MudItem>
                         <!--Taux de TVA-->
-                        <MudItem>
-                            <MudTextField Margin="Margin.Dense"
-                                          T="decimal?"
-                                          Typo="Typo.body2"
-                                          Label="@context.Item.VatRate?.Name"
-                                          Style="font-size: 13px; height:30px;"
-                                          Variant="Variant.Outlined"
-                                          ReadOnly="true"
-                                          Value="@context.Item.VatRate?.Value">
-                            </MudTextField>
-                        </MudItem>
+                        @if (!FieldUtility.IsHidden(context.Item.VatRate))
+                        {
+                            <MudItem>
+                                <MudTextField Margin="Margin.Dense"
+                                              T="decimal?"
+                                              Typo="Typo.body2"
+                                              Label="@context.Item.VatRate?.Name"
+                                              Style="font-size: 13px; height:30px;"
+                                              Variant="Variant.Outlined"
+                                              Required="@FieldUtility.IsRequired(context.Item.VatRate)"
+                                              ReadOnly="@FieldUtility.IsReadOnly(context.Item.VatRate)"
+                                              Disabled="@FieldUtility.IsHidden(context.Item.VatRate)"
+                                              Value="@context.Item.VatRate?.Value"
+                                              ValueChanged="(x => OnValueChange(x, context.Item, context.Item.VatRate, context.Item.LineNum.Value))">
+                                </MudTextField>
+                            </MudItem>
+                        }
+
                     </MudGrid>
                     <!--Description-->
-                    <MudTextField Margin="Margin.Dense"
-                                  T="string"
-                                  Typo="Typo.body2"
-                                  Label="@context.Item.Name?.Name"
-                                  Style="font-size: 13px; height:30px;"
-                                  Variant="Variant.Outlined"
-                                  ReadOnly="true"
-                                  Value="@context.Item.Name?.Value">
-                    </MudTextField>
+                    @if (!FieldUtility.IsHidden(context.Item.Name))
+                    {
+                        <MudTextField Margin="Margin.Dense"
+                                      T="string"
+                                      Typo="Typo.body2"
+                                      Label="@context.Item.Name?.Name"
+                                      Style="font-size: 13px; height:30px;"
+                                      Variant="Variant.Outlined"
+                                      Required="@FieldUtility.IsRequired(context.Item.Name)"
+                                      ReadOnly="@FieldUtility.IsReadOnly(context.Item.Name)"
+                                      Disabled="@FieldUtility.IsHidden(context.Item.Name)"
+                                      Value="@context.Item.Name?.Value"
+                                      ValueChanged="(x => OnValueChange(x, context.Item, context.Item.Name, context.Item.LineNum.Value))">
+                        </MudTextField>
+                    }
 
                     <!--Notes de ligne-->
                     <MudGrid>
-                        <MudItem>
-                            <MudTextField Margin="Margin.Dense"
-                                          T="string"
-                                          Typo="Typo.body2"
-                                          Label="@context?.Item?.Note?.Name"
-                                          Style="font-size: 13px; height:30px;"
-                                          Variant="Variant.Outlined"
-                                          ReadOnly="true"
-                                          Value="@context?.Item?.Note?.Value">
-                            </MudTextField>
-                        </MudItem>
+                        @if (!FieldUtility.IsHidden(context.Item.Note))
+                        {
+                            <MudItem>
+                                <MudTextField Margin="Margin.Dense"
+                                              T="string"
+                                              Typo="Typo.body2"
+                                              Label="@context?.Item?.Note?.Name"
+                                              Style="font-size: 13px; height:30px;"
+                                              Variant="Variant.Outlined"
+                                              Required="@FieldUtility.IsRequired(context?.Item.Note)"
+                                              ReadOnly="@FieldUtility.IsReadOnly(context?.Item.Note)"
+                                              Disabled="@FieldUtility.IsHidden(context.Item.Note)"
+                                              Value="@context?.Item?.Note?.Value"
+                                              ValueChanged="(x => OnValueChange(x, context?.Item, context?.Item?.Note ?? new () , context?.Item?.LineNum?.Value))">
+                                </MudTextField>
+                            </MudItem>
+                        }
+
                         <!--icons-->
                         <MudItem>
                             <MudIcon Icon="@Icons.Material.Filled.Done" Color="Color.Primary">
@@ -203,38 +250,63 @@
                     </MudGrid>
 
                     <!--Information produit-->
-                    <MudTextField Margin="Margin.Dense"
-                                  T="string"
-                                  Typo="Typo.body2"
-                                  Label="@context.Item.ProductInfo?.Name"
-                                  Style="font-size: 13px; height:30px;"
-                                  Variant="Variant.Outlined"
-                                  ReadOnly="true"
-                                  Value="@context.Item.ProductInfo?.Value">
-                    </MudTextField>
+                    @if (!FieldUtility.IsHidden(context.Item.ProductInfo))
+                    {
+                        <MudTextField Margin="Margin.Dense"
+                                      T="string"
+                                      Typo="Typo.body2"
+                                      Label="@context.Item.ProductInfo?.Name"
+                                      Style="font-size: 13px; height:30px;"
+                                      Variant="Variant.Outlined"
+                                      Required="@FieldUtility.IsRequired(context.Item.ProductInfo)"
+                                      ReadOnly="@FieldUtility.IsReadOnly(context.Item.ProductInfo)"
+                                      Disabled="@FieldUtility.IsHidden(context.Item.ProductInfo)"
+                                      Value="@context.Item.ProductInfo?.Value"
+                                      ValueChanged="(x => OnValueChange(x, context.Item, context.Item.ProductInfo, context.Item.LineNum.Value))">
+                        </MudTextField>
+                    }
                 </MudPaper>
 
                 <MudPaper Class="pa-3">
                     <MudGrid>
                         <!--Flux Logistique-->
-                        <MudItem>
-                            <GenericMudSelect Variant="Variant.Outlined"
-                                              T="string"
-                                              @bind-BoundValue="LogisticFlowString"
-                                              Field="context.Item.LogisticFlow"
-                                              Items="LogisticFlows?.Select(item => item?.Value).ToList()" />
-                        </MudItem>
+                        @if (!FieldUtility.IsHidden(context.Item.LogisticFlow))
+                        {
+                            <MudItem>
+                                <GenericMudSelect Variant="Variant.Outlined"
+                                                  T="string"
+                                                  @bind-BoundValue="context.Item.LogisticFlow.Value"
+                                                  @bind-BoundValue:after="(() =>
+                                                                    OnValueChange(context.Item.LogisticFlow.Value,
+                                                                    context.Item,
+                                                                    context.Item.LogisticFlow,
+                                                                    context.Item.LineNum.Value))"
+                                                  Field="context.Item.LogisticFlow"
+                                                  Items="LogisticFlows?.Select(item => item?.Value).ToList()" />
+                            </MudItem>
+                        }
+
                         <!--Entrepot-->
-                        <MudItem>
-                            <GenericMudSelect Variant="Variant.Outlined"
-                                              T="string"
-                                              @bind-BoundValue="UpdateReasonString"
-                                              Field="context.Item.InventLocationId"
-                                              Items="UpdateReasons?.Select(item => item?.Value).ToList()" />
-                        </MudItem>
+                        @if (!FieldUtility.IsHidden(context.Item.InventLocationId))
+                        {
+                            <MudItem>
+                                <GenericMudSelect Variant="Variant.Outlined"
+                                                  T="string"
+                                                  @bind-BoundValue="context.Item.InventLocationId.Value"
+                                                  @bind-BoundValue:after="(() =>
+                                                                    OnValueChange(context.Item.LogisticFlow.Value,
+                                                                    context.Item,
+                                                                    context.Item.LogisticFlow,
+                                                                    context.Item.LineNum.Value))"
+                                                  Field="context.Item.InventLocationId"
+                                                  Items="UpdateReasons?.Select(item => item?.Value).ToList()" />
+                            </MudItem>
+                        }
+
                     </MudGrid>
-                    <!--Livré maintenant-->
+                    
                     <MudGrid>
+                        <!--Livré maintenant-->
                         <MudItem>
                             <MudTextField Margin="Margin.Dense"
                                           T="int?"
@@ -259,8 +331,9 @@
                             </MudTextField>
                         </MudItem>
                     </MudGrid>
-                    <!--Quantité/palette-->
+                    
                     <MudGrid>
+                        <!--Quantité/palette-->
                         <MudItem>
                             <MudTextField Margin="Margin.Dense"
                                           T="int?"
@@ -287,29 +360,61 @@
                     </MudGrid>
                     <MudGrid>
                         <!--Type d'article-->
-                        <MudItem>
-                            <GenericMudSelect Variant="Variant.Outlined"
-                                              T="string"
-                                              @bind-BoundValue="UpdateReasonString"
-                                              Field="context.Item.ItemType"
-                                              Items="UpdateReasons?.Select(item => item?.Value).ToList()" />
-                        </MudItem>
+                        @if (!FieldUtility.IsHidden(context.Item.LogisticFlow))
+                        {
+                            <MudItem>
+                                <GenericMudSelect Variant="Variant.Outlined"
+                                                  T="string"
+                                                  @bind-BoundValue="context.Item.LogisticFlow.Value"
+                                                  @bind-BoundValue:after="(() =>
+                                                                    OnValueChange(context.Item.LogisticFlow.Value,
+                                                                    context.Item,
+                                                                    context.Item.LogisticFlow,
+                                                                    context.Item.LineNum.Value))"
+                                                  Field="context.Item.ItemType"
+                                                  Items="UpdateReasons?.Select(item => item?.Value).ToList()" />
+                            </MudItem>
+                        }
+
                         <!--Date de liv manuelle-->
                         <MudItem>
                             <MudCheckBox Value="context?.Item?.IsCustomDeliveryDate?.Value"></MudCheckBox>
                         </MudItem>
                         <!--Date de liv-->
-                        <MudItem>
-                            <MudTextField Margin="Margin.Dense"
-                                          T="string"
-                                          Typo="Typo.body2"
-                                          Label="@context.Item.DeliveryDate?.Name"
-                                          Style="font-size: 13px; height:30px;"
-                                          Variant="Variant.Outlined"
-                                          ReadOnly="true"
-                                          Value="@context.Item.DeliveryDate?.Value">
-                            </MudTextField>
-                        </MudItem>
+                        @if (!FieldUtility.IsHidden(context.Item.DeliveryDate))
+                        {
+                            <MudItem>
+                                <MudTextField Margin="Margin.Dense"
+                                              T="string"
+                                              Typo="Typo.body2"
+                                              Label="@context.Item.DeliveryDate?.Name"
+                                              Style="font-size: 13px; height:30px;"
+                                              Variant="Variant.Outlined"
+                                              Required="@FieldUtility.IsRequired(context.Item.DeliveryDate)"
+                                              ReadOnly="@FieldUtility.IsReadOnly(context.Item.DeliveryDate)"
+                                              Disabled="@FieldUtility.IsHidden(context.Item.DeliveryDate)"
+                                              Value="@context.Item.DeliveryDate?.Value"
+                                              ValueChanged="(x => OnValueChange(x, context.Item, context.Item.DeliveryDate, context.Item.LineNum.Value))">
+                                </MudTextField>
+                            </MudItem>
+                        }
+                        @if (!FieldUtility.IsHidden(context.Item.DeliveryDate))
+                        {
+                            <MudItem>
+                                <MudTextField Margin="Margin.Dense"
+                                              T="string"
+                                              Typo="Typo.body2"
+                                              Label="@context.Item.DeliveryDate?.Name"
+                                              Style="font-size: 13px; height:30px;"
+                                              Variant="Variant.Outlined"
+                                              Required="@FieldUtility.IsRequired(context.Item.DeliveryDate)"
+                                              ReadOnly="@FieldUtility.IsReadOnly(context.Item.DeliveryDate)"
+                                              Disabled="@FieldUtility.IsHidden(context.Item.DeliveryDate)"
+                                              Value="@context.Item.DeliveryDate?.Value"
+                                              ValueChanged="(x => OnValueChange(x, context.Item, context.Item.DeliveryDate, context.Item.LineNum.Value))">
+                                </MudTextField>
+                            </MudItem>
+                        }
                     </MudGrid>
                     <MudGrid Justify="Justify.FlexStart">
                         <!--Disponible-->
@@ -375,8 +480,9 @@
                             </MudTextField>
                         </MudItem>
                     </MudGrid>
-                    <!--Stock Dispo-->
+                    
                     <MudGrid>
+                        <!--Stock Dispo-->
                         <MudItem>
                             <MudTextField Margin="Margin.Dense"
                                           T="int?"
@@ -401,8 +507,9 @@
                             </MudTextField>
                         </MudItem>
                     </MudGrid>
-                    <!--Famille d'appro-->
+                   
                     <MudGrid>
+                        <!--Famille d'appro-->
                         <MudItem>
                             <MudTextField Margin="Margin.Dense"
                                           T="string"
@@ -445,14 +552,22 @@
                 </MudPaper>
                 <MudPaper Class="pa-3">
                     <!--Tarification-->
-                    <GenericMudSelect Variant="Variant.Outlined"
-                                      T="string"
-                                      @bind-BoundValue="UpdateReasonString"
-                                      Field="context.Item.DiscountType"
-                                      Items="UpdateReasons?.Select(item => item?.Value).ToList()" />
+                    @if (!FieldUtility.IsHidden(context.Item.DiscountType))
+                    {
+                        <GenericMudSelect Variant="Variant.Outlined"
+                                          T="string"
+                                          @bind-BoundValue="context.Item.LogisticFlow.Value"
+                                          @bind-BoundValue:after="(() =>
+                                                                    OnValueChange(context.Item.LogisticFlow.Value,
+                                                                    context.Item,
+                                                                    context.Item.LogisticFlow,
+                                                                    context.Item.LineNum.Value))"
+                                          Field="context.Item.DiscountType"
+                                          Items="UpdateReasons?.Select(item => item?.Value).ToList()" />
+                    }
+
 
                     <!--Description-->
-
                     <MudTextField Margin="Margin.Dense"
                                   T="string"
                                   Typo="Typo.body2"
@@ -465,29 +580,43 @@
 
                     <!--Remise sup-->
                     <MudGrid>
-                        <MudItem>
-                            <MudTextField Margin="Margin.Dense"
-                                          T="decimal?"
-                                          Typo="Typo.body2"
-                                          Label="@context.Item.DiscountRate?.Name"
-                                          Style="font-size: 13px; height:30px;"
-                                          Variant="Variant.Outlined"
-                                          ReadOnly="true"
-                                          Value="@context.Item.DiscountRate?.Value">
-                            </MudTextField>
-                        </MudItem>
+                        @if (!FieldUtility.IsHidden(context.Item.DiscountRate))
+                        {
+                            <MudItem>
+                                <MudTextField Margin="Margin.Dense"
+                                              T="decimal?"
+                                              Typo="Typo.body2"
+                                              Label="@context.Item.DiscountRate?.Name"
+                                              Style="font-size: 13px; height:30px;"
+                                              Variant="Variant.Outlined"
+                                              Required="@FieldUtility.IsRequired(context.Item.DiscountRate)"
+                                              ReadOnly="@FieldUtility.IsReadOnly(context.Item.DiscountRate)"
+                                              Disabled="@FieldUtility.IsHidden(context.Item.DiscountRate)"
+                                              Value="@context.Item.DiscountRate?.Value"
+                                              ValueChanged="(x => OnValueChange(x, context.Item, context.Item.DiscountRate, context.Item.LineNum.Value))">
+                                </MudTextField>
+                            </MudItem>
+                        }
+
                         <!--PU HT-->
-                        <MudItem>
-                            <MudTextField Margin="Margin.Dense"
-                                          T="decimal?"
-                                          Typo="Typo.body2"
-                                          Label="@context.Item.DiscountPrice?.Name"
-                                          Style="font-size: 13px; height:30px;"
-                                          Variant="Variant.Outlined"
-                                          ReadOnly="true"
-                                          Value="@context.Item.DiscountPrice?.Value">
-                            </MudTextField>
-                        </MudItem>
+                        @if (!FieldUtility.IsHidden(context.Item.DiscountPrice))
+                        {
+                            <MudItem>
+                                <MudTextField Margin="Margin.Dense"
+                                              T="decimal?"
+                                              Typo="Typo.body2"
+                                              Label="@context.Item.DiscountPrice?.Name"
+                                              Style="font-size: 13px; height:30px;"
+                                              Variant="Variant.Outlined"
+                                              Required="@FieldUtility.IsRequired(context.Item.DiscountPrice)"
+                                              ReadOnly="@FieldUtility.IsReadOnly(context.Item.DiscountPrice)"
+                                              Disabled="@FieldUtility.IsHidden(context.Item.DiscountPrice)"
+                                              Value="@context.Item.DiscountPrice?.Value"
+                                              ValueChanged="(x => OnValueChange(x, context.Item, context.Item.DiscountPrice, context.Item.LineNum.Value))">
+                                </MudTextField>
+                            </MudItem>
+                        }
+
                     </MudGrid>
                 </MudPaper>
             </MudStack>
@@ -496,64 +625,7 @@
 
 </MudContainer>
 
-@code {
-    MudDataGrid<BasketLineDto> dataGrid = new();
-    void HandleRowDoubleClick(MouseEventArgs args, BasketLineDto item)
-    {
-        Console.WriteLine("the HandleRowDoubleClick is double clicked");
-    }
 
-    void RowClicked(DataGridRowClickEventArgs<BasketLineDto> args)
-    {
-        basketLineDto = args.Item;
-
-    }
-
-    void SelectedItemsChanged(HashSet<BasketLineDto> items)
-    {
-        // selectedBasketLineDto.Clear();
-        selectedBasketLineDto = items.ToList();
-
-    }
-
-    // string IconFunc(BasketLineDto basketLineDto)
-    // {
-    //     if (basketLineDto.OnOrderQuantity?.Value > 0)
-    //     {
-    //         // <MudIcon Icon="@Icons.Material.Filled.BackHand" Color="Color.Error" />
-    //         return "@Icons.Material.Filled.BackHand";
-    //     }
-    //     if (basketLineDto.OnOrderQuantity?.Value == 0 && basketLineDto.PhysicalAvailableQuantity?.Value > 0)
-    //     {
-    //         return string.Empty;
-    //     }
-    //     if (basketLineDto.OnOrderQuantity?.Value == 0 && basketLineDto.PhysicalAvailableQuantity?.Value == 0)
-    //     {
-    //         //<MudIcon Icon="@Icons.Material.Filled.Done" Color="Color.Primary" />
-    //         return "@Icons.Material.Filled.Done";
-    //     }
-
-    //     return string.Empty;
-    // }
-
-    int selectedIndex = -1;
-    string BackgroundColor(BasketLineDto arg, int index) // it's called twice i don't know why
-    {
-
-        // if(index == selectedIndex)
-        // {
-        //     return "";
-        // }
-        if (arg.LineNum?.Value == basketLineDto?.LineNum?.Value)
-        {
-            selectedIndex = index;
-            Console.WriteLine("the index is: " + index);
-            Console.WriteLine("the selectedIndex is: " + selectedIndex);
-            return "background-color:#5499c7";
-        }
-        return "";
-    }
-}
 
 
 

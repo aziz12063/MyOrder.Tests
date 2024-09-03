@@ -1,5 +1,7 @@
 ﻿using Fluxor;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
+using MudBlazor;
 using MyOrder.Components.Common;
 using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.Lines;
@@ -23,26 +25,64 @@ namespace MyOrder.Components.Childs.Lines
             UpdateReasons = State.Value.UpdateReasons;
             LogisticFlows = State.Value.LogisticFlows;
             selectedBasketLineDto = new List<BasketLineDto>();
-            basketLineDto = new();
         }
-
+ 
         protected override FetchLinesAction CreateFetchAction(LinesState state, string basketId)
         {
             return new FetchLinesAction(state, basketId);
         }
 
-        private string UpdateReasonString
+        MudDataGrid<BasketLineDto> dataGrid = new();
+
+
+
+        string test = "";
+        private void OnValueChange<T>(T value, BasketLineDto row, MyOrder.Shared.Dtos.SharedComponents.Field<T?> field, int? lineNbr)
         {
-            get => GetFieldValue(basketLineDto?.UpdateReason?.Value);
-            set => SetBasketOrderValue(field: basketLineDto?.UpdateReason, value: value, procedureCallValue: value);
+            if (lineNbr != null && lineNbr == row.LineNum.Value)
+            {
+
+                //basketLineDto = row;
+                Console.WriteLine("Line nbr: " + row.LineNum.Value);
+                Console.WriteLine("the new value: " + value);
+
+                field.Value = value;
+                SetBasketOrderValue(field: field, value: value, procedureCallValue: value?.ToString());
+                // Console.WriteLine("UpdateReasonString: " + UpdateReasonString);
+                Console.WriteLine("UpdateReason: " + row.UpdateReason.Value);
+
+            }
 
         }
 
-        private string LogisticFlowString
-        {
-            get => GetFieldValue(basketLineDto?.LogisticFlow?.Value);
-            set => SetBasketOrderValue(field: basketLineDto?.LogisticFlow, value: value, procedureCallValue: value);
+      
 
+        void HandleRowDoubleClick(MouseEventArgs args, BasketLineDto item)
+        {
+            Console.WriteLine("the HandleRowDoubleClick is double clicked");
+        }
+
+        void RowClicked(DataGridRowClickEventArgs<BasketLineDto> args)
+        {
+            basketLineDto = args.Item;
+        }
+
+      
+
+        string BackgroundColor(BasketLineDto arg, int index) // it's called twice i don't know why
+        {
+            if (arg.LineNum?.Value == basketLineDto?.LineNum?.Value)
+            {
+                return "background-color:#5499c7";
+            }
+            return "";
+        }
+
+        // is called when chekbox a row
+        void SelectedItemsChanged(HashSet<BasketLineDto> items)
+        {
+            // selectedBasketLineDto.Clear();
+            selectedBasketLineDto = items.ToList();
         }
 
 
