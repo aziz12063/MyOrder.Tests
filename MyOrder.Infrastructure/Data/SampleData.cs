@@ -1592,8 +1592,52 @@ namespace MyOrder.Infrastructure.Data
             Status = "readOnly",
             Value = 0.68m
         },
-        Prices = null
+        // in the api this Prices is null,  adding data for test
+        Prices = new List<BasketPriceLine?>()
+{
+    new BasketPriceLine
+    {
+        quantity = 25,
+        catalogPrice = 1.05m,
+        discountPrice = 1.00m,
+        multiplePrice = 25.00m,
+        discountRate = 0 
     },
+     new BasketPriceLine
+    {
+        quantity = 100,
+        catalogPrice = 0.99m,
+        discountPrice = 0.94m,
+        multiplePrice = 23.50m,
+        discountRate = 6
+    },
+    new BasketPriceLine
+    {
+        quantity = 200,
+        catalogPrice = 0.92m,
+        discountPrice = 0.87m,
+        multiplePrice = 21.75m,
+        discountRate = 13
+    },
+    new BasketPriceLine
+    {
+        quantity = 400,
+        catalogPrice = 0.87m,
+        discountPrice = 0.83m,
+        multiplePrice = 20.75m,
+        discountRate = 17
+    },
+    new BasketPriceLine
+    {
+        quantity = 800,
+        catalogPrice = 0.76m,
+        discountPrice = 0.72m,
+        multiplePrice = 18.00m,
+        discountRate = 28
+    }
+        }
+    },
+
     new BasketLineDto
     {
         LineNum = new Field<int?>

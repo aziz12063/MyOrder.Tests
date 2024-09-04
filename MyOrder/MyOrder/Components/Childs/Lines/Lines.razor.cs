@@ -7,6 +7,7 @@ using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.Lines;
 using MyOrder.Store.LinesUseCase;
 using MyOrder.Utils;
+using static MudBlazor.CategoryTypes;
 
 
 namespace MyOrder.Components.Childs.Lines
@@ -26,6 +27,8 @@ namespace MyOrder.Components.Childs.Lines
         private bool IsSalesPriceEditable { get; set; } // not yet
         private bool IsDiscountTypeEditable { get; set; }
         private bool IsLineAmountEditable { get; set; }
+        private bool IsDiscountRateEditable { get; set; }
+       
 
 
         protected override void CacheNewFields()
@@ -34,6 +37,7 @@ namespace MyOrder.Components.Childs.Lines
             UpdateReasons = State.Value.UpdateReasons;
             LogisticFlows = State.Value.LogisticFlows;
             selectedBasketLineDto = new List<BasketLineDto>();
+           
 
             if (BasketOrderLinesDto is not null && BasketOrderLinesDto.lines is not null && BasketOrderLinesDto.lines.Count > 0)
             {
@@ -44,7 +48,10 @@ namespace MyOrder.Components.Childs.Lines
                 IsSalesQuantityEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0].SalesQuantity);
                 IsDiscountTypeEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0].DiscountType);
                 IsLineAmountEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0].LineAmount);
-                
+                IsDiscountRateEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0].DiscountRate);
+                IsSalesPriceEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0].SalesPrice);
+
+
             }
         }
 
@@ -75,8 +82,42 @@ namespace MyOrder.Components.Childs.Lines
             }
 
         }
+        private void OnValueChangedCell()
+        {
 
+            Logger.LogInformation($"CommittedItemChanges is called for line nbr ");
 
+        }
+
+        // is called when a cell is modifyed
+        private void CommittedItemChanges(BasketLineDto item)
+        {
+           
+            Logger.LogInformation($"CommittedItemChanges is called for line nbr {item.LineNum.Value}");
+            
+        }
+        private string RowStyleFunc(BasketPriceLine x, int index, BasketLineDto item)
+        {
+           
+            string style = "";
+            int quantite = item?.SalesQuantity?.Value ?? 0;
+            if (x.quantity == 25 && quantite < 100)
+                style = "background-color:#8CED8C";
+
+            else if (x.quantity == 100 && quantite >= 100 && quantite < 200)
+                style = "background-color:#8CED8C";
+
+            else if (x.quantity == 200 && quantite >= 200 && quantite < 400)
+                style += "background-color:#8CED8C";
+
+            else if (x.quantity == 400 && quantite >= 400 && quantite < 800)
+                style += "background-color:#8CED8C";
+
+            if (x.quantity > 500 && quantite >= 800 )
+                style += "background-color:#8CED8C";
+
+            return style;
+        }
 
         void HandleRowDoubleClick(MouseEventArgs args, BasketLineDto item)
         {
@@ -86,6 +127,7 @@ namespace MyOrder.Components.Childs.Lines
         void RowClicked(DataGridRowClickEventArgs<BasketLineDto> args)
         {
             basketLineDto = args.Item;
+            Logger.LogInformation("row clicked");
         }
 
 

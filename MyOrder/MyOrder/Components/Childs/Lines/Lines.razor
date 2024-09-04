@@ -16,25 +16,32 @@
                  Striped="true"
                  Elevation="4"
                  Items="@BasketOrderLinesDto!.lines"
-                 SortMode="@SortMode.Single"
-                 DragDropColumnReordering="true"
+                 SortMode="@SortMode.None"
                  ApplyDropClassesOnDragStarted="true"
                  DragIndicatorIcon="@Icons.Material.Filled.DragIndicator"
-                 ColumnsPanelReordering="true"
+                 ColumnsPanelReordering="false"
                  ShowMenuIcon="true"
                  Hideable="true"
                  @ondblclick="(args => HandleRowDoubleClick(args, dataGrid.SelectedItem))"
                  SelectedItemsChanged="@SelectedItemsChanged"
                  EditMode="@DataGridEditMode.Cell"
-                 ReadOnly="false"> 
+                 ReadOnly="false"
+                 CommittedItemChanges="@CommittedItemChanges"
+                 RowClick="RowClicked">
         <Columns>
             <SelectColumn T="BasketLineDto" Size="Size.Small" />
             <HierarchyColumn T="BasketLineDto" />
-            <PropertyColumn Property="x => x.LineNum.Value"
+            <TemplateColumn Editable="false"
                             Title="Ligne"
                             HeaderClass="header-style"
-                            Editable="IsLineNbrEditable"
-                            CellStyle="text-align: center; margin: 5% auto; font-size: 12px;" />
+                            CellStyle="text-align: center; margin: 5% auto; font-size: 12px;">
+
+                <CellTemplate>
+                    <MudTextField T="int?"
+                                  Value="@context.Item.LineNum?.Value"
+                                  ValueChanged="(x => OnValueChange(x, context.Item, context.Item.LineNum, context.Item.LineNum.Value))" />
+                </CellTemplate>
+            </TemplateColumn>
 
             <TemplateColumn Title="not impl" CellClass="pa-1 ma-1" CellStyle="text-align: center; margin: 5% auto; font-size: 12px;">
                 <CellTemplate>
@@ -56,47 +63,92 @@
 
                 </CellTemplate>
             </TemplateColumn>
+
             <PropertyColumn Property="x => x.ItemId.Value" Title="CodeArticle"
                             HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
                             CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
                             CellClass="pa-1 ma-1"
                             Editable="IsItemIdEditable" />
+
             <PropertyColumn Property="x => x.Name.Value" Title="Description"
                             HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
                             CellStyle="text-align: center; margin: 5% auto; font-size: 11px;"
                             CellClass="pa-1 ma-1"
                             Editable="IsNameEditable" />
+
             <PropertyColumn Property="x => x.InventLocationId.Value " Title="Entrepôt"
                             HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
                             CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
-                            CellClass="pa-1 ma-1" 
+                            CellClass="pa-1 ma-1"
                             Editable="IsInventLocationIdEditable" />
-            <PropertyColumn Property="x => x.ItemOnOrderQuantity.Value " Title="Commandé"
-                            HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
-                            CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
-                            CellClass="pa-1 ma-1"
-                            Editable="false" />
-            <PropertyColumn Property="x => x.SalesQuantity.Value" Title="Quantité"
-                            HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
-                            CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
-                            CellClass="pa-1 ma-1"
-                            Editable="IsSalesQuantityEditable" />
-            <PropertyColumn Property="x => x.SalesPrice.Value" Title="Prix Unitaire"
-                            HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
-                            CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
-                            CellClass="pa-1 ma-1"
-                            Editable="true" />
+
+            <TemplateColumn Editable="false"
+                            Title="Quantité"
+                            HeaderClass="header-style"
+                            CellStyle="text-align: center; margin: 5% auto; font-size: 12px;">
+
+                <CellTemplate>
+                    <MudTextField T="int?"
+                                  ReadOnly="@FieldUtility.IsReadOnly(BasketOrderLinesDto.lines[0].SalesQuantity)"
+                                  Value="@(context.Item.SalesQuantity?.Value )"
+                                  ValueChanged="(x => OnValueChange(x, context.Item, context.Item.SalesQuantity, context.Item.LineNum.Value))" />
+                </CellTemplate>
+            </TemplateColumn>
+
+            <TemplateColumn Editable="false"
+                            Title="Remise Std"
+                            HeaderClass="header-style"
+                            CellStyle="text-align: center; margin: 5% auto; font-size: 12px;">
+                <CellTemplate>
+                    <MudTextField T="decimal?"
+                                  Format="0.##' %'"
+                                  ReadOnly="@FieldUtility.IsReadOnly(BasketOrderLinesDto.lines[0].DiscountRate)"
+                                  Value="@context.Item.DiscountRate?.Value"
+                                  ValueChanged="(x => OnValueChange(x, context.Item, context.Item.DiscountRate, context.Item.LineNum.Value))" />
+                </CellTemplate>
+            </TemplateColumn>
+
+            <TemplateColumn Editable="false"
+                            Title="Remise DC Var not imple"
+                            HeaderClass="header-style"
+                            CellStyle="text-align: center; margin: 5% auto; font-size: 12px;">
+                <CellTemplate>
+                    <MudTextField T="decimal?"
+                                  Format="0.##' %'"
+                                  ReadOnly="@FieldUtility.IsReadOnly(BasketOrderLinesDto.lines[0].DiscountRate)"
+                                  Value="@context.Item.DiscountRate?.Value"
+                                  ValueChanged="(x => OnValueChange(x, context.Item, context.Item.DiscountRate, context.Item.LineNum.Value))" />
+                </CellTemplate>
+            </TemplateColumn>
+
+            <TemplateColumn Editable="false"
+                            Title="Prix Unitaire"
+                            HeaderClass="header-style"
+                            CellStyle="text-align: center; margin: 5% auto; font-size: 12px;">
+                <CellTemplate>
+                    <MudTextField T="decimal?"
+                                  ReadOnly="@FieldUtility.IsReadOnly(BasketOrderLinesDto.lines[0].SalesPrice)"
+                                  Value="@context.Item.SalesPrice?.Value"
+                                  ValueChanged="(x => OnValueChange(x, context.Item, context.Item.SalesPrice, context.Item.LineNum.Value))"
+                                  Format="#,0.00 €" />
+                </CellTemplate>
+            </TemplateColumn>
+
             <PropertyColumn Property="x => x.DiscountType.Value" Title="Tarification"
+                            Format="0.##' %'"
                             HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
                             CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
                             CellClass="pa-1 ma-1"
                             Editable="IsDiscountTypeEditable" />
-            <PropertyColumn Property="x => x.LineAmount.Value" Title="Montant HT"
+
+            <PropertyColumn Property="x => x.LineAmount.Value" Title="Montant HT" 
                             HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
                             CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
                             CellClass="pa-1 ma-1"
-                            Editable="IsLineAmountEditable" />
+                            Editable="IsLineAmountEditable"
+                            Format="c"/>
         </Columns>
+
         <ChildRowContent>
 
             <MudStack Row="true" Justify="Justify.SpaceBetween">
@@ -310,7 +362,7 @@
                         }
 
                     </MudGrid>
-                    
+
                     <MudGrid>
                         <!--Livré maintenant-->
                         <MudItem>
@@ -337,7 +389,7 @@
                             </MudTextField>
                         </MudItem>
                     </MudGrid>
-                    
+
                     <MudGrid>
                         <!--Quantité/palette-->
                         <MudItem>
@@ -486,7 +538,7 @@
                             </MudTextField>
                         </MudItem>
                     </MudGrid>
-                    
+
                     <MudGrid>
                         <!--Stock Dispo-->
                         <MudItem>
@@ -513,7 +565,7 @@
                             </MudTextField>
                         </MudItem>
                     </MudGrid>
-                   
+
                     <MudGrid>
                         <!--Famille d'appro-->
                         <MudItem>
@@ -624,14 +676,40 @@
                         }
 
                     </MudGrid>
+
+                    <!--the new Grid-->
+                    <MudStack Class="pa-1">
+                        <MudDataGrid T="BasketPriceLine" Items="@context.Item.Prices"
+                                     Bordered="true"
+                                     SortMode="@SortMode.None"
+                                     Striped="true"
+                                     Hover="true"
+                                     Dense="true"
+                                     Elevation="2"
+                                     Class="mx-n3"
+                                     RowStyleFunc="((item, x) => RowStyleFunc(item, x ,context.Item))">
+                            <Columns>
+                                <PropertyColumn Property="x => x == null? 0 : x.quantity"
+                                                Title="Quantity"
+                                                CellClass="pa-1 ma-1"
+                                                />
+                                <PropertyColumn Property="x => x == null? 0 : x.catalogPrice"
+                                                Title="Prix Cat."
+                                                CellClass="pa-1 ma-1" />
+                                <PropertyColumn Property="x => x == null? 0 : x.discountPrice"
+                                                Title="Prix Rem." />
+                                <PropertyColumn Property="x => x == null? 0 : x.multiplePrice"
+                                                Title="Prix / 25"
+                                                CellClass="pa-1 ma-1" />
+                                <PropertyColumn Property="x => x == null? 0 : x.discountRate"
+                                                Title="% Dégress."
+                                                CellClass="pa-1 ma-1" />
+                            </Columns>
+                        </MudDataGrid>
+                    </MudStack>
                 </MudPaper>
             </MudStack>
         </ChildRowContent>
     </MudDataGrid>
 
 </MudContainer>
-
-
-
-
-
