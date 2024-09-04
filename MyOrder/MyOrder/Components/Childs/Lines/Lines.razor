@@ -28,13 +28,12 @@
                  EditMode="@DataGridEditMode.Cell"
                  ReadOnly="false"> 
         <Columns>
-            
             <SelectColumn T="BasketLineDto" Size="Size.Small" />
             <HierarchyColumn T="BasketLineDto" />
             <PropertyColumn Property="x => x.LineNum.Value"
                             Title="Ligne"
                             HeaderClass="header-style"
-                            Editable="true"
+                            Editable="IsLineNbrEditable"
                             CellStyle="text-align: center; margin: 5% auto; font-size: 12px;" />
 
             <TemplateColumn Title="not impl" CellClass="pa-1 ma-1" CellStyle="text-align: center; margin: 5% auto; font-size: 12px;">
@@ -61,35 +60,42 @@
                             HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
                             CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
                             CellClass="pa-1 ma-1"
-                            Editable="true" />
+                            Editable="IsItemIdEditable" />
             <PropertyColumn Property="x => x.Name.Value" Title="Description"
                             HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
                             CellStyle="text-align: center; margin: 5% auto; font-size: 11px;"
-                            CellClass="pa-1 ma-1" />
+                            CellClass="pa-1 ma-1"
+                            Editable="IsNameEditable" />
             <PropertyColumn Property="x => x.InventLocationId.Value " Title="Entrepôt"
                             HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
                             CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
-                            CellClass="pa-1 ma-1" />
+                            CellClass="pa-1 ma-1" 
+                            Editable="IsInventLocationIdEditable" />
             <PropertyColumn Property="x => x.ItemOnOrderQuantity.Value " Title="Commandé"
                             HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
                             CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
-                            CellClass="pa-1 ma-1" />
+                            CellClass="pa-1 ma-1"
+                            Editable="false" />
             <PropertyColumn Property="x => x.SalesQuantity.Value" Title="Quantité"
                             HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
                             CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
-                            CellClass="pa-1 ma-1" />
+                            CellClass="pa-1 ma-1"
+                            Editable="IsSalesQuantityEditable" />
             <PropertyColumn Property="x => x.SalesPrice.Value" Title="Prix Unitaire"
                             HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
                             CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
-                            CellClass="pa-1 ma-1" />
+                            CellClass="pa-1 ma-1"
+                            Editable="true" />
             <PropertyColumn Property="x => x.DiscountType.Value" Title="Tarification"
                             HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
                             CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
-                            CellClass="pa-1 ma-1" />
+                            CellClass="pa-1 ma-1"
+                            Editable="IsDiscountTypeEditable" />
             <PropertyColumn Property="x => x.LineAmount.Value" Title="Montant HT"
                             HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
                             CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
-                            CellClass="pa-1 ma-1" />
+                            CellClass="pa-1 ma-1"
+                            Editable="IsLineAmountEditable" />
         </Columns>
         <ChildRowContent>
 

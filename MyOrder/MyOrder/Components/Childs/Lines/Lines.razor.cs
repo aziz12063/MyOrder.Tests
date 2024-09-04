@@ -6,18 +6,27 @@ using MyOrder.Components.Common;
 using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.Lines;
 using MyOrder.Store.LinesUseCase;
+using MyOrder.Utils;
 
 
 namespace MyOrder.Components.Childs.Lines
 {
     public partial class Lines : BaseFluxorComponent<LinesState, FetchLinesAction>
     {
-       
-        private BasketOrderLinesDto? BasketOrderLinesDto {  get; set; }
+        private BasketOrderLinesDto? BasketOrderLinesDto { get; set; }
         private List<BasketValueDto?>? UpdateReasons { get; set; }
         private List<BasketValueDto?>? LogisticFlows { get; set; }
         private BasketLineDto? basketLineDto { get; set; }
         private List<BasketLineDto>? selectedBasketLineDto { get; set; }
+        private bool IsLineNbrEditable { get; set; }
+        private bool IsItemIdEditable { get; set; }
+        private bool IsNameEditable { get; set; }
+        private bool IsInventLocationIdEditable { get; set; }
+        private bool IsSalesQuantityEditable { get; set; }
+        private bool IsSalesPriceEditable { get; set; } // not yet
+        private bool IsDiscountTypeEditable { get; set; }
+        private bool IsLineAmountEditable { get; set; }
+
 
         protected override void CacheNewFields()
         {
@@ -25,8 +34,20 @@ namespace MyOrder.Components.Childs.Lines
             UpdateReasons = State.Value.UpdateReasons;
             LogisticFlows = State.Value.LogisticFlows;
             selectedBasketLineDto = new List<BasketLineDto>();
+
+            if (BasketOrderLinesDto is not null && BasketOrderLinesDto.lines is not null && BasketOrderLinesDto.lines.Count > 0)
+            {
+                IsLineNbrEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0].LineNum);
+                IsItemIdEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0].ItemId);
+                IsNameEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0].Name);
+                IsInventLocationIdEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0].InventLocationId);
+                IsSalesQuantityEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0].SalesQuantity);
+                IsDiscountTypeEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0].DiscountType);
+                IsLineAmountEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0].LineAmount);
+                
+            }
         }
- 
+
         protected override FetchLinesAction CreateFetchAction(LinesState state, string basketId)
         {
             return new FetchLinesAction(state, basketId);
@@ -55,7 +76,7 @@ namespace MyOrder.Components.Childs.Lines
 
         }
 
-      
+
 
         void HandleRowDoubleClick(MouseEventArgs args, BasketLineDto item)
         {
@@ -67,7 +88,7 @@ namespace MyOrder.Components.Childs.Lines
             basketLineDto = args.Item;
         }
 
-      
+
 
         string BackgroundColor(BasketLineDto arg, int index) // it's called twice i don't know why
         {
