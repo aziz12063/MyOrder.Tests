@@ -8,6 +8,9 @@
     return;
 }
 <MudContainer Class="pa-0 ma-0" Style="max-width: none;">
+
+
+
     <!--Grid-->
     <MudDataGrid T="BasketLineDto"
                  Bordered="true"
@@ -28,6 +31,7 @@
                  ReadOnly="false"
                  CommittedItemChanges="@CommittedItemChanges"
                  RowClick="RowClicked">
+       
         <Columns>
             <SelectColumn T="BasketLineDto" Size="Size.Small" />
             <HierarchyColumn T="BasketLineDto" />
@@ -69,13 +73,13 @@
                             CellClass="pa-1 ma-1"
                             Editable="IsItemIdEditable" />
 
-            <PropertyColumn Property="x => x.Name.Value" Title="Description"
+            <PropertyColumn Property="x => x.Name == null ? string.Empty : x.Name.Value" Title="Description"
                             HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
                             CellStyle="text-align: center; margin: 5% auto; font-size: 11px;"
                             CellClass="pa-1 ma-1"
                             Editable="IsNameEditable" />
 
-            <PropertyColumn Property="x => x.InventLocationId.Value " Title="Entrepôt"
+            <PropertyColumn Property="x => x.InventLocationId == null ? string.Empty : x.InventLocationId.Value " Title="Entrepôt"
                             HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
                             CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
                             CellClass="pa-1 ma-1"
@@ -87,11 +91,11 @@
                             CellStyle="text-align: center; margin: 5% auto; font-size: 12px;">
                 <CellTemplate>
                     <MudTextField T="int?" Immediate="true"
-                                  ReadOnly="@FieldUtility.IsReadOnly(BasketOrderLinesDto.lines[0].SalesQuantity)"
+                                  ReadOnly="@FieldUtility.IsReadOnly(BasketOrderLinesDto?.lines?[0]?.SalesQuantity)"
                                   Required="true" RequiredError="Quantité is required!"
-                                  Validation="@(new Func<int?, string>(CheckQuantityValue))"
+                                  Validation="@(new Func<int?, string?>(CheckQuantityValue))"
                                   Value="@context.Item.SalesQuantity?.Value"
-                                  ValueChanged="(x => OnValueChange(x, context.Item, context.Item.SalesQuantity, context.Item.LineNum.Value))" />
+                                  ValueChanged="(x => OnValueChange(x, context.Item, context.Item.SalesQuantity, context.Item.LineNum?.Value))" />
                 </CellTemplate>
             </TemplateColumn>
 
@@ -100,11 +104,11 @@
                             HeaderClass="header-style"
                             CellStyle="text-align: center; margin: 5% auto; font-size: 12px;">
                 <CellTemplate>
-                    <MudTextField T="decimal?" 
+                    <MudTextField T="decimal?"
                                   Format="0.##' %'"
-                                  ReadOnly="@FieldUtility.IsReadOnly(BasketOrderLinesDto.lines[0].DiscountRate)"
+                                  ReadOnly="@FieldUtility.IsReadOnly(BasketOrderLinesDto?.lines?[0]?.DiscountRate)"
                                   Value="@context.Item.DiscountRate?.Value"
-                                  ValueChanged="(x => OnValueChange(x, context.Item, context.Item.DiscountRate, context.Item.LineNum.Value))" />
+                                  ValueChanged="(x => OnValueChange(x, context.Item, context.Item.DiscountRate, context.Item.LineNum?.Value))" />
                 </CellTemplate>
             </TemplateColumn>
 
@@ -115,9 +119,9 @@
                 <CellTemplate>
                     <MudTextField T="decimal?"
                                   Format="0.##' %'"
-                                  ReadOnly="@FieldUtility.IsReadOnly(BasketOrderLinesDto.lines[0].DiscountRate)"
+                                  ReadOnly="@FieldUtility.IsReadOnly(BasketOrderLinesDto?.lines?[0]?.DiscountRate)"
                                   Value="@context.Item.DiscountRate?.Value"
-                                  ValueChanged="(x => OnValueChange(x, context.Item, context.Item.DiscountRate, context.Item.LineNum.Value))" />
+                                  ValueChanged="(x => OnValueChange(x, context.Item, context.Item.DiscountRate, context.Item.LineNum?.Value))" />
                 </CellTemplate>
             </TemplateColumn>
 
@@ -127,26 +131,26 @@
                             CellStyle="text-align: center; margin: 5% auto; font-size: 12px;">
                 <CellTemplate>
                     <MudTextField T="decimal?"
-                                  ReadOnly="@FieldUtility.IsReadOnly(BasketOrderLinesDto.lines[0].SalesPrice)"
+                                  ReadOnly="@FieldUtility.IsReadOnly(BasketOrderLinesDto?.lines?[0]?.SalesPrice)"
                                   Value="@context.Item.SalesPrice?.Value"
-                                  ValueChanged="(x => OnValueChange(x, context.Item, context.Item.SalesPrice, context.Item.LineNum.Value))"
+                                  ValueChanged="(x => OnValueChange(x, context.Item, context.Item.SalesPrice, context.Item.LineNum?.Value))"
                                   Format="#,0.00 €" />
                 </CellTemplate>
             </TemplateColumn>
 
-            <PropertyColumn Property="x => x.DiscountType.Value" Title="Tarification"
+            <PropertyColumn Property="x => x.DiscountType == null ? string.Empty : x.DiscountType.Value" Title="Tarification"
                             Format="0.##' %'"
                             HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
                             CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
                             CellClass="pa-1 ma-1"
                             Editable="IsDiscountTypeEditable" />
 
-            <PropertyColumn Property="x => x.LineAmount.Value" Title="Montant HT" 
+            <PropertyColumn Property="x => x.LineAmount == null ? 0 :  x.LineAmount.Value" Title="Montant HT"
                             HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
                             CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
                             CellClass="pa-1 ma-1"
                             Editable="IsLineAmountEditable"
-                            Format="c"/>
+                            Format="c" />
         </Columns>
 
         <ChildRowContent>
@@ -168,7 +172,7 @@
                                               ReadOnly="@FieldUtility.IsReadOnly(context.Item.ItemId)"
                                               Disabled="@FieldUtility.IsHidden(context.Item.ItemId)"
                                               Value="@context.Item.ItemId?.Value"
-                                              ValueChanged="(x => OnValueChange(x, context.Item, context.Item.ItemId, context.Item.LineNum.Value))">
+                                              ValueChanged="(x => OnValueChange(x, context.Item, context.Item.ItemId, context.Item.LineNum?.Value))">
                                 </MudTextField>
                             </MudItem>
                         }
@@ -187,7 +191,7 @@
                                               ReadOnly="@FieldUtility.IsReadOnly(context.Item.LineNum)"
                                               Disabled="@FieldUtility.IsHidden(context.Item.LineNum)"
                                               Value="@context.Item.LineNum?.Value"
-                                              ValueChanged="(x => OnValueChange(x, context.Item, context.Item.LineNum, context.Item.LineNum.Value))">
+                                              ValueChanged="(x => OnValueChange(x, context.Item, context.Item.LineNum, context.Item.LineNum?.Value))">
                                 </MudTextField>
                             </MudItem>
                         }
@@ -199,12 +203,12 @@
                             <MudItem>
                                 <GenericMudSelect Variant="Variant.Outlined"
                                                   T="string"
-                                                  @bind-BoundValue="context.Item.UpdateReason.Value"
+                                                  @bind-BoundValue="context.Item.UpdateReason!.Value"
                                                   @bind-BoundValue:after="(() =>
                                                                     OnValueChange(context.Item.UpdateReason.Value,
                                                                     context.Item,
                                                                     context.Item.UpdateReason,
-                                                                    context.Item.LineNum.Value))"
+                                                                    context.Item.LineNum?.Value))"
                                                   Field="context.Item.UpdateReason"
                                                   Items="UpdateReasons?.Select(item => item?.Value).ToList()" />
                             </MudItem>
@@ -224,7 +228,7 @@
                                               ReadOnly="@FieldUtility.IsReadOnly(context.Item.InitialSalesQuantity)"
                                               Disabled="@FieldUtility.IsHidden(context.Item.InitialSalesQuantity)"
                                               Value="@context.Item.InitialSalesQuantity?.Value"
-                                              ValueChanged="(x => OnValueChange(x, context.Item, context.Item.InitialSalesQuantity, context.Item.LineNum.Value))">
+                                              ValueChanged="(x => OnValueChange(x, context.Item, context.Item.InitialSalesQuantity, context.Item.LineNum?.Value))">
                                 </MudTextField>
                             </MudItem>
                         }
@@ -257,7 +261,7 @@
                                               ReadOnly="@FieldUtility.IsReadOnly(context.Item.VatRate)"
                                               Disabled="@FieldUtility.IsHidden(context.Item.VatRate)"
                                               Value="@context.Item.VatRate?.Value"
-                                              ValueChanged="(x => OnValueChange(x, context.Item, context.Item.VatRate, context.Item.LineNum.Value))">
+                                              ValueChanged="(x => OnValueChange(x, context.Item, context.Item.VatRate, context.Item.LineNum?.Value))">
                                 </MudTextField>
                             </MudItem>
                         }
@@ -276,7 +280,7 @@
                                       ReadOnly="@FieldUtility.IsReadOnly(context.Item.Name)"
                                       Disabled="@FieldUtility.IsHidden(context.Item.Name)"
                                       Value="@context.Item.Name?.Value"
-                                      ValueChanged="(x => OnValueChange(x, context.Item, context.Item.Name, context.Item.LineNum.Value))">
+                                      ValueChanged="(x => OnValueChange(x, context.Item, context.Item.Name, context.Item.LineNum?.Value))">
                         </MudTextField>
                     }
 
@@ -293,7 +297,7 @@
                                               Variant="Variant.Outlined"
                                               Required="@FieldUtility.IsRequired(context?.Item.Note)"
                                               ReadOnly="@FieldUtility.IsReadOnly(context?.Item.Note)"
-                                              Disabled="@FieldUtility.IsHidden(context.Item.Note)"
+                                              Disabled="@FieldUtility.IsHidden(context?.Item.Note)"
                                               Value="@context?.Item?.Note?.Value"
                                               ValueChanged="(x => OnValueChange(x, context?.Item, context?.Item?.Note ?? new () , context?.Item?.LineNum?.Value))">
                                 </MudTextField>
@@ -320,7 +324,7 @@
                                       ReadOnly="@FieldUtility.IsReadOnly(context.Item.ProductInfo)"
                                       Disabled="@FieldUtility.IsHidden(context.Item.ProductInfo)"
                                       Value="@context.Item.ProductInfo?.Value"
-                                      ValueChanged="(x => OnValueChange(x, context.Item, context.Item.ProductInfo, context.Item.LineNum.Value))">
+                                      ValueChanged="(x => OnValueChange(x, context.Item, context.Item.ProductInfo, context.Item.LineNum?.Value))">
                         </MudTextField>
                     }
                 </MudPaper>
@@ -331,16 +335,28 @@
                         @if (!FieldUtility.IsHidden(context.Item.LogisticFlow))
                         {
                             <MudItem>
-                                <GenericMudSelect Variant="Variant.Outlined"
-                                                  T="string"
-                                                  @bind-BoundValue="context.Item.LogisticFlow.Value"
-                                                  @bind-BoundValue:after="(() =>
-                                                                    OnValueChange(context.Item.LogisticFlow.Value,
-                                                                    context.Item,
-                                                                    context.Item.LogisticFlow,
-                                                                    context.Item.LineNum.Value))"
-                                                  Field="context.Item.LogisticFlow"
-                                                  Items="LogisticFlows?.Select(item => item?.Value).ToList()" />
+                                @if (context.Item.LogisticFlow != null)
+                                {
+                                    <GenericMudSelect Variant="Variant.Outlined"
+                                                      T="string"
+                                                      @bind-BoundValue=" context.Item.LogisticFlow.Value"
+                                                      @bind-BoundValue:after="() =>
+                                                                    OnValueChange(context?.Item?.LogisticFlow?.Value,
+                                                                    context?.Item,
+                                                                    context?.Item?.LogisticFlow,
+                                                                    context?.Item?.LineNum?.Value)"
+                                                      Field="context.Item.LogisticFlow"
+                                                      Items="LogisticFlows?.Select(item => item?.Value).ToList()" />
+                                }
+                                else
+                                {
+                                    var field = new Shared.Dtos.SharedComponents.Field<string>();
+                                    <GenericMudSelect Variant="Variant.Outlined"
+                                                      T="string"
+                                                      @bind-BoundValue="field.Value"
+                                                      Field="context.Item.LogisticFlow"
+                                                      Items="LogisticFlows?.Select(item => item?.Value).ToList()" />
+                                }
                             </MudItem>
                         }
 
@@ -350,12 +366,12 @@
                             <MudItem>
                                 <GenericMudSelect Variant="Variant.Outlined"
                                                   T="string"
-                                                  @bind-BoundValue="context.Item.InventLocationId.Value"
+                                                  @bind-BoundValue="context.Item.InventLocationId!.Value"
                                                   @bind-BoundValue:after="(() =>
-                                                                    OnValueChange(context.Item.LogisticFlow.Value,
+                                                                    OnValueChange(context.Item.LogisticFlow?.Value,
                                                                     context.Item,
                                                                     context.Item.LogisticFlow,
-                                                                    context.Item.LineNum.Value))"
+                                                                    context.Item.LineNum?.Value))"
                                                   Field="context.Item.InventLocationId"
                                                   Items="UpdateReasons?.Select(item => item?.Value).ToList()" />
                             </MudItem>
@@ -423,12 +439,12 @@
                             <MudItem>
                                 <GenericMudSelect Variant="Variant.Outlined"
                                                   T="string"
-                                                  @bind-BoundValue="context.Item.LogisticFlow.Value"
+                                                  @bind-BoundValue="context.Item.LogisticFlow!.Value"
                                                   @bind-BoundValue:after="(() =>
                                                                     OnValueChange(context.Item.LogisticFlow.Value,
                                                                     context.Item,
                                                                     context.Item.LogisticFlow,
-                                                                    context.Item.LineNum.Value))"
+                                                                    context.Item.LineNum?.Value))"
                                                   Field="context.Item.ItemType"
                                                   Items="UpdateReasons?.Select(item => item?.Value).ToList()" />
                             </MudItem>
@@ -452,7 +468,7 @@
                                               ReadOnly="@FieldUtility.IsReadOnly(context.Item.DeliveryDate)"
                                               Disabled="@FieldUtility.IsHidden(context.Item.DeliveryDate)"
                                               Value="@context.Item.DeliveryDate?.Value"
-                                              ValueChanged="(x => OnValueChange(x, context.Item, context.Item.DeliveryDate, context.Item.LineNum.Value))">
+                                              ValueChanged="(x => OnValueChange(x, context.Item, context.Item.DeliveryDate, context.Item.LineNum?.Value))">
                                 </MudTextField>
                             </MudItem>
                         }
@@ -469,7 +485,7 @@
                                               ReadOnly="@FieldUtility.IsReadOnly(context.Item.DeliveryDate)"
                                               Disabled="@FieldUtility.IsHidden(context.Item.DeliveryDate)"
                                               Value="@context.Item.DeliveryDate?.Value"
-                                              ValueChanged="(x => OnValueChange(x, context.Item, context.Item.DeliveryDate, context.Item.LineNum.Value))">
+                                              ValueChanged="(x => OnValueChange(x, context.Item, context.Item.DeliveryDate, context.Item.LineNum?.Value))">
                                 </MudTextField>
                             </MudItem>
                         }
@@ -614,12 +630,12 @@
                     {
                         <GenericMudSelect Variant="Variant.Outlined"
                                           T="string"
-                                          @bind-BoundValue="context.Item.LogisticFlow.Value"
+                                          @bind-BoundValue="context.Item.LogisticFlow!.Value"
                                           @bind-BoundValue:after="(() =>
                                                                     OnValueChange(context.Item.LogisticFlow.Value,
                                                                     context.Item,
                                                                     context.Item.LogisticFlow,
-                                                                    context.Item.LineNum.Value))"
+                                                                    context.Item.LineNum?.Value))"
                                           Field="context.Item.DiscountType"
                                           Items="UpdateReasons?.Select(item => item?.Value).ToList()" />
                     }
@@ -651,7 +667,7 @@
                                               ReadOnly="@FieldUtility.IsReadOnly(context.Item.DiscountRate)"
                                               Disabled="@FieldUtility.IsHidden(context.Item.DiscountRate)"
                                               Value="@context.Item.DiscountRate?.Value"
-                                              ValueChanged="(x => OnValueChange(x, context.Item, context.Item.DiscountRate, context.Item.LineNum.Value))">
+                                              ValueChanged="(x => OnValueChange(x, context.Item, context.Item.DiscountRate, context.Item.LineNum?.Value))">
                                 </MudTextField>
                             </MudItem>
                         }
@@ -670,7 +686,7 @@
                                               ReadOnly="@FieldUtility.IsReadOnly(context.Item.DiscountPrice)"
                                               Disabled="@FieldUtility.IsHidden(context.Item.DiscountPrice)"
                                               Value="@context.Item.DiscountPrice?.Value"
-                                              ValueChanged="(x => OnValueChange(x, context.Item, context.Item.DiscountPrice, context.Item.LineNum.Value))">
+                                              ValueChanged="(x => OnValueChange(x, context.Item, context.Item.DiscountPrice, context.Item.LineNum?.Value))">
                                 </MudTextField>
                             </MudItem>
                         }
@@ -691,8 +707,7 @@
                             <Columns>
                                 <PropertyColumn Property="x => x == null? 0 : x.quantity"
                                                 Title="Quantity"
-                                                CellClass="pa-1 ma-1"
-                                                />
+                                                CellClass="pa-1 ma-1" />
                                 <PropertyColumn Property="x => x == null? 0 : x.catalogPrice"
                                                 Title="Prix Cat."
                                                 CellClass="pa-1 ma-1" />
@@ -712,4 +727,16 @@
         </ChildRowContent>
     </MudDataGrid>
 
+    <MudPopover Open="@_open" Fixed="true" Class="px-4 pt-4" AnchorOrigin="Origin.CenterCenter">
+        <MudText>Content of the popover can be anything.</MudText>
+        <MudButton OnClick="@ToggleOpen" Class="ml-auto mr-n3 mb-1" Color="Color.Error">Close</MudButton>
+    </MudPopover>
 </MudContainer>
+
+@code {
+
+    private bool _open;
+
+    private void ToggleOpen() => _open = !_open;
+
+}

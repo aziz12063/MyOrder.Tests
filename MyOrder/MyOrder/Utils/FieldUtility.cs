@@ -5,7 +5,7 @@ namespace MyOrder.Utils;
 
 public static class FieldUtility
 {
-    public static bool IsHidden<T>(Field<T>? field) => field?.Status == "hidden";
+    public static bool IsHidden<T>(Field<T>? field) => field == null || field?.Status == "hidden";
     // Refactor to use readOnly and onlyForDisplay
     public static bool IsReadOnly<T>(Field<T>? field) => field?.Status == "readOnly";
     // Refactor to use Variant.Filled to reflect the actual status

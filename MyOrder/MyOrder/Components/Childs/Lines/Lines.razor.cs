@@ -42,15 +42,15 @@ namespace MyOrder.Components.Childs.Lines
 
             if (BasketOrderLinesDto is not null && BasketOrderLinesDto.lines is not null && BasketOrderLinesDto.lines.Count > 0)
             {
-                IsLineNbrEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0].LineNum);
-                IsItemIdEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0].ItemId);
-                IsNameEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0].Name);
-                IsInventLocationIdEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0].InventLocationId);
-                IsSalesQuantityEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0].SalesQuantity);
-                IsDiscountTypeEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0].DiscountType);
-                IsLineAmountEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0].LineAmount);
-                IsDiscountRateEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0].DiscountRate);
-                IsSalesPriceEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0].SalesPrice);
+                IsLineNbrEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0]?.LineNum);
+                IsItemIdEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0]?.ItemId);
+                IsNameEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0]?.Name);
+                IsInventLocationIdEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0]?.InventLocationId);
+                IsSalesQuantityEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0]?.SalesQuantity);
+                IsDiscountTypeEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0]?.DiscountType);
+                IsLineAmountEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0]?.LineAmount);
+                IsDiscountRateEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0]?.DiscountRate);
+                IsSalesPriceEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0]?.SalesPrice);
 
 
             }
@@ -64,11 +64,19 @@ namespace MyOrder.Components.Childs.Lines
         MudDataGrid<BasketLineDto> dataGrid = new();
 
 
-
-        string test = "";
-        private void OnValueChange<T>(T value , BasketLineDto row, Field<T?>? field, int? lineNbr)
+        private string NullableChek(BasketLineDto basketLineDto, Field<string> field, string value)
         {
-            if (lineNbr != null && lineNbr == row.LineNum?.Value)
+            if (basketLineDto != null && field != null)
+                return value;
+
+            return string.Empty;
+        }
+
+
+       
+        private void OnValueChange<T>(T value , BasketLineDto? row, Field<T?>? field, int? lineNbr)
+        {
+            if (lineNbr != null && lineNbr == row?.LineNum?.Value)
             {
 
                 //basketLineDto = row;
@@ -84,7 +92,7 @@ namespace MyOrder.Components.Childs.Lines
                     }
                 }
                     Logger.LogInformation($"in second else");
-                    field.Value = value;
+                    field!.Value = value;
                 
                 SetBasketOrderValue(field: field, value: value, procedureCallValue: value?.ToString());
                 // Console.WriteLine("UpdateReasonString: " + UpdateReasonString);
@@ -111,7 +119,7 @@ namespace MyOrder.Components.Childs.Lines
         private void CommittedItemChanges(BasketLineDto item)
         {
            
-            Logger.LogInformation($"CommittedItemChanges is called for line nbr {item.LineNum.Value}");
+            Logger.LogInformation($"CommittedItemChanges is called for line nbr {item.LineNum?.Value}");
             
         }
         private string RowStyleFunc(BasketPriceLine x, int index, BasketLineDto item)
