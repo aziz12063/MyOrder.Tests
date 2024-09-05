@@ -35,11 +35,10 @@
                             Title="Ligne"
                             HeaderClass="header-style"
                             CellStyle="text-align: center; margin: 5% auto; font-size: 12px;">
-
                 <CellTemplate>
                     <MudTextField T="int?"
                                   Value="@context.Item.LineNum?.Value"
-                                  ValueChanged="(x => OnValueChange(x, context.Item, context.Item.LineNum, context.Item.LineNum.Value))" />
+                                  ValueChanged="(x => OnValueChange(x, context.Item, context?.Item?.LineNum, context?.Item?.LineNum?.Value))" />
                 </CellTemplate>
             </TemplateColumn>
 
@@ -64,7 +63,7 @@
                 </CellTemplate>
             </TemplateColumn>
 
-            <PropertyColumn Property="x => x.ItemId.Value" Title="CodeArticle"
+            <PropertyColumn Property="x => x.ItemId == null? string.Empty : x.ItemId.Value" Title="CodeArticle"
                             HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
                             CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
                             CellClass="pa-1 ma-1"
@@ -86,11 +85,12 @@
                             Title="Quantité"
                             HeaderClass="header-style"
                             CellStyle="text-align: center; margin: 5% auto; font-size: 12px;">
-
                 <CellTemplate>
-                    <MudTextField T="int?"
+                    <MudTextField T="int?" Immediate="true"
                                   ReadOnly="@FieldUtility.IsReadOnly(BasketOrderLinesDto.lines[0].SalesQuantity)"
-                                  Value="@(context.Item.SalesQuantity?.Value )"
+                                  Required="true" RequiredError="Quantité is required!"
+                                  Validation="@(new Func<int?, string>(CheckQuantityValue))"
+                                  Value="@context.Item.SalesQuantity?.Value"
                                   ValueChanged="(x => OnValueChange(x, context.Item, context.Item.SalesQuantity, context.Item.LineNum.Value))" />
                 </CellTemplate>
             </TemplateColumn>
@@ -100,7 +100,7 @@
                             HeaderClass="header-style"
                             CellStyle="text-align: center; margin: 5% auto; font-size: 12px;">
                 <CellTemplate>
-                    <MudTextField T="decimal?"
+                    <MudTextField T="decimal?" 
                                   Format="0.##' %'"
                                   ReadOnly="@FieldUtility.IsReadOnly(BasketOrderLinesDto.lines[0].DiscountRate)"
                                   Value="@context.Item.DiscountRate?.Value"

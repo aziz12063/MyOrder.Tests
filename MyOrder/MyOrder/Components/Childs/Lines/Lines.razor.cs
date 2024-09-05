@@ -5,6 +5,7 @@ using MudBlazor;
 using MyOrder.Components.Common;
 using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.Lines;
+using MyOrder.Shared.Dtos.SharedComponents;
 using MyOrder.Store.LinesUseCase;
 using MyOrder.Utils;
 using static MudBlazor.CategoryTypes;
@@ -28,7 +29,7 @@ namespace MyOrder.Components.Childs.Lines
         private bool IsDiscountTypeEditable { get; set; }
         private bool IsLineAmountEditable { get; set; }
         private bool IsDiscountRateEditable { get; set; }
-       
+        
 
 
         protected override void CacheNewFields()
@@ -65,28 +66,45 @@ namespace MyOrder.Components.Childs.Lines
 
 
         string test = "";
-        private void OnValueChange<T>(T value, BasketLineDto row, MyOrder.Shared.Dtos.SharedComponents.Field<T?> field, int? lineNbr)
+        private void OnValueChange<T>(T value , BasketLineDto row, Field<T?>? field, int? lineNbr)
         {
-            if (lineNbr != null && lineNbr == row.LineNum.Value)
+            if (lineNbr != null && lineNbr == row.LineNum?.Value)
             {
 
                 //basketLineDto = row;
                 Console.WriteLine("Line nbr: " + row.LineNum.Value);
                 Console.WriteLine("the new value: " + value);
 
-                field.Value = value;
+                if(value is int?  && field is Field<int?>)
+                {
+                    int x = Convert.ToInt32(value) ;
+                    if(CheckQuantityValue(x) != null)
+                    {
+                        return;
+                    }
+                }
+                    Logger.LogInformation($"in second else");
+                    field.Value = value;
+                
                 SetBasketOrderValue(field: field, value: value, procedureCallValue: value?.ToString());
                 // Console.WriteLine("UpdateReasonString: " + UpdateReasonString);
-                Console.WriteLine("UpdateReason: " + row.UpdateReason.Value);
-
             }
-
         }
-        private void OnValueChangedCell()
+        void HandleIntervalElapsed(string debouncedText)
         {
+            //int value = Int32.Parse(debouncedText);
+            //CheckQuantityValue(value);
+        }
 
-            Logger.LogInformation($"CommittedItemChanges is called for line nbr ");
-
+        private string? CheckQuantityValue(int? value)
+        {
+            if (value == null || value == 0)
+                return "Quatity is required";
+            if (value % 25 != 0)
+            {
+                return "Quantity don't match ";
+            }
+            return null;
         }
 
         // is called when a cell is modifyed
