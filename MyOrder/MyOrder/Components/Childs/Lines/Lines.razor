@@ -1,4 +1,5 @@
-﻿@using MyOrder.Store.LinesUseCase
+﻿@using MyOrder.Components.Common.Input
+@using MyOrder.Store.LinesUseCase
 @using static MudBlazor.CategoryTypes
 @inherits MyOrder.Components.Common.BaseFluxorComponent<LinesState, FetchLinesAction>
 
@@ -8,9 +9,6 @@
     return;
 }
 <MudContainer Class="pa-0 ma-0" Style="max-width: none;">
-
-
-
     <!--Grid-->
     <MudDataGrid T="BasketLineDto"
                  Bordered="true"
@@ -31,7 +29,38 @@
                  ReadOnly="false"
                  CommittedItemChanges="@CommittedItemChanges"
                  RowClick="RowClicked">
-       
+                 <!--Buttons-->
+        <ToolBarContent>
+            <MudGrid>
+                <MudItem>
+                    <MudIconButton Icon="@Icons.Material.Filled.Search" Size="Size.Small" @onclick="() => OpenAdminDialogAsync(ActiveComponent.General)" />
+                    </MudItem>
+                <MudItem>
+                    <MudIconButton Icon="@Icons.Material.Filled.Add" Variant="Variant.Filled" Color="Color.Tertiary" OnClick="@ToggleOpen">Open</MudIconButton>
+                </MudItem>
+                <MudItem>
+                    <MudIconButton Icon="@Icons.Material.Outlined.AttachMoney" Variant="Variant.Filled" Color="Color.Tertiary" OnClick="@ToggleOpen">Open</MudIconButton>
+                </MudItem>
+                <MudItem>
+                    <MudIconButton Icon="@Icons.Material.Filled.Search" Variant="Variant.Filled" Color="Color.Primary" OnClick="@ToggleOpen">Open</MudIconButton>
+                </MudItem>
+                <MudItem>
+                    <MudIconButton Icon="@Icons.Material.Filled.Alarm" Variant="Variant.Filled" Color="Color.Primary" OnClick="@ToggleOpen">Open</MudIconButton>
+                </MudItem>
+                <MudItem>
+                    <MudIconButton Icon="@Icons.Material.Filled.List" Variant="Variant.Filled" Color="Color.Primary" OnClick="@ToggleOpen">Open</MudIconButton>
+                </MudItem>
+                <MudItem>
+                    <MudIconButton Icon="@Icons.Material.Filled.Handshake" Variant="Variant.Filled" Color="Color.Primary" OnClick="@ToggleOpen">Open</MudIconButton>
+                </MudItem>
+                <MudItem>
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" OnClick="@ToggleOpen">Open</MudIconButton>
+                </MudItem>
+                <MudItem>
+                    <MudIconButton Icon="@Icons.Material.Filled.ContentCopy" Variant="Variant.Filled" Color="Color.Primary" OnClick="@ToggleOpen">Open</MudIconButton>
+                </MudItem>
+            </MudGrid>
+        </ToolBarContent>
         <Columns>
             <SelectColumn T="BasketLineDto" Size="Size.Small" />
             <HierarchyColumn T="BasketLineDto" />
@@ -726,11 +755,6 @@
             </MudStack>
         </ChildRowContent>
     </MudDataGrid>
-
-    <MudPopover Open="@_open" Fixed="true" Class="px-4 pt-4" AnchorOrigin="Origin.CenterCenter">
-        <MudText>Content of the popover can be anything.</MudText>
-        <MudButton OnClick="@ToggleOpen" Class="ml-auto mr-n3 mb-1" Color="Color.Error">Close</MudButton>
-    </MudPopover>
 </MudContainer>
 
 @code {

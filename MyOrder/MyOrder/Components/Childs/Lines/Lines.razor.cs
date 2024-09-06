@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using MudBlazor;
 using MyOrder.Components.Common;
+using MyOrder.Components.Common.Dialogs;
 using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.Lines;
 using MyOrder.Shared.Dtos.SharedComponents;
@@ -15,6 +16,7 @@ namespace MyOrder.Components.Childs.Lines
 {
     public partial class Lines : BaseFluxorComponent<LinesState, FetchLinesAction>
     {
+        [Inject] IDialogService DialogService { get; set; }
         private BasketOrderLinesDto? BasketOrderLinesDto { get; set; }
         private List<BasketValueDto?>? UpdateReasons { get; set; }
         private List<BasketValueDto?>? LogisticFlows { get; set; }
@@ -62,6 +64,18 @@ namespace MyOrder.Components.Childs.Lines
         }
 
         MudDataGrid<BasketLineDto> dataGrid = new();
+
+        
+        private Task OpenAdminDialogAsync(ActiveComponent component)
+        {
+            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Medium, CloseButton = true };
+            var parameters = new DialogParameters<AdminDialog>
+            {
+                {x => x.activeComponent, component }
+            };
+            return DialogService.ShowAsync<AdminDialog>("Simple Dialog", parameters, options);
+        }
+
 
 
         private string NullableChek(BasketLineDto basketLineDto, Field<string> field, string value)

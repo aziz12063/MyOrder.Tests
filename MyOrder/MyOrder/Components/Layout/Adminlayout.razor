@@ -1,15 +1,15 @@
-﻿@*  @inherits LayoutComponentBase
+﻿  @* @inherits LayoutComponentBase
 
-<RadzenLayout>
-    <RadzenHeader>
-        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
+<MudLayout>
+    <MudCardHeader>
+        <MudStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
             <CascadingValue Value=this>
-                <RadzenSidebarToggle Click="@(() => sidebar1Expanded = !sidebar1Expanded)" />
-                <RadzenLabel  Text=@Name />
+                <MudSidebarToggle Click="@(() => sidebar1Expanded = !sidebar1Expanded)" />
+                <label  Text=@Name />
             </CascadingValue>
 
-        </RadzenStack>
-    </RadzenHeader>
+        </MudStack>
+    </MudCardHeader>
     <RadzenSidebar @bind-Expanded="@sidebar1Expanded">
         <RadzenPanelMenu>
             <RadzenPanelMenuItem Text="Général" Click="() => OpenComponent(typeof(General))" Icon="home" />
@@ -35,7 +35,7 @@
     <RadzenFooter>
         Footer
     </RadzenFooter>
-</RadzenLayout>
+</MudLayout> *@
 
 
- *@
+ 

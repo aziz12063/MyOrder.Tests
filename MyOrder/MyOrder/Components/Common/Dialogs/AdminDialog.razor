@@ -1,0 +1,58 @@
+﻿@using MyOrder.Components.Childs.Admin
+<MudDialog>
+    <TitleContent>
+        Admin
+    </TitleContent>
+
+    <DialogContent>
+        <!--Buttons-->
+        <MudStack Row="true" Style="background-color: #9fd0f1; height:100%;">
+            <MudButton Style="@ButtonStyle" OnClick="() => OpenComponent(ActiveComponent.General)" Variant="Variant.Filled">General</MudButton>
+            <MudButton Color="@(activeComponent == ActiveComponent.Ventes ? Color.Primary : Color.Default)" OnClick="() => OpenComponent(ActiveComponent.Ventes)" Variant="Variant.Filled">Ventes</MudButton>
+            <MudButton Color="Color.Tertiary" OnClick="Cancel" Variant="Variant.Filled">Button 3</MudButton>
+        </MudStack>
+        <!--Components-->
+        @if (activeComponent == ActiveComponent.General)
+        {
+            <General />
+        }
+        else if (activeComponent == ActiveComponent.Ventes)
+        {
+            <Ventes />
+        }
+        else
+        {
+            <p>Select a component to open.</p>
+        }
+
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">Ok</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private MudDialogInstance MudDialog { get; set; }
+
+    private string ButtonStyle => $"background-color: {clickedButtonBackgroundColor}; color: black;";
+    private string clickedButtonBackgroundColor = "#78e7e7";
+
+    [Parameter]
+    public ActiveComponent activeComponent { get; set; }
+
+    public void OpenComponent(ActiveComponent component)
+    {
+        activeComponent = component;
+    }
+
+   
+
+    private void Submit() => MudDialog.Close(DialogResult.Ok(true));
+
+    private void Cancel() => MudDialog.Cancel();
+    private bool _open = false;
+
+    
+}
