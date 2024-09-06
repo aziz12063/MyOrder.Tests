@@ -1,5 +1,7 @@
-﻿using MudBlazor;
+﻿using Microsoft.AspNetCore.Components;
+using MudBlazor;
 using MyOrder.Components.Common;
+using MyOrder.Components.Common.Dialogs;
 using MyOrder.Shared.Dtos;
 using MyOrder.Store.OrderInfoUseCase;
 using MyOrder.Utils;
@@ -8,6 +10,8 @@ namespace MyOrder.Components.Childs.Header;
 
 public partial class OrderInfo : BaseFluxorComponent<OrderInfoState, FetchOrderInfoAction>
 {
+    [Inject] IDialogService DialogService { get; set; }
+
     private BasketOrderInfoDto? BasketOrderInfo { get; set; }
     private List<ContactDto?>? Contacts { get; set; }
     private List<SalesOriginDto?>? SalesOrigins { get; set; }
@@ -82,4 +86,14 @@ public partial class OrderInfo : BaseFluxorComponent<OrderInfoState, FetchOrderI
             "noGift" => Icons.Material.Filled.CardGiftcard,
             _ => Icons.Material.Filled.Warning
         };
+
+    private Task OpenContactSearchDialogAsync()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Medium, CloseButton = true };
+        var parameters = new DialogParameters<SearchContactDialog>
+        {
+            { x => x.Contacts, Contacts }
+        };
+        return DialogService.ShowAsync<SearchContactDialog>("Simple Dialog", parameters, options);
+    }
 }

@@ -1,13 +1,16 @@
 ﻿
-<MudCard Elevation="1" Class="pa-2" Style="background: linear-gradient(165deg, #ffffff, #f7f9fc); border-radius: 8px;">
-    <MudCardHeader Class="px-1 py-1 ma-n1">
+<MudCard Elevation="Elevation" Class="pa-2 my-0">
+    <MudCardHeader Class="px-1 pt-1 pb-0 ma-n1">
         <CardHeaderContent>
             <MudStack Row="true" Spacing="1" StretchItems="StretchItems.Start" Class="pb-2">
                 @HeaderContent
             </MudStack>
         </CardHeaderContent>
+        <CardHeaderActions>
+            @HeaderActions
+        </CardHeaderActions>
     </MudCardHeader>
-    <MudCardContent>
+    <MudCardContent Class="py-0 px-1">
         @BodyContent
     </MudCardContent>
 </MudCard>
@@ -15,8 +18,13 @@
 @code {
     [Parameter, EditorRequired]
     public RenderFragment? HeaderContent { get; set; }
+    [Parameter]
+    public RenderFragment? HeaderActions { get; set; }
 
     [Parameter, EditorRequired]
     public RenderFragment? BodyContent { get; set; }
+
+    [Parameter]
+    public int Elevation { get; set; } = 2;
 
 }

@@ -1,5 +1,4 @@
 ﻿@using MyOrder.Store.DeliveryInfoUseCase
-
 @inherits MyOrder.Components.Common.BaseFluxorComponent<DeliveryInfoState, FetchDeliveryInfoAction>
 
 @if (State.Value.IsLoading)
@@ -8,12 +7,10 @@
     return;
 }
 
-
 <MudStack Justify="Justify.SpaceBetween" Style="height: inherit;">
-    <!-- Compte de livraison -->
     <div>
         <MudText Typo="Typo.h6" Color="Color.Secondary" Class="pb-4">Livraison</MudText>
-
+        <!-- Compte de livraison -->
         <CustomHeaderCard>
             <HeaderContent>
                 <MudStack Row="true" Spacing="1" StretchItems="StretchItems.Start" Class="pb-2">
@@ -42,14 +39,7 @@
                                   @bind-BoundValue="AccountValue"
                                   Variant="Variant.Outlined" />
 
-                <MudTextField Typo="Typo.caption"
-                              Style="margin-top: -4px !important;"
-                              Lines=" AccountAddress != null? AccountAddress.Count : 1"
-                              Variant="Variant.Outlined"
-                              FullWidth="true"
-                              Margin="Margin.Dense"
-                              ReadOnly="true"
-                              Value="DisplayAddress" />
+                <DisplayAddress Address="@DisplayAddress" />
             </BodyContent>
         </CustomHeaderCard>
     </div>
@@ -101,7 +91,7 @@
                          Size="Size.Small"
                          Style="display:inline-block;"
                          Label="@BasketDeliveryInfo!.CompleteDelivery?.Name"
-                         LabelPosition="LabelPosition.Start"
+                         LabelPosition="LabelPosition.End"
                          ReadOnly="@FieldUtility.IsReadOnly(BasketDeliveryInfo!.CompleteDelivery)"
                          Disabled="@FieldUtility.IsHidden(BasketDeliveryInfo!.CompleteDelivery)"
                          @bind-Value="CompleteDelivery" />
@@ -130,21 +120,9 @@
 
     <!-- Notes de RC -->
     <div>
-        @if (!FieldUtility.IsHidden(BasketDeliveryInfo!.NoteMustBeSaved))
-        {
-            <MudItem>
-                <MudCheckBox Dense="true"
-                             Size="Size.Small"
-                             Style="display:inline-block;"
-                             Label="@BasketDeliveryInfo!.NoteMustBeSaved?.Name"
-                             LabelPosition="LabelPosition.Start"
-                             ReadOnly="@FieldUtility.IsReadOnly(BasketDeliveryInfo!.NoteMustBeSaved)"
-                             Disabled="@FieldUtility.IsHidden(BasketDeliveryInfo!.NoteMustBeSaved)"
-                             @bind-Value="SaveNoteForFutureOrders" />
-            </MudItem>
-        }
+
         <MudTextField Typo="Typo.caption"
-                      Lines="4"
+                      Lines="3"
                       Variant="Variant.Outlined"
                       FullWidth="true"
                       Margin="Margin.Dense"
@@ -152,5 +130,20 @@
                       ReadOnly="@FieldUtility.IsReadOnly(BasketDeliveryInfo!.Note)"
                       Label="@BasketDeliveryInfo!.Note?.Name"
                       @bind-Value="@NoteValue" />
+        @if (!FieldUtility.IsHidden(BasketDeliveryInfo!.NoteMustBeSaved))
+        {
+            <MudItem>
+                <MudCheckBox Dense="true"
+                             Size="Size.Small"
+                             Style="display:inline-block;"
+                             ReadOnly="@FieldUtility.IsReadOnly(BasketDeliveryInfo!.NoteMustBeSaved)"
+                             Disabled="@FieldUtility.IsHidden(BasketDeliveryInfo!.NoteMustBeSaved)"
+                             @bind-Value="SaveNoteForFutureOrders">
+                    <ChildContent>
+                        <MudText Typo="Typo.button">@BasketDeliveryInfo!.NoteMustBeSaved?.Name</MudText>
+                    </ChildContent>
+                </MudCheckBox>
+            </MudItem>
+        }
     </div>
 </MudStack>

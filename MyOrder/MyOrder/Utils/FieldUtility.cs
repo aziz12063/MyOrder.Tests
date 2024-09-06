@@ -9,7 +9,7 @@ public static class FieldUtility
     // Refactor to use readOnly and onlyForDisplay
     public static bool IsReadOnly<T>(Field<T>? field) => field?.Status == "readOnly";
     // Refactor to use Variant.Filled to reflect the actual status
-    public static bool IsDisabled<T>(Field<T>? field) => field?.Status == "onlyForDisplay";
+    public static bool IsOnlyForDisplay<T>(Field<T>? field) => field?.Status == "onlyForDisplay";
     public static bool IsReadWrite<T>(Field<T>? field) => field?.Status == "readWrite";
     public static bool IsRequired<T>(Field<T>? field) => field?.Status == "required";
     public static string NullOrWhiteSpaceHelper(string? value) => string.IsNullOrWhiteSpace(value) ? string.Empty : value;

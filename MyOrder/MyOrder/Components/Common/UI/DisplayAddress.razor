@@ -1,0 +1,13 @@
+﻿<MudTextField Typo="Typo.caption"
+              Style="margin-top: -4px !important;"
+              Class="mudcard-details-info-background"
+              Lines="4"
+              Variant="Variant.Outlined"
+              FullWidth="true"
+              Margin="Margin.Dense"
+              ReadOnly="true"
+              Value="Address" />
+
+@code {
+    [Parameter, EditorRequired] public string Address { get; set; }
+}

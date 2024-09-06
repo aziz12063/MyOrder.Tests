@@ -1,16 +1,17 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
-namespace MyOrder.Components.Common
+namespace MyOrder.Components.Common.UI
 {
     public class HoverableMudPaperBase : MudPaper
     {
         [Parameter] public int HoverElevation { get; set; } = 4;
+        [Parameter] public int IdleElevation { get; set; } = 2;
         protected int currentElevation;
 
         protected override void OnInitialized()
         {
-            currentElevation = Elevation;
+            currentElevation = IdleElevation;
         }
 
         protected void MouseEnterHandler()
@@ -20,7 +21,7 @@ namespace MyOrder.Components.Common
 
         protected void MouseLeaveHandler()
         {
-            currentElevation = Elevation;
+            currentElevation = IdleElevation;
         }
     }
 }

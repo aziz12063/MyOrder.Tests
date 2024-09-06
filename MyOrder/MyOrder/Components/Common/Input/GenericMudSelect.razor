@@ -1,7 +1,8 @@
 ﻿@using MyOrder.Shared.Dtos.SharedComponents
 @typeparam T
+@inherits GenericInputBase<T>
 
-@if (!IsHidden)
+@if (!hidden)
 {
     <MudSelect T="T"
                Typo="Typo.body2"
@@ -13,9 +14,9 @@
                Variant="@Variant"
                FullWidth="true"
                AnchorOrigin="Origin.CenterCenter"
-               Required="@IsRequired"
-               ReadOnly="@IsReadOnly"
-               Disabled="@IsReadOnly"
+               Required="required"
+               ReadOnly="readOnly"
+               Disabled="readOnly"
                @bind-Value="BoundValue"
                @bind-Value:after="BoundValueChangedHandler">
         @if (Items is not null)
@@ -29,17 +30,7 @@
 }
 
 @code {
-    [Parameter, EditorRequired] public T? BoundValue { get; set; }
-    [Parameter, EditorRequired] public Field<T>? Field { get; set; }
     [Parameter, EditorRequired] public List<T>? Items { get; set; }
     [Parameter] public Variant Variant { get; set; } = 0;
     [Parameter] public string? Class { get; set; }
-    [Parameter] public EventCallback<T> BoundValueChanged { get; set; }
-
-    private async Task BoundValueChangedHandler() => await BoundValueChanged.InvokeAsync(BoundValue);
-
-    private bool IsHidden => FieldUtility.IsHidden(Field);
-    private bool IsReadOnly => FieldUtility.IsReadOnly(Field);
-    private bool IsRequired => FieldUtility.IsRequired(Field);
-    private bool IsDisabled => FieldUtility.IsDisabled(Field);
 }

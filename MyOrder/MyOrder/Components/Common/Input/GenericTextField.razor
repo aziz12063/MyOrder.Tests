@@ -1,0 +1,49 @@
+﻿@using MyOrder.Shared.Dtos.SharedComponents
+@typeparam T
+@inherits GenericInputBase<T>
+
+ @if (!hidden)
+{
+    <MudTextField Typo="Typo.body2"
+                  Margin="Margin.Dense"
+                  Variant="variant"
+                  Class="@cssClass"
+                  Label="@Field?.Name"
+                  Required="required"
+                  Error="required"
+                  ReadOnly="onlyForDisplay"
+                  Disabled="readOnly"
+                  ShrinkLabel
+                  @bind-Value="BoundValue"
+                  @bind-Value:after="BoundValueChangedHandler" />
+
+}
+
+@code {
+    private Variant variant;
+    private string cssClass = string.Empty;
+    private bool shrinkLabel = false;
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        if (readOnly)
+        {
+            //cssClass = ".readonly-field";
+
+        }
+        else if (readWrite)
+        {
+            //cssClass = "readwrite-field";
+        }
+        else if (required)
+        {
+            cssClass = "";
+        }
+        else if (onlyForDisplay)
+        {
+            cssClass = "";
+        }
+    }
+}
