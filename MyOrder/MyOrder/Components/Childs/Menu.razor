@@ -1,9 +1,14 @@
 ﻿@using Fluxor
 @using MyOrder.Store.CreateBasketUseCase
 @using MyOrder.Store.GeneralInfoUseCase
+@using MyOrder.Store.OrderInfoUseCase
+@using MyOrder.Components.Common.Dialogs
 
 @inject IDispatcher dispatcher
 @inject IState<GeneralInfoState> generalInfoState
+@inject IState<OrderInfoState> orderInfoState
+@inject IDialogService DialogService
+
 
 <MudMenu AnchorOrigin="Origin.BottomCenter"
          TransformOrigin="Origin.TopCenter"
@@ -12,7 +17,7 @@
         <MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Add" Size="Size.Large" />
     </ActivatorContent>
     <ChildContent>
-        <MudMenuItem>Nouveau panier</MudMenuItem>
+        <MudMenuItem OnClick="OpenNewBasketDialogAsync">Nouveau panier</MudMenuItem>
         @*     <MudMenuItem>
         <MudMenu AnchorOrigin="Origin.CenterRight"
         TransformOrigin="Origin.CenterLeft" EndIcon="@Icons.Material.Filled.ArrowRight" ActivationEvent="MouseEvent.MouseOver">
@@ -45,6 +50,8 @@
 
 @code {
 
+    string accountId { get; set; }
+
     private void CloneBasket()
     {
         var basketId = generalInfoState?.Value?.GeneralInfo?.BasketId;
@@ -54,5 +61,22 @@
                 new CreateBasketAction(new NewBasketRequestDto
                     { BasketId = basketId }));
         }
+    }
+
+    private Task OpenNewBasketDialogAsync()
+    {
+        accountId = orderInfoState?.Value?.BasketOrderInfo?.Account?.Value?.AccountId;
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small };
+        var parameters = new DialogParameters<NewBasketDialog>
+        {
+            { x => x.AccountId, accountId }
+        };
+
+        return DialogService.ShowAsync<NewBasketDialog>("Simple Dialog", parameters, options);
+    }
+
+    private void NewBasket()
+    {
+        
     }
 }

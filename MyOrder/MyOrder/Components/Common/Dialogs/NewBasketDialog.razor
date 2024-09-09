@@ -1,0 +1,73 @@
+﻿@using Fluxor
+@inject IDispatcher dispatcher
+@using MyOrder.Store.CreateBasketUseCase
+
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h5">Nouveau panier</MudText>
+    </TitleContent>
+    <DialogContent>
+       
+          
+                <MudRadioGroup @bind-Value="position"  >
+                    <MudStack Justify="Justify.SpaceAround">
+                    <MudRadio Value="1" Style="width:100%;">
+                        <MudTextField @bind-Value="AccountId"
+                                      FullWidth="true"
+                                      Label="Nouveau panier pour le client n°"
+                                      Variant="Variant.Outlined"
+                                      Margin="Margin.Dense" />
+                    </MudRadio>
+                <MudRadio Value="2" Style="width:100%;" >
+                        <MudTextField @bind-Value="OrderId"
+                                      FullWidth="true"
+                                      Label="Ouvrir Panier, Commande, Offre n°"
+                                      Variant="Variant.Outlined"
+                                      Margin="Margin.Dense" />
+                    </MudRadio>
+                    </MudStack>
+                </MudRadioGroup>
+            
+       
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+        <MudButton Color="Color.Primary" OnClick="Submit">Ok</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private MudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public string AccountId { get; set; }
+
+
+    public string OrderId { get; set; }
+
+
+
+    private void Submit() 
+    {
+        if(position == 1)
+        {
+            dispatcher.Dispatch(
+                    new CreateBasketAction(new NewBasketRequestDto
+                        { AccountId = this.AccountId }));
+        }
+
+        if (position == 2)
+        {
+            dispatcher.Dispatch(
+                    new CreateBasketAction(new NewBasketRequestDto
+                        { OrderId = this.OrderId }));
+        }
+        
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+
+    private void Cancel() => MudDialog.Cancel();
+    int position = 1;
+}
