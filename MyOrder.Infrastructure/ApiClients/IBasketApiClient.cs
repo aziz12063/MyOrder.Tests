@@ -6,9 +6,25 @@ namespace MyOrder.Infrastructure.ApiClients
 {
     public interface IBasketApiClient
     {
+        //=======================================================================================================
+        // Actions Section
+        //=======================================================================================================
+        [Post("/api/orderContext")]
+        Task<NewBasketResponseDto> CreateNewBasketAsync([Body(BodySerializationMethod.UrlEncoded)] Dictionary<string, string> formFields);
 
+        [Post("/api/orderContext/{basketId}/procedureCall")]
+        Task<ProcedureCallResponseDto> PostProcedureCallAsync(string basketId, [Body] List<string> procedureCall);
+
+        //=======================================================================================================
+        // General Info Section
+        //=======================================================================================================
+        #region General Info
         [Get("/api/orderContext/{basketId}/generalInfo")]
         Task<BasketGeneralInfoDto> GetBasketGeneralInfoAsync(string basketId);
+
+        //[Get("/api/orderContext/{basketId}/notifications")]
+        //Task<IEnumerable<NotificationDto>> GetNotificationsAsync(string basketId);
+        #endregion
 
         //=======================================================================================================
         // Order Info Section
@@ -34,6 +50,7 @@ namespace MyOrder.Infrastructure.ApiClients
         //=======================================================================================================
         // Delivery Info Section
         //=======================================================================================================
+        #region Delivery Info
         [Get("/api/orderContext/{basketId}/deliveryInfo")]
         Task<BasketDeliveryInfoDto> GetBasketDeliveryInfoAsync(string basketId);
 
@@ -45,10 +62,12 @@ namespace MyOrder.Infrastructure.ApiClients
 
         [Get("/api/orderContext/{basketId}/deliveryModes")]
         Task<List<BasketValueDto?>> GetDeliveryModesAsync(string basketId);
+        #endregion
 
         //=======================================================================================================
         // Invoice Info Section
         //=======================================================================================================
+        #region Invoice Info
         [Get("/api/orderContext/{basketId}/invoiceInfo")]
         Task<BasketInvoiceInfoDto> GetBasketInvoiceInfoAsync(string basketId);
 
@@ -60,16 +79,20 @@ namespace MyOrder.Infrastructure.ApiClients
 
         [Get("/api/orderContext/{basketId}/paymentModes")]
         Task<List<BasketValueDto?>> GetPaymentModesAsync(string basketId);
+        #endregion
 
         //=======================================================================================================
         // Trade Info Section
         //=======================================================================================================
+        #region Trade Info
         [Get("/api/orderContext/{basketId}/tradeInfo")]
         Task<BasketTradeInfoDto> GetBasketTradeInfoAsync(string basketId);
+        #endregion
 
         //=======================================================================================================
         // Prices Info Section
         //=======================================================================================================
+        #region Prices Info
         [Get("/api/orderContext/{basketId}/pricesInfo")]
         Task<BasketPricesInfoDto> GetBasketPricesInfoAsync(string basketId);
 
@@ -81,17 +104,12 @@ namespace MyOrder.Infrastructure.ApiClients
 
         [Get("/api/orderContext/{basketId}/shippingCostOptions")]
         Task<List<BasketValueDto?>> GetShippingCostOptionsAsync(string basketId);
-
-        //=======================================================================================================
-        // Procedure Call Section
-        //=======================================================================================================
-        [Post("/api/orderContext/{basketId}/procedureCall")]
-        Task<ProcedureCallResponseDto> PostProcedureCallAsync(string basketId, [Body] List<string> procedureCall);
-
+        #endregion
 
         //=======================================================================================================
         //Lines Section
         //=======================================================================================================
+        #region Lines
         [Get("/api/orderContext/{basketId}/orderLines")]
         Task<BasketOrderLinesDto> GetBasketLinesAsync(string basketId);
 
@@ -100,9 +118,7 @@ namespace MyOrder.Infrastructure.ApiClients
 
         [Get("/api/orderContext/{basketId}/logisticFlows")]
         Task<List<BasketValueDto?>> GetlogisticFlowsAsync(string basketId);
+        #endregion
 
-
-        //[Get("/api/orderContext/{basketId}/notifications")]
-        //Task<IEnumerable<NotificationDto>> GetNotificationsAsync(string basketId);
     }
 }

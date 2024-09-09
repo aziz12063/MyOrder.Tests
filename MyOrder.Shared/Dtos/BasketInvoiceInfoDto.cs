@@ -6,6 +6,11 @@ public class BasketInvoiceInfoDto
     // ============================================
     // Facturation
     // ============================================
+    public string? PanelLabel { get; set; }
+    public string? AccountSectionLabel { get; set; }
+    public string? PaymentSectionLabel { get; set; }
+    public string? InformationSectionLabel { get; set; }
+
 
     // Compte de facturation (Ex: C0123456)
     // Modifiable + menu

@@ -38,6 +38,17 @@
     box-shadow: inset 0px 0px 7px #00000025 !important;
 }
 
+.outlined-generic-select input {
+    padding-top: 8px !important;
+    padding-bottom: 7px !important;
+}
+
+.outlined-display-field p {
+    padding-top: 2px !important;
+    padding-bottom: 4px !important;
+    color: #6C757D;
+}
+
 .onlyfordisplay-field input {
     background-color: #f0f0f0; /* Slightly darker gray background */
     border: none; /* No border to show it's non-interactive */

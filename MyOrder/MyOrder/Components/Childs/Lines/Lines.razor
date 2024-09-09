@@ -13,7 +13,6 @@
     <MudDataGrid T="BasketLineDto"
                  Bordered="true"
                  Dense="true"
-                 Hover="true"
                  Striped="true"
                  Elevation="4"
                  Items="@BasketOrderLinesDto!.lines"
@@ -31,9 +30,9 @@
                  RowClick="RowClicked">
                  <!--Buttons-->
         <ToolBarContent>
-            <MudGrid>
+            <MudStack Row="true" Spacing="1">
                 <MudItem>
-                    <MudIconButton Icon="@Icons.Material.Filled.Search" Size="Size.Small" @onclick="() => OpenAdminDialogAsync(ActiveComponent.General)" />
+                    <MudIconButton Icon="@Icons.Material.Filled.Search" Size="Size.Small" />
                     </MudItem>
                 <MudItem>
                     <MudIconButton Icon="@Icons.Material.Filled.Add" Variant="Variant.Filled" Color="Color.Tertiary" OnClick="@ToggleOpen">Open</MudIconButton>
@@ -59,7 +58,7 @@
                 <MudItem>
                     <MudIconButton Icon="@Icons.Material.Filled.ContentCopy" Variant="Variant.Filled" Color="Color.Primary" OnClick="@ToggleOpen">Open</MudIconButton>
                 </MudItem>
-            </MudGrid>
+            </MudStack>
         </ToolBarContent>
         <Columns>
             <SelectColumn T="BasketLineDto" Size="Size.Small" />
@@ -184,7 +183,7 @@
 
         <ChildRowContent>
 
-            <MudStack Row="true" Justify="Justify.SpaceBetween">
+            <MudStack Row="true" Spacing="3" Justify="Justify.SpaceAround" StretchItems="StretchItems.All">
                 <MudPaper Class="pa-3">
                     <MudGrid>
                         <!--Code article-->

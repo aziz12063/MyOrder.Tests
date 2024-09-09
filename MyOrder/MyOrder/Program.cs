@@ -26,6 +26,7 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddScoped<BasketService>();
 builder.Services.AddScoped<IStateResolver, StateResolver>();
+builder.Services.AddScoped<IUrlService, UrlService>();
 
 // Api Client, and Resilience Policies
 builder.Services.AddHttpContextAccessor();
@@ -55,8 +56,8 @@ builder.Services.AddFluxor(options =>
 
 
 // Repositories
-//builder.Services.AddScoped<IBasketRepository, BasketRepository>();
-builder.Services.AddSingleton<IBasketRepository, InMemoryBasketRepository>();
+builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+//builder.Services.AddSingleton<IBasketRepository, InMemoryBasketRepository>();
 
 //MudBlazor and UI elements
 builder.Services.AddMudServices();
@@ -72,9 +73,9 @@ if (app.Environment.IsDevelopment())
     //To disable caching while in development
     app.Use(async (context, next) =>
     {
-        context.Response.Headers["Cache-Control"] = "no-cache, no-store";
-        context.Response.Headers["Pragma"] = "no-cache";
-        context.Response.Headers["Expires"] = "-1";
+        context.Response.Headers.CacheControl = "no-cache, no-store";
+        context.Response.Headers.Pragma = "no-cache";
+        context.Response.Headers.Expires = "-1";
         await next();
     });
 }

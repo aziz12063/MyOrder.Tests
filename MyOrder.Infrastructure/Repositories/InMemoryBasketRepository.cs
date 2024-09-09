@@ -467,7 +467,10 @@ namespace MyOrder.Infrastructure.Repositories
             _basketslogisticFlows.Add(_basketId, SampleData.logisticFlowsP0130938);
         }
 
-        
+        public Task<NewBasketResponseDto> PostNewBasketAsync(NewBasketRequestDto newBasketRequest)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

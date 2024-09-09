@@ -1,7 +1,7 @@
 ﻿@using MyOrder.Store.OrderInfoUseCase
 @inherits BaseFluxorComponent<OrderInfoState, FetchOrderInfoAction>
 
-@if (State.Value.IsLoading)
+@if (isLoading)
 {
     <HeaderElementLoadingSkeleton />
     return;
@@ -55,37 +55,6 @@
         </CustomHeaderCard>
     </div>
 
-    <!-- Informations générales -->
-    @* <MudCard Elevation="0" Class="pa-2 my-0" Style="background-color: transparent;">
-    <MudCardHeader Class="px-1 pt-1 pb-0 ma-n1">
-    <CardHeaderContent>
-    <MudText Typo="Typo.subtitle1" Class="pt-0">Informations générales</MudText>
-    </CardHeaderContent>
-    <CardHeaderActions>
-    <div style="display: flex; align-items: center; justify-content: center; height: -1vh;">
-    @if (BasketOrderInfo?.CustomerTags is { Count: > 0 })
-    {
-    <MudStack Row="true" Spacing="2" Justify="Justify.FlexStart" Style="">
-    @foreach (var item in BasketOrderInfo.CustomerTags)
-    {
-    if (item is not null)
-    {
-    <MudIcon Color="@CustomerTagColorHelper(item.Value)"
-    Title="@FieldUtility.NullOrWhiteSpaceHelperWithDash(item.Description)"
-    Icon="@CustomerTagIconHelper(item.Value)"
-    Size="Size.Large" />
-    }
-    }
-    </MudStack>
-    }
-    </div>
-
-    </CardHeaderActions>
-    </MudCardHeader>
-    <MudCardContent Class="mt-1 py-0 px-1">
-
-    </MudCardContent>
-    </MudCard> *@
     <CustomHeaderCard Elevation="0">
         <HeaderContent>
             <MudText Typo="Typo.subtitle1" Class="pt-0">Informations générales</MudText>
@@ -112,23 +81,7 @@
         </HeaderActions>
         <BodyContent>
             <MudStack Spacing="2">
-
-                <MudTooltip RootStyle="width:100%">
-                    <TooltipContent>
-                        <MudText Typo="Typo.caption">@FieldUtility.NullOrWhiteSpaceHelperWithDash(BasketOrderInfo!.ActivityArea?.Description)</MudText>
-                    </TooltipContent>
-                    <ChildContent>
-                        <MudTextField Typo="Typo.body2"
-                                      Class="px-0"
-                                      FullWidth="true"
-                                      Label="@BasketOrderInfo!.ActivityArea?.Name"
-                                      Value="FieldUtility.NullOrWhiteSpaceHelperWithDash(BasketOrderInfo!.ActivityArea?.Value)"
-                                      ReadOnly="true"
-                                      Disabled="string.IsNullOrWhiteSpace(BasketOrderInfo!.ActivityArea?.Value)"
-                                      Variant="Variant.Outlined"
-                                      Margin="Margin.Dense" />
-                    </ChildContent>
-                </MudTooltip>
+                <DisplayField Field="@BasketOrderInfo!.ActivityArea" />
 
                 <MudGrid Spacing="0">
                     <MudItem xs="12">
@@ -141,8 +94,7 @@
 
                             </MudItem>
                             <MudItem xs="6">
-                                <GenericMudSelect T="string"
-                                                  @bind-BoundValue="WebOriginIdValue"
+                                <GenericMudSelect @bind-BoundValue="WebOriginIdValue"
                                                   Field="BasketOrderInfo!.WebOriginId"
                                                   Items="WebOrigins?.Select( item => item?.Value).ToList()" />
                             </MudItem>
@@ -157,14 +109,12 @@
                     </MudItem>
                     <!-- Customer Ref-->
                     <MudItem xs="12">
-                        <GenericTextField T="string"
-                                          Field="@BasketOrderInfo!.CustomerOrderRef"
+                        <GenericTextField Field="@BasketOrderInfo!.CustomerOrderRef"
                                           @bind-BoundValue="CustomerOrderRefValue" />
                     </MudItem>
                     <!-- Web Sales-->
                     <MudItem xs="12">
-                        <GenericTextField T="string"
-                                          Field="@BasketOrderInfo!.WebSalesId"
+                        <GenericTextField Field="@BasketOrderInfo!.WebSalesId"
                                           @bind-BoundValue="WebSalesIdValue" />
                     </MudItem>
                     <!-- Related Link-->

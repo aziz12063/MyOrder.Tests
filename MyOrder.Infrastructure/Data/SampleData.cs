@@ -9,7 +9,7 @@ namespace MyOrder.Infrastructure.Data
         // P0130938
 
         //  api/orderContext/P0130938/generalInfo   P0130938
-        public static BasketGeneralInfoDto generalInfoP0130938 = new BasketGeneralInfoDto()
+        public static BasketGeneralInfoDto generalInfoP0130938 = new()
         {
             OrderType = "Panier",
             BasketId = "P0130938",
@@ -415,7 +415,7 @@ namespace MyOrder.Infrastructure.Data
         //deliveryInfo   P0130938                                                           
         public static BasketDeliveryInfoDto deliveryInfoP0130938 = new BasketDeliveryInfoDto()
         {
-            Account = new Field<AccountDto>
+            Account = new Field<AccountDto?>
             {
                 Name = "Compte de livraison",
                 Status = "readWrite",
@@ -438,7 +438,7 @@ namespace MyOrder.Infrastructure.Data
                 ProcedureCall = new List<string?> { "UpdateCustomer", "DeliverTo", "<one of /deliverToAccounts accountId>" }
 
             },
-            Contact = new Field<ContactDto>
+            Contact = new Field<ContactDto?>
             {
                 Name = "Contact de livraison",
                 Status = "readWrite",
@@ -455,11 +455,10 @@ namespace MyOrder.Infrastructure.Data
                 ProcedureCall = new List<string?> { "UpdateContact", "DeliverTo", "<one of /deliverToContacts contactId>" }
 
             },
-            DeliveryMode = new Field<string>
+            DeliveryMode = new Field<string?>
             {
                 Name = "Mode de livraison",
                 Status = "readWrite",
-                Type = "String",
                 Value = "Catalogue",
                 ProcedureCall = new List<string?> { "UpdateOrderTablePropertyValue", "RAJ_GenericDlvMode", "System.String", "<one of /deliveryModes value>" }
 
@@ -468,7 +467,6 @@ namespace MyOrder.Infrastructure.Data
             {
                 Name = "Livraison complète",
                 Status = "readWrite",
-                Type = "Boolean",
                 Value = false
 
             },
@@ -768,7 +766,6 @@ namespace MyOrder.Infrastructure.Data
             {
                 Name = null,
                 Status = "onlyForDisplay",
-                Type = "String",
                 Value = null
             }
         };
@@ -971,7 +968,6 @@ namespace MyOrder.Infrastructure.Data
             {
                 Name = "Chiffre d'affaire",
                 Status = "onlyForDisplay",
-                Type = "List<BasketTurnoverLineDto>",
                 Value = new List<BasketTurnoverLineDto?>
                     {
                         new BasketTurnoverLineDto
@@ -1007,7 +1003,6 @@ namespace MyOrder.Infrastructure.Data
                 {
                     Name = "Contrat",
                     Status = "onlyForDisplay",
-                    Type = "String",
                     Value = "CT072408"
 
                 },
@@ -1015,7 +1010,6 @@ namespace MyOrder.Infrastructure.Data
                 {
                     Name = "Type",
                     Status = "onlyForDisplay",
-                    Type = "String",
                     Value = "Conditions Spéciales"
 
                 },
@@ -1023,56 +1017,52 @@ namespace MyOrder.Infrastructure.Data
                 {
                     Name = "Groupe de contrat",
                     Status = "onlyForDisplay",
-                    Type = "String",
                     Value = "CHRONOPOST SA"
                 },
                 Status = new Field<string?>
                 {
                     Name = "Statut",
                     Status = "onlyForDisplay",
-                    Type = "String",
                     Value = "En cours"
                 },
                 StartDate = new Field<string?>
                 {
                     Name = "Date de début",
                     Status = "onlyForDisplay",
-                    Type = "String",
                     Value = "2024-04-08 00:00:00"
                 },
                 EndDate = new Field<string?>
                 {
                     Name = "Date de fin",
                     Status = "onlyForDisplay",
-                    Type = "String",
                     Value = "2024-08-31 00:00:00"
                 },
                 CampaignId = new Field<string?>
                 {
                     Name = "Campagne de prix",
                     Status = "onlyForDisplay",
-                    Type = "String",
+
                     Value = null
                 },
                 MainContact = new Field<string?>
                 {
                     Name = "Commercial terrain",
                     Status = "onlyForDisplay",
-                    Type = "String",
+
                     Value = "ISABELLE LASNIER"
                 },
                 OfficeExecutive = new Field<string?>
                 {
                     Name = "Commercial sédentaire",
                     Status = "onlyForDisplay",
-                    Type = "String",
+
                     Value = "CHRISTELLE BERNIER"
                 },
                 DiscountList = new Field<List<string?>>
                 {
                     Name = "Description",
                     Status = "onlyForDisplay",
-                    Type = "List<string>",
+
                     Value = new List<string?> { "Prix nets sur 49 article(s)", "10% DC sur tout le catalogue" }
                 }
             }
@@ -1088,7 +1078,7 @@ namespace MyOrder.Infrastructure.Data
             {
                 Name = "Code Action",
                 Status = "readWrite",
-                Type = "String",
+
                 Value = "G032400",
                 ProcedureCall = new List<string?>
         {
@@ -1102,21 +1092,21 @@ namespace MyOrder.Infrastructure.Data
             {
                 Name = "Diff Franco",
                 Status = "onlyForDisplay",
-                Type = "Decimal",
+
                 Value = null
             },
             GiftAmountThreshold = new Field<decimal?>
             {
                 Name = "Diff KDO",
                 Status = "onlyForDisplay",
-                Type = "Decimal",
+
                 Value = null
             },
             ProductsInfo = new Field<string?>
             {
                 Name = "Dispo. Marchandise",
                 Status = "onlyForDisplay",
-                Type = "String",
+
                 Value = "78% en stock / Liv. Multiple"
             },
 
@@ -1125,14 +1115,14 @@ namespace MyOrder.Infrastructure.Data
             {
                 Name = "Marchandise HT",
                 Status = "onlyForDisplay",
-                Type = "Decimal",
+
                 Value = 77.00m
             },
             WarrantyCostOption = new Field<string?>
             {
                 Name = "Type de garantie optimale",
                 Status = "readWrite",
-                Type = "String",
+
                 Value = "Disabled",
                 ProcedureCall = new List<string?>
         {
@@ -1146,14 +1136,14 @@ namespace MyOrder.Infrastructure.Data
             {
                 Name = "Montant de la garantie optimale",
                 Status = "onlyForDisplay",
-                Type = "Decimal",
+
                 Value = 0.00m
             },
             ShippingCostOption = new Field<string?>
             {
                 Name = "Type de frais de port",
                 Status = "readWrite",
-                Type = "String",
+
                 Value = "Disabled",
                 ProcedureCall = new List<string?>
         {
@@ -1167,7 +1157,7 @@ namespace MyOrder.Infrastructure.Data
             {
                 Name = "Montant des frais de port",
                 Status = "readWrite",
-                Type = "Decimal",
+
                 Value = 0.00m,
                 ProcedureCall = new List<string?>
         {
@@ -1184,36 +1174,22 @@ namespace MyOrder.Infrastructure.Data
             {
                 Name = "Montant Total HT",
                 Status = "onlyForDisplay",
-                Type = "Decimal",
+
                 Value = 77.00m
             },
             VatAmount = new Field<decimal?>
             {
                 Name = "Montant TVA",
                 Status = "onlyForDisplay",
-                Type = "Decimal",
+
                 Value = 15.40m
             },
             TotalGrossAmount = new Field<decimal?>
             {
                 Name = "Montant TTC",
                 Status = "onlyForDisplay",
-                Type = "Decimal",
+
                 Value = 92.40m
-            },
-            FirstDeliveryDate = new Field<string?>
-            {
-                Name = "Première date de livraison",
-                Status = "onlyForDisplay",
-                Type = "String",
-                Value = "2024-08-20 00:00:00"
-            },
-            LastDeliveryDate = new Field<string?>
-            {
-                Name = "Dernière date de livraison",
-                Status = "onlyForDisplay",
-                Type = "String",
-                Value = "2024-08-30 00:00:00"
             },
 
             // Column 4
@@ -1221,21 +1197,20 @@ namespace MyOrder.Infrastructure.Data
             {
                 Name = "Remise Cde (%)",
                 Status = "readWrite",
-                Type = "Int",
                 Value = 0,
                 ProcedureCall = new List<string?>
-        {
-            "UpdateOrderTablePropertyValue",
-            "MyDiscountPercent",
-            "System.Int32",
-            "<value>"
-        }
+                {
+                    "UpdateOrderTablePropertyValue",
+                    "MyDiscountPercent",
+                    "System.Int32",
+                    "<value>"
+                }
             },
             OrderLastColumnDiscount = new Field<bool?>
             {
                 Name = "Remise Cde DC",
                 Status = "readWrite",
-                Type = "Bool",
+
                 Value = true,
                 ProcedureCall = new List<string?>
         {
@@ -1249,38 +1224,36 @@ namespace MyOrder.Infrastructure.Data
             {
                 Name = "Remise Cde (€)",
                 Status = "onlyForDisplay",
-                Type = "Decimal",
+
                 Value = 0.00m
             },
             AdditionalSalesAmount = new Field<decimal?>
             {
                 Name = "Ventes add. (€)",
                 Status = "onlyForDisplay",
-                Type = "Decimal",
+
                 Value = 0.00m
             },
             TotalWeight = new Field<decimal?>
             {
                 Name = "Poids (kg)",
                 Status = "onlyForDisplay",
-                Type = "Decimal",
+
                 Value = 12.67m
             },
             TotalVolume = new Field<decimal?>
             {
                 Name = "Volume (m3)",
                 Status = "onlyForDisplay",
-                Type = "Decimal",
+
                 Value = 0.095m
             }
-
-
-
         };
 
 
-        //coupons    Prices info section   P0130938
-        public static List<BasketValueDto?> couponsP0130938 = new List<BasketValueDto?>()
+
+    //coupons    Prices info section   P0130938
+    public static List<BasketValueDto?> couponsP0130938 = new List<BasketValueDto?>()
             {
                 new BasketValueDto
     {
@@ -1360,8 +1333,8 @@ namespace MyOrder.Infrastructure.Data
             };
 
 
-        //warrantyCostOptions   Prices info section   P0130938
-        public static List<BasketValueDto?> warrantyCostOptionsP0130938 = new List<BasketValueDto?>()
+    //warrantyCostOptions   Prices info section   P0130938
+    public static List<BasketValueDto?> warrantyCostOptionsP0130938 = new List<BasketValueDto?>()
             {
                  new BasketValueDto
     {
@@ -1372,8 +1345,8 @@ namespace MyOrder.Infrastructure.Data
             };
 
 
-        //shippingCostOptions   Prices info section   P0130938
-        public static List<BasketValueDto?> shippingCostOptionsP0130938 = new List<BasketValueDto?>()
+    //shippingCostOptions   Prices info section   P0130938
+    public static List<BasketValueDto?> shippingCostOptionsP0130938 = new List<BasketValueDto?>()
             {
                  new BasketValueDto
     {
@@ -1387,10 +1360,10 @@ namespace MyOrder.Infrastructure.Data
     }
             };
 
-        // Lines P0130938
-        public static BasketOrderLinesDto basketLineDtosP0130938 = new()
-        {
-            lines = new List<BasketLineDto?>()
+    // Lines P0130938
+    public static BasketOrderLinesDto basketLineDtosP0130938 = new()
+    {
+        lines = new List<BasketLineDto?>()
             {
             new BasketLineDto
             {
@@ -1601,7 +1574,7 @@ namespace MyOrder.Infrastructure.Data
         catalogPrice = 1.05m,
         discountPrice = 1.00m,
         multiplePrice = 25.00m,
-        discountRate = 0 
+        discountRate = 0
     },
      new BasketPriceLine
     {
@@ -1841,10 +1814,10 @@ namespace MyOrder.Infrastructure.Data
         Prices = null
     }
         }
-        };
+    };
 
 
-        public static List<BasketValueDto?> UpdateReasonsP0130938 = new List<BasketValueDto?>()
+    public static List<BasketValueDto?> UpdateReasonsP0130938 = new List<BasketValueDto?>()
             {
                  new BasketValueDto
                 {
@@ -2049,7 +2022,7 @@ new BasketValueDto
             };
 
 
-        public static List<BasketValueDto?> logisticFlowsP0130938 = new List<BasketValueDto?>()
+    public static List<BasketValueDto?> logisticFlowsP0130938 = new List<BasketValueDto?>()
             {
                  new BasketValueDto
                  {
@@ -2070,114 +2043,114 @@ new BasketValueDto
             };
 
 
-        //P0130140
+    //P0130140
 
-        //  api/orderContext/P0130140/generalInfo   P0130140
+    //  api/orderContext/P0130140/generalInfo   P0130140
 
-        public static BasketGeneralInfoDto generalInfoP0130140 = new BasketGeneralInfoDto()
+    public static BasketGeneralInfoDto generalInfoP0130140 = new BasketGeneralInfoDto()
+    {
+        OrderType = "Panier",
+        BasketId = "P0130140",
+        OrderId = "WC999075",
+        OrderStatus = "Nouveau",
+        OrderDate = "2024-07-15 17:04:31",
+        SalesResponsible = "CEDRIC REVILLON"
+    };
+
+
+    // orderInfo   P0130140
+    public static BasketOrderInfoDto orderInfoP0130140 = new BasketOrderInfoDto
+    {
+        Account = new Field<AccountDto?>
         {
-            OrderType = "Panier",
-            BasketId = "P0130140",
-            OrderId = "WC999075",
-            OrderStatus = "Nouveau",
-            OrderDate = "2024-07-15 17:04:31",
-            SalesResponsible = "CEDRIC REVILLON"
-        };
-
-
-        // orderInfo   P0130140
-        public static BasketOrderInfoDto orderInfoP0130140 = new BasketOrderInfoDto
-        {
-            Account = new Field<AccountDto?>
+            Name = "Compte commandeur",
+            Status = "onlyForDisplay",
+            Value = new AccountDto
             {
-                Name = "Compte commandeur",
-                Status = "onlyForDisplay",
-                Value = new AccountDto
-                {
-                    AccountId = "A1619563",
-                    Name = "COQUILLAGE NACRE",
-                    Recipient = "",
-                    Building = "",
-                    Street = "2 RUE BINET",
-                    Locality = "",
-                    ZipCode = "60000",
-                    City = "BEAUVAIS",
-                    Country = "FRANCE",
-                    Email = "",
-                    Phone = "0621434586",
-                    CellularPhone = "",
-                    Blocked = false
-                }
-            },
-            Contact = new Field<ContactDto?>
-            {
-                Name = "Contact commandeur",
-                Status = "readOnly",
-                Value = new ContactDto
-                {
-                    ContactId = "X4690210",
-                    SocialTitle = "M.",
-                    FirstName = "LUC",
-                    LastName = "DURAND",
-                    Email = "knouet@raja.fr",
-                    Phone = "0621434586",
-                    CellularPhone = "0621434586"
-                }
-            },
-            ActivityArea = new Field<string>
-            {
-                Name = "Secteur d'activité",
-                Status = "onlyForDisplay",
-                Value = null
-            },
-            CustomerTags = new List<BasketValueDto?>(),
-            SalesOriginId = new Field<string>
-            {
-                Name = "Canal de vente",
-                Status = "readOnly",
-                Value = "Téléphone"
-            },
-            WebOriginId = new Field<string>
-            {
-                Name = "Origine e-commerce",
-                Status = "readOnly",
-                Value = ""
-            },
-            SalesPoolId = new Field<string>
-            {
-                Name = "Type de transaction",
-                Status = "readOnly",
-                Value = "NOR"
-            },
-            CustomerOrderRef = new Field<string>
-            {
-                Name = "Référence Client",
-                Status = "readOnly",
-                Value = "visa"
-            },
-            WebSalesId = new Field<string>
-            {
-                Name = "Commande Web",
-                Status = "readOnly",
-                Value = ""
-            },
-            RelatedLink = new Field<string>
-            {
-                Name = "Devis",
-                Status = "hidden",
-                Value = ""
-            },
-            Note = new Field<string>
-            {
-                Name = "Note de RC",
-                Status = "onlyForDisplay",
-                Value = ""
+                AccountId = "A1619563",
+                Name = "COQUILLAGE NACRE",
+                Recipient = "",
+                Building = "",
+                Street = "2 RUE BINET",
+                Locality = "",
+                ZipCode = "60000",
+                City = "BEAUVAIS",
+                Country = "FRANCE",
+                Email = "",
+                Phone = "0621434586",
+                CellularPhone = "",
+                Blocked = false
             }
-        };
+        },
+        Contact = new Field<ContactDto?>
+        {
+            Name = "Contact commandeur",
+            Status = "readOnly",
+            Value = new ContactDto
+            {
+                ContactId = "X4690210",
+                SocialTitle = "M.",
+                FirstName = "LUC",
+                LastName = "DURAND",
+                Email = "knouet@raja.fr",
+                Phone = "0621434586",
+                CellularPhone = "0621434586"
+            }
+        },
+        ActivityArea = new Field<string>
+        {
+            Name = "Secteur d'activité",
+            Status = "onlyForDisplay",
+            Value = null
+        },
+        CustomerTags = new List<BasketValueDto?>(),
+        SalesOriginId = new Field<string>
+        {
+            Name = "Canal de vente",
+            Status = "readOnly",
+            Value = "Téléphone"
+        },
+        WebOriginId = new Field<string>
+        {
+            Name = "Origine e-commerce",
+            Status = "readOnly",
+            Value = ""
+        },
+        SalesPoolId = new Field<string>
+        {
+            Name = "Type de transaction",
+            Status = "readOnly",
+            Value = "NOR"
+        },
+        CustomerOrderRef = new Field<string>
+        {
+            Name = "Référence Client",
+            Status = "readOnly",
+            Value = "visa"
+        },
+        WebSalesId = new Field<string>
+        {
+            Name = "Commande Web",
+            Status = "readOnly",
+            Value = ""
+        },
+        RelatedLink = new Field<string>
+        {
+            Name = "Devis",
+            Status = "hidden",
+            Value = ""
+        },
+        Note = new Field<string>
+        {
+            Name = "Note de RC",
+            Status = "onlyForDisplay",
+            Value = ""
+        }
+    };
 
 
-        // orderByContacts   P0130140
-        public static List<ContactDto?> orderByContactsP0130140 = new List<ContactDto?>
+    // orderByContacts   P0130140
+    public static List<ContactDto?> orderByContactsP0130140 = new List<ContactDto?>
         {
             new ContactDto
             {
@@ -2192,8 +2165,8 @@ new BasketValueDto
         };
 
 
-        //customerTags   P0130140
-        public static List<BasketValueDto?> customerTagsP0130140 = new List<BasketValueDto?>
+    //customerTags   P0130140
+    public static List<BasketValueDto?> customerTagsP0130140 = new List<BasketValueDto?>
         {
     new BasketValueDto
     {
@@ -2223,8 +2196,8 @@ new BasketValueDto
         };
 
 
-        //salesPools   P0130140
-        public static List<BasketValueDto?> salesPoolsP0130140 = new List<BasketValueDto?>
+    //salesPools   P0130140
+    public static List<BasketValueDto?> salesPoolsP0130140 = new List<BasketValueDto?>
         {
     new BasketValueDto
     {
@@ -2249,8 +2222,8 @@ new BasketValueDto
         };
 
 
-        //salesOrigins   P0130140
-        public static List<SalesOriginDto?> salesOriginsP0130140 = new List<SalesOriginDto?>
+    //salesOrigins   P0130140
+    public static List<SalesOriginDto?> salesOriginsP0130140 = new List<SalesOriginDto?>
         {
     new SalesOriginDto { Value = "" },
     new SalesOriginDto { Value = "Téléphone" },
@@ -2269,8 +2242,8 @@ new BasketValueDto
         };
 
 
-        //webOrigins   P0130140
-        public static List<BasketValueDto?> webOriginsP0130140 = new List<BasketValueDto?>
+    //webOrigins   P0130140
+    public static List<BasketValueDto?> webOriginsP0130140 = new List<BasketValueDto?>
 {
     new BasketValueDto { Value = "" },
     new BasketValueDto { Value = "3M" },
@@ -2362,13 +2335,13 @@ new BasketValueDto
 };
 
 
-        //procedureCall => SalesOrigin = Internet   P0130140
-        public static ProcedureCallResponseDto procedureCallResponseP0130140_1 = new ProcedureCallResponseDto
-        {
-            Success = true,
-            Message = "Property SalesOriginId updated with value Internet",
-            UpdateDone = true,
-            RefreshCalls = new List<string?>
+    //procedureCall => SalesOrigin = Internet   P0130140
+    public static ProcedureCallResponseDto procedureCallResponseP0130140_1 = new ProcedureCallResponseDto
+    {
+        Success = true,
+        Message = "Property SalesOriginId updated with value Internet",
+        UpdateDone = true,
+        RefreshCalls = new List<string?>
     {
         "generalInfo",
         "notifications",
@@ -2376,239 +2349,239 @@ new BasketValueDto
         "pricesInfo",
         "invoiceInfo"
     }
-        };
+    };
 
 
-        //procedureCall => RAJ_WebSalesId = W01234567   P0130140
-        public static ProcedureCallResponseDto procedureCallResponseP0130140_2 = new ProcedureCallResponseDto
-        {
-            Success = true,
-            Message = "Property RAJ_WebSalesId updated with value W01234567",
-            UpdateDone = true,
-            RefreshCalls = new List<string?>
+    //procedureCall => RAJ_WebSalesId = W01234567   P0130140
+    public static ProcedureCallResponseDto procedureCallResponseP0130140_2 = new ProcedureCallResponseDto
+    {
+        Success = true,
+        Message = "Property RAJ_WebSalesId updated with value W01234567",
+        UpdateDone = true,
+        RefreshCalls = new List<string?>
                 {
                     "generalInfo",
                     "notifications"
                 }
-        };
+    };
 
 
-        //procedureCall => MayLastColumnDiscount = true   P0130140
-        public static ProcedureCallResponseDto procedureCallResponseP0130140_3 = new ProcedureCallResponseDto
-        {
-            Success = true,
-            Message = "Property MyLastColumnDiscount updated with value True",
-            UpdateDone = true,
-            RefreshCalls = new List<string?>
+    //procedureCall => MayLastColumnDiscount = true   P0130140
+    public static ProcedureCallResponseDto procedureCallResponseP0130140_3 = new ProcedureCallResponseDto
+    {
+        Success = true,
+        Message = "Property MyLastColumnDiscount updated with value True",
+        UpdateDone = true,
+        RefreshCalls = new List<string?>
     {
         "generalInfo",
         "notifications",
         "pricesInfo",
         "orderLines"
     }
-        };
+    };
 
 
-        //procedureCall => UpdateContact(OrderBy, X2567124   P0130140
-        public static ProcedureCallResponseDto procedureCallResponseP0130140_4 = new ProcedureCallResponseDto
-        {
-            Success = true,
-            Message = "Contact X2567124 updated",
-            UpdateDone = true,
-            RefreshCalls = new List<string?>
+    //procedureCall => UpdateContact(OrderBy, X2567124   P0130140
+    public static ProcedureCallResponseDto procedureCallResponseP0130140_4 = new ProcedureCallResponseDto
+    {
+        Success = true,
+        Message = "Contact X2567124 updated",
+        UpdateDone = true,
+        RefreshCalls = new List<string?>
     {
         "generalInfo",
         "notifications"
     }
-        };
+    };
 
 
-        //procedureCall => addorderLine(CAS10,100)   P0130140
-        public static ProcedureCallResponseDto procedureCallResponseP0130140_5 = new ProcedureCallResponseDto
+    //procedureCall => addorderLine(CAS10,100)   P0130140
+    public static ProcedureCallResponseDto procedureCallResponseP0130140_5 = new ProcedureCallResponseDto
+    {
+        Success = true,
+        Message = "No line added",
+        UpdateDone = false,
+        RefreshCalls = new List<string?>()
+    };
+
+
+    //orderInfo => Check update values   P0130140
+    public static BasketOrderInfoDto orderInfoP0130140_2 = new BasketOrderInfoDto
+    {
+        Account = new Field<AccountDto?>
         {
-            Success = true,
-            Message = "No line added",
-            UpdateDone = false,
-            RefreshCalls = new List<string?>()
-        };
-
-
-        //orderInfo => Check update values   P0130140
-        public static BasketOrderInfoDto orderInfoP0130140_2 = new BasketOrderInfoDto
+            Name = "Compte commandeur",
+            Status = "onlyForDisplay",
+            Value = new AccountDto
+            {
+                AccountId = "A1619563",
+                Name = "COQUILLAGE NACRE",
+                Recipient = "",
+                Building = "",
+                Street = "2 RUE BINET",
+                Locality = "",
+                ZipCode = "60000",
+                City = "BEAUVAIS",
+                Country = "FRANCE",
+                Email = "",
+                Phone = "0621434586",
+                CellularPhone = "",
+                Blocked = false
+            }
+        },
+        Contact = new Field<ContactDto>
         {
-            Account = new Field<AccountDto?>
+            Name = "Contact commandeur",
+            Status = "readOnly",
+            Value = new ContactDto
             {
-                Name = "Compte commandeur",
-                Status = "onlyForDisplay",
-                Value = new AccountDto
-                {
-                    AccountId = "A1619563",
-                    Name = "COQUILLAGE NACRE",
-                    Recipient = "",
-                    Building = "",
-                    Street = "2 RUE BINET",
-                    Locality = "",
-                    ZipCode = "60000",
-                    City = "BEAUVAIS",
-                    Country = "FRANCE",
-                    Email = "",
-                    Phone = "0621434586",
-                    CellularPhone = "",
-                    Blocked = false
-                }
-            },
-            Contact = new Field<ContactDto>
-            {
-                Name = "Contact commandeur",
-                Status = "readOnly",
-                Value = new ContactDto
-                {
-                    ContactId = null,
-                    SocialTitle = null,
-                    FirstName = null,
-                    LastName = null,
-                    Email = null,
-                    Phone = null,
-                    CellularPhone = null
-                }
-            },
-            ActivityArea = new Field<string>
-            {
-                Name = "Secteur d'activité",
-                Status = "onlyForDisplay",
-                Value = null
-            },
-            CustomerTags = new List<BasketValueDto>
+                ContactId = null,
+                SocialTitle = null,
+                FirstName = null,
+                LastName = null,
+                Email = null,
+                Phone = null,
+                CellularPhone = null
+            }
+        },
+        ActivityArea = new Field<string>
+        {
+            Name = "Secteur d'activité",
+            Status = "onlyForDisplay",
+            Value = null
+        },
+        CustomerTags = new List<BasketValueDto>
     {
 
          new BasketValueDto { Description = "Client VIP", Value = "vip" }
     },
-            SalesOriginId = new Field<string>
-            {
-                Name = "Canal de vente",
-                Status = "readOnly",
-                Value = "Internet"
-            },
-            WebOriginId = new Field<string>
-            {
-                Name = "Origine e-commerce",
-                Status = "readWrite",
-                Value = "DESKTOP"
-            },
-            SalesPoolId = new Field<string>
-            {
-                Name = "Type de transaction",
-                Status = "readOnly",
-                Value = "NOR"
-            },
-            CustomerOrderRef = new Field<string>
-            {
-                Name = "Référence Client",
-                Status = "readOnly",
-                Value = "visa"
-            },
-            WebSalesId = new Field<string>
-            {
-                Name = "Commande Web",
-                Status = "readWrite",
-                Value = "W01234567"
-            },
-            RelatedLink = new Field<string>
-            {
-                Name = "Devis",
-                Status = "hidden",
-                Value = ""
-            },
-            Note = new Field<string>
-            {
-                Name = "Note de RC",
-                Status = "onlyForDisplay",
-                Value = ""
-            }
-        };
-
-
-        //deliveryInfo   P0130140
-        public static BasketDeliveryInfoDto deliveryInfoP0130140 = new BasketDeliveryInfoDto
+        SalesOriginId = new Field<string>
         {
-            Account = new Field<AccountDto>
+            Name = "Canal de vente",
+            Status = "readOnly",
+            Value = "Internet"
+        },
+        WebOriginId = new Field<string>
+        {
+            Name = "Origine e-commerce",
+            Status = "readWrite",
+            Value = "DESKTOP"
+        },
+        SalesPoolId = new Field<string>
+        {
+            Name = "Type de transaction",
+            Status = "readOnly",
+            Value = "NOR"
+        },
+        CustomerOrderRef = new Field<string>
+        {
+            Name = "Référence Client",
+            Status = "readOnly",
+            Value = "visa"
+        },
+        WebSalesId = new Field<string>
+        {
+            Name = "Commande Web",
+            Status = "readWrite",
+            Value = "W01234567"
+        },
+        RelatedLink = new Field<string>
+        {
+            Name = "Devis",
+            Status = "hidden",
+            Value = ""
+        },
+        Note = new Field<string>
+        {
+            Name = "Note de RC",
+            Status = "onlyForDisplay",
+            Value = ""
+        }
+    };
+
+
+    //deliveryInfo   P0130140
+    public static BasketDeliveryInfoDto deliveryInfoP0130140 = new BasketDeliveryInfoDto
+    {
+        Account = new Field<AccountDto>
+        {
+            Name = "Compte de livraison",
+            Status = "readOnly",
+            Value = new AccountDto
             {
-                Name = "Compte de livraison",
-                Status = "readOnly",
-                Value = new AccountDto
-                {
-                    AccountId = null,
-                    Name = null,
-                    Recipient = null,
-                    Building = null,
-                    Street = null,
-                    Locality = null,
-                    ZipCode = null,
-                    City = null,
-                    Country = null,
-                    Email = null,
-                    Phone = null,
-                    CellularPhone = null,
-                    Blocked = false
-                }
-            },
-            Contact = new Field<ContactDto>
-            {
-                Name = "Contact de livraison",
-                Status = "readOnly",
-                Value = new ContactDto
-                {
-                    ContactId = null,
-                    SocialTitle = null,
-                    FirstName = null,
-                    LastName = null,
-                    Email = null,
-                    Phone = null,
-                    CellularPhone = null
-                }
-            },
-            DeliveryMode = new Field<string>
-            {
-                Name = "Mode de livraison",
-                Status = "readOnly",
-                Value = null
-            },
-            CompleteDelivery = new Field<bool?>
-            {
-                Name = "Livraison complète",
-                Status = "readOnly",
-                Value = false
-            },
-            ImperativeDate = new Field<string>
-            {
-                Name = "Date impérative",
-                Status = "readOnly",
-                Value = null
-            },
-            OrderDocuments = new Field<List<string?>>
-            {
-                Name = "BL / Factures",
-                Status = "hidden",
-                Value = new List<string?>()
-            },
-            Note = new Field<string>
-            {
-                Name = "Note de livraison",
-                Status = "readOnly",
-                Value = null
-            },
-            NoteMustBeSaved = new Field<bool?>
-            {
-                Name = "Sauvegarde note de liv.",
-                Status = "readOnly",
-                Value = false,
-                Description = "Sauvegarde pour les prochaines commandes"
+                AccountId = null,
+                Name = null,
+                Recipient = null,
+                Building = null,
+                Street = null,
+                Locality = null,
+                ZipCode = null,
+                City = null,
+                Country = null,
+                Email = null,
+                Phone = null,
+                CellularPhone = null,
+                Blocked = false
             }
-        };
+        },
+        Contact = new Field<ContactDto>
+        {
+            Name = "Contact de livraison",
+            Status = "readOnly",
+            Value = new ContactDto
+            {
+                ContactId = null,
+                SocialTitle = null,
+                FirstName = null,
+                LastName = null,
+                Email = null,
+                Phone = null,
+                CellularPhone = null
+            }
+        },
+        DeliveryMode = new Field<string>
+        {
+            Name = "Mode de livraison",
+            Status = "readOnly",
+            Value = null
+        },
+        CompleteDelivery = new Field<bool?>
+        {
+            Name = "Livraison complète",
+            Status = "readOnly",
+            Value = false
+        },
+        ImperativeDate = new Field<string>
+        {
+            Name = "Date impérative",
+            Status = "readOnly",
+            Value = null
+        },
+        OrderDocuments = new Field<List<string?>>
+        {
+            Name = "BL / Factures",
+            Status = "hidden",
+            Value = new List<string?>()
+        },
+        Note = new Field<string>
+        {
+            Name = "Note de livraison",
+            Status = "readOnly",
+            Value = null
+        },
+        NoteMustBeSaved = new Field<bool?>
+        {
+            Name = "Sauvegarde note de liv.",
+            Status = "readOnly",
+            Value = false,
+            Description = "Sauvegarde pour les prochaines commandes"
+        }
+    };
 
 
-        //deliverToAccounts   P0130140
-        public static List<AccountDto?> deliverToAccountsP0130140 = new List<AccountDto?>
+    //deliverToAccounts   P0130140
+    public static List<AccountDto?> deliverToAccountsP0130140 = new List<AccountDto?>
 {
     new AccountDto
     {
@@ -2629,8 +2602,8 @@ new BasketValueDto
 };
 
 
-        //deliverToContacts   P0130140
-        public static List<ContactDto?> deliverToContactsP0130140 = new List<ContactDto?>
+    //deliverToContacts   P0130140
+    public static List<ContactDto?> deliverToContactsP0130140 = new List<ContactDto?>
 {
     new ContactDto
     {
@@ -2645,8 +2618,8 @@ new BasketValueDto
 };
 
 
-        //deliveryModes   P0130140
-        public static List<BasketValueDto?> deliveryModesP0130140 = new List<BasketValueDto?>
+    //deliveryModes   P0130140
+    public static List<BasketValueDto?> deliveryModesP0130140 = new List<BasketValueDto?>
 {
     new BasketValueDto { Value = "Catalogue" },
     new BasketValueDto { Value = "Enlèvement" },
@@ -2657,78 +2630,78 @@ new BasketValueDto
 };
 
 
-        //invoiceInfo   P0130140
-        public static BasketInvoiceInfoDto invoiceInfoP0130140 = new BasketInvoiceInfoDto
+    //invoiceInfo   P0130140
+    public static BasketInvoiceInfoDto invoiceInfoP0130140 = new BasketInvoiceInfoDto
+    {
+        Account = new Field<AccountDto>
         {
-            Account = new Field<AccountDto>
+            Name = "Compte de facturation",
+            Status = "readOnly",
+            Value = new AccountDto
             {
-                Name = "Compte de facturation",
-                Status = "readOnly",
-                Value = new AccountDto
-                {
-                    AccountId = null,
-                    Name = null,
-                    Recipient = null,
-                    Building = null,
-                    Street = null,
-                    Locality = null,
-                    ZipCode = null,
-                    City = null,
-                    Country = null,
-                    Email = null,
-                    Phone = null,
-                    CellularPhone = null,
-                    Blocked = false
-                }
-            },
-            SiretId = new Field<string>
-            {
-                Name = "Siret",
-                Status = "onlyForDisplay",
-                Value = null
-            },
-            TaxGroup = new Field<string>
-            {
-                Name = "Groupe de taxe",
-                Status = "readOnly",
-                Value = null
-            },
-            PaymentTerm = new Field<string>
-            {
-                Name = "Conditions de paiement",
-                Status = "onlyForDisplay",
-                Value = null
-            },
-            PaymentMode = new Field<string>
-            {
-                Name = "Mode de paiement",
-                Status = "readOnly",
-                Value = null
-            },
-            IsPublicEntity = false,
-            PublicEntityExecutingService = new Field<string>
-            {
-                Name = "Service exécutif",
-                Status = "readOnly",
-                Value = null
-            },
-            PublicEntityLegalCommitment = new Field<string>
-            {
-                Name = "Engagement juridique",
-                Status = "readOnly",
-                Value = null
-            },
-            Note = new Field<string>
-            {
+                AccountId = null,
                 Name = null,
-                Status = "onlyForDisplay",
-                Value = ""
+                Recipient = null,
+                Building = null,
+                Street = null,
+                Locality = null,
+                ZipCode = null,
+                City = null,
+                Country = null,
+                Email = null,
+                Phone = null,
+                CellularPhone = null,
+                Blocked = false
             }
-        };
+        },
+        SiretId = new Field<string>
+        {
+            Name = "Siret",
+            Status = "onlyForDisplay",
+            Value = null
+        },
+        TaxGroup = new Field<string>
+        {
+            Name = "Groupe de taxe",
+            Status = "readOnly",
+            Value = null
+        },
+        PaymentTerm = new Field<string>
+        {
+            Name = "Conditions de paiement",
+            Status = "onlyForDisplay",
+            Value = null
+        },
+        PaymentMode = new Field<string>
+        {
+            Name = "Mode de paiement",
+            Status = "readOnly",
+            Value = null
+        },
+        IsPublicEntity = false,
+        PublicEntityExecutingService = new Field<string>
+        {
+            Name = "Service exécutif",
+            Status = "readOnly",
+            Value = null
+        },
+        PublicEntityLegalCommitment = new Field<string>
+        {
+            Name = "Engagement juridique",
+            Status = "readOnly",
+            Value = null
+        },
+        Note = new Field<string>
+        {
+            Name = null,
+            Status = "onlyForDisplay",
+            Value = ""
+        }
+    };
 
 
-        //invoiceToAccounts   P0130140
-        public static List<AccountDto?> invoiceToAccountsP0130140 = new List<AccountDto?>
+    //invoiceToAccounts   P0130140
+    public static List<AccountDto?> invoiceToAccountsP0130140 = new List<AccountDto?>
 {
     new AccountDto
     {
@@ -2749,8 +2722,8 @@ new BasketValueDto
 };
 
 
-        //TaxGroups   P0130140
-        public static List<BasketValueDto?> taxGroupsP0130140 = new List<BasketValueDto?>
+    //TaxGroups   P0130140
+    public static List<BasketValueDto?> taxGroupsP0130140 = new List<BasketValueDto?>
 {
     new BasketValueDto { Value = "" },
     new BasketValueDto { Description = "France Autoliquidation", Value = "F-AUTOLIQ" },
@@ -2771,8 +2744,8 @@ new BasketValueDto
 };
 
 
-        //paymentModes   P0130140
-        public static List<BasketValueDto?> paymentModesP0130140 = new List<BasketValueDto?>
+    //paymentModes   P0130140
+    public static List<BasketValueDto?> paymentModesP0130140 = new List<BasketValueDto?>
 {
     new BasketValueDto { Description = null, Value = "" },
     new BasketValueDto { Description = "Carte Bancaire", Value = "CB" },
@@ -2788,14 +2761,14 @@ new BasketValueDto
 };
 
 
-        //tradeInfo   P0130140
-        public static BasketTradeInfoDto tradeInfoP0130140 = new BasketTradeInfoDto
+    //tradeInfo   P0130140
+    public static BasketTradeInfoDto tradeInfoP0130140 = new BasketTradeInfoDto
+    {
+        Turnover = new Field<List<BasketTurnoverLineDto?>>
         {
-            Turnover = new Field<List<BasketTurnoverLineDto?>>
-            {
-                Name = "Chiffre d'affaire",
-                Status = "onlyForDisplay",
-                Value = new List<BasketTurnoverLineDto?>
+            Name = "Chiffre d'affaire",
+            Status = "onlyForDisplay",
+            Value = new List<BasketTurnoverLineDto?>
         {
             new BasketTurnoverLineDto
             {
@@ -2822,202 +2795,190 @@ new BasketValueDto
                 N2 = ""
             }
         }
-            },
-            Contract = new BasketContractInfoDto
-            {
-                ContractId = new Field<string>
-                {
-                    Name = "Contrat",
-                    Status = "onlyForDisplay",
-                    Value = null
-                },
-                ContractType = new Field<string>
-                {
-                    Name = "Type",
-                    Status = "onlyForDisplay",
-                    Value = null
-                },
-                ContractGroup = new Field<string>
-                {
-                    Name = "Groupe de contrat",
-                    Status = "onlyForDisplay",
-                    Value = ""
-                },
-                Status = new Field<string>
-                {
-                    Name = "Statut",
-                    Status = "onlyForDisplay",
-                    Value = null
-                },
-                StartDate = new Field<string>
-                {
-                    Name = "Date de début",
-                    Status = "onlyForDisplay",
-                    Value = null
-                },
-                EndDate = new Field<string>
-                {
-                    Name = "Date de fin",
-                    Status = "onlyForDisplay",
-                    Value = null
-                },
-                CampaignId = new Field<string>
-                {
-                    Name = "Campagne de prix",
-                    Status = "onlyForDisplay",
-                    Value = null
-                },
-                MainContact = new Field<string>
-                {
-                    Name = "Commercial terrain",
-                    Status = "onlyForDisplay",
-                    Value = null
-                },
-                OfficeExecutive = new Field<string>
-                {
-                    Name = "Commercial sédentaire",
-                    Status = "onlyForDisplay",
-                    Value = null
-                },
-                DiscountList = new Field<List<string?>>
-                {
-                    Name = "Description",
-                    Status = "onlyForDisplay",
-                    Value = new List<string?>()
-                }
-            }
-        };
-
-
-        //pricesInfo   P0130140
-        public static BasketPricesInfoDto pricesInfoP0130140 = new BasketPricesInfoDto
+        },
+        Contract = new BasketContractInfoDto
         {
-            Coupon = new Field<string?>
+            ContractId = new Field<string>
             {
-                Name = "Code Action",
-                Status = "readOnly",
+                Name = "Contrat",
+                Status = "onlyForDisplay",
+                Value = null
+            },
+            ContractType = new Field<string>
+            {
+                Name = "Type",
+                Status = "onlyForDisplay",
+                Value = null
+            },
+            ContractGroup = new Field<string>
+            {
+                Name = "Groupe de contrat",
+                Status = "onlyForDisplay",
                 Value = ""
             },
-            FreeShippingAmountThreshold = new Field<decimal?>
+            Status = new Field<string>
             {
-                Name = "Diff Franco",
+                Name = "Statut",
                 Status = "onlyForDisplay",
                 Value = null
             },
-            GiftAmountThreshold = new Field<decimal?>
+            StartDate = new Field<string>
             {
-                Name = "Diff KDO",
+                Name = "Date de début",
                 Status = "onlyForDisplay",
                 Value = null
             },
-            ProductsInfo = new Field<string?>
+            EndDate = new Field<string>
             {
-                Name = "Dispo. Marchandise",
+                Name = "Date de fin",
                 Status = "onlyForDisplay",
                 Value = null
             },
-            ProductsNetAmount = new Field<decimal?>
+            CampaignId = new Field<string>
             {
-                Name = "Marchandise HT",
-                Status = "onlyForDisplay",
-                Value = 0
-            },
-            WarrantyCostOption = new Field<string?>
-            {
-                Name = "Type de garantie optimale",
-                Status = "readOnly",
-                Value = "Disabled"
-            },
-            WarrantyCostAmount = new Field<decimal?>
-            {
-                Name = "Montant de la garantie optimale",
-                Status = "onlyForDisplay",
-                Value = 0
-            },
-            ShippingCostOption = new Field<string?>
-            {
-                Name = "Type de frais de port",
-                Status = "readOnly",
-                Value = "Disabled"
-            },
-            ShippingCostAmount = new Field<decimal?>
-            {
-                Name = "Montant des frais de port",
-                Status = "readOnly",
-                Value = 0
-            },
-            LogisticInfo = null,
-            TotalNetAmount = new Field<decimal?>
-            {
-                Name = "Montant Total HT",
-                Status = "onlyForDisplay",
-                Value = 0
-            },
-            VatAmount = new Field<decimal?>
-            {
-                Name = "Montant TVA",
-                Status = "onlyForDisplay",
-                Value = 0
-            },
-            TotalGrossAmount = new Field<decimal?>
-            {
-                Name = "Montant TTC",
-                Status = "onlyForDisplay",
-                Value = 0
-            },
-            FirstDeliveryDate = new Field<string?>
-            {
-                Name = "Première date de livraison",
-                Status = "onlyForDisplay",
-                Value = "1900, 1, 1, 0, 0, 0"  // test this in postman
-            },
-            LastDeliveryDate = new Field<string?>
-            {
-                Name = "Dernière date de livraison",
+                Name = "Campagne de prix",
                 Status = "onlyForDisplay",
                 Value = null
             },
-            OrderDiscountRate = new Field<int?>
+            MainContact = new Field<string>
             {
-                Name = "Remise Cde (%)",
-                Status = "readOnly",
-                Value = 0
-            },
-            OrderLastColumnDiscount = new Field<bool?>
-            {
-                Name = "Remise Cde DC",
-                Status = "readOnly",
-                Value = false
-            },
-            AdditionalSalesAmount = new Field<decimal?>
-            {
-                Name = "Ventes add. (€)",
+                Name = "Commercial terrain",
                 Status = "onlyForDisplay",
-                Value = 0
+                Value = null
             },
-            DiscountAmount = new Field<decimal?>
+            OfficeExecutive = new Field<string>
             {
-                Name = "Remise Cde (€)",
+                Name = "Commercial sédentaire",
                 Status = "onlyForDisplay",
-                Value = 0
+                Value = null
             },
-            TotalWeight = new Field<decimal?>
+            DiscountList = new Field<List<string?>>
             {
-                Name = "Poids (kg)",
+                Name = "Description",
                 Status = "onlyForDisplay",
-                Value = 0
-            },
-            TotalVolume = new Field<decimal?>
-            {
-                Name = "Volume (m3)",
-                Status = "onlyForDisplay",
-                Value = 0
+                Value = new List<string?>()
             }
-        };
+        }
+    };
 
 
-        //coupons    Prices info section   P0130140
-        public static List<BasketValueDto?> couponsP0130140 = new List<BasketValueDto?>
+    //pricesInfo   P0130140
+    public static BasketPricesInfoDto pricesInfoP0130140 = new BasketPricesInfoDto
+    {
+        Coupon = new Field<string?>
+        {
+            Name = "Code Action",
+            Status = "readOnly",
+            Value = ""
+        },
+        FreeShippingAmountThreshold = new Field<decimal?>
+        {
+            Name = "Diff Franco",
+            Status = "onlyForDisplay",
+            Value = null
+        },
+        GiftAmountThreshold = new Field<decimal?>
+        {
+            Name = "Diff KDO",
+            Status = "onlyForDisplay",
+            Value = null
+        },
+        ProductsInfo = new Field<string?>
+        {
+            Name = "Dispo. Marchandise",
+            Status = "onlyForDisplay",
+            Value = null
+        },
+        ProductsNetAmount = new Field<decimal?>
+        {
+            Name = "Marchandise HT",
+            Status = "onlyForDisplay",
+            Value = 0
+        },
+        WarrantyCostOption = new Field<string?>
+        {
+            Name = "Type de garantie optimale",
+            Status = "readOnly",
+            Value = "Disabled"
+        },
+        WarrantyCostAmount = new Field<decimal?>
+        {
+            Name = "Montant de la garantie optimale",
+            Status = "onlyForDisplay",
+            Value = 0
+        },
+        ShippingCostOption = new Field<string?>
+        {
+            Name = "Type de frais de port",
+            Status = "readOnly",
+            Value = "Disabled"
+        },
+        ShippingCostAmount = new Field<decimal?>
+        {
+            Name = "Montant des frais de port",
+            Status = "readOnly",
+            Value = 0
+        },
+        LogisticInfo = null,
+        TotalNetAmount = new Field<decimal?>
+        {
+            Name = "Montant Total HT",
+            Status = "onlyForDisplay",
+            Value = 0
+        },
+        VatAmount = new Field<decimal?>
+        {
+            Name = "Montant TVA",
+            Status = "onlyForDisplay",
+            Value = 0
+        },
+        TotalGrossAmount = new Field<decimal?>
+        {
+            Name = "Montant TTC",
+            Status = "onlyForDisplay",
+            Value = 0
+        },
+               OrderDiscountRate = new Field<int?>
+        {
+            Name = "Remise Cde (%)",
+            Status = "readOnly",
+            Value = 0
+        },
+        OrderLastColumnDiscount = new Field<bool?>
+        {
+            Name = "Remise Cde DC",
+            Status = "readOnly",
+            Value = false
+        },
+        AdditionalSalesAmount = new Field<decimal?>
+        {
+            Name = "Ventes add. (€)",
+            Status = "onlyForDisplay",
+            Value = 0
+        },
+        DiscountAmount = new Field<decimal?>
+        {
+            Name = "Remise Cde (€)",
+            Status = "onlyForDisplay",
+            Value = 0
+        },
+        TotalWeight = new Field<decimal?>
+        {
+            Name = "Poids (kg)",
+            Status = "onlyForDisplay",
+            Value = 0
+        },
+        TotalVolume = new Field<decimal?>
+        {
+            Name = "Volume (m3)",
+            Status = "onlyForDisplay",
+            Value = 0
+        }
+    };
+
+
+    //coupons    Prices info section   P0130140
+    public static List<BasketValueDto?> couponsP0130140 = new List<BasketValueDto?>
 {
     new BasketValueDto { Description = null, Value = "" },
     new BasketValueDto { Description = "COMMANDES nefab  2010\nCODE PAR DEFAUT\nVALIDITE INDETERMINEE\nAUCUN CADEAU\nPAS DE WELCOME PACK\npas d'asile colis", Value = "AC0100" },
@@ -3060,8 +3021,8 @@ new BasketValueDto
 };
 
 
-        //warrantyCostOptions   Prices info section   P0130140
-        public static List<BasketValueDto?> warrantyCostOptionsP0130140 = new List<BasketValueDto?>
+    //warrantyCostOptions   Prices info section   P0130140
+    public static List<BasketValueDto?> warrantyCostOptionsP0130140 = new List<BasketValueDto?>
 {
     new BasketValueDto { Description = "GO activée", Value = "Enabled" },
     new BasketValueDto { Description = "GO désactivée", Value = "Disabled" },
@@ -3069,8 +3030,8 @@ new BasketValueDto
 };
 
 
-        //shippingCostOptions   Prices info section   P0130140
-        public static List<BasketValueDto?> shippingCostOptionsP0130140 = new List<BasketValueDto?>
+    //shippingCostOptions   Prices info section   P0130140
+    public static List<BasketValueDto?> shippingCostOptionsP0130140 = new List<BasketValueDto?>
 {
     new BasketValueDto { Description = "Frais de livraison", Value = "Standard" },
     new BasketValueDto { Description = "Frais de liv. offerts", Value = "Offered" }
@@ -3078,119 +3039,119 @@ new BasketValueDto
 
 
 
-        //===========================================================================================================
+    //===========================================================================================================
 
 
-        /*"P0130512" */// info commercial, 16
+    /*"P0130512" */// info commercial, 16
 
 
-        //  api/orderContext/P0130512/generalInfo   P0130512
-        public static BasketGeneralInfoDto generalInfoP0130512 = new BasketGeneralInfoDto
+    //  api/orderContext/P0130512/generalInfo   P0130512
+    public static BasketGeneralInfoDto generalInfoP0130512 = new BasketGeneralInfoDto
+    {
+        OrderType = "Commande",
+        BasketId = "P0130512",
+        OrderId = "24136778",
+        OrderStatus = "Lancée",
+        OrderDate = "2024-06-18 15:44:42",
+        SalesResponsible = "JOSEPH TU"
+    };
+
+
+    // orderInfo   P0130512
+    public static BasketOrderInfoDto orderInfoP0130512 = new BasketOrderInfoDto
+    {
+        Account = new Field<AccountDto>
         {
-            OrderType = "Commande",
-            BasketId = "P0130512",
-            OrderId = "24136778",
-            OrderStatus = "Lancée",
-            OrderDate = "2024-06-18 15:44:42",
-            SalesResponsible = "JOSEPH TU"
-        };
-
-
-        // orderInfo   P0130512
-        public static BasketOrderInfoDto orderInfoP0130512 = new BasketOrderInfoDto
-        {
-            Account = new Field<AccountDto>
+            Name = "Compte commandeur",
+            Status = "onlyForDisplay",
+            Value = new AccountDto
             {
-                Name = "Compte commandeur",
-                Status = "onlyForDisplay",
-                Value = new AccountDto
-                {
-                    AccountId = "51141525",
-                    Name = "PRECICULTURE SAS",
-                    Recipient = "",
-                    Building = "",
-                    Street = "165 RUE DES VERRIERS",
-                    Locality = "",
-                    ZipCode = "51230",
-                    City = "FERE CHAMPENOISE",
-                    Country = "FRANCE",
-                    Email = "raja1234@raja.fr",
-                    Phone = "0120281279",
-                    CellularPhone = "0120281279",
-                    Blocked = false
-                }
-            },
-            Contact = new Field<ContactDto>
-            {
-                Name = "Contact commandeur",
-                Status = "readOnly",
-                Value = new ContactDto
-                {
-                    ContactId = null,
-                    SocialTitle = null,
-                    FirstName = null,
-                    LastName = null,
-                    Email = null,
-                    Phone = null,
-                    CellularPhone = null
-                }
-            },
-            ActivityArea = new Field<string>
-            {
-                Name = "Secteur d'activité",
-                Status = "onlyForDisplay",
-                Value = "Fabrication de machines agricoles et forestières",
-                Description = "Code NAF: 2830Z"
-            },
-            CustomerTags = new List<BasketValueDto>(),
-            SalesOriginId = new Field<string>
-            {
-                Name = "Canal de vente",
-                Status = "readOnly",
-                Value = "Téléphone"
-            },
-            WebOriginId = new Field<string>
-            {
-                Name = "Origine e-commerce",
-                Status = "readOnly",
-                Value = ""
-            },
-            SalesPoolId = new Field<string>
-            {
-                Name = "Type de transaction",
-                Status = "readOnly",
-                Value = "NOR"
-            },
-            CustomerOrderRef = new Field<string>
-            {
-                Name = "Référence Client",
-                Status = "readOnly",
-                Value = "18/06/2024"
-            },
-            WebSalesId = new Field<string>
-            {
-                Name = "Commande Web",
-                Status = "readOnly",
-                Value = ""
-            },
-            RelatedLink = new Field<string>
-            {
-                Name = "Devis",
-                Status = "hidden",
-                Value = ""
-            },
-            Note = new Field<string>
-            {
-                Name = "Note de RC",
-                Status = "onlyForDisplay",
-                Value = "CS/SMO/VALIDITE AU 31/12/2011**** ATTENTION MR COCHART NE VEUT PLUS DE CONFIRMATIONS PAR E MAIL CLO **IMPERATIF ENVOYER KDO SEPAREMENT A L'ATTENTION DE LA DIRECTION**"
+                AccountId = "51141525",
+                Name = "PRECICULTURE SAS",
+                Recipient = "",
+                Building = "",
+                Street = "165 RUE DES VERRIERS",
+                Locality = "",
+                ZipCode = "51230",
+                City = "FERE CHAMPENOISE",
+                Country = "FRANCE",
+                Email = "raja1234@raja.fr",
+                Phone = "0120281279",
+                CellularPhone = "0120281279",
+                Blocked = false
             }
-        };
+        },
+        Contact = new Field<ContactDto>
+        {
+            Name = "Contact commandeur",
+            Status = "readOnly",
+            Value = new ContactDto
+            {
+                ContactId = null,
+                SocialTitle = null,
+                FirstName = null,
+                LastName = null,
+                Email = null,
+                Phone = null,
+                CellularPhone = null
+            }
+        },
+        ActivityArea = new Field<string>
+        {
+            Name = "Secteur d'activité",
+            Status = "onlyForDisplay",
+            Value = "Fabrication de machines agricoles et forestières",
+            Description = "Code NAF: 2830Z"
+        },
+        CustomerTags = new List<BasketValueDto>(),
+        SalesOriginId = new Field<string>
+        {
+            Name = "Canal de vente",
+            Status = "readOnly",
+            Value = "Téléphone"
+        },
+        WebOriginId = new Field<string>
+        {
+            Name = "Origine e-commerce",
+            Status = "readOnly",
+            Value = ""
+        },
+        SalesPoolId = new Field<string>
+        {
+            Name = "Type de transaction",
+            Status = "readOnly",
+            Value = "NOR"
+        },
+        CustomerOrderRef = new Field<string>
+        {
+            Name = "Référence Client",
+            Status = "readOnly",
+            Value = "18/06/2024"
+        },
+        WebSalesId = new Field<string>
+        {
+            Name = "Commande Web",
+            Status = "readOnly",
+            Value = ""
+        },
+        RelatedLink = new Field<string>
+        {
+            Name = "Devis",
+            Status = "hidden",
+            Value = ""
+        },
+        Note = new Field<string>
+        {
+            Name = "Note de RC",
+            Status = "onlyForDisplay",
+            Value = "CS/SMO/VALIDITE AU 31/12/2011**** ATTENTION MR COCHART NE VEUT PLUS DE CONFIRMATIONS PAR E MAIL CLO **IMPERATIF ENVOYER KDO SEPAREMENT A L'ATTENTION DE LA DIRECTION**"
+        }
+    };
 
 
-        //orderByContacts   P0130512
+    //orderByContacts   P0130512
 
-        public static List<ContactDto?> orderByContactsP0130512 = new List<ContactDto?>
+    public static List<ContactDto?> orderByContactsP0130512 = new List<ContactDto?>
 {
     new ContactDto
     {
@@ -3205,8 +3166,8 @@ new BasketValueDto
 };
 
 
-        //customerTags   P0130512
-        public static List<BasketValueDto?> customerTagsP0130512 = new List<BasketValueDto?>
+    //customerTags   P0130512
+    public static List<BasketValueDto?> customerTagsP0130512 = new List<BasketValueDto?>
 {
     new BasketValueDto
     {
@@ -3236,8 +3197,8 @@ new BasketValueDto
 };
 
 
-        //salesPools   P0130512
-        public static List<BasketValueDto?> salesPoolsP0130512 = new List<BasketValueDto?>
+    //salesPools   P0130512
+    public static List<BasketValueDto?> salesPoolsP0130512 = new List<BasketValueDto?>
 {
     new BasketValueDto
     {
@@ -3262,8 +3223,8 @@ new BasketValueDto
 };
 
 
-        //salesOrigins   P0130512
-        public static List<SalesOriginDto?> salesOriginsP0130512 = new List<SalesOriginDto?>
+    //salesOrigins   P0130512
+    public static List<SalesOriginDto?> salesOriginsP0130512 = new List<SalesOriginDto?>
 {
     new SalesOriginDto
     {
@@ -3324,8 +3285,8 @@ new BasketValueDto
 };
 
 
-        //webOrigins   P0130512
-        public static List<BasketValueDto?> webOriginsP0130512 = new List<BasketValueDto?>
+    //webOrigins   P0130512
+    public static List<BasketValueDto?> webOriginsP0130512 = new List<BasketValueDto?>
 {
     new BasketValueDto
     {
@@ -3678,13 +3639,13 @@ new BasketValueDto
 };
 
 
-        //procedureCall => SalesOrigin = Internet   P0130512
-        public static ProcedureCallResponseDto procedureCallResponseP0130512_1 = new ProcedureCallResponseDto
-        {
-            Success = true,
-            Message = "Property SalesOriginId updated with value Internet",
-            UpdateDone = true,
-            RefreshCalls = new List<string?>
+    //procedureCall => SalesOrigin = Internet   P0130512
+    public static ProcedureCallResponseDto procedureCallResponseP0130512_1 = new ProcedureCallResponseDto
+    {
+        Success = true,
+        Message = "Property SalesOriginId updated with value Internet",
+        UpdateDone = true,
+        RefreshCalls = new List<string?>
     {
         "generalInfo",
         "notifications",
@@ -3692,253 +3653,253 @@ new BasketValueDto
         "pricesInfo",
         "invoiceInfo"
     }
-        };
+    };
 
 
-        //procedureCall => RAJ_WebSalesId = W01234567   P0130512
-        public static ProcedureCallResponseDto procedureCallResponseP0130512_2 = new ProcedureCallResponseDto
-        {
-            Success = true,
-            Message = "Property RAJ_WebSalesId updated with value W01234567",
-            UpdateDone = true,
-            RefreshCalls = new List<string?>
+    //procedureCall => RAJ_WebSalesId = W01234567   P0130512
+    public static ProcedureCallResponseDto procedureCallResponseP0130512_2 = new ProcedureCallResponseDto
+    {
+        Success = true,
+        Message = "Property RAJ_WebSalesId updated with value W01234567",
+        UpdateDone = true,
+        RefreshCalls = new List<string?>
     {
         "generalInfo",
         "notifications"
     }
-        };
+    };
 
 
-        //procedureCall => MayLastColumnDiscount = true   P0130512
-        public static ProcedureCallResponseDto procedureCallResponseP0130512_3 = new ProcedureCallResponseDto
-        {
-            Success = true,
-            Message = "Property MyLastColumnDiscount updated with value True",
-            UpdateDone = true,
-            RefreshCalls = new List<string?>
+    //procedureCall => MayLastColumnDiscount = true   P0130512
+    public static ProcedureCallResponseDto procedureCallResponseP0130512_3 = new ProcedureCallResponseDto
+    {
+        Success = true,
+        Message = "Property MyLastColumnDiscount updated with value True",
+        UpdateDone = true,
+        RefreshCalls = new List<string?>
     {
         "generalInfo",
         "notifications",
         "pricesInfo",
         "orderLines"
     }
-        };
+    };
 
 
-        //procedureCall => UpdateContact(OrderBy, X2567124   P0130512
-        public static ProcedureCallResponseDto procedureCallResponseP0130512_4 = new ProcedureCallResponseDto
-        {
-            Success = true,
-            Message = "Contact X2567124 updated",
-            UpdateDone = true,
-            RefreshCalls = new List<string?>
+    //procedureCall => UpdateContact(OrderBy, X2567124   P0130512
+    public static ProcedureCallResponseDto procedureCallResponseP0130512_4 = new ProcedureCallResponseDto
+    {
+        Success = true,
+        Message = "Contact X2567124 updated",
+        UpdateDone = true,
+        RefreshCalls = new List<string?>
     {
         "generalInfo",
         "notifications"
     }
-        };
+    };
 
 
-        //procedureCall => addorderLine(CAS10,100)   P0130512
-        public static ProcedureCallResponseDto procedureCallResponseP0130512_5 = new ProcedureCallResponseDto
+    //procedureCall => addorderLine(CAS10,100)   P0130512
+    public static ProcedureCallResponseDto procedureCallResponseP0130512_5 = new ProcedureCallResponseDto
+    {
+        Success = true,
+        Message = "No line added",
+        UpdateDone = false,
+        RefreshCalls = new List<string?>()
+    };
+
+
+    //orderInfo => Check update values   P0130512
+    public static BasketOrderInfoDto orderInfoP0130512_2 = new BasketOrderInfoDto
+    {
+        Account = new Field<AccountDto>
         {
-            Success = true,
-            Message = "No line added",
-            UpdateDone = false,
-            RefreshCalls = new List<string?>()
-        };
-
-
-        //orderInfo => Check update values   P0130512
-        public static BasketOrderInfoDto orderInfoP0130512_2 = new BasketOrderInfoDto
+            Name = "Compte commandeur",
+            Status = "onlyForDisplay",
+            Value = new AccountDto
+            {
+                AccountId = "51141525",
+                Name = "PRECICULTURE SAS",
+                Recipient = "",
+                Building = "",
+                Street = "165 RUE DES VERRIERS",
+                Locality = "",
+                ZipCode = "51230",
+                City = "FERE CHAMPENOISE",
+                Country = "FRANCE",
+                Email = "raja1234@raja.fr",
+                Phone = "0120281279",
+                CellularPhone = "0120281279",
+                Blocked = false
+            }
+        },
+        Contact = new Field<ContactDto>
         {
-            Account = new Field<AccountDto>
+            Name = "Contact commandeur",
+            Status = "readOnly",
+            Value = new ContactDto
             {
-                Name = "Compte commandeur",
-                Status = "onlyForDisplay",
-                Value = new AccountDto
-                {
-                    AccountId = "51141525",
-                    Name = "PRECICULTURE SAS",
-                    Recipient = "",
-                    Building = "",
-                    Street = "165 RUE DES VERRIERS",
-                    Locality = "",
-                    ZipCode = "51230",
-                    City = "FERE CHAMPENOISE",
-                    Country = "FRANCE",
-                    Email = "raja1234@raja.fr",
-                    Phone = "0120281279",
-                    CellularPhone = "0120281279",
-                    Blocked = false
-                }
-            },
-            Contact = new Field<ContactDto>
-            {
-                Name = "Contact commandeur",
-                Status = "readOnly",
-                Value = new ContactDto
-                {
-                    ContactId = null,
-                    SocialTitle = null,
-                    FirstName = null,
-                    LastName = null,
-                    Email = null,
-                    Phone = null,
-                    CellularPhone = null
-                }
-            },
-            ActivityArea = new Field<string>
-            {
-                Name = "Secteur d'activité",
-                Status = "onlyForDisplay",
-                Value = "Fabrication de machines agricoles et forestières",
-                Description = "Code NAF: 2830Z"
-            },
-            CustomerTags = new List<BasketValueDto>(),
-            SalesOriginId = new Field<string>
-            {
-                Name = "Canal de vente",
-                Status = "readOnly",
-                Value = "Internet"
-            },
-            WebOriginId = new Field<string>
-            {
-                Name = "Origine e-commerce",
-                Status = "readWrite",
-                Value = "DESKTOP",
-                ProcedureCall = new List<string?>
+                ContactId = null,
+                SocialTitle = null,
+                FirstName = null,
+                LastName = null,
+                Email = null,
+                Phone = null,
+                CellularPhone = null
+            }
+        },
+        ActivityArea = new Field<string>
+        {
+            Name = "Secteur d'activité",
+            Status = "onlyForDisplay",
+            Value = "Fabrication de machines agricoles et forestières",
+            Description = "Code NAF: 2830Z"
+        },
+        CustomerTags = new List<BasketValueDto>(),
+        SalesOriginId = new Field<string>
+        {
+            Name = "Canal de vente",
+            Status = "readOnly",
+            Value = "Internet"
+        },
+        WebOriginId = new Field<string>
+        {
+            Name = "Origine e-commerce",
+            Status = "readWrite",
+            Value = "DESKTOP",
+            ProcedureCall = new List<string?>
         {
             "UpdateOrderTablePropertyValue",
             "RAJ_WebOriginId",
             "System.String",
             "<one of /webOrigins value>"
         }
-            },
-            SalesPoolId = new Field<string>
-            {
-                Name = "Type de transaction",
-                Status = "readOnly",
-                Value = "NOR"
-            },
-            CustomerOrderRef = new Field<string>
-            {
-                Name = "Référence Client",
-                Status = "readOnly",
-                Value = "18/06/2024"
-            },
-            WebSalesId = new Field<string>
-            {
-                Name = "Commande Web",
-                Status = "readWrite",
-                Value = "W01234567",
-                ProcedureCall = new List<string?>
+        },
+        SalesPoolId = new Field<string>
+        {
+            Name = "Type de transaction",
+            Status = "readOnly",
+            Value = "NOR"
+        },
+        CustomerOrderRef = new Field<string>
+        {
+            Name = "Référence Client",
+            Status = "readOnly",
+            Value = "18/06/2024"
+        },
+        WebSalesId = new Field<string>
+        {
+            Name = "Commande Web",
+            Status = "readWrite",
+            Value = "W01234567",
+            ProcedureCall = new List<string?>
         {
             "UpdateOrderTablePropertyValue",
             "RAJ_WebSalesId",
             "System.String",
             "<value>"
         }
-            },
-            RelatedLink = new Field<string>
-            {
-                Name = "Devis",
-                Status = "hidden",
-                Value = ""
-            },
-            Note = new Field<string>
-            {
-                Name = "Note de RC",
-                Status = "onlyForDisplay",
-                Value = "CS/SMO/VALIDITE AU 31/12/2011**** ATTENTION MR COCHART NE VEUT PLUS DE CONFIRMATIONS PAR E MAIL CLO **IMPERATIF ENVOYER KDO SEPAREMENT A L'ATTENTION DE LA DIRECTION**"
-            }
-        };
-
-
-        //api/orderContext/{{basketId}}/deliveryInfo   P0130512
-        public static BasketDeliveryInfoDto deliveryInfoP0130512 = new BasketDeliveryInfoDto
+        },
+        RelatedLink = new Field<string>
         {
-            Account = new Field<AccountDto>
+            Name = "Devis",
+            Status = "hidden",
+            Value = ""
+        },
+        Note = new Field<string>
+        {
+            Name = "Note de RC",
+            Status = "onlyForDisplay",
+            Value = "CS/SMO/VALIDITE AU 31/12/2011**** ATTENTION MR COCHART NE VEUT PLUS DE CONFIRMATIONS PAR E MAIL CLO **IMPERATIF ENVOYER KDO SEPAREMENT A L'ATTENTION DE LA DIRECTION**"
+        }
+    };
+
+
+    //api/orderContext/{{basketId}}/deliveryInfo   P0130512
+    public static BasketDeliveryInfoDto deliveryInfoP0130512 = new BasketDeliveryInfoDto
+    {
+        Account = new Field<AccountDto>
+        {
+            Name = "Compte de livraison",
+            Status = "readOnly",
+            Value = new AccountDto
             {
-                Name = "Compte de livraison",
-                Status = "readOnly",
-                Value = new AccountDto
-                {
-                    AccountId = "D0057691",
-                    Name = "PRECICULTURE SAS TESTSOR",
-                    Recipient = "",
-                    Building = "",
-                    Street = "80 ROUTE D ENTRAIGUES",
-                    Locality = "",
-                    ZipCode = "84700",
-                    City = "SORGUES",
-                    Country = "FRANCE",
-                    Email = null,
-                    Phone = null,
-                    CellularPhone = null,
-                    Blocked = false
-                }
-            },
-            Contact = new Field<ContactDto>
+                AccountId = "D0057691",
+                Name = "PRECICULTURE SAS TESTSOR",
+                Recipient = "",
+                Building = "",
+                Street = "80 ROUTE D ENTRAIGUES",
+                Locality = "",
+                ZipCode = "84700",
+                City = "SORGUES",
+                Country = "FRANCE",
+                Email = null,
+                Phone = null,
+                CellularPhone = null,
+                Blocked = false
+            }
+        },
+        Contact = new Field<ContactDto>
+        {
+            Name = "Contact de livraison",
+            Status = "readOnly",
+            Value = new ContactDto
             {
-                Name = "Contact de livraison",
-                Status = "readOnly",
-                Value = new ContactDto
-                {
-                    ContactId = null,
-                    SocialTitle = null,
-                    FirstName = null,
-                    LastName = null,
-                    Email = null,
-                    Phone = null,
-                    CellularPhone = null
-                }
-            },
-            DeliveryMode = new Field<string>
-            {
-                Name = "Mode de livraison",
-                Status = "readOnly",
-                Value = "Normal"
-            },
-            CompleteDelivery = new Field<bool?>
-            {
-                Name = "Livraison complète",
-                Status = "readOnly",
-                Value = false
-            },
-            ImperativeDate = new Field<string>
-            {
-                Name = "Date impérative",
-                Status = "readOnly",
-                Value = null
-            },
-            OrderDocuments = new Field<List<string?>>
-            {
-                Name = "BL / Factures",
-                Status = "onlyForDisplay",
-                Value = new List<string?>
+                ContactId = null,
+                SocialTitle = null,
+                FirstName = null,
+                LastName = null,
+                Email = null,
+                Phone = null,
+                CellularPhone = null
+            }
+        },
+        DeliveryMode = new Field<string>
+        {
+            Name = "Mode de livraison",
+            Status = "readOnly",
+            Value = "Normal"
+        },
+        CompleteDelivery = new Field<bool?>
+        {
+            Name = "Livraison complète",
+            Status = "readOnly",
+            Value = false
+        },
+        ImperativeDate = new Field<string>
+        {
+            Name = "Date impérative",
+            Status = "readOnly",
+            Value = null
+        },
+        OrderDocuments = new Field<List<string?>>
+        {
+            Name = "BL / Factures",
+            Status = "onlyForDisplay",
+            Value = new List<string?>
         {
             "18/06/24 - BP 24215215 - SOR - Activé"
         }
-            },
-            Note = new Field<string>
-            {
-                Name = "Note de livraison",
-                Status = "readOnly",
-                Value = ""
-            },
-            NoteMustBeSaved = new Field<bool?>
-            {
-                Name = "Sauvegarde note de liv.",
-                Status = "readOnly",
-                Value = false,
-                Description = "Sauvegarde pour les prochaines commandes"
-            }
-        };
+        },
+        Note = new Field<string>
+        {
+            Name = "Note de livraison",
+            Status = "readOnly",
+            Value = ""
+        },
+        NoteMustBeSaved = new Field<bool?>
+        {
+            Name = "Sauvegarde note de liv.",
+            Status = "readOnly",
+            Value = false,
+            Description = "Sauvegarde pour les prochaines commandes"
+        }
+    };
 
 
-        //deliverToAccounts   P0130512
-        public static List<AccountDto?> deliverToAccountsP0130512 = new List<AccountDto?>
+    //deliverToAccounts   P0130512
+    public static List<AccountDto?> deliverToAccountsP0130512 = new List<AccountDto?>
 {
     new AccountDto
     {
@@ -3959,8 +3920,8 @@ new BasketValueDto
 };
 
 
-        //deliverToContacts   P0130512
-        public static List<ContactDto?> deliverToContactsP0130512 = new List<ContactDto?>
+    //deliverToContacts   P0130512
+    public static List<ContactDto?> deliverToContactsP0130512 = new List<ContactDto?>
 {
     new ContactDto
     {
@@ -3975,8 +3936,8 @@ new BasketValueDto
 };
 
 
-        //deliveryModes   P0130512
-        public static List<BasketValueDto?> deliveryModesP0130512 = new List<BasketValueDto?>
+    //deliveryModes   P0130512
+    public static List<BasketValueDto?> deliveryModesP0130512 = new List<BasketValueDto?>
 {
     new BasketValueDto { Value = "Catalogue" },
     new BasketValueDto { Value = "Enlèvement" },
@@ -3988,78 +3949,78 @@ new BasketValueDto
 };
 
 
-        //invoiceInfo   P0130512
-        public static BasketInvoiceInfoDto invoiceInfoP0130512 = new BasketInvoiceInfoDto
+    //invoiceInfo   P0130512
+    public static BasketInvoiceInfoDto invoiceInfoP0130512 = new BasketInvoiceInfoDto
+    {
+        Account = new Field<AccountDto>
         {
-            Account = new Field<AccountDto>
+            Name = "Compte de facturation",
+            Status = "readOnly",
+            Value = new AccountDto
             {
-                Name = "Compte de facturation",
-                Status = "readOnly",
-                Value = new AccountDto
-                {
-                    AccountId = "51141525",
-                    Name = "PRECICULTURE SAS",
-                    Recipient = "",
-                    Building = "",
-                    Street = "165 RUE DES VERRIERS",
-                    Locality = "",
-                    ZipCode = "51230",
-                    City = "FERE CHAMPENOISE",
-                    Country = "FRANCE",
-                    Email = "raja1234@raja.fr",
-                    Phone = "0120281279",
-                    CellularPhone = "0120281279",
-                    Blocked = false
-                }
-            },
-            SiretId = new Field<string>
-            {
-                Name = "Siret",
-                Status = "onlyForDisplay",
-                Value = "09715035300031"
-            },
-            TaxGroup = new Field<string>
-            {
-                Name = "Groupe de taxe",
-                Status = "readOnly",
-                Value = "F-DEB"
-            },
-            PaymentTerm = new Field<string>
-            {
-                Name = "Conditions de paiement",
-                Status = "onlyForDisplay",
-                Value = "FDM45"
-            },
-            PaymentMode = new Field<string>
-            {
-                Name = "Mode de paiement",
-                Status = "readOnly",
-                Value = "VB"
-            },
-            IsPublicEntity = false,
-            PublicEntityExecutingService = new Field<string>
-            {
-                Name = "Service exécutif",
-                Status = "readOnly",
-                Value = ""
-            },
-            PublicEntityLegalCommitment = new Field<string>
-            {
-                Name = "Engagement juridique",
-                Status = "readOnly",
-                Value = ""
-            },
-            Note = new Field<string>
-            {
-                Name = null,
-                Status = "onlyForDisplay",
-                Value = null
+                AccountId = "51141525",
+                Name = "PRECICULTURE SAS",
+                Recipient = "",
+                Building = "",
+                Street = "165 RUE DES VERRIERS",
+                Locality = "",
+                ZipCode = "51230",
+                City = "FERE CHAMPENOISE",
+                Country = "FRANCE",
+                Email = "raja1234@raja.fr",
+                Phone = "0120281279",
+                CellularPhone = "0120281279",
+                Blocked = false
             }
-        };
+        },
+        SiretId = new Field<string>
+        {
+            Name = "Siret",
+            Status = "onlyForDisplay",
+            Value = "09715035300031"
+        },
+        TaxGroup = new Field<string>
+        {
+            Name = "Groupe de taxe",
+            Status = "readOnly",
+            Value = "F-DEB"
+        },
+        PaymentTerm = new Field<string>
+        {
+            Name = "Conditions de paiement",
+            Status = "onlyForDisplay",
+            Value = "FDM45"
+        },
+        PaymentMode = new Field<string>
+        {
+            Name = "Mode de paiement",
+            Status = "readOnly",
+            Value = "VB"
+        },
+        IsPublicEntity = false,
+        PublicEntityExecutingService = new Field<string>
+        {
+            Name = "Service exécutif",
+            Status = "readOnly",
+            Value = ""
+        },
+        PublicEntityLegalCommitment = new Field<string>
+        {
+            Name = "Engagement juridique",
+            Status = "readOnly",
+            Value = ""
+        },
+        Note = new Field<string>
+        {
+            Name = null,
+            Status = "onlyForDisplay",
+            Value = null
+        }
+    };
 
 
-        //invoiceToAccounts   P0130512
-        public static List<AccountDto?> invoiceToAccountsP0130512 = new List<AccountDto?>
+    //invoiceToAccounts   P0130512
+    public static List<AccountDto?> invoiceToAccountsP0130512 = new List<AccountDto?>
 {
     new AccountDto
     {
@@ -4080,8 +4041,8 @@ new BasketValueDto
 };
 
 
-        //TaxGroups   P0130512
-        public static List<BasketValueDto?> taxGroupsP0130512 = new List<BasketValueDto?>
+    //TaxGroups   P0130512
+    public static List<BasketValueDto?> taxGroupsP0130512 = new List<BasketValueDto?>
 {
     new BasketValueDto { Value = "" },
     new BasketValueDto { Value = "F-AUTOLIQ", Description = "France Autoliquidation" },
@@ -4102,8 +4063,8 @@ new BasketValueDto
 };
 
 
-        //paymentModes   P0130512
-        public static List<BasketValueDto?> paymentModesP0130512 = new List<BasketValueDto?>
+    //paymentModes   P0130512
+    public static List<BasketValueDto?> paymentModesP0130512 = new List<BasketValueDto?>
 {
     new BasketValueDto { Value = "" },
     new BasketValueDto { Value = "CB", Description = "Carte Bancaire" },
@@ -4120,14 +4081,14 @@ new BasketValueDto
 };
 
 
-        //tradeInfo   P0130512
-        public static BasketTradeInfoDto tradeInfoP0130512 = new BasketTradeInfoDto
+    //tradeInfo   P0130512
+    public static BasketTradeInfoDto tradeInfoP0130512 = new BasketTradeInfoDto
+    {
+        Turnover = new Field<List<BasketTurnoverLineDto?>>
         {
-            Turnover = new Field<List<BasketTurnoverLineDto?>>
-            {
-                Name = "Chiffre d'affaire",
-                Status = "onlyForDisplay",
-                Value = new List<BasketTurnoverLineDto?>
+            Name = "Chiffre d'affaire",
+            Status = "onlyForDisplay",
+            Value = new List<BasketTurnoverLineDto?>
         {
             new BasketTurnoverLineDto
             {
@@ -4154,207 +4115,195 @@ new BasketValueDto
                 N2 = ""
             }
         }
-            },
-            Contract = new BasketContractInfoDto
+        },
+        Contract = new BasketContractInfoDto
+        {
+            ContractId = new Field<string>
             {
-                ContractId = new Field<string>
-                {
-                    Name = "Contrat",
-                    Status = "onlyForDisplay",
-                    Value = "CT068593"
-                },
-                ContractType = new Field<string>
-                {
-                    Name = "Type",
-                    Status = "onlyForDisplay",
-                    Value = "Conditions Spéciales"
-                },
-                ContractGroup = new Field<string>
-                {
-                    Name = "Groupe de contrat",
-                    Status = "onlyForDisplay",
-                    Value = "PRECICULTURE SAS",
-                    Description = "Groupe de contrat 51141525"
-                },
-                Status = new Field<string>
-                {
-                    Name = "Statut",
-                    Status = "onlyForDisplay",
-                    Value = "En cours"
-                },
-                StartDate = new Field<string>
-                {
-                    Name = "Date de début",
-                    Status = "onlyForDisplay",
-                    Value = "2023-03-06 00:00:00"
-                },
-                EndDate = new Field<string>
-                {
-                    Name = "Date de fin",
-                    Status = "onlyForDisplay",
-                    Value = "2024-08-31 00:00:00"
-                },
-                CampaignId = new Field<string>
-                {
-                    Name = "Campagne de prix",
-                    Status = "onlyForDisplay",
-                    Value = null
-                },
-                MainContact = new Field<string>
-                {
-                    Name = "Commercial terrain",
-                    Status = "onlyForDisplay",
-                    Value = "LOIC GUSMINI-HUREAU"
-                },
-                OfficeExecutive = new Field<string>
-                {
-                    Name = "Commercial sédentaire",
-                    Status = "onlyForDisplay",
-                    Value = "LINDA BOUHALI"
-                },
-                DiscountList = new Field<List<string?>>
-                {
-                    Name = "Description",
-                    Status = "onlyForDisplay",
-                    Value = new List<string?>
+                Name = "Contrat",
+                Status = "onlyForDisplay",
+                Value = "CT068593"
+            },
+            ContractType = new Field<string>
+            {
+                Name = "Type",
+                Status = "onlyForDisplay",
+                Value = "Conditions Spéciales"
+            },
+            ContractGroup = new Field<string>
+            {
+                Name = "Groupe de contrat",
+                Status = "onlyForDisplay",
+                Value = "PRECICULTURE SAS",
+                Description = "Groupe de contrat 51141525"
+            },
+            Status = new Field<string>
+            {
+                Name = "Statut",
+                Status = "onlyForDisplay",
+                Value = "En cours"
+            },
+            StartDate = new Field<string>
+            {
+                Name = "Date de début",
+                Status = "onlyForDisplay",
+                Value = "2023-03-06 00:00:00"
+            },
+            EndDate = new Field<string>
+            {
+                Name = "Date de fin",
+                Status = "onlyForDisplay",
+                Value = "2024-08-31 00:00:00"
+            },
+            CampaignId = new Field<string>
+            {
+                Name = "Campagne de prix",
+                Status = "onlyForDisplay",
+                Value = null
+            },
+            MainContact = new Field<string>
+            {
+                Name = "Commercial terrain",
+                Status = "onlyForDisplay",
+                Value = "LOIC GUSMINI-HUREAU"
+            },
+            OfficeExecutive = new Field<string>
+            {
+                Name = "Commercial sédentaire",
+                Status = "onlyForDisplay",
+                Value = "LINDA BOUHALI"
+            },
+            DiscountList = new Field<List<string?>>
+            {
+                Name = "Description",
+                Status = "onlyForDisplay",
+                Value = new List<string?>
                 {
                     "Prix nets sur 15 article(s)",
                     "DC sur tout le catalogue"
                 }
-                }
             }
-        };
+        }
+    };
 
 
-        //pricesInfo   P0130512
-        public static BasketPricesInfoDto pricesInfoP0130512 = new BasketPricesInfoDto
+    //pricesInfo   P0130512
+    public static BasketPricesInfoDto pricesInfoP0130512 = new BasketPricesInfoDto
+    {
+        Coupon = new Field<string?>
         {
-            Coupon = new Field<string?>
-            {
-                Name = "Code Action",
-                Status = "readOnly",
-                Value = "G032400"
-            },
-            FreeShippingAmountThreshold = new Field<decimal?>
-            {
-                Name = "Diff Franco",
-                Status = "onlyForDisplay",
-                Value = null
-            },
-            GiftAmountThreshold = new Field<decimal?>
-            {
-                Name = "Diff KDO",
-                Status = "onlyForDisplay",
-                Value = null
-            },
-            ProductsInfo = new Field<string?>
-            {
-                Name = "Dispo. Marchandise",
-                Status = "onlyForDisplay",
-                Value = "55% en stock / Liv. Multiple"
-            },
-            ProductsNetAmount = new Field<decimal?>
-            {
-                Name = "Marchandise HT",
-                Status = "onlyForDisplay",
-                Value = 123.45m
-            },
-            WarrantyCostOption = new Field<string?>
-            {
-                Name = "Type de garantie optimale",
-                Status = "readOnly",
-                Value = "Disabled"
-            },
-            WarrantyCostAmount = new Field<decimal?>
-            {
-                Name = "Montant de la garantie optimale",
-                Status = "onlyForDisplay",
-                Value = 0m
-            },
-            ShippingCostOption = new Field<string?>
-            {
-                Name = "Type de frais de port",
-                Status = "readOnly",
-                Value = "Disabled"
-            },
-            ShippingCostAmount = new Field<decimal?>
-            {
-                Name = "Montant des frais de port",
-                Status = "readOnly",
-                Value = 14.9m
-            },
-            LogisticInfo = null,
-            TotalNetAmount = new Field<decimal?>
-            {
-                Name = "Montant Total HT",
-                Status = "onlyForDisplay",
-                Value = 138.35m
-            },
-            VatAmount = new Field<decimal?>
-            {
-                Name = "Montant TVA",
-                Status = "onlyForDisplay",
-                Value = 27.67m
-            },
-            TotalGrossAmount = new Field<decimal?>
-            {
-                Name = "Montant TTC",
-                Status = "onlyForDisplay",
-                Value = 166.02m
-            },
-            FirstDeliveryDate = new Field<string?>
-            {
-                Name = "Première date de livraison",
-                Status = "onlyForDisplay",
-                Value = "2024, 6, 24"
-            },
-            LastDeliveryDate = new Field<string?>
-            {
-                Name = "Dernière date de livraison",
-                Status = "onlyForDisplay",
-                Value = null
-            },
-            OrderDiscountRate = new Field<int?>
-            {
-                Name = "Remise Cde (%)",
-                Status = "readOnly",
-                Value = 0
-            },
-            OrderLastColumnDiscount = new Field<bool?>
-            {
-                Name = "Remise Cde DC",
-                Status = "readOnly",
-                Value = true
-            },
-            AdditionalSalesAmount = new Field<decimal?>
-            {
-                Name = "Ventes add. (€)",
-                Status = "onlyForDisplay",
-                Value = 0m
-            },
-            DiscountAmount = new Field<decimal?>
-            {
-                Name = "Remise Cde (€)",
-                Status = "onlyForDisplay",
-                Value = 0m
-            },
-            TotalWeight = new Field<decimal?>
-            {
-                Name = "Poids (kg)",
-                Status = "onlyForDisplay",
-                Value = 16.7m
-            },
-            TotalVolume = new Field<decimal?>
-            {
-                Name = "Volume (m3)",
-                Status = "onlyForDisplay",
-                Value = 0.214m
-            }
-        };
+            Name = "Code Action",
+            Status = "readOnly",
+            Value = "G032400"
+        },
+        FreeShippingAmountThreshold = new Field<decimal?>
+        {
+            Name = "Diff Franco",
+            Status = "onlyForDisplay",
+            Value = null
+        },
+        GiftAmountThreshold = new Field<decimal?>
+        {
+            Name = "Diff KDO",
+            Status = "onlyForDisplay",
+            Value = null
+        },
+        ProductsInfo = new Field<string?>
+        {
+            Name = "Dispo. Marchandise",
+            Status = "onlyForDisplay",
+            Value = "55% en stock / Liv. Multiple"
+        },
+        ProductsNetAmount = new Field<decimal?>
+        {
+            Name = "Marchandise HT",
+            Status = "onlyForDisplay",
+            Value = 123.45m
+        },
+        WarrantyCostOption = new Field<string?>
+        {
+            Name = "Type de garantie optimale",
+            Status = "readOnly",
+            Value = "Disabled"
+        },
+        WarrantyCostAmount = new Field<decimal?>
+        {
+            Name = "Montant de la garantie optimale",
+            Status = "onlyForDisplay",
+            Value = 0m
+        },
+        ShippingCostOption = new Field<string?>
+        {
+            Name = "Type de frais de port",
+            Status = "readOnly",
+            Value = "Disabled"
+        },
+        ShippingCostAmount = new Field<decimal?>
+        {
+            Name = "Montant des frais de port",
+            Status = "readOnly",
+            Value = 14.9m
+        },
+        LogisticInfo = null,
+        TotalNetAmount = new Field<decimal?>
+        {
+            Name = "Montant Total HT",
+            Status = "onlyForDisplay",
+            Value = 138.35m
+        },
+        VatAmount = new Field<decimal?>
+        {
+            Name = "Montant TVA",
+            Status = "onlyForDisplay",
+            Value = 27.67m
+        },
+        TotalGrossAmount = new Field<decimal?>
+        {
+            Name = "Montant TTC",
+            Status = "onlyForDisplay",
+            Value = 166.02m
+        },
+        OrderDiscountRate = new Field<int?>
+        {
+            Name = "Remise Cde (%)",
+            Status = "readOnly",
+            Value = 0
+        },
+        OrderLastColumnDiscount = new Field<bool?>
+        {
+            Name = "Remise Cde DC",
+            Status = "readOnly",
+            Value = true
+        },
+        AdditionalSalesAmount = new Field<decimal?>
+        {
+            Name = "Ventes add. (€)",
+            Status = "onlyForDisplay",
+            Value = 0m
+        },
+        DiscountAmount = new Field<decimal?>
+        {
+            Name = "Remise Cde (€)",
+            Status = "onlyForDisplay",
+            Value = 0m
+        },
+        TotalWeight = new Field<decimal?>
+        {
+            Name = "Poids (kg)",
+            Status = "onlyForDisplay",
+            Value = 16.7m
+        },
+        TotalVolume = new Field<decimal?>
+        {
+            Name = "Volume (m3)",
+            Status = "onlyForDisplay",
+            Value = 0.214m
+        }
+    };
 
 
-        //coupons   P0130512
-        public static List<BasketValueDto?> couponsP0130512 = new List<BasketValueDto?>
+    //coupons   P0130512
+    public static List<BasketValueDto?> couponsP0130512 = new List<BasketValueDto?>
 {
     new BasketValueDto { Value = "" },
     new BasketValueDto
@@ -4545,8 +4494,8 @@ new BasketValueDto
 };
 
 
-        //warrantyCostOptions   P0130512
-        public static List<BasketValueDto?> warrantyCostOptionsP0130512 = new List<BasketValueDto>
+    //warrantyCostOptions   P0130512
+    public static List<BasketValueDto?> warrantyCostOptionsP0130512 = new List<BasketValueDto>
 {
     new BasketValueDto
     {
@@ -4566,8 +4515,8 @@ new BasketValueDto
 };
 
 
-        //shippingCostOptions   P0130512
-        public static List<BasketValueDto?> shippingCostOptionsP0130512 = new List<BasketValueDto>
+    //shippingCostOptions   P0130512
+    public static List<BasketValueDto?> shippingCostOptionsP0130512 = new List<BasketValueDto>
 {
     new BasketValueDto
     {
@@ -4582,149 +4531,149 @@ new BasketValueDto
 };
 
 
-        //===========================================================================================================
+    //===========================================================================================================
 
-        //"P0130652" // 
-        //  api/orderContext/P0130652/generalInfo
-        public static BasketGeneralInfoDto generalInfoP0130652 = new BasketGeneralInfoDto
+    //"P0130652" // 
+    //  api/orderContext/P0130652/generalInfo
+    public static BasketGeneralInfoDto generalInfoP0130652 = new BasketGeneralInfoDto
+    {
+        OrderType = "Panier",
+        BasketId = "P0130652",
+        OrderId = "P0130652",
+        OrderStatus = "Nouveau",
+        OrderDate = "2024-07-09 15:01:37",
+        SalesResponsible = "Imad.BOUGATAIA.ext"
+    };
+
+
+    // orderInfo   P0130652
+    public static BasketOrderInfoDto orderInfoP0130652 = new BasketOrderInfoDto
+    {
+        Account = new Field<AccountDto>
         {
-            OrderType = "Panier",
-            BasketId = "P0130652",
-            OrderId = "P0130652",
-            OrderStatus = "Nouveau",
-            OrderDate = "2024-07-09 15:01:37",
-            SalesResponsible = "Imad.BOUGATAIA.ext"
-        };
-
-
-        // orderInfo   P0130652
-        public static BasketOrderInfoDto orderInfoP0130652 = new BasketOrderInfoDto
-        {
-            Account = new Field<AccountDto>
+            Name = "Compte commandeur",
+            Status = "onlyForDisplay",
+            Value = new AccountDto
             {
-                Name = "Compte commandeur",
-                Status = "onlyForDisplay",
-                Value = new AccountDto
-                {
-                    AccountId = "A1619588",
-                    Name = "TRUE BEAUTY",
-                    Recipient = "",
-                    Building = "",
-                    Street = "25 CHEMIN DE LA PIERRE",
-                    Locality = "",
-                    ZipCode = "95260",
-                    City = "BEAUMONT SUR OISE CEDEX",
-                    Country = "FRANCE",
-                    Email = "true.beauty@test.fr",
-                    Phone = "0102326252",
-                    CellularPhone = "0621434586",
-                    Blocked = false
-                }
+                AccountId = "A1619588",
+                Name = "TRUE BEAUTY",
+                Recipient = "",
+                Building = "",
+                Street = "25 CHEMIN DE LA PIERRE",
+                Locality = "",
+                ZipCode = "95260",
+                City = "BEAUMONT SUR OISE CEDEX",
+                Country = "FRANCE",
+                Email = "true.beauty@test.fr",
+                Phone = "0102326252",
+                CellularPhone = "0621434586",
+                Blocked = false
+            }
+        },
+        Contact = new Field<ContactDto>
+        {
+            Name = "Contact commandeur",
+            Status = "readWrite",
+            Value = new ContactDto
+            {
+                ContactId = null,
+                SocialTitle = null,
+                FirstName = null,
+                LastName = null,
+                Email = null,
+                Phone = null,
+                CellularPhone = null
             },
-            Contact = new Field<ContactDto>
-            {
-                Name = "Contact commandeur",
-                Status = "readWrite",
-                Value = new ContactDto
-                {
-                    ContactId = null,
-                    SocialTitle = null,
-                    FirstName = null,
-                    LastName = null,
-                    Email = null,
-                    Phone = null,
-                    CellularPhone = null
-                },
-                ProcedureCall = new List<string?>
+            ProcedureCall = new List<string?>
         {
             "UpdateContact",
             "OrderBy",
             "<one of /orderByContacts contactId>"
         }
-            },
-            ActivityArea = new Field<string>
-            {
-                Name = "Secteur d'activité",
-                Status = "onlyForDisplay",
-                Value = null
-            },
-            CustomerTags = new List<BasketValueDto>(),
-            SalesOriginId = new Field<string>
-            {
-                Name = "Canal de vente",
-                Status = "readWrite",
-                Value = "Auto",
-                ProcedureCall = new List<string?>
+        },
+        ActivityArea = new Field<string>
+        {
+            Name = "Secteur d'activité",
+            Status = "onlyForDisplay",
+            Value = null
+        },
+        CustomerTags = new List<BasketValueDto>(),
+        SalesOriginId = new Field<string>
+        {
+            Name = "Canal de vente",
+            Status = "readWrite",
+            Value = "Auto",
+            ProcedureCall = new List<string?>
         {
             "UpdateOrderTablePropertyValue",
             "SalesOriginId",
             "System.String",
             "<one of /salesOrigins value>"
         }
-            },
-            WebOriginId = new Field<string>
-            {
-                Name = "Origine e-commerce",
-                Status = "required",
-                Error = "L'origine e-commerce est obligatoire pour le canal de vente sélectionné",
-                Value = "",
-                ProcedureCall = new List<string?>
+        },
+        WebOriginId = new Field<string>
+        {
+            Name = "Origine e-commerce",
+            Status = "required",
+            Error = "L'origine e-commerce est obligatoire pour le canal de vente sélectionné",
+            Value = "",
+            ProcedureCall = new List<string?>
         {
             "UpdateOrderTablePropertyValue",
             "RAJ_WebOriginId",
             "System.String",
             "<one of /webOrigins value>"
         }
-            },
-            SalesPoolId = new Field<string>
-            {
-                Name = "Type de transaction",
-                Status = "readWrite",
-                Value = "NOR",
-                ProcedureCall = new List<string?>
+        },
+        SalesPoolId = new Field<string>
+        {
+            Name = "Type de transaction",
+            Status = "readWrite",
+            Value = "NOR",
+            ProcedureCall = new List<string?>
         {
             "UpdateOrderTablePropertyValue",
             "SalesPoolId",
             "System.String",
             "<one of /salesPools value>"
         }
-            },
-            CustomerOrderRef = new Field<string>
-            {
-                Name = "Référence Client",
-                Status = "readWrite",
-                Value = null,
-                ProcedureCall = new List<string?>
+        },
+        CustomerOrderRef = new Field<string>
+        {
+            Name = "Référence Client",
+            Status = "readWrite",
+            Value = null,
+            ProcedureCall = new List<string?>
         {
             "UpdateOrderTablePropertyValue",
             "PurchOrderFormNum",
             "System.String",
             "<value>"
         }
-            },
-            WebSalesId = new Field<string>
-            {
-                Name = "Commande Web",
-                Status = "readOnly",
-                Value = null
-            },
-            RelatedLink = new Field<string>
-            {
-                Name = "Devis",
-                Status = "hidden",
-                Value = ""
-            },
-            Note = new Field<string>
-            {
-                Name = "Note de RC",
-                Status = "onlyForDisplay",
-                Value = ""
-            }
-        };
+        },
+        WebSalesId = new Field<string>
+        {
+            Name = "Commande Web",
+            Status = "readOnly",
+            Value = null
+        },
+        RelatedLink = new Field<string>
+        {
+            Name = "Devis",
+            Status = "hidden",
+            Value = ""
+        },
+        Note = new Field<string>
+        {
+            Name = "Note de RC",
+            Status = "onlyForDisplay",
+            Value = ""
+        }
+    };
 
 
-        //orderByContacts   P0130652
-        public static List<ContactDto?> orderByContactsP0130652 = new List<ContactDto?>
+    //orderByContacts   P0130652
+    public static List<ContactDto?> orderByContactsP0130652 = new List<ContactDto?>
 {
     new ContactDto
     {
@@ -4759,8 +4708,8 @@ new BasketValueDto
 };
 
 
-        //customerTags   P0130652
-        public static List<BasketValueDto?> customerTagsP0130652 = new List<BasketValueDto?>
+    //customerTags   P0130652
+    public static List<BasketValueDto?> customerTagsP0130652 = new List<BasketValueDto?>
 {
     new BasketValueDto
     {
@@ -4790,8 +4739,8 @@ new BasketValueDto
 };
 
 
-        //salesPools   P0130652
-        public static List<BasketValueDto?> salesPoolsP0130652 = new List<BasketValueDto?>
+    //salesPools   P0130652
+    public static List<BasketValueDto?> salesPoolsP0130652 = new List<BasketValueDto?>
 {
     new BasketValueDto
     {
@@ -4816,8 +4765,8 @@ new BasketValueDto
 };
 
 
-        //salesOrigins   P0130652
-        public static List<SalesOriginDto?> salesOriginsP0130652 = new List<SalesOriginDto?>
+    //salesOrigins   P0130652
+    public static List<SalesOriginDto?> salesOriginsP0130652 = new List<SalesOriginDto?>
 {
     new SalesOriginDto
     {
@@ -4889,8 +4838,8 @@ new BasketValueDto
     }
 };
 
-        //webOrigins    // orderInfo   P0130652
-        public static List<BasketValueDto?> webOriginsP0130652 = new List<BasketValueDto?>
+    //webOrigins    // orderInfo   P0130652
+    public static List<BasketValueDto?> webOriginsP0130652 = new List<BasketValueDto?>
 {
     new BasketValueDto
     {
@@ -5330,13 +5279,13 @@ new BasketValueDto
 };
 
 
-        //procedureCall => SalesOrigin = Internet   P0130652
-        public static ProcedureCallResponseDto procedureCallResponseP0130652_1 = new ProcedureCallResponseDto
-        {
-            Success = true,
-            Message = "Property SalesOriginId updated with value Internet",
-            UpdateDone = true,
-            RefreshCalls = new List<string?>
+    //procedureCall => SalesOrigin = Internet   P0130652
+    public static ProcedureCallResponseDto procedureCallResponseP0130652_1 = new ProcedureCallResponseDto
+    {
+        Success = true,
+        Message = "Property SalesOriginId updated with value Internet",
+        UpdateDone = true,
+        RefreshCalls = new List<string?>
     {
         "generalInfo",
         "notifications",
@@ -5344,322 +5293,322 @@ new BasketValueDto
         "pricesInfo",
         "invoiceInfo"
     }
-        };
+    };
 
 
-        //procedureCall => RAJ_WebSalesId = W01234567   P0130652
-        public static ProcedureCallResponseDto procedureCallResponseP0130652_2 = new ProcedureCallResponseDto
-        {
-            Success = true,
-            Message = "Property RAJ_WebSalesId updated with value W01234567",
-            UpdateDone = true,
-            RefreshCalls = new List<string?>
+    //procedureCall => RAJ_WebSalesId = W01234567   P0130652
+    public static ProcedureCallResponseDto procedureCallResponseP0130652_2 = new ProcedureCallResponseDto
+    {
+        Success = true,
+        Message = "Property RAJ_WebSalesId updated with value W01234567",
+        UpdateDone = true,
+        RefreshCalls = new List<string?>
     {
         "generalInfo",
         "notifications"
     }
-        };
+    };
 
 
-        //procedureCall => MayLastColumnDiscount = true   P0130652
-        public static ProcedureCallResponseDto procedureCallResponseP0130652_3 = new ProcedureCallResponseDto
-        {
-            Success = true,
-            Message = "Property MyLastColumnDiscount updated with value True",
-            UpdateDone = true,
-            RefreshCalls = new List<string?>
+    //procedureCall => MayLastColumnDiscount = true   P0130652
+    public static ProcedureCallResponseDto procedureCallResponseP0130652_3 = new ProcedureCallResponseDto
+    {
+        Success = true,
+        Message = "Property MyLastColumnDiscount updated with value True",
+        UpdateDone = true,
+        RefreshCalls = new List<string?>
     {
         "generalInfo",
         "notifications",
         "pricesInfo",
         "orderLines"
     }
-        };
+    };
 
 
-        //procedureCall => UpdateContact(OrderBy, X2567124   P0130652
-        public static ProcedureCallResponseDto procedureCallResponseP0130652_4 = new ProcedureCallResponseDto
-        {
-            Success = true,
-            Message = "Contact X2567124 updated",
-            UpdateDone = true,
-            RefreshCalls = new List<string?>
+    //procedureCall => UpdateContact(OrderBy, X2567124   P0130652
+    public static ProcedureCallResponseDto procedureCallResponseP0130652_4 = new ProcedureCallResponseDto
+    {
+        Success = true,
+        Message = "Contact X2567124 updated",
+        UpdateDone = true,
+        RefreshCalls = new List<string?>
     {
         "generalInfo",
         "notifications"
     }
-        };
+    };
 
 
-        //procedureCall => addorderLine(CAS10,100)   P0130652
-        public static ProcedureCallResponseDto procedureCallResponseP0130652_5 = new ProcedureCallResponseDto
-        {
-            Success = true,
-            Message = "Article CAS10 added with quantity 100",
-            UpdateDone = true,
-            RefreshCalls = new List<string?>
+    //procedureCall => addorderLine(CAS10,100)   P0130652
+    public static ProcedureCallResponseDto procedureCallResponseP0130652_5 = new ProcedureCallResponseDto
+    {
+        Success = true,
+        Message = "Article CAS10 added with quantity 100",
+        UpdateDone = true,
+        RefreshCalls = new List<string?>
     {
         "generalInfo",
         "notifications",
         "pricesInfo",
         "orderLines"
     }
-        };
+    };
 
 
-        //orderInfo => Check update values   P0130652
-        public static BasketOrderInfoDto orderInfoP0130652_2 = new BasketOrderInfoDto
+    //orderInfo => Check update values   P0130652
+    public static BasketOrderInfoDto orderInfoP0130652_2 = new BasketOrderInfoDto
+    {
+        Account = new Field<AccountDto>
         {
-            Account = new Field<AccountDto>
+            Name = "Compte commandeur",
+            Status = "onlyForDisplay",
+            Value = new AccountDto
             {
-                Name = "Compte commandeur",
-                Status = "onlyForDisplay",
-                Value = new AccountDto
-                {
-                    AccountId = "A1619588",
-                    Name = "TRUE BEAUTY",
-                    Recipient = "",
-                    Building = "",
-                    Street = "25 CHEMIN DE LA PIERRE",
-                    Locality = "",
-                    ZipCode = "95260",
-                    City = "BEAUMONT SUR OISE CEDEX",
-                    Country = "FRANCE",
-                    Email = "true.beauty@test.fr",
-                    Phone = "0102326252",
-                    CellularPhone = "0621434586",
-                    Blocked = false
-                }
+                AccountId = "A1619588",
+                Name = "TRUE BEAUTY",
+                Recipient = "",
+                Building = "",
+                Street = "25 CHEMIN DE LA PIERRE",
+                Locality = "",
+                ZipCode = "95260",
+                City = "BEAUMONT SUR OISE CEDEX",
+                Country = "FRANCE",
+                Email = "true.beauty@test.fr",
+                Phone = "0102326252",
+                CellularPhone = "0621434586",
+                Blocked = false
+            }
+        },
+        Contact = new Field<ContactDto>
+        {
+            Name = "Contact commandeur",
+            Status = "readWrite",
+            Value = new ContactDto
+            {
+                ContactId = null,
+                SocialTitle = null,
+                FirstName = null,
+                LastName = null,
+                Email = null,
+                Phone = null,
+                CellularPhone = null
             },
-            Contact = new Field<ContactDto>
-            {
-                Name = "Contact commandeur",
-                Status = "readWrite",
-                Value = new ContactDto
-                {
-                    ContactId = null,
-                    SocialTitle = null,
-                    FirstName = null,
-                    LastName = null,
-                    Email = null,
-                    Phone = null,
-                    CellularPhone = null
-                },
-                ProcedureCall = new List<string?>
+            ProcedureCall = new List<string?>
         {
             "UpdateContact",
             "OrderBy",
             "<one of /orderByContacts contactId>"
         }
-            },
-            ActivityArea = new Field<string>
-            {
-                Name = "Secteur d'activité",
-                Status = "onlyForDisplay",
-                Value = null
-            },
-            CustomerTags = new List<BasketValueDto>(),
-            SalesOriginId = new Field<string>
-            {
-                Name = "Canal de vente",
-                Status = "readWrite",
-                Value = "Internet",
-                ProcedureCall = new List<string?>
+        },
+        ActivityArea = new Field<string>
+        {
+            Name = "Secteur d'activité",
+            Status = "onlyForDisplay",
+            Value = null
+        },
+        CustomerTags = new List<BasketValueDto>(),
+        SalesOriginId = new Field<string>
+        {
+            Name = "Canal de vente",
+            Status = "readWrite",
+            Value = "Internet",
+            ProcedureCall = new List<string?>
         {
             "UpdateOrderTablePropertyValue",
             "SalesOriginId",
             "System.String",
             "<one of /salesOrigins value>"
         }
-            },
-            WebOriginId = new Field<string>
-            {
-                Name = "Origine e-commerce",
-                Status = "readWrite",
-                Value = "DESKTOP",
-                ProcedureCall = new List<string?>
+        },
+        WebOriginId = new Field<string>
+        {
+            Name = "Origine e-commerce",
+            Status = "readWrite",
+            Value = "DESKTOP",
+            ProcedureCall = new List<string?>
         {
             "UpdateOrderTablePropertyValue",
             "RAJ_WebOriginId",
             "System.String",
             "<one of /webOrigins value>"
         }
-            },
-            SalesPoolId = new Field<string>
-            {
-                Name = "Type de transaction",
-                Status = "readWrite",
-                Value = "NOR",
-                ProcedureCall = new List<string?>
+        },
+        SalesPoolId = new Field<string>
+        {
+            Name = "Type de transaction",
+            Status = "readWrite",
+            Value = "NOR",
+            ProcedureCall = new List<string?>
         {
             "UpdateOrderTablePropertyValue",
             "SalesPoolId",
             "System.String",
             "<one of /salesPools value>"
         }
-            },
-            CustomerOrderRef = new Field<string>
-            {
-                Name = "Référence Client",
-                Status = "readWrite",
-                Value = null,
-                ProcedureCall = new List<string?>
+        },
+        CustomerOrderRef = new Field<string>
+        {
+            Name = "Référence Client",
+            Status = "readWrite",
+            Value = null,
+            ProcedureCall = new List<string?>
         {
             "UpdateOrderTablePropertyValue",
             "PurchOrderFormNum",
             "System.String",
             "<value>"
         }
-            },
-            WebSalesId = new Field<string>
-            {
-                Name = "Commande Web",
-                Status = "readWrite",
-                Value = "W01234567",
-                ProcedureCall = new List<string?>
+        },
+        WebSalesId = new Field<string>
+        {
+            Name = "Commande Web",
+            Status = "readWrite",
+            Value = "W01234567",
+            ProcedureCall = new List<string?>
         {
             "UpdateOrderTablePropertyValue",
             "RAJ_WebSalesId",
             "System.String",
             "<value>"
         }
-            },
-            RelatedLink = new Field<string>
-            {
-                Name = "Devis",
-                Status = "hidden",
-                Value = ""
-            },
-            Note = new Field<string>
-            {
-                Name = "Note de RC",
-                Status = "onlyForDisplay",
-                Value = ""
-            }
-        };
-
-
-        //deliveryInfo   P0130652
-        public static BasketDeliveryInfoDto deliveryInfoP0130652 = new BasketDeliveryInfoDto
+        },
+        RelatedLink = new Field<string>
         {
-            Account = new Field<AccountDto>
+            Name = "Devis",
+            Status = "hidden",
+            Value = ""
+        },
+        Note = new Field<string>
+        {
+            Name = "Note de RC",
+            Status = "onlyForDisplay",
+            Value = ""
+        }
+    };
+
+
+    //deliveryInfo   P0130652
+    public static BasketDeliveryInfoDto deliveryInfoP0130652 = new BasketDeliveryInfoDto
+    {
+        Account = new Field<AccountDto>
+        {
+            Name = "Compte de livraison",
+            Status = "readWrite",
+            Value = new AccountDto
             {
-                Name = "Compte de livraison",
-                Status = "readWrite",
-                Value = new AccountDto
-                {
-                    AccountId = "A1619588",
-                    Name = "TRUE BEAUTY",
-                    Recipient = "",
-                    Building = "",
-                    Street = "25 CHEMIN DE LA PIERRE",
-                    Locality = "",
-                    ZipCode = "95260",
-                    City = "BEAUMONT SUR OISE CEDEX",
-                    Country = "FRANCE",
-                    Email = "true.beauty@test.fr",
-                    Phone = "0102326252",
-                    CellularPhone = "0621434586",
-                    Blocked = false
-                },
-                ProcedureCall = new List<string?>
+                AccountId = "A1619588",
+                Name = "TRUE BEAUTY",
+                Recipient = "",
+                Building = "",
+                Street = "25 CHEMIN DE LA PIERRE",
+                Locality = "",
+                ZipCode = "95260",
+                City = "BEAUMONT SUR OISE CEDEX",
+                Country = "FRANCE",
+                Email = "true.beauty@test.fr",
+                Phone = "0102326252",
+                CellularPhone = "0621434586",
+                Blocked = false
+            },
+            ProcedureCall = new List<string?>
         {
             "UpdateCustomer",
             "DeliverTo",
             "<one of /deliverToAccounts accountId>"
         }
-            },
-            Contact = new Field<ContactDto>
+        },
+        Contact = new Field<ContactDto>
+        {
+            Name = "Contact de livraison",
+            Status = "readWrite",
+            Value = new ContactDto
             {
-                Name = "Contact de livraison",
-                Status = "readWrite",
-                Value = new ContactDto
-                {
-                    ContactId = null,
-                    SocialTitle = null,
-                    FirstName = null,
-                    LastName = null,
-                    Email = null,
-                    Phone = null,
-                    CellularPhone = null
-                },
-                ProcedureCall = new List<string?>
+                ContactId = null,
+                SocialTitle = null,
+                FirstName = null,
+                LastName = null,
+                Email = null,
+                Phone = null,
+                CellularPhone = null
+            },
+            ProcedureCall = new List<string?>
         {
             "UpdateContact",
             "DeliverTo",
             "<one of /deliverToContacts contactId>"
         }
-            },
-            DeliveryMode = new Field<string>
-            {
-                Name = "Mode de livraison",
-                Status = "readWrite",
-                Value = "Normal",
-                ProcedureCall = new List<string?>
+        },
+        DeliveryMode = new Field<string>
+        {
+            Name = "Mode de livraison",
+            Status = "readWrite",
+            Value = "Normal",
+            ProcedureCall = new List<string?>
         {
             "UpdateOrderTablePropertyValue",
             "RAJ_GenericDlvMode",
             "System.String",
             "<one of /deliveryModes value>"
         }
-            },
-            CompleteDelivery = new Field<bool?>
-            {
-                Name = "Livraison complète",
-                Status = "readWrite",
-                Value = false
-            },
-            ImperativeDate = new Field<string>
-            {
-                Name = "Date impérative",
-                Status = "required",
-                Value = null,
-                ProcedureCall = new List<string?>
+        },
+        CompleteDelivery = new Field<bool?>
+        {
+            Name = "Livraison complète",
+            Status = "readWrite",
+            Value = false
+        },
+        ImperativeDate = new Field<string>
+        {
+            Name = "Date impérative",
+            Status = "required",
+            Value = null,
+            ProcedureCall = new List<string?>
         {
             "UpdateOrderTablePropertyValue",
             "RAJ_ImperativeDate",
             "DateTime",
             "<value>"
         }
-            },
-            OrderDocuments = new Field<List<string?>>
-            {
-                Name = "BL / Factures",
-                Status = "hidden",
-                Value = new List<string?>()
-            },
-            Note = new Field<string>
-            {
-                Name = "Note de livraison",
-                Status = "readWrite",
-                Value = null,
-                ProcedureCall = new List<string?>
+        },
+        OrderDocuments = new Field<List<string?>>
+        {
+            Name = "BL / Factures",
+            Status = "hidden",
+            Value = new List<string?>()
+        },
+        Note = new Field<string>
+        {
+            Name = "Note de livraison",
+            Status = "readWrite",
+            Value = null,
+            ProcedureCall = new List<string?>
         {
             "UpdateOrderTablePropertyValue",
             "DeliveryNote",
             "System.DateTime",
             "<value>"
         }
-            },
-            NoteMustBeSaved = new Field<bool?>
-            {
-                Name = "Sauvegarde note de liv.",
-                Status = "readWrite",
-                Value = true,
-                Description = "Sauvegarde pour les prochaines commandes",
-                ProcedureCall = new List<string?>
+        },
+        NoteMustBeSaved = new Field<bool?>
+        {
+            Name = "Sauvegarde note de liv.",
+            Status = "readWrite",
+            Value = true,
+            Description = "Sauvegarde pour les prochaines commandes",
+            ProcedureCall = new List<string?>
         {
             "UpdateOrderTablePropertyValue",
             "IsDeliveryNoteSaved",
             "System.Boolean",
             "<value>"
         }
-            }
-        };
+        }
+    };
 
 
-        //deliverToAccounts   P0130652
-        public static List<AccountDto?> deliverToAccountsP0130652 = new List<AccountDto?>
+    //deliverToAccounts   P0130652
+    public static List<AccountDto?> deliverToAccountsP0130652 = new List<AccountDto?>
 {
     new AccountDto
     {
@@ -5792,8 +5741,8 @@ new BasketValueDto
 };
 
 
-        //deliverToContacts   P0130652
-        public static List<ContactDto?> deliverToContactsP0130652 = new List<ContactDto?>
+    //deliverToContacts   P0130652
+    public static List<ContactDto?> deliverToContactsP0130652 = new List<ContactDto?>
 {
     new ContactDto
     {
@@ -5858,8 +5807,8 @@ new BasketValueDto
 };
 
 
-        //deliveryModes   P0130652
-        public static List<BasketValueDto?> deliveryModesP0130652 = new List<BasketValueDto?>
+    //deliveryModes   P0130652
+    public static List<BasketValueDto?> deliveryModesP0130652 = new List<BasketValueDto?>
 {
     new BasketValueDto { Value = "Catalogue" },
     new BasketValueDto { Value = "Enlèvement" },
@@ -5871,98 +5820,98 @@ new BasketValueDto
 };
 
 
-        //invoiceInfo   P0130652
-        public static BasketInvoiceInfoDto invoiceInfoP0130652 = new BasketInvoiceInfoDto
+    //invoiceInfo   P0130652
+    public static BasketInvoiceInfoDto invoiceInfoP0130652 = new BasketInvoiceInfoDto
+    {
+        Account = new Field<AccountDto>
         {
-            Account = new Field<AccountDto>
+            Name = "Compte de facturation",
+            Status = "readWrite",
+            Value = new AccountDto
             {
-                Name = "Compte de facturation",
-                Status = "readWrite",
-                Value = new AccountDto
-                {
-                    AccountId = "A1619588",
-                    Name = "TRUE BEAUTY",
-                    Recipient = "",
-                    Building = "",
-                    Street = "25 CHEMIN DE LA PIERRE",
-                    Locality = "",
-                    ZipCode = "95260",
-                    City = "BEAUMONT SUR OISE CEDEX",
-                    Country = "FRANCE",
-                    Email = "true.beauty@test.fr",
-                    Phone = "0102326252",
-                    CellularPhone = "0621434586",
-                    Blocked = false
-                },
-                ProcedureCall = new List<string?>
+                AccountId = "A1619588",
+                Name = "TRUE BEAUTY",
+                Recipient = "",
+                Building = "",
+                Street = "25 CHEMIN DE LA PIERRE",
+                Locality = "",
+                ZipCode = "95260",
+                City = "BEAUMONT SUR OISE CEDEX",
+                Country = "FRANCE",
+                Email = "true.beauty@test.fr",
+                Phone = "0102326252",
+                CellularPhone = "0621434586",
+                Blocked = false
+            },
+            ProcedureCall = new List<string?>
         {
             "UpdateCustomer",
             "InvoiceTo",
             "<one of /invoiceToAccounts accountId>"
         }
-            },
-            SiretId = new Field<string>
-            {
-                Name = "Siret",
-                Status = "onlyForDisplay",
-                Value = ""
-            },
-            TaxGroup = new Field<string>
-            {
-                Name = "Groupe de taxe",
-                Status = "readWrite",
-                Value = "F-DEB",
-                ProcedureCall = new List<string?>
+        },
+        SiretId = new Field<string>
+        {
+            Name = "Siret",
+            Status = "onlyForDisplay",
+            Value = ""
+        },
+        TaxGroup = new Field<string>
+        {
+            Name = "Groupe de taxe",
+            Status = "readWrite",
+            Value = "F-DEB",
+            ProcedureCall = new List<string?>
         {
             "UpdateOrderTablePropertyValue",
             "TaxGroup",
             "System.String",
             "<value>"
         }
-            },
-            PaymentTerm = new Field<string>
-            {
-                Name = "Conditions de paiement",
-                Status = "onlyForDisplay",
-                Value = "COMPTANT"
-            },
-            PaymentMode = new Field<string>
-            {
-                Name = "Mode de paiement",
-                Status = "readWrite",
-                Value = "CH",
-                ProcedureCall = new List<string?>
+        },
+        PaymentTerm = new Field<string>
+        {
+            Name = "Conditions de paiement",
+            Status = "onlyForDisplay",
+            Value = "COMPTANT"
+        },
+        PaymentMode = new Field<string>
+        {
+            Name = "Mode de paiement",
+            Status = "readWrite",
+            Value = "CH",
+            ProcedureCall = new List<string?>
         {
             "UpdateOrderTablePropertyValue",
             "PaymMode",
             "System.String",
             "<value>"
         }
-            },
-            IsPublicEntity = false,
-            PublicEntityExecutingService = new Field<string>
-            {
-                Name = "Service exécutif",
-                Status = "readOnly",
-                Value = null
-            },
-            PublicEntityLegalCommitment = new Field<string>
-            {
-                Name = "Engagement juridique",
-                Status = "readOnly",
-                Value = null
-            },
-            Note = new Field<string>
-            {
-                Name = null,
-                Status = "onlyForDisplay",
-                Value = "cccc"
-            }
-        };
+        },
+        IsPublicEntity = false,
+        PublicEntityExecutingService = new Field<string>
+        {
+            Name = "Service exécutif",
+            Status = "readOnly",
+            Value = null
+        },
+        PublicEntityLegalCommitment = new Field<string>
+        {
+            Name = "Engagement juridique",
+            Status = "readOnly",
+            Value = null
+        },
+        Note = new Field<string>
+        {
+            Name = null,
+            Status = "onlyForDisplay",
+            Value = "cccc"
+        }
+    };
 
 
-        //invoiceToAccounts   P0130652
-        public static List<AccountDto?> invoiceToAccountsP0130652 = new List<AccountDto?>
+    //invoiceToAccounts   P0130652
+    public static List<AccountDto?> invoiceToAccountsP0130652 = new List<AccountDto?>
 {
     new AccountDto
     {
@@ -5998,8 +5947,8 @@ new BasketValueDto
     }
 };
 
-        //TaxGroups   P0130652
-        public static List<BasketValueDto?> taxGroupsP0130652 = new List<BasketValueDto?>
+    //TaxGroups   P0130652
+    public static List<BasketValueDto?> taxGroupsP0130652 = new List<BasketValueDto?>
 {
     new BasketValueDto
     {
@@ -6084,8 +6033,8 @@ new BasketValueDto
 };
 
 
-        //paymentModes   P0130652
-        public static List<BasketValueDto?> paymentModesP0130652 = new List<BasketValueDto?>
+    //paymentModes   P0130652
+    public static List<BasketValueDto?> paymentModesP0130652 = new List<BasketValueDto?>
 {
     new BasketValueDto
     {
@@ -6140,14 +6089,14 @@ new BasketValueDto
 };
 
 
-        //tradeInfo   P0130652
-        public static BasketTradeInfoDto tradeInfoP0130652 = new BasketTradeInfoDto
+    //tradeInfo   P0130652
+    public static BasketTradeInfoDto tradeInfoP0130652 = new BasketTradeInfoDto
+    {
+        Turnover = new Field<List<BasketTurnoverLineDto?>>
         {
-            Turnover = new Field<List<BasketTurnoverLineDto?>>
-            {
-                Name = "Chiffre d'affaire",
-                Status = "onlyForDisplay",
-                Value = new List<BasketTurnoverLineDto?>
+            Name = "Chiffre d'affaire",
+            Status = "onlyForDisplay",
+            Value = new List<BasketTurnoverLineDto?>
         {
             new BasketTurnoverLineDto
             {
@@ -6174,251 +6123,238 @@ new BasketValueDto
                 N2 = ""
             }
         }
-            },
-            Contract = new BasketContractInfoDto
-            {
-                ContractId = new Field<string>
-                {
-                    Name = "Contrat",
-                    Status = "onlyForDisplay",
-                    Value = null
-                },
-                ContractType = new Field<string>
-                {
-                    Name = "Type",
-                    Status = "onlyForDisplay",
-                    Value = null
-                },
-                ContractGroup = new Field<string>
-                {
-                    Name = "Groupe de contrat",
-                    Status = "onlyForDisplay",
-                    Value = ""
-                },
-                Status = new Field<string>
-                {
-                    Name = "Statut",
-                    Status = "onlyForDisplay",
-                    Value = null
-                },
-                StartDate = new Field<string>
-                {
-                    Name = "Date de début",
-                    Status = "onlyForDisplay",
-                    Value = null
-                },
-                EndDate = new Field<string>
-                {
-                    Name = "Date de fin",
-                    Status = "onlyForDisplay",
-                    Value = null
-                },
-                CampaignId = new Field<string>
-                {
-                    Name = "Campagne de prix",
-                    Status = "onlyForDisplay",
-                    Value = null
-                },
-                MainContact = new Field<string>
-                {
-                    Name = "Commercial terrain",
-                    Status = "onlyForDisplay",
-                    Value = null
-                },
-                OfficeExecutive = new Field<string>
-                {
-                    Name = "Commercial sédentaire",
-                    Status = "onlyForDisplay",
-                    Value = null
-                },
-                DiscountList = new Field<List<string?>>
-                {
-                    Name = "Description",
-                    Status = "onlyForDisplay",
-                    Value = new List<string?>()
-                }
-            }
-        };
-
-
-        //pricesInfo   P0130652
-        public static BasketPricesInfoDto pricesInfoP0130652 = new BasketPricesInfoDto
+        },
+        Contract = new BasketContractInfoDto
         {
-            // Column 1
-            Coupon = new Field<string?>
+            ContractId = new Field<string>
             {
-                Name = "Code Action",
-                Status = "readWrite",
-                Value = "G032400",
-                ProcedureCall = new List<string?>
+                Name = "Contrat",
+                Status = "onlyForDisplay",
+                Value = null
+            },
+            ContractType = new Field<string>
+            {
+                Name = "Type",
+                Status = "onlyForDisplay",
+                Value = null
+            },
+            ContractGroup = new Field<string>
+            {
+                Name = "Groupe de contrat",
+                Status = "onlyForDisplay",
+                Value = ""
+            },
+            Status = new Field<string>
+            {
+                Name = "Statut",
+                Status = "onlyForDisplay",
+                Value = null
+            },
+            StartDate = new Field<string>
+            {
+                Name = "Date de début",
+                Status = "onlyForDisplay",
+                Value = null
+            },
+            EndDate = new Field<string>
+            {
+                Name = "Date de fin",
+                Status = "onlyForDisplay",
+                Value = null
+            },
+            CampaignId = new Field<string>
+            {
+                Name = "Campagne de prix",
+                Status = "onlyForDisplay",
+                Value = null
+            },
+            MainContact = new Field<string>
+            {
+                Name = "Commercial terrain",
+                Status = "onlyForDisplay",
+                Value = null
+            },
+            OfficeExecutive = new Field<string>
+            {
+                Name = "Commercial sédentaire",
+                Status = "onlyForDisplay",
+                Value = null
+            },
+            DiscountList = new Field<List<string?>>
+            {
+                Name = "Description",
+                Status = "onlyForDisplay",
+                Value = new List<string?>()
+            }
+        }
+    };
+
+
+    //pricesInfo   P0130652
+    public static BasketPricesInfoDto pricesInfoP0130652 = new BasketPricesInfoDto
+    {
+        // Column 1
+        Coupon = new Field<string?>
+        {
+            Name = "Code Action",
+            Status = "readWrite",
+            Value = "G032400",
+            ProcedureCall = new List<string?>
         {
             "UpdateOrderTablePropertyValue",
             "CampaignId",
             "System.String",
             "<one of /coupons value>"
         }
-            },
-            FreeShippingAmountThreshold = new Field<decimal?>
-            {
-                Name = "Diff Franco",
-                Status = "onlyForDisplay",
-                Value = 2.5m
-            },
-            GiftAmountThreshold = new Field<decimal?>
-            {
-                Name = "Diff KDO",
-                Status = "onlyForDisplay",
-                Value = null
-            },
-            ProductsInfo = new Field<string?>
-            {
-                Name = "Dispo. Marchandise",
-                Status = "onlyForDisplay",
-                Value = "En stock"
-            },
+        },
+        FreeShippingAmountThreshold = new Field<decimal?>
+        {
+            Name = "Diff Franco",
+            Status = "onlyForDisplay",
+            Value = 2.5m
+        },
+        GiftAmountThreshold = new Field<decimal?>
+        {
+            Name = "Diff KDO",
+            Status = "onlyForDisplay",
+            Value = null
+        },
+        ProductsInfo = new Field<string?>
+        {
+            Name = "Dispo. Marchandise",
+            Status = "onlyForDisplay",
+            Value = "En stock"
+        },
 
-            // Column 2
-            ProductsNetAmount = new Field<decimal?>
-            {
-                Name = "Marchandise HT",
-                Status = "onlyForDisplay",
-                Value = 197.5m
-            },
-            WarrantyCostOption = new Field<string?>
-            {
-                Name = "Type de garantie optimale",
-                Status = "readWrite",
-                Value = "Enabled",
-                ProcedureCall = new List<string?>
+        // Column 2
+        ProductsNetAmount = new Field<decimal?>
+        {
+            Name = "Marchandise HT",
+            Status = "onlyForDisplay",
+            Value = 197.5m
+        },
+        WarrantyCostOption = new Field<string?>
+        {
+            Name = "Type de garantie optimale",
+            Status = "readWrite",
+            Value = "Enabled",
+            ProcedureCall = new List<string?>
         {
             "UpdateOrderTablePropertyValue",
             "WarrantyMode",
             "System.String",
             "<one of /warrantyCostOptions value>"
         }
-            },
-            WarrantyCostAmount = new Field<decimal?>
-            {
-                Name = "Montant de la garantie optimale",
-                Status = "onlyForDisplay",
-                Value = 4.94m
-            },
-            ShippingCostOption = new Field<string?>
-            {
-                Name = "Type de frais de port",
-                Status = "readWrite",
-                Value = "Enabled",
-                ProcedureCall = new List<string?>
+        },
+        WarrantyCostAmount = new Field<decimal?>
+        {
+            Name = "Montant de la garantie optimale",
+            Status = "onlyForDisplay",
+            Value = 4.94m
+        },
+        ShippingCostOption = new Field<string?>
+        {
+            Name = "Type de frais de port",
+            Status = "readWrite",
+            Value = "Enabled",
+            ProcedureCall = new List<string?>
         {
             "UpdateOrderTablePropertyValue",
             "DeliveryFeeMode",
             "System.String",
             "<one of /shippingCostOptions value>"
         }
-            },
-            ShippingCostAmount = new Field<decimal?>
-            {
-                Name = "Montant des frais de port",
-                Status = "readWrite",
-                Value = 9.9m,
-                ProcedureCall = new List<string?>
+        },
+        ShippingCostAmount = new Field<decimal?>
+        {
+            Name = "Montant des frais de port",
+            Status = "readWrite",
+            Value = 9.9m,
+            ProcedureCall = new List<string?>
         {
             "UpdateOrderTablePropertyValue",
             "DeliveryAmount",
             "System.Double",
             "<value>"
         }
-            },
-            LogisticInfo = null,
+        },
+        LogisticInfo = null,
 
-            // Column 3
-            TotalNetAmount = new Field<decimal?>
-            {
-                Name = "Montant Total HT",
-                Status = "onlyForDisplay",
-                Value = 212.34m
-            },
-            VatAmount = new Field<decimal?>
-            {
-                Name = "Montant TVA",
-                Status = "onlyForDisplay",
-                Value = 42.47m
-            },
-            TotalGrossAmount = new Field<decimal?>
-            {
-                Name = "Montant TTC",
-                Status = "onlyForDisplay",
-                Value = 254.81m
-            },
-            FirstDeliveryDate = new Field<string?>
-            {
-                Name = "Première date de livraison",
-                Status = "onlyForDisplay",
-                Value = "2024-08-14 00:00:00"
-            },
-            LastDeliveryDate = new Field<string?>
-            {
-                Name = "Dernière date de livraison",
-                Status = "onlyForDisplay",
-                Value = null
-            },
-
-            // Column 4
-            OrderDiscountRate = new Field<int?>
-            {
-                Name = "Remise Cde (%)",
-                Status = "readWrite",
-                Value = 0,
-                ProcedureCall = new List<string?>
+        // Column 3
+        TotalNetAmount = new Field<decimal?>
+        {
+            Name = "Montant Total HT",
+            Status = "onlyForDisplay",
+            Value = 212.34m
+        },
+        VatAmount = new Field<decimal?>
+        {
+            Name = "Montant TVA",
+            Status = "onlyForDisplay",
+            Value = 42.47m
+        },
+        TotalGrossAmount = new Field<decimal?>
+        {
+            Name = "Montant TTC",
+            Status = "onlyForDisplay",
+            Value = 254.81m
+        },
+        // Column 4
+        OrderDiscountRate = new Field<int?>
+        {
+            Name = "Remise Cde (%)",
+            Status = "readWrite",
+            Value = 0,
+            ProcedureCall = new List<string?>
         {
             "UpdateOrderTablePropertyValue",
             "MyDiscountPercent",
             "System.Int32",
             "<value>"
         }
-            },
-            OrderLastColumnDiscount = new Field<bool?>
-            {
-                Name = "Remise Cde DC",
-                Status = "readWrite",
-                Value = true,
-                ProcedureCall = new List<string?>
+        },
+        OrderLastColumnDiscount = new Field<bool?>
+        {
+            Name = "Remise Cde DC",
+            Status = "readWrite",
+            Value = true,
+            ProcedureCall = new List<string?>
         {
             "UpdateOrderTablePropertyValue",
             "MyLastColumnDiscount",
             "System.Boolean",
             "<value>"
         }
-            },
-            AdditionalSalesAmount = new Field<decimal?>
-            {
-                Name = "Ventes add. (€)",
-                Status = "onlyForDisplay",
-                Value = 0m
-            },
-            DiscountAmount = new Field<decimal?>
-            {
-                Name = "Remise Cde (€)",
-                Status = "onlyForDisplay",
-                Value = 31.5m
-            },
-            TotalWeight = new Field<decimal?>
-            {
-                Name = "Poids (kg)",
-                Status = "onlyForDisplay",
-                Value = 39.3m
-            },
-            TotalVolume = new Field<decimal?>
-            {
-                Name = "Volume (m3)",
-                Status = "onlyForDisplay",
-                Value = 0.302m
-            }
-        };
+        },
+        AdditionalSalesAmount = new Field<decimal?>
+        {
+            Name = "Ventes add. (€)",
+            Status = "onlyForDisplay",
+            Value = 0m
+        },
+        DiscountAmount = new Field<decimal?>
+        {
+            Name = "Remise Cde (€)",
+            Status = "onlyForDisplay",
+            Value = 31.5m
+        },
+        TotalWeight = new Field<decimal?>
+        {
+            Name = "Poids (kg)",
+            Status = "onlyForDisplay",
+            Value = 39.3m
+        },
+        TotalVolume = new Field<decimal?>
+        {
+            Name = "Volume (m3)",
+            Status = "onlyForDisplay",
+            Value = 0.302m
+        }
+    };
 
 
-        //coupons   P0130652
-        public static List<BasketValueDto?> couponsP0130652 = new List<BasketValueDto?>
+    //coupons   P0130652
+    public static List<BasketValueDto?> couponsP0130652 = new List<BasketValueDto?>
 {
     new BasketValueDto
     {
@@ -6613,8 +6549,8 @@ new BasketValueDto
 };
 
 
-        //warrantyCostOptions   P0130652
-        public static List<BasketValueDto?> warrantyCostOptionsP0130652 = new List<BasketValueDto?>
+    //warrantyCostOptions   P0130652
+    public static List<BasketValueDto?> warrantyCostOptionsP0130652 = new List<BasketValueDto?>
 {
     new BasketValueDto
     {
@@ -6634,8 +6570,8 @@ new BasketValueDto
 };
 
 
-        //shippingCostOptions   P0130652
-        public static List<BasketValueDto?> shippingCostOptionsP0130652 = new List<BasketValueDto>
+    //shippingCostOptions   P0130652
+    public static List<BasketValueDto?> shippingCostOptionsP0130652 = new List<BasketValueDto>
 {
     new BasketValueDto
     {
@@ -6650,68 +6586,68 @@ new BasketValueDto
 };
 
 
-        //===========================================================================================================
+    //===========================================================================================================
 
-        //"P0130863" // secteur d'activité
-        // generalInfo  P0130863
-        public static BasketGeneralInfoDto generalInfoP0130863 = new BasketGeneralInfoDto
+    //"P0130863" // secteur d'activité
+    // generalInfo  P0130863
+    public static BasketGeneralInfoDto generalInfoP0130863 = new BasketGeneralInfoDto
+    {
+        OrderType = "Avoir/Retour",
+        BasketId = "P0130863",
+        OrderId = "P0130863",
+        OrderStatus = "Nouveau",
+        OrderDate = "2024-07-20 20:08:38",
+        SalesResponsible = "CEDRIC REVILLON"
+    };
+
+
+    // orderInfo  P0130863
+    public static BasketOrderInfoDto orderInfoP0130863 = new BasketOrderInfoDto
+    {
+        Account = new Field<AccountDto>
         {
-            OrderType = "Avoir/Retour",
-            BasketId = "P0130863",
-            OrderId = "P0130863",
-            OrderStatus = "Nouveau",
-            OrderDate = "2024-07-20 20:08:38",
-            SalesResponsible = "CEDRIC REVILLON"
-        };
-
-
-        // orderInfo  P0130863
-        public static BasketOrderInfoDto orderInfoP0130863 = new BasketOrderInfoDto
+            Name = "Compte commandeur",
+            Status = "onlyForDisplay",
+            Value = new AccountDto
+            {
+                AccountId = "92156594",
+                Name = "CHRONOPOST SAS",
+                Recipient = "DEPARTEMENT COMPTABILITE FOURNISSEURS",
+                Building = "CC211093",
+                Street = "3 BOULEVARD ROMAIN ROLLAND",
+                Locality = "",
+                ZipCode = "75680",
+                City = "PARIS CEDEX 14",
+                Country = "FRANCE",
+                Email = "raja1234@raja.fr",
+                Phone = "0120281279",
+                CellularPhone = "0120281279",
+                Blocked = false
+            }
+        },
+        Contact = new Field<ContactDto>
         {
-            Account = new Field<AccountDto>
+            Name = "Contact commandeur",
+            Status = "readOnly",
+            Value = new ContactDto
             {
-                Name = "Compte commandeur",
-                Status = "onlyForDisplay",
-                Value = new AccountDto
-                {
-                    AccountId = "92156594",
-                    Name = "CHRONOPOST SAS",
-                    Recipient = "DEPARTEMENT COMPTABILITE FOURNISSEURS",
-                    Building = "CC211093",
-                    Street = "3 BOULEVARD ROMAIN ROLLAND",
-                    Locality = "",
-                    ZipCode = "75680",
-                    City = "PARIS CEDEX 14",
-                    Country = "FRANCE",
-                    Email = "raja1234@raja.fr",
-                    Phone = "0120281279",
-                    CellularPhone = "0120281279",
-                    Blocked = false
-                }
-            },
-            Contact = new Field<ContactDto>
-            {
-                Name = "Contact commandeur",
-                Status = "readOnly",
-                Value = new ContactDto
-                {
-                    ContactId = "X2505625",
-                    SocialTitle = "M.",
-                    FirstName = "AYMERIC",
-                    LastName = "BESSON",
-                    Email = "raja1234@raja.fr",
-                    Phone = "0120281279",
-                    CellularPhone = "0120281279"
-                }
-            },
-            ActivityArea = new Field<string>
-            {
-                Name = "Secteur d'activité",
-                Status = "onlyForDisplay",
-                Value = "Messagerie, fret express",
-                Description = "Code NAF: 5229A"
-            },
-            CustomerTags = new List<BasketValueDto>
+                ContactId = "X2505625",
+                SocialTitle = "M.",
+                FirstName = "AYMERIC",
+                LastName = "BESSON",
+                Email = "raja1234@raja.fr",
+                Phone = "0120281279",
+                CellularPhone = "0120281279"
+            }
+        },
+        ActivityArea = new Field<string>
+        {
+            Name = "Secteur d'activité",
+            Status = "onlyForDisplay",
+            Value = "Messagerie, fret express",
+            Description = "Code NAF: 5229A"
+        },
+        CustomerTags = new List<BasketValueDto>
     {
         new BasketValueDto
         {
@@ -6724,54 +6660,54 @@ new BasketValueDto
             Value = "noGift"
         }
     },
-            SalesOriginId = new Field<string>
-            {
-                Name = "Canal de vente",
-                Status = "readOnly",
-                Value = "E-mail"
-            },
-            WebOriginId = new Field<string>
-            {
-                Name = "Origine e-commerce",
-                Status = "readOnly",
-                Value = ""
-            },
-            SalesPoolId = new Field<string>
-            {
-                Name = "Type de transaction",
-                Status = "readOnly",
-                Value = "NOR"
-            },
-            CustomerOrderRef = new Field<string>
-            {
-                Name = "Référence Client",
-                Status = "readOnly",
-                Value = "BDC-CHR-2024-003027"
-            },
-            WebSalesId = new Field<string>
-            {
-                Name = "Commande Web",
-                Status = "readOnly",
-                Value = ""
-            },
-            RelatedLink = new Field<string>
-            {
-                Name = "Dossier SAV / Commande",
-                Status = "onlyForDisplay",
-                Value = "R0031591 / 24136045",
-                Url = "SalesId=24136045"
-            },
-            Note = new Field<string>
-            {
-                Name = "Note de RC",
-                Status = "onlyForDisplay",
-                Value = "29/10/2019 ******A TRAITER PAR L'EQUIPE VIP*******LORS DE LA SAISIE DES COMMANDES LE COMPTE D IMPUTATION ET LE NUMERO DE COMMANDE SONT OBLIGATOIRES 03/11/2022  SGR ATTENTION  SUR ORDRE DE MR ARINO NE PAS NOTER DANS LE NO DE CDE  BDC-  MAIS JUSTE LA SUITE CAR SINON NE VOIT PAS LES NUMEROS EN ENTIERS,"
-            }
-        };
+        SalesOriginId = new Field<string>
+        {
+            Name = "Canal de vente",
+            Status = "readOnly",
+            Value = "E-mail"
+        },
+        WebOriginId = new Field<string>
+        {
+            Name = "Origine e-commerce",
+            Status = "readOnly",
+            Value = ""
+        },
+        SalesPoolId = new Field<string>
+        {
+            Name = "Type de transaction",
+            Status = "readOnly",
+            Value = "NOR"
+        },
+        CustomerOrderRef = new Field<string>
+        {
+            Name = "Référence Client",
+            Status = "readOnly",
+            Value = "BDC-CHR-2024-003027"
+        },
+        WebSalesId = new Field<string>
+        {
+            Name = "Commande Web",
+            Status = "readOnly",
+            Value = ""
+        },
+        RelatedLink = new Field<string>
+        {
+            Name = "Dossier SAV / Commande",
+            Status = "onlyForDisplay",
+            Value = "R0031591 / 24136045",
+            Url = "SalesId=24136045"
+        },
+        Note = new Field<string>
+        {
+            Name = "Note de RC",
+            Status = "onlyForDisplay",
+            Value = "29/10/2019 ******A TRAITER PAR L'EQUIPE VIP*******LORS DE LA SAISIE DES COMMANDES LE COMPTE D IMPUTATION ET LE NUMERO DE COMMANDE SONT OBLIGATOIRES 03/11/2022  SGR ATTENTION  SUR ORDRE DE MR ARINO NE PAS NOTER DANS LE NO DE CDE  BDC-  MAIS JUSTE LA SUITE CAR SINON NE VOIT PAS LES NUMEROS EN ENTIERS,"
+        }
+    };
 
 
-        //orderByContacts   P0130863
-        public static List<ContactDto?> orderByContactsP0130863 = new List<ContactDto>
+    //orderByContacts   P0130863
+    public static List<ContactDto?> orderByContactsP0130863 = new List<ContactDto>
 {
     new ContactDto
     {
@@ -7115,8 +7051,8 @@ new BasketValueDto
     }
 };
 
-        //customerTags   P0130863
-        public static List<BasketValueDto?> customerTagsP0130863 = new List<BasketValueDto>
+    //customerTags   P0130863
+    public static List<BasketValueDto?> customerTagsP0130863 = new List<BasketValueDto>
 {
     new BasketValueDto
     {
@@ -7146,8 +7082,8 @@ new BasketValueDto
 };
 
 
-        //salesPools   P0130863
-        public static List<BasketValueDto?> salesPoolsP0130863 = new List<BasketValueDto?>
+    //salesPools   P0130863
+    public static List<BasketValueDto?> salesPoolsP0130863 = new List<BasketValueDto?>
 {
     new BasketValueDto
     {
@@ -7172,8 +7108,8 @@ new BasketValueDto
 };
 
 
-        //salesOrigins   P0130863
-        public static List<SalesOriginDto?> salesOriginsP0130863 = new List<SalesOriginDto?>
+    //salesOrigins   P0130863
+    public static List<SalesOriginDto?> salesOriginsP0130863 = new List<SalesOriginDto?>
 {
     new SalesOriginDto { Value = "" },
     new SalesOriginDto { Value = "Téléphone" },
@@ -7192,8 +7128,8 @@ new BasketValueDto
 };
 
 
-        //webOrigins   P0130863
-        public static List<BasketValueDto?> webOriginsP0130863 = new List<BasketValueDto?>
+    //webOrigins   P0130863
+    public static List<BasketValueDto?> webOriginsP0130863 = new List<BasketValueDto?>
 {
     new BasketValueDto { Value = "" },
     new BasketValueDto { Value = "3M" },
@@ -7259,13 +7195,13 @@ new BasketValueDto
 };
 
 
-        //procedureCall => SalesOrigin = Internet   P0130863
-        public static ProcedureCallResponseDto procedureCallResponseP0130863_1 = new ProcedureCallResponseDto
-        {
-            Success = true,
-            Message = "Property SalesOriginId updated with value Internet",
-            UpdateDone = true,
-            RefreshCalls = new List<string?>
+    //procedureCall => SalesOrigin = Internet   P0130863
+    public static ProcedureCallResponseDto procedureCallResponseP0130863_1 = new ProcedureCallResponseDto
+    {
+        Success = true,
+        Message = "Property SalesOriginId updated with value Internet",
+        UpdateDone = true,
+        RefreshCalls = new List<string?>
     {
         "generalInfo",
         "notifications",
@@ -7273,116 +7209,116 @@ new BasketValueDto
         "pricesInfo",
         "invoiceInfo"
     }
-        };
+    };
 
 
-        //procedureCall => RAJ_WebSalesId = W01234567   P0130863
-        public static ProcedureCallResponseDto procedureCallResponseP0130863_2 = new ProcedureCallResponseDto
-        {
-            Success = true,
-            Message = "Property RAJ_WebSalesId updated with value W01234567",
-            UpdateDone = true,
-            RefreshCalls = new List<string?>
+    //procedureCall => RAJ_WebSalesId = W01234567   P0130863
+    public static ProcedureCallResponseDto procedureCallResponseP0130863_2 = new ProcedureCallResponseDto
+    {
+        Success = true,
+        Message = "Property RAJ_WebSalesId updated with value W01234567",
+        UpdateDone = true,
+        RefreshCalls = new List<string?>
     {
         "generalInfo",
         "notifications"
     }
-        };
+    };
 
 
-        //procedureCall => MayLastColumnDiscount = true   P0130863
-        public static ProcedureCallResponseDto procedureCallResponseP0130863_3 = new ProcedureCallResponseDto
-        {
-            Success = true,
-            Message = "Property MyLastColumnDiscount updated with value True",
-            UpdateDone = true,
-            RefreshCalls = new List<string?>
+    //procedureCall => MayLastColumnDiscount = true   P0130863
+    public static ProcedureCallResponseDto procedureCallResponseP0130863_3 = new ProcedureCallResponseDto
+    {
+        Success = true,
+        Message = "Property MyLastColumnDiscount updated with value True",
+        UpdateDone = true,
+        RefreshCalls = new List<string?>
     {
         "generalInfo",
         "notifications",
         "pricesInfo",
         "orderLines"
     }
-        };
+    };
 
 
-        //procedureCall => UpdateContact(OrderBy, X2567124   P0130863
-        public static ProcedureCallResponseDto procedureCallResponseP0130863_4 = new ProcedureCallResponseDto
-        {
-            Success = true,
-            Message = "Contact X2567124 updated",
-            UpdateDone = true,
-            RefreshCalls = new List<string?>
+    //procedureCall => UpdateContact(OrderBy, X2567124   P0130863
+    public static ProcedureCallResponseDto procedureCallResponseP0130863_4 = new ProcedureCallResponseDto
+    {
+        Success = true,
+        Message = "Contact X2567124 updated",
+        UpdateDone = true,
+        RefreshCalls = new List<string?>
     {
         "generalInfo",
         "notifications"
     }
-        };
+    };
 
 
-        //procedureCall => addorderLine(CAS10,100)   P0130863
-        public static ProcedureCallResponseDto procedureCallResponseP0130863_5 = new ProcedureCallResponseDto
-        {
-            Success = true,
-            Message = "Article CAS10 added with quantity 50",
-            UpdateDone = true,
-            RefreshCalls = new List<string?>
+    //procedureCall => addorderLine(CAS10,100)   P0130863
+    public static ProcedureCallResponseDto procedureCallResponseP0130863_5 = new ProcedureCallResponseDto
+    {
+        Success = true,
+        Message = "Article CAS10 added with quantity 50",
+        UpdateDone = true,
+        RefreshCalls = new List<string?>
     {
         "generalInfo",
         "notifications",
         "pricesInfo",
         "orderLines"
     }
-        };
+    };
 
 
-        //orderInfo => Check update values   P0130863
-        public static BasketOrderInfoDto orderInfoP0130863_2 = new BasketOrderInfoDto
+    //orderInfo => Check update values   P0130863
+    public static BasketOrderInfoDto orderInfoP0130863_2 = new BasketOrderInfoDto
+    {
+        Account = new Field<AccountDto>
         {
-            Account = new Field<AccountDto>
+            Name = "Compte commandeur",
+            Status = "onlyForDisplay",
+            Value = new AccountDto
             {
-                Name = "Compte commandeur",
-                Status = "onlyForDisplay",
-                Value = new AccountDto
-                {
-                    AccountId = "92156594",
-                    Name = "CHRONOPOST SAS",
-                    Recipient = "DEPARTEMENT COMPTABILITE FOURNISSEURS",
-                    Building = "CC211093",
-                    Street = "3 BOULEVARD ROMAIN ROLLAND",
-                    Locality = "",
-                    ZipCode = "75680",
-                    City = "PARIS CEDEX 14",
-                    Country = "FRANCE",
-                    Email = "raja1234@raja.fr",
-                    Phone = "0120281279",
-                    CellularPhone = "0120281279",
-                    Blocked = false
-                }
-            },
-            Contact = new Field<ContactDto>
+                AccountId = "92156594",
+                Name = "CHRONOPOST SAS",
+                Recipient = "DEPARTEMENT COMPTABILITE FOURNISSEURS",
+                Building = "CC211093",
+                Street = "3 BOULEVARD ROMAIN ROLLAND",
+                Locality = "",
+                ZipCode = "75680",
+                City = "PARIS CEDEX 14",
+                Country = "FRANCE",
+                Email = "raja1234@raja.fr",
+                Phone = "0120281279",
+                CellularPhone = "0120281279",
+                Blocked = false
+            }
+        },
+        Contact = new Field<ContactDto>
+        {
+            Name = "Contact commandeur",
+            Status = "readOnly",
+            Value = new ContactDto
             {
-                Name = "Contact commandeur",
-                Status = "readOnly",
-                Value = new ContactDto
-                {
-                    ContactId = null,
-                    SocialTitle = null,
-                    FirstName = null,
-                    LastName = null,
-                    Email = null,
-                    Phone = null,
-                    CellularPhone = null
-                }
-            },
-            ActivityArea = new Field<string>
-            {
-                Name = "Secteur d'activité",
-                Status = "onlyForDisplay",
-                Value = "Messagerie, fret express",
-                Description = "Code NAF: 5229A"
-            },
-            CustomerTags = new List<BasketValueDto>
+                ContactId = null,
+                SocialTitle = null,
+                FirstName = null,
+                LastName = null,
+                Email = null,
+                Phone = null,
+                CellularPhone = null
+            }
+        },
+        ActivityArea = new Field<string>
+        {
+            Name = "Secteur d'activité",
+            Status = "onlyForDisplay",
+            Value = "Messagerie, fret express",
+            Description = "Code NAF: 5229A"
+        },
+        CustomerTags = new List<BasketValueDto>
     {
         new BasketValueDto
         {
@@ -7395,186 +7331,186 @@ new BasketValueDto
             Value = "noGift"
         }
     },
-            SalesOriginId = new Field<string>
-            {
-                Name = "Canal de vente",
-                Status = "readOnly",
-                Value = "Internet"
-            },
-            WebOriginId = new Field<string>
-            {
-                Name = "Origine e-commerce",
-                Status = "readWrite",
-                Value = "DESKTOP",
-                ProcedureCall = new List<string?>
+        SalesOriginId = new Field<string>
+        {
+            Name = "Canal de vente",
+            Status = "readOnly",
+            Value = "Internet"
+        },
+        WebOriginId = new Field<string>
+        {
+            Name = "Origine e-commerce",
+            Status = "readWrite",
+            Value = "DESKTOP",
+            ProcedureCall = new List<string?>
         {
             "UpdateOrderTablePropertyValue",
             "RAJ_WebOriginId",
             "System.String",
             "<one of /webOrigins value>"
         }
-            },
-            SalesPoolId = new Field<string>
-            {
-                Name = "Type de transaction",
-                Status = "readOnly",
-                Value = "NOR"
-            },
-            CustomerOrderRef = new Field<string>
-            {
-                Name = "Référence Client",
-                Status = "readOnly",
-                Value = "BDC-CHR-2024-003027"
-            },
-            WebSalesId = new Field<string>
-            {
-                Name = "Commande Web",
-                Status = "readWrite",
-                Value = "W01234567",
-                ProcedureCall = new List<string?>
+        },
+        SalesPoolId = new Field<string>
+        {
+            Name = "Type de transaction",
+            Status = "readOnly",
+            Value = "NOR"
+        },
+        CustomerOrderRef = new Field<string>
+        {
+            Name = "Référence Client",
+            Status = "readOnly",
+            Value = "BDC-CHR-2024-003027"
+        },
+        WebSalesId = new Field<string>
+        {
+            Name = "Commande Web",
+            Status = "readWrite",
+            Value = "W01234567",
+            ProcedureCall = new List<string?>
         {
             "UpdateOrderTablePropertyValue",
             "RAJ_WebSalesId",
             "System.String",
             "<value>"
         }
-            },
-            RelatedLink = new Field<string>
-            {
-                Name = "Dossier SAV / Commande",
-                Status = "onlyForDisplay",
-                Value = "R0031591 / 24136045",
-                Url = "SalesId=2"
-            }
-        };
-
-
-        //deliveryInfo   P0130863
-        public static BasketDeliveryInfoDto deliveryInfoP0130863 = new BasketDeliveryInfoDto
+        },
+        RelatedLink = new Field<string>
         {
-            Account = new Field<AccountDto>
+            Name = "Dossier SAV / Commande",
+            Status = "onlyForDisplay",
+            Value = "R0031591 / 24136045",
+            Url = "SalesId=2"
+        }
+    };
+
+
+    //deliveryInfo   P0130863
+    public static BasketDeliveryInfoDto deliveryInfoP0130863 = new BasketDeliveryInfoDto
+    {
+        Account = new Field<AccountDto>
+        {
+            Name = "Compte de livraison",
+            Status = "readWrite",
+            Value = new AccountDto
             {
-                Name = "Compte de livraison",
-                Status = "readWrite",
-                Value = new AccountDto
-                {
-                    AccountId = "95145761",
-                    Name = "CHRONOPOST",
-                    Recipient = "CC 211296",
-                    Building = "CARGO 7",
-                    Street = "9 RUE DU HAUT DE LAVAL",
-                    Locality = "BP 10506",
-                    ZipCode = "95709",
-                    City = "ROISSY CHARLES DE GAULLE CEDEX 1",
-                    Country = null,
-                    Email = "raja1234@raja.fr",
-                    Phone = "0120281279",
-                    CellularPhone = "0120281279",
-                    Blocked = false
-                },
-                ProcedureCall = new List<string?>
+                AccountId = "95145761",
+                Name = "CHRONOPOST",
+                Recipient = "CC 211296",
+                Building = "CARGO 7",
+                Street = "9 RUE DU HAUT DE LAVAL",
+                Locality = "BP 10506",
+                ZipCode = "95709",
+                City = "ROISSY CHARLES DE GAULLE CEDEX 1",
+                Country = null,
+                Email = "raja1234@raja.fr",
+                Phone = "0120281279",
+                CellularPhone = "0120281279",
+                Blocked = false
+            },
+            ProcedureCall = new List<string?>
         {
             "UpdateCustomer",
             "DeliverTo",
             "<one of /deliverToAccounts accountId>"
         }
-            },
-            Contact = new Field<ContactDto>
+        },
+        Contact = new Field<ContactDto>
+        {
+            Name = "Contact de livraison",
+            Status = "readWrite",
+            Value = new ContactDto
             {
-                Name = "Contact de livraison",
-                Status = "readWrite",
-                Value = new ContactDto
-                {
-                    ContactId = "I1894692",
-                    SocialTitle = "M.",
-                    FirstName = "AYMERIC",
-                    LastName = "BESSON",
-                    Email = "raja1234@raja.fr",
-                    Phone = "0120281279",
-                    CellularPhone = "0120281279"
-                },
-                ProcedureCall = new List<string?>
+                ContactId = "I1894692",
+                SocialTitle = "M.",
+                FirstName = "AYMERIC",
+                LastName = "BESSON",
+                Email = "raja1234@raja.fr",
+                Phone = "0120281279",
+                CellularPhone = "0120281279"
+            },
+            ProcedureCall = new List<string?>
         {
             "UpdateContact",
             "DeliverTo",
             "<one of /deliverToContacts contactId>"
         }
-            },
-            DeliveryMode = new Field<string>
-            {
-                Name = "Mode de livraison",
-                Status = "readWrite",
-                Value = "Normal",
-                ProcedureCall = new List<string?>
+        },
+        DeliveryMode = new Field<string>
+        {
+            Name = "Mode de livraison",
+            Status = "readWrite",
+            Value = "Normal",
+            ProcedureCall = new List<string?>
         {
             "UpdateOrderTablePropertyValue",
             "RAJ_GenericDlvMode",
             "System.String",
             "<one of /deliveryModes value>"
         }
-            },
-            CompleteDelivery = new Field<bool?>
-            {
-                Name = "Livraison complète",
-                Status = "readWrite",
-                Value = false
-            },
-            ImperativeDate = new Field<string>
-            {
-                Name = "Date impérative",
-                Status = "required",
-                Value = null,
-                ProcedureCall = new List<string?>
+        },
+        CompleteDelivery = new Field<bool?>
+        {
+            Name = "Livraison complète",
+            Status = "readWrite",
+            Value = false
+        },
+        ImperativeDate = new Field<string>
+        {
+            Name = "Date impérative",
+            Status = "required",
+            Value = null,
+            ProcedureCall = new List<string?>
         {
             "UpdateOrderTablePropertyValue",
             "RAJ_ImperativeDate",
             "DateTime",
             "<value>"
         }
-            },
-            OrderDocuments = new Field<List<string?>>
-            {
-                Name = "BL / Factures",
-                Status = "onlyForDisplay",
-                Value = new List<string?>
+        },
+        OrderDocuments = new Field<List<string?>>
+        {
+            Name = "BL / Factures",
+            Status = "onlyForDisplay",
+            Value = new List<string?>
         {
             "07/05/24 - BL 24213216 - PN2 - Chargé",
             "30/06/24 - Facture 24F171476",
             "19/07/24 - Avoir 24A006866"
         }
-            },
-            Note = new Field<string>
-            {
-                Name = "Note de livraison",
-                Status = "readWrite",
-                Value = "LES LIVRAISONS SONT A REMETTRE A LA PERSONNE D INDIQUEE SUR LE BL CLH",
-                ProcedureCall = new List<string?>
+        },
+        Note = new Field<string>
+        {
+            Name = "Note de livraison",
+            Status = "readWrite",
+            Value = "LES LIVRAISONS SONT A REMETTRE A LA PERSONNE D INDIQUEE SUR LE BL CLH",
+            ProcedureCall = new List<string?>
         {
             "UpdateOrderTablePropertyValue",
             "DeliveryNote",
             "System.DateTime",
             "<value>"
         }
-            },
-            NoteMustBeSaved = new Field<bool?>
-            {
-                Name = "Sauvegarde note de liv.",
-                Status = "readWrite",
-                Value = false,
-                Description = "Sauvegarde pour les prochaines commandes",
-                ProcedureCall = new List<string?>
+        },
+        NoteMustBeSaved = new Field<bool?>
+        {
+            Name = "Sauvegarde note de liv.",
+            Status = "readWrite",
+            Value = false,
+            Description = "Sauvegarde pour les prochaines commandes",
+            ProcedureCall = new List<string?>
         {
             "UpdateOrderTablePropertyValue",
             "IsDeliveryNoteSaved",
             "System.Boolean",
             "<value>"
         }
-            }
-        };
+        }
+    };
 
 
-        //deliverToAccounts   P0130863
-        public static List<AccountDto?> deliverToAccountsP0130863 = new List<AccountDto?>
+    //deliverToAccounts   P0130863
+    public static List<AccountDto?> deliverToAccountsP0130863 = new List<AccountDto?>
 {
     new AccountDto
     {
@@ -7835,8 +7771,8 @@ new BasketValueDto
 };
 
 
-        //deliverToContacts   P0130863
-        public static List<ContactDto?> deliverToContactsP0130863 = new List<ContactDto?>
+    //deliverToContacts   P0130863
+    public static List<ContactDto?> deliverToContactsP0130863 = new List<ContactDto?>
 {
     new ContactDto
     {
@@ -8011,8 +7947,8 @@ new BasketValueDto
 };
 
 
-        //deliveryModes   P0130863
-        public static List<BasketValueDto?> deliveryModesP0130863 = new List<BasketValueDto?>
+    //deliveryModes   P0130863
+    public static List<BasketValueDto?> deliveryModesP0130863 = new List<BasketValueDto?>
 {
     new BasketValueDto { Value = "Catalogue" },
     new BasketValueDto { Value = "Enlèvement" },
@@ -8024,78 +7960,78 @@ new BasketValueDto
 };
 
 
-        //invoiceInfo   P0130863
-        public static BasketInvoiceInfoDto invoiceInfoP0130863 = new BasketInvoiceInfoDto
+    //invoiceInfo   P0130863
+    public static BasketInvoiceInfoDto invoiceInfoP0130863 = new BasketInvoiceInfoDto
+    {
+        Account = new Field<AccountDto>
         {
-            Account = new Field<AccountDto>
+            Name = "Compte de facturation",
+            Status = "readOnly",
+            Value = new AccountDto
             {
-                Name = "Compte de facturation",
-                Status = "readOnly",
-                Value = new AccountDto
-                {
-                    AccountId = "92156594",
-                    Name = "CHRONOPOST SAS",
-                    Recipient = "DEPARTEMENT COMPTABILITE FOURNISSEURS",
-                    Building = "CC211093",
-                    Street = "3 BOULEVARD ROMAIN ROLLAND",
-                    Locality = "",
-                    ZipCode = "75680",
-                    City = "PARIS CEDEX 14",
-                    Country = "FRANCE",
-                    Email = "raja1234@raja.fr",
-                    Phone = "0120281279",
-                    CellularPhone = "0120281279",
-                    Blocked = false
-                }
-            },
-            SiretId = new Field<string>
-            {
-                Name = "Siret",
-                Status = "onlyForDisplay",
-                Value = "38396013502628"
-            },
-            TaxGroup = new Field<string>
-            {
-                Name = "Groupe de taxe",
-                Status = "readOnly",
-                Value = "F-DEB"
-            },
-            PaymentTerm = new Field<string>
-            {
-                Name = "Conditions de paiement",
-                Status = "onlyForDisplay",
-                Value = "FDM45"
-            },
-            PaymentMode = new Field<string>
-            {
-                Name = "Mode de paiement",
-                Status = "readOnly",
-                Value = "VB"
-            },
-            IsPublicEntity = false,
-            PublicEntityExecutingService = new Field<string>
-            {
-                Name = "Service exécutif",
-                Status = "readOnly",
-                Value = ""
-            },
-            PublicEntityLegalCommitment = new Field<string>
-            {
-                Name = "Engagement juridique",
-                Status = "readOnly",
-                Value = ""
-            },
-            Note = new Field<string>
-            {
-                Name = null,
-                Status = "onlyForDisplay",
-                Value = null
+                AccountId = "92156594",
+                Name = "CHRONOPOST SAS",
+                Recipient = "DEPARTEMENT COMPTABILITE FOURNISSEURS",
+                Building = "CC211093",
+                Street = "3 BOULEVARD ROMAIN ROLLAND",
+                Locality = "",
+                ZipCode = "75680",
+                City = "PARIS CEDEX 14",
+                Country = "FRANCE",
+                Email = "raja1234@raja.fr",
+                Phone = "0120281279",
+                CellularPhone = "0120281279",
+                Blocked = false
             }
-        };
+        },
+        SiretId = new Field<string>
+        {
+            Name = "Siret",
+            Status = "onlyForDisplay",
+            Value = "38396013502628"
+        },
+        TaxGroup = new Field<string>
+        {
+            Name = "Groupe de taxe",
+            Status = "readOnly",
+            Value = "F-DEB"
+        },
+        PaymentTerm = new Field<string>
+        {
+            Name = "Conditions de paiement",
+            Status = "onlyForDisplay",
+            Value = "FDM45"
+        },
+        PaymentMode = new Field<string>
+        {
+            Name = "Mode de paiement",
+            Status = "readOnly",
+            Value = "VB"
+        },
+        IsPublicEntity = false,
+        PublicEntityExecutingService = new Field<string>
+        {
+            Name = "Service exécutif",
+            Status = "readOnly",
+            Value = ""
+        },
+        PublicEntityLegalCommitment = new Field<string>
+        {
+            Name = "Engagement juridique",
+            Status = "readOnly",
+            Value = ""
+        },
+        Note = new Field<string>
+        {
+            Name = null,
+            Status = "onlyForDisplay",
+            Value = null
+        }
+    };
 
 
-        //invoiceToAccounts   P0130863
-        public static List<AccountDto?> invoiceToAccountsP0130863 = new List<AccountDto?>
+    //invoiceToAccounts   P0130863
+    public static List<AccountDto?> invoiceToAccountsP0130863 = new List<AccountDto?>
 {
     new AccountDto
     {
@@ -8132,8 +8068,8 @@ new BasketValueDto
 };
 
 
-        //TaxGroups   P0130863
-        public static List<BasketValueDto?> taxGroupsP0130863 = new List<BasketValueDto?>
+    //TaxGroups   P0130863
+    public static List<BasketValueDto?> taxGroupsP0130863 = new List<BasketValueDto?>
 {
     new BasketValueDto
     {
@@ -8218,8 +8154,8 @@ new BasketValueDto
 };
 
 
-        //paymentModes   P0130863
-        public static List<BasketValueDto?> paymentModesP0130863 = new List<BasketValueDto?>
+    //paymentModes   P0130863
+    public static List<BasketValueDto?> paymentModesP0130863 = new List<BasketValueDto?>
 {
     new BasketValueDto
     {
@@ -8284,14 +8220,14 @@ new BasketValueDto
 };
 
 
-        //tradeInfo   P0130863
-        public static BasketTradeInfoDto tradeInfoP0130863 = new BasketTradeInfoDto
+    //tradeInfo   P0130863
+    public static BasketTradeInfoDto tradeInfoP0130863 = new BasketTradeInfoDto
+    {
+        Turnover = new Field<List<BasketTurnoverLineDto?>>
         {
-            Turnover = new Field<List<BasketTurnoverLineDto?>>
-            {
-                Name = "Chiffre d'affaire",
-                Status = "onlyForDisplay",
-                Value = new List<BasketTurnoverLineDto?>
+            Name = "Chiffre d'affaire",
+            Status = "onlyForDisplay",
+            Value = new List<BasketTurnoverLineDto?>
         {
             new BasketTurnoverLineDto
             {
@@ -8318,230 +8254,218 @@ new BasketValueDto
                 N2 = ""
             }
         }
-            },
-            Contract = new BasketContractInfoDto
-            {
-                ContractId = new Field<string>
-                {
-                    Name = "Contrat",
-                    Status = "onlyForDisplay",
-                    Value = null
-                },
-                ContractType = new Field<string>
-                {
-                    Name = "Type",
-                    Status = "onlyForDisplay",
-                    Value = null
-                },
-                ContractGroup = new Field<string>
-                {
-                    Name = "Groupe de contrat",
-                    Status = "onlyForDisplay",
-                    Value = ""
-                },
-                Status = new Field<string>
-                {
-                    Name = "Statut",
-                    Status = "onlyForDisplay",
-                    Value = null
-                },
-                StartDate = new Field<string>
-                {
-                    Name = "Date de début",
-                    Status = "onlyForDisplay",
-                    Value = null
-                },
-                EndDate = new Field<string>
-                {
-                    Name = "Date de fin",
-                    Status = "onlyForDisplay",
-                    Value = null
-                },
-                CampaignId = new Field<string>
-                {
-                    Name = "Campagne de prix",
-                    Status = "onlyForDisplay",
-                    Value = null
-                },
-                MainContact = new Field<string>
-                {
-                    Name = "Commercial terrain",
-                    Status = "onlyForDisplay",
-                    Value = null
-                },
-                OfficeExecutive = new Field<string>
-                {
-                    Name = "Commercial sédentaire",
-                    Status = "onlyForDisplay",
-                    Value = null
-                },
-                DiscountList = new Field<List<string?>>
-                {
-                    Name = "Description",
-                    Status = "onlyForDisplay",
-                    Value = new List<string?>()
-                }
-            }
-        };
-
-
-        //pricesInfo   P0130863
-        public static BasketPricesInfoDto pricesInfoP0130863 = new BasketPricesInfoDto
+        },
+        Contract = new BasketContractInfoDto
         {
-            Coupon = new Field<string?>
+            ContractId = new Field<string>
             {
-                Name = "Code Action",
-                Status = "readWrite",
-                Value = "G032400",
-                ProcedureCall = new List<string?>
+                Name = "Contrat",
+                Status = "onlyForDisplay",
+                Value = null
+            },
+            ContractType = new Field<string>
+            {
+                Name = "Type",
+                Status = "onlyForDisplay",
+                Value = null
+            },
+            ContractGroup = new Field<string>
+            {
+                Name = "Groupe de contrat",
+                Status = "onlyForDisplay",
+                Value = ""
+            },
+            Status = new Field<string>
+            {
+                Name = "Statut",
+                Status = "onlyForDisplay",
+                Value = null
+            },
+            StartDate = new Field<string>
+            {
+                Name = "Date de début",
+                Status = "onlyForDisplay",
+                Value = null
+            },
+            EndDate = new Field<string>
+            {
+                Name = "Date de fin",
+                Status = "onlyForDisplay",
+                Value = null
+            },
+            CampaignId = new Field<string>
+            {
+                Name = "Campagne de prix",
+                Status = "onlyForDisplay",
+                Value = null
+            },
+            MainContact = new Field<string>
+            {
+                Name = "Commercial terrain",
+                Status = "onlyForDisplay",
+                Value = null
+            },
+            OfficeExecutive = new Field<string>
+            {
+                Name = "Commercial sédentaire",
+                Status = "onlyForDisplay",
+                Value = null
+            },
+            DiscountList = new Field<List<string?>>
+            {
+                Name = "Description",
+                Status = "onlyForDisplay",
+                Value = new List<string?>()
+            }
+        }
+    };
+
+
+    //pricesInfo   P0130863
+    public static BasketPricesInfoDto pricesInfoP0130863 = new BasketPricesInfoDto
+    {
+        Coupon = new Field<string?>
+        {
+            Name = "Code Action",
+            Status = "readWrite",
+            Value = "G032400",
+            ProcedureCall = new List<string?>
         {
             "UpdateOrderTablePropertyValue",
             "CampaignId",
             "System.String",
             "<one of /coupons value>"
         }
-            },
-            FreeShippingAmountThreshold = new Field<decimal?>
-            {
-                Name = "Diff Franco",
-                Status = "onlyForDisplay",
-                Value = null
-            },
-            GiftAmountThreshold = new Field<decimal?>
-            {
-                Name = "Diff KDO",
-                Status = "onlyForDisplay",
-                Value = null
-            },
-            ProductsInfo = new Field<string?>
-            {
-                Name = "Dispo. Marchandise",
-                Status = "onlyForDisplay",
-                Value = "En stock"
-            },
-            ProductsNetAmount = new Field<decimal?>
-            {
-                Name = "Marchandise HT",
-                Status = "onlyForDisplay",
-                Value = 0
-            },
-            WarrantyCostOption = new Field<string?>
-            {
-                Name = "Type de garantie optimale",
-                Status = "readWrite",
-                Value = "Offered",
-                ProcedureCall = new List<string?>
+        },
+        FreeShippingAmountThreshold = new Field<decimal?>
+        {
+            Name = "Diff Franco",
+            Status = "onlyForDisplay",
+            Value = null
+        },
+        GiftAmountThreshold = new Field<decimal?>
+        {
+            Name = "Diff KDO",
+            Status = "onlyForDisplay",
+            Value = null
+        },
+        ProductsInfo = new Field<string?>
+        {
+            Name = "Dispo. Marchandise",
+            Status = "onlyForDisplay",
+            Value = "En stock"
+        },
+        ProductsNetAmount = new Field<decimal?>
+        {
+            Name = "Marchandise HT",
+            Status = "onlyForDisplay",
+            Value = 0
+        },
+        WarrantyCostOption = new Field<string?>
+        {
+            Name = "Type de garantie optimale",
+            Status = "readWrite",
+            Value = "Offered",
+            ProcedureCall = new List<string?>
         {
             "UpdateOrderTablePropertyValue",
             "WarrantyMode",
             "System.String",
             "<one of /warrantyCostOptions value>"
         }
-            },
-            WarrantyCostAmount = new Field<decimal?>
-            {
-                Name = "Montant de la garantie optimale",
-                Status = "onlyForDisplay",
-                Value = 0
-            },
-            ShippingCostOption = new Field<string?>
-            {
-                Name = "Type de frais de port",
-                Status = "readWrite",
-                Value = "Offered",
-                ProcedureCall = new List<string?>
+        },
+        WarrantyCostAmount = new Field<decimal?>
+        {
+            Name = "Montant de la garantie optimale",
+            Status = "onlyForDisplay",
+            Value = 0
+        },
+        ShippingCostOption = new Field<string?>
+        {
+            Name = "Type de frais de port",
+            Status = "readWrite",
+            Value = "Offered",
+            ProcedureCall = new List<string?>
         {
             "UpdateOrderTablePropertyValue",
             "DeliveryFeeMode",
             "System.String",
             "<one of /shippingCostOptions value>"
         }
-            },
-            ShippingCostAmount = new Field<decimal?>
-            {
-                Name = "Montant des frais de port",
-                Status = "readWrite",
-                Value = 0,
-                ProcedureCall = new List<string?>
+        },
+        ShippingCostAmount = new Field<decimal?>
+        {
+            Name = "Montant des frais de port",
+            Status = "readWrite",
+            Value = 0,
+            ProcedureCall = new List<string?>
         {
             "UpdateOrderTablePropertyValue",
             "DeliveryAmount",
             "System.Double",
             "<value>"
         }
-            },
-            LogisticInfo = null,
-            TotalNetAmount = new Field<decimal?>
-            {
-                Name = "Montant Total HT",
-                Status = "onlyForDisplay",
-                Value = 0
-            },
-            VatAmount = new Field<decimal?>
-            {
-                Name = "Montant TVA",
-                Status = "onlyForDisplay",
-                Value = 0
-            },
-            TotalGrossAmount = new Field<decimal?>
-            {
-                Name = "Montant TTC",
-                Status = "onlyForDisplay",
-                Value = 0
-            },
-            FirstDeliveryDate = new Field<string?>
-            {
-                Name = "Première date de livraison",
-                Status = "onlyForDisplay",
-                Value = "2024-05-14 00:00:00"
-            },
-            LastDeliveryDate = new Field<string?>
-            {
-                Name = "Dernière date de livraison",
-                Status = "onlyForDisplay",
-                Value = null
-            },
-            OrderDiscountRate = new Field<int?>
-            {
-                Name = "Remise Cde (%)",
-                Status = "readOnly",
-                Value = 0
-            },
-            OrderLastColumnDiscount = new Field<bool?>
-            {
-                Name = "Remise Cde DC",
-                Status = "readOnly",
-                Value = true
-            },
-            AdditionalSalesAmount = new Field<decimal?>
-            {
-                Name = "Ventes add. (€)",
-                Status = "onlyForDisplay",
-                Value = 0
-            },
-            DiscountAmount = new Field<decimal?>
-            {
-                Name = "Remise Cde (€)",
-                Status = "onlyForDisplay",
-                Value = 90.5m
-            },
-            TotalWeight = new Field<decimal?>
-            {
-                Name = "Poids (kg)",
-                Status = "onlyForDisplay",
-                Value = 12
-            },
-            TotalVolume = new Field<decimal?>
-            {
-                Name = "Volume (m3)",
-                Status = "onlyForDisplay",
-                Value = 0.076m
-            }
-        };
+        },
+        LogisticInfo = null,
+        TotalNetAmount = new Field<decimal?>
+        {
+            Name = "Montant Total HT",
+            Status = "onlyForDisplay",
+            Value = 0
+        },
+        VatAmount = new Field<decimal?>
+        {
+            Name = "Montant TVA",
+            Status = "onlyForDisplay",
+            Value = 0
+        },
+        TotalGrossAmount = new Field<decimal?>
+        {
+            Name = "Montant TTC",
+            Status = "onlyForDisplay",
+            Value = 0
+        },
+        OrderDiscountRate = new Field<int?>
+        {
+            Name = "Remise Cde (%)",
+            Status = "readOnly",
+            Value = 0
+        },
+        OrderLastColumnDiscount = new Field<bool?>
+        {
+            Name = "Remise Cde DC",
+            Status = "readOnly",
+            Value = true
+        },
+        AdditionalSalesAmount = new Field<decimal?>
+        {
+            Name = "Ventes add. (€)",
+            Status = "onlyForDisplay",
+            Value = 0
+        },
+        DiscountAmount = new Field<decimal?>
+        {
+            Name = "Remise Cde (€)",
+            Status = "onlyForDisplay",
+            Value = 90.5m
+        },
+        TotalWeight = new Field<decimal?>
+        {
+            Name = "Poids (kg)",
+            Status = "onlyForDisplay",
+            Value = 12
+        },
+        TotalVolume = new Field<decimal?>
+        {
+            Name = "Volume (m3)",
+            Status = "onlyForDisplay",
+            Value = 0.076m
+        }
+    };
 
 
-        //coupons   P0130863
-        public static List<BasketValueDto?> couponsP0130863 = new List<BasketValueDto?>
+    //coupons   P0130863
+    public static List<BasketValueDto?> couponsP0130863 = new List<BasketValueDto?>
 {
     new BasketValueDto
     {
@@ -8736,8 +8660,8 @@ new BasketValueDto
 };
 
 
-        //warrantyCostOptions   P0130863
-        public static List<BasketValueDto?> warrantyCostOptionsP0130863 = new List<BasketValueDto?>
+    //warrantyCostOptions   P0130863
+    public static List<BasketValueDto?> warrantyCostOptionsP0130863 = new List<BasketValueDto?>
 {
     new BasketValueDto
     {
@@ -8757,8 +8681,8 @@ new BasketValueDto
 };
 
 
-        //shippingCostOptions   P0130863
-        public static List<BasketValueDto?> shippingCostOptionsP0130863 = new List<BasketValueDto?>
+    //shippingCostOptions   P0130863
+    public static List<BasketValueDto?> shippingCostOptionsP0130863 = new List<BasketValueDto?>
 {
     new BasketValueDto
     {
@@ -8776,7 +8700,7 @@ new BasketValueDto
         Value = "Custom"
     }
 };
-    }
+}
 
 
 

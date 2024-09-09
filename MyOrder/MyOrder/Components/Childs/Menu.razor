@@ -1,9 +1,58 @@
-﻿<MudIconButton Icon="@Icons.Material.Filled.Add" Size="Size.Large" OnClick="AddBasket" />
+﻿@using Fluxor
+@using MyOrder.Store.CreateBasketUseCase
+@using MyOrder.Store.GeneralInfoUseCase
 
-@code{
+@inject IDispatcher dispatcher
+@inject IState<GeneralInfoState> generalInfoState
 
-    private void AddBasket()
+<MudMenu AnchorOrigin="Origin.BottomCenter"
+         TransformOrigin="Origin.TopCenter"
+         StartIcon="@Icons.Material.Filled.Add">
+    <ActivatorContent>
+        <MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Add" Size="Size.Large" />
+    </ActivatorContent>
+    <ChildContent>
+        <MudMenuItem>Nouveau panier</MudMenuItem>
+        @*     <MudMenuItem>
+        <MudMenu AnchorOrigin="Origin.CenterRight"
+        TransformOrigin="Origin.CenterLeft" EndIcon="@Icons.Material.Filled.ArrowRight" ActivationEvent="MouseEvent.MouseOver">
+        <ActivatorContent>
+        Nouveau panier à partir de...
+        </ActivatorContent>
+        <ChildContent>
+        <MudMenuItem>Commande de vente</MudMenuItem>
+        <MudMenuItem>Devis</MudMenuItem>
+        <MudMenuItem>Facture financière</MudMenuItem>
+        <MudMenuItem>Commande Web à intégrer</MudMenuItem>
+        <MudMenuItem>Détermination dynamique</MudMenuItem>
+        </ChildContent>
+        </MudMenu>
+        </MudMenuItem> *@
+        <MudMenuItem OnClick="CloneBasket">Cloner ce panier</MudMenuItem>
+        <MudMenuItem>SAV</MudMenuItem>
+        <MudMenuItem>FS</MudMenuItem>
+    </ChildContent>
+</MudMenu>
+<MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Check" Size="Size.Large" />
+<MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Close" Size="Size.Large" />
+<MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Mail" Size="Size.Large" />
+<MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Block" Size="Size.Large" />
+<MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Menu" Size="Size.Large" />
+<MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Description" Size="Size.Large" />
+<MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.LocalBar" Size="Size.Large" />
+<MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Warning" Size="Size.Large" />
+<MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.ShoppingCart" Size="Size.Large" />
+
+@code {
+
+    private void CloneBasket()
     {
-        throw new NotImplementedException();
+        var basketId = generalInfoState?.Value?.GeneralInfo?.BasketId;
+        if (!string.IsNullOrWhiteSpace(basketId))
+        {
+            dispatcher.Dispatch(
+                new CreateBasketAction(new NewBasketRequestDto
+                    { BasketId = basketId }));
+        }
     }
 }

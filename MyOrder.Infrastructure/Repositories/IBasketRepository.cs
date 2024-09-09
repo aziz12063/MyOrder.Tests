@@ -8,6 +8,12 @@ public interface IBasketRepository
     Task<BasketGeneralInfoDto> GetBasketGeneralInfoAsync(string basketId);
 
     //=======================================================================================================
+    //Actions Section
+    //=======================================================================================================
+    Task<ProcedureCallResponseDto> PostProcedureCallAsync(string basketId, List<string> procedureCall);
+    Task<NewBasketResponseDto> PostNewBasketAsync(NewBasketRequestDto newBasketRequest);
+
+    //=======================================================================================================
     //Order Info Section
     //=======================================================================================================
     Task<BasketOrderInfoDto> GetBasketOrderInfoAsync(string basketId);
@@ -46,10 +52,7 @@ public interface IBasketRepository
     Task<List<BasketValueDto?>> GetWarrantyCostOptionsAsync(string basketId);
     Task<List<BasketValueDto?>> GetShippingCostOptionsAsync(string basketId);
 
-    //=======================================================================================================
-    //Procedure Call
-    //=======================================================================================================
-    Task<ProcedureCallResponseDto> PostProcedureCallAsync(string basketId, List<string> procedureCall);
+    
 
     //=======================================================================================================
     //Lines

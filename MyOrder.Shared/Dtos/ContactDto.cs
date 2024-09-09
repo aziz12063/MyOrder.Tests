@@ -10,7 +10,7 @@ public class ContactDto
     public string? Phone { get; set; }
     public string? CellularPhone { get; set; }
 
-    public override string ToString() => $"{FirstName} {LastName}";
+    public override string ToString() => $"{LastName} {FirstName}";
 
     public override bool Equals(object? obj) => obj is ContactDto dto && dto.ContactId == ContactId;
     public override int GetHashCode() => ContactId?.GetHashCode() ?? 0;

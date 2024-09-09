@@ -15,6 +15,8 @@ public partial class DeliveryDetails : BaseFluxorComponent<DeliveryInfoState, Fe
     private string SelectedAccount { get; set; } = string.Empty;
     private List<string>? AccountAddress { get; set; }
     private string DisplayAddress { get; set; } = string.Empty;
+    private bool isLoading = true;
+
 
     protected override void CacheNewFields()
     {
@@ -27,6 +29,7 @@ public partial class DeliveryDetails : BaseFluxorComponent<DeliveryInfoState, Fe
         SelectedAccount = FieldUtility.SelectedAccount(BasketDeliveryInfo?.Account?.Value);
         AccountAddress = FieldUtility.CreateAddressList(BasketDeliveryInfo?.Account?.Value);
         DisplayAddress = FieldUtility.DisplayAddress(AccountAddress);
+        isLoading = State.Value.IsLoading;
     }
 
     protected override FetchDeliveryInfoAction CreateFetchAction(DeliveryInfoState state, string basketId) => new(state, basketId);

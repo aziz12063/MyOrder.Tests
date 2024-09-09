@@ -1,7 +1,7 @@
 ﻿@using MyOrder.Store.TradeInfoUseCase
 @inherits BaseFluxorComponent<TradeInfoState, FetchTradeInfoAction>
 
-@if (State.Value.IsLoading)
+@if (isLoading)
 {
     <HeaderElementLoadingSkeleton />
     return;
@@ -70,6 +70,7 @@
                 </MudText>
 
                 <!--Contract details-->
+                
                 <MudGrid>
                     <MudItem xs="4">
                         <MudText Style="font-size: 13px">Date</MudText>
@@ -83,45 +84,12 @@
                         </MudTextField>
                     </MudItem>
                 </MudGrid>
-                <MudGrid>
-                    <MudItem xs="4">
-                        <MudText Style="font-size: 13px">@BasketTradeInfoDto?.Contract?.CampaignId?.Name</MudText>
-                    </MudItem>
-                    <MudItem xs="8">
-                        <MudTextField Margin="Margin.Dense" T="string"
-                                      Variant="Variant.Outlined" Width="200px"
-                                      Disabled="false"
-                                      Style="font-size: 13px; height:22px;"
-                                      Value="@CampaignIdValue">
-                        </MudTextField>
-                    </MudItem>
-                </MudGrid>
-                <MudGrid>
-                    <MudItem xs="4">
-                        <MudText Style="font-size: 13px">@BasketTradeInfoDto?.Contract?.MainContact?.Name</MudText>
-                    </MudItem>
-                    <MudItem xs="8">
-                        <MudTextField Margin="Margin.Dense" T="string"
-                                      Variant="Variant.Outlined" Width="200px"
-                                      Disabled="false"
-                                      Style="font-size: 13px; height:22px;"
-                                      Value="@MainContactValue">
-                        </MudTextField>
-                    </MudItem>
-                </MudGrid>
-                <MudGrid>
-                    <MudItem xs="4">
-                        <MudText Style="font-size: 13px">@BasketTradeInfoDto?.Contract?.OfficeExecutive?.Name</MudText>
-                    </MudItem>
-                    <MudItem xs="8">
-                        <MudTextField Margin="Margin.Dense" T="string"
-                                      Variant="Variant.Outlined" Width="200px"
-                                      Disabled="false"
-                                      Style="font-size: 13px; height:22px;"
-                                      Value="@OfficeExecutiveValue">
-                        </MudTextField>
-                    </MudItem>
-                </MudGrid>
+
+                <DisplayField Field="Contract?.CampaignId" />
+                <DisplayField Field="Contract?.CampaignId" />
+                <DisplayField Field="Contract?.MainContact" />
+                <DisplayField Field="Contract?.OfficeExecutive" />
+      
             </div>
         </MudStack>
         <MudDivider />

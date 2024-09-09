@@ -2,35 +2,64 @@
 @typeparam T
 @inherits GenericInputBase<T>
 
-@if (!hidden)
+@if (Field != null && !hidden)
 {
-    <MudSelect T="T"
-               Typo="Typo.body2"
-               Style="margin-inline:0;"
-               Class="@Class"
-               Label="@Field?.Name"
-               Margin="Margin.Dense"
-               Dense="true"
-               Variant="@Variant"
-               FullWidth="true"
-               AnchorOrigin="Origin.CenterCenter"
-               Required="required"
-               ReadOnly="readOnly"
-               Disabled="readOnly"
-               @bind-Value="BoundValue"
-               @bind-Value:after="BoundValueChangedHandler">
-        @if (Items is not null)
-        {
-            foreach (var item in Items)
+    <MudTooltip RootStyle="width:100%"
+                Text="@_tooltipText"
+                Placement="Placement.Top">
+        <MudSelect T="T"
+                   Typo="Typo.body2"
+                   Class="@Class"
+                   Label="@Field?.Name"
+                   Margin="Margin.Dense"
+                   Dense="true"
+                   Variant="@Variant"
+                   FullWidth="true"
+                   AnchorOrigin="Origin.CenterCenter"
+                   Required="required"
+                   Error="required"
+                   ReadOnly="readOnly"
+                   Disabled="readOnly"
+                   @bind-Value="BoundValue"
+                   @bind-Value:after="BoundValueChangedHandler">
+            @if (Items is not null)
             {
-                <MudSelectItem T="T" Value="@item" />
+                foreach (var item in Items)
+                {
+                    <MudSelectItem T="T" Value="@item" />
+                }
             }
-        }
-    </MudSelect>
+        </MudSelect>
+    </MudTooltip>
 }
 
 @code {
+    private const string OUTLINED_CSS_CLASS = "outlined-generic-select";
+
     [Parameter, EditorRequired] public List<T>? Items { get; set; }
     [Parameter] public Variant Variant { get; set; } = 0;
     [Parameter] public string? Class { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        if (Variant == Variant.Outlined)
+        {
+            if (string.IsNullOrEmpty(Class))
+                Class = OUTLINED_CSS_CLASS;
+            else
+                Class += OUTLINED_CSS_CLASS;
+        }
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        if (BoundValue is BasketValueDto basketValueDto)
+            _tooltipText = "test";
+    }
+    private string? _tooltipText;
+
 }

@@ -3,6 +3,8 @@
 namespace MyOrder.Shared.Dtos;
 public class BasketPricesInfoDto
 {
+    public string? PanelLabel { get; set; }
+
     // Column 1
     public Field<string?>? Coupon { get; set; }
     public Field<decimal?>? FreeShippingAmountThreshold { get; set; }
@@ -21,8 +23,7 @@ public class BasketPricesInfoDto
     public Field<decimal?>? TotalNetAmount { get; set; }
     public Field<decimal?>? VatAmount { get; set; }
     public Field<decimal?>? TotalGrossAmount { get; set; }
-    public Field<string?>? FirstDeliveryDate { get; set; }
-    public Field<string?>? LastDeliveryDate { get; set; }
+    public Field<string?>? DeliveryDates { get; set; }
 
     // Column 4
     public Field<int?>? OrderDiscountRate { get; set; } 

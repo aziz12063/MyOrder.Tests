@@ -1,7 +1,7 @@
 ﻿@using MyOrder.Store.InvoiceInfoUseCase
 @inherits MyOrder.Components.Common.BaseFluxorComponent<InvoiceInfoState, FetchInvoiceInfoAction>
 
-@if (State.Value.IsLoading)
+@if (isLoading)
 {
     <HeaderElementLoadingSkeleton />
     return;
@@ -46,7 +46,7 @@
     </div>
 
     <!-- SUBSECTION: Paiment du client-->
-    <MudCard Elevation="0" Class="pa-2" Style="background-color: transparent;">
+    <MudCard Elevation="0" Class="px-2 pt-2 pb-0" Style="background-color: transparent;">
         <MudCardHeader Class="px-1 py-1 ma-n1">
             <CardHeaderContent>
                 <MudText Typo="Typo.subtitle1">Paiement du client</MudText>
@@ -58,18 +58,12 @@
                 @if (!FieldUtility.IsHidden(BasketInvoiceInfo!.PaymentTerm))
                 {
                     <MudItem xs="6">
-                        <MudTextField Typo="Typo.body2"
-                                      Margin="Margin.Dense"
-                                      Variant="Variant.Text"
-                                      FullWidth="true"
-                                      ReadOnly="@FieldUtility.IsReadOnly(BasketInvoiceInfo.PaymentTerm)"
-                                      Disabled="@FieldUtility.IsOnlyForDisplay(BasketInvoiceInfo.PaymentTerm)"
-                                      Label="@BasketInvoiceInfo.PaymentTerm?.Name"
-                                      Value="@BasketInvoiceInfo.PaymentTerm?.Value" />
+                        <DisplayField Field="BasketInvoiceInfo!.PaymentTerm" />
                     </MudItem>
                 }
                 <MudItem xs="6">
-                    <GenericMudSelect T="string"
+                    <GenericMudSelect Variant="Variant.Outlined"
+                                      T="string"
                                       @bind-BoundValue="PaymentModeValue"
                                       Field="BasketInvoiceInfo!.PaymentMode"
                                       Items="PaymentModes?.Select( item => item?.Value).ToList()" />
@@ -81,7 +75,7 @@
     </MudCard>
 
     <!-- SUBSECTION: Informations de facturation -->
-    <MudCard Elevation="0" Class="pa-2" Style="background-color: transparent;">
+    <MudCard Elevation="0" Class="px-2 py-0" Style="background-color: transparent;">
         <MudCardHeader Class="px-1 py-2 ma-n1">
             <CardHeaderContent>
                 <MudText Typo="Typo.subtitle1">Informations de facturation</MudText>
@@ -90,17 +84,7 @@
         <MudCardContent Class="pa-0">
             <MudStack Spacing="0">
                 <!--Siret-->
-                @if (!FieldUtility.IsHidden(BasketInvoiceInfo!.SiretId))
-                {
-                    <MudTextField Typo="Typo.body2"
-                                  Margin="Margin.Dense"
-                                  Variant="Variant.Text"
-                                  FullWidth="true"
-                                  ReadOnly="@FieldUtility.IsReadOnly(BasketInvoiceInfo.SiretId)"
-                                  Disabled="@FieldUtility.IsOnlyForDisplay(BasketInvoiceInfo.SiretId)"
-                                  Label="@BasketInvoiceInfo.SiretId?.Name"
-                                  Value="@BasketInvoiceInfo.SiretId?.Value" />
-                }
+                <DisplayField Field="BasketInvoiceInfo!.SiretId" />
 
                 <!--Groupe de taxe-->
                 <GenericMudSelect T="string"
@@ -139,13 +123,13 @@
     <MudDivider />
     <!--Notes de facturation-->
     <div>
-    <MudTextField Typo="Typo.caption"
-                  Lines="4"
-                  Variant="Variant.Outlined"
-                  FullWidth="true"
-                  Margin="Margin.Dense"
-                  ReadOnly="true"
-                  Label="@BasketInvoiceInfo!.Note?.Name"
-                  Value="@BasketInvoiceInfo!.Note?.Value" />
+        <MudTextField Typo="Typo.caption"
+                      Lines="4"
+                      Variant="Variant.Outlined"
+                      FullWidth="true"
+                      Margin="Margin.Dense"
+                      ReadOnly="true"
+                      Label="@BasketInvoiceInfo!.Note?.Name"
+                      Value="@BasketInvoiceInfo!.Note?.Value" />
     </div>
 </MudStack>

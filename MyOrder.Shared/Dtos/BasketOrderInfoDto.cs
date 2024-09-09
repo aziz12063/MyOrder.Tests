@@ -3,6 +3,9 @@ namespace MyOrder.Shared.Dtos
 {
     public class BasketOrderInfoDto
     {
+        public string? PanelLabel { get; set; }
+        public string? ContactSection { get; set; }
+        public string? InformationSectionLabel { get; set; }
         public Field<AccountDto?>? Account { get; set; }
         public Field<ContactDto?>? Contact { get; set; }
         public Field<string?>? ActivityArea { get; set; }

@@ -17,6 +17,7 @@ public partial class InvoiceDetails : BaseFluxorComponent<InvoiceInfoState, Fetc
     private string SelectedClient { get; set; } = string.Empty;
     private List<string>? AccountAddress { get; set; }
     private string? DisplayAddress { get; set; }
+    private bool isLoading = true;
 
     protected override FetchInvoiceInfoAction CreateFetchAction(InvoiceInfoState state, string basketId) =>
         new(state, basketId);
@@ -31,6 +32,7 @@ public partial class InvoiceDetails : BaseFluxorComponent<InvoiceInfoState, Fetc
         SelectedClient = FieldUtility.SelectedAccount(BasketInvoiceInfo?.Account?.Value);
         AccountAddress = FieldUtility.CreateAddressList(BasketInvoiceInfo?.Account?.Value);
         DisplayAddress = FieldUtility.DisplayAddress(AccountAddress);
+        isLoading = State.Value.IsLoading;
     }
 
     private AccountDto? AccountValue

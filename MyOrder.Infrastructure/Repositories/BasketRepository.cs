@@ -16,6 +16,40 @@ public class BasketRepository(IBasketApiClient apiClient, ILogger<BasketReposito
     }
 
     //=======================================================================================================
+    //Actions
+    //=======================================================================================================
+    public async Task<ProcedureCallResponseDto> PostProcedureCallAsync(string basketId, List<string> procedureCall)
+    {
+        logger.LogInformation("Posting procedure call : \n{procedureCall} \nfor {BasketId} from repository", string.Join("\n", procedureCall), basketId);
+        var response = await apiClient.PostProcedureCallAsync(basketId, procedureCall);
+        logger.LogInformation("Procedure call response : \n{response}", response);
+        return response;
+    }
+
+    public async Task<NewBasketResponseDto> PostNewBasketAsync(NewBasketRequestDto newBasketRequest)
+    {
+        logger.LogInformation("Posting new basket request {newBasketRequest}", newBasketRequest);
+
+        var formData = new Dictionary<string, string>();
+
+        if (!string.IsNullOrEmpty(newBasketRequest.BasketId)) formData.Add("BasketId", newBasketRequest.BasketId);
+        if (!string.IsNullOrEmpty(newBasketRequest.ContactId)) formData.Add("ContactId", newBasketRequest.ContactId);
+        if (!string.IsNullOrEmpty(newBasketRequest.AccountId)) formData.Add("AccountId", newBasketRequest.AccountId);
+        if (!string.IsNullOrEmpty(newBasketRequest.SalesId)) formData.Add("SalesId", newBasketRequest.SalesId);
+        if (!string.IsNullOrEmpty(newBasketRequest.QuotationId)) formData.Add("QuotationId", newBasketRequest.QuotationId);
+        if (!string.IsNullOrEmpty(newBasketRequest.InvoiceId)) formData.Add("InvoiceId", newBasketRequest.InvoiceId);
+        if (!string.IsNullOrEmpty(newBasketRequest.ApiSalesId)) formData.Add("ApiSalesId", newBasketRequest.ApiSalesId);
+        if (!string.IsNullOrEmpty(newBasketRequest.OrderId)) formData.Add("OrderId", newBasketRequest.OrderId);
+        if (!string.IsNullOrEmpty(newBasketRequest.CaseNumber)) formData.Add("CaseNumber", newBasketRequest.CaseNumber);
+        if (!string.IsNullOrEmpty(newBasketRequest.SavType)) formData.Add("SavType", newBasketRequest.SavType);
+        if (!string.IsNullOrEmpty(newBasketRequest.FsRequestId)) formData.Add("FsRequestId", newBasketRequest.FsRequestId);
+        
+        var response = await apiClient.CreateNewBasketAsync(formData);
+        logger.LogInformation("New basket response : \n{response}", response);
+        return response;
+    }
+
+    //=======================================================================================================
     //Order Info Section
     //=======================================================================================================
     public async Task<BasketOrderInfoDto> GetBasketOrderInfoAsync(string basketId)
@@ -144,16 +178,6 @@ public class BasketRepository(IBasketApiClient apiClient, ILogger<BasketReposito
         return await apiClient.GetShippingCostOptionsAsync(basketId);
     }
 
-    //=======================================================================================================
-    //Procedure Call
-    //=======================================================================================================
-    public async Task<ProcedureCallResponseDto> PostProcedureCallAsync(string basketId, List<string> procedureCall)
-    {
-        logger.LogInformation("Posting procedure call : \n{procedureCall} \nfor {BasketId} from repository", string.Join("\n", procedureCall), basketId);
-        return await apiClient.PostProcedureCallAsync(basketId, procedureCall);
-    }
-
-   
 
     //=======================================================================================================
     //Lines

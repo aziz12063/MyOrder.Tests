@@ -6,7 +6,9 @@
 @inject BasketService BasketService
 
 @* Required for MudBlazor framework *@
-<MudThemeProvider Theme="@ThemeConfiguration.MyTheme" />
+@* <MudThemeProvider Theme="@ThemeConfiguration.MyTheme" /> *@
+<MudThemeProvider Theme="_themeManager.Theme" />
+
 <MudPopoverProvider />
 
 @* Needed for dialogs *@
@@ -15,21 +17,24 @@
 @* Needed for snackbars *@
 <MudSnackbarProvider />
 
-<CustomErrorBoundary>
-    <ChildContent>
-        <MudLayout>
-            <MudAppBar Elevation="2">
-                <MudImage Src="images/Raja-Logo.png" Alt="Raja Group" Class="logo" />
-                <GeneralInfo />
-                <Menu />
-            </MudAppBar>
+<MudLayout>
+    <MudAppBar Elevation="2">
+        <MudImage Src="images/Raja-Logo.png" Alt="Raja Group" Class="logo" />
+        <GeneralInfo />
+        <MudSpacer />
+        <Menu />
+    </MudAppBar>
 
-            <MudMainContent>
-                @Body
-            </MudMainContent>
-        </MudLayout>
-    </ChildContent>
-</CustomErrorBoundary>
+    <MudMainContent>
+        @Body
+        @* RequiredByThemeManager *@
+        <MudThemeManagerButton OnClick="@((e) => OpenThemeManager(true))" />
+        <MudThemeManager Open="_themeManagerOpen"
+                         OpenChanged="OpenThemeManager"
+                         Theme="_themeManager"
+                         ThemeChanged="UpdateTheme" />
+    </MudMainContent>
+</MudLayout>
 
 
 <div id="blazor-error-ui">
@@ -39,8 +44,26 @@
 </div>
 
 @code {
+    private ThemeManagerTheme _themeManager = new ThemeManagerTheme() { Theme = ThemeConfiguration.MyTheme };
+    public bool _themeManagerOpen = false;
+
+    void OpenThemeManager(bool value)
+    {
+        _themeManagerOpen = value;
+    }
+
+    void UpdateTheme(ThemeManagerTheme value)
+    {
+        _themeManager = value;
+        StateHasChanged();
+    }
+
     protected override void OnInitialized()
     {
+        /// For Theme manager
+        StateHasChanged();
+        //////////////////////////
+
         var uri = new Uri(NavigationManager.Uri);
         var queryParams = System.Web.HttpUtility.ParseQueryString(uri.Query);
         var basketId = queryParams["basketId"];
@@ -49,4 +72,5 @@
             BasketService.BasketId = basketId; // Cache the basket ID in a service
         }
     }
+
 }

@@ -65,18 +65,6 @@ namespace MyOrder.Components.Childs.Lines
 
         MudDataGrid<BasketLineDto> dataGrid = new();
 
-        
-        private Task OpenAdminDialogAsync(ActiveComponent component)
-        {
-            var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Medium, CloseButton = true };
-            var parameters = new DialogParameters<AdminDialog>
-            {
-                {x => x.activeComponent, component }
-            };
-            return DialogService.ShowAsync<AdminDialog>("Simple Dialog", parameters, options);
-        }
-
-
 
         private string NullableChek(BasketLineDto basketLineDto, Field<string> field, string value)
         {

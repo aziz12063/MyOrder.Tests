@@ -19,6 +19,7 @@ public partial class OrderInfo : BaseFluxorComponent<OrderInfoState, FetchOrderI
     private List<BasketValueDto?>? SalesPools { get; set; }
     private string SelectedClient { get; set; } = string.Empty;
     private List<string>? AccountAddress { get; set; }
+    private bool isLoading = true;
 
     protected override FetchOrderInfoAction CreateFetchAction(OrderInfoState state, string basketId) => new(state, basketId);
 
@@ -32,6 +33,7 @@ public partial class OrderInfo : BaseFluxorComponent<OrderInfoState, FetchOrderI
         SalesPools = State.Value.SalesPools;
         SelectedClient = FieldUtility.SelectedAccount(BasketOrderInfo?.Account?.Value);
         AccountAddress = FieldUtility.CreateAddressList(BasketOrderInfo?.Account?.Value);
+        isLoading = State.Value.IsLoading;
     }
 
     private ContactDto? ContactValue

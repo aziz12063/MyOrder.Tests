@@ -1,25 +1,33 @@
 ﻿@using MyOrder.Shared.Dtos.SharedComponents
+@using System.Globalization
 @typeparam T
 @inherits GenericInputBase<T>
 
- @if (!hidden)
+ @if (Field != null && !hidden)
 {
-    <MudTextField Typo="Typo.body2"
-                  Margin="Margin.Dense"
-                  Variant="variant"
-                  Class="@cssClass"
-                  Label="@Field?.Name"
-                  Required="required"
-                  Error="required"
-                  ReadOnly="onlyForDisplay"
-                  Disabled="readOnly"
-                  ShrinkLabel
-                  @bind-Value="BoundValue"
-                  @bind-Value:after="BoundValueChangedHandler" />
-
+    <MudTooltip RootStyle="width: 100%;"
+                Text="@Field.Description">
+        <MudTextField Typo="Typo.body2"
+                      Margin="Margin.Dense"
+                      Variant="variant"
+                      ShrinkLabel="shrinkLabel"
+                      Format="@Format"
+                      Culture="@Culture"
+                      Class="@cssClass"
+                      Label="@Field?.Name"
+                      Required="required"
+                      Error="required"
+                      RequiredError="Ce champ est obligatoire"
+                      ReadOnly="readOnly"
+                      Disabled="readOnly"
+                      @bind-Value="BoundValue"
+                      @bind-Value:after="BoundValueChangedHandler" />
+    </MudTooltip>
 }
 
 @code {
+    [Parameter] public string? Format { get; set; }
+    [Parameter] public CultureInfo? Culture { get; set; }
     private Variant variant;
     private string cssClass = string.Empty;
     private bool shrinkLabel = false;
@@ -38,10 +46,6 @@
             //cssClass = "readwrite-field";
         }
         else if (required)
-        {
-            cssClass = "";
-        }
-        else if (onlyForDisplay)
         {
             cssClass = "";
         }

@@ -1,0 +1,53 @@
+﻿@using MyOrder.Shared.Dtos.SharedComponents
+@typeparam T
+
+@if (Field != null && !FieldUtility.IsHidden(Field))
+{
+    <MudTooltip RootStyle="width:100%"
+                Text="@TooltipText"
+                Placement="Placement.Top">
+
+        <MudField Margin="Margin.Dense"
+                  Variant="Variant.Outlined"
+                  FullWidth="true"
+                  InnerPadding="false"
+                  Class="outlined-display-field"
+                  Label="@Field?.Name">
+            <MudText Typo="Typo.body2">
+                @if (Field!.Value is List<string> stringList && stringList is { Count: > 0 })
+                {
+                    for (var i = 0; i < stringList.Count - 2; i++)
+                    {
+                        var x = i;
+                        @stringList[x]
+                        <br />
+                    }
+
+                    if (stringList.Count > 1)
+                    {
+                        @stringList[stringList.Count - 2]
+                        <br />
+                        @stringList[^1]
+                    }
+
+                    else
+                    {
+                        @stringList[^1]
+                    }
+                }
+                else
+                {
+                    @FieldUtility.NullOrWhiteSpaceHelperWithDash(Field.Value as string)
+                }
+            </MudText>
+        </MudField>
+
+    </MudTooltip>
+}
+
+@code {
+    [Parameter, EditorRequired]
+    public Field<T>? Field { get; set; }
+
+    private string TooltipText => Field?.Description ?? Field?.Name;
+}

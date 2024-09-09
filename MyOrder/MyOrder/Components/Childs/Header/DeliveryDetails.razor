@@ -1,7 +1,7 @@
 ﻿@using MyOrder.Store.DeliveryInfoUseCase
 @inherits MyOrder.Components.Common.BaseFluxorComponent<DeliveryInfoState, FetchDeliveryInfoAction>
 
-@if (State.Value.IsLoading)
+@if (isLoading)
 {
     <HeaderElementLoadingSkeleton />
     return;
@@ -94,6 +94,8 @@
                          LabelPosition="LabelPosition.End"
                          ReadOnly="@FieldUtility.IsReadOnly(BasketDeliveryInfo!.CompleteDelivery)"
                          Disabled="@FieldUtility.IsHidden(BasketDeliveryInfo!.CompleteDelivery)"
+                         Required="@FieldUtility.IsRequired(BasketDeliveryInfo!.CompleteDelivery)"
+                         Error="@FieldUtility.IsRequired(BasketDeliveryInfo!.CompleteDelivery)"
                          @bind-Value="CompleteDelivery" />
         }
         @if (!FieldUtility.IsHidden(BasketDeliveryInfo!.ImperativeDate))
@@ -102,19 +104,10 @@
                            ReadOnly="@FieldUtility.IsReadOnly(BasketDeliveryInfo!.ImperativeDate)"
                            Disabled="@FieldUtility.IsHidden(BasketDeliveryInfo!.ImperativeDate)"
                            Required="@FieldUtility.IsRequired(BasketDeliveryInfo!.ImperativeDate)"
+                           Error="@FieldUtility.IsRequired(BasketDeliveryInfo!.ImperativeDate)"
                            @bind-Date="ImperativeDateValue" />
         }
-        @if (!FieldUtility.IsHidden(BasketDeliveryInfo!.OrderDocuments))
-        {
-            <MudTextField Typo="Typo.caption"
-                          Lines="2"
-                          Variant="Variant.Outlined"
-                          FullWidth="true"
-                          Margin="Margin.Dense"
-                          ReadOnly="true"
-                          Label="@BasketDeliveryInfo.OrderDocuments?.Name"
-                          Value="FieldUtility.DisplayAddress(BasketDeliveryInfo!.OrderDocuments?.Value)" />
-        }
+        <DisplayField Field="BasketDeliveryInfo!.OrderDocuments" />
     </MudStack>
     <MudDivider />
 
@@ -127,6 +120,7 @@
                       FullWidth="true"
                       Margin="Margin.Dense"
                       Required="@FieldUtility.IsRequired(BasketDeliveryInfo!.Note)"
+                      Error="@FieldUtility.IsRequired(BasketDeliveryInfo!.Note)"
                       ReadOnly="@FieldUtility.IsReadOnly(BasketDeliveryInfo!.Note)"
                       Label="@BasketDeliveryInfo!.Note?.Name"
                       @bind-Value="@NoteValue" />
@@ -138,9 +132,10 @@
                              Style="display:inline-block;"
                              ReadOnly="@FieldUtility.IsReadOnly(BasketDeliveryInfo!.NoteMustBeSaved)"
                              Disabled="@FieldUtility.IsHidden(BasketDeliveryInfo!.NoteMustBeSaved)"
+                             Error="@FieldUtility.IsRequired(BasketDeliveryInfo!.NoteMustBeSaved)"
                              @bind-Value="SaveNoteForFutureOrders">
                     <ChildContent>
-                        <MudText Typo="Typo.button">@BasketDeliveryInfo!.NoteMustBeSaved?.Name</MudText>
+                        <MudText Typo="Typo.caption">@BasketDeliveryInfo!.NoteMustBeSaved?.Name</MudText>
                     </ChildContent>
                 </MudCheckBox>
             </MudItem>
