@@ -20,9 +20,9 @@
                                       Margin="Margin.Dense" />
                     </MudRadio>
                 <MudRadio Value="2" Style="width:100%;" >
-                        <MudTextField @bind-Value="OrderId"
+                    <MudTextField @bind-Value="ContactId"
                                       FullWidth="true"
-                                      Label="Ouvrir Panier, Commande, Offre n°"
+                                  Label="Nouveau panier pour le contact n°"
                                       Variant="Variant.Outlined"
                                       Margin="Margin.Dense" />
                     </MudRadio>
@@ -44,8 +44,8 @@
     [Parameter]
     public string AccountId { get; set; }
 
-
-    public string OrderId { get; set; }
+    [Parameter]
+    public string ContactId { get; set; }
 
 
 
@@ -57,12 +57,11 @@
                     new CreateBasketAction(new NewBasketRequestDto
                         { AccountId = this.AccountId }));
         }
-
         if (position == 2)
         {
             dispatcher.Dispatch(
                     new CreateBasketAction(new NewBasketRequestDto
-                        { OrderId = this.OrderId }));
+                        { ContactId = this.ContactId }));
         }
         
         MudDialog.Close(DialogResult.Ok(true));

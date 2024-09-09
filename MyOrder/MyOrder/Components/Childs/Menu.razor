@@ -50,7 +50,8 @@
 
 @code {
 
-    string accountId { get; set; }
+    string? accountId { get; set; }
+    string? contactId { get; set; }
 
     private void CloneBasket()
     {
@@ -65,18 +66,18 @@
 
     private Task OpenNewBasketDialogAsync()
     {
+        contactId = orderInfoState?.Value?.BasketOrderInfo?.Contact?.Value?.ContactId;
         accountId = orderInfoState?.Value?.BasketOrderInfo?.Account?.Value?.AccountId;
         var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small };
         var parameters = new DialogParameters<NewBasketDialog>
         {
-            { x => x.AccountId, accountId }
+            { x => x.AccountId, accountId },
+            { x => x.ContactId, contactId }
+            
         };
 
         return DialogService.ShowAsync<NewBasketDialog>("Simple Dialog", parameters, options);
     }
 
-    private void NewBasket()
-    {
-        
-    }
+    
 }
