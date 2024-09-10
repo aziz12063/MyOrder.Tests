@@ -8,28 +8,30 @@
         <MudText Typo="Typo.h5">Nouveau panier</MudText>
     </TitleContent>
     <DialogContent>
-       
-          
-                <MudRadioGroup @bind-Value="position"  >
-                    <MudStack Justify="Justify.SpaceAround">
-                    <MudRadio Value="1" Style="width:100%;">
-                        <MudTextField @bind-Value="AccountId"
-                                      FullWidth="true"
-                                      Label="Nouveau panier pour le client n°"
-                                      Variant="Variant.Outlined"
-                                      Margin="Margin.Dense" />
-                    </MudRadio>
-                <MudRadio Value="2" Style="width:100%;" >
+
+
+        <MudRadioGroup @bind-Value="position">
+            <MudStack Justify="Justify.SpaceAround">
+                <MudRadio Value="1"
+                          Class="add-basket-dialog-field">
+                    <MudTextField @bind-Value="AccountId"
+                                  FullWidth="true"
+                                  Label="Nouveau panier pour le client n°"
+                                  Variant="Variant.Outlined"
+                                  Margin="Margin.Dense" />
+                </MudRadio>
+                <MudRadio Value="2"
+                          Class="add-basket-dialog-field">
                     <MudTextField @bind-Value="ContactId"
-                                      FullWidth="true"
+                                  FullWidth="true"
                                   Label="Nouveau panier pour le contact n°"
-                                      Variant="Variant.Outlined"
-                                      Margin="Margin.Dense" />
-                    </MudRadio>
-                    </MudStack>
-                </MudRadioGroup>
-            
-       
+                                  Variant="Variant.Outlined"
+                                  Margin="Margin.Dense" />
+                </MudRadio>
+            </MudStack>
+        </MudRadioGroup>
+
+
     </DialogContent>
     <DialogActions>
         <MudButton OnClick="Cancel">Cancel</MudButton>
@@ -49,9 +51,9 @@
 
 
 
-    private void Submit() 
+    private void Submit()
     {
-        if(position == 1)
+        if (position == 1)
         {
             dispatcher.Dispatch(
                     new CreateBasketAction(new NewBasketRequestDto
@@ -63,7 +65,7 @@
                     new CreateBasketAction(new NewBasketRequestDto
                         { ContactId = this.ContactId }));
         }
-        
+
         MudDialog.Close(DialogResult.Ok(true));
     }
 

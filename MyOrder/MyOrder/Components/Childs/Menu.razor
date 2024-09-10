@@ -18,6 +18,7 @@
     </ActivatorContent>
     <ChildContent>
         <MudMenuItem OnClick="OpenNewBasketDialogAsync">Nouveau panier</MudMenuItem>
+        <MudMenuItem>Ouvrir panier</MudMenuItem>
         @*     <MudMenuItem>
         <MudMenu AnchorOrigin="Origin.CenterRight"
         TransformOrigin="Origin.CenterLeft" EndIcon="@Icons.Material.Filled.ArrowRight" ActivationEvent="MouseEvent.MouseOver">
@@ -34,8 +35,6 @@
         </MudMenu>
         </MudMenuItem> *@
         <MudMenuItem OnClick="CloneBasket">Cloner ce panier</MudMenuItem>
-        <MudMenuItem>SAV</MudMenuItem>
-        <MudMenuItem>FS</MudMenuItem>
     </ChildContent>
 </MudMenu>
 <MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Check" Size="Size.Large" />
@@ -53,7 +52,7 @@
     string? accountId { get; set; }
     string? contactId { get; set; }
 
-    private void CloneBasket()
+    private void CloneBasketConfirmed()
     {
         var basketId = generalInfoState?.Value?.GeneralInfo?.BasketId;
         if (!string.IsNullOrWhiteSpace(basketId))
@@ -64,7 +63,17 @@
         }
     }
 
-    private Task OpenNewBasketDialogAsync()
+    private async void CloneBasket()
+    {
+        bool? result = await DialogService.ShowMessageBox(
+            "Confirmation",
+            "Êtes-vous sûr de vouloir cloner ce panier?",
+            yesText: "Confirmer", cancelText: "Retour");
+        if (result == true)
+            CloneBasketConfirmed();
+    }
+
+    private async Task<IDialogReference> OpenNewBasketDialogAsync()
     {
         contactId = orderInfoState?.Value?.BasketOrderInfo?.Contact?.Value?.ContactId;
         accountId = orderInfoState?.Value?.BasketOrderInfo?.Account?.Value?.AccountId;
@@ -73,11 +82,8 @@
         {
             { x => x.AccountId, accountId },
             { x => x.ContactId, contactId }
-            
         };
 
-        return DialogService.ShowAsync<NewBasketDialog>("Simple Dialog", parameters, options);
+        return await DialogService.ShowAsync<NewBasketDialog>("Simple Dialog", parameters, options);
     }
-
-    
 }
