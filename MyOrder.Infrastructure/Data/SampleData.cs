@@ -1436,8 +1436,18 @@ namespace MyOrder.Infrastructure.Data
             Status = "readWrite",
             Value = 20
         },
-        Note = null,
-        ProductInfo = null,
+        Note = new Field<string?>
+        {
+            Name = "Note",
+            Status = "OnlyForDisplay",
+            Value = ""
+        },
+        ProductInfo = new Field<string?>
+        {
+            Name = "Information produit",
+            Status = "OnlyForDisplay",
+            Value = ""
+        },
         IsCustomLogisticFlow = false,
         LogisticFlow = new Field<string?>
         {

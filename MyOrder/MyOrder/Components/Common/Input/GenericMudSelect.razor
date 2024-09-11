@@ -18,8 +18,8 @@
                    AnchorOrigin="Origin.CenterCenter"
                    Required="required"
                    Error="required"
-                   ReadOnly="readOnly"
-                   Disabled="readOnly"
+                   ReadOnly="ReadOnly ?? true"
+                   Disabled="ReadOnly ?? true"
                    @bind-Value="BoundValue"
                    @bind-Value:after="BoundValueChangedHandler">
             @if (Items is not null)

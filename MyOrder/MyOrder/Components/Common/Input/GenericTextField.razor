@@ -18,8 +18,9 @@
                       Required="required"
                       Error="required"
                       RequiredError="Ce champ est obligatoire"
-                      ReadOnly="readOnly"
-                      Disabled="readOnly"
+                      ReadOnly="ReadOnly ?? true"
+                      Disabled="ReadOnly ?? true"
+                      Lines="lines"
                       @bind-Value="BoundValue"
                       @bind-Value:after="BoundValueChangedHandler" />
     </MudTooltip>
@@ -36,18 +37,18 @@
     {
         base.OnParametersSet();
 
-        if (readOnly)
-        {
-            //cssClass = ".readonly-field";
+        // if (ReadOnly)
+        // {
+        //     //cssClass = ".readonly-field";
 
-        }
-        else if (readWrite)
-        {
-            //cssClass = "readwrite-field";
-        }
-        else if (required)
-        {
-            cssClass = "";
-        }
+        // }
+        // else if (readWrite)
+        // {
+        //     //cssClass = "readwrite-field";
+        // }
+        // else if (required)
+        // {
+        //     cssClass = "";
+        // }
     }
 }

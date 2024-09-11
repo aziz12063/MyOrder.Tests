@@ -31,7 +31,7 @@ namespace MyOrder.Components.Childs.Lines
         private bool IsDiscountTypeEditable { get; set; }
         private bool IsLineAmountEditable { get; set; }
         private bool IsDiscountRateEditable { get; set; }
-        
+        int? selectedLine;
 
 
         protected override void CacheNewFields()
@@ -40,8 +40,6 @@ namespace MyOrder.Components.Childs.Lines
             UpdateReasons = State.Value.UpdateReasons;
             LogisticFlows = State.Value.LogisticFlows;
             selectedBasketLineDto = new List<BasketLineDto>();
-           
-
             if (BasketOrderLinesDto is not null && BasketOrderLinesDto.lines is not null && BasketOrderLinesDto.lines.Count > 0)
             {
                 IsLineNbrEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0]?.LineNum);
@@ -66,6 +64,7 @@ namespace MyOrder.Components.Childs.Lines
         MudDataGrid<BasketLineDto> dataGrid = new();
 
 
+
         private string NullableChek(BasketLineDto basketLineDto, Field<string> field, string value)
         {
             if (basketLineDto != null && field != null)
@@ -73,8 +72,8 @@ namespace MyOrder.Components.Childs.Lines
 
             return string.Empty;
         }
-
-
+         
+       
        
         private void OnValueChange<T>(T value , BasketLineDto? row, Field<T?>? field, int? lineNbr)
         {
@@ -85,15 +84,15 @@ namespace MyOrder.Components.Childs.Lines
                 Console.WriteLine("Line nbr: " + row.LineNum.Value);
                 Console.WriteLine("the new value: " + value);
 
-                if(value is int?  && field is Field<int?>)
-                {
-                    int x = Convert.ToInt32(value) ;
-                    if(CheckQuantityValue(x) != null)
-                    {
-                        return;
-                    }
-                }
-                    Logger.LogInformation($"in second else");
+                //if(value is int?  && field is Field<int?>)
+                //{
+                //    int x = Convert.ToInt32(value) ;
+                //    if(CheckQuantityValue(x) != null)
+                //    {
+                //        return;
+                //    }
+                //}
+                //    Logger.LogInformation($"in second else");
                     field!.Value = value;
                 
                 SetBasketOrderValue(field: field, value: value, procedureCallValue: value?.ToString());
@@ -149,8 +148,34 @@ namespace MyOrder.Components.Childs.Lines
 
         void HandleRowDoubleClick(MouseEventArgs args, BasketLineDto item)
         {
+            
             Console.WriteLine("the HandleRowDoubleClick is double clicked");
+           
         }
+
+       
+        void HandlePopOverOnClick(int? linNbr)
+        {
+            selectedLine = linNbr;
+        }
+         bool OpenPopoverChecker(int? linNbr)
+        {
+            Logger.LogInformation($"parameter is: {linNbr}");
+           
+
+            if (selectedLine == linNbr)
+                return true;
+
+            return false;
+        }
+
+        private bool DelivaryDateReadOnly(BasketLineDto basketLineDto)
+        {
+            if (!FieldUtility.IsReadOnly(basketLineDto.DeliveryDate) && !FieldUtility.IsReadOnly(basketLineDto.IsCustomDeliveryDate) && basketLineDto.IsCustomDeliveryDate?.Value == true)
+                return false;
+            return true;
+        }
+
 
         void RowClicked(DataGridRowClickEventArgs<BasketLineDto> args)
         {

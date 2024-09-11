@@ -29,7 +29,6 @@
                         <br />
                         @stringList[^1]
                     }
-
                     else
                     {
                         @stringList[^1]
@@ -37,11 +36,10 @@
                 }
                 else
                 {
-                    @FieldUtility.NullOrWhiteSpaceHelperWithDash(Field.Value as string)
+                    @FieldUtility.NullOrWhiteSpaceHelperWithDash(Field.Value?.ToString());
                 }
             </MudText>
         </MudField>
-
     </MudTooltip>
 }
 
@@ -49,5 +47,5 @@
     [Parameter, EditorRequired]
     public Field<T>? Field { get; set; }
 
-    private string TooltipText => Field?.Description ?? Field?.Name;
+    private string? TooltipText => Field?.Description ?? Field?.Name;
 }
