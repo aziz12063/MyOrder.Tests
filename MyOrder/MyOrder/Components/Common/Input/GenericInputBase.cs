@@ -5,9 +5,7 @@ using MyOrder.Utils;
 namespace MyOrder.Components.Common.Input;
 public abstract class GenericInputBase<T> : ComponentBase
 {
-
     protected bool hidden;
-    
     protected bool readWrite;
     protected bool required;
     protected bool onlyForDisplay;
@@ -22,12 +20,12 @@ public abstract class GenericInputBase<T> : ComponentBase
     protected override void OnParametersSet()
     {
         base.OnParametersSet();
+
         hidden = FieldUtility.IsHidden(Field);
         ReadOnly = ReadOnly ?? FieldUtility.IsReadOnly(Field);
         readWrite = FieldUtility.IsReadWrite(Field);
         required = FieldUtility.IsRequired(Field);
         onlyForDisplay = FieldUtility.IsOnlyForDisplay(Field);
-        
     }
 }
 

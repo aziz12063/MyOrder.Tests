@@ -36,6 +36,7 @@ namespace MyOrder.Infrastructure.Repositories
         private static readonly Dictionary<string, BasketOrderLinesDto> _basketsBasketLineDto = [];
         private static readonly Dictionary<string, List<BasketValueDto?>> _basketslogisticFlows = [];
         private static readonly Dictionary<string, List<BasketValueDto?>> _basketsUpdateReasons = [];
+        private static readonly Dictionary<string, BasketNotificationDto> _basketsNotification = [];
 
         private int _millisecondsTimeout = 500;
 
@@ -65,7 +66,8 @@ namespace MyOrder.Infrastructure.Repositories
             SeedbasketsBasketLineDtoData();
             SeedlineUpdateReasonsAsync();
             SeedlogisticFlowsAsync();
-            
+            SeedNotificationData();
+
         }
 
         public async Task<BasketGeneralInfoDto> GetBasketGeneralInfoAsync(string basketId)
@@ -195,7 +197,7 @@ namespace MyOrder.Infrastructure.Repositories
             return _basketsProcedureCall[basketId];
         }
 
-      
+
         public async Task<BasketOrderLinesDto> GetBasketLinesAsync(string basketId)
         {
             await Task.Delay(_millisecondsTimeout);
@@ -210,11 +212,18 @@ namespace MyOrder.Infrastructure.Repositories
         }
 
 
-            public async Task<List<BasketValueDto?>> GetlogisticFlowsAsync(string basketId)
+        public async Task<List<BasketValueDto?>> GetlogisticFlowsAsync(string basketId)
         {
             await Task.Delay(_millisecondsTimeout);
             return _basketslogisticFlows[basketId];
         }
+
+        public async Task<BasketNotificationDto> GetNotificationsAsync(string basketId)
+        {
+            await Task.Delay(_millisecondsTimeout);
+            return _basketsNotification[basketId];
+        }
+
 
 
         //**********************************************************//
@@ -227,12 +236,18 @@ namespace MyOrder.Infrastructure.Repositories
         private static void SeedBasketGeneralInfoData()
         {
             _basketsGeneralInfoDtos.Clear();
-            _basketsGeneralInfoDtos.Add("P0130938", SampleData.generalInfoP0130938);
+            _basketsGeneralInfoDtos.Add(_basketId, SampleData.generalInfoP0130938);
             _basketsGeneralInfoDtos.Add("P0130140", SampleData.generalInfoP0130140);
             _basketsGeneralInfoDtos.Add("P0130512", SampleData.generalInfoP0130512);
             _basketsGeneralInfoDtos.Add("P0130863", SampleData.generalInfoP0130863);
             _basketsGeneralInfoDtos.Add("P0130652", SampleData.generalInfoP0130652);
-        }  
+        }
+
+        private static void SeedNotificationData()
+        {
+            _basketsNotification.Clear();
+            _basketsNotification.Add(_basketId, SampleData.NotificationP0130938);
+        }
 
 
         //=================================================================================================//
@@ -246,7 +261,7 @@ namespace MyOrder.Infrastructure.Repositories
             _basketsOrderInfoDtos.Add("P0130512", SampleData.orderInfoP0130512);
             _basketsOrderInfoDtos.Add("P0130863", SampleData.orderInfoP0130863);
             _basketsOrderInfoDtos.Add("P0130652", SampleData.orderInfoP0130652);
-        }  
+        }
         private static void SeedBasketOrderByContactsData()
         {
             _basketsOrderByContacts.Clear();
@@ -255,7 +270,7 @@ namespace MyOrder.Infrastructure.Repositories
             _basketsOrderByContacts.Add("P0130512", SampleData.orderByContactsP0130512);
             _basketsOrderByContacts.Add("P0130863", SampleData.orderByContactsP0130863);
             _basketsOrderByContacts.Add("P0130652", SampleData.orderByContactsP0130652);
-        } 
+        }
         private static void SeedBasketCustomerTagsData()
         {
             _basketsCustomerTags.Clear();
@@ -264,7 +279,7 @@ namespace MyOrder.Infrastructure.Repositories
             _basketsCustomerTags.Add("P0130512", SampleData.customerTagsP0130512);
             _basketsCustomerTags.Add("P0130863", SampleData.customerTagsP0130863);
             _basketsCustomerTags.Add("P0130652", SampleData.customerTagsP0130652);
-        } 
+        }
         private static void SeedBasketSalesOriginsData()
         {
             _basketsSalesOrigins.Clear();
@@ -273,7 +288,7 @@ namespace MyOrder.Infrastructure.Repositories
             _basketsSalesOrigins.Add("P0130512", SampleData.salesOriginsP0130512);
             _basketsSalesOrigins.Add("P0130863", SampleData.salesOriginsP0130863);
             _basketsSalesOrigins.Add("P0130652", SampleData.salesOriginsP0130652);
-        } 
+        }
         private static void SeedBasketWebOriginsData()
         {
             _basketsWebOrigins.Clear();
@@ -282,7 +297,7 @@ namespace MyOrder.Infrastructure.Repositories
             _basketsWebOrigins.Add("P0130512", SampleData.webOriginsP0130512);
             _basketsWebOrigins.Add("P0130863", SampleData.webOriginsP0130863);
             _basketsWebOrigins.Add("P0130652", SampleData.webOriginsP0130652);
-        } 
+        }
         private static void SeedBasketSalesPoolData()
         {
             _basketsSalesPool.Clear();
@@ -291,7 +306,7 @@ namespace MyOrder.Infrastructure.Repositories
             _basketsSalesPool.Add("P0130512", SampleData.salesPoolsP0130512);
             _basketsSalesPool.Add("P0130863", SampleData.salesPoolsP0130863);
             _basketsSalesPool.Add("P0130652", SampleData.salesPoolsP0130652);
-        } 
+        }
 
 
         //=======================================================================================================
@@ -300,12 +315,12 @@ namespace MyOrder.Infrastructure.Repositories
         private static void SeedBasketDeliveryInfoData()
         {
             _basketsDeliveryInfoDtos.Clear();
-            _basketsDeliveryInfoDtos.Add(_basketId,SampleData.deliveryInfoP0130938);
+            _basketsDeliveryInfoDtos.Add(_basketId, SampleData.deliveryInfoP0130938);
             _basketsDeliveryInfoDtos.Add("P0130140", SampleData.deliveryInfoP0130140);
             _basketsDeliveryInfoDtos.Add("P0130512", SampleData.deliveryInfoP0130512);
             _basketsDeliveryInfoDtos.Add("P0130863", SampleData.deliveryInfoP0130863);
             _basketsDeliveryInfoDtos.Add("P0130652", SampleData.deliveryInfoP0130652);
-        } 
+        }
         private static void SeedBasketDeliverToAccountsData()
         {
             _basketsDeliverToAccounts.Clear();
@@ -314,7 +329,7 @@ namespace MyOrder.Infrastructure.Repositories
             _basketsDeliverToAccounts.Add("P0130512", SampleData.deliverToAccountsP0130512);
             _basketsDeliverToAccounts.Add("P0130863", SampleData.deliverToAccountsP0130863);
             _basketsDeliverToAccounts.Add("P0130652", SampleData.deliverToAccountsP0130652);
-        } 
+        }
         private static void SeedBasketDeliverToContactsData()
         {
             _basketsDeliverToContacts.Clear();
@@ -332,7 +347,7 @@ namespace MyOrder.Infrastructure.Repositories
             _basketsDeliveryModes.Add("P0130512", SampleData.deliveryModesP0130512);
             _basketsDeliveryModes.Add("P0130863", SampleData.deliveryModesP0130863);
             _basketsDeliveryModes.Add("P0130652", SampleData.deliveryModesP0130652);
-        } 
+        }
 
         //=======================================================================================================
         //Invoice info section
@@ -345,7 +360,7 @@ namespace MyOrder.Infrastructure.Repositories
             _basketsInvoiceInfoDtos.Add("P0130512", SampleData.invoiceInfoP0130512);
             _basketsInvoiceInfoDtos.Add("P0130863", SampleData.invoiceInfoP0130863);
             _basketsInvoiceInfoDtos.Add("P0130652", SampleData.invoiceInfoP0130652);
-        } 
+        }
         private static void SeedBasketTaxGroupsData()
         {
             _basketsTaxGroups.Clear();
@@ -401,7 +416,7 @@ namespace MyOrder.Infrastructure.Repositories
             _basketsPricesInfoDtos.Add("P0130512", SampleData.pricesInfoP0130512);
             _basketsPricesInfoDtos.Add("P0130863", SampleData.pricesInfoP0130863);
             _basketsPricesInfoDtos.Add("P0130652", SampleData.pricesInfoP0130652);
-        } 
+        }
         private static void SeedBasketCouponsData()
         {
             _basketsCoupons.Clear();
@@ -447,7 +462,7 @@ namespace MyOrder.Infrastructure.Repositories
         //=======================================================================================================
         //Lines
         //=======================================================================================================
-        
+
         private static void SeedbasketsBasketLineDtoData()
         {
             _basketsBasketLineDto.Clear();
@@ -456,7 +471,7 @@ namespace MyOrder.Infrastructure.Repositories
 
         public static void SeedlineUpdateReasonsAsync()
         {
-           
+
             _basketsUpdateReasons.Clear();
             _basketsUpdateReasons.Add(_basketId, SampleData.UpdateReasonsP0130938);
         }

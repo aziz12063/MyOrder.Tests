@@ -14,6 +14,11 @@ public class BasketRepository(IBasketApiClient apiClient, ILogger<BasketReposito
         logger.LogInformation("Fetching basket general info for {BasketId} from repository", basketId);
         return await apiClient.GetBasketGeneralInfoAsync(basketId);
     }
+    public async Task<BasketNotificationDto> GetNotificationsAsync(string basketId)
+    {
+        logger.LogInformation("Fetching basket notification for {BasketId} from repository", basketId);
+        return await apiClient.GetNotificationsAsync(basketId);
+    }
 
     //=======================================================================================================
     //Actions

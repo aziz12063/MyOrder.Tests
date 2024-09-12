@@ -22,8 +22,8 @@ namespace MyOrder.Infrastructure.ApiClients
         [Get("/api/orderContext/{basketId}/generalInfo")]
         Task<BasketGeneralInfoDto> GetBasketGeneralInfoAsync(string basketId);
 
-        //[Get("/api/orderContext/{basketId}/notifications")]
-        //Task<IEnumerable<NotificationDto>> GetNotificationsAsync(string basketId);
+        [Get("/api/orderContext/{basketId}/notifications")]
+        Task<BasketNotificationDto> GetNotificationsAsync(string basketId);
         #endregion
 
         //=======================================================================================================

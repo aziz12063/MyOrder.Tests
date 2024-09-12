@@ -19,6 +19,29 @@ namespace MyOrder.Infrastructure.Data
             SalesResponsible = "CEDRIC REVILLON"
         };
 
+        public static BasketNotificationDto NotificationP0130938 = new()
+        {
+            Notifications = new List<NotificationDto?>()
+            {
+                  new NotificationDto
+                    {
+                    NotificationId = 1,
+                 Severity = "Info",
+                 Message = "<strong>[Commande]</strong> Notes de commande: INDIQUER LE NOM DU DESTINATAIRE 0CA 14H50 18/01/16",
+                 CreatedDate = new DateTime(1, 1, 1, 0, 0, 0),
+                 ProcedureCall = new List<string?> { "RemoveLog", "1" }
+                 },
+                new NotificationDto
+                {
+                    NotificationId = 2,
+                    Severity = "Warning",
+                    Message = "<strong>[Stock]</strong> Low stock warning for item XYZ123",
+                 CreatedDate = new DateTime(2024, 9, 1, 9, 30, 0),
+                 ProcedureCall = new List<string?> { "UpdateStock", "2" }
+                }
+            }
+        };
+
 
         // orderInfo   P0130938
         public static BasketOrderInfoDto orderInfoP0130938 = new BasketOrderInfoDto()
@@ -470,28 +493,30 @@ namespace MyOrder.Infrastructure.Data
                 Value = false
 
             },
-            ImperativeDate = new Field<string>
+            ImperativeDate = new Field<DateTime?>
             {
                 Name = "Date impérative",
                 Status = "required",
-                Value = null,
+                Value = DateTime.ParseExact("12/09/2024", "dd/MM/yyyy", null),
                 ProcedureCall = new List<string?> { "UpdateOrderTablePropertyValue", "RAJ_ImperativeDate", "DateTime", "<value>" }
 
             },
-            OrderDocuments = new Field<List<string?>>
+            OrderDocuments = new Field<List<string?>?>
             {
                 Name = "BL / Factures",
                 Status = "hidden",
                 Value = new List<string?>()
 
             },
-            Note = new Field<string>
+            Note = new Field<string?>
             {
                 Name = "Note de livraison",
                 Status = "readWrite",
                 Value = "",
-                ProcedureCall = new List<string?> { "UpdateOrderTablePropertyValue", "DeliveryNote", "System.DateTime", "<value>" }
-
+                ProcedureCall = new List<string?> { "UpdateOrderTablePropertyValue", 
+                                                    "DeliveryNote", 
+                                                    "System.DateTime", 
+                                                    "<value>" }
             },
             NoteMustBeSaved = new Field<bool?>
             {
@@ -2562,7 +2587,7 @@ new BasketValueDto
             Status = "readOnly",
             Value = false
         },
-        ImperativeDate = new Field<string>
+        ImperativeDate = new Field<DateTime?>
         {
             Name = "Date impérative",
             Status = "readOnly",
@@ -3877,7 +3902,7 @@ new BasketValueDto
             Status = "readOnly",
             Value = false
         },
-        ImperativeDate = new Field<string>
+        ImperativeDate = new Field<DateTime?>
         {
             Name = "Date impérative",
             Status = "readOnly",
@@ -5568,7 +5593,7 @@ new BasketValueDto
             Status = "readWrite",
             Value = false
         },
-        ImperativeDate = new Field<string>
+        ImperativeDate = new Field<DateTime?>
         {
             Name = "Date impérative",
             Status = "required",
@@ -7465,7 +7490,7 @@ new BasketValueDto
             Status = "readWrite",
             Value = false
         },
-        ImperativeDate = new Field<string>
+        ImperativeDate = new Field<DateTime?>
         {
             Name = "Date impérative",
             Status = "required",

@@ -6,6 +6,7 @@ namespace MyOrder.Infrastructure.Repositories;
 public interface IBasketRepository
 {
     Task<BasketGeneralInfoDto> GetBasketGeneralInfoAsync(string basketId);
+    Task<BasketNotificationDto> GetNotificationsAsync(string basketId);
 
     //=======================================================================================================
     //Actions Section

@@ -72,31 +72,13 @@ namespace MyOrder.Components.Childs.Lines
 
             return string.Empty;
         }
-         
-       
        
         private void OnValueChange<T>(T value , BasketLineDto? row, Field<T?>? field, int? lineNbr)
         {
             if (lineNbr != null && lineNbr == row?.LineNum?.Value)
             {
-
-                //basketLineDto = row;
-                Console.WriteLine("Line nbr: " + row.LineNum.Value);
-                Console.WriteLine("the new value: " + value);
-
-                //if(value is int?  && field is Field<int?>)
-                //{
-                //    int x = Convert.ToInt32(value) ;
-                //    if(CheckQuantityValue(x) != null)
-                //    {
-                //        return;
-                //    }
-                //}
-                //    Logger.LogInformation($"in second else");
-                    field!.Value = value;
-                
+                field!.Value = value;
                 SetBasketOrderValue(field: field, value: value, procedureCallValue: value?.ToString());
-                // Console.WriteLine("UpdateReasonString: " + UpdateReasonString);
             }
         }
         void HandleIntervalElapsed(string debouncedText)
@@ -119,9 +101,7 @@ namespace MyOrder.Components.Childs.Lines
         // is called when a cell is modifyed
         private void CommittedItemChanges(BasketLineDto item)
         {
-           
             Logger.LogInformation($"CommittedItemChanges is called for line nbr {item.LineNum?.Value}");
-            
         }
         private string RowStyleFunc(BasketPriceLine x, int index, BasketLineDto item)
         {
@@ -148,9 +128,7 @@ namespace MyOrder.Components.Childs.Lines
 
         void HandleRowDoubleClick(MouseEventArgs args, BasketLineDto item)
         {
-            
             Console.WriteLine("the HandleRowDoubleClick is double clicked");
-           
         }
 
        
@@ -161,11 +139,8 @@ namespace MyOrder.Components.Childs.Lines
          bool OpenPopoverChecker(int? linNbr)
         {
             Logger.LogInformation($"parameter is: {linNbr}");
-           
-
             if (selectedLine == linNbr)
                 return true;
-
             return false;
         }
 

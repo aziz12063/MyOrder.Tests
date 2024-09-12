@@ -119,12 +119,12 @@
                             CellStyle="text-align: center; margin: 5% auto; font-size: 12px;">
                 <CellTemplate>
                     <MudNumericField T="int?" Immediate="true"
-                        Step="25"
-                                  ReadOnly="@FieldUtility.IsReadOnly(BasketOrderLinesDto?.lines?[0]?.SalesQuantity)"
-                                  Required="true" RequiredError="Quantité is required!"
-                                  Validation="@(new Func<int?, string?>(CheckQuantityValue))"
-                                  Value="@context.Item.SalesQuantity?.Value"
-                                  ValueChanged="(x => OnValueChange(x, context.Item, context.Item.SalesQuantity, context.Item.LineNum?.Value))" />
+                                     Step="25"
+                                     ReadOnly="@FieldUtility.IsReadOnly(BasketOrderLinesDto?.lines?[0]?.SalesQuantity)"
+                                     Required="true" RequiredError="Quantité is required!"
+                                     Validation="@(new Func<int?, string?>(CheckQuantityValue))"
+                                     Value="@context.Item.SalesQuantity?.Value"
+                                     ValueChanged="(x => OnValueChange(x, context.Item, context.Item.SalesQuantity, context.Item.LineNum?.Value))" />
                 </CellTemplate>
             </TemplateColumn>
 
@@ -195,17 +195,17 @@
 
                                         <!--Code article-->
                                         <MudItem xs="12">
-                                          
-                                            <MudTextField Margin="Margin.Dense" @onfocus="(() => HandlePopOverOnClick(context.Item.LineNum?.Value))" 
-                                                              T="string"
-                                                              Typo="Typo.body2"
-                                                              Label="@context.Item.ItemId?.Name"
-                                                              Style="font-size: 13px; height:30px;"
-                                                              Variant="Variant.Outlined"
-                                                              Required="@FieldUtility.IsRequired(context.Item.ItemId)"
-                                                              ReadOnly="true"
-                                                              Value="@context.Item.ItemId?.Value">
-                                                </MudTextField>
+
+                                            <MudTextField Margin="Margin.Dense" @onfocus="(() => HandlePopOverOnClick(context.Item.LineNum?.Value))"
+                                                          T="string"
+                                                          Typo="Typo.body2"
+                                                          Label="@context.Item.ItemId?.Name"
+                                                          Style="font-size: 13px; height:30px;"
+                                                          Variant="Variant.Outlined"
+                                                          Required="@FieldUtility.IsRequired(context.Item.ItemId)"
+                                                          ReadOnly="true"
+                                                          Value="@context.Item.ItemId?.Value">
+                                            </MudTextField>
                                             <MudPopover Open="@OpenPopoverChecker(context.Item.LineNum?.Value)" OverflowBehavior="OverflowBehavior.FlipAlways" AnchorOrigin="Origin.TopCenter" TransformOrigin="Origin.BottomCenter" Paper="false">
                                                 <MudPaper Outlined="true" Class="px-4 py-8">
                                                     <MudText>MyData</MudText>
@@ -242,21 +242,6 @@
                                 <MudItem xs="6">
                                     <MudStack Spacing="1">
                                         <!--N de ligne-->
-                                        @*  <MudItem>
-                                        <MudTextField Margin="Margin.Dense"
-                                        T="int?"
-                                        Typo="Typo.body2"
-                                        Label="@context.Item.LineNum?.Name"
-                                        Style="font-size: 13px; height:30px;"
-                                        Variant="Variant.Outlined"
-                                        Required="@FieldUtility.IsRequired(context.Item.LineNum)"
-                                        ReadOnly="@FieldUtility.IsReadOnly(context.Item.LineNum)"
-                                        Disabled="@FieldUtility.IsHidden(context.Item.LineNum)"
-                                        Value="@context.Item.LineNum?.Value"
-                                        ValueChanged="(x => OnValueChange(x, context.Item, context.Item.LineNum, context.Item.LineNum.Value))">
-                                        </MudTextField>
-                                        </MudItem> *@
-
                                         <MudItem>
                                             <GenericTextField Field="@context.Item.LineNum"
                                                               @bind-BoundValue="context.Item.LineNum!.Value"
@@ -296,14 +281,6 @@
 
                             <!--Information produit-->
                             <div>
-                               @*  <GenericTextField Field="@context.Item.ProductInfo"
-                                lines="3"
-                                                  @bind-BoundValue="context.Item.ProductInfo!.Value"
-                                                  @bind-BoundValue:after="(() =>
-                                                                    OnValueChange(context.Item.ProductInfo.Value,
-                                                                    context.Item,
-                                                                    context.Item.ProductInfo,
-                                                                    context.Item.LineNum?.Value))" /> *@
                                 <MudTextField Margin="Margin.Dense"
                                               T="string"
                                               Lines="3"
