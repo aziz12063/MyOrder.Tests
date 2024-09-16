@@ -44,10 +44,10 @@ public partial class DeliveryDetails : BaseFluxorComponent<DeliveryInfoState, Fe
         get => BasketDeliveryInfo?.Contact?.Value;
         set => SetBasketOrderValue(field: BasketDeliveryInfo!.Contact, value: value, procedureCallValue: value?.ContactId);
     }
-    private string DeliveryModeValue
+    private BasketValueDto? DeliveryModeValue
     {
-        get => GetFieldValue(BasketDeliveryInfo?.DeliveryMode?.Value);
-        set => SetBasketOrderValue(field: BasketDeliveryInfo!.DeliveryMode, value: value, procedureCallValue: value);
+        get => BasketDeliveryInfo?.DeliveryMode?.Value;
+        set => SetBasketOrderValue(field: BasketDeliveryInfo!.DeliveryMode, value: value, procedureCallValue: value?.Value);
     }
     private bool? CompleteDelivery
     {
@@ -56,8 +56,8 @@ public partial class DeliveryDetails : BaseFluxorComponent<DeliveryInfoState, Fe
     }
     private DateTime? ImperativeDateValue
     {
-        get; //=> BasketDeliveryInfo?.ImperativeDate?.Value;
-        set; //=> SetBasketOrderValue(field: BasketDeliveryInfo!.ImperativeDate, value: value, procedureCallValue: value?.ToString("yyyy-MM-dd"));
+        get => BasketDeliveryInfo?.ImperativeDate?.Value;
+        set => SetBasketOrderValue(field: BasketDeliveryInfo!.ImperativeDate, value: value, procedureCallValue: value.ToString()); // This is triggered 2 times when set to null. Do troubleshoot.
     }
     public bool? SaveNoteForFutureOrders {
         get => BasketDeliveryInfo?.NoteMustBeSaved?.Value;

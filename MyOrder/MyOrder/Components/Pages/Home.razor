@@ -1,14 +1,17 @@
-﻿@using Microsoft.AspNetCore.Components.Authorization
-@using MyOrder.Components.Childs.Header
+﻿@using MyOrder.Components.Childs.Header
 @using MyOrder.Components.Childs.Lines
-@using MyOrder.Services
+@using MyOrder.Components.Childs
+
+@inject NavigationManager NavigationManager
 
 @page "/"
+
 
 <PageTitle>MyOrder</PageTitle>
 
 <MudContainer Class="mt-11 px-14" MaxWidth="MaxWidth.ExtraLarge">
     <MudStack Spacing="4">
+        <Notifications />
         <Header />
         <Lines />
     </MudStack>

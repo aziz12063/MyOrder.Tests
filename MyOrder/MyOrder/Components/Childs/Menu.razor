@@ -48,7 +48,7 @@
 <MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.ShoppingCart" Size="Size.Large" />
 
 @code {
-
+#warning TODO: This code is for test and is not complete, please complete and refactor.
     string? accountId { get; set; }
     string? contactId { get; set; }
 
@@ -58,8 +58,7 @@
         if (!string.IsNullOrWhiteSpace(basketId))
         {
             dispatcher.Dispatch(
-                new CreateBasketAction(new NewBasketRequestDto
-                    { BasketId = basketId }));
+                new CreateBasketAction(new Dictionary<string, string>() { { "BasketId", basketId } }));
         }
     }
 

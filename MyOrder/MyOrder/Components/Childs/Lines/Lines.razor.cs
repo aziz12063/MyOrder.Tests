@@ -1,15 +1,12 @@
-﻿using Fluxor;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using MudBlazor;
 using MyOrder.Components.Common;
-using MyOrder.Components.Common.Dialogs;
 using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.Lines;
 using MyOrder.Shared.Dtos.SharedComponents;
 using MyOrder.Store.LinesUseCase;
 using MyOrder.Utils;
-using static MudBlazor.CategoryTypes;
 
 
 namespace MyOrder.Components.Childs.Lines
@@ -72,13 +69,26 @@ namespace MyOrder.Components.Childs.Lines
 
             return string.Empty;
         }
-       
-        private void OnValueChange<T>(T value , BasketLineDto? row, Field<T?>? field, int? lineNbr)
+
+
+
+        private void OnValueChange<T>(T value, BasketLineDto? row, Field<T?>? field, int? lineNbr)
         {
+#warning "Logic for test purpose only. Do refactor."
             if (lineNbr != null && lineNbr == row?.LineNum?.Value)
             {
                 field!.Value = value;
-                SetBasketOrderValue(field: field, value: value, procedureCallValue: value?.ToString());
+
+                string? pcdCallValue;
+                if (value is BasketValueDto basketValueDto)
+                {
+                    pcdCallValue = basketValueDto?.Value;
+                }
+                else
+                {
+                    pcdCallValue = value?.ToString();
+                }
+                SetBasketOrderValue(field: field, value: value, procedureCallValue: pcdCallValue);
             }
         }
         void HandleIntervalElapsed(string debouncedText)
@@ -101,26 +111,28 @@ namespace MyOrder.Components.Childs.Lines
         // is called when a cell is modifyed
         private void CommittedItemChanges(BasketLineDto item)
         {
+
             Logger.LogInformation($"CommittedItemChanges is called for line nbr {item.LineNum?.Value}");
+
         }
         private string RowStyleFunc(BasketPriceLine x, int index, BasketLineDto item)
         {
-           
+
             string style = "";
             int quantite = item?.SalesQuantity?.Value ?? 0;
-            if (x.quantity == 25 && quantite < 100)
+            if (x.Quantity == 25 && quantite < 100)
                 style = "background-color:#8CED8C";
 
-            else if (x.quantity == 100 && quantite >= 100 && quantite < 200)
+            else if (x.Quantity == 100 && quantite >= 100 && quantite < 200)
                 style = "background-color:#8CED8C";
 
-            else if (x.quantity == 200 && quantite >= 200 && quantite < 400)
+            else if (x.Quantity == 200 && quantite >= 200 && quantite < 400)
                 style += "background-color:#8CED8C";
 
-            else if (x.quantity == 400 && quantite >= 400 && quantite < 800)
+            else if (x.Quantity == 400 && quantite >= 400 && quantite < 800)
                 style += "background-color:#8CED8C";
 
-            if (x.quantity > 500 && quantite >= 800 )
+            if (x.Quantity > 500 && quantite >= 800)
                 style += "background-color:#8CED8C";
 
             return style;
@@ -128,19 +140,24 @@ namespace MyOrder.Components.Childs.Lines
 
         void HandleRowDoubleClick(MouseEventArgs args, BasketLineDto item)
         {
+
             Console.WriteLine("the HandleRowDoubleClick is double clicked");
+
         }
 
-       
+
         void HandlePopOverOnClick(int? linNbr)
         {
             selectedLine = linNbr;
         }
-         bool OpenPopoverChecker(int? linNbr)
+        bool OpenPopoverChecker(int? linNbr)
         {
             Logger.LogInformation($"parameter is: {linNbr}");
+
+
             if (selectedLine == linNbr)
                 return true;
+
             return false;
         }
 

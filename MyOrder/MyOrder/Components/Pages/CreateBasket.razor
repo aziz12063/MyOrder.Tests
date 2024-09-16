@@ -19,49 +19,13 @@
         var uri = navigationManager.ToAbsoluteUri(navigationManager.Uri);
         var queryParams = QueryHelpers.ParseQuery(uri.Query);
 
-        var basketRequestDto = new NewBasketRequestDto();
+        // Convert StringValues to take only one string
+        var postData = queryParams.ToDictionary(
+            kvp => kvp.Key,
+            kvp => kvp.Value.FirstOrDefault() ?? string.Empty
+        );
 
-        foreach (var param in queryParams)
-        {
-            switch (param.Key.ToLower())
-            {
-                case "basketid":
-                    basketRequestDto.BasketId = param.Value;
-                    break;
-                case "contactid":
-                    basketRequestDto.ContactId = param.Value;
-                    break;
-                case "accountid":
-                    basketRequestDto.AccountId = param.Value;
-                    break;
-                case "salesid":
-                    basketRequestDto.SalesId = param.Value;
-                    break;
-                case "quotationid":
-                    basketRequestDto.QuotationId = param.Value;
-                    break;
-                case "invoiceid":
-                    basketRequestDto.InvoiceId = param.Value;
-                    break;
-                case "apisalesid":
-                    basketRequestDto.ApiSalesId = param.Value;
-                    break;
-                case "orderid":
-                    basketRequestDto.OrderId = param.Value;
-                    break;
-                case "casenumber":
-                    basketRequestDto.CaseNumber = param.Value;
-                    break;
-                case "savtype":
-                    basketRequestDto.SavType = param.Value;
-                    break;
-                case "fsrequestid":
-                    basketRequestDto.FsRequestId = param.Value;
-                    break;
-            }
-        }
-
-        dispatcher.Dispatch(new CreateBasketAction(basketRequestDto));
+        dispatcher.Dispatch(new CreateBasketAction(postData));
 
     }
 }

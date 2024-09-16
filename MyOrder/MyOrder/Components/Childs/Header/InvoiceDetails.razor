@@ -63,10 +63,9 @@
                 }
                 <MudItem xs="6">
                     <GenericMudSelect Variant="Variant.Outlined"
-                                      T="string"
                                       @bind-BoundValue="PaymentModeValue"
                                       Field="BasketInvoiceInfo!.PaymentMode"
-                                      Items="PaymentModes?.Select( item => item?.Value).ToList()" />
+                                      Items="PaymentModes" />
 
                 </MudItem>
 
@@ -87,10 +86,9 @@
                 <DisplayField Field="BasketInvoiceInfo!.SiretId" />
 
                 <!--Groupe de taxe-->
-                <GenericMudSelect T="string"
-                                  Field="BasketInvoiceInfo!.TaxGroup"
-                                  Items="TaxGroups?.Select( item => item?.Value).ToList()"
+                <GenericMudSelect Field="BasketInvoiceInfo!.TaxGroup"
                                   @bind-BoundValue="TaxGroupValue"
+                                  Items="TaxGroups"
                                   Variant="Variant.Outlined" />
                 <!--Executing Service-->
                 @if (!FieldUtility.IsHidden(BasketInvoiceInfo!.PublicEntityExecutingService))

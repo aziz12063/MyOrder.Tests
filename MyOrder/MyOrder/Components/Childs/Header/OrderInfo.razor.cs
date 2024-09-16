@@ -14,7 +14,7 @@ public partial class OrderInfo : BaseFluxorComponent<OrderInfoState, FetchOrderI
 
     private BasketOrderInfoDto? BasketOrderInfo { get; set; }
     private List<ContactDto?>? Contacts { get; set; }
-    private List<SalesOriginDto?>? SalesOrigins { get; set; }
+    private List<BasketValueDto?>? SalesOrigins { get; set; }
     private List<BasketValueDto?>? WebOrigins { get; set; }
     private List<BasketValueDto?>? SalesPools { get; set; }
     private string SelectedClient { get; set; } = string.Empty;
@@ -41,21 +41,21 @@ public partial class OrderInfo : BaseFluxorComponent<OrderInfoState, FetchOrderI
         get => BasketOrderInfo?.Contact?.Value;
         set => SetBasketOrderValue(field: BasketOrderInfo!.Contact, value: value, procedureCallValue: value?.ContactId);
     }
-    private string SalesOriginIdValue
+    private BasketValueDto? SalesOriginIdValue
     {
-        get => GetFieldValue(BasketOrderInfo?.SalesOriginId?.Value);
-        set => SetBasketOrderValue(field: BasketOrderInfo!.SalesOriginId, value: value, procedureCallValue: value);
+        get => BasketOrderInfo?.SalesOriginId?.Value;
+        set => SetBasketOrderValue(field: BasketOrderInfo!.SalesOriginId, value: value, procedureCallValue: value?.Value);
 
     }
-    private string WebOriginIdValue
+    private BasketValueDto? WebOriginIdValue
     {
-        get => GetFieldValue(BasketOrderInfo?.WebOriginId?.Value);
-        set => SetBasketOrderValue(field: BasketOrderInfo!.WebOriginId, value: value, procedureCallValue: value);
+        get => BasketOrderInfo?.WebOriginId?.Value;
+        set => SetBasketOrderValue(field: BasketOrderInfo!.WebOriginId, value: value, procedureCallValue: value?.Value);
     }
-    private string SalesPoolId
+    private BasketValueDto? SalesPoolId
     {
-        get => GetFieldValue(BasketOrderInfo?.SalesPoolId?.Value);
-        set => SetBasketOrderValue(field: BasketOrderInfo!.SalesPoolId, value: value, procedureCallValue: value);
+        get => BasketOrderInfo?.SalesPoolId?.Value;
+        set => SetBasketOrderValue(field: BasketOrderInfo!.SalesPoolId, value: value, procedureCallValue: value?.Value);
     }
     private string CustomerOrderRefValue
     {

@@ -11,7 +11,7 @@ namespace MyOrder.Components.Common;
 public abstract class BaseFluxorComponent<TState, TAction> : ComponentBase, IDisposable where TState : class
 {
     [Inject]
-    protected IState<TState> State { get; set; }
+    protected IState<TState>? State { get; set; }
     [Inject]
     protected IDispatcher Dispatcher { get; set; }
     [Inject]
@@ -63,6 +63,12 @@ public abstract class BaseFluxorComponent<TState, TAction> : ComponentBase, IDis
             return;
         }
 
+        if (EqualityComparer<T>.Default.Equals(field.Value, value))
+        {
+            Logger.LogWarning("Trying to update the field with the same value at {StackTrace}", LogUtility.GetStackTrace());
+            return;
+        }
+
         // Set the field value
         field.Value = value;
         try
@@ -75,7 +81,7 @@ public abstract class BaseFluxorComponent<TState, TAction> : ComponentBase, IDis
         {
             Logger.LogError(e, "Error while updating procedure call for {Field}", field);
         }
-    
+
     }
 
     // This method should only be called from SetBasketOrderValue, make private and remove the Obsolete attribute once the method is no longer used

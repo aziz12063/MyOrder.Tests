@@ -2,9 +2,9 @@
 
 namespace MyOrder.Store.CreateBasketUseCase
 {
-    public class CreateBasketAction(NewBasketRequestDto newBasketRequest)
+    public class CreateBasketAction(Dictionary<string, string> newBasketRequest)
     {
-        public NewBasketRequestDto NewBasketReques { get; set; } = newBasketRequest;
+        public Dictionary<string, string> NewBasketReques { get; set; } = newBasketRequest;
     }
     public class CreateBasketSuccessAction(NewBasketResponseDto newBasketResponse)
     {

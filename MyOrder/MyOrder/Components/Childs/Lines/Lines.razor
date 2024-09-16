@@ -8,7 +8,7 @@
     <HeaderElementLoadingSkeleton />
     return;
 }
-<MudContainer Class="pa-0 ma-0" Style="max-width: none;">
+<MudContainer Class="pa-0 mx-0 mt-0 mb-10" Style="max-width: none;">
     <!--Grid-->
     <MudDataGrid T="BasketLineDto"
                  Bordered="true"
@@ -167,7 +167,7 @@
                 </CellTemplate>
             </TemplateColumn>
 
-            <PropertyColumn Property="x => x.DiscountType == null ? string.Empty : x.DiscountType.Value"
+            <PropertyColumn Property="x => x.DiscountType != null ? x.DiscountType.Value : null"
                             Title="Tarification"
                             HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
                             CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
@@ -186,7 +186,7 @@
         <ChildRowContent>
             <MudGrid Spacing="3" Justify="Justify.SpaceAround">
                 <!--Column1-->
-                <MudItem Class="pa-3" xs="12" sm="4">
+                <MudItem Class="pa-3" xs="12" sm="3">
                     <MudStack Spacing="6" Justify="Justify.SpaceBetween" Style="height: inherit;">
                         <MudItem>
                             <MudGrid>
@@ -216,7 +216,7 @@
                                         </MudItem>
                                         <!--Motif Modif-->
                                         <GenericMudSelect Variant="Variant.Outlined"
-                                                          T="string"
+                                                          T="BasketValueDto"
                                                           @bind-BoundValue="context.Item.UpdateReason!.Value"
                                                           @bind-BoundValue:after="(() =>
                                                                     OnValueChange(context.Item.UpdateReason.Value,
@@ -224,7 +224,7 @@
                                                                     context.Item.UpdateReason,
                                                                     context.Item.LineNum?.Value))"
                                                           Field="context.Item.UpdateReason"
-                                                          Items="UpdateReasons?.Select(item => item?.Value).ToList()" />
+                                                          Items="UpdateReasons" />
 
                                         <!--Vendu par-->
                                         <MudTextField Margin="Margin.Dense"
@@ -281,6 +281,14 @@
 
                             <!--Information produit-->
                             <div>
+                                @*  <GenericTextField Field="@context.Item.ProductInfo"
+                                lines="3"
+                                @bind-BoundValue="context.Item.ProductInfo!.Value"
+                                @bind-BoundValue:after="(() =>
+                                OnValueChange(context.Item.ProductInfo.Value,
+                                context.Item,
+                                context.Item.ProductInfo,
+                                context.Item.LineNum?.Value))" /> *@
                                 <MudTextField Margin="Margin.Dense"
                                               T="string"
                                               Lines="3"
@@ -300,7 +308,7 @@
                 </MudItem>
 
                 <!--Column2-->
-                <MudItem Class="pa-3" xs="12" sm="4">
+                <MudItem Class="pa-3" xs="12" sm="5">
                     <MudStack>
                         <MudGrid>
                             <!--1-->
@@ -310,7 +318,6 @@
                                     @if (context.Item.LogisticFlow != null)
                                     {
                                         <GenericMudSelect Variant="Variant.Outlined"
-                                                          T="string"
                                                           @bind-BoundValue=" context.Item.LogisticFlow.Value"
                                                           @bind-BoundValue:after="() =>
                                                                     OnValueChange(context?.Item?.LogisticFlow?.Value,
@@ -318,16 +325,15 @@
                                                                     context?.Item?.LogisticFlow,
                                                                     context?.Item?.LineNum?.Value)"
                                                           Field="context.Item.LogisticFlow"
-                                                          Items="LogisticFlows?.Select(item => item?.Value).ToList()" />
+                                                          Items="LogisticFlows" />
                                     }
                                     else
                                     {
-                                        var field = new Shared.Dtos.SharedComponents.Field<string>();
+                                        var field = new Shared.Dtos.SharedComponents.Field<BasketValueDto>();
                                         <GenericMudSelect Variant="Variant.Outlined"
-                                                          T="string"
                                                           @bind-BoundValue="field.Value"
                                                           Field="context.Item.LogisticFlow"
-                                                          Items="LogisticFlows?.Select(item => item?.Value).ToList()" />
+                                                          Items="LogisticFlows" />
                                     }
                                     <!--Livré maintenant-->
                                     <DisplayField Field="@context.Item.PhysicalAvailableQuantity" />
@@ -509,15 +515,15 @@
                 <MudItem Class="pa-3" xs="12" sm="4">
                     <!--Tarification-->
                     <GenericMudSelect Variant="Variant.Outlined"
-                                      T="string"
-                                      @bind-BoundValue="context.Item.LogisticFlow!.Value"
+                                      T="BasketValueDto"
+                                      @bind-BoundValue="context.Item.DiscountType!.Value"
                                       @bind-BoundValue:after="(() =>
-                                                                    OnValueChange(context.Item.LogisticFlow.Value,
+                                                                    OnValueChange(context.Item.DiscountType.Value,
                                                                     context.Item,
-                                                                    context.Item.LogisticFlow,
+                                                                    context.Item.DiscountType,
                                                                     context.Item.LineNum?.Value))"
                                       Field="context.Item.DiscountType"
-                                      Items="UpdateReasons?.Select(item => item?.Value).ToList()" />
+                                      Items="context.Item.DiscountTypes" />
 
                     <!--Description-->
                     <MudTextField Margin="Margin.Dense"
@@ -576,18 +582,18 @@
                                      Class="mx-n3"
                                      RowStyleFunc="((item, x) => RowStyleFunc(item, x ,context.Item))">
                             <Columns>
-                                <PropertyColumn Property="x => x == null? 0 : x.quantity"
+                                <PropertyColumn Property="x => x == null? 0 : x.Quantity"
                                                 Title="Quantity"
                                                 CellClass="pa-1 ma-1" />
-                                <PropertyColumn Property="x => x == null? 0 : x.catalogPrice"
+                                <PropertyColumn Property="x => x == null? 0 : x.CatalogPrice"
                                                 Title="Prix Cat."
                                                 CellClass="pa-1 ma-1" />
-                                <PropertyColumn Property="x => x == null? 0 : x.discountPrice"
+                                <PropertyColumn Property="x => x == null? 0 : x.DiscountPrice"
                                                 Title="Prix Rem." />
-                                <PropertyColumn Property="x => x == null? 0 : x.multiplePrice"
+                                <PropertyColumn Property="x => x == null? 0 : x.MultiplePrice"
                                                 Title="Prix / 25"
                                                 CellClass="pa-1 ma-1" />
-                                <PropertyColumn Property="x => x == null? 0 : x.discountRate"
+                                <PropertyColumn Property="x => x == null? 0 : x.DiscountRate"
                                                 Title="% Dégress."
                                                 CellClass="pa-1 ma-1" />
                             </Columns>

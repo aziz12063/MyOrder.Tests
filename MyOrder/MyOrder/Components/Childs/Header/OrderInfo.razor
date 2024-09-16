@@ -39,8 +39,7 @@
                                   Margin="Margin.Dense"
                                   ReadOnly="true"
                                   Value="SelectedClient"
-                                  Label="Compte Commandeur"
-                                  Style="text-align-last: center;" />
+                                  Label="Compte Commandeur" />
 
                 </AddressTooltip>
 
@@ -87,24 +86,22 @@
                     <MudItem xs="12">
                         <MudGrid Justify="Justify.SpaceBetween">
                             <MudItem xs="6">
-                                <GenericMudSelect T="string"
-                                                  @bind-BoundValue="SalesOriginIdValue"
+                                <GenericMudSelect @bind-BoundValue="SalesOriginIdValue"
                                                   Field="BasketOrderInfo!.SalesOriginId"
-                                                  Items="SalesOrigins?.Select( item => item?.Value).ToList()" />
+                                                  Items="SalesOrigins" />
 
                             </MudItem>
                             <MudItem xs="6">
                                 <GenericMudSelect @bind-BoundValue="WebOriginIdValue"
                                                   Field="BasketOrderInfo!.WebOriginId"
-                                                  Items="WebOrigins?.Select( item => item?.Value).ToList()" />
+                                                  Items="WebOrigins" />
                             </MudItem>
                         </MudGrid>
                     </MudItem>
                     <MudItem xs="12">
-                        <GenericMudSelect T="string"
-                                          @bind-BoundValue="SalesPoolId"
+                        <GenericMudSelect @bind-BoundValue="SalesPoolId"
                                           Field="BasketOrderInfo!.SalesPoolId"
-                                          Items="SalesPools?.Select( item => item?.Value).ToList()" />
+                                          Items="SalesPools" />
 
                     </MudItem>
                     <!-- Customer Ref-->

@@ -40,15 +40,15 @@ public partial class InvoiceDetails : BaseFluxorComponent<InvoiceInfoState, Fetc
         get => BasketInvoiceInfo?.Account?.Value;
         set => SetBasketOrderValue(field: BasketInvoiceInfo!.Account, value: value, procedureCallValue: value?.AccountId);
     }
-    private string TaxGroupValue
+    private BasketValueDto? TaxGroupValue
     {
-        get => FieldUtility.NullOrWhiteSpaceHelper(BasketInvoiceInfo?.TaxGroup?.Value);
-        set => SetBasketOrderValue(field: BasketInvoiceInfo!.TaxGroup, value: value, procedureCallValue: value);
+        get => BasketInvoiceInfo?.TaxGroup?.Value;
+        set => SetBasketOrderValue(field: BasketInvoiceInfo!.TaxGroup, value: value, procedureCallValue: value?.Value);
     }
-    private string PaymentModeValue
+    private BasketValueDto? PaymentModeValue
     {
-        get => FieldUtility.NullOrWhiteSpaceHelper(BasketInvoiceInfo?.PaymentMode?.Value);
-        set => SetBasketOrderValue(field: BasketInvoiceInfo!.PaymentMode, value: value, procedureCallValue: value);
+        get => BasketInvoiceInfo?.PaymentMode?.Value;
+        set => SetBasketOrderValue(field: BasketInvoiceInfo!.PaymentMode, value: value, procedureCallValue: value?.Value);
     }
     private string PublicEntityExecutingServiceValue
     {

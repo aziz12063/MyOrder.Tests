@@ -3,6 +3,8 @@ using MyOrder.Store.Base;
 using MyOrder.Store.DeliveryInfoUseCase;
 using MyOrder.Store.GeneralInfoUseCase;
 using MyOrder.Store.InvoiceInfoUseCase;
+using MyOrder.Store.LinesUseCase;
+using MyOrder.Store.NotificationsUseCase;
 using MyOrder.Store.OrderInfoUseCase;
 using MyOrder.Store.PricesInfoUseCase;
 using MyOrder.Store.TradeInfoUseCase;
@@ -25,8 +27,9 @@ public class StateResolver : IStateResolver
             { "invoiceInfo", CreateDispatchAction<InvoiceInfoState, FetchInvoiceInfoAction> },
             { "tradeInfo", CreateDispatchAction<TradeInfoState, FetchTradeInfoAction> },
             { "pricesInfo", CreateDispatchAction<PricesInfoState, FetchPricesInfoAction> },
-            { "notifications", CreateDispatchAction<GeneralInfoState, FetchGeneralInfoAction> }
-        // Add other mappings here as needed : Coupons, Warranty, Notifications, etc.
+            { "notifications", CreateDispatchAction<NotificationsState, FetchNotificationsAction> },
+            { "orderLines", CreateDispatchAction<LinesState, FetchLinesAction> }
+        // Add other mappings here as needed : Coupons, Warranty, etc.
         };
     }
 

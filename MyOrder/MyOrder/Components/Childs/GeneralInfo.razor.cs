@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
-using MyOrder.Components.Common;
+﻿using MyOrder.Components.Common;
 using MyOrder.Shared.Dtos;
 using MyOrder.Store.GeneralInfoUseCase;
 using MyOrder.Utils;
@@ -17,7 +15,7 @@ public partial class GeneralInfo : BaseFluxorComponent<GeneralInfoState, FetchGe
 
     protected override void CacheNewFields()
     {
-        BasketGeneralInfo = State.Value.GeneralInfo
+        BasketGeneralInfo = State?.Value.GeneralInfo
                              ?? throw new ArgumentNullException(nameof(State.Value.GeneralInfo), "Unexpected null for BasketGeneralInfo object.");
         User = State.Value.User;
     }

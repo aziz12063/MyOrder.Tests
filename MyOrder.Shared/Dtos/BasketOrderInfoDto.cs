@@ -10,9 +10,9 @@ namespace MyOrder.Shared.Dtos
         public Field<ContactDto?>? Contact { get; set; }
         public Field<string?>? ActivityArea { get; set; }
         public List<BasketValueDto?>? CustomerTags { get; set; }
-        public Field<string?>? SalesOriginId { get; set; }
-        public Field<string?>? WebOriginId { get; set; }
-        public Field<string?>? SalesPoolId { get; set; }
+        public Field<BasketValueDto?>? SalesOriginId { get; set; }
+        public Field<BasketValueDto?>? WebOriginId { get; set; }
+        public Field<BasketValueDto?>? SalesPoolId { get; set; }
         public Field<string?>? CustomerOrderRef { get; set; }
         public Field<string?>? WebSalesId { get; set; }
         public Field<string?>? RelatedLink { get; set; }

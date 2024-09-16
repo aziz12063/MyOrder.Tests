@@ -24,15 +24,15 @@ public class BasketInvoiceInfoDto
 
     // Groupe de taxe
     // Modifiable Resource taxGroup
-    public Field<string?>? TaxGroup { get; set; }
+    public Field<BasketValueDto?>? TaxGroup { get; set; }
 
     // Condition de paiement  
     // Non modifiable Resource paymentTerms
-    public Field<string?>? PaymentTerm { get; set; }
+    public Field<BasketValueDto?>? PaymentTerm { get; set; }
 
     // Mode de paiement
     // Modifiable Obligatoire Resouce paymentModes
-    public Field<string?>? PaymentMode { get; set; }
+    public Field<BasketValueDto?>? PaymentMode { get; set; }
 
     public bool? IsPublicEntity { get; set; }
 

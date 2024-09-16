@@ -23,7 +23,7 @@ namespace MyOrder.Infrastructure.ApiClients
         Task<BasketGeneralInfoDto> GetBasketGeneralInfoAsync(string basketId);
 
         [Get("/api/orderContext/{basketId}/notifications")]
-        Task<BasketNotificationDto> GetNotificationsAsync(string basketId);
+        Task<List<BasketNotificationDto?>?> GetNotificationsAsync(string basketId);
         #endregion
 
         //=======================================================================================================
@@ -39,7 +39,7 @@ namespace MyOrder.Infrastructure.ApiClients
         Task<List<BasketValueDto?>> GetCustomerTagsAsync(string basketId);
 
         [Get("/api/orderContext/{basketId}/salesOrigins")]
-        Task<List<SalesOriginDto?>> GetSalesOriginsAsync(string basketId);
+        Task<List<BasketValueDto?>> GetSalesOriginsAsync(string basketId);
 
         [Get("/api/orderContext/{basketId}/webOrigins")]
         Task<List<BasketValueDto?>> GetWebOriginsAsync(string basketId);

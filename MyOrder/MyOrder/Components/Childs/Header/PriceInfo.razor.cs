@@ -24,26 +24,20 @@ public partial class PriceInfo : BaseFluxorComponent<PricesInfoState, FetchPrice
 
     protected override FetchPricesInfoAction CreateFetchAction(PricesInfoState state, string basketId) => new(state, basketId);
 
-    private string CouponValue
+    private BasketValueDto? CouponValue
     {
-        get => GetFieldValue(BasketPricesInfo?.Coupon?.Value);
-        set => SetBasketOrderValue(field: BasketPricesInfo!.Coupon, value: value, procedureCallValue: value);
+        get => BasketPricesInfo?.Coupon?.Value;
+        set => SetBasketOrderValue(field: BasketPricesInfo!.Coupon, value: value, procedureCallValue: value?.Value);
     }
-    private string WarrantyCostOptionsValue
+    private BasketValueDto? WarrantyCostOptionsValue
     {
-        get => FieldUtility.NullOrWhiteSpaceHelper(BasketPricesInfo?.WarrantyCostOption?.Value);
-        //{
-        //    var value = BasketPricesInfo?.WarrantyCostOption?.Value;
-        //    return FieldUtility.NullOrWhiteSpaceHelper(
-        //        WarrantyCostOptions?.FirstOrDefault(item => item?.Value == value)
-        //        ?.Description);
-        //}
-        set => SetBasketOrderValue(field: BasketPricesInfo!.WarrantyCostOption, value: value, procedureCallValue: value);
+        get => BasketPricesInfo?.WarrantyCostOption?.Value;
+        set => SetBasketOrderValue(field: BasketPricesInfo!.WarrantyCostOption, value: value, procedureCallValue: value?.Value);
     }
-    private string ShippingCostOptionValue
+    private BasketValueDto? ShippingCostOptionValue
     {
-        get => FieldUtility.NullOrWhiteSpaceHelper(BasketPricesInfo?.ShippingCostOption?.Value);
-        set => SetBasketOrderValue(field: BasketPricesInfo!.ShippingCostOption, value: value, procedureCallValue: value);
+        get => BasketPricesInfo?.ShippingCostOption?.Value;
+        set => SetBasketOrderValue(field: BasketPricesInfo!.ShippingCostOption, value: value, procedureCallValue: value?.Value);
     }
     private decimal? ShippingCostAmountValue
     {

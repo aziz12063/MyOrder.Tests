@@ -9,15 +9,13 @@ using MyOrder.Infrastructure.Resilience;
 using MyOrder.Services;
 using Refit;
 using Serilog;
-using Serilog.Exceptions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure Logging
 builder.Logging.ClearProviders();
-builder.Host.UseSerilog((hostingContext, loggerConfiguration) => loggerConfiguration
-    .ReadFrom.Configuration(hostingContext.Configuration)
-    .Enrich.WithExceptionDetails());
+builder.Host.UseSerilog((hostingContext, loggerConfiguration) =>
+    loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration));
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
@@ -31,12 +29,15 @@ builder.Services.AddScoped<IUrlService, UrlService>();
 // Api Client, and Resilience Policies
 builder.Services.AddHttpContextAccessor();
 if (builder.Environment.IsDevelopment())
-
     builder.Services.AddTransient<UserNameHandlerDev>();
 else
     builder.Services.AddTransient<UserNameHandler>();
 
-var httpBuilder = builder.Services.AddRefitClient<IBasketApiClient>()
+var httpBuilder = builder.Services.AddRefitClient<IBasketApiClient>(new RefitSettings
+{
+    ContentSerializer = new NewtonsoftJsonContentSerializer()
+
+})
     .ConfigureHttpClient(c => c.BaseAddress = new Uri("http://aliasiisq:8080")) // Refactor to use https only
     .AddPolicyHandler(ResiliencePolicies.GetRetryPolicy())
     .AddPolicyHandler(ResiliencePolicies.GetCircuitBreakerPolicy());

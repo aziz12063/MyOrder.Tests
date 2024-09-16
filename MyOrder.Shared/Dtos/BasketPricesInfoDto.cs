@@ -6,16 +6,16 @@ public class BasketPricesInfoDto
     public string? PanelLabel { get; set; }
 
     // Column 1
-    public Field<string?>? Coupon { get; set; }
+    public Field<BasketValueDto?>? Coupon { get; set; }
     public Field<decimal?>? FreeShippingAmountThreshold { get; set; }
     public Field<decimal?>? GiftAmountThreshold { get; set; }
     public Field<string?>? ProductsInfo { get; set; }
 
     // Column 2
     public Field<decimal?>? ProductsNetAmount { get; set; }
-    public Field<string?>? WarrantyCostOption { get; set; }
-    public Field<decimal?>? WarrantyCostAmount { get; set; }
-    public Field<string?>? ShippingCostOption { get; set; }
+    public Field<BasketValueDto?>? WarrantyCostOption { get; set; }
+    public Field<string?>? WarrantyCostAmount { get; set; }
+    public Field<BasketValueDto?>? ShippingCostOption { get; set; }
     public Field<decimal?>? ShippingCostAmount { get; set; }
     public Field<string?>? LogisticInfo { get; set; }
 

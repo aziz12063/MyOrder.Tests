@@ -6,13 +6,13 @@ namespace MyOrder.Infrastructure.Repositories;
 public interface IBasketRepository
 {
     Task<BasketGeneralInfoDto> GetBasketGeneralInfoAsync(string basketId);
-    Task<BasketNotificationDto> GetNotificationsAsync(string basketId);
+    Task<List<BasketNotificationDto?>?> GetNotificationsAsync(string basketId);
 
     //=======================================================================================================
     //Actions Section
     //=======================================================================================================
     Task<ProcedureCallResponseDto> PostProcedureCallAsync(string basketId, List<string> procedureCall);
-    Task<NewBasketResponseDto> PostNewBasketAsync(NewBasketRequestDto newBasketRequest);
+    Task<NewBasketResponseDto> PostNewBasketAsync(Dictionary<string, string> newBasketRequest);
 
     //=======================================================================================================
     //Order Info Section
@@ -20,7 +20,7 @@ public interface IBasketRepository
     Task<BasketOrderInfoDto> GetBasketOrderInfoAsync(string basketId);
     Task<List<ContactDto?>> GetOrderByContactsAsync(string basketId);
     Task<List<BasketValueDto?>> GetCustomerTagsAsync(string basketId);
-    Task<List<SalesOriginDto?>> GetSalesOriginsAsync(string basketId);
+    Task<List<BasketValueDto?>> GetSalesOriginsAsync(string basketId);
     Task<List<BasketValueDto?>> GetWebOriginsAsync(string basketId);
     Task<List<BasketValueDto?>> GetSalesPoolAsync(string basketId);
 
@@ -53,7 +53,7 @@ public interface IBasketRepository
     Task<List<BasketValueDto?>> GetWarrantyCostOptionsAsync(string basketId);
     Task<List<BasketValueDto?>> GetShippingCostOptionsAsync(string basketId);
 
-    
+
 
     //=======================================================================================================
     //Lines

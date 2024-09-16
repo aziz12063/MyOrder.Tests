@@ -6,6 +6,8 @@ public class BasketValueDto
     public string? Description { get; set; }
     public string? Value { get; set; }
 
-    public override string ToString() => Description ?? string.Empty;
+    public override string ToString() => Description
+        ?? Value
+        ?? string.Empty;
 }
 

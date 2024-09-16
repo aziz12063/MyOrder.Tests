@@ -36,10 +36,12 @@
 @code {
     private const string OUTLINED_CSS_CLASS = "outlined-generic-select";
 
+    private string? _tooltipText;
+
     [Parameter, EditorRequired] public List<T>? Items { get; set; }
     [Parameter] public Variant Variant { get; set; } = 0;
     [Parameter] public string? Class { get; set; }
-
+    
     protected override void OnInitialized()
     {
         base.OnInitialized();
@@ -51,15 +53,9 @@
             else
                 Class += OUTLINED_CSS_CLASS;
         }
-    }
 
-    protected override void OnParametersSet()
-    {
-        base.OnParametersSet();
-
-        if (BoundValue is BasketValueDto basketValueDto)
-            _tooltipText = "test";
+        _tooltipText = Field?.Description ?? Field?.Name;
     }
-    private string? _tooltipText;
+    
 
 }

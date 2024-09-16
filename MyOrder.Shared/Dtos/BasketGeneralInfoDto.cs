@@ -2,7 +2,8 @@
 {
     public class BasketGeneralInfoDto
     {
-        public BasketCompany Company { get; set; }
+        public string? PageTitle { get; set; }
+        public BasketCompany? Company { get; set; }
         public string? OrderType { get; set; }
         public string? BasketId { get; set; }
         public string? OrderId { get; set; }
@@ -13,10 +14,7 @@
 
     public class BasketCompany
     {
-        // N° de compte
         public string? GroupId { get; set; }
-
-        // Raison sociale
         public string? Lang { get; set; }
     }
 }

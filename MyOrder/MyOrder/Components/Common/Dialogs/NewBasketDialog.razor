@@ -56,14 +56,12 @@
         if (position == 1)
         {
             dispatcher.Dispatch(
-                    new CreateBasketAction(new NewBasketRequestDto
-                        { AccountId = this.AccountId }));
+                    new CreateBasketAction(new Dictionary<string, string>() { { "AccountId", this.AccountId } })); // Refactor this
         }
         if (position == 2)
         {
             dispatcher.Dispatch(
-                    new CreateBasketAction(new NewBasketRequestDto
-                        { ContactId = this.ContactId }));
+                    new CreateBasketAction(new Dictionary<string, string>() { { "ContactId", this.ContactId } })); // Refactor this
         }
 
         MudDialog.Close(DialogResult.Ok(true));
