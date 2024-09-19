@@ -13,7 +13,7 @@
                   InnerPadding="false"
                   Class="outlined-display-field"
                   Label="@Field?.Name">
-            <MudText Typo="Typo.body2">
+            <MudText Typo="Typo.body2" >
                 @if (Field!.Value is List<string> stringList && stringList is { Count: > 0 })
                 {
                     for (var i = 0; i < stringList.Count - 2; i++)

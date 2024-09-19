@@ -20,7 +20,6 @@
                       RequiredError="Ce champ est obligatoire"
                       ReadOnly="ReadOnly ?? true"
                       Disabled="ReadOnly ?? true"
-                      Lines="Lines"
                       @bind-Value="BoundValue"
                       @bind-Value:after="BoundValueChangedHandler" />
     </MudTooltip>
@@ -29,7 +28,6 @@
 @code {
     [Parameter] public string? Format { get; set; }
     [Parameter] public CultureInfo? Culture { get; set; }
-    [Parameter] public int Lines { get; set; }
     private Variant variant;
     private string cssClass = string.Empty;
     private bool shrinkLabel = false;

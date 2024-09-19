@@ -49,7 +49,7 @@ public class BasketLineDto
     public Field<string?>? SupplyFamily { get; set; }  //ONLY FOR D
     public Field<string?>? ItemManager { get; set; }  //ONLY FOR D
     public Field<string?>? TransportMode { get; set; }  //ONLY FOR D
-    public Field<string?>? PurchaseId { get; set; }  // CAN BE HIDDEN
+    public Field<string?>? PurchaseId { get; set; }  // COULD BE HIDDEN
 
     // =============================================================================================================
     // Prices quantities

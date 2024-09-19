@@ -7,6 +7,7 @@ using MyOrder.Shared.Dtos.Lines;
 using MyOrder.Shared.Dtos.SharedComponents;
 using MyOrder.Store.LinesUseCase;
 using MyOrder.Utils;
+using static MudBlazor.CategoryTypes;
 
 
 namespace MyOrder.Components.Childs.Lines
@@ -15,9 +16,8 @@ namespace MyOrder.Components.Childs.Lines
     {
         [Inject] IDialogService DialogService { get; set; }
         private BasketOrderLinesDto? BasketOrderLinesDto { get; set; }
-        private List<BasketValueDto?>? UpdateReasons { get; set; }
-        private List<BasketValueDto?>? LogisticFlows { get; set; }
-        private BasketLineDto? basketLineDto { get; set; }
+        protected List<BasketValueDto?>? UpdateReasons { get; set; }
+        protected List<BasketValueDto?>? LogisticFlows { get; set; }
         private List<BasketLineDto>? selectedBasketLineDto { get; set; }
         private bool IsLineNbrEditable { get; set; }
         private bool IsItemIdEditable { get; set; }
@@ -28,7 +28,7 @@ namespace MyOrder.Components.Childs.Lines
         private bool IsDiscountTypeEditable { get; set; }
         private bool IsLineAmountEditable { get; set; }
         private bool IsDiscountRateEditable { get; set; }
-        int? selectedLine;
+        
 
 
         protected override void CacheNewFields()
@@ -60,24 +60,10 @@ namespace MyOrder.Components.Childs.Lines
 
         MudDataGrid<BasketLineDto> dataGrid = new();
 
-
-
-        private string NullableChek(BasketLineDto basketLineDto, Field<string> field, string value)
-        {
-            if (basketLineDto != null && field != null)
-                return value;
-
-            return string.Empty;
-        }
-
-
-
-        private void OnValueChange<T>(T value, BasketLineDto? row, Field<T?>? field, int? lineNbr)
+        protected void OnValueChange<T>(T value, Field<T?>? field)
         {
 #warning "Logic for test purpose only. Do refactor."
-            if (lineNbr != null && lineNbr == row?.LineNum?.Value)
-            {
-                field!.Value = value;
+             Logger.LogWarning($"the updated  value is {value} and the old value is {field.Value}");
 
                 string? pcdCallValue;
                 if (value is BasketValueDto basketValueDto)
@@ -89,9 +75,8 @@ namespace MyOrder.Components.Childs.Lines
                     pcdCallValue = value?.ToString();
                 }
                 SetBasketOrderValue(field: field, value: value, procedureCallValue: pcdCallValue);
-            }
         }
-        void HandleIntervalElapsed(string debouncedText)
+        protected void HandleIntervalElapsed(string debouncedText)
         {
             //int value = Int32.Parse(debouncedText);
             //CheckQuantityValue(value);
@@ -115,29 +100,7 @@ namespace MyOrder.Components.Childs.Lines
             Logger.LogInformation($"CommittedItemChanges is called for line nbr {item.LineNum?.Value}");
 
         }
-        private string RowStyleFunc(BasketPriceLine x, int index, BasketLineDto item)
-        {
-
-            string style = "";
-            int quantite = item?.SalesQuantity?.Value ?? 0;
-            if (x.Quantity == 25 && quantite < 100)
-                style = "background-color:#8CED8C";
-
-            else if (x.Quantity == 100 && quantite >= 100 && quantite < 200)
-                style = "background-color:#8CED8C";
-
-            else if (x.Quantity == 200 && quantite >= 200 && quantite < 400)
-                style += "background-color:#8CED8C";
-
-            else if (x.Quantity == 400 && quantite >= 400 && quantite < 800)
-                style += "background-color:#8CED8C";
-
-            if (x.Quantity > 500 && quantite >= 800)
-                style += "background-color:#8CED8C";
-
-            return style;
-        }
-
+        
         void HandleRowDoubleClick(MouseEventArgs args, BasketLineDto item)
         {
 
@@ -146,22 +109,9 @@ namespace MyOrder.Components.Childs.Lines
         }
 
 
-        void HandlePopOverOnClick(int? linNbr)
-        {
-            selectedLine = linNbr;
-        }
-        bool OpenPopoverChecker(int? linNbr)
-        {
-            Logger.LogInformation($"parameter is: {linNbr}");
+        
 
-
-            if (selectedLine == linNbr)
-                return true;
-
-            return false;
-        }
-
-        private bool DelivaryDateReadOnly(BasketLineDto basketLineDto)
+        protected bool DelivaryDateReadOnly(BasketLineDto basketLineDto)
         {
             if (!FieldUtility.IsReadOnly(basketLineDto.DeliveryDate) && !FieldUtility.IsReadOnly(basketLineDto.IsCustomDeliveryDate) && basketLineDto.IsCustomDeliveryDate?.Value == true)
                 return false;
@@ -169,22 +119,6 @@ namespace MyOrder.Components.Childs.Lines
         }
 
 
-        void RowClicked(DataGridRowClickEventArgs<BasketLineDto> args)
-        {
-            basketLineDto = args.Item;
-            Logger.LogInformation("row clicked");
-        }
-
-
-
-        string BackgroundColor(BasketLineDto arg, int index) // it's called twice i don't know why
-        {
-            if (arg.LineNum?.Value == basketLineDto?.LineNum?.Value)
-            {
-                return "background-color:#5499c7";
-            }
-            return "";
-        }
 
         // is called when chekbox a row
         void SelectedItemsChanged(HashSet<BasketLineDto> items)

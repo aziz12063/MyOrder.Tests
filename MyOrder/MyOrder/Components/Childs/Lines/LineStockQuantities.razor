@@ -1,0 +1,111 @@
+﻿@inherits MyOrder.Components.Childs.Lines.Lines
+
+<MudStack>
+    <MudGrid>
+        <!--1-->
+        <MudItem xs="6">
+            <MudStack Spacing="1">
+                <!--Flux Logistique-->
+                @if (BasketLine?.LogisticFlow != null)
+                {
+                    <GenericMudSelect Variant="Variant.Outlined"
+                                      @bind-BoundValue="LogisticFlowValue"
+                                      Field="BasketLine.LogisticFlow"
+                                      Items="LogisticFlows" />
+                }
+                else
+                {
+                    var field = new Shared.Dtos.SharedComponents.Field<BasketValueDto>();
+                    <GenericMudSelect Variant="Variant.Outlined"
+                                      @bind-BoundValue="field.Value"
+                                      Field="BasketLine?.LogisticFlow"
+                                      Items="LogisticFlows" />
+                }
+                <!--Livré maintenant-->
+                <DisplayField Field="@BasketLine?.PhysicalAvailableQuantity" />
+
+                <!--Quantité/palette-->
+                <DisplayField Field="@BasketLine?.PaletteQuantity" />
+
+                <!--Type d'article-->
+                <DisplayField Field="@BasketLine?.ItemType" />
+
+            </MudStack>
+        </MudItem>
+        <!--2-->
+        <MudItem xs="6">
+            <MudStack Spacing="1">
+                <!--Entrepot-->
+                <GenericMudSelect Variant="Variant.Outlined"
+                                  T="string"
+                                  @bind-BoundValue="InventLocationIdValue"
+                                  Field="BasketLine?.InventLocationId"
+                                  Items="UpdateReasons?.Select(item => item?.Value).ToList()" />
+
+                <!--a livrer plus tard-->
+                <DisplayField Field="@BasketLine?.OnOrderQuantity" />
+
+                <!--Diff Palette-->
+                <DisplayField Field="@BasketLine?.QuantityAtPaletteThreshold" />
+
+                <MudGrid>
+                    <!--Date de liv manuelle-->
+                    <MudItem Class="align-self-center">
+                        <MudCheckBox @bind-Value="IsCustomDeliveryDateValue">
+                        </MudCheckBox>
+                    </MudItem>
+                    <!--Date de liv-->
+                    <MudItem xs="10">
+                        <GenericTextField Field="@BasketLine!.DeliveryDate"
+                                          ReadOnly="@DelivaryDateReadOnly(BasketLine)"
+                                          @bind-BoundValue="DeliveryDateValue" />
+                    </MudItem>
+                </MudGrid>
+            </MudStack>
+        </MudItem>
+    </MudGrid>
+
+    <MudGrid>
+        <!--1: Disponible-->
+        <MudItem xs="6">
+            <MudStack Spacing="1">
+                <!--Disponible-->
+                <MudText>Disponible </MudText>
+
+                <!--Stock total-->
+                <DisplayField Field="@BasketLine?.ItemPhysicalInventQuantity" />
+
+                <!--Stock reservé-->
+                <DisplayField Field="@BasketLine?.ItemReservPhysicalQuantity" />
+
+                <!--Stock Dispo-->
+                <DisplayField Field="@BasketLine?.ItemPhysicalAvailableQuantity" />
+
+                <!--Famille d'appro-->
+                <DisplayField Field="@BasketLine?.SupplyFamily" />
+
+                <!--Mode de transport-->
+                <DisplayField Field="@BasketLine?.TransportMode" />
+            </MudStack>
+        </MudItem>
+
+        <!--2: En attente-->
+        <MudItem xs="6">
+            <MudStack Spacing="1">
+                <MudText> En attente </MudText>
+                <!--Commandé total-->
+                <DisplayField Field="@BasketLine?.ItemOrderedQuantity" />
+
+                <!--en commande-->
+                <DisplayField Field="@BasketLine?.ItemOnOrderQuantity" />
+
+                <!--Commandé Dispo-->
+                <DisplayField Field="@BasketLine?.ItemOrderedAvailableQuantity" />
+
+                <!--Gestionnaire-->
+                <DisplayField Field="@BasketLine?.ItemManager" />
+            </MudStack>
+        </MudItem>
+    </MudGrid>
+</MudStack>
+
