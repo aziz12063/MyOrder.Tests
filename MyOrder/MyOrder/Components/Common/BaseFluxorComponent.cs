@@ -71,6 +71,7 @@ public abstract class BaseFluxorComponent<TState, TAction> : ComponentBase, IDis
         if (EqualityComparer<T>.Default.Equals(field.Value, value))
         {
             Logger.LogWarning("Trying to update the field with the same value at {StackTrace}", LogUtility.GetStackTrace());
+            // Logger.LogWarning($"the updated  value is {value} and the old value is {field.Value}");
             return;
         }
 
@@ -90,8 +91,7 @@ public abstract class BaseFluxorComponent<TState, TAction> : ComponentBase, IDis
     }
 
     // This method should only be called from SetBasketOrderValue, make private and remove the Obsolete attribute once the method is no longer used
-    [Obsolete("Use SetBasketOrderValue instead", false)]
-    protected void UpdateProcedureCall(string? newValue, List<string?>? procedureCall)
+    private void UpdateProcedureCall(string? newValue, List<string?>? procedureCall)
     {
         if (procedureCall is null || procedureCall.Count < 1)
         {
@@ -99,15 +99,15 @@ public abstract class BaseFluxorComponent<TState, TAction> : ComponentBase, IDis
         }
 
         procedureCall[^1] = newValue ?? string.Empty; // Update with the new value or empty string if null
-        OnPropertyUpdatedHandler(procedureCall);
-    }
 
-    private void OnPropertyUpdatedHandler(List<string?> procedureCall)
-    {
-        if (procedureCall.Any(item => item == null))
+        bool pcdCallContainsNull = procedureCall
+            .Take(procedureCall.Count - 2)
+            .Any(item => item == null);
+
+        if (pcdCallContainsNull)
             Logger.LogWarning("ProcedureCall contains a null item.");
 
-        Logger.LogInformation("OnPropertyUpdatedHandler called for {procedure}", procedureCall);
+        Logger.LogInformation("Dispatching procedure call:\n{procedure}", procedureCall);
 
         // ToList() to Create a copy of the ProcedureCall list ensuring it's not modified in the process
         Dispatcher.Dispatch(new PostProcedureCallAction(BasketId, procedureCall.ToList()));

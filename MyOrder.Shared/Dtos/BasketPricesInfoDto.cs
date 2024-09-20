@@ -14,7 +14,7 @@ public class BasketPricesInfoDto
     // Column 2
     public Field<decimal?>? ProductsNetAmount { get; set; }
     public Field<BasketValueDto?>? WarrantyCostOption { get; set; }
-    public Field<string?>? WarrantyCostAmount { get; set; }
+    public Field<decimal?>? WarrantyCostAmount { get; set; }
     public Field<BasketValueDto?>? ShippingCostOption { get; set; }
     public Field<decimal?>? ShippingCostAmount { get; set; }
     public Field<string?>? LogisticInfo { get; set; }

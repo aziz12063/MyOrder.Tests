@@ -26,8 +26,7 @@
                  SelectedItemsChanged="@SelectedItemsChanged"
                  EditMode="@DataGridEditMode.Cell"
                  ReadOnly="false"
-                 CommittedItemChanges="@CommittedItemChanges"
-                 RowClick="RowClicked">
+                 CommittedItemChanges="@CommittedItemChanges">
         <!--Buttons-->
         <ToolBarContent>
             <MudStack Row="true" Spacing="1">
@@ -70,7 +69,7 @@
                 <CellTemplate>
                     <MudTextField T="int?"
                                   Value="@context.Item.LineNum?.Value"
-                                  ValueChanged="(x => OnValueChange(x, context.Item, context?.Item?.LineNum, context?.Item?.LineNum?.Value))" />
+                                  ValueChanged="(x => OnValueChange(x, context?.Item?.LineNum))" />
                 </CellTemplate>
             </TemplateColumn>
 
@@ -124,7 +123,7 @@
                                      Required="true" RequiredError="Quantité is required!"
                                      Validation="@(new Func<int?, string?>(CheckQuantityValue))"
                                      Value="@context.Item.SalesQuantity?.Value"
-                                     ValueChanged="(x => OnValueChange(x, context.Item, context.Item.SalesQuantity, context.Item.LineNum?.Value))" />
+                                     ValueChanged="(x => OnValueChange(x,context.Item.SalesQuantity))" />
                 </CellTemplate>
             </TemplateColumn>
 
@@ -137,7 +136,7 @@
                                   Format="0.##' %'"
                                   ReadOnly="@FieldUtility.IsReadOnly(BasketOrderLinesDto?.lines?[0]?.DiscountRate)"
                                   Value="@context.Item.DiscountRate?.Value"
-                                  ValueChanged="(x => OnValueChange(x, context.Item, context.Item.DiscountRate, context.Item.LineNum?.Value))" />
+                                  ValueChanged="(x => OnValueChange(x, context.Item.DiscountRate))" />
                 </CellTemplate>
             </TemplateColumn>
 
@@ -150,7 +149,7 @@
                                   Format="0.##' %'"
                                   ReadOnly="@FieldUtility.IsReadOnly(BasketOrderLinesDto?.lines?[0]?.DiscountRate)"
                                   Value="@context.Item.DiscountRate?.Value"
-                                  ValueChanged="(x => OnValueChange(x, context.Item, context.Item.DiscountRate, context.Item.LineNum?.Value))" />
+                                  ValueChanged="(x => OnValueChange(x, context.Item.DiscountRate))" />
                 </CellTemplate>
             </TemplateColumn>
 
@@ -162,7 +161,7 @@
                     <MudTextField T="decimal?"
                                   ReadOnly="@FieldUtility.IsReadOnly(BasketOrderLinesDto?.lines?[0]?.SalesPrice)"
                                   Value="@context.Item.SalesPrice?.Value"
-                                  ValueChanged="(x => OnValueChange(x, context.Item, context.Item.SalesPrice, context.Item.LineNum?.Value))"
+                                  ValueChanged="(x => OnValueChange(x, context.Item.SalesPrice))"
                                   Format="#,0.00 €" />
                 </CellTemplate>
             </TemplateColumn>
@@ -185,422 +184,23 @@
 
         <ChildRowContent>
             <MudGrid Spacing="3" Justify="Justify.SpaceAround">
-                <!--Column1-->
-                <MudItem Class="pa-3" xs="12" sm="3">
-                    <MudStack Spacing="6" Justify="Justify.SpaceBetween" Style="height: inherit;">
-                        <MudItem>
-                            <MudGrid>
-                                <MudItem xs="6">
-                                    <MudStack Spacing="1">
+                @if (context.Item is BasketLineDto basketLineDto)
+                {
+                    <!--S1-->
+                    <MudItem Class="pa-3" xs="12" sm="3">
+                        <LineArticleDetails BasketLine="@basketLineDto" UpdateReasons="UpdateReasons" SetBasketOrderValue="OnSetHandler" />
+                    </MudItem>
 
-                                        <!--Code article-->
-                                        <MudItem xs="12">
+                    <!--S2-->
+                    <MudItem Class="pa-3" xs="12" sm="5">
+                        <LineStockQuantities BasketLine="@basketLineDto" SetBasketOrderValue="OnSetHandler" />
+                    </MudItem>
 
-                                            <MudTextField Margin="Margin.Dense" @onfocus="(() => HandlePopOverOnClick(context.Item.LineNum?.Value))"
-                                                          T="string"
-                                                          Typo="Typo.body2"
-                                                          Label="@context.Item.ItemId?.Name"
-                                                          Style="font-size: 13px; height:30px;"
-                                                          Variant="Variant.Outlined"
-                                                          Required="@FieldUtility.IsRequired(context.Item.ItemId)"
-                                                          ReadOnly="true"
-                                                          Value="@context.Item.ItemId?.Value">
-                                            </MudTextField>
-                                            <MudPopover Open="@OpenPopoverChecker(context.Item.LineNum?.Value)" OverflowBehavior="OverflowBehavior.FlipAlways" AnchorOrigin="Origin.TopCenter" TransformOrigin="Origin.BottomCenter" Paper="false">
-                                                <MudPaper Outlined="true" Class="px-4 py-8">
-                                                    <MudText>MyData</MudText>
-                                                    <MudButton OnClick="@(() => HandlePopOverOnClick(-1))" Class="ml-auto mr-n3 mb-1" Color="Color.Error">Close</MudButton>
-                                                </MudPaper>
-                                            </MudPopover>
-
-                                        </MudItem>
-                                        <!--Motif Modif-->
-                                        <GenericMudSelect Variant="Variant.Outlined"
-                                                          T="BasketValueDto"
-                                                          @bind-BoundValue="context.Item.UpdateReason!.Value"
-                                                          @bind-BoundValue:after="(() =>
-                                                                    OnValueChange(context.Item.UpdateReason.Value,
-                                                                    context.Item,
-                                                                    context.Item.UpdateReason,
-                                                                    context.Item.LineNum?.Value))"
-                                                          Field="context.Item.UpdateReason"
-                                                          Items="UpdateReasons" />
-
-                                        <!--Vendu par-->
-                                        <MudTextField Margin="Margin.Dense"
-                                                      T="string"
-                                                      Typo="Typo.body2"
-                                                      Label="not implemented"
-                                                      Style="font-size: 13px; height:30px;"
-                                                      Variant="Variant.Outlined"
-                                                      ReadOnly="true"
-                                                      Value="string.Empty">
-                                        </MudTextField>
-
-                                    </MudStack>
-                                </MudItem>
-                                <MudItem xs="6">
-                                    <MudStack Spacing="1">
-                                        <!--N de ligne-->
-                                        <MudItem>
-                                            <GenericTextField Field="@context.Item.LineNum"
-                                                              @bind-BoundValue="context.Item.LineNum!.Value"
-                                                              @bind-BoundValue:after="(() =>
-                                                                    OnValueChange(context.Item.LineNum.Value,
-                                                                    context.Item,
-                                                                    context.Item.LineNum,
-                                                                    context.Item.LineNum?.Value))" />
-                                        </MudItem>
-
-                                        <!--Quantité initiale-->
-                                        <DisplayField Field="@context.Item.InitialSalesQuantity" />
-
-                                        <!--Taux de TVA-->
-                                        <DisplayField Field="@context.Item.VatRate" />
-                                    </MudStack>
-                                </MudItem>
-                            </MudGrid>
-
-                            <MudItem xs="12">
-                                <!--Description-->
-                                <DisplayField Field="@context.Item.Name" />
-                            </MudItem>
-                        </MudItem>
-                        <MudStack Spacing="2">
-                            <!--Notes de ligne-->
-                            <MudGrid>
-                                <MudItem xs="10">
-                                    <DisplayField Field="@context.Item.Note" />
-                                </MudItem>
-                                <!--icons-->
-                                <MudItem Class="align-self-center">
-                                    <MudIcon Icon="@Icons.Material.Filled.Done" Color="Color.Primary">
-                                    </MudIcon>
-                                </MudItem>
-                            </MudGrid>
-
-                            <!--Information produit-->
-                            <div>
-                                @*  <GenericTextField Field="@context.Item.ProductInfo"
-                                lines="3"
-                                @bind-BoundValue="context.Item.ProductInfo!.Value"
-                                @bind-BoundValue:after="(() =>
-                                OnValueChange(context.Item.ProductInfo.Value,
-                                context.Item,
-                                context.Item.ProductInfo,
-                                context.Item.LineNum?.Value))" /> *@
-                                <MudTextField Margin="Margin.Dense"
-                                              T="string"
-                                              Lines="3"
-                                              Typo="Typo.body2"
-                                              Label="@context.Item.ProductInfo?.Name"
-                                              Style="font-size: 13px;"
-                                              Variant="Variant.Outlined"
-                                              Required="@FieldUtility.IsRequired(context.Item.ProductInfo)"
-                                              ReadOnly="@FieldUtility.IsReadOnly(context.Item.ProductInfo)"
-                                              Disabled="@FieldUtility.IsHidden(context.Item.ProductInfo)"
-                                              Value="@context.Item.ProductInfo?.Value"
-                                              ValueChanged="(x => OnValueChange(x, context.Item, context.Item.ProductInfo, context.Item.LineNum?.Value))">
-                                </MudTextField>
-                            </div>
-                        </MudStack>
-                    </MudStack>
-                </MudItem>
-
-                <!--Column2-->
-                <MudItem Class="pa-3" xs="12" sm="5">
-                    <MudStack>
-                        <MudGrid>
-                            <!--1-->
-                            <MudItem xs="6">
-                                <MudStack Spacing="1">
-                                    <!--Flux Logistique-->
-                                    @if (context.Item.LogisticFlow != null)
-                                    {
-                                        <GenericMudSelect Variant="Variant.Outlined"
-                                                          @bind-BoundValue=" context.Item.LogisticFlow.Value"
-                                                          @bind-BoundValue:after="() =>
-                                                                    OnValueChange(context?.Item?.LogisticFlow?.Value,
-                                                                    context?.Item,
-                                                                    context?.Item?.LogisticFlow,
-                                                                    context?.Item?.LineNum?.Value)"
-                                                          Field="context.Item.LogisticFlow"
-                                                          Items="LogisticFlows" />
-                                    }
-                                    else
-                                    {
-                                        var field = new Shared.Dtos.SharedComponents.Field<BasketValueDto>();
-                                        <GenericMudSelect Variant="Variant.Outlined"
-                                                          @bind-BoundValue="field.Value"
-                                                          Field="context.Item.LogisticFlow"
-                                                          Items="LogisticFlows" />
-                                    }
-                                    <!--Livré maintenant-->
-                                    <DisplayField Field="@context.Item.PhysicalAvailableQuantity" />
-
-                                    <!--Quantité/palette-->
-                                    <DisplayField Field="@context.Item.PaletteQuantity" />
-
-                                    <!--Type d'article-->
-                                    <DisplayField Field="@context.Item.ItemType" />
-
-                                </MudStack>
-                            </MudItem>
-                            <!--2-->
-                            <MudItem xs="6">
-                                <MudStack Spacing="1">
-                                    <!--Entrepot-->
-                                    <GenericMudSelect Variant="Variant.Outlined"
-                                                      T="string"
-                                                      @bind-BoundValue="context.Item.InventLocationId!.Value"
-                                                      @bind-BoundValue:after="(() =>
-                                                                    OnValueChange(context.Item.LogisticFlow?.Value,
-                                                                    context.Item,
-                                                                    context.Item.LogisticFlow,
-                                                                    context.Item.LineNum?.Value))"
-                                                      Field="context.Item.InventLocationId"
-                                                      Items="UpdateReasons?.Select(item => item?.Value).ToList()" />
-
-                                    <!--a livrer plus tard-->
-                                    <DisplayField Field="@context.Item.OnOrderQuantity" />
-
-                                    <!--Diff Palette-->
-                                    <DisplayField Field="@context.Item.QuantityAtPaletteThreshold" />
-
-                                    <MudGrid>
-                                        <!--Date de liv manuelle-->
-                                        <MudItem Class="align-self-center">
-                                            <MudCheckBox Value="context?.Item?.IsCustomDeliveryDate?.Value"
-                                                         T="bool?"
-                                                         ValueChanged="(x => OnValueChange(x, context?.Item, context?.Item.IsCustomDeliveryDate, context?.Item?.LineNum?.Value))">
-                                            </MudCheckBox>
-                                        </MudItem>
-                                        <!--Date de liv-->
-                                        <MudItem xs="10">
-                                            <MudTextField Margin="Margin.Dense"
-                                                          T="string"
-                                                          Typo="Typo.body2"
-                                                          Label="@context.Item.DeliveryDate?.Name"
-                                                          Style="font-size: 13px; height:30px;"
-                                                          Variant="Variant.Outlined"
-                                                          Required="@FieldUtility.IsRequired(context.Item.DeliveryDate)"
-                                                          ReadOnly="@DelivaryDateReadOnly(context.Item)"
-                                                          Disabled="@FieldUtility.IsHidden(context.Item.DeliveryDate)"
-                                                          Value="@context.Item.DeliveryDate?.Value"
-                                                          ValueChanged="(x => OnValueChange(x, context.Item, context.Item.DeliveryDate, context.Item.LineNum?.Value))">
-                                            </MudTextField>
-                                        </MudItem>
-                                    </MudGrid>
-                                </MudStack>
-                            </MudItem>
-                        </MudGrid>
-
-                        <MudGrid>
-                            <!--1: Disponible-->
-                            <MudItem xs="6">
-                                <MudStack Spacing="1">
-                                    <!--Disponible-->
-                                    <MudText>Disponible </MudText>
-                                    <!--Stock total-->
-                                    <MudTextField Margin="Margin.Dense"
-                                                  T="int?"
-                                                  Typo="Typo.body2"
-                                                  Label="@context.Item.ItemPhysicalInventQuantity?.Name"
-                                                  Style="font-size: 13px; height:30px;"
-                                                  Variant="Variant.Outlined"
-                                                  ReadOnly="true"
-                                                  Value="@context.Item.ItemPhysicalInventQuantity?.Value">
-                                    </MudTextField>
-
-                                    <!--Stock reservé-->
-                                    <MudTextField Margin="Margin.Dense"
-                                                  T="int?"
-                                                  Typo="Typo.body2"
-                                                  Label="@context.Item.ItemReservPhysicalQuantity?.Name"
-                                                  Style="font-size: 13px; height:30px;"
-                                                  Variant="Variant.Outlined"
-                                                  ReadOnly="true"
-                                                  Value="@context.Item.ItemReservPhysicalQuantity?.Value">
-                                    </MudTextField>
-
-                                    <!--Stock Dispo-->
-                                    <MudTextField Margin="Margin.Dense"
-                                                  T="int?"
-                                                  Typo="Typo.body2"
-                                                  Label="@context.Item.ItemPhysicalAvailableQuantity?.Name"
-                                                  Style="font-size: 13px; height:30px;"
-                                                  Variant="Variant.Outlined"
-                                                  ReadOnly="true"
-                                                  Value="@context.Item.ItemPhysicalAvailableQuantity?.Value">
-                                    </MudTextField>
-
-                                    <!--Famille d'appro-->
-                                    <MudTextField Margin="Margin.Dense"
-                                                  T="string"
-                                                  Typo="Typo.body2"
-                                                  Label="@context.Item.SupplyFamily?.Name"
-                                                  Style="font-size: 13px; height:30px;"
-                                                  Variant="Variant.Outlined"
-                                                  ReadOnly="true"
-                                                  Value="@context.Item.SupplyFamily?.Value">
-                                    </MudTextField>
-
-                                    <!--Mode de transport-->
-                                    <MudTextField Margin="Margin.Dense"
-                                                  T="string"
-                                                  Typo="Typo.body2"
-                                                  Label="@context.Item.TransportMode?.Name"
-                                                  Style="font-size: 13px; height:30px;"
-                                                  Variant="Variant.Outlined"
-                                                  ReadOnly="true"
-                                                  Value="@context.Item.TransportMode?.Value">
-                                    </MudTextField>
-                                </MudStack>
-                            </MudItem>
-
-                            <!--2: En attente-->
-                            <MudItem xs="6">
-                                <MudStack Spacing="1">
-                                    <MudText> En attente </MudText>
-                                    <!--Commandé total-->
-                                    <MudTextField Margin="Margin.Dense"
-                                                  T="int?"
-                                                  Typo="Typo.body2"
-                                                  Label="@context.Item.ItemOrderedQuantity?.Name"
-                                                  Style="font-size: 13px; height:30px;"
-                                                  Variant="Variant.Outlined"
-                                                  ReadOnly="true"
-                                                  Value="@context.Item.ItemOrderedQuantity?.Value">
-                                    </MudTextField>
-
-                                    <!--en commande-->
-                                    <MudTextField Margin="Margin.Dense"
-                                                  T="int?"
-                                                  Typo="Typo.body2"
-                                                  Label="@context.Item.ItemOnOrderQuantity?.Name"
-                                                  Style="font-size: 13px; height:30px;"
-                                                  Variant="Variant.Outlined"
-                                                  ReadOnly="true"
-                                                  Value="@context.Item.ItemOnOrderQuantity?.Value">
-                                    </MudTextField>
-
-                                    <!--Commandé Dispo-->
-                                    <MudTextField Margin="Margin.Dense"
-                                                  T="int?"
-                                                  Typo="Typo.body2"
-                                                  Label="@context.Item.ItemOrderedAvailableQuantity?.Name"
-                                                  Style="font-size: 13px; height:30px;"
-                                                  Variant="Variant.Outlined"
-                                                  ReadOnly="true"
-                                                  Value="@context.Item.ItemOrderedAvailableQuantity?.Value">
-                                    </MudTextField>
-
-                                    <!--Gestionnaire-->
-                                    <MudTextField Margin="Margin.Dense"
-                                                  T="string"
-                                                  Typo="Typo.body2"
-                                                  Label="@context.Item.ItemManager?.Name"
-                                                  Style="font-size: 13px; height:30px;"
-                                                  Variant="Variant.Outlined"
-                                                  ReadOnly="true"
-                                                  Value="@context.Item.ItemManager?.Value">
-                                    </MudTextField>
-                                </MudStack>
-                            </MudItem>
-                        </MudGrid>
-                    </MudStack>
-                </MudItem>
-
-                <!--Column3-->
-                <MudItem Class="pa-3" xs="12" sm="4">
-                    <!--Tarification-->
-                    <GenericMudSelect Variant="Variant.Outlined"
-                                      T="BasketValueDto"
-                                      @bind-BoundValue="context.Item.DiscountType!.Value"
-                                      @bind-BoundValue:after="(() =>
-                                                                    OnValueChange(context.Item.DiscountType.Value,
-                                                                    context.Item,
-                                                                    context.Item.DiscountType,
-                                                                    context.Item.LineNum?.Value))"
-                                      Field="context.Item.DiscountType"
-                                      Items="context.Item.DiscountTypes" />
-
-                    <!--Description-->
-                    <MudTextField Margin="Margin.Dense"
-                                  T="string"
-                                  Typo="Typo.body2"
-                                  Label="@context.Item.DiscountDescription?.Name"
-                                  Style="font-size: 13px; height:30px;"
-                                  Variant="Variant.Outlined"
-                                  ReadOnly="true"
-                                  Value="@context.Item.DiscountDescription?.Value">
-                    </MudTextField>
-
-                    <!--Remise sup-->
-                    <MudGrid>
-                        <MudItem xs="6">
-                            <MudTextField Margin="Margin.Dense"
-                                          T="decimal?"
-                                          Typo="Typo.body2"
-                                          Label="@context.Item.DiscountRate?.Name"
-                                          Style="font-size: 13px; height:30px;"
-                                          Variant="Variant.Outlined"
-                                          Required="@FieldUtility.IsRequired(context.Item.DiscountRate)"
-                                          ReadOnly="@FieldUtility.IsReadOnly(context.Item.DiscountRate)"
-                                          Disabled="@FieldUtility.IsHidden(context.Item.DiscountRate)"
-                                          Value="@context.Item.DiscountRate?.Value"
-                                          ValueChanged="(x => OnValueChange(x, context.Item, context.Item.DiscountRate, context.Item.LineNum?.Value))">
-                            </MudTextField>
-                        </MudItem>
-                        <MudItem xs="6">
-
-                            <!--PU HT-->
-                            <MudTextField Margin="Margin.Dense"
-                                          T="decimal?"
-                                          Typo="Typo.body2"
-                                          Label="@context.Item.DiscountPrice?.Name"
-                                          Style="font-size: 13px; height:30px;"
-                                          Variant="Variant.Outlined"
-                                          Required="@FieldUtility.IsRequired(context.Item.DiscountPrice)"
-                                          ReadOnly="@FieldUtility.IsReadOnly(context.Item.DiscountPrice)"
-                                          Disabled="@FieldUtility.IsHidden(context.Item.DiscountPrice)"
-                                          Value="@context.Item.DiscountPrice?.Value"
-                                          ValueChanged="(x => OnValueChange(x, context.Item, context.Item.DiscountPrice, context.Item.LineNum?.Value))">
-                            </MudTextField>
-                        </MudItem>
-                    </MudGrid>
-
-                    <!--the new Grid-->
-                    <MudStack Class="pa-1">
-                        <MudDataGrid T="BasketPriceLine" Items="@context.Item.Prices"
-                                     Bordered="true"
-                                     SortMode="@SortMode.None"
-                                     Striped="true"
-                                     Hover="true"
-                                     Dense="true"
-                                     Elevation="2"
-                                     Class="mx-n3"
-                                     RowStyleFunc="((item, x) => RowStyleFunc(item, x ,context.Item))">
-                            <Columns>
-                                <PropertyColumn Property="x => x == null? 0 : x.Quantity"
-                                                Title="Quantity"
-                                                CellClass="pa-1 ma-1" />
-                                <PropertyColumn Property="x => x == null? 0 : x.CatalogPrice"
-                                                Title="Prix Cat."
-                                                CellClass="pa-1 ma-1" />
-                                <PropertyColumn Property="x => x == null? 0 : x.DiscountPrice"
-                                                Title="Prix Rem." />
-                                <PropertyColumn Property="x => x == null? 0 : x.MultiplePrice"
-                                                Title="Prix / 25"
-                                                CellClass="pa-1 ma-1" />
-                                <PropertyColumn Property="x => x == null? 0 : x.DiscountRate"
-                                                Title="% Dégress."
-                                                CellClass="pa-1 ma-1" />
-                            </Columns>
-                        </MudDataGrid>
-                    </MudStack>
-
-                </MudItem>
+                    <!--S3-->
+                    <MudItem Class="pa-3" xs="12" sm="4">
+                        <LinePricesQuantities BasketLine="@basketLineDto" SetBasketOrderValue="OnSetHandler" />
+                    </MudItem>
+                }
             </MudGrid>
         </ChildRowContent>
     </MudDataGrid>
@@ -610,5 +210,10 @@
     private bool _open = false;
 
     private void ToggleOpen() => _open = !_open;
+
+    private void OnSetHandler((dynamic field, dynamic value, string st) args)
+    {
+        SetBasketOrderValue(args.field, args.value, args.st);
+    }
 
 }

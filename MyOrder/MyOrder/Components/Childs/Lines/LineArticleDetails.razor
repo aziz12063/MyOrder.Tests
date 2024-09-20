@@ -1,0 +1,83 @@
+﻿
+<MudStack Spacing="6" Justify="Justify.SpaceBetween" Style="height: inherit;">
+    <MudItem>
+        <MudGrid>
+            <MudItem xs="6">
+                <MudStack Spacing="1">
+
+                    <!--Code article-->
+                    <MudItem xs="12">
+                        <MudElement @onclick="(() => HandlePopOverOnClick())">
+                        <DisplayField Field="BasketLine?.ItemId"  /></MudElement>
+                        <MudPopover Open="@_openPopOver" OverflowBehavior="OverflowBehavior.FlipAlways" AnchorOrigin="Origin.TopCenter" TransformOrigin="Origin.BottomCenter" Paper="false">
+                            <MudPaper Outlined="true" Class="px-4 py-8">
+                                <MudText>MyData</MudText>
+                                <MudButton OnClick="@(() => HandlePopOverOnClick())" Class="ml-auto mr-n3 mb-1" Color="Color.Error">Close</MudButton>
+                            </MudPaper>
+                        </MudPopover>
+                    </MudItem>
+                    <!--Motif Modif-->
+                    <GenericMudSelect Variant="Variant.Outlined"
+                                      @bind-BoundValue="UpdateReasonValue"
+                                      Field="BasketLine?.UpdateReason"
+                                      Items="UpdateReasons" />
+
+                    <!--Vendu par-->
+                    <DisplayField Field="@BasketLine?.MultipleQuantity" />
+
+                </MudStack>
+            </MudItem>
+            <MudItem xs="6">
+                <MudStack Spacing="1">
+                    <!--N de ligne-->
+                    <MudItem>
+                        <GenericTextField Field="@BasketLine!.LineNum"
+                                          @bind-BoundValue="LineNumValue" />
+                    </MudItem>
+
+                    <!--Quantité initiale-->
+                    <DisplayField Field="@BasketLine?.InitialSalesQuantity" />
+
+                    <!--Taux de TVA-->
+                    <DisplayField Field="@BasketLine?.VatRate" />
+                </MudStack>
+            </MudItem>
+        </MudGrid>
+
+        <MudItem xs="12">
+            <!--Description-->
+            <DisplayField Field="@BasketLine?.Name" />
+        </MudItem>
+    </MudItem>
+    <MudStack Spacing="2">
+        <!--Notes de ligne-->
+        <MudGrid>
+            <MudItem xs="10">
+                <DisplayField Field="@BasketLine?.Note" />
+            </MudItem>
+            <!--icons-->
+            <MudItem Class="align-self-center">
+                <MudIcon Icon="@Icons.Material.Filled.Done" Color="Color.Primary">
+                </MudIcon>
+            </MudItem>
+        </MudGrid>
+
+        <!--Information produit-->
+        <div>
+            <MudTextField Margin="Margin.Dense"
+                          T="string"
+                          Lines="3"
+                          Typo="Typo.body2"
+                          Label="@BasketLine?.ProductInfo?.Name"
+                          Style="font-size: 13px;"
+                          Variant="Variant.Outlined"
+                          Required="@FieldUtility.IsRequired(BasketLine?.ProductInfo)"
+                          ReadOnly="@FieldUtility.IsReadOnly(BasketLine?.ProductInfo)"
+                          Disabled="@FieldUtility.IsHidden(BasketLine?.ProductInfo)"
+                          @bind-Value="ProductInfoValue">
+            </MudTextField>
+        </div>
+    </MudStack>
+</MudStack>
+
+
