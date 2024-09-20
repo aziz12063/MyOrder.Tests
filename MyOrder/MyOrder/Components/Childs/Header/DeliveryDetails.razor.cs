@@ -17,19 +17,24 @@ public partial class DeliveryDetails : BaseFluxorComponent<DeliveryInfoState, Fe
     private string DisplayAddress { get; set; } = string.Empty;
     private bool isLoading = true;
 
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        DeliveryModes = RessourcesState?.Value.DeliveryModes
+            ?? throw new ArgumentNullException(nameof(RessourcesState.Value.DeliveryModes), "Unexpected null for DeliveryModes object.");
+    }
 
     protected override void CacheNewFields()
     {
-        BasketDeliveryInfo = State.Value.BasketDeliveryInfo
+        BasketDeliveryInfo = State?.Value.BasketDeliveryInfo
                              ?? throw new ArgumentNullException(nameof(State.Value.BasketDeliveryInfo), "Unexpected null for BasketOrderInfo object.");
         Accounts = State.Value.DeliverToAccounts;
         Contacts = State.Value.DeliverToContacts;
-        DeliveryModes = State.Value.DeliveryModes;
 
         SelectedAccount = FieldUtility.SelectedAccount(BasketDeliveryInfo?.Account?.Value);
         AccountAddress = FieldUtility.CreateAddressList(BasketDeliveryInfo?.Account?.Value);
         DisplayAddress = FieldUtility.DisplayAddress(AccountAddress);
-        isLoading = State.Value.IsLoading;
+        isLoading = State.Value.IsLoading || RessourcesState.Value.IsLoading;
     }
 
     protected override FetchDeliveryInfoAction CreateFetchAction(DeliveryInfoState state, string basketId) => new(state, basketId);
@@ -59,7 +64,8 @@ public partial class DeliveryDetails : BaseFluxorComponent<DeliveryInfoState, Fe
         get => BasketDeliveryInfo?.ImperativeDate?.Value;
         set => SetBasketOrderValue(field: BasketDeliveryInfo!.ImperativeDate, value: value, procedureCallValue: value.ToString()); // This is triggered 2 times when set to null. Do troubleshoot.
     }
-    public bool? SaveNoteForFutureOrders {
+    public bool? SaveNoteForFutureOrders
+    {
         get => BasketDeliveryInfo?.NoteMustBeSaved?.Value;
         set => SetBasketOrderValue(field: BasketDeliveryInfo!.NoteMustBeSaved, value: value, procedureCallValue: value.ToString());
     }

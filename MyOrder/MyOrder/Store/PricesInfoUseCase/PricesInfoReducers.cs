@@ -7,8 +7,7 @@ public static class PricesInfoReducers
 {
     [ReducerMethod]
     public static PricesInfoState ReduceFetchPricesInfoSuccessAction(PricesInfoState state, FetchPricesInfoSuccessAction action) =>
-        new(action.PricesInfo, action.Coupons, action.WarrantyCostOptions,
-            action.ShippingCostOptions);
+        new(action.PricesInfo);
 
     [ReducerMethod]
     public static PricesInfoState ReduceFetchPricesInfoFailureAction(PricesInfoState state, FetchPricesInfoFailureAction action) =>

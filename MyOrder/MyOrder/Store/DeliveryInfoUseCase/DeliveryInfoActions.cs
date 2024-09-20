@@ -9,12 +9,11 @@ namespace MyOrder.Store.DeliveryInfoUseCase
     }
 
     public class FetchDeliveryInfoSuccessAction(BasketDeliveryInfoDto? basketDeliveryInfo, List<AccountDto?>? deliverToAccounts,
-        List<ContactDto?>? deliverToContacts, List<BasketValueDto?>? deliveryModes)
+        List<ContactDto?>? deliverToContacts)
     {
         public BasketDeliveryInfoDto? BasketDeliveryInfo { get; } = basketDeliveryInfo;
         public List<AccountDto?>? DeliverToAccounts { get; set; } = deliverToAccounts;
         public List<ContactDto?>? DeliverToContacts { get; set; } = deliverToContacts;
-        public List<BasketValueDto?>? DeliveryModes { get; set; } = deliveryModes;
     }
 
     public class FetchDeliveryInfoFailureAction(string errorMessage)

@@ -9,14 +9,9 @@ namespace MyOrder.Store.LinesUseCase
         public string BasketId { get; } = basketId;
     }
 
-    public class FetchLinesSuccessAction(BasketOrderLinesDto? basketOrderLinesDto, 
-                                         List<BasketValueDto?>? updateReasons,
-                                         List<BasketValueDto?>? logisticFlows)
+    public class FetchLinesSuccessAction(BasketOrderLinesDto? basketOrderLinesDto)
     {
         public BasketOrderLinesDto? BasketOrderLinesDto { get; } = basketOrderLinesDto;
-        public List<BasketValueDto?>? UpdateReasons { get; } = updateReasons;
-        public List<BasketValueDto?>? LogisticFlows { get; } = logisticFlows;
-
     }
 
     public class FetchLinesFailureAction(string errorMessage)

@@ -12,13 +12,10 @@ public class InvoiceInfoEffects(IBasketRepository basketRepository, ILogger<Invo
         {
             var invoiceInfo = basketRepository.GetBasketInvoiceInfoAsync(action.BasketId);
             var invoiceToAccounts = basketRepository.GetInvoiceToAccountsAsync(action.BasketId);
-            var taxGroups = basketRepository.GetTaxGroupsAsync(action.BasketId);
-            var paymentModes = basketRepository.GetPaymentModesAsync(action.BasketId);
 
-            await Task.WhenAll(invoiceInfo, invoiceToAccounts, taxGroups, paymentModes);
+            await Task.WhenAll(invoiceInfo, invoiceToAccounts);
 
-            dispatcher.Dispatch(new FetchInvoiceInfoSuccessAction(invoiceInfo.Result, invoiceToAccounts.Result,
-                 taxGroups.Result, paymentModes.Result));
+            dispatcher.Dispatch(new FetchInvoiceInfoSuccessAction(invoiceInfo.Result, invoiceToAccounts.Result));
         }
         catch (Exception e)
         {

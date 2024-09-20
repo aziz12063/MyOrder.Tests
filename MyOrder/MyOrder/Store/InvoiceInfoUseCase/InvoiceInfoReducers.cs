@@ -5,7 +5,7 @@ public static class InvoiceInfoReducers
 {
     [ReducerMethod]
     public static InvoiceInfoState ReduceFetchInvoiceInfoSuccessAction(InvoiceInfoState state, FetchInvoiceInfoSuccessAction action) =>
-        new(action.InvoiceInfo, action.InvoiceToAccounts, action.TaxGroups, action.PaymentModes);
+        new(action.InvoiceInfo, action.InvoiceToAccounts);
 
     [ReducerMethod]
     public static InvoiceInfoState ReduceFetchInvoiceInfoFailureAction(InvoiceInfoState state, FetchInvoiceInfoFailureAction action) =>

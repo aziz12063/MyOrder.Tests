@@ -12,11 +12,9 @@ namespace MyOrder.Store.LinesUseCase
             try
             {
                 logger.LogInformation("Fetching lines for {BasketId}", action.BasketId);
-                var lines = basketRepository.GetBasketLinesAsync(action.BasketId);
-                var lineUpdateReasons = basketRepository.GetlineUpdateReasonsAsync(action.BasketId);
-                var logisticFlows = basketRepository.GetlogisticFlowsAsync(action.BasketId);
-                await Task.WhenAll(lines, lineUpdateReasons, logisticFlows);
-                dispatcher.Dispatch(new FetchLinesSuccessAction(lines.Result, lineUpdateReasons.Result, logisticFlows.Result));
+                var lines = await basketRepository.GetBasketLinesAsync(action.BasketId);
+
+                dispatcher.Dispatch(new FetchLinesSuccessAction(lines));
             }
             catch (Exception ex)
             {

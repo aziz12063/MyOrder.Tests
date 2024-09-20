@@ -2,7 +2,7 @@
 @typeparam T
 @inherits GenericInputBase<T>
 
-@if (Field != null && !hidden)
+@if (Field is not null && !_hidden)
 {
     <MudTooltip RootStyle="width:100%"
                 Text="@_tooltipText"
@@ -15,13 +15,15 @@
                    Dense="true"
                    Variant="@Variant"
                    FullWidth="true"
-                   AnchorOrigin="Origin.CenterCenter"
-                   Required="required"
-                   Error="required"
-                   ReadOnly="ReadOnly ?? true"
-                   Disabled="ReadOnly ?? true"
-                   @bind-Value="BoundValue"
-                   @bind-Value:after="BoundValueChangedHandler">
+                   AnchorOrigin="Origin.BottomCenter"
+                   Required="_required"
+                   Error="_required"
+                   ReadOnly="_readOnly"
+                   Disabled="_readOnly"
+                   Value="BoundValue"
+                   ValueChanged="OnValueChanged"
+                   OnClose="DropDownClosedHandler"
+                   OnOpen="DropDownOpenedHandler">
             @if (Items is not null)
             {
                 foreach (var item in Items)
@@ -37,11 +39,12 @@
     private const string OUTLINED_CSS_CLASS = "outlined-generic-select";
 
     private string? _tooltipText;
+    private bool _isOpen;
 
     [Parameter, EditorRequired] public List<T>? Items { get; set; }
     [Parameter] public Variant Variant { get; set; } = 0;
     [Parameter] public string? Class { get; set; }
-    
+
     protected override void OnInitialized()
     {
         base.OnInitialized();
@@ -56,6 +59,16 @@
 
         _tooltipText = Field?.Description ?? Field?.Name;
     }
-    
 
+    private async void OnValueChanged(T boundValue)
+    {
+        if (_isOpen)
+            return;
+
+        BoundValue = boundValue;
+        await BoundValueChangedHandler();
+    }
+
+    public void DropDownClosedHandler() => _isOpen = false;
+    public void DropDownOpenedHandler() => _isOpen = true;
 }

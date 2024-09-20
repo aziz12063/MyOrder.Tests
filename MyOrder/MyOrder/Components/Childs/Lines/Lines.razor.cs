@@ -29,13 +29,22 @@ namespace MyOrder.Components.Childs.Lines
         private bool IsLineAmountEditable { get; set; }
         private bool IsDiscountRateEditable { get; set; }
         int? selectedLine;
+        private bool isLoading = true;
 
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+
+            UpdateReasons = RessourcesState?.Value.UpdateReasons
+                ?? throw new ArgumentNullException("Unexpected null for UpdateReasons object.");
+            LogisticFlows = RessourcesState?.Value.LogisticFlows
+                ?? throw new ArgumentNullException("Unexpected null for LogisticFlows object.");
+        }
 
         protected override void CacheNewFields()
         {
-            BasketOrderLinesDto = State.Value.BasketOrderLines ?? throw new NullReferenceException("Unexpected null for BasketOrderLines object.");
-            UpdateReasons = State.Value.UpdateReasons;
-            LogisticFlows = State.Value.LogisticFlows;
+            BasketOrderLinesDto = State?.Value.BasketOrderLines 
+                ?? throw new ArgumentNullException("Unexpected null for BasketOrderLines object.");
             selectedBasketLineDto = new List<BasketLineDto>();
             if (BasketOrderLinesDto is not null && BasketOrderLinesDto.lines is not null && BasketOrderLinesDto.lines.Count > 0)
             {
@@ -51,6 +60,7 @@ namespace MyOrder.Components.Childs.Lines
 
 
             }
+            isLoading = State.Value.IsLoading || RessourcesState.Value.IsLoading;
         }
 
         protected override FetchLinesAction CreateFetchAction(LinesState state, string basketId)

@@ -12,14 +12,24 @@ public partial class PriceInfo : BaseFluxorComponent<PricesInfoState, FetchPrice
     private List<BasketValueDto?>? ShippingCostOptions { get; set; }
     private bool isLoading = true;
 
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        var rscState = RessourcesState?.Value;
+        Coupons = rscState?.Coupons
+            ?? throw new ArgumentNullException("Unexpected null for Coupons");
+        WarrantyCostOptions = rscState?.WarrantyCostOptions
+            ?? throw new ArgumentNullException("Unexpected null for WarrantyCostOptions");
+        ShippingCostOptions = rscState?.ShippingCostOptions
+            ?? throw new ArgumentNullException("Unexpected null for ShippingCostOptions");
+    }
     protected override void CacheNewFields()
     {
-        BasketPricesInfo = State.Value.PricesInfo 
-            ?? throw new NullReferenceException("Unexpected null for BasketOrderInfo object.");
-        Coupons = State.Value.Coupons;
-        WarrantyCostOptions = State.Value.WarrantyCostOptions;
-        ShippingCostOptions = State.Value.ShippingCostOptions;
-        isLoading = State.Value.IsLoading;
+        BasketPricesInfo = State?.Value.PricesInfo
+            ?? throw new ArgumentNullException("Unexpected null for BasketOrderInfo object.");
+
+        isLoading = State.Value.IsLoading || RessourcesState.Value.IsLoading;
     }
 
     protected override FetchPricesInfoAction CreateFetchAction(PricesInfoState state, string basketId) => new(state, basketId);

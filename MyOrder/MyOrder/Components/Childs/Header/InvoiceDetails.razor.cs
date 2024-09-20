@@ -22,12 +22,22 @@ public partial class InvoiceDetails : BaseFluxorComponent<InvoiceInfoState, Fetc
     protected override FetchInvoiceInfoAction CreateFetchAction(InvoiceInfoState state, string basketId) =>
         new(state, basketId);
 
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        TaxGroups = RessourcesState?.Value.TaxGroups
+            ?? throw new NullReferenceException("Unexpected null for TaxGroups object.");
+
+        PaymentModes = RessourcesState?.Value.PaymentModes
+            ?? throw new NullReferenceException("Unexpected null for PaymentModes object.");
+    }
+
     protected override void CacheNewFields()
     {
         BasketInvoiceInfo = State.Value.BasketInvoiceInfo ?? throw new NullReferenceException("Unexpected null for BasketInvoiceInfo object.");
         InvoiceToAccounts = State.Value.InvoiceToAccounts;
-        TaxGroups = State.Value.TaxGroups;
-        PaymentModes = State.Value.PaymentModes;
+        InvoiceToAccounts = State.Value.InvoiceToAccounts;
 
         SelectedClient = FieldUtility.SelectedAccount(BasketInvoiceInfo?.Account?.Value);
         AccountAddress = FieldUtility.CreateAddressList(BasketInvoiceInfo?.Account?.Value);

@@ -3,7 +3,7 @@
 @typeparam T
 @inherits GenericInputBase<T>
 
- @if (Field != null && !hidden)
+ @if (Field != null && !_hidden)
 {
     <MudTooltip RootStyle="width: 100%;"
                 Text="@Field.Description">
@@ -15,11 +15,11 @@
                       Culture="@Culture"
                       Class="@cssClass"
                       Label="@Field?.Name"
-                      Required="required"
-                      Error="required"
+                      Required="_required"
+                      Error="_required"
                       RequiredError="Ce champ est obligatoire"
-                      ReadOnly="ReadOnly ?? true"
-                      Disabled="ReadOnly ?? true"
+                      ReadOnly="_readOnly"
+                      Disabled="_readOnly"
                       Lines="Lines"
                       @bind-Value="BoundValue"
                       @bind-Value:after="BoundValueChangedHandler" />

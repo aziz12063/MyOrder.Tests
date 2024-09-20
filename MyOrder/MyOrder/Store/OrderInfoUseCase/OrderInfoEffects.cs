@@ -13,15 +13,10 @@ public class OrderInfoEffects(IBasketRepository basketRepository, ILogger<OrderI
             logger.LogInformation("Fetching order info for {BasketId}", action.BasketId);
             var basketOrderInfoTask = basketRepository.GetBasketOrderInfoAsync(action.BasketId);
             var contactListTask = basketRepository.GetOrderByContactsAsync(action.BasketId);
-            var customerTagsTask = basketRepository.GetCustomerTagsAsync(action.BasketId);
-            var salesOriginsTask = basketRepository.GetSalesOriginsAsync(action.BasketId);
-            var webOriginsTask = basketRepository.GetWebOriginsAsync(action.BasketId);
-            var salesPoolsTask = basketRepository.GetSalesPoolAsync(action.BasketId);
+           
+            await Task.WhenAll(basketOrderInfoTask, contactListTask);
 
-            await Task.WhenAll(basketOrderInfoTask, contactListTask, customerTagsTask, salesOriginsTask, salesPoolsTask);
-
-            dispatcher.Dispatch(new FetchOrderInfoSuccessAction(basketOrderInfoTask.Result, contactListTask.Result,
-                customerTagsTask.Result, salesOriginsTask.Result, webOriginsTask.Result, salesPoolsTask.Result));
+            dispatcher.Dispatch(new FetchOrderInfoSuccessAction(basketOrderInfoTask.Result, contactListTask.Result));
         }
         catch (Exception ex)
         {

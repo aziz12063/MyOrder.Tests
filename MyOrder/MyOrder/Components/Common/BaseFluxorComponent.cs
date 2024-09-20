@@ -5,6 +5,7 @@ using MyOrder.Shared.Dtos.SharedComponents;
 using MyOrder.Store.ProcedureCallUseCase;
 using MyOrder.Utils;
 using MyOrder.Shared.Utils;
+using MyOrder.Store.RessourcesUseCase;
 
 namespace MyOrder.Components.Common;
 
@@ -12,6 +13,8 @@ public abstract class BaseFluxorComponent<TState, TAction> : ComponentBase, IDis
 {
     [Inject]
     protected IState<TState>? State { get; set; }
+    [Inject]
+    protected IState<RessourcesState>? RessourcesState { get; set; }
     [Inject]
     protected IDispatcher Dispatcher { get; set; }
     [Inject]
@@ -37,6 +40,7 @@ public abstract class BaseFluxorComponent<TState, TAction> : ComponentBase, IDis
     /// <param name="e">Event arguments.</param>
     protected virtual void OnStateChanged(object? sender, EventArgs e)
     {
+        Logger.LogDebug("State has changed for {Component}", GetType().Name);
         // Schedule the execution of this code on the Blazor UI thread. This ensures that any UI-related operations
         // are executed within the appropriate synchronization context, preventing potential threading issues.
         InvokeAsync(async () =>
@@ -44,11 +48,12 @@ public abstract class BaseFluxorComponent<TState, TAction> : ComponentBase, IDis
             // Cache the relevant state fields first to ensure they are up-to-date before the UI is re-rendered.
             // This prevents potential null reference issues when the Razor view attempts to access these fields.
             CacheNewFields();
-
+            Logger.LogDebug("Cached new fields for {Component}", GetType().Name);
             // Trigger a re-render of the component to reflect the updated state in the UI.
             // Awaiting this ensures that the state update happens after caching, maintaining consistency.
             await InvokeAsync(StateHasChanged);
         });
+        Logger.LogDebug("StateChanged handler completed for {Component}", GetType().Name);
     }
 
     protected abstract void CacheNewFields();

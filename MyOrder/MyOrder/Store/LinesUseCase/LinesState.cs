@@ -8,19 +8,13 @@ namespace MyOrder.Store.LinesUseCase
     [FeatureState]
     public class LinesState : StateBase
     {
-        public BasketOrderLinesDto? BasketOrderLines {  get; }
-        public List<BasketValueDto?>? UpdateReasons { get; }
-        public List<BasketValueDto?>? LogisticFlows { get; }
+        public BasketOrderLinesDto? BasketOrderLines { get; }
 
         public LinesState() : base(true) { }
 
-        public LinesState(BasketOrderLinesDto? basketOrderLines, 
-                          List<BasketValueDto?>? updateReasons,
-                          List<BasketValueDto?>? logisticFlows) : base(false)
+        public LinesState(BasketOrderLinesDto? basketOrderLines) : base(false)
         {
             BasketOrderLines = basketOrderLines;
-            UpdateReasons = updateReasons;
-            LogisticFlows = logisticFlows;
         }
     }
 }

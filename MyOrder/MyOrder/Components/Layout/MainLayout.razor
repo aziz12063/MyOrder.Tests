@@ -1,5 +1,8 @@
-﻿@using MyOrder.Components.Childs
+﻿@using Fluxor
+@using MyOrder.Components.Childs
 @using MyOrder.Services
+@using MyOrder.Store.GeneralInfoUseCase
+@using MyOrder.Store.RessourcesUseCase
 @inherits LayoutComponentBase
 
 @inject NavigationManager NavigationManager
@@ -17,9 +20,26 @@
 @* Needed for snackbars *@
 <MudSnackbarProvider />
 
+@if (RessourcesState.Value.IsLoading)
+{
+    <MudOverlay Visible="RessourcesState.Value.IsLoading" ZIndex="9999" DarkBackground="false">
+        <MudProgressCircular Size="Size.Large" Indeterminate="true" />
+    </MudOverlay>
+    return;
+}
+
+@if (GeneralInfoState.Value.IsLoading)
+{
+    @* #warning "Refactor to use MudDialog fullscreen with close button false" *@
+    <MudOverlay Visible="GeneralInfoState.Value.IsLoading" ZIndex="9999" DarkBackground="false">
+        <MudProgressCircular Size="Size.Large" Indeterminate="true" />
+    </MudOverlay>
+}
+
 <MudLayout>
     <MudAppBar Elevation="2">
-            <GeneralInfo />
+        <MudImage Src="@_companyLogoSrc" Alt="Raja Group" Class="logo" />
+        <GeneralInfo />
         <MudSpacer />
         <Menu />
     </MudAppBar>
@@ -43,8 +63,16 @@
 </div>
 
 @code {
-    private ThemeManagerTheme _themeManager = new ThemeManagerTheme() { Theme = ThemeConfiguration.MyTheme };
+    [Inject]
+    private IDispatcher Dispatcher { get; set; }
+    [Inject]
+    private IState<RessourcesState> RessourcesState { get; set; }
+    private ThemeManagerTheme _themeManager = new ThemeManagerTheme() { Theme = ThemeConfiguration.RajaTheme };
+    private string _companyLogoSrc = "images/Raja-Logo.png";
     public bool _themeManagerOpen = false;
+
+    [Inject]
+    IState<GeneralInfoState> GeneralInfoState { get; set; }
 
     void OpenThemeManager(bool value)
     {
@@ -63,6 +91,10 @@
         StateHasChanged();
         //////////////////////////
 
+        GeneralInfoState.StateChanged += GenInfoOnStateChanged;
+        RessourcesState.StateChanged += ResInfoOnStateChanged;
+
+
         var uri = new Uri(NavigationManager.Uri);
         var queryParams = System.Web.HttpUtility.ParseQueryString(uri.Query);
         var basketId = queryParams["basketId"];
@@ -70,6 +102,30 @@
         {
             BasketService.BasketId = basketId; // Cache the basket ID in a service
         }
+
+        Dispatcher.Dispatch(new FetchRessourcesAction(RessourcesState.Value, basketId)); //Refactor
     }
 
+    //Duplicate code for testing purpose
+    protected virtual void GenInfoOnStateChanged(object? sender, EventArgs e)
+    {
+        InvokeAsync(async () =>
+        {
+            if (GeneralInfoState?.Value?.GeneralInfo?.Company?.GroupId == "viking")
+            {
+                _themeManager.Theme = ThemeConfiguration.VikingTheme;
+                _companyLogoSrc = "images/Viking-Logo.png";
+            }
+            else
+            {
+                _themeManager.Theme = ThemeConfiguration.RajaTheme;
+                _companyLogoSrc = "images/Raja-Logo.png";
+            }
+            await InvokeAsync(StateHasChanged);
+        });
+    }
+    protected virtual void ResInfoOnStateChanged(object? sender, EventArgs e)
+    {
+        StateHasChanged();
+    }
 }

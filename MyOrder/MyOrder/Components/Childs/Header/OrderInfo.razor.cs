@@ -1,17 +1,19 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Fluxor;
+using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using MyOrder.Components.Common;
 using MyOrder.Components.Common.Dialogs;
 using MyOrder.Shared.Dtos;
 using MyOrder.Store.OrderInfoUseCase;
+using MyOrder.Store.RessourcesUseCase;
 using MyOrder.Utils;
 
 namespace MyOrder.Components.Childs.Header;
 
 public partial class OrderInfo : BaseFluxorComponent<OrderInfoState, FetchOrderInfoAction>
 {
-    [Inject] IDialogService DialogService { get; set; }
-
+    [Inject]
+    private IDialogService DialogService { get; set; }
     private BasketOrderInfoDto? BasketOrderInfo { get; set; }
     private List<ContactDto?>? Contacts { get; set; }
     private List<BasketValueDto?>? SalesOrigins { get; set; }
@@ -23,17 +25,28 @@ public partial class OrderInfo : BaseFluxorComponent<OrderInfoState, FetchOrderI
 
     protected override FetchOrderInfoAction CreateFetchAction(OrderInfoState state, string basketId) => new(state, basketId);
 
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        var rscState = RessourcesState?.Value;
+
+        SalesOrigins = rscState?.SalesOrigins
+            ?? throw new ArgumentNullException(nameof(rscState.SalesOrigins), "Unexpected null for SalesOrigins object."); ;
+        WebOrigins = rscState?.WebOrigins
+            ?? throw new ArgumentNullException(nameof(rscState.WebOrigins), "Unexpected null for WebOrigins object."); ;
+        SalesPools = rscState?.SalesPools
+            ?? throw new ArgumentNullException(nameof(rscState.SalesPools), "Unexpected null for SalesPools object."); ;
+    }
+
     protected override void CacheNewFields()
     {
-        BasketOrderInfo = State.Value.BasketOrderInfo ??
-                          throw new ArgumentNullException(nameof(State.Value.BasketOrderInfo), "Unexpected null for BasketOrderInfo object.");
+        BasketOrderInfo = State?.Value.BasketOrderInfo
+            ?? throw new ArgumentNullException(nameof(State.Value.BasketOrderInfo), "Unexpected null for BasketOrderInfo object.");
         Contacts = State.Value.ContactList;
-        SalesOrigins = State.Value.SalesOrigins;
-        WebOrigins = State.Value.WebOrigins;
-        SalesPools = State.Value.SalesPools;
         SelectedClient = FieldUtility.SelectedAccount(BasketOrderInfo?.Account?.Value);
         AccountAddress = FieldUtility.CreateAddressList(BasketOrderInfo?.Account?.Value);
-        isLoading = State.Value.IsLoading;
+        isLoading = State.Value.IsLoading || RessourcesState.Value.IsLoading;
     }
 
     private ContactDto? ContactValue

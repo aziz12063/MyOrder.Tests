@@ -17,12 +17,12 @@ public class DeliveryInfoEffects(IBasketRepository basketRepository, ILogger<Del
             var basketDeliveryInfoTask = basketRepository.GetBasketDeliveryInfoAsync(basketId);
             var deliverToAccountsTask = basketRepository.GetDeliverToAccountsAsync(basketId);
             var deliverToContactsTask = basketRepository.GetDeliverToContactsAsync(basketId);
-            var deliveryModesTask = basketRepository.GetDeliveryModesAsync(basketId);
 
-            await Task.WhenAll(basketDeliveryInfoTask, deliverToAccountsTask, deliverToContactsTask, deliveryModesTask);
+            await Task.WhenAll(basketDeliveryInfoTask, deliverToAccountsTask, 
+                deliverToContactsTask);
 
             dispatcher.Dispatch(new FetchDeliveryInfoSuccessAction(basketDeliveryInfoTask.Result, deliverToAccountsTask.Result,
-                deliverToContactsTask.Result, deliveryModesTask.Result));
+                deliverToContactsTask.Result));
         }
         catch (Exception ex)
         {

@@ -6,7 +6,7 @@ namespace MyOrder.Store.DeliveryInfoUseCase
     {
         [ReducerMethod]
         public static DeliveryInfoState ReduceFetchDeliveryInfoSuccessAction(DeliveryInfoState state, FetchDeliveryInfoSuccessAction action) =>
-            new (action.BasketDeliveryInfo, action.DeliverToAccounts, action.DeliverToContacts, action.DeliveryModes);
+            new (action.BasketDeliveryInfo, action.DeliverToAccounts, action.DeliverToContacts);
 
         [ReducerMethod]
         public static DeliveryInfoState ReduceFetchDeliveryInfoFailureAction(DeliveryInfoState state, FetchDeliveryInfoFailureAction action) =>
