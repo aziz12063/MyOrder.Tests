@@ -1,12 +1,8 @@
-﻿namespace MyOrder.Shared.Dtos.SharedComponents;
+﻿using System.Collections.Immutable;
 
-public class Field<T>
-{
-    public string? Name { get; set; }
-    public string? Status { get; set; }
-    public T? Value { get; set; }
-    public List<string?>? ProcedureCall { get; set; }
-    public string? Error { get; set; }
-    public string? Description { get; set; }
-    public string? Url { get; set; }
-}
+namespace MyOrder.Shared.Dtos.SharedComponents;
+
+public record Field<T>(string? Name, T? Value,
+    string? Description, string? Status, string? Error,
+    ImmutableList<string?>? ProcedureCall, string? Url)
+{ }

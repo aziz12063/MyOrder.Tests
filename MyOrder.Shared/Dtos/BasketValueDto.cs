@@ -1,13 +1,8 @@
-﻿
-namespace MyOrder.Shared.Dtos;
+﻿namespace MyOrder.Shared.Dtos;
 
-public class BasketValueDto
+public record BasketValueDto(string? Description, string? Value)
 {
-    public string? Description { get; set; }
-    public string? Value { get; set; }
-
     public override string ToString() => Description
         ?? Value
         ?? string.Empty;
 }
-
