@@ -1,6 +1,7 @@
 ﻿using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.Lines;
 using Refit;
+using System.Collections.Immutable;
 
 namespace MyOrder.Infrastructure.ApiClients
 {
@@ -13,7 +14,7 @@ namespace MyOrder.Infrastructure.ApiClients
         Task<NewBasketResponseDto> CreateNewBasketAsync([Body(BodySerializationMethod.UrlEncoded)] Dictionary<string, string> formFields);
 
         [Post("/api/orderContext/{basketId}/procedureCall")]
-        Task<ProcedureCallResponseDto> PostProcedureCallAsync(string basketId, [Body] List<string> procedureCall);
+        Task<ProcedureCallResponseDto> PostProcedureCallAsync(string basketId, [Body] ImmutableList<string?> procedureCall);
 
         //=======================================================================================================
         // General Info Section

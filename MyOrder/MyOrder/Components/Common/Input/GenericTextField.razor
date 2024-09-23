@@ -3,7 +3,7 @@
 @typeparam T
 @inherits GenericInputBase<T>
 
- @if (Field != null && !_hidden)
+ @if (Field is not null && !_hidden)
 {
     <MudTooltip RootStyle="width: 100%;"
                 Text="@Field.Description">

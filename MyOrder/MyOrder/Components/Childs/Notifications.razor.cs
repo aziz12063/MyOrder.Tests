@@ -69,13 +69,13 @@ public partial class Notifications : BaseFluxorComponent<NotificationsState, Fet
     {
         var notification = BasketNotifications?.Find(notification
             => notification?.Message?.Equals(snackbar.Message) ?? false);
-        if (notification is not null)
-            Dispatcher.Dispatch(new PostProcedureCallAction(BasketId, notification.ProcedureCall?.ToList()));
+       // if (notification is not null)
+         //   Dispatcher.Dispatch(new UpdateFieldAction(BasketId, notification.ProcedureCall?.ToList()));
     }
 
     private void RemoveNotification(BasketNotificationDto notification)
     {
-        Dispatcher.Dispatch(new PostProcedureCallAction(BasketId, notification.ProcedureCall.ToList()));
+        //Dispatcher.Dispatch(new UpdateFieldAction(BasketId, notification.ProcedureCall.ToList()));
         Snackbar.RemoveByKey(notification.NotificationId.ToString());
     }
 }

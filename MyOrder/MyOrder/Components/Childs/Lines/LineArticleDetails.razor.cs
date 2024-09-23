@@ -17,11 +17,16 @@ public partial class LineArticleDetails
 
     [Parameter]
     public EventCallback<(dynamic?, dynamic?, string?)> SetBasketOrderValue { get; set; }
-   
+
     private BasketValueDto? UpdateReasonValue
     {
         get => BasketLine?.UpdateReason?.Value;
-        set => SetBasketOrderValue.InvokeAsync((BasketLine?.UpdateReason, value, value?.Value)); 
+        set => SetBasketOrderValue.InvokeAsync((BasketLine?.UpdateReason, value, value?.Value));
+    }
+    private BasketValueDto? LogisticFlowValue
+    {
+        get => BasketLine?.LogisticFlow?.Value;
+        set => SetBasketOrderValue.InvokeAsync((BasketLine?.LogisticFlow, value, value?.Value));
     }
 
     private int? LineNumValue

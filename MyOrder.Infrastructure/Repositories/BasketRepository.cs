@@ -2,6 +2,8 @@
 using MyOrder.Infrastructure.ApiClients;
 using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.Lines;
+using MyOrder.Shared.Dtos.SharedComponents;
+using System.Collections.Immutable;
 
 namespace MyOrder.Infrastructure.Repositories;
 
@@ -23,12 +25,89 @@ public class BasketRepository(IBasketApiClient apiClient, ILogger<BasketReposito
     //=======================================================================================================
     //Actions
     //=======================================================================================================
-    public async Task<ProcedureCallResponseDto> PostProcedureCallAsync(string basketId, List<string> procedureCall)
+    public async Task<ProcedureCallResponseDto?> PostProcedureCallAsync(IField field, object value, string basketId)
     {
-        logger.LogInformation("Posting procedure call : \n{procedureCall} \nfor {BasketId} from repository", string.Join("\n", procedureCall), basketId);
+        // Get the runtime type of the field and value
+        var fieldType = field.GetType();
+        if (!fieldType.IsGenericType || fieldType.GetGenericTypeDefinition() != typeof(Field<>))
+        {
+            throw new InvalidOperationException("Field is not of type Field<T>.");
+        }
+
+        // Retrieve the value's type
+        var valueType = value?.GetType();
+
+        // Retrieve the field's value
+        var fieldValueProperty = fieldType.GetProperty(nameof(Field<object>.Value));
+        var fieldValue = fieldValueProperty?.GetValue(field);
+
+        if (value != null && fieldValue != null)
+        {
+            var fieldValueType = fieldValue.GetType();
+
+            if (fieldValueType != valueType)
+            {
+                throw new InvalidOperationException($"Field and value types do not match. " +
+                    $"Field type: {fieldValueType}, Value type: {valueType}");
+            }
+        }
+
+        // Check if the current field value equals the new value
+        if (EqualityComparer<object>.Default.Equals(fieldValue, value))
+        {
+            logger.LogWarning("No changes detected: Field value is the same as the new value.");
+            return null;
+        }
+
+        string procedureCallValue = ProcedureCallValueToString(value);
+
+        GetProcedureCallTemplate(field, fieldType, 
+            out ImmutableList<string?>? procedureCallTemplate, 
+            out bool pcdCallTemplateContainsNull);
+
+        if (pcdCallTemplateContainsNull)
+            logger.LogWarning("ProcedureCall contains a null item.");
+
+
+        var procedureCall = procedureCallTemplate!.SetItem(procedureCallTemplate.Count - 1, procedureCallValue);
+
+        logger.LogInformation("Posting procedure call : \n{procedureCall} " +
+            "\nfor {BasketId} from repository", string.Join("\n", procedureCall), basketId);
+
         var response = await apiClient.PostProcedureCallAsync(basketId, procedureCall);
+
         logger.LogInformation("Procedure call response : \n{response}", response);
+
         return response;
+    }
+
+    private static string ProcedureCallValueToString(object? value)
+    {
+        string? str = value switch
+        {
+            BasketValueDto basketValue => basketValue.Value,
+            AccountDto account => account.AccountId,
+            ContactDto contact => contact.ContactId,
+            _ => value?.ToString(),
+        };
+        return str ?? string.Empty;
+    }
+
+    private static void GetProcedureCallTemplate(IField field, Type fieldType, 
+        out ImmutableList<string?>? procedureCallTemplate, 
+        out bool pcdCallTemplateContainsNull)
+    {
+        procedureCallTemplate = fieldType.GetProperty(nameof(Field<object>.ProcedureCall))
+            ?.GetValue(field) as ImmutableList<string?>;
+
+        if (procedureCallTemplate is null || procedureCallTemplate.Count < 1)
+        {
+            throw new InvalidOperationException("ProcedureCallTemplate is either null or empty.");
+        }
+
+        pcdCallTemplateContainsNull = procedureCallTemplate
+           .Take(procedureCallTemplate.Count - 2)
+           .Any(item => string.IsNullOrWhiteSpace(item));
     }
 
     public async Task<NewBasketResponseDto> PostNewBasketAsync(Dictionary<string, string> newBasketRequest)

@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Components;
-using MyOrder.Shared.Dtos.Lines;
+﻿using Fluxor;
+using Microsoft.AspNetCore.Components;
 using MyOrder.Shared.Dtos.SharedComponents;
+using MyOrder.Store.ProcedureCallUseCase;
 using MyOrder.Utils;
 
 namespace MyOrder.Components.Common.Input;
@@ -12,12 +13,15 @@ public abstract class GenericInputBase<TValue> : ComponentBase
     protected bool _required;
     protected bool _onlyForDisplay;
 
+    [Inject] protected IDispatcher dispatcher { get; set; }
+
     [Parameter] public bool? ReadOnly { get; set; } = null;
     [Parameter, EditorRequired] public TValue? BoundValue { get; set; }
     [Parameter, EditorRequired] public Field<TValue>? Field { get; set; }
     [Parameter] public EventCallback<TValue> BoundValueChanged { get; set; }
-    protected async Task BoundValueChangedHandler() =>
-        await BoundValueChanged.InvokeAsync(BoundValue);
+    protected void BoundValueChangedHandler() => 
+        dispatcher.Dispatch(new UpdateFieldAction(Field, BoundValue));
+
 
     protected override void OnParametersSet()
     {
@@ -27,7 +31,7 @@ public abstract class GenericInputBase<TValue> : ComponentBase
         _readWrite = FieldUtility.IsReadWrite(Field);
         _required = FieldUtility.IsRequired(Field);
         _onlyForDisplay = FieldUtility.IsOnlyForDisplay(Field);
-
     }
+
 }
 

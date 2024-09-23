@@ -60,13 +60,13 @@
         _tooltipText = Field?.Description ?? Field?.Name;
     }
 
-    private async void OnValueChanged(T boundValue)
+    private void OnValueChanged(T boundValue)
     {
         if (_isOpen)
             return;
 
         BoundValue = boundValue;
-        await BoundValueChangedHandler();
+        BoundValueChangedHandler();
     }
 
     public void DropDownClosedHandler() => _isOpen = false;

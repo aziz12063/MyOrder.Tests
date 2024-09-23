@@ -62,56 +62,11 @@ public abstract class BaseFluxorComponent<TState, TAction> : ComponentBase, IDis
 
     protected void SetBasketOrderValue<T>(Field<T>? field, T value, string? procedureCallValue)
     {
-        if (field == null)
-        {
-            Logger.LogWarning("Trying to update a null field at {StackTrace}", LogUtility.GetStackTrace());
-            return;
-        }
-
-        if (EqualityComparer<T>.Default.Equals(field.Value, value))
-        {
-            Logger.LogWarning("Trying to update the field with the same value at {StackTrace}", LogUtility.GetStackTrace());
-            // Logger.LogWarning($"the updated  value is {value} and the old value is {field.Value}");
-            return;
-        }
-
         // Set the field value
-        field.Value = value;
-        try
-        {
-#pragma warning disable CS0618 // Type or member is obsolete
-            UpdateProcedureCall(procedureCallValue, field.ProcedureCall);
-#pragma warning restore CS0618 // Type or member is obsolete
-        }
-        catch (ArgumentNullException e)
-        {
-            Logger.LogError(e, "Error while updating procedure call for {Field}", field);
-        }
+        //field.Value = value;   
 
     }
 
-    // This method should only be called from SetBasketOrderValue, make private and remove the Obsolete attribute once the method is no longer used
-    private void UpdateProcedureCall(string? newValue, List<string?>? procedureCall)
-    {
-        if (procedureCall is null || procedureCall.Count < 1)
-        {
-            throw new ArgumentNullException(nameof(procedureCall), "ProcedureCall is either null or has 0 item.");
-        }
-
-        procedureCall[^1] = newValue ?? string.Empty; // Update with the new value or empty string if null
-
-        bool pcdCallContainsNull = procedureCall
-            .Take(procedureCall.Count - 2)
-            .Any(item => item == null);
-
-        if (pcdCallContainsNull)
-            Logger.LogWarning("ProcedureCall contains a null item.");
-
-        Logger.LogInformation("Dispatching procedure call:\n{procedure}", procedureCall);
-
-        // ToList() to Create a copy of the ProcedureCall list ensuring it's not modified in the process
-        Dispatcher.Dispatch(new PostProcedureCallAction(BasketId, procedureCall.ToList()));
-    }
 
     protected static string GetFieldValue(string? value) => FieldUtility.NullOrWhiteSpaceHelper(value);
 

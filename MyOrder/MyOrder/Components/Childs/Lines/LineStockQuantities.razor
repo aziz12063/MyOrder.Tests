@@ -15,9 +15,8 @@
                 }
                 else
                 {
-                    var field = new Shared.Dtos.SharedComponents.Field<BasketValueDto>();
                     <GenericMudSelect Variant="Variant.Outlined"
-                                      @bind-BoundValue="field.Value"
+                                      @bind-BoundValue="LogisticFlowValue"
                                       Field="BasketLine?.LogisticFlow"
                                       Items="LogisticFlows" />
                 }

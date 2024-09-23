@@ -1,7 +1,7 @@
 ﻿@using MyOrder.Components.Common.Input
 @using MyOrder.Store.LinesUseCase
 @using static MudBlazor.CategoryTypes
-@inherits MyOrder.Components.Common.BaseFluxorComponent<LinesState, FetchLinesAction>
+@inherits BaseFluxorComponent<LinesState, FetchLinesAction>
 
 @if (State.Value.IsLoading)
 {
@@ -188,17 +188,17 @@
                 {
                     <!--S1-->
                     <MudItem Class="pa-3" xs="12" sm="3">
-                        <LineArticleDetails BasketLine="@basketLineDto" UpdateReasons="UpdateReasons" SetBasketOrderValue="OnSetHandler" />
+                        <LineArticleDetails BasketLine="@context.Item" UpdateReasons="UpdateReasons" />
                     </MudItem>
 
                     <!--S2-->
                     <MudItem Class="pa-3" xs="12" sm="5">
-                        <LineStockQuantities BasketLine="@basketLineDto" SetBasketOrderValue="OnSetHandler" />
+                        <LineStockQuantities BasketLine="@context.Item" />
                     </MudItem>
 
                     <!--S3-->
                     <MudItem Class="pa-3" xs="12" sm="4">
-                        <LinePricesQuantities BasketLine="@basketLineDto" SetBasketOrderValue="OnSetHandler" />
+                        <LinePricesQuantities BasketLine="@context.Item"/>
                     </MudItem>
                 }
             </MudGrid>
@@ -210,10 +210,4 @@
     private bool _open = false;
 
     private void ToggleOpen() => _open = !_open;
-
-    private void OnSetHandler((dynamic field, dynamic value, string st) args)
-    {
-        SetBasketOrderValue(args.field, args.value, args.st);
-    }
-
 }

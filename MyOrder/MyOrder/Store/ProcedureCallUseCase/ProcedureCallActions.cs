@@ -1,12 +1,14 @@
 ﻿using MyOrder.Shared.Dtos;
+using MyOrder.Shared.Dtos.SharedComponents;
 
 namespace MyOrder.Store.ProcedureCallUseCase
 {
-    public class PostProcedureCallAction(string basketId, List<string?> procedureCall)
+    public class UpdateFieldAction(IField field, dynamic value)
     {
-        public List<string?> ProcedureCall { get; } = procedureCall;
-        public string BasketId { get; } = basketId;
+        public IField Field { get; } = field;
+        public dynamic Value { get; } = value;
     }
+
     public class PostProcedureCallSuccessAction(string basketId, ProcedureCallResponseDto procedureCallResponse)
     {
         public ProcedureCallResponseDto ProcedureCallResponse { get; set; } = procedureCallResponse;
