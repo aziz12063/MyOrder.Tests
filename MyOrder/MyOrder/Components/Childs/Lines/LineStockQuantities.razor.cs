@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MyOrder.Shared.Dtos.Lines;
 using MyOrder.Shared.Dtos;
+using MyOrder.Utils;
 
 namespace MyOrder.Components.Childs.Lines;
 
@@ -9,31 +10,17 @@ partial class LineStockQuantities
     [Parameter]
     public BasketLineDto? BasketLine { get; set; }
 
-    [Parameter]
-    public EventCallback<(dynamic?, dynamic?, string?)> SetBasketOrderValue { get; set; }
+    [Parameter, EditorRequired]
+    public List<BasketValueDto?>? UpdateReasons { get; set; }
 
-    private BasketValueDto? LogisticFlowValue
-    {
-        get => BasketLine?.LogisticFlow?.Value;
-        set => SetBasketOrderValue(field: BasketLine?.LogisticFlow, value: value, procedureCallValue: value?.Value);
-    }
+    [Parameter, EditorRequired]
+    public List<BasketValueDto?>? LogisticFlows { get; set; }
 
-    private bool? IsCustomDeliveryDateValue
+    private bool DelivaryDateReadOnly(BasketLineDto basketLineDto)
     {
-        get => BasketLine?.IsCustomDeliveryDate?.Value;
-        set => SetBasketOrderValue(field: BasketLine?.IsCustomDeliveryDate, value: value, procedureCallValue: value?.ToString());
+        if (!FieldUtility.IsReadOnly(basketLineDto.DeliveryDate) && !FieldUtility.IsReadOnly(basketLineDto.IsCustomDeliveryDate) && basketLineDto.IsCustomDeliveryDate?.Value == true)
+            return false;
+        return true;
     }
-
-    private string? InventLocationIdValue
-    {
-        get => BasketLine?.InventLocationId?.Value;
-        set => SetBasketOrderValue(field: BasketLine?.InventLocationId, value: value, procedureCallValue: value);
-    }
-    private string? DeliveryDateValue
-    {
-        get => BasketLine?.DeliveryDate?.Value;
-        set => SetBasketOrderValue(field: BasketLine?.DeliveryDate, value: value, procedureCallValue: value);
-    }
-
 
 }

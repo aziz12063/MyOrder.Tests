@@ -1,10 +1,8 @@
-﻿
-<MudStack Spacing="6" Justify="Justify.SpaceBetween" Style="height: inherit;">
+﻿<MudStack Spacing="6" Justify="Justify.SpaceBetween" Style="height: inherit;">
     <MudItem>
         <MudGrid>
             <MudItem xs="6">
                 <MudStack Spacing="1">
-
                     <!--Code article-->
                     <MudItem xs="12">
                         <MudElement @onclick="(() => HandlePopOverOnClick())">
@@ -18,7 +16,6 @@
                     </MudItem>
                     <!--Motif Modif-->
                     <GenericMudSelect Variant="Variant.Outlined"
-                                      
                                       Field="BasketLine?.UpdateReason"
                                       Items="UpdateReasons" />
 
@@ -31,8 +28,7 @@
                 <MudStack Spacing="1">
                     <!--N de ligne-->
                     <MudItem>
-                        <GenericTextField Field="@BasketLine!.LineNum"
-                                           />
+                        <GenericTextField Field="@BasketLine!.LineNum"/>
                     </MudItem>
 
                     <!--Quantité initiale-->
@@ -74,7 +70,7 @@
                           Required="@FieldUtility.IsRequired(BasketLine?.ProductInfo)"
                           ReadOnly="@FieldUtility.IsReadOnly(BasketLine?.ProductInfo)"
                           Disabled="@FieldUtility.IsHidden(BasketLine?.ProductInfo)"
-                          @bind-Value="ProductInfoValue">
+                          Value="BasketLine?.ProductInfo?.Value">
             </MudTextField>
         </div>
     </MudStack>

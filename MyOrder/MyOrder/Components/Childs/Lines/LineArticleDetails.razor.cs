@@ -18,29 +18,6 @@ public partial class LineArticleDetails
     [Parameter]
     public EventCallback<(dynamic?, dynamic?, string?)> SetBasketOrderValue { get; set; }
 
-    private BasketValueDto? UpdateReasonValue
-    {
-        get => BasketLine?.UpdateReason?.Value;
-        set => SetBasketOrderValue.InvokeAsync((BasketLine?.UpdateReason, value, value?.Value));
-    }
-    private BasketValueDto? LogisticFlowValue
-    {
-        get => BasketLine?.LogisticFlow?.Value;
-        set => SetBasketOrderValue.InvokeAsync((BasketLine?.LogisticFlow, value, value?.Value));
-    }
-
-    private int? LineNumValue
-    {
-        get => BasketLine?.LineNum?.Value;
-        set => SetBasketOrderValue.InvokeAsync((BasketLine?.LineNum,  value,  value?.ToString()));
-    }
-
-    private string? ProductInfoValue
-    {
-        get => BasketLine?.ProductInfo?.Value;
-        set => SetBasketOrderValue.InvokeAsync((BasketLine?.ProductInfo, value, value));
-    }
-
     private void HandlePopOverOnClick()
     {
         _openPopOver = !_openPopOver;

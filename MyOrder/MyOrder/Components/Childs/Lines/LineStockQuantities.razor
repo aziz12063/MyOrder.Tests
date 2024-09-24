@@ -1,25 +1,13 @@
-﻿@inherits MyOrder.Components.Childs.Lines.Lines
-
-<MudStack>
+﻿<MudStack>
     <MudGrid>
         <!--1-->
         <MudItem xs="6">
             <MudStack Spacing="1">
                 <!--Flux Logistique-->
-                @if (BasketLine?.LogisticFlow != null)
-                {
-                    <GenericMudSelect Variant="Variant.Outlined"
-                                      
-                                      Field="BasketLine.LogisticFlow"
-                                      Items="LogisticFlows" />
-                }
-                else
-                {
-                    <GenericMudSelect Variant="Variant.Outlined"
-                                      
-                                      Field="BasketLine?.LogisticFlow"
-                                      Items="LogisticFlows" />
-                }
+                <GenericMudSelect Variant="Variant.Outlined"
+                                  Field="BasketLine.LogisticFlow"
+                                  Items="LogisticFlows" />
+
                 <!--Livré maintenant-->
                 <DisplayField Field="@BasketLine?.PhysicalAvailableQuantity" />
 
@@ -28,7 +16,6 @@
 
                 <!--Type d'article-->
                 <DisplayField Field="@BasketLine?.ItemType" />
-
             </MudStack>
         </MudItem>
         <!--2-->
@@ -37,7 +24,6 @@
                 <!--Entrepot-->
                 <GenericMudSelect Variant="Variant.Outlined"
                                   T="string"
-                                  
                                   Field="BasketLine?.InventLocationId"
                                   Items="UpdateReasons?.Select(item => item?.Value).ToList()" />
 
@@ -50,14 +36,13 @@
                 <MudGrid>
                     <!--Date de liv manuelle-->
                     <MudItem Class="align-self-center">
-                        <MudCheckBox @bind-Value="IsCustomDeliveryDateValue">
+                        <MudCheckBox Value="BasketLine?.IsCustomDeliveryDate">
                         </MudCheckBox>
                     </MudItem>
                     <!--Date de liv-->
                     <MudItem xs="10">
                         <GenericTextField Field="@BasketLine!.DeliveryDate"
-                                          ReadOnly="@DelivaryDateReadOnly(BasketLine)"
-                                           />
+                                          ReadOnly="@DelivaryDateReadOnly(BasketLine)" />
                     </MudItem>
                 </MudGrid>
             </MudStack>
