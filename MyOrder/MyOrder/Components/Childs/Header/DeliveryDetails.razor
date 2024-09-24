@@ -36,7 +36,6 @@
                 <GenericMudSelect T="AccountDto"
                                   Field="BasketDeliveryInfo!.Account"
                                   Items="Accounts"
-                                  @bind-BoundValue="AccountValue"
                                   Variant="Variant.Outlined" />
 
                 <DisplayAddress Address="@DisplayAddress" />
@@ -70,7 +69,6 @@
             <GenericMudSelect T="ContactDto"
                               Field="BasketDeliveryInfo!.Contact"
                               Items="Contacts"
-                              @bind-BoundValue="ContactValue"
                               Variant="Variant.Outlined" />
 
             <ContactInfo Contact="BasketDeliveryInfo!.Contact?.Value" />
@@ -80,8 +78,7 @@
     <!-- Informations de livraison -->
     <MudStack Spacing="0">
         <MudText Typo="Typo.subtitle1">Informations de livraison</MudText>
-        <GenericMudSelect @bind-BoundValue="DeliveryModeValue"
-                          Field="BasketDeliveryInfo!.DeliveryMode"
+        <GenericMudSelect Field="BasketDeliveryInfo!.DeliveryMode"
                           Items="DeliveryModes" />
 
         @if (!FieldUtility.IsHidden(BasketDeliveryInfo!.CompleteDelivery))

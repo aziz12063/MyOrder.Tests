@@ -17,7 +17,6 @@
         <MudStack Justify="Justify.SpaceBetween">
             <!--1-->
             <GenericMudSelect Variant="Variant.Outlined"
-                              @bind-BoundValue="@CouponValue"
                               Field="BasketPricesInfo!.Coupon"
                               Items="Coupons" />
 
@@ -43,7 +42,6 @@
             <MudGrid>
                 <MudItem xs="6">
                     <GenericMudSelect Variant="Variant.Outlined"
-                                      @bind-BoundValue="@WarrantyCostOptionsValue"
                                       Field="BasketPricesInfo?.WarrantyCostOption"
                                       Items="WarrantyCostOptions" />
                 </MudItem>
@@ -56,15 +54,13 @@
             <MudGrid>
                 <MudItem xs="6">
                     <GenericMudSelect Variant="Variant.Outlined"
-                                      @bind-BoundValue="@ShippingCostOptionValue"
                                       Field="BasketPricesInfo?.ShippingCostOption"
                                       Items="ShippingCostOptions" />
                 </MudItem>
                 <MudItem xs="6">
                     <GenericTextField Format="C"
                                       Culture="cultureInfo"
-                                      Field="BasketPricesInfo!.ShippingCostAmount"
-                                      @bind-BoundValue="ShippingCostAmountValue" />
+                                      Field="BasketPricesInfo!.ShippingCostAmount" />
                 </MudItem>
             </MudGrid>
 
@@ -96,8 +92,7 @@
     <MudItem xs="3">
         <MudStack Justify="Justify.SpaceBetween">
             <!--1-->
-            <GenericTextField Field="BasketPricesInfo?.OrderDiscountRate"
-                              @bind-BoundValue="OrderDiscountRateValue" />
+            <GenericTextField Field="BasketPricesInfo?.OrderDiscountRate" />
 
             <!--2-->
             <DisplayField Field="BasketPricesInfo!.DiscountAmount" />

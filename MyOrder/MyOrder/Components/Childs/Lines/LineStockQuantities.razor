@@ -9,14 +9,14 @@
                 @if (BasketLine?.LogisticFlow != null)
                 {
                     <GenericMudSelect Variant="Variant.Outlined"
-                                      @bind-BoundValue="LogisticFlowValue"
+                                      
                                       Field="BasketLine.LogisticFlow"
                                       Items="LogisticFlows" />
                 }
                 else
                 {
                     <GenericMudSelect Variant="Variant.Outlined"
-                                      @bind-BoundValue="LogisticFlowValue"
+                                      
                                       Field="BasketLine?.LogisticFlow"
                                       Items="LogisticFlows" />
                 }
@@ -37,7 +37,7 @@
                 <!--Entrepot-->
                 <GenericMudSelect Variant="Variant.Outlined"
                                   T="string"
-                                  @bind-BoundValue="InventLocationIdValue"
+                                  
                                   Field="BasketLine?.InventLocationId"
                                   Items="UpdateReasons?.Select(item => item?.Value).ToList()" />
 
@@ -57,7 +57,7 @@
                     <MudItem xs="10">
                         <GenericTextField Field="@BasketLine!.DeliveryDate"
                                           ReadOnly="@DelivaryDateReadOnly(BasketLine)"
-                                          @bind-BoundValue="DeliveryDateValue" />
+                                           />
                     </MudItem>
                 </MudGrid>
             </MudStack>

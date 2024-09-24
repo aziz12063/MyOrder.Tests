@@ -39,21 +39,6 @@ public partial class DeliveryDetails : BaseFluxorComponent<DeliveryInfoState, Fe
 
     protected override FetchDeliveryInfoAction CreateFetchAction(DeliveryInfoState state, string basketId) => new(state, basketId);
 
-    private AccountDto? AccountValue
-    {
-        get => BasketDeliveryInfo?.Account?.Value;
-        set => SetBasketOrderValue(field: BasketDeliveryInfo!.Account, value: value, procedureCallValue: value?.AccountId);
-    }
-    private ContactDto? ContactValue
-    {
-        get => BasketDeliveryInfo?.Contact?.Value;
-        set => SetBasketOrderValue(field: BasketDeliveryInfo!.Contact, value: value, procedureCallValue: value?.ContactId);
-    }
-    private BasketValueDto? DeliveryModeValue
-    {
-        get => BasketDeliveryInfo?.DeliveryMode?.Value;
-        set => SetBasketOrderValue(field: BasketDeliveryInfo!.DeliveryMode, value: value, procedureCallValue: value?.Value);
-    }
     private bool? CompleteDelivery
     {
         get => BasketDeliveryInfo?.CompleteDelivery?.Value;

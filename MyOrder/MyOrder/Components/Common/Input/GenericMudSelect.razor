@@ -20,7 +20,7 @@
                    Error="_required"
                    ReadOnly="_readOnly"
                    Disabled="_readOnly"
-                   Value="BoundValue"
+                   Value="ValueProperty"
                    ValueChanged="OnValueChanged"
                    OnClose="DropDownClosedHandler"
                    OnOpen="DropDownOpenedHandler">
@@ -60,12 +60,12 @@
         _tooltipText = Field?.Description ?? Field?.Name;
     }
 
-    private void OnValueChanged(T boundValue)
+    private void OnValueChanged(T value)
     {
         if (_isOpen)
             return;
 
-        BoundValue = boundValue;
+        ValueProperty = value;
         BoundValueChangedHandler();
     }
 

@@ -33,10 +33,8 @@
                 </MudStack>
             </HeaderContent>
             <BodyContent>
-                <GenericMudSelect T="AccountDto"
-                                  Field="BasketInvoiceInfo!.Account"
+                <GenericMudSelect Field="BasketInvoiceInfo!.Account"
                                   Items="InvoiceToAccounts"
-                                  @bind-BoundValue="AccountValue"
                                   Variant="Variant.Outlined" />
 
                 <DisplayAddress Address="@DisplayAddress" />
@@ -63,7 +61,6 @@
                 }
                 <MudItem xs="6">
                     <GenericMudSelect Variant="Variant.Outlined"
-                                      @bind-BoundValue="PaymentModeValue"
                                       Field="BasketInvoiceInfo!.PaymentMode"
                                       Items="PaymentModes" />
 
@@ -87,33 +84,12 @@
 
                 <!--Groupe de taxe-->
                 <GenericMudSelect Field="BasketInvoiceInfo!.TaxGroup"
-                                  @bind-BoundValue="TaxGroupValue"
                                   Items="TaxGroups"
                                   Variant="Variant.Outlined" />
                 <!--Executing Service-->
-                @if (!FieldUtility.IsHidden(BasketInvoiceInfo!.PublicEntityExecutingService))
-                {
-                    <MudTextField Typo="Typo.body2"
-                                  Margin="Margin.Dense"
-                                  Variant="Variant.Text"
-                                  FullWidth="true"
-                                  ReadOnly="@FieldUtility.IsReadOnly(BasketInvoiceInfo!.PublicEntityExecutingService)"
-                                  Disabled="@FieldUtility.IsOnlyForDisplay(BasketInvoiceInfo!.PublicEntityExecutingService)"
-                                  Label="@BasketInvoiceInfo!.PublicEntityExecutingService?.Name"
-                                  @bind-Value="PublicEntityExecutingServiceValue" />
-                }
+                <GenericTextField Field="BasketInvoiceInfo!.PublicEntityExecutingService" />
                 <!--Legal Commitment-->
-                @if (!FieldUtility.IsHidden(BasketInvoiceInfo!.PublicEntityLegalCommitment))
-                {
-                    <MudTextField Typo="Typo.body2"
-                                  Margin="Margin.Dense"
-                                  Variant="Variant.Text"
-                                  FullWidth="true"
-                                  ReadOnly="@FieldUtility.IsReadOnly(BasketInvoiceInfo!.PublicEntityLegalCommitment)"
-                                  Disabled="@FieldUtility.IsOnlyForDisplay(BasketInvoiceInfo!.PublicEntityLegalCommitment)"
-                                  Label="@BasketInvoiceInfo!.PublicEntityLegalCommitment?.Name"
-                                  @bind-Value="@PublicEntityLegalCommitmentValue" />
-                }
+                <GenericTextField Field="BasketInvoiceInfo!.PublicEntityLegalCommitment" />
             </MudStack>
         </MudCardContent>
     </MudCard>

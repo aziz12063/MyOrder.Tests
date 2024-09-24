@@ -45,32 +45,6 @@ public partial class InvoiceDetails : BaseFluxorComponent<InvoiceInfoState, Fetc
         isLoading = State.Value.IsLoading;
     }
 
-    private AccountDto? AccountValue
-    {
-        get => BasketInvoiceInfo?.Account?.Value;
-        set => SetBasketOrderValue(field: BasketInvoiceInfo!.Account, value: value, procedureCallValue: value?.AccountId);
-    }
-    private BasketValueDto? TaxGroupValue
-    {
-        get => BasketInvoiceInfo?.TaxGroup?.Value;
-        set => SetBasketOrderValue(field: BasketInvoiceInfo!.TaxGroup, value: value, procedureCallValue: value?.Value);
-    }
-    private BasketValueDto? PaymentModeValue
-    {
-        get => BasketInvoiceInfo?.PaymentMode?.Value;
-        set => SetBasketOrderValue(field: BasketInvoiceInfo!.PaymentMode, value: value, procedureCallValue: value?.Value);
-    }
-    private string PublicEntityExecutingServiceValue
-    {
-        get => FieldUtility.NullOrWhiteSpaceHelper(BasketInvoiceInfo?.PublicEntityExecutingService?.Value);
-        set => SetBasketOrderValue(field: BasketInvoiceInfo!.PublicEntityExecutingService, value: value, procedureCallValue: value);
-    }
-    private string PublicEntityLegalCommitmentValue
-    {
-        get => FieldUtility.NullOrWhiteSpaceHelper(BasketInvoiceInfo?.PublicEntityExecutingService?.Value);
-        set => SetBasketOrderValue(field: BasketInvoiceInfo!.PublicEntityLegalCommitment, value: value, procedureCallValue: value);
-    }
-
     private bool IsPublicEntityValue =>
         FieldUtility.NullOrWhiteSpaceHelper(BasketInvoiceInfo?.IsPublicEntity);
 

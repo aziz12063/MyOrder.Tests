@@ -1,25 +1,25 @@
 ﻿<!--Tarification-->
 <GenericMudSelect Variant="Variant.Outlined"
                   T="BasketValueDto"
-                  @bind-BoundValue="DiscountTypeValue"
+                  
                   Field="BasketLine!.DiscountType"
                   Items="BasketLine.DiscountTypes" />
 
 <!--Description-->
 <GenericTextField Field="@BasketLine!.DiscountDescription"
-                  @bind-BoundValue="DiscountDescriptionValue" />
+                   />
 
 <!--Remise sup-->
 <MudGrid>
     <MudItem xs="6">
         <GenericTextField Field="@BasketLine!.DiscountRate"
-                          @bind-BoundValue="DiscountRateValue" />
+                           />
     </MudItem>
     <MudItem xs="6">
 
         <!--PU HT-->
         <GenericTextField Field="@BasketLine!.DiscountPrice"
-                          @bind-BoundValue="DiscountPriceValue" />
+                           />
     </MudItem>
 </MudGrid>
 

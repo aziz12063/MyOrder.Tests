@@ -16,16 +16,20 @@ public abstract class GenericInputBase<TValue> : ComponentBase
     [Inject] protected IDispatcher Dispatcher { get; set; }
 
     [Parameter] public bool? ReadOnly { get; set; } = null;
-    [Parameter, EditorRequired] public TValue? BoundValue { get; set; }
+    protected TValue? ValueProperty { get; set; }
     [Parameter, EditorRequired] public Field<TValue>? Field { get; set; }
-    [Parameter] public EventCallback<TValue> BoundValueChanged { get; set; }
-    protected void BoundValueChangedHandler() => 
-        Dispatcher.Dispatch(new UpdateFieldAction(Field, BoundValue));
+    protected void BoundValueChangedHandler() =>
+        Dispatcher.Dispatch(new UpdateFieldAction(Field, ValueProperty));
 
 
     protected override void OnParametersSet()
     {
         base.OnParametersSet();
+
+        if (Field == null)
+            return;
+
+        ValueProperty = Field.Value;
         _hidden = FieldUtility.IsHidden(Field);
         _readOnly = ReadOnly ?? FieldUtility.IsReadOnly(Field);
         _readWrite = FieldUtility.IsReadWrite(Field);

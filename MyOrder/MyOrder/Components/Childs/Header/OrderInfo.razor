@@ -45,7 +45,6 @@
 
                 <GenericMudSelect Variant="Variant.Outlined"
                                   T="ContactDto"
-                                  @bind-BoundValue="ContactValue"
                                   Field="BasketOrderInfo!.Contact"
                                   Items="Contacts" />
 
@@ -86,47 +85,32 @@
                     <MudItem xs="12">
                         <MudGrid Justify="Justify.SpaceBetween">
                             <MudItem xs="6">
-                                <GenericMudSelect @bind-BoundValue="SalesOriginIdValue"
-                                                  Field="BasketOrderInfo!.SalesOriginId"
+                                <GenericMudSelect Field="BasketOrderInfo!.SalesOriginId"
                                                   Items="SalesOrigins" />
 
                             </MudItem>
                             <MudItem xs="6">
-                                <GenericMudSelect @bind-BoundValue="WebOriginIdValue"
-                                                  Field="BasketOrderInfo!.WebOriginId"
+                                <GenericMudSelect Field="BasketOrderInfo!.WebOriginId"
                                                   Items="WebOrigins" />
                             </MudItem>
                         </MudGrid>
                     </MudItem>
                     <MudItem xs="12">
-                        <GenericMudSelect @bind-BoundValue="SalesPoolId"
-                                          Field="BasketOrderInfo!.SalesPoolId"
+                        <GenericMudSelect Field="BasketOrderInfo!.SalesPoolId"
                                           Items="SalesPools" />
 
                     </MudItem>
                     <!-- Customer Ref-->
                     <MudItem xs="12">
-                        <GenericTextField Field="@BasketOrderInfo!.CustomerOrderRef"
-                                          @bind-BoundValue="CustomerOrderRefValue" />
+                        <GenericTextField Field="BasketOrderInfo!.CustomerOrderRef" />
                     </MudItem>
                     <!-- Web Sales-->
                     <MudItem xs="12">
-                        <GenericTextField Field="@BasketOrderInfo!.WebSalesId"
-                                          @bind-BoundValue="WebSalesIdValue" />
+                        <GenericTextField Field="BasketOrderInfo!.WebSalesId" />
                     </MudItem>
                     <!-- Related Link-->
                     <MudItem xs="12">
-                        @if (!FieldUtility.IsHidden(BasketOrderInfo!.RelatedLink))
-                        {
-                            <MudTextField Typo="Typo.body2"
-                                          Margin="Margin.Dense"
-                                          Variant="Variant.Text"
-                                          FullWidth="true"
-                                          Required="FieldUtility.IsRequired(BasketOrderInfo.RelatedLink)"
-                                          ReadOnly="FieldUtility.IsReadOnly(BasketOrderInfo.RelatedLink)"
-                                          Label="@BasketOrderInfo.RelatedLink?.Name"
-                                          @bind-Value="@RelatedLinkValue" />
-                        }
+                        <GenericTextField Field="BasketOrderInfo.RelatedLink" />
                     </MudItem>
                 </MudGrid>
             </MudStack>

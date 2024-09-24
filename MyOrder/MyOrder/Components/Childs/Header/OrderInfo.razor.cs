@@ -49,37 +49,6 @@ public partial class OrderInfo : BaseFluxorComponent<OrderInfoState, FetchOrderI
         isLoading = State.Value.IsLoading || RessourcesState.Value.IsLoading;
     }
 
-    private ContactDto? ContactValue
-    {
-        get => BasketOrderInfo?.Contact?.Value;
-        set => SetBasketOrderValue(field: BasketOrderInfo!.Contact, value: value, procedureCallValue: value?.ContactId);
-    }
-    private BasketValueDto? SalesOriginIdValue
-    {
-        get => BasketOrderInfo?.SalesOriginId?.Value;
-        set => SetBasketOrderValue(field: BasketOrderInfo!.SalesOriginId, value: value, procedureCallValue: value?.Value);
-
-    }
-    private BasketValueDto? WebOriginIdValue
-    {
-        get => BasketOrderInfo?.WebOriginId?.Value;
-        set => SetBasketOrderValue(field: BasketOrderInfo!.WebOriginId, value: value, procedureCallValue: value?.Value);
-    }
-    private BasketValueDto? SalesPoolId
-    {
-        get => BasketOrderInfo?.SalesPoolId?.Value;
-        set => SetBasketOrderValue(field: BasketOrderInfo!.SalesPoolId, value: value, procedureCallValue: value?.Value);
-    }
-    private string CustomerOrderRefValue
-    {
-        get => GetFieldValue(BasketOrderInfo?.CustomerOrderRef?.Value);
-        set => SetBasketOrderValue(field: BasketOrderInfo!.CustomerOrderRef, value: value, procedureCallValue: value);
-    }
-    private string WebSalesIdValue
-    {
-        get => GetFieldValue(BasketOrderInfo?.WebSalesId?.Value);
-        set => SetBasketOrderValue(field: BasketOrderInfo!.WebSalesId, value: value, procedureCallValue: value);
-    }
     private string RelatedLinkValue
     {
         get => GetFieldValue(BasketOrderInfo?.RelatedLink?.Value);
