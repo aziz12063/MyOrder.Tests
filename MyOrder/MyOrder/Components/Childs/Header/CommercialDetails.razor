@@ -55,7 +55,7 @@
                              Class="my-data-grid mx-n3">
                     <Columns>
                         <PropertyColumn Property="x => x.ContractId.Value " Title="@BasketTradeInfoDto?.Contract?.ContractId?.Name" />
-                        <PropertyColumn Property="x => x.ContractGroup.Name" Title="@BasketTradeInfoDto?.Contract?.ContractGroup?.Name" />
+                        <PropertyColumn Property="x => x.ContractGroup.Value" Title="@BasketTradeInfoDto?.Contract?.ContractGroup?.Name" />
                         <PropertyColumn Property="x => x.Status.Value" Title="@BasketTradeInfoDto?.Contract?.Status?.Name" />
 
                     </Columns>
@@ -85,7 +85,6 @@
                     </MudItem>
                 </MudGrid>
 
-                <DisplayField Field="Contract?.CampaignId" />
                 <DisplayField Field="Contract?.CampaignId" />
                 <DisplayField Field="Contract?.MainContact" />
                 <DisplayField Field="Contract?.OfficeExecutive" />

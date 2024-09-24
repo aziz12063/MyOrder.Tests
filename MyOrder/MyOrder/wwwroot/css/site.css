@@ -64,9 +64,9 @@
     transition: border-color 0.2s ease-in-out;
 }
 
-.readonly-field input:hover {
-    border-color: #a6a6a6; /* Slightly darker border on hover */
-}
+    .readonly-field input:hover {
+        border-color: #a6a6a6; /* Slightly darker border on hover */
+    }
 
 .readwrite-field input {
     background-color: #ffffff; /* White background to make it clear this is an editable field */
@@ -75,21 +75,40 @@
     padding: 0.5rem;
 }
 
-.readwrite-field input:focus {
-    border-color: #3498db; /* Blue border on focus */
-    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5); /* Soft blue shadow for focus */
-}
+    .readwrite-field input:focus {
+        border-color: #3498db; /* Blue border on focus */
+        box-shadow: 0 0 5px rgba(52, 152, 219, 0.5); /* Soft blue shadow for focus */
+    }
 
-.readwrite-field input:hover {
-    border-color: #2980b9; /* Darker blue border on hover */
-}
+    .readwrite-field input:hover {
+        border-color: #2980b9; /* Darker blue border on hover */
+    }
 
 .add-basket-dialog-field span:nth-of-type(2) {
-   width:100%;
+    width: 100%;
 }
 
+/*======================= Tabs inside Dialogs =======================*/
 
+.tabfix .mud-tab-slider.mud-tab-slider-horizontal {
+    height: 0px;
+}
 
+.tabfix .mud-tab.mud-tab-active {
+    border-bottom: 2px solid var(--mud-palette-primary);
+}
+
+.mud-tab {
+    font-size: 12px; /* Reduces the text size */
+    min-width: unset !important; /* Removes the default minimum width */
+    padding: 0 10px !important; /* Adjusts horizontal padding */
+}
+
+    .mud-tab .mud-icon {
+        font-size: 16px; /* Reduces the icon size */
+    }
+
+/*===================================================================*/
 
 /*===============*/
 .my-data-grid .mud-data-grid-header th,

@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using MudBlazor;
+using MyOrder.Components.Childs.Lines.AddLine;
 using MyOrder.Components.Common;
+using MyOrder.Components.Common.Dialogs;
 using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.Lines;
 using MyOrder.Shared.Dtos.SharedComponents;
@@ -15,7 +17,7 @@ namespace MyOrder.Components.Childs.Lines;
 
 public partial class Lines : BaseFluxorComponent<LinesState, FetchLinesAction>
 {
-    [Inject] IDialogService? DialogService { get; set; }
+    [Inject] IDialogService DialogService { get; set; }
     private BasketOrderLinesDto? BasketOrderLinesDto { get; set; }
     protected List<BasketValueDto?>? UpdateReasons { get; set; }
     protected List<BasketValueDto?>? LogisticFlows { get; set; }
@@ -85,36 +87,16 @@ public partial class Lines : BaseFluxorComponent<LinesState, FetchLinesAction>
             }
             SetBasketOrderValue(field: field, value: value, procedureCallValue: pcdCallValue);
     }
-    protected void HandleIntervalElapsed(string debouncedText)
-    {
-        //int value = Int32.Parse(debouncedText);
-        //CheckQuantityValue(value);
-    }
-
+    
     private string? CheckQuantityValue(int? value)
     {
         if (value == null || value == 0)
-            return "Quatity is required";
+            return "Quantity is required";
         if (value % 25 != 0)
         {
-            return "Quantity don't match ";
+            return "Quantity doesn't match";
         }
         return null;
-    }
-
-    // is called when a cell is modifyed
-    private void CommittedItemChanges(BasketLineDto item)
-    {
-
-        Logger.LogInformation($"CommittedItemChanges is called for line nbr {item.LineNum?.Value}");
-
-    }
-    
-    void HandleRowDoubleClick(MouseEventArgs args, BasketLineDto item)
-    {
-
-        Console.WriteLine("the HandleRowDoubleClick is double clicked");
-
     }
 
     // is called when chekbox a row
@@ -122,6 +104,19 @@ public partial class Lines : BaseFluxorComponent<LinesState, FetchLinesAction>
     {
         // selectedBasketLineDto.Clear();
         selectedBasketLineDto = items.ToList();
+    }
+
+    private Task OpenAddLineDialogAsync()
+    {
+        var options = new DialogOptions 
+        { 
+            CloseOnEscapeKey = true, 
+            FullWidth = true, 
+            MaxWidth = MaxWidth.Medium, 
+            CloseButton = true 
+        };
+
+        return DialogService.ShowAsync<AddLineDialog>("AddLineDialog", options);
     }
 
 
