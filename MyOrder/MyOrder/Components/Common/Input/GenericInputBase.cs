@@ -13,14 +13,14 @@ public abstract class GenericInputBase<TValue> : ComponentBase
     protected bool _required;
     protected bool _onlyForDisplay;
 
-    [Inject] protected IDispatcher dispatcher { get; set; }
+    [Inject] protected IDispatcher Dispatcher { get; set; }
 
     [Parameter] public bool? ReadOnly { get; set; } = null;
     [Parameter, EditorRequired] public TValue? BoundValue { get; set; }
     [Parameter, EditorRequired] public Field<TValue>? Field { get; set; }
     [Parameter] public EventCallback<TValue> BoundValueChanged { get; set; }
     protected void BoundValueChangedHandler() => 
-        dispatcher.Dispatch(new UpdateFieldAction(Field, BoundValue));
+        Dispatcher.Dispatch(new UpdateFieldAction(Field, BoundValue));
 
 
     protected override void OnParametersSet()

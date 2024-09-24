@@ -1,4 +1,5 @@
 ﻿@page "/CreateBasket"
+@layout DefaultLayout
 
 @using Fluxor
 @using Microsoft.AspNetCore.WebUtilities
@@ -7,25 +8,21 @@
 @inject NavigationManager navigationManager
 @inject IDispatcher dispatcher
 
-
-
 @rendermode InteractiveServer
 
 @code {
 
     protected override void OnInitialized()
     {
-        // Parse the query string parameters
         var uri = navigationManager.ToAbsoluteUri(navigationManager.Uri);
         var queryParams = QueryHelpers.ParseQuery(uri.Query);
 
-        // Convert StringValues to take only one string
+        // Convert StringValues to take only one string per key
         var postData = queryParams.ToDictionary(
             kvp => kvp.Key,
             kvp => kvp.Value.FirstOrDefault() ?? string.Empty
         );
 
         dispatcher.Dispatch(new CreateBasketAction(postData));
-
     }
 }

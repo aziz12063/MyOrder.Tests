@@ -14,7 +14,7 @@ public class CreateBasketEffects(IBasketRepository basketRepository, ILogger<Ord
     {
         try
         {
-            var response = await basketRepository.PostNewBasketAsync(action.NewBasketReques);
+            var response = await basketRepository.PostNewBasketAsync(action.NewBasketRequest);
             dispatcher.Dispatch(new CreateBasketSuccessAction(response));
         }
         catch (Exception e)

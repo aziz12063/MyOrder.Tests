@@ -4,7 +4,7 @@ namespace MyOrder.Store.CreateBasketUseCase
 {
     public class CreateBasketAction(Dictionary<string, string> newBasketRequest)
     {
-        public Dictionary<string, string> NewBasketReques { get; set; } = newBasketRequest;
+        public Dictionary<string, string> NewBasketRequest { get; set; } = newBasketRequest;
     }
     public class CreateBasketSuccessAction(NewBasketResponseDto newBasketResponse)
     {
