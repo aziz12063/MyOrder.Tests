@@ -1,0 +1,22 @@
+﻿@using MyOrder.Shared.Dtos.SharedComponents
+@inherits GenericInputBase<bool?>
+
+@if (Field is not null && !_hidden)
+{
+    <MudTooltip RootStyle="width:100%"
+                Text="@_tooltipText"
+                Placement="Placement.Top">
+        <MudCheckBox Size="Size.Small"
+                     Dense="true"
+                     Style="display:inline-block;"
+                     Label="@Field?.Name"
+                     LabelPosition="LabelPosition.End"
+                     Required="_required"
+                     Error="_required"
+                     ReadOnly="_readOnly"
+                     Disabled="_readOnly"
+                     @bind-Value="ValueProperty"
+                     @bind-Value:after="BoundValueChangedHandler">
+        </MudCheckBox>
+    </MudTooltip>
+}
