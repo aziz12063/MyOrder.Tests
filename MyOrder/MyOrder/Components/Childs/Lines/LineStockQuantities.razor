@@ -22,10 +22,7 @@
         <MudItem xs="6">
             <MudStack Spacing="1">
                 <!--Entrepot-->
-                <GenericMudSelect Variant="Variant.Outlined"
-                                  T="string"
-                                  Field="BasketLine?.InventLocationId"
-                                  Items="UpdateReasons?.Select(item => item?.Value).ToList()" />
+                <DisplayField Field="@BasketLine?.InventLocationId" />
 
                 <!--a livrer plus tard-->
                 <DisplayField Field="@BasketLine?.OnOrderQuantity" />

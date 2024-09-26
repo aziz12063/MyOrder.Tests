@@ -62,8 +62,7 @@ public interface IBasketRepository
     Task<BasketOrderLinesDto> GetBasketLinesAsync(string basketId);
     Task<List<BasketValueDto?>> GetlineUpdateReasonsAsync(string basketId);
     Task<List<BasketValueDto?>> GetlogisticFlowsAsync(string basketId);
-
-
-    //Task<IEnumerable<NotificationDto>> GetNotificationsAsync(string basketId);
-
+    Task<BasketLineDto?> GetNewLineAsync(string basketId);
+    Task<BasketLineDto> ResetNewLineStateAsync(string basketId);
+    Task<ProcedureCallResponseDto> CommitAddNewLineAsync(string basketId);
 }

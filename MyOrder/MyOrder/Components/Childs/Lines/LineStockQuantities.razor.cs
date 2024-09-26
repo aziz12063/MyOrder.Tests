@@ -7,20 +7,18 @@ namespace MyOrder.Components.Childs.Lines;
 
 partial class LineStockQuantities
 {
-    [Parameter]
-    public BasketLineDto? BasketLine { get; set; }
-
     [Parameter, EditorRequired]
-    public List<BasketValueDto?>? UpdateReasons { get; set; }
+    public BasketLineDto? BasketLine { get; set; }
 
     [Parameter, EditorRequired]
     public List<BasketValueDto?>? LogisticFlows { get; set; }
 
-    private bool DelivaryDateReadOnly(BasketLineDto basketLineDto)
+    private static bool DelivaryDateReadOnly(BasketLineDto basketLineDto)
     {
-        if (!FieldUtility.IsReadOnly(basketLineDto.DeliveryDate) && !FieldUtility.IsReadOnly(basketLineDto.IsCustomDeliveryDate) && basketLineDto.IsCustomDeliveryDate?.Value == true)
+        if (!FieldUtility.IsReadOnly(basketLineDto.DeliveryDate) 
+            && !FieldUtility.IsReadOnly(basketLineDto.IsCustomDeliveryDate) 
+            && basketLineDto.IsCustomDeliveryDate?.Value == true)
             return false;
         return true;
     }
-
 }

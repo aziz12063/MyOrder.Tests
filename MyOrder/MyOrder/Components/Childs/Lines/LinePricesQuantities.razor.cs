@@ -6,7 +6,7 @@ namespace MyOrder.Components.Childs.Lines;
 
 partial class LinePricesQuantities
 {
-    [Parameter]
+    [Parameter, EditorRequired]
     public BasketLineDto? BasketLine { get; set; }
 
     protected string RowStyleFunc(BasketPriceLine x, int index, BasketLineDto item)
