@@ -32,6 +32,7 @@ public class ProcedureCallEffects(IBasketRepository basketRepository,
             {
                 if (response.UpdateDone == true)
                 {
+                    // In case of success, we refresh states indicated in the response
                     dispatcher.Dispatch(new PostProcedureCallSuccessAction(basket.BasketId, response));
                     return;
                 }
@@ -53,7 +54,7 @@ public class ProcedureCallEffects(IBasketRepository basketRepository,
         }
         finally
         {
-            dispatcher.Dispatch(new PostProcedureCallFailureAction(errorMessage));
+            dispatcher.Dispatch(new PostProcedureCallFailureAction(action.SelfFetchActionType, errorMessage));
         }
     }
 
@@ -61,14 +62,15 @@ public class ProcedureCallEffects(IBasketRepository basketRepository,
     public async Task HandlePostProcedureCallSuccessAction(PostProcedureCallSuccessAction receivedAction,
         IDispatcher dispatcher)
     {
-        if (receivedAction?.ProcedureCallResponse?.RefreshCalls is null
-            || receivedAction.ProcedureCallResponse.RefreshCalls.Count < 1)
+        var refreshCalls = receivedAction?.ProcedureCallResponse?.RefreshCalls;
+        if (refreshCalls is null
+            || refreshCalls.Count < 1)
         {
             logger.LogInformation("RefreshCall property is empty. No refresh calls to make.");
             return;
         }
 
-        foreach (var call in receivedAction.ProcedureCallResponse.RefreshCalls)
+        foreach (var call in refreshCalls)
         {
             if (string.IsNullOrWhiteSpace(call))
             {
@@ -78,5 +80,17 @@ public class ProcedureCallEffects(IBasketRepository basketRepository,
             logger.LogInformation("Dispatching refresh action for {Call}", call);
             stateResolver.DispatchRefreshAction(call, dispatcher, receivedAction.BasketId);
         }
+    }
+
+    [EffectMethod]
+    public async Task HandlePostProcedureCallFailureAction(PostProcedureCallFailureAction action,
+        IDispatcher dispatcher)
+    {
+        logger.LogDebug("Error while posting procedure call: {ErrorMessage}", action.ErrorMessage);
+
+        stateResolver.DispatchRefreshAction(
+            StateResolver.EndpointFetchActionMap[action.SelfFetchActionType], 
+            dispatcher, 
+            basket.BasketId);
     }
 }

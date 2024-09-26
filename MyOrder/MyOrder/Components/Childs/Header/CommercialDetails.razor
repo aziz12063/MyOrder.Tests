@@ -6,110 +6,111 @@
     <HeaderElementLoadingSkeleton />
     return;
 }
+<FetchActionTypeCascadingValue FetchActionTypeValue="FetchActionType">
+    <MudStack Justify="Justify.SpaceBetween" Style="height: inherit;">
+        <MudStack Spacing="2">
+            <MudText Typo="Typo.h6" Color="Color.Secondary" Class="pb-4">Informations Commerciales</MudText>
+            <MudText Typo="Typo.subtitle1">@BasketTradeInfoDto?.Turnover?.Name</MudText>
+            <MudDataGrid Items="@Turnover"
+                         SortMode="@SortMode.None"
+                         Striped="true"
+                         Hover="true"
+                         Dense="true"
+                         Elevation="0"
+                         Class="mx-n3">
+                <Columns>
+                    <PropertyColumn Property="x => x == null? string.Empty : x.Name"
+                                    Title="@string.Empty"
+                                    CellClass="pa-1 ma-1" />
+                    <PropertyColumn Property="x => x == null? string.Empty : x.Ytd"
+                                    Title="YTD"
+                                    CellClass="pa-1 ma-1" />
+                    <PropertyColumn Property="x => x == null? string.Empty : x.YtdN1"
+                                    Title="YTD-1" />
+                    <PropertyColumn Property="x => x == null? string.Empty : x.N1"
+                                    Title="N-1"
+                                    CellClass="pa-1 ma-1" />
+                    <PropertyColumn Property="x => x == null? string.Empty : x.N2"
+                                    Title="N-2"
+                                    CellClass="pa-1 ma-1" />
+                </Columns>
+            </MudDataGrid>
+        </MudStack>
 
-<MudStack Justify="Justify.SpaceBetween" Style="height: inherit;">
-    <MudStack Spacing="2">
-        <MudText Typo="Typo.h6" Color="Color.Secondary" Class="pb-4">Informations Commerciales</MudText>
-        <MudText Typo="Typo.subtitle1">@BasketTradeInfoDto?.Turnover?.Name</MudText>
-        <MudDataGrid Items="@Turnover"
-                     SortMode="@SortMode.None"
-                     Striped="true"
-                     Hover="true"
-                     Dense="true"
-                     Elevation="0"
-                     Class="mx-n3">
-            <Columns>
-                <PropertyColumn Property="x => x == null? string.Empty : x.Name"
-                                Title="@string.Empty"
-                                CellClass="pa-1 ma-1" />
-                <PropertyColumn Property="x => x == null? string.Empty : x.Ytd"
-                                Title="YTD"
-                                CellClass="pa-1 ma-1" />
-                <PropertyColumn Property="x => x == null? string.Empty : x.YtdN1"
-                                Title="YTD-1" />
-                <PropertyColumn Property="x => x == null? string.Empty : x.N1"
-                                Title="N-1"
-                                CellClass="pa-1 ma-1" />
-                <PropertyColumn Property="x => x == null? string.Empty : x.N2"
-                                Title="N-2"
-                                CellClass="pa-1 ma-1" />
-            </Columns>
-        </MudDataGrid>
-    </MudStack>
+
+        <!--Contract en cours-->
+        @if (ContractList is { Count: > 0 })
+        {
+            <MudStack Spacing="6" Class="mt-6">
+                <div>
+                    <MudText Typo="Typo.subtitle1" Color="Color.Warning">Contrats en cours</MudText>
+
+                    <MudDataGrid Items="@ContractList"
+                                 Filterable="false"
+                                 SortMode="@SortMode.None"
+                                 Groupable="false"
+                                 Bordered="true"
+                                 Dense="true"
+                                 Elevation="0"
+                                 Class="my-data-grid mx-n3">
+                        <Columns>
+                            <PropertyColumn Property="x => x.ContractId.Value " Title="@BasketTradeInfoDto?.Contract?.ContractId?.Name" />
+                            <PropertyColumn Property="x => x.ContractGroup.Value" Title="@BasketTradeInfoDto?.Contract?.ContractGroup?.Name" />
+                            <PropertyColumn Property="x => x.Status.Value" Title="@BasketTradeInfoDto?.Contract?.Status?.Name" />
+
+                        </Columns>
+                    </MudDataGrid>
+                </div>
 
 
-    <!--Contract en cours-->
-    @if (ContractList is { Count: > 0 })
-    {
-        <MudStack Spacing="6" Class="mt-6">
+                <div>
+                    <MudText Typo="Typo.subtitle1"
+                             Color="Color.Warning">
+                        @ContractDescription @Contract?.ContractId?.Value
+                    </MudText>
+
+                    <!--Contract details-->
+
+                    <MudGrid>
+                        <MudItem xs="4">
+                            <MudText Style="font-size: 13px">Date</MudText>
+                        </MudItem>
+                        <MudItem xs="8">
+                            <MudTextField Margin="Margin.Dense" T="string"
+                                          Variant="Variant.Outlined" Width="200px"
+                                          Disabled="false"
+                                          Style="font-size: 13px; height:22px;"
+                                          Value="@DateValue">
+                            </MudTextField>
+                        </MudItem>
+                    </MudGrid>
+
+                    <DisplayField Field="Contract?.CampaignId" />
+                    <DisplayField Field="Contract?.MainContact" />
+                    <DisplayField Field="Contract?.OfficeExecutive" />
+
+                </div>
+            </MudStack>
+            <MudDivider />
+            <div>
+                <MudTextField Typo="Typo.caption"
+                              Lines="4"
+                              Variant="Variant.Outlined"
+                              FullWidth="true"
+                              Margin="Margin.Dense"
+                              ReadOnly="true"
+                              Label="@Contract?.DiscountList?.Name"
+                              Value="DiscountDetails" />
+            </div>
+
+        }
+        else
+        {
             <div>
                 <MudText Typo="Typo.subtitle1" Color="Color.Warning">Contrats en cours</MudText>
-
-                <MudDataGrid Items="@ContractList"
-                             Filterable="false"
-                             SortMode="@SortMode.None"
-                             Groupable="false"
-                             Bordered="true"
-                             Dense="true"
-                             Elevation="0"
-                             Class="my-data-grid mx-n3">
-                    <Columns>
-                        <PropertyColumn Property="x => x.ContractId.Value " Title="@BasketTradeInfoDto?.Contract?.ContractId?.Name" />
-                        <PropertyColumn Property="x => x.ContractGroup.Value" Title="@BasketTradeInfoDto?.Contract?.ContractGroup?.Name" />
-                        <PropertyColumn Property="x => x.Status.Value" Title="@BasketTradeInfoDto?.Contract?.Status?.Name" />
-
-                    </Columns>
-                </MudDataGrid>
+                <MudText Typo="Typo.body1">Aucun contrat en cours</MudText>
             </div>
-
-
-            <div>
-                <MudText Typo="Typo.subtitle1"
-                         Color="Color.Warning">
-                    @ContractDescription @Contract?.ContractId?.Value
-                </MudText>
-
-                <!--Contract details-->
-
-                <MudGrid>
-                    <MudItem xs="4">
-                        <MudText Style="font-size: 13px">Date</MudText>
-                    </MudItem>
-                    <MudItem xs="8">
-                        <MudTextField Margin="Margin.Dense" T="string"
-                                      Variant="Variant.Outlined" Width="200px"
-                                      Disabled="false"
-                                      Style="font-size: 13px; height:22px;"
-                                      Value="@DateValue">
-                        </MudTextField>
-                    </MudItem>
-                </MudGrid>
-
-                <DisplayField Field="Contract?.CampaignId" />
-                <DisplayField Field="Contract?.MainContact" />
-                <DisplayField Field="Contract?.OfficeExecutive" />
-
-            </div>
-        </MudStack>
-        <MudDivider />
-        <div>
-            <MudTextField Typo="Typo.caption"
-                          Lines="4"
-                          Variant="Variant.Outlined"
-                          FullWidth="true"
-                          Margin="Margin.Dense"
-                          ReadOnly="true"
-                          Label="@Contract?.DiscountList?.Name"
-                          Value="DiscountDetails" />
-        </div>
-
-    }
-    else
-    {
-        <div>
-            <MudText Typo="Typo.subtitle1" Color="Color.Warning">Contrats en cours</MudText>
-            <MudText Typo="Typo.body1">Aucun contrat en cours</MudText>
-        </div>
-        <MudDivider />
-    }
-</MudStack>
+            <MudDivider />
+        }
+    </MudStack>
+</FetchActionTypeCascadingValue>

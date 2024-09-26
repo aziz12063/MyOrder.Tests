@@ -10,15 +10,16 @@
     return;
 }
 
-
-<PageTitle>@State?.Value?.GeneralInfo?.PageTitle</PageTitle>
-<MudTooltip Text="@AuthentifiedUser">
-<MudStack Class="pl-16" Spacing="2">
-    <MudText Typo="Typo.body1" Class="d-flex">
-        <b>@BasketGeneralInfo!.OrderType @BasketGeneralInfo!.OrderId [@BasketGeneralInfo!.OrderStatus]</b>
-    </MudText>
-    <MudText Typo="Typo.body2" Class="d-flex">
-        @BasketGeneralInfo!.OrderDate - @BasketGeneralInfo!.SalesResponsible
-    </MudText>
-</MudStack>
-</MudTooltip>
+<FetchActionTypeCascadingValue FetchActionTypeValue="FetchActionType">
+    <PageTitle>@State?.Value?.GeneralInfo?.PageTitle</PageTitle>
+    <MudTooltip Text="@AuthentifiedUser">
+        <MudStack Class="pl-16" Spacing="2">
+            <MudText Typo="Typo.body1" Class="d-flex">
+                <b>@BasketGeneralInfo!.OrderType @BasketGeneralInfo!.OrderId [@BasketGeneralInfo!.OrderStatus]</b>
+            </MudText>
+            <MudText Typo="Typo.body2" Class="d-flex">
+                @BasketGeneralInfo!.OrderDate - @BasketGeneralInfo!.SalesResponsible
+            </MudText>
+        </MudStack>
+    </MudTooltip>
+</FetchActionTypeCascadingValue>

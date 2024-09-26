@@ -6,15 +6,48 @@
     <HeaderElementLoadingSkeleton />
     return;
 }
+<FetchActionTypeCascadingValue FetchActionTypeValue="FetchActionType">
+    <MudStack Justify="Justify.SpaceBetween" Style="height: inherit;">
+        <div>
+            <MudText Typo="Typo.h6" Color="Color.Secondary" Class="pb-4">Livraison</MudText>
+            <!-- Compte de livraison -->
+            <CustomHeaderCard>
+                <HeaderContent>
+                    <MudStack Row="true" Spacing="1" StretchItems="StretchItems.Start" Class="pb-2">
+                        <MudText Typo="Typo.subtitle1">@BasketDeliveryInfo!.Account?.Name</MudText>
+                        <MudTooltip Text="Chercher client? -Not Implemented">
+                            <MudIconButton Icon="@Icons.Material.Filled.Search" Size="Size.Small" />
+                        </MudTooltip>
+                        <MudTooltip Text="Copier les informations du client -Not Implemented">
+                            <MudIconButton Icon="@Icons.Material.Filled.Description" Size="Size.Small" />
+                        </MudTooltip>
+                        <MudTooltip Text="Salesforce? -Not Implemented">
+                            <MudIconButton Icon="@Icons.Material.Filled.Cloud" Size="Size.Small" />
+                        </MudTooltip>
+                        <MudTooltip Text="Infos? -Not Implemented">
+                            <MudIconButton Icon="@Icons.Material.Filled.Info" Size="Size.Small" />
+                        </MudTooltip>
+                        <MudTooltip Text="Call? -Not Implemented">
+                            <MudIconButton Icon="@Icons.Material.Filled.Phone" Size="Size.Small" />
+                        </MudTooltip>
+                    </MudStack>
+                </HeaderContent>
+                <BodyContent>
+                    <GenericMudSelect T="AccountDto"
+                                      Field="BasketDeliveryInfo!.Account"
+                                      Items="Accounts"
+                                      Variant="Variant.Outlined" />
 
-<MudStack Justify="Justify.SpaceBetween" Style="height: inherit;">
-    <div>
-        <MudText Typo="Typo.h6" Color="Color.Secondary" Class="pb-4">Livraison</MudText>
-        <!-- Compte de livraison -->
+                    <DisplayAddress Address="@DisplayAddress" />
+                </BodyContent>
+            </CustomHeaderCard>
+        </div>
+
+        <!-- Contact  de livraison-->
         <CustomHeaderCard>
             <HeaderContent>
-                <MudStack Row="true" Spacing="1" StretchItems="StretchItems.Start" Class="pb-2">
-                    <MudText Typo="Typo.subtitle1">@BasketDeliveryInfo!.Account?.Name</MudText>
+                <MudStack Row="true" Spacing="1" StretchItems="StretchItems.Start">
+                    <MudText Typo="Typo.subtitle1">@BasketDeliveryInfo!.Contact?.Name</MudText>
                     <MudTooltip Text="Chercher client? -Not Implemented">
                         <MudIconButton Icon="@Icons.Material.Filled.Search" Size="Size.Small" />
                     </MudTooltip>
@@ -33,109 +66,77 @@
                 </MudStack>
             </HeaderContent>
             <BodyContent>
-                <GenericMudSelect T="AccountDto"
-                                  Field="BasketDeliveryInfo!.Account"
-                                  Items="Accounts"
+                <GenericMudSelect T="ContactDto"
+                                  Field="BasketDeliveryInfo!.Contact"
+                                  Items="Contacts"
                                   Variant="Variant.Outlined" />
 
-                <DisplayAddress Address="@DisplayAddress" />
+                <ContactInfo Contact="BasketDeliveryInfo!.Contact?.Value" />
             </BodyContent>
         </CustomHeaderCard>
-    </div>
 
-    <!-- Contact  de livraison-->
-    <CustomHeaderCard>
-        <HeaderContent>
-            <MudStack Row="true" Spacing="1" StretchItems="StretchItems.Start">
-                <MudText Typo="Typo.subtitle1">@BasketDeliveryInfo!.Contact?.Name</MudText>
-                <MudTooltip Text="Chercher client? -Not Implemented">
-                    <MudIconButton Icon="@Icons.Material.Filled.Search" Size="Size.Small" />
-                </MudTooltip>
-                <MudTooltip Text="Copier les informations du client -Not Implemented">
-                    <MudIconButton Icon="@Icons.Material.Filled.Description" Size="Size.Small" />
-                </MudTooltip>
-                <MudTooltip Text="Salesforce? -Not Implemented">
-                    <MudIconButton Icon="@Icons.Material.Filled.Cloud" Size="Size.Small" />
-                </MudTooltip>
-                <MudTooltip Text="Infos? -Not Implemented">
-                    <MudIconButton Icon="@Icons.Material.Filled.Info" Size="Size.Small" />
-                </MudTooltip>
-                <MudTooltip Text="Call? -Not Implemented">
-                    <MudIconButton Icon="@Icons.Material.Filled.Phone" Size="Size.Small" />
-                </MudTooltip>
-            </MudStack>
-        </HeaderContent>
-        <BodyContent>
-            <GenericMudSelect T="ContactDto"
-                              Field="BasketDeliveryInfo!.Contact"
-                              Items="Contacts"
-                              Variant="Variant.Outlined" />
+        <!-- Informations de livraison -->
+        <MudStack Spacing="0">
+            <MudText Typo="Typo.subtitle1">Informations de livraison</MudText>
+            <GenericMudSelect Field="BasketDeliveryInfo!.DeliveryMode"
+                              Items="DeliveryModes" />
 
-            <ContactInfo Contact="BasketDeliveryInfo!.Contact?.Value" />
-        </BodyContent>
-    </CustomHeaderCard>
-
-    <!-- Informations de livraison -->
-    <MudStack Spacing="0">
-        <MudText Typo="Typo.subtitle1">Informations de livraison</MudText>
-        <GenericMudSelect Field="BasketDeliveryInfo!.DeliveryMode"
-                          Items="DeliveryModes" />
-
-        @if (!FieldUtility.IsHidden(BasketDeliveryInfo!.CompleteDelivery))
-        {
-            <MudCheckBox Dense="true"
-                         Size="Size.Small"
-                         Style="display:inline-block;"
-                         Label="@BasketDeliveryInfo!.CompleteDelivery?.Name"
-                         LabelPosition="LabelPosition.End"
-                         ReadOnly="@FieldUtility.IsReadOnly(BasketDeliveryInfo!.CompleteDelivery)"
-                         Disabled="@FieldUtility.IsHidden(BasketDeliveryInfo!.CompleteDelivery)"
-                         Required="@FieldUtility.IsRequired(BasketDeliveryInfo!.CompleteDelivery)"
-                         Error="@FieldUtility.IsRequired(BasketDeliveryInfo!.CompleteDelivery)"
-                         @bind-Value="CompleteDelivery" />
-        }
-        @if (!FieldUtility.IsHidden(BasketDeliveryInfo!.ImperativeDate))
-        {
-            <MudDatePicker Label="@BasketDeliveryInfo!.ImperativeDate?.Name"
-                           ReadOnly="@FieldUtility.IsReadOnly(BasketDeliveryInfo!.ImperativeDate)"
-                           Disabled="@FieldUtility.IsHidden(BasketDeliveryInfo!.ImperativeDate)"
-                           Required="@FieldUtility.IsRequired(BasketDeliveryInfo!.ImperativeDate)"
-                           Error="@FieldUtility.IsRequired(BasketDeliveryInfo!.ImperativeDate)"
-                           Clearable="true"
-                           @bind-Date="ImperativeDateValue" />
-        }
-        <DisplayField Field="BasketDeliveryInfo!.OrderDocuments" />
-    </MudStack>
-    <MudDivider />
-
-    <!-- Notes de RC -->
-    <div>
-
-        <MudTextField Typo="Typo.caption"
-                      Lines="3"
-                      Variant="Variant.Outlined"
-                      FullWidth="true"
-                      Margin="Margin.Dense"
-                      Required="@FieldUtility.IsRequired(BasketDeliveryInfo!.Note)"
-                      Error="@FieldUtility.IsRequired(BasketDeliveryInfo!.Note)"
-                      ReadOnly="@FieldUtility.IsReadOnly(BasketDeliveryInfo!.Note)"
-                      Label="@BasketDeliveryInfo!.Note?.Name"
-                      @bind-Value="@NoteValue" />
-        @if (!FieldUtility.IsHidden(BasketDeliveryInfo!.NoteMustBeSaved))
-        {
-            <MudItem>
+            @if (!FieldUtility.IsHidden(BasketDeliveryInfo!.CompleteDelivery))
+            {
                 <MudCheckBox Dense="true"
                              Size="Size.Small"
                              Style="display:inline-block;"
-                             ReadOnly="@FieldUtility.IsReadOnly(BasketDeliveryInfo!.NoteMustBeSaved)"
-                             Disabled="@FieldUtility.IsHidden(BasketDeliveryInfo!.NoteMustBeSaved)"
-                             Error="@FieldUtility.IsRequired(BasketDeliveryInfo!.NoteMustBeSaved)"
-                             @bind-Value="SaveNoteForFutureOrders">
-                    <ChildContent>
-                        <MudText Typo="Typo.caption">@BasketDeliveryInfo!.NoteMustBeSaved?.Name</MudText>
-                    </ChildContent>
-                </MudCheckBox>
-            </MudItem>
-        }
-    </div>
-</MudStack>
+                             Label="@BasketDeliveryInfo!.CompleteDelivery?.Name"
+                             LabelPosition="LabelPosition.End"
+                             ReadOnly="@FieldUtility.IsReadOnly(BasketDeliveryInfo!.CompleteDelivery)"
+                             Disabled="@FieldUtility.IsHidden(BasketDeliveryInfo!.CompleteDelivery)"
+                             Required="@FieldUtility.IsRequired(BasketDeliveryInfo!.CompleteDelivery)"
+                             Error="@FieldUtility.IsRequired(BasketDeliveryInfo!.CompleteDelivery)"
+                             @bind-Value="CompleteDelivery" />
+            }
+            @if (!FieldUtility.IsHidden(BasketDeliveryInfo!.ImperativeDate))
+            {
+                <MudDatePicker Label="@BasketDeliveryInfo!.ImperativeDate?.Name"
+                               ReadOnly="@FieldUtility.IsReadOnly(BasketDeliveryInfo!.ImperativeDate)"
+                               Disabled="@FieldUtility.IsHidden(BasketDeliveryInfo!.ImperativeDate)"
+                               Required="@FieldUtility.IsRequired(BasketDeliveryInfo!.ImperativeDate)"
+                               Error="@FieldUtility.IsRequired(BasketDeliveryInfo!.ImperativeDate)"
+                               Clearable="true"
+                               @bind-Date="ImperativeDateValue" />
+            }
+            <DisplayField Field="BasketDeliveryInfo!.OrderDocuments" />
+        </MudStack>
+        <MudDivider />
+
+        <!-- Notes de RC -->
+        <div>
+
+            <MudTextField Typo="Typo.caption"
+                          Lines="3"
+                          Variant="Variant.Outlined"
+                          FullWidth="true"
+                          Margin="Margin.Dense"
+                          Required="@FieldUtility.IsRequired(BasketDeliveryInfo!.Note)"
+                          Error="@FieldUtility.IsRequired(BasketDeliveryInfo!.Note)"
+                          ReadOnly="@FieldUtility.IsReadOnly(BasketDeliveryInfo!.Note)"
+                          Label="@BasketDeliveryInfo!.Note?.Name"
+                          @bind-Value="@NoteValue" />
+            @if (!FieldUtility.IsHidden(BasketDeliveryInfo!.NoteMustBeSaved))
+            {
+                <MudItem>
+                    <MudCheckBox Dense="true"
+                                 Size="Size.Small"
+                                 Style="display:inline-block;"
+                                 ReadOnly="@FieldUtility.IsReadOnly(BasketDeliveryInfo!.NoteMustBeSaved)"
+                                 Disabled="@FieldUtility.IsHidden(BasketDeliveryInfo!.NoteMustBeSaved)"
+                                 Error="@FieldUtility.IsRequired(BasketDeliveryInfo!.NoteMustBeSaved)"
+                                 @bind-Value="SaveNoteForFutureOrders">
+                        <ChildContent>
+                            <MudText Typo="Typo.caption">@BasketDeliveryInfo!.NoteMustBeSaved?.Name</MudText>
+                        </ChildContent>
+                    </MudCheckBox>
+                </MudItem>
+            }
+        </div>
+    </MudStack>
+</FetchActionTypeCascadingValue>

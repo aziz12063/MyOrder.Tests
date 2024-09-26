@@ -22,7 +22,7 @@ public abstract class BaseFluxorComponent<TState, TAction> : ComponentBase, IDis
     [Inject]
     protected ILogger<BaseFluxorComponent<TState, TAction>> Logger { get; set; }
 
-    protected Type FetchActionType { get;} = typeof(TAction);
+    protected Type FetchActionType { get; } = typeof(TAction);
     protected string BasketId => BasketService.BasketId;
 
     protected override async Task OnInitializedAsync()
@@ -30,7 +30,7 @@ public abstract class BaseFluxorComponent<TState, TAction> : ComponentBase, IDis
         State.StateChanged += OnStateChanged;
         BasketService.BasketIdChanged += OnBasketIdChanged;
         Dispatcher.Dispatch(CreateFetchAction(State.Value, BasketId));
-        
+
         await base.OnInitializedAsync();
     }
 
@@ -61,11 +61,10 @@ public abstract class BaseFluxorComponent<TState, TAction> : ComponentBase, IDis
 
     private void OnBasketIdChanged(string basketId) => Dispatcher.Dispatch(CreateFetchAction(State.Value, basketId));
 
+    [Obsolete]
     protected void SetBasketOrderValue<T>(Field<T>? field, T value, string? procedureCallValue)
     {
-        // Set the field value
-        //field.Value = value;   
-
+        throw new NotImplementedException();
     }
 
 

@@ -4,6 +4,7 @@ using MyOrder.Store.DeliveryInfoUseCase;
 using MyOrder.Store.GeneralInfoUseCase;
 using MyOrder.Store.InvoiceInfoUseCase;
 using MyOrder.Store.LinesUseCase;
+using MyOrder.Store.NewLineUseCase;
 using MyOrder.Store.NotificationsUseCase;
 using MyOrder.Store.OrderInfoUseCase;
 using MyOrder.Store.PricesInfoUseCase;
@@ -13,22 +14,46 @@ namespace MyOrder.Services;
 
 public class StateResolver : IStateResolver
 {
+    private const string GeneralInfo = "generalInfo";
+    private const string OrderInfo = "orderInfo";
+    private const string DeliveryInfo = "deliveryInfo";
+    private const string InvoiceInfo = "invoiceInfo";
+    private const string TradeInfo = "tradeInfo";
+    private const string PricesInfo = "pricesInfo";
+    private const string Notifications = "notifications";
+    private const string OrderLines = "orderLines";
+    private const string NewLine = "newLine";
+
+
     private readonly IServiceProvider _serviceProvider;
     private readonly Dictionary<string, Func<IDispatcher, string, StateBase>> _refreshCallActions;
+    public static readonly Dictionary<Type, string> EndpointFetchActionMap = new()
+    {
+        { typeof(FetchGeneralInfoAction), GeneralInfo },
+        { typeof(FetchOrderInfoAction), OrderInfo },
+        { typeof(FetchDeliveryInfoAction), DeliveryInfo },
+        { typeof(FetchInvoiceInfoAction), InvoiceInfo },
+        { typeof(FetchTradeInfoAction), TradeInfo },
+        { typeof(FetchPricesInfoAction), PricesInfo },
+        { typeof(FetchNotificationsAction), Notifications },
+        { typeof(FetchLinesAction), OrderLines },
+        { typeof(FetchNewLineAction), NewLine }
+    };
 
     public StateResolver(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
         _refreshCallActions = new Dictionary<string, Func<IDispatcher, string, StateBase>>
         {
-            { "generalInfo", CreateDispatchAction<GeneralInfoState, FetchGeneralInfoAction> },
-            { "orderInfo", CreateDispatchAction<OrderInfoState, FetchOrderInfoAction> },
-            { "deliveryInfo", CreateDispatchAction<DeliveryInfoState, FetchDeliveryInfoAction> },
-            { "invoiceInfo", CreateDispatchAction<InvoiceInfoState, FetchInvoiceInfoAction> },
-            { "tradeInfo", CreateDispatchAction<TradeInfoState, FetchTradeInfoAction> },
-            { "pricesInfo", CreateDispatchAction<PricesInfoState, FetchPricesInfoAction> },
-            { "notifications", CreateDispatchAction<NotificationsState, FetchNotificationsAction> },
-            { "orderLines", CreateDispatchAction<LinesState, FetchLinesAction> }
+            { GeneralInfo, CreateDispatchAction<GeneralInfoState, FetchGeneralInfoAction> },
+            { OrderInfo, CreateDispatchAction<OrderInfoState, FetchOrderInfoAction> },
+            { DeliveryInfo, CreateDispatchAction<DeliveryInfoState, FetchDeliveryInfoAction> },
+            { InvoiceInfo, CreateDispatchAction<InvoiceInfoState, FetchInvoiceInfoAction> },
+            { TradeInfo, CreateDispatchAction<TradeInfoState, FetchTradeInfoAction> },
+            { PricesInfo, CreateDispatchAction<PricesInfoState, FetchPricesInfoAction> },
+            { Notifications, CreateDispatchAction<NotificationsState, FetchNotificationsAction> },
+            { OrderLines, CreateDispatchAction<LinesState, FetchLinesAction> },
+            { NewLine, CreateDispatchAction<NewLineState, FetchNewLineAction> }
         // Add other mappings here as needed : Coupons, Warranty, etc.
         };
     }
@@ -108,7 +133,7 @@ public class StateResolver : IStateResolver
 //                (dispatcher, basketId) =>
 //                    dispatcher.Dispatch(new FetchPricesInfoAction((PricesInfoState) ResolveState(typeof(PricesInfoState)), basketId))
 //            }
-        
+
 //    //{ "coupons" , (dispatcher, basketId) => dispatcher.Dispatch(new FetchPricesInfoAction(basketId)) },
 //    //{ "warrantyC"
 //    //{ "notifications", dispatcher => dispatcher.Dispatch(new FetchNotificationsAction()) },

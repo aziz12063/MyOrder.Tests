@@ -8,15 +8,17 @@
     return;
 }
 
-<MudGrid>
-    <MudItem xs="12" md="12">
+<FetchActionTypeCascadingValue FetchActionTypeValue="FetchActionType">
+    <MudGrid>
+        <MudItem xs="12" md="12">
 
-    </MudItem>
-    <MudItem xs="12" md="6">
-        <LineStockQuantities BasketLine="NewLine"
-                             LogisticFlows="LogisticFlows" />
-    </MudItem>
-    <MudItem xs="12" md="6">
-        <LinePricesQuantities BasketLine="NewLine" />
-    </MudItem>
-</MudGrid>
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <LineStockQuantities BasketLine="NewLine"
+                                 LogisticFlows="LogisticFlows" />
+        </MudItem>
+        <MudItem xs="12" md="6">
+            <LinePricesQuantities BasketLine="NewLine" />
+        </MudItem>
+    </MudGrid>
+</FetchActionTypeCascadingValue>

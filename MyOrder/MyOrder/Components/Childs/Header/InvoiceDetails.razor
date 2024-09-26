@@ -6,104 +6,105 @@
     <HeaderElementLoadingSkeleton />
     return;
 }
+<FetchActionTypeCascadingValue FetchActionTypeValue="FetchActionType">
+    <MudStack Justify="Justify.SpaceBetween" Style="height: inherit;">
+        <div>
+            <MudText Typo="Typo.h6" Color="Color.Secondary" Class="pb-4">Facturation</MudText>
+            <!--Compte facturé-->
+            <CustomHeaderCard>
+                <HeaderContent>
+                    <MudStack Row="true" Spacing="1" StretchItems="StretchItems.Start" Class="pb-2">
+                        <MudText Typo="Typo.subtitle1">@BasketInvoiceInfo!.Account?.Name</MudText>
+                        <MudTooltip Text="Chercher client? -Not Implemented">
+                            <MudIconButton Icon="@Icons.Material.Filled.Search" Size="Size.Small" />
+                        </MudTooltip>
+                        <MudTooltip Text="Copier les informations du client -Not Implemented">
+                            <MudIconButton Icon="@Icons.Material.Filled.Description" Size="Size.Small" />
+                        </MudTooltip>
+                        <MudTooltip Text="Salesforce? -Not Implemented">
+                            <MudIconButton Icon="@Icons.Material.Filled.Cloud" Size="Size.Small" />
+                        </MudTooltip>
+                        <MudTooltip Text="Infos? -Not Implemented">
+                            <MudIconButton Icon="@Icons.Material.Filled.Info" Size="Size.Small" />
+                        </MudTooltip>
+                        <MudTooltip Text="Call? -Not Implemented">
+                            <MudIconButton Icon="@Icons.Material.Filled.Phone" Size="Size.Small" />
+                        </MudTooltip>
+                    </MudStack>
+                </HeaderContent>
+                <BodyContent>
+                    <GenericMudSelect Field="BasketInvoiceInfo!.Account"
+                                      Items="InvoiceToAccounts"
+                                      Variant="Variant.Outlined" />
 
-<MudStack Justify="Justify.SpaceBetween" Style="height: inherit;">
-    <div>
-        <MudText Typo="Typo.h6" Color="Color.Secondary" Class="pb-4">Facturation</MudText>
-        <!--Compte facturé-->
-        <CustomHeaderCard>
-            <HeaderContent>
-                <MudStack Row="true" Spacing="1" StretchItems="StretchItems.Start" Class="pb-2">
-                    <MudText Typo="Typo.subtitle1">@BasketInvoiceInfo!.Account?.Name</MudText>
-                    <MudTooltip Text="Chercher client? -Not Implemented">
-                        <MudIconButton Icon="@Icons.Material.Filled.Search" Size="Size.Small" />
-                    </MudTooltip>
-                    <MudTooltip Text="Copier les informations du client -Not Implemented">
-                        <MudIconButton Icon="@Icons.Material.Filled.Description" Size="Size.Small" />
-                    </MudTooltip>
-                    <MudTooltip Text="Salesforce? -Not Implemented">
-                        <MudIconButton Icon="@Icons.Material.Filled.Cloud" Size="Size.Small" />
-                    </MudTooltip>
-                    <MudTooltip Text="Infos? -Not Implemented">
-                        <MudIconButton Icon="@Icons.Material.Filled.Info" Size="Size.Small" />
-                    </MudTooltip>
-                    <MudTooltip Text="Call? -Not Implemented">
-                        <MudIconButton Icon="@Icons.Material.Filled.Phone" Size="Size.Small" />
-                    </MudTooltip>
-                </MudStack>
-            </HeaderContent>
-            <BodyContent>
-                <GenericMudSelect Field="BasketInvoiceInfo!.Account"
-                                  Items="InvoiceToAccounts"
-                                  Variant="Variant.Outlined" />
+                    <DisplayAddress Address="@DisplayAddress" />
 
-                <DisplayAddress Address="@DisplayAddress" />
+                </BodyContent>
+            </CustomHeaderCard>
+        </div>
 
-            </BodyContent>
-        </CustomHeaderCard>
-    </div>
+        <!-- SUBSECTION: Paiment du client-->
+        <MudCard Elevation="0" Class="px-2 pt-2 pb-0" Style="background-color: transparent;">
+            <MudCardHeader Class="px-1 py-1 ma-n1">
+                <CardHeaderContent>
+                    <MudText Typo="Typo.subtitle1">Paiement du client</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent Class="pa-0">
+                <MudGrid Justify="Justify.SpaceBetween">
 
-    <!-- SUBSECTION: Paiment du client-->
-    <MudCard Elevation="0" Class="px-2 pt-2 pb-0" Style="background-color: transparent;">
-        <MudCardHeader Class="px-1 py-1 ma-n1">
-            <CardHeaderContent>
-                <MudText Typo="Typo.subtitle1">Paiement du client</MudText>
-            </CardHeaderContent>
-        </MudCardHeader>
-        <MudCardContent Class="pa-0">
-            <MudGrid Justify="Justify.SpaceBetween">
-
-                @if (!FieldUtility.IsHidden(BasketInvoiceInfo!.PaymentTerm))
-                {
+                    @if (!FieldUtility.IsHidden(BasketInvoiceInfo!.PaymentTerm))
+                    {
+                        <MudItem xs="6">
+                            <DisplayField Field="BasketInvoiceInfo!.PaymentTerm" />
+                        </MudItem>
+                    }
                     <MudItem xs="6">
-                        <DisplayField Field="BasketInvoiceInfo!.PaymentTerm" />
+                        <GenericMudSelect Variant="Variant.Outlined"
+                                          Field="BasketInvoiceInfo!.PaymentMode"
+                                          Items="PaymentModes" />
+
                     </MudItem>
-                }
-                <MudItem xs="6">
-                    <GenericMudSelect Variant="Variant.Outlined"
-                                      Field="BasketInvoiceInfo!.PaymentMode"
-                                      Items="PaymentModes" />
 
-                </MudItem>
+                </MudGrid>
+            </MudCardContent>
+        </MudCard>
 
-            </MudGrid>
-        </MudCardContent>
-    </MudCard>
+        <!-- SUBSECTION: Informations de facturation -->
+        <MudCard Elevation="0" Class="px-2 py-0" Style="background-color: transparent;">
+            <MudCardHeader Class="px-1 py-2 ma-n1">
+                <CardHeaderContent>
+                    <MudText Typo="Typo.subtitle1">Informations de facturation</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent Class="pa-0">
+                <MudStack Spacing="0">
+                    <!--Siret-->
+                    <DisplayField Field="BasketInvoiceInfo!.SiretId" />
 
-    <!-- SUBSECTION: Informations de facturation -->
-    <MudCard Elevation="0" Class="px-2 py-0" Style="background-color: transparent;">
-        <MudCardHeader Class="px-1 py-2 ma-n1">
-            <CardHeaderContent>
-                <MudText Typo="Typo.subtitle1">Informations de facturation</MudText>
-            </CardHeaderContent>
-        </MudCardHeader>
-        <MudCardContent Class="pa-0">
-            <MudStack Spacing="0">
-                <!--Siret-->
-                <DisplayField Field="BasketInvoiceInfo!.SiretId" />
+                    <!--Groupe de taxe-->
+                    <GenericMudSelect Field="BasketInvoiceInfo!.TaxGroup"
+                                      Items="TaxGroups"
+                                      Variant="Variant.Outlined" />
+                    <!--Executing Service-->
+                    <GenericTextField Field="BasketInvoiceInfo!.PublicEntityExecutingService" />
+                    <!--Legal Commitment-->
+                    <GenericTextField Field="BasketInvoiceInfo!.PublicEntityLegalCommitment" />
+                </MudStack>
+            </MudCardContent>
+        </MudCard>
 
-                <!--Groupe de taxe-->
-                <GenericMudSelect Field="BasketInvoiceInfo!.TaxGroup"
-                                  Items="TaxGroups"
-                                  Variant="Variant.Outlined" />
-                <!--Executing Service-->
-                <GenericTextField Field="BasketInvoiceInfo!.PublicEntityExecutingService" />
-                <!--Legal Commitment-->
-                <GenericTextField Field="BasketInvoiceInfo!.PublicEntityLegalCommitment" />
-            </MudStack>
-        </MudCardContent>
-    </MudCard>
-
-    <MudDivider />
-    <!--Notes de facturation-->
-    <div>
-        <MudTextField Typo="Typo.caption"
-                      Lines="4"
-                      Variant="Variant.Outlined"
-                      FullWidth="true"
-                      Margin="Margin.Dense"
-                      ReadOnly="true"
-                      Label="@BasketInvoiceInfo!.Note?.Name"
-                      Value="@BasketInvoiceInfo!.Note?.Value" />
-    </div>
-</MudStack>
+        <MudDivider />
+        <!--Notes de facturation-->
+        <div>
+            <MudTextField Typo="Typo.caption"
+                          Lines="4"
+                          Variant="Variant.Outlined"
+                          FullWidth="true"
+                          Margin="Margin.Dense"
+                          ReadOnly="true"
+                          Label="@BasketInvoiceInfo!.Note?.Name"
+                          Value="@BasketInvoiceInfo!.Note?.Value" />
+        </div>
+    </MudStack>
+</FetchActionTypeCascadingValue>

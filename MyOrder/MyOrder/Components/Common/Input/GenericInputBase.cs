@@ -1,7 +1,6 @@
 ﻿using Fluxor;
 using Microsoft.AspNetCore.Components;
 using MyOrder.Shared.Dtos.SharedComponents;
-using MyOrder.Store.Base;
 using MyOrder.Store.ProcedureCallUseCase;
 using MyOrder.Utils;
 

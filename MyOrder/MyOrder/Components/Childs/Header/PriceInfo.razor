@@ -8,113 +8,113 @@
     <PricesAndLinesElementLoadingSkeleton />
     return;
 }
+<FetchActionTypeCascadingValue FetchActionTypeValue="FetchActionType">
+    <MudText Typo="Typo.h6" Color="Color.Secondary" Class="pa-3">Totaux et prix</MudText>
 
-<MudText Typo="Typo.h6" Color="Color.Secondary" Class="pa-3">Totaux et prix</MudText>
+    <MudGrid Class="pa-4" Justify="Justify.SpaceBetween">
+        <!--Column1-->
+        <MudItem xs="3">
+            <MudStack Justify="Justify.SpaceBetween">
+                <!--1-->
+                <GenericMudSelect Variant="Variant.Outlined"
+                                  Field="BasketPricesInfo!.Coupon"
+                                  Items="Coupons" />
 
-<MudGrid Class="pa-4" Justify="Justify.SpaceBetween">
-    <!--Column1-->
-    <MudItem xs="3">
-        <MudStack Justify="Justify.SpaceBetween">
-            <!--1-->
-            <GenericMudSelect Variant="Variant.Outlined"
-                              Field="BasketPricesInfo!.Coupon"
-                              Items="Coupons" />
+                <!--2-->
+                <DisplayField Field="BasketPricesInfo!.FreeShippingAmountThreshold" />
 
-            <!--2-->
-            <DisplayField Field="BasketPricesInfo!.FreeShippingAmountThreshold" />
+                <!--3-->
+                <DisplayField Field="BasketPricesInfo!.GiftAmountThreshold" />
 
-            <!--3-->
-            <DisplayField Field="BasketPricesInfo!.GiftAmountThreshold" />
+                <!--4-->
+                <DisplayField Field="BasketPricesInfo!.ProductsInfo" />
 
-            <!--4-->
-            <DisplayField Field="BasketPricesInfo!.ProductsInfo" />
+            </MudStack>
+        </MudItem>
 
-        </MudStack>
-    </MudItem>
+        <!--Column2-->
+        <MudItem xs="3">
+            <MudStack Justify="Justify.SpaceBetween">
+                <!--1-->
+                <DisplayField Field="BasketPricesInfo!.ProductsNetAmount" />
 
-    <!--Column2-->
-    <MudItem xs="3">
-        <MudStack Justify="Justify.SpaceBetween">
-            <!--1-->
-            <DisplayField Field="BasketPricesInfo!.ProductsNetAmount" />
+                <!--2-->
+                <MudGrid>
+                    <MudItem xs="6">
+                        <GenericMudSelect Variant="Variant.Outlined"
+                                          Field="BasketPricesInfo?.WarrantyCostOption"
+                                          Items="WarrantyCostOptions" />
+                    </MudItem>
+                    <MudItem xs="6">
+                        <DisplayField Field="BasketPricesInfo!.WarrantyCostAmount" />
 
-            <!--2-->
-            <MudGrid>
-                <MudItem xs="6">
-                    <GenericMudSelect Variant="Variant.Outlined"
-                                      Field="BasketPricesInfo?.WarrantyCostOption"
-                                      Items="WarrantyCostOptions" />
-                </MudItem>
-                <MudItem xs="6">
-                    <DisplayField Field="BasketPricesInfo!.WarrantyCostAmount" />
+                    </MudItem>
+                </MudGrid>
+                <!--3-->
+                <MudGrid>
+                    <MudItem xs="6">
+                        <GenericMudSelect Variant="Variant.Outlined"
+                                          Field="BasketPricesInfo?.ShippingCostOption"
+                                          Items="ShippingCostOptions" />
+                    </MudItem>
+                    <MudItem xs="6">
+                        <GenericTextField Format="C"
+                                          Culture="cultureInfo"
+                                          Field="BasketPricesInfo!.ShippingCostAmount" />
+                    </MudItem>
+                </MudGrid>
 
-                </MudItem>
-            </MudGrid>
-            <!--3-->
-            <MudGrid>
-                <MudItem xs="6">
-                    <GenericMudSelect Variant="Variant.Outlined"
-                                      Field="BasketPricesInfo?.ShippingCostOption"
-                                      Items="ShippingCostOptions" />
-                </MudItem>
-                <MudItem xs="6">
-                    <GenericTextField Format="C"
-                                      Culture="cultureInfo"
-                                      Field="BasketPricesInfo!.ShippingCostAmount" />
-                </MudItem>
-            </MudGrid>
+                <!--4-->
+                <DisplayField Field="BasketPricesInfo!.LogisticInfo" />
 
-            <!--4-->
-            <DisplayField Field="BasketPricesInfo!.LogisticInfo" />
+            </MudStack>
+        </MudItem>
 
-        </MudStack>
-    </MudItem>
+        <!--Column3-->
+        <MudItem xs="3">
+            <MudStack Justify="Justify.SpaceBetween">
+                <!--1-->
+                <DisplayField Field="BasketPricesInfo!.TotalNetAmount" />
 
-    <!--Column3-->
-    <MudItem xs="3">
-        <MudStack Justify="Justify.SpaceBetween">
-            <!--1-->
-            <DisplayField Field="BasketPricesInfo!.TotalNetAmount" />
+                <!--2-->
+                <DisplayField Field="BasketPricesInfo!.VatAmount" />
 
-            <!--2-->
-            <DisplayField Field="BasketPricesInfo!.VatAmount" />
+                <!--3-->
+                <DisplayField Field="BasketPricesInfo!.TotalGrossAmount" />
 
-            <!--3-->
-            <DisplayField Field="BasketPricesInfo!.TotalGrossAmount" />
+                <!--4-->
+                <DisplayField Field="BasketPricesInfo!.DeliveryDates" />
 
-            <!--4-->
-            <DisplayField Field="BasketPricesInfo!.DeliveryDates" />
+            </MudStack>
+        </MudItem>
 
-        </MudStack>
-    </MudItem>
+        <!--Column4-->
+        <MudItem xs="3">
+            <MudStack Justify="Justify.SpaceBetween">
+                <!--1-->
+                <GenericTextField Field="BasketPricesInfo?.OrderDiscountRate" />
 
-    <!--Column4-->
-    <MudItem xs="3">
-        <MudStack Justify="Justify.SpaceBetween">
-            <!--1-->
-            <GenericTextField Field="BasketPricesInfo?.OrderDiscountRate" />
+                <!--2-->
+                <DisplayField Field="BasketPricesInfo!.DiscountAmount" />
 
-            <!--2-->
-            <DisplayField Field="BasketPricesInfo!.DiscountAmount" />
+                <!--3-->
+                <DisplayField Field="BasketPricesInfo!.AdditionalSalesAmount" />
 
-            <!--3-->
-            <DisplayField Field="BasketPricesInfo!.AdditionalSalesAmount" />
+                <!--4-->
+                <MudGrid>
+                    <MudItem xs="6">
+                        <DisplayField Field="BasketPricesInfo!.TotalWeight" />
 
-            <!--4-->
-            <MudGrid>
-                <MudItem xs="6">
-                    <DisplayField Field="BasketPricesInfo!.TotalWeight" />
+                    </MudItem>
+                    <MudItem xs="6">
+                        <DisplayField Field="BasketPricesInfo!.TotalVolume" />
 
-                </MudItem>
-                <MudItem xs="6">
-                    <DisplayField Field="BasketPricesInfo!.TotalVolume" />
-
-                </MudItem>
-            </MudGrid>
-        </MudStack>
-    </MudItem>
-</MudGrid>
-
+                    </MudItem>
+                </MudGrid>
+            </MudStack>
+        </MudItem>
+    </MudGrid>
+</FetchActionTypeCascadingValue>
 @code
 {
 #warning Code for testing purposes
