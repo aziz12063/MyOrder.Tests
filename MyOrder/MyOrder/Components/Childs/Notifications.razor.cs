@@ -7,7 +7,7 @@ using MyOrder.Store.ProcedureCallUseCase;
 
 namespace MyOrder.Components.Childs;
 
-public partial class Notifications : BaseFluxorComponent<NotificationsState, FetchNotificationsAction>
+public partial class Notifications : FluxorComponentBase<NotificationsState, FetchNotificationsAction>
 {
     [Inject]
     private ISnackbar Snackbar { get; set; }

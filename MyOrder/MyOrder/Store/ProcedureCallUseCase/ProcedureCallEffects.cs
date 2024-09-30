@@ -16,6 +16,7 @@ public class ProcedureCallEffects(IBasketRepository basketRepository,
     {
         var field = action.Field;
         var value = action.Value;
+        bool success = false;
 
         if (field == null)
         {
@@ -24,7 +25,7 @@ public class ProcedureCallEffects(IBasketRepository basketRepository,
             return;
         }
 
-        string errorMessage = "An error occured!";
+        string errorMessage = "Fatal error." ;
         try
         {
             ProcedureCallResponseDto response = await basketRepository.PostProcedureCallAsync(field, value, basket.BasketId);
@@ -34,7 +35,7 @@ public class ProcedureCallEffects(IBasketRepository basketRepository,
                 {
                     // In case of success, we refresh states indicated in the response
                     dispatcher.Dispatch(new PostProcedureCallSuccessAction(basket.BasketId, response));
-                    return;
+                    success = true;
                 }
                 else
                     errorMessage = response.Message ?? "Field not updated.";
@@ -54,7 +55,8 @@ public class ProcedureCallEffects(IBasketRepository basketRepository,
         }
         finally
         {
-            dispatcher.Dispatch(new PostProcedureCallFailureAction(action.SelfFetchActionType, errorMessage));
+            if (!success)
+                dispatcher.Dispatch(new PostProcedureCallFailureAction(action.SelfFetchActionType, errorMessage));
         }
     }
 
@@ -63,24 +65,11 @@ public class ProcedureCallEffects(IBasketRepository basketRepository,
         IDispatcher dispatcher)
     {
         var refreshCalls = receivedAction?.ProcedureCallResponse?.RefreshCalls;
-        if (refreshCalls is null
-            || refreshCalls.Count < 1)
-        {
-            logger.LogInformation("RefreshCall property is empty. No refresh calls to make.");
-            return;
-        }
-
-        foreach (var call in refreshCalls)
-        {
-            if (string.IsNullOrWhiteSpace(call))
-            {
-                logger.LogError("Refresh call is null");
-                continue;
-            }
-            logger.LogInformation("Dispatching refresh action for {Call}", call);
-            stateResolver.DispatchRefreshAction(call, dispatcher, receivedAction.BasketId);
-        }
+        var basketId = receivedAction?.BasketId;
+        stateResolver.DispatchRefreshCalls(dispatcher, refreshCalls, basketId);
     }
+
+    
 
     [EffectMethod]
     public async Task HandlePostProcedureCallFailureAction(PostProcedureCallFailureAction action,

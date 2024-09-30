@@ -8,7 +8,7 @@ using MyOrder.Utils;
 
 namespace MyOrder.Components.Childs.Header;
 
-public partial class InvoiceDetails : BaseFluxorComponent<InvoiceInfoState, FetchInvoiceInfoAction>
+public partial class InvoiceDetails : FluxorComponentBase<InvoiceInfoState, FetchInvoiceInfoAction>
 {
     public BasketInvoiceInfoDto? BasketInvoiceInfo { get; set; }
     public List<AccountDto?>? InvoiceToAccounts { get; set; }

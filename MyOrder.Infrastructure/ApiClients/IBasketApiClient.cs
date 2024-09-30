@@ -124,7 +124,7 @@ public interface IBasketApiClient
     [Get("/api/orderContext/{basketId}/newLine")]
     Task<BasketLineDto?> GetNewLineAsync(string basketId);
 
-    [Post("/api/orderContext/{basketId}/newLine/reset")]
+    [Put("/api/orderContext/{basketId}/newLine/reset")]
     Task<BasketLineDto> ResetNewLineStateAsync(string basketId);
 
     [Post("/api/orderContext/{basketId}/newLine/add")]

@@ -1,6 +1,6 @@
 ﻿@using MyOrder.Store.NewLineUseCase
 
-@inherits BaseFluxorComponent<NewLineState, FetchNewLineAction>
+@inherits FluxorComponentBase<NewLineState, FetchNewLineAction>
 
 @if (_isLoading)
 {
@@ -11,7 +11,38 @@
 <FetchActionTypeCascadingValue FetchActionTypeValue="FetchActionType">
     <MudGrid>
         <MudItem xs="12" md="12">
-
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudStack Row="true" Justify="Justify.FlexEnd">
+                        <GenericTextField Field="NewLine!.ItemId" />
+                        <DisplayField Field="NewLine!.Name" />
+                    </MudStack>
+                    @*
+                    Code article //rw required w/ error article non trouvé
+                    dimensions
+                    link
+                    poids/volume
+                    - actif
+                    *@
+                </MudItem>
+                <MudItem xs="12">
+                    <MudStack Row="true" Justify="Justify.SpaceAround">
+                        @* FormuleQ *@
+                        <GenericTextField Field="NewLine!.SalesQuantity" /> @* Vendu par*@
+                        X
+                        <DisplayField Field="NewLine.SalesPrice" />
+                        =
+                        <DisplayField Field="NewLine.LineAmount" />
+                    </MudStack>
+                </MudItem>
+                <MudItem xs="12">
+                    @*
+                    Vente add
+                    Quantité initiale du client
+                    notes de ligne
+                    *@
+                </MudItem>
+            </MudGrid>
         </MudItem>
         <MudItem xs="12" md="6">
             <LineStockQuantities BasketLine="NewLine"
@@ -21,4 +52,9 @@
             <LinePricesQuantities BasketLine="NewLine" />
         </MudItem>
     </MudGrid>
+    <MudStack Row="true" Justify="Justify.FlexEnd" Style="position:sticky;">
+        <MudButton Variant="Variant.Text" Color="Color.Error" OnClick="ResetLine">Réinitialiser</MudButton>
+        <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="CommitNewLine">Ajouter</MudButton>
+    </MudStack>
+
 </FetchActionTypeCascadingValue>

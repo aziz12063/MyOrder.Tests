@@ -1,5 +1,5 @@
 @using MyOrder.Store.GeneralInfoUseCase
-@inherits MyOrder.Components.Common.BaseFluxorComponent<GeneralInfoState, FetchGeneralInfoAction>
+@inherits MyOrder.Components.Common.FluxorComponentBase<GeneralInfoState, FetchGeneralInfoAction>
 
 @if (State.Value.IsLoading)
 {

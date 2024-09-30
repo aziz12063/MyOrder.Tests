@@ -6,7 +6,7 @@ using MyOrder.Store.TradeInfoUseCase;
 using MyOrder.Utils;
 
 namespace MyOrder.Components.Childs.Header;
-public partial class CommercialDetails : BaseFluxorComponent<TradeInfoState, FetchTradeInfoAction>
+public partial class CommercialDetails : FluxorComponentBase<TradeInfoState, FetchTradeInfoAction>
 {
 
     private BasketTradeInfoDto? BasketTradeInfoDto { get; set; }

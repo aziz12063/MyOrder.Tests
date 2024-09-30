@@ -280,6 +280,10 @@ public class BasketRepository(IBasketApiClient apiClient, ILogger<BasketReposito
     public async Task<ProcedureCallResponseDto> CommitAddNewLineAsync(string basketId)
     {
         logger.LogDebug("Committing new line for {BasketId} from repository", basketId);
-        return await apiClient.CommitAddNewLineAsync(basketId);
+
+        var response = await apiClient.CommitAddNewLineAsync(basketId);
+
+        logger.LogInformation("Procedure call response : \n{response}", response);
+        return response;
     }
 }

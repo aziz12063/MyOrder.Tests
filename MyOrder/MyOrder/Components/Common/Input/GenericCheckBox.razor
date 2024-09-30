@@ -9,7 +9,6 @@
         <MudCheckBox Size="Size.Small"
                      Dense="true"
                      Style="display:inline-block;"
-                     Label="@Field?.Name"
                      LabelPosition="LabelPosition.End"
                      Required="_required"
                      Error="_required"
@@ -17,6 +16,15 @@
                      Disabled="_readOnly"
                      @bind-Value="ValueProperty"
                      @bind-Value:after="BoundValueChangedHandler">
+            <ChildContent>
+                <MudText Typo="Typo">@Field?.Name</MudText>
+            </ChildContent>
         </MudCheckBox>
     </MudTooltip>
+}
+
+@code
+{
+    [Parameter]
+    public Typo Typo { get; set; } = Typo.body2;
 }

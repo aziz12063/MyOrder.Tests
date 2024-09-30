@@ -1,7 +1,7 @@
 ﻿@using MyOrder.Shared.Dtos.SharedComponents
 @using MyOrder.Store.PricesInfoUseCase
 @using System.Globalization
-@inherits MyOrder.Components.Common.BaseFluxorComponent<PricesInfoState, FetchPricesInfoAction>
+@inherits MyOrder.Components.Common.FluxorComponentBase<PricesInfoState, FetchPricesInfoAction>
 
 @if (isLoading)
 {

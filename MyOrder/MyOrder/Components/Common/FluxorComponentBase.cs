@@ -9,7 +9,7 @@ using MyOrder.Store.RessourcesUseCase;
 
 namespace MyOrder.Components.Common;
 
-public abstract class BaseFluxorComponent<TState, TAction> : ComponentBase, IDisposable where TState : class
+public abstract class FluxorComponentBase<TState, TAction> : ComponentBase, IDisposable where TState : class
 {
     [Inject]
     protected IState<TState>? State { get; set; }
@@ -20,7 +20,7 @@ public abstract class BaseFluxorComponent<TState, TAction> : ComponentBase, IDis
     [Inject]
     protected BasketService BasketService { get; set; }
     [Inject]
-    protected ILogger<BaseFluxorComponent<TState, TAction>> Logger { get; set; }
+    protected ILogger<FluxorComponentBase<TState, TAction>> Logger { get; set; }
 
     protected Type FetchActionType { get; } = typeof(TAction);
     protected string BasketId => BasketService.BasketId;
@@ -60,13 +60,6 @@ public abstract class BaseFluxorComponent<TState, TAction> : ComponentBase, IDis
     protected abstract void CacheNewFields();
 
     private void OnBasketIdChanged(string basketId) => Dispatcher.Dispatch(CreateFetchAction(State.Value, basketId));
-
-    [Obsolete]
-    protected void SetBasketOrderValue<T>(Field<T>? field, T value, string? procedureCallValue)
-    {
-        throw new NotImplementedException();
-    }
-
 
     protected static string GetFieldValue(string? value) => FieldUtility.NullOrWhiteSpaceHelper(value);
 

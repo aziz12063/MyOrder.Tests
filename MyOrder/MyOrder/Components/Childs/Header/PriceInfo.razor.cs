@@ -4,7 +4,7 @@ using MyOrder.Store.PricesInfoUseCase;
 using MyOrder.Utils;
 
 namespace MyOrder.Components.Childs.Header;
-public partial class PriceInfo : BaseFluxorComponent<PricesInfoState, FetchPricesInfoAction>
+public partial class PriceInfo : FluxorComponentBase<PricesInfoState, FetchPricesInfoAction>
 {
     private BasketPricesInfoDto? BasketPricesInfo { get; set; }
     private List<BasketValueDto?>? Coupons { get; set; }

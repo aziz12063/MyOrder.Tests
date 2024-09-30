@@ -7,28 +7,32 @@
 {
     <MudTooltip RootStyle="width: 100%;"
                 Text="@_tooltipText">
-        <MudTextField Typo="Typo.body2"
+        <MudTextField Typo="Typo"
                       Margin="Margin.Dense"
                       Variant="variant"
+                      Lines="Lines"
                       ShrinkLabel="shrinkLabel"
                       Format="@Format"
                       Culture="@Culture"
                       Class="@cssClass"
-                      Label="@Field?.Name"
+                      Label="@FieldLabel()"
                       Required="_required"
-                      Error="_required"
                       RequiredError="Ce champ est obligatoire"
+                      Error="_error"
+                      ErrorText="@Field!.Error"
                       ReadOnly="_readOnly"
                       Disabled="_readOnly"
                       @bind-Value="ValueProperty"
-                      @bind-Value:after="BoundValueChangedHandler" />
+                      OnBlur="BoundValueChangedHandler" />
     </MudTooltip>
 }
 
 @code {
+    [Parameter] public int Lines { get; set; } = 1;
     [Parameter] public string? Format { get; set; }
     [Parameter] public CultureInfo? Culture { get; set; }
-    private Variant variant;
+    [Parameter] public Variant variant { get; set; } = Variant.Text;
+    [Parameter] public Typo Typo { get; set; } = Typo.body2;
     private string cssClass = string.Empty;
     private bool shrinkLabel = false;
 
@@ -45,9 +49,9 @@
         // {
         //     //cssClass = "readwrite-field";
         // }
-        // else if (required)
-        // {
-        //     cssClass = "";
-        // }
+        if (_required)
+            cssClass = "required-field";
+        else
+            cssClass = string.Empty;
     }
 }

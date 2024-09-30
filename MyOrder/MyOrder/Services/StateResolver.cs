@@ -24,9 +24,6 @@ public class StateResolver : IStateResolver
     private const string OrderLines = "orderLines";
     private const string NewLine = "newLine";
 
-
-    private readonly IServiceProvider _serviceProvider;
-    private readonly Dictionary<string, Func<IDispatcher, string, StateBase>> _refreshCallActions;
     public static readonly Dictionary<Type, string> EndpointFetchActionMap = new()
     {
         { typeof(FetchGeneralInfoAction), GeneralInfo },
@@ -40,9 +37,14 @@ public class StateResolver : IStateResolver
         { typeof(FetchNewLineAction), NewLine }
     };
 
-    public StateResolver(IServiceProvider serviceProvider)
+    private readonly IServiceProvider _serviceProvider;
+    private readonly ILogger<StateResolver> _logger;
+    private readonly Dictionary<string, Func<IDispatcher, string, StateBase>> _refreshCallActions;
+
+    public StateResolver(IServiceProvider serviceProvider, ILogger<StateResolver> logger)
     {
         _serviceProvider = serviceProvider;
+        _logger = logger;
         _refreshCallActions = new Dictionary<string, Func<IDispatcher, string, StateBase>>
         {
             { GeneralInfo, CreateDispatchAction<GeneralInfoState, FetchGeneralInfoAction> },
@@ -78,6 +80,27 @@ public class StateResolver : IStateResolver
 
         dispatcher.Dispatch(action);
         return state;
+    }
+
+    public void DispatchRefreshCalls(IDispatcher dispatcher, List<string?>? refreshCalls, string? basketId)
+    {
+        if (refreshCalls is null
+                    || refreshCalls.Count < 1)
+        {
+            _logger.LogInformation("RefreshCall property is empty. No refresh calls to make.");
+            return;
+        }
+
+        foreach (var call in refreshCalls)
+        {
+            if (string.IsNullOrWhiteSpace(call))
+            {
+                _logger.LogError("Refresh call is null");
+                continue;
+            }
+            _logger.LogInformation("Dispatching refresh action for {Call}", call);
+            DispatchRefreshAction(call, dispatcher, basketId!);
+        }
     }
 
     public void DispatchRefreshAction(string key, IDispatcher dispatcher, string basketId)

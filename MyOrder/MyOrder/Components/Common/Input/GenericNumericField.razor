@@ -1,0 +1,78 @@
+﻿@* We should use (where T : INumber<T>) but the latter doesn't accept nullable *@
+@typeparam T
+
+@inherits GenericInputBase<T>
+
+@if (Field is not null && !_hidden)
+{
+    <MudTooltip RootStyle="width:100%"
+                Text="@_tooltipText"
+                Placement="Placement.Top">
+        <MudNumericField T="T"
+                         Typo="Typo.body2"
+                         Label="@FieldLabel()"
+                         Margin="Margin.Dense"
+                         Variant="@Variant"
+                         Underline="!HideLabel"
+                         FullWidth="true"
+                         Required="_required"
+                         Error="_required"
+                         ReadOnly="_readOnly"
+                         Disabled="_readOnly"
+                         @bind-Value="ValueProperty"
+                         Clearable="Clearable"
+                         Min="Step"
+                         Step="Step"
+                         OnBlur="BoundValueChangedHandler"
+                         HideSpinButtons="true" />
+    </MudTooltip>
+}
+
+@code {
+    [Parameter]
+    public T Step { get; set; }
+    [Parameter]
+    public Variant Variant { get; set; } = Variant.Text;
+    [Parameter]
+    public bool Clearable { get; set; } = false;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        Step = ConvertTo(1);
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        var type = typeof(T);
+
+        if (Nullable.GetUnderlyingType(type) != null)
+        {
+            type = Nullable.GetUnderlyingType(type);
+        }
+
+        if (type != typeof(int) && type != typeof(short) && type != typeof(decimal) &&
+            type != typeof(long) && type != typeof(float) && type != typeof(double) &&
+            type != typeof(byte) && type != typeof(sbyte) && type != typeof(uint) &&
+            type != typeof(ushort) && type != typeof(ulong))
+        {
+            throw new InvalidOperationException($"The type '{typeof(T)}' is not a numeric type.");
+        }
+    }
+
+    public static T ConvertTo(object value)
+    {
+        var targetType = Nullable.GetUnderlyingType(typeof(T)) ?? typeof(T);
+
+        if (value == null || value == DBNull.Value)
+        {
+            return default;
+        }
+
+        return (T)Convert.ChangeType(value, targetType);
+    }
+
+}

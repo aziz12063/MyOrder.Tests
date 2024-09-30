@@ -1,5 +1,5 @@
 ﻿@using MyOrder.Store.InvoiceInfoUseCase
-@inherits MyOrder.Components.Common.BaseFluxorComponent<InvoiceInfoState, FetchInvoiceInfoAction>
+@inherits MyOrder.Components.Common.FluxorComponentBase<InvoiceInfoState, FetchInvoiceInfoAction>
 
 @if (isLoading)
 {

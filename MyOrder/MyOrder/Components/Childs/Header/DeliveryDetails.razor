@@ -1,5 +1,5 @@
 ﻿@using MyOrder.Store.DeliveryInfoUseCase
-@inherits MyOrder.Components.Common.BaseFluxorComponent<DeliveryInfoState, FetchDeliveryInfoAction>
+@inherits MyOrder.Components.Common.FluxorComponentBase<DeliveryInfoState, FetchDeliveryInfoAction>
 
 @if (isLoading)
 {
@@ -81,62 +81,21 @@
             <GenericMudSelect Field="BasketDeliveryInfo!.DeliveryMode"
                               Items="DeliveryModes" />
 
-            @if (!FieldUtility.IsHidden(BasketDeliveryInfo!.CompleteDelivery))
-            {
-                <MudCheckBox Dense="true"
-                             Size="Size.Small"
-                             Style="display:inline-block;"
-                             Label="@BasketDeliveryInfo!.CompleteDelivery?.Name"
-                             LabelPosition="LabelPosition.End"
-                             ReadOnly="@FieldUtility.IsReadOnly(BasketDeliveryInfo!.CompleteDelivery)"
-                             Disabled="@FieldUtility.IsHidden(BasketDeliveryInfo!.CompleteDelivery)"
-                             Required="@FieldUtility.IsRequired(BasketDeliveryInfo!.CompleteDelivery)"
-                             Error="@FieldUtility.IsRequired(BasketDeliveryInfo!.CompleteDelivery)"
-                             @bind-Value="CompleteDelivery" />
-            }
-            @if (!FieldUtility.IsHidden(BasketDeliveryInfo!.ImperativeDate))
-            {
-                <MudDatePicker Label="@BasketDeliveryInfo!.ImperativeDate?.Name"
-                               ReadOnly="@FieldUtility.IsReadOnly(BasketDeliveryInfo!.ImperativeDate)"
-                               Disabled="@FieldUtility.IsHidden(BasketDeliveryInfo!.ImperativeDate)"
-                               Required="@FieldUtility.IsRequired(BasketDeliveryInfo!.ImperativeDate)"
-                               Error="@FieldUtility.IsRequired(BasketDeliveryInfo!.ImperativeDate)"
-                               Clearable="true"
-                               @bind-Date="ImperativeDateValue" />
-            }
+            <GenericCheckBox Field="BasketDeliveryInfo?.CompleteDelivery" />
+            <DatePicker Field="BasketDeliveryInfo?.ImperativeDate" />
             <DisplayField Field="BasketDeliveryInfo!.OrderDocuments" />
         </MudStack>
         <MudDivider />
 
         <!-- Notes de RC -->
         <div>
+            <GenericTextField Field="BasketDeliveryInfo!.Note"
+                              Lines="3"
+                              variant="Variant.Outlined"
+                              Typo="Typo.caption" />
 
-            <MudTextField Typo="Typo.caption"
-                          Lines="3"
-                          Variant="Variant.Outlined"
-                          FullWidth="true"
-                          Margin="Margin.Dense"
-                          Required="@FieldUtility.IsRequired(BasketDeliveryInfo!.Note)"
-                          Error="@FieldUtility.IsRequired(BasketDeliveryInfo!.Note)"
-                          ReadOnly="@FieldUtility.IsReadOnly(BasketDeliveryInfo!.Note)"
-                          Label="@BasketDeliveryInfo!.Note?.Name"
-                          @bind-Value="@NoteValue" />
-            @if (!FieldUtility.IsHidden(BasketDeliveryInfo!.NoteMustBeSaved))
-            {
-                <MudItem>
-                    <MudCheckBox Dense="true"
-                                 Size="Size.Small"
-                                 Style="display:inline-block;"
-                                 ReadOnly="@FieldUtility.IsReadOnly(BasketDeliveryInfo!.NoteMustBeSaved)"
-                                 Disabled="@FieldUtility.IsHidden(BasketDeliveryInfo!.NoteMustBeSaved)"
-                                 Error="@FieldUtility.IsRequired(BasketDeliveryInfo!.NoteMustBeSaved)"
-                                 @bind-Value="SaveNoteForFutureOrders">
-                        <ChildContent>
-                            <MudText Typo="Typo.caption">@BasketDeliveryInfo!.NoteMustBeSaved?.Name</MudText>
-                        </ChildContent>
-                    </MudCheckBox>
-                </MudItem>
-            }
+            <GenericCheckBox Field="BasketDeliveryInfo?.NoteMustBeSaved"
+                             Typo="Typo.caption" />
         </div>
     </MudStack>
 </FetchActionTypeCascadingValue>

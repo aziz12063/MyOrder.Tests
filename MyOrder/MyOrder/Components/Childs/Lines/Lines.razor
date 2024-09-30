@@ -1,7 +1,7 @@
 ﻿@using MyOrder.Components.Common.Input
 @using MyOrder.Store.LinesUseCase
 @using static MudBlazor.CategoryTypes
-@inherits BaseFluxorComponent<LinesState, FetchLinesAction>
+@inherits FluxorComponentBase<LinesState, FetchLinesAction>
 
 @if (State.Value.IsLoading)
 {
@@ -47,9 +47,8 @@
                                 HeaderClass="header-style"
                                 CellStyle="text-align: center; margin: 5% auto; font-size: 12px;">
                     <CellTemplate>
-                        <MudTextField T="int?"
-                                      Value="@context.Item.LineNum?.Value"
-                                      ValueChanged="(x => OnValueChange(x, context?.Item?.LineNum))" />
+                        <GenericNumericField Field="context.Item.LineNum"
+                                             HideLabel="true" />
                     </CellTemplate>
                 </TemplateColumn>
 
@@ -97,13 +96,8 @@
                                 HeaderClass="header-style"
                                 CellStyle="text-align: center; margin: 5% auto; font-size: 12px;">
                     <CellTemplate>
-                        <MudNumericField T="int?" Immediate="true"
-                                         Step="25"
-                                         ReadOnly="@FieldUtility.IsReadOnly(BasketOrderLinesDto?.lines?[0]?.SalesQuantity)"
-                                         Required="true" RequiredError="Quantité is required!"
-                                         Validation="@(new Func<int?, string?>(CheckQuantityValue))"
-                                         Value="@context.Item.SalesQuantity?.Value"
-                                         ValueChanged="(x => OnValueChange(x,context.Item.SalesQuantity))" />
+                        <GenericNumericField Field="context.Item.SalesQuantity"
+                                             HideLabel="true" />
                     </CellTemplate>
                 </TemplateColumn>
 
@@ -112,11 +106,8 @@
                                 HeaderClass="header-style"
                                 CellStyle="text-align: center; margin: 5% auto; font-size: 12px;">
                     <CellTemplate>
-                        <MudTextField T="decimal?"
-                                      Format="0.##' %'"
-                                      ReadOnly="@FieldUtility.IsReadOnly(BasketOrderLinesDto?.lines?[0]?.DiscountRate)"
-                                      Value="@context.Item.DiscountRate?.Value"
-                                      ValueChanged="(x => OnValueChange(x, context.Item.DiscountRate))" />
+                        <GenericNumericField Field="context.Item.DiscountRate"
+                                             HideLabel="true" /> @* Format="0.##' %'" *@
                     </CellTemplate>
                 </TemplateColumn>
 
@@ -125,11 +116,7 @@
                                 HeaderClass="header-style"
                                 CellStyle="text-align: center; margin: 5% auto; font-size: 12px;">
                     <CellTemplate>
-                        <MudTextField T="decimal?"
-                                      Format="0.##' %'"
-                                      ReadOnly="@FieldUtility.IsReadOnly(BasketOrderLinesDto?.lines?[0]?.DiscountRate)"
-                                      Value="@context.Item.DiscountRate?.Value"
-                                      ValueChanged="(x => OnValueChange(x, context.Item.DiscountRate))" />
+
                     </CellTemplate>
                 </TemplateColumn>
 
@@ -138,11 +125,8 @@
                                 HeaderClass="header-style"
                                 CellStyle="text-align: center; margin: 5% auto; font-size: 12px;">
                     <CellTemplate>
-                        <MudTextField T="decimal?"
-                                      ReadOnly="@FieldUtility.IsReadOnly(BasketOrderLinesDto?.lines?[0]?.SalesPrice)"
-                                      Value="@context.Item.SalesPrice?.Value"
-                                      ValueChanged="(x => OnValueChange(x, context.Item.SalesPrice))"
-                                      Format="#,0.00 €" />
+                        <GenericNumericField Field="context.Item.SalesPrice"
+                                             HideLabel="true" />
                     </CellTemplate>
                 </TemplateColumn>
 

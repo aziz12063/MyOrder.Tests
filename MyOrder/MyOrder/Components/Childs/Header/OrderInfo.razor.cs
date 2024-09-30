@@ -10,7 +10,7 @@ using MyOrder.Utils;
 
 namespace MyOrder.Components.Childs.Header;
 
-public partial class OrderInfo : BaseFluxorComponent<OrderInfoState, FetchOrderInfoAction>
+public partial class OrderInfo : FluxorComponentBase<OrderInfoState, FetchOrderInfoAction>
 {
     [Inject]
     private IDialogService DialogService { get; set; }
@@ -47,12 +47,6 @@ public partial class OrderInfo : BaseFluxorComponent<OrderInfoState, FetchOrderI
         SelectedClient = FieldUtility.SelectedAccount(BasketOrderInfo?.Account?.Value);
         AccountAddress = FieldUtility.CreateAddressList(BasketOrderInfo?.Account?.Value);
         isLoading = State.Value.IsLoading || RessourcesState.Value.IsLoading;
-    }
-
-    private string RelatedLinkValue
-    {
-        get => GetFieldValue(BasketOrderInfo?.RelatedLink?.Value);
-        set => SetBasketOrderValue(field: BasketOrderInfo!.RelatedLink, value: value, procedureCallValue: value);
     }
 
     private static Color CustomerTagColorHelper(string? value) =>

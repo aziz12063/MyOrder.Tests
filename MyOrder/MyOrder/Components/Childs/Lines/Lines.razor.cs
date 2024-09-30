@@ -15,7 +15,7 @@ using static MudBlazor.CategoryTypes;
 
 namespace MyOrder.Components.Childs.Lines;
 
-public partial class Lines : BaseFluxorComponent<LinesState, FetchLinesAction>
+public partial class Lines : FluxorComponentBase<LinesState, FetchLinesAction>
 {
     [Inject] IDialogService DialogService { get; set; }
     private BasketOrderLinesDto? BasketOrderLinesDto { get; set; }
@@ -70,23 +70,6 @@ public partial class Lines : BaseFluxorComponent<LinesState, FetchLinesAction>
     }
 
     MudDataGrid<BasketLineDto> dataGrid = new();
-
-    protected void OnValueChange<T>(T value, Field<T?>? field)
-    {
-#warning "Logic for test purpose only. Do refactor."
-         Logger.LogWarning($"the updated  value is {value} and the old value is {field.Value}");
-
-            string? pcdCallValue;
-            if (value is BasketValueDto basketValueDto)
-            {
-                pcdCallValue = basketValueDto?.Value;
-            }
-            else
-            {
-                pcdCallValue = value?.ToString();
-            }
-            SetBasketOrderValue(field: field, value: value, procedureCallValue: pcdCallValue);
-    }
     
     private string? CheckQuantityValue(int? value)
     {

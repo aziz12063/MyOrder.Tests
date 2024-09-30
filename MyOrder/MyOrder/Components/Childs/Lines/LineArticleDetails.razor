@@ -42,7 +42,7 @@
 
         <MudItem xs="12">
             <!--Description-->
-            <DisplayField Field="@BasketLine?.Name" />
+            <GenericTextField Field="@BasketLine?.Name" />
         </MudItem>
     </MudItem>
     <MudStack Spacing="2">
@@ -50,11 +50,6 @@
         <MudGrid>
             <MudItem xs="10">
                 <DisplayField Field="@BasketLine?.Note" />
-            </MudItem>
-            <!--icons-->
-            <MudItem Class="align-self-center">
-                <MudIcon Icon="@Icons.Material.Filled.Done" Color="Color.Primary">
-                </MudIcon>
             </MudItem>
         </MudGrid>
 

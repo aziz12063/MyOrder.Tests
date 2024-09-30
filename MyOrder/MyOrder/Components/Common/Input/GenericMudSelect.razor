@@ -10,7 +10,7 @@
         <MudSelect T="T"
                    Typo="Typo.body2"
                    Class="@Class"
-                   Label="@Field?.Name"
+                   Label="@FieldLabel()"
                    Margin="Margin.Dense"
                    Dense="true"
                    Variant="@Variant"
@@ -54,6 +54,23 @@
                 Class = OUTLINED_CSS_CLASS;
             else
                 Class += OUTLINED_CSS_CLASS;
+        }
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        if (typeof(T) == typeof(BasketValueDto))
+        {
+            var basketValue = Field.Value as BasketValueDto;
+
+            if (basketValue != null)
+            {
+                // Find the item in Items where item.Value matches value.Value
+                ValueProperty = (T?)(object?)Items?
+                .OfType<BasketValueDto>()
+                .FirstOrDefault(item => item.Value == basketValue.Value);
+            }
         }
     }
 

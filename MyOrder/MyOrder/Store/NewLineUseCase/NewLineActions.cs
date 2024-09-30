@@ -22,3 +22,8 @@ public class ResetNewLineAction(string basketId)
 {
     public string BasketId { get; } = basketId;
 }
+
+public class CommitNewLineAction(string basketId)
+{
+    public string BasketId { get; } = basketId;
+}

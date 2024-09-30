@@ -6,7 +6,7 @@ using System.Security.Claims;
 
 namespace MyOrder.Components.Childs;
 
-public partial class GeneralInfo : BaseFluxorComponent<GeneralInfoState, FetchGeneralInfoAction>
+public partial class GeneralInfo : FluxorComponentBase<GeneralInfoState, FetchGeneralInfoAction>
 {
     private BasketGeneralInfoDto? BasketGeneralInfo { get; set; }
     private ClaimsPrincipal? User { get; set; }
