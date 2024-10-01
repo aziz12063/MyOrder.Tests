@@ -7,10 +7,13 @@ using System.Collections.Immutable;
 
 namespace MyOrder.Infrastructure.Repositories;
 
-public class BasketRepository(IBasketApiClient apiClient, ILogger<BasketRepository> logger)
-    : IBasketRepository
+public class BasketRepository(IBasketApiClient apiClient,
+    ILogger<BasketRepository> logger) : IBasketRepository
 {
-
+    //=======================================================================================================
+    //General Info Section
+    //=======================================================================================================
+    #region GeneralInfo
     public async Task<BasketGeneralInfoDto> GetBasketGeneralInfoAsync(string basketId)
     {
         logger.LogDebug("Fetching basket general info for {BasketId} from repository", basketId);
@@ -22,9 +25,21 @@ public class BasketRepository(IBasketApiClient apiClient, ILogger<BasketReposito
         return await apiClient.GetNotificationsAsync(basketId);
     }
 
+    #endregion
     //=======================================================================================================
     //Actions
     //=======================================================================================================
+    #region Actions
+
+    public async Task<NewBasketResponseDto> PostNewBasketAsync(Dictionary<string, string> newBasketRequest)
+    {
+        logger.LogInformation("Posting new basket request {newBasketRequest}", newBasketRequest);
+        var response = await apiClient.CreateNewBasketAsync(newBasketRequest);
+        logger.LogInformation("New basket response : \n{response}", response);
+        return response;
+    }
+
+    #region PostProcedureCall
     public async Task<ProcedureCallResponseDto?> PostProcedureCallAsync(IField field, object value, string basketId)
     {
         // Get the runtime type of the field and value
@@ -110,17 +125,20 @@ public class BasketRepository(IBasketApiClient apiClient, ILogger<BasketReposito
            .Any(item => string.IsNullOrWhiteSpace(item));
     }
 
-    public async Task<NewBasketResponseDto> PostNewBasketAsync(Dictionary<string, string> newBasketRequest)
+    #endregion
+
+    public async Task<NewOrderContextResponse> ReloadOrderContextAsync(string basketId)
     {
-        logger.LogInformation("Posting new basket request {newBasketRequest}", newBasketRequest);
-        var response = await apiClient.CreateNewBasketAsync(newBasketRequest);
-        logger.LogInformation("New basket response : \n{response}", response);
-        return response;
+        logger.LogDebug("Reloading order context for {BasketId} from repository", basketId);
+        return await apiClient.ReloadOrderContextAsync(basketId);
     }
 
+    #endregion
     //=======================================================================================================
     //Order Info Section
     //=======================================================================================================
+    #region OrderInfo
+
     public async Task<BasketOrderInfoDto> GetBasketOrderInfoAsync(string basketId)
     {
         logger.LogDebug("Fetching basket order info for {BasketId} from repository", basketId);
@@ -157,9 +175,12 @@ public class BasketRepository(IBasketApiClient apiClient, ILogger<BasketReposito
         return await apiClient.GetSalesPoolsAsync(basketId);
     }
 
+    #endregion
     //=======================================================================================================
     //Delivery section
     //=======================================================================================================
+    #region DeliveryInfo
+
     public async Task<BasketDeliveryInfoDto> GetBasketDeliveryInfoAsync(string basketId)
     {
         logger.LogDebug("Fetching basket delivery info for {BasketId} from repository", basketId);
@@ -184,9 +205,12 @@ public class BasketRepository(IBasketApiClient apiClient, ILogger<BasketReposito
         return await apiClient.GetDeliveryModesAsync(basketId);
     }
 
+    #endregion
     //=======================================================================================================
     //Invoice info section
     //=======================================================================================================
+    #region InvoiceInfo
+
     public async Task<BasketInvoiceInfoDto> GetBasketInvoiceInfoAsync(string basketId)
     {
         logger.LogDebug("Fetching basket invoice info for {BasketId} from repository", basketId);
@@ -211,18 +235,22 @@ public class BasketRepository(IBasketApiClient apiClient, ILogger<BasketReposito
         return await apiClient.GetPaymentModesAsync(basketId);
     }
 
+    #endregion
     //=======================================================================================================
     // Trade Info Section
     //=======================================================================================================
+    #region TradeInfo
     public async Task<BasketTradeInfoDto> GetBasketTradeInfoAsync(string basketId)
     {
         logger.LogDebug("Fetching basket trade info for {BasketId} from repository", basketId);
         return await apiClient.GetBasketTradeInfoAsync(basketId);
     }
-
+    #endregion
     //=======================================================================================================
     //Prices info section
     //=======================================================================================================
+    #region PricesInfo
+
     public async Task<BasketPricesInfoDto> GetBasketPricesInfoAsync(string basketId)
     {
         logger.LogDebug("Fetching basket prices info for {BasketId} from repository", basketId);
@@ -247,10 +275,11 @@ public class BasketRepository(IBasketApiClient apiClient, ILogger<BasketReposito
         return await apiClient.GetShippingCostOptionsAsync(basketId);
     }
 
-
+    #endregion
     //=======================================================================================================
     //Lines
     //=======================================================================================================
+    #region Lines
 
     public async Task<BasketOrderLinesDto> GetBasketLinesAsync(string basketId)
     {
@@ -286,4 +315,5 @@ public class BasketRepository(IBasketApiClient apiClient, ILogger<BasketReposito
         logger.LogInformation("Procedure call response : \n{response}", response);
         return response;
     }
+    #endregion
 }

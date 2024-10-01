@@ -32,8 +32,8 @@ public partial class CommercialDetails : FluxorComponentBase<TradeInfoState, Fet
     {
         get
         {
-            var startDate = FieldUtility.NullOrWhiteSpaceHelper(Contract?.StartDate?.Value);
-            var endDate = FieldUtility.NullOrWhiteSpaceHelper(Contract?.EndDate?.Value);
+            var startDate = FieldUtility.NullOrWhiteSpaceHelper(Contract?.StartDate?.Value?.ToString("d"));
+            var endDate = FieldUtility.NullOrWhiteSpaceHelper(Contract?.EndDate?.Value?.ToString("d"));
             return $"{startDate}  - {endDate}";
         }
     }

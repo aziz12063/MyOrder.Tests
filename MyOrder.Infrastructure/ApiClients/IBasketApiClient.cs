@@ -16,6 +16,9 @@ public interface IBasketApiClient
     [Post("/api/orderContext/{basketId}/procedureCall")]
     Task<ProcedureCallResponseDto> PostProcedureCallAsync(string basketId, [Body] ImmutableList<string?> procedureCall);
 
+    [Get("/api/orderContext/{basketId}/reload")]
+    Task<NewOrderContextResponse> ReloadOrderContextAsync(string basketId);
+
     //=======================================================================================================
     // General Info Section
     //=======================================================================================================

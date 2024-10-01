@@ -7,6 +7,5 @@ public abstract class MyOrderContextResponse
     public string? ErrorCause { get; set; }
 
     override public string ToString() => $"Success: {Success}, Message: {Message}, ErrorCause: {ErrorCause}";
-
 }
 

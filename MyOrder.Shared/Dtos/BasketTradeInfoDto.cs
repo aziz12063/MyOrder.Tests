@@ -29,8 +29,8 @@ namespace MyOrder.Shared.Dtos
         public Field<string?>? ContractType { get; set; }
         public Field<string?>? ContractGroup { get; set; }
         public Field<string?>? Status { get; set; }
-        public Field<string?>? StartDate { get; set; }
-        public Field<string?>? EndDate { get; set; }
+        public Field<DateTime?>? StartDate { get; set; }
+        public Field<DateTime?>? EndDate { get; set; }
         public Field<string?>? CampaignId { get; set; }
         public Field<string?>? MainContact { get; set; }
         public Field<string?>? OfficeExecutive { get; set; }
