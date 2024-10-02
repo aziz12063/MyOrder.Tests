@@ -15,7 +15,7 @@
                      ReadOnly="_readOnly"
                      Disabled="_readOnly"
                      @bind-Value="ValueProperty"
-                     @bind-Value:after="BoundValueChangedHandler">
+                     @bind-Value:after="OnBindValueAfter">
             <ChildContent>
                 <MudText Typo="Typo">@Field?.Name</MudText>
             </ChildContent>

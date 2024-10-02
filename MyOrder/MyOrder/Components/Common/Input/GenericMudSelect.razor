@@ -21,7 +21,7 @@
                    ReadOnly="_readOnly"
                    Disabled="_readOnly"
                    Value="ValueProperty"
-                   ValueChanged="OnValueChanged"
+                   ValueChanged="(Action<T>)OnValueChanged"
                    OnClose="DropDownClosedHandler"
                    OnOpen="DropDownOpenedHandler">
             @if (Items is not null)
@@ -80,7 +80,7 @@
             return;
 
         ValueProperty = value;
-        BoundValueChangedHandler();
+        OnBindValueAfter();
     }
 
     public void DropDownClosedHandler() => _isOpen = false;

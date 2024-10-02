@@ -23,7 +23,7 @@
                       ReadOnly="_readOnly"
                       Disabled="_readOnly"
                       @bind-Value="ValueProperty"
-                      OnBlur="BoundValueChangedHandler" />
+                      @bind-Value:after="OnBindValueAfter" />
     </MudTooltip>
 }
 

@@ -2,6 +2,7 @@ using Fluxor;
 using Fluxor.Blazor.Web.ReduxDevTools;
 using MudBlazor.Services;
 using MyOrder.Components;
+using MyOrder.Configuration;
 using MyOrder.Infrastructure.ApiClients;
 using MyOrder.Infrastructure.HttpHandlers;
 using MyOrder.Infrastructure.Repositories;
@@ -25,6 +26,8 @@ builder.Services.AddRazorComponents()
 builder.Services.AddScoped<BasketService>();
 builder.Services.AddScoped<IStateResolver, StateResolver>();
 builder.Services.AddScoped<IUrlService, UrlService>();
+builder.Services.Configure<RouteConfig>(
+    builder.Configuration.GetSection(RouteConfig.Routes));
 
 // Api Client, and Resilience Policies
 builder.Services.AddHttpContextAccessor();

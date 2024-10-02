@@ -3,10 +3,10 @@ using MyOrder.Shared.Dtos.SharedComponents;
 
 namespace MyOrder.Store.ProcedureCallUseCase;
 
-public class UpdateFieldAction(IField field, dynamic value, Type actionType)
+public class UpdateFieldAction(IField field, dynamic? value, Type actionType)
 {
     public IField Field { get; } = field;
-    public dynamic Value { get; } = value;
+    public dynamic? Value { get; } = value;
     public Type SelfFetchActionType { get; } = actionType;
 }
 

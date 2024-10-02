@@ -12,7 +12,7 @@ public interface IBasketRepository
     //=======================================================================================================
     //Actions Section
     //=======================================================================================================
-    Task<ProcedureCallResponseDto> PostProcedureCallAsync(IField field, object value, string basketId);
+    Task<ProcedureCallResponseDto?> PostProcedureCallAsync(IField field, object value, string basketId);
     Task<NewBasketResponseDto> PostNewBasketAsync(Dictionary<string, string> newBasketRequest);
     Task<NewOrderContextResponse> ReloadOrderContextAsync(string basketId);
 

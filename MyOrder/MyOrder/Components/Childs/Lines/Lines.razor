@@ -97,6 +97,8 @@
                                 CellStyle="text-align: center; margin: 5% auto; font-size: 12px;">
                     <CellTemplate>
                         <GenericNumericField Field="context.Item.SalesQuantity"
+                                             Step="context.Item.MultipleQuantity?.Value"
+                                             Min="context.Item.MultipleQuantity?.Value"
                                              HideLabel="true" />
                     </CellTemplate>
                 </TemplateColumn>
@@ -107,6 +109,7 @@
                                 CellStyle="text-align: center; margin: 5% auto; font-size: 12px;">
                     <CellTemplate>
                         <GenericNumericField Field="context.Item.DiscountRate"
+                                             Min="0"
                                              HideLabel="true" /> @* Format="0.##' %'" *@
                     </CellTemplate>
                 </TemplateColumn>

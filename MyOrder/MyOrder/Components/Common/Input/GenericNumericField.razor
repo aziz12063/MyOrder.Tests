@@ -19,12 +19,12 @@
                          Error="_required"
                          ReadOnly="_readOnly"
                          Disabled="_readOnly"
-                         @bind-Value="ValueProperty"
+                         @bind-value="ValueProperty"
+                         @bind-value:after="OnBindValueAfter"
                          Clearable="Clearable"
-                         Min="Step"
+                         Min="Min"
                          Step="Step"
-                         OnBlur="BoundValueChangedHandler"
-                         HideSpinButtons="true" />
+                         HideSpinButtons="false" />
     </MudTooltip>
 }
 
@@ -32,40 +32,35 @@
     [Parameter]
     public T Step { get; set; }
     [Parameter]
+    public T? Min { get; set; }
+    [Parameter]
     public Variant Variant { get; set; } = Variant.Text;
     [Parameter]
     public bool Clearable { get; set; } = false;
+
+    private Type _underLyingType = GetUnderlyingType(typeof(T));
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
 
-        Step = ConvertTo(1);
+        if (_underLyingType != typeof(int) && _underLyingType != typeof(short) && _underLyingType != typeof(decimal) &&
+            _underLyingType != typeof(long) && _underLyingType != typeof(float) && _underLyingType != typeof(double) &&
+            _underLyingType != typeof(byte) && _underLyingType != typeof(sbyte) && _underLyingType != typeof(uint) &&
+            _underLyingType != typeof(ushort) && _underLyingType != typeof(ulong))
+        {
+            throw new InvalidOperationException($"The type '{_underLyingType}' is not a numeric type.");
+        }
+        if (Step is null)
+            Step = ConvertTo(1);
+        if (Min is null)
+            Min = (T)GetMinValue(_underLyingType);
     }
 
-    protected override void OnParametersSet()
+    private static T ConvertTo(object value)
     {
-        base.OnParametersSet();
-
         var type = typeof(T);
-
-        if (Nullable.GetUnderlyingType(type) != null)
-        {
-            type = Nullable.GetUnderlyingType(type);
-        }
-
-        if (type != typeof(int) && type != typeof(short) && type != typeof(decimal) &&
-            type != typeof(long) && type != typeof(float) && type != typeof(double) &&
-            type != typeof(byte) && type != typeof(sbyte) && type != typeof(uint) &&
-            type != typeof(ushort) && type != typeof(ulong))
-        {
-            throw new InvalidOperationException($"The type '{typeof(T)}' is not a numeric type.");
-        }
-    }
-
-    public static T ConvertTo(object value)
-    {
-        var targetType = Nullable.GetUnderlyingType(typeof(T)) ?? typeof(T);
+        var targetType = Nullable.GetUnderlyingType(type) ?? type;
 
         if (value == null || value == DBNull.Value)
         {
@@ -75,4 +70,22 @@
         return (T)Convert.ChangeType(value, targetType);
     }
 
+    private static object GetMinValue(Type type) => type switch
+    {
+        Type t when t == typeof(float) => float.MinValue,
+        Type t when t == typeof(double) => double.MinValue,
+        Type t when t == typeof(decimal) => decimal.MinValue,
+        Type t when t == typeof(int) => int.MinValue,
+        Type t when t == typeof(long) => long.MinValue,
+        Type t when t == typeof(sbyte) => sbyte.MinValue,
+        Type t when t == typeof(byte) => byte.MinValue,
+        Type t when t == typeof(short) => short.MinValue,
+        Type t when t == typeof(ushort) => ushort.MinValue,
+        Type t when t == typeof(uint) => uint.MinValue,
+        Type t when t == typeof(ulong) => ulong.MinValue,
+        _ => throw new ArgumentException($"Unsupported type {type}")
+    };
+
+    private static Type GetUnderlyingType(Type type) =>
+    Nullable.GetUnderlyingType(type) ?? type;
 }

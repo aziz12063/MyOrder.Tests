@@ -25,11 +25,15 @@ public class ProcedureCallEffects(IBasketRepository basketRepository,
             return;
         }
 
-        string errorMessage = "Fatal error." ;
+        string errorMessage = "Unhandled error occured." ;
         try
         {
-            ProcedureCallResponseDto response = await basketRepository.PostProcedureCallAsync(field, value, basket.BasketId);
-            if (response.Success == true)
+            var response = await basketRepository.PostProcedureCallAsync(field, value, basket.BasketId);
+            if (response == null)
+            {
+                errorMessage = "Null response returned.";
+            }
+            else if (response.Success == true)
             {
                 if (response.UpdateDone == true)
                 {

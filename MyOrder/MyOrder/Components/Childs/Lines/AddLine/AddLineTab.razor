@@ -28,7 +28,9 @@
                 <MudItem xs="12">
                     <MudStack Row="true" Justify="Justify.SpaceAround">
                         @* FormuleQ *@
-                        <GenericTextField Field="NewLine!.SalesQuantity" /> @* Vendu par*@
+                        <GenericNumericField Field="NewLine!.SalesQuantity"
+                                             Step="NewLine!.MultipleQuantity?.Value"
+                                             Min="NewLine!.MultipleQuantity?.Value" /> @* Vendu par*@
                         X
                         <DisplayField Field="NewLine.SalesPrice" />
                         =

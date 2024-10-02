@@ -16,9 +16,8 @@ public class UrlService : IUrlService
         if (string.IsNullOrEmpty(_routeConfig.Basket))
         {
             _logger.LogWarning("Basket route is not configured. Using fallback route.");
-            _routeConfig.Basket = "/?BasketId={basketId}";
+            _routeConfig.Basket = "/EditBasket?BasketId={basketId}";
         }
-
         if (string.IsNullOrEmpty(_routeConfig.Error))
         {
             _logger.LogWarning("Error route is not configured. Using fallback route.");
