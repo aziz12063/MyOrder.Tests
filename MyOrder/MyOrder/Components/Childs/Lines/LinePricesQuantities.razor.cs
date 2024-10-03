@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MyOrder.Shared.Dtos.Lines;
-using MyOrder.Shared.Dtos;
 
 namespace MyOrder.Components.Childs.Lines;
 

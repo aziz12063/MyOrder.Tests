@@ -4,59 +4,93 @@
 
 @if (_isLoading)
 {
+    <MudProgressLinear Color="Color.Primary"
+                       Indeterminate="true" />
     <MudText>Chargement ...</MudText>
     return;
 }
 
 <FetchActionTypeCascadingValue FetchActionTypeValue="FetchActionType">
-    <MudGrid>
-        <MudItem xs="12" md="12">
-            <MudGrid>
-                <MudItem xs="12">
-                    <MudStack Row="true" Justify="Justify.FlexEnd">
-                        <GenericTextField Field="NewLine!.ItemId" />
-                        <DisplayField Field="NewLine!.Name" />
-                    </MudStack>
-                    @*
-                    Code article //rw required w/ error article non trouvé
-                    dimensions
-                    link
-                    poids/volume
-                    - actif
-                    *@
-                </MudItem>
-                <MudItem xs="12">
-                    <MudStack Row="true" Justify="Justify.SpaceAround">
-                        @* FormuleQ *@
-                        <GenericNumericField Field="NewLine!.SalesQuantity"
-                                             Step="NewLine!.MultipleQuantity?.Value"
-                                             Min="NewLine!.MultipleQuantity?.Value" /> @* Vendu par*@
-                        X
-                        <DisplayField Field="NewLine.SalesPrice" />
-                        =
-                        <DisplayField Field="NewLine.LineAmount" />
-                    </MudStack>
-                </MudItem>
-                <MudItem xs="12">
-                    @*
-                    Vente add
-                    Quantité initiale du client
-                    notes de ligne
-                    *@
-                </MudItem>
-            </MudGrid>
+    <MudGrid Spacing="1">
+        <MudItem xs="3">
+            <GenericTextField Field="NewLine!.ItemId" />
         </MudItem>
-        <MudItem xs="12" md="6">
+        <MudItem xs="3">
+            <MudStack Row="true"
+                      Spacing="1"
+                      StretchItems="StretchItems.Start">
+                <GenericNumericField Field="NewLine!.SalesQuantity"
+                                     Step="NewLine!.MultipleQuantity?.Value"
+                                     Min="NewLine!.MultipleQuantity?.Value" />
+                <MudText>X</MudText>
+            </MudStack>
+        </MudItem>
+        @* Vendu par*@
+        @*                 <MudItem xs="1">
+        <MudText>X</MudText>
+        </MudItem> *@
+        <MudItem xs="3">
+            <MudStack Row="true"
+                      Spacing="1"
+                      StretchItems="StretchItems.Start">
+                <DisplayField Field="NewLine!.SalesPrice" />
+                <MudText>=</MudText>
+            </MudStack>
+        </MudItem>
+        @*                 <MudItem xs="1">
+        <MudText>=</MudText>
+        </MudItem> *@
+        <MudItem xs="3">
+            <DisplayField Field="NewLine.LineAmount" />
+        </MudItem>
+
+        <MudItem xs="12">
+            <DisplayField Field="NewLine!.Name" />
+        </MudItem>
+        <MudItem xs="3">
+            <MudText>Vente Additionelle</MudText>
+        </MudItem>
+        <MudItem xs="3">
+            <GenericNumericField Field="NewLine!.InitialSalesQuantity" />
+        </MudItem>
+        <MudItem xs="6">
+            <GenericTextField Field="NewLine!.Note" />
+        </MudItem>
+        @*
+        Code article //rw required w/ error article non trouvé
+        dimensions
+        link
+        poids/volume
+        - actif
+        *@
+        @*   <MudItem xs="12">
+        <MudStack Row="true" Justify="Justify.SpaceAround">
+        FormuleQ
+
+        </MudStack>
+        </MudItem> *@
+        @*    <MudItem xs="12">
+
+        Vente add
+        Quantité initiale du client
+        notes de ligne
+
+        </MudItem> *@
+        <MudItem xs="6">
             <LineStockQuantities BasketLine="NewLine"
                                  LogisticFlows="LogisticFlows" />
         </MudItem>
-        <MudItem xs="12" md="6">
+        <MudItem xs="6">
             <LinePricesQuantities BasketLine="NewLine" />
         </MudItem>
     </MudGrid>
-    <MudStack Row="true" Justify="Justify.FlexEnd" Style="position:sticky;">
-        <MudButton Variant="Variant.Text" Color="Color.Error" OnClick="ResetLine">Réinitialiser</MudButton>
-        <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="CommitNewLine">Ajouter</MudButton>
-    </MudStack>
 
+    <MudStack Row="true"
+              Justify="Justify.FlexEnd"
+              Class="mt-2"
+              Style="position:sticky;">
+        <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="CommitNewLineAndClose">AJOUTER</MudButton>
+        <MudButton Variant="Variant.Text" Color="Color.Success" OnClick="CommitNewLine">CONTINUER</MudButton>
+        <MudButton Variant="Variant.Text" Color="Color.Error" OnClick="ResetLine">ANNULER</MudButton>
+    </MudStack>
 </FetchActionTypeCascadingValue>

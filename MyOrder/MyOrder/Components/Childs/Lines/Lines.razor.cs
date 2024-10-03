@@ -46,7 +46,7 @@ public partial class Lines : FluxorComponentBase<LinesState, FetchLinesAction>
 
     protected override void CacheNewFields()
     {
-        BasketOrderLinesDto = State?.Value.BasketOrderLines 
+        BasketOrderLinesDto = State?.Value.BasketOrderLines
             ?? throw new ArgumentNullException("Unexpected null for BasketOrderLines object.");
         selectedBasketLineDto = new List<BasketLineDto>();
         if (BasketOrderLinesDto is not null && BasketOrderLinesDto.lines is not null && BasketOrderLinesDto.lines.Count > 0)
@@ -70,17 +70,6 @@ public partial class Lines : FluxorComponentBase<LinesState, FetchLinesAction>
     }
 
     MudDataGrid<BasketLineDto> dataGrid = new();
-    
-    private string? CheckQuantityValue(int? value)
-    {
-        if (value == null || value == 0)
-            return "Quantity is required";
-        if (value % 25 != 0)
-        {
-            return "Quantity doesn't match";
-        }
-        return null;
-    }
 
     // is called when chekbox a row
     void SelectedItemsChanged(HashSet<BasketLineDto> items)
@@ -91,26 +80,17 @@ public partial class Lines : FluxorComponentBase<LinesState, FetchLinesAction>
 
     private Task OpenAddLineDialogAsync()
     {
-        var options = new DialogOptions 
-        { 
-            CloseOnEscapeKey = true, 
-            FullWidth = true, 
-            MaxWidth = MaxWidth.Medium, 
-            CloseButton = true 
+        var options = new DialogOptions
+        {
+            FullWidth = true,
+            MaxWidth = MaxWidth.Medium,
+            CloseOnEscapeKey = true,
+            CloseButton = true,
+            BackdropClick = false,
         };
 
         return DialogService.ShowAsync<AddLineDialog>("AddLineDialog", options);
     }
-
-
-    //private async Task AddLine()
-    //{
-    //    await DialogService.OpenAsync<AddLines>("Add Line", new Dictionary<string, object>()
-    //    {
-    //        { "LineAddedCallback", EventCallback.Factory.Create<LineDto>(this, OnLineAdded) }
-    //    });
-
-    //}
 
     //private void OnLineAdded(LineDto newLine)
     //{

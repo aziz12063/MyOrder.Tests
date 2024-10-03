@@ -1,58 +1,63 @@
-﻿<MudStack Spacing="6" Justify="Justify.SpaceBetween" Style="height: inherit;">
-    <MudItem>
-        <MudGrid>
-            <MudItem xs="6">
-                <MudStack Spacing="1">
-                    <!--Code article-->
-                    <MudItem xs="12">
-                        <MudElement @onclick="(() => HandlePopOverOnClick())">
-                        <DisplayField Field="BasketLine?.ItemId"  /></MudElement>
-                        <MudPopover Open="@_openPopOver" OverflowBehavior="OverflowBehavior.FlipAlways" AnchorOrigin="Origin.TopCenter" TransformOrigin="Origin.BottomCenter" Paper="false">
-                            <MudPaper Outlined="true" Class="px-4 py-8">
-                                <MudText>MyData</MudText>
-                                <MudButton OnClick="@(() => HandlePopOverOnClick())" Class="ml-auto mr-n3 mb-1" Color="Color.Error">Close</MudButton>
-                            </MudPaper>
-                        </MudPopover>
-                    </MudItem>
-                    <!--Motif Modif-->
+﻿<MudPaper Elevation="2" Class="header-cards-height header-cards-height-content">
+    <MudStack Spacing="2" Justify="Justify.SpaceBetween" Style="height: inherit;">
+        <div>
+            <MudText Typo="Typo.h6" Color="Color.Secondary" Class="pb-4">Informations générales</MudText>
+            <MudGrid Spacing="1">
+                <!--Code article-->
+                <MudItem xs="6">
+                    <MudElement @onclick="(() => HandlePopOverOnClick())">
+                        <DisplayField Field="BasketLine?.ItemId" />
+                    </MudElement>
+                    <MudPopover Open="@_openPopOver" OverflowBehavior="OverflowBehavior.FlipAlways" AnchorOrigin="Origin.TopCenter" TransformOrigin="Origin.BottomCenter" Paper="false">
+                        <MudPaper Outlined="true" Class="pa-2">
+                            <MudText>
+                                Num article<br />
+                                Volume<br />
+                                etc...
+                            </MudText>
+                            <MudButton OnClick="@(() => HandlePopOverOnClick())" Color="Color.Error">Fermer</MudButton>
+                        </MudPaper>
+                    </MudPopover>
+                </MudItem>
+
+                <!--N de ligne-->
+                <MudItem xs="6">
+                    <GenericTextField Field="@BasketLine!.LineNum" />
+                </MudItem>
+
+                <!--Motif Modif-->
+                <MudItem xs="6">
                     <GenericMudSelect Variant="Variant.Outlined"
                                       Field="BasketLine?.UpdateReason"
                                       Items="UpdateReasons" />
+                </MudItem>
 
-                    <!--Vendu par-->
-                    <DisplayField Field="@BasketLine?.MultipleQuantity" />
-
-                </MudStack>
-            </MudItem>
-            <MudItem xs="6">
-                <MudStack Spacing="1">
-                    <!--N de ligne-->
-                    <MudItem>
-                        <GenericTextField Field="@BasketLine!.LineNum"/>
-                    </MudItem>
-
-                    <!--Quantité initiale-->
+                <!--Quantité initiale-->
+                <MudItem xs="6">
                     <DisplayField Field="@BasketLine?.InitialSalesQuantity" />
+                </MudItem>
 
-                    <!--Taux de TVA-->
+                <!--Vendu par-->
+                <MudItem xs="6">
+                    <DisplayField Field="@BasketLine?.MultipleQuantity" />
+                </MudItem>
+
+                <!--Taux de TVA-->
+                <MudItem xs="6">
                     <DisplayField Field="@BasketLine?.VatRate" />
-                </MudStack>
-            </MudItem>
-        </MudGrid>
+                </MudItem>
 
-        <MudItem xs="12">
-            <!--Description-->
-            <GenericTextField Field="@BasketLine?.Name" />
-        </MudItem>
-    </MudItem>
-    <MudStack Spacing="2">
-        <!--Notes de ligne-->
-        <MudGrid>
-            <MudItem xs="10">
-                <DisplayField Field="@BasketLine?.Note" />
-            </MudItem>
-        </MudGrid>
+                <!--Description-->
+                <MudItem xs="12">
+                    <GenericTextField Field="@BasketLine?.Name" />
+                </MudItem>
+            </MudGrid>
 
+            <!--Notes de ligne-->
+            <GenericTextField Field="@BasketLine?.Note" />
+        </div>
+
+        <MudDivider Light="true" />
         <!--Information produit-->
         <div>
             <MudTextField Margin="Margin.Dense"
@@ -65,10 +70,7 @@
                           Required="@FieldUtility.IsRequired(BasketLine?.ProductInfo)"
                           ReadOnly="@FieldUtility.IsReadOnly(BasketLine?.ProductInfo)"
                           Disabled="@FieldUtility.IsHidden(BasketLine?.ProductInfo)"
-                          Value="BasketLine?.ProductInfo?.Value">
-            </MudTextField>
+                          Value="BasketLine?.ProductInfo?.Value" />
         </div>
     </MudStack>
-</MudStack>
-
-
+</MudPaper>

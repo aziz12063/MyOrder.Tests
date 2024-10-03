@@ -1,51 +1,55 @@
-﻿<!--Tarification-->
-<GenericMudSelect Variant="Variant.Outlined"
-                  T="BasketValueDto"
-                  Field="BasketLine!.DiscountType"
-                  Items="BasketLine.DiscountTypes" />
+﻿<MudPaper Elevation="2" Class="header-cards-height header-cards-height-content">
+    <MudText Typo="Typo.h6" Color="Color.Secondary" Class="pb-4">Prix et remises</MudText>
+    <MudStack Spacing="2" Justify="Justify.SpaceBetween" Style="height: inherit;">
+        <MudGrid Spacing="1">
+            <!--Tarification-->
+            <MudItem xs="12">
+                <GenericMudSelect Variant="Variant.Outlined"
+                                  T="BasketValueDto"
+                                  Field="BasketLine!.DiscountType"
+                                  Items="BasketLine.DiscountTypes" />
+            </MudItem>
 
-<!--Description-->
-<GenericTextField Field="@BasketLine!.DiscountDescription" />
+            <!--Description-->
+            <MudItem xs="12">
+                <GenericTextField Field="@BasketLine!.DiscountDescription" />
+            </MudItem>
 
-<!--Remise sup-->
-<MudGrid>
-    <MudItem xs="6">
-        <GenericTextField Field="@BasketLine!.DiscountRate"/>
-    </MudItem>
-    <MudItem xs="6">
-
-        <!--PU HT-->
-        <GenericTextField Field="@BasketLine!.DiscountPrice"/>
-    </MudItem>
-</MudGrid>
-
-<!--the new Grid-->
-<MudStack Class="pa-1">
-    <MudDataGrid T="BasketPriceLine" Items="@BasketLine.Prices"
-                 Bordered="true"
-                 SortMode="@SortMode.None"
-                 Striped="true"
-                 Hover="true"
-                 Dense="true"
-                 Elevation="2"
-                 Class="mx-n3"
-                 RowStyleFunc="((item, x) => RowStyleFunc(item, x ,BasketLine))">
-        <Columns>
-            <PropertyColumn Property="x => x == null? 0 : x.Quantity"
-                            Title="Quantity"
-                            CellClass="pa-1 ma-1" />
-            <PropertyColumn Property="x => x == null? 0 : x.CatalogPrice"
-                            Title="Prix Cat."
-                            CellClass="pa-1 ma-1" />
-            <PropertyColumn Property="x => x == null? 0 : x.DiscountPrice"
-                            Title="Prix Rem." />
-            <PropertyColumn Property="x => x == null? 0 : x.MultiplePrice"
-                            Title="Prix / 25"
-                            CellClass="pa-1 ma-1" />
-            <PropertyColumn Property="x => x == null? 0 : x.DiscountRate"
-                            Title="% Dégress."
-                            CellClass="pa-1 ma-1" />
-        </Columns>
-    </MudDataGrid>
-</MudStack>
-
+            <!--Remise sup-->
+            <MudItem xs="6">
+                <GenericTextField Field="@BasketLine!.DiscountRate" />
+            </MudItem>
+            <!--PU HT-->
+            <MudItem xs="6">
+                <GenericTextField Field="@BasketLine!.DiscountPrice" />
+            </MudItem>
+        </MudGrid>
+        <MudDivider />
+        <MudDataGrid T="BasketPriceLine" Items="@BasketLine.Prices"
+                     Bordered="true"
+                     SortMode="@SortMode.None"
+                     Striped="true"
+                     Hover="true"
+                     Dense="true"
+                     Elevation="2"
+                     Class="mx-n3"
+                     RowStyleFunc="((item, x) => RowStyleFunc(item, x ,BasketLine))">
+            <Columns>
+                <PropertyColumn Property="x => x == null? 0 : x.Quantity"
+                                Title="Quantity"
+                                CellClass="pa-1 ma-1" />
+                <PropertyColumn Property="x => x == null? 0 : x.CatalogPrice"
+                                Title="Prix Cat."
+                                CellClass="pa-1 ma-1" />
+                <PropertyColumn Property="x => x == null? 0 : x.DiscountPrice"
+                                Title="Prix Rem." />
+                <PropertyColumn Property="x => x == null? 0 : x.MultiplePrice"
+                                Title="Prix / 25"
+                                CellClass="pa-1 ma-1" />
+                <PropertyColumn Property="x => x == null? 0 : x.DiscountRate"
+                                Title="% Dégress."
+                                CellClass="pa-1 ma-1" />
+            </Columns>
+        </MudDataGrid>
+    </MudStack>
+</MudPaper>
