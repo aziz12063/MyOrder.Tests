@@ -17,11 +17,13 @@
 
             <!--Remise sup-->
             <MudItem xs="6">
-                <GenericTextField Field="@BasketLine!.DiscountRate" />
+                <GenericTextField Field="@BasketLine!.DiscountRate"
+                                  Format="P" />
             </MudItem>
             <!--PU HT-->
             <MudItem xs="6">
-                <GenericTextField Field="@BasketLine!.DiscountPrice" />
+                <GenericTextField Field="@BasketLine!.DiscountPrice"
+                                  Format="C" />
             </MudItem>
         </MudGrid>
 

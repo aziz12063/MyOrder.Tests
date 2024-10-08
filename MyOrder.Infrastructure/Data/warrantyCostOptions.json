@@ -1,0 +1,10 @@
+[
+  {
+    "description": "GO non dispo.",
+    "value": "Disabled"
+  },
+  {
+    "description": "GO activée",
+    "value": "Enabled"
+  }
+]

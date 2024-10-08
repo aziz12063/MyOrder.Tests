@@ -28,6 +28,7 @@ builder.Services.AddScoped<IStateResolver, StateResolver>();
 builder.Services.AddScoped<IUrlService, UrlService>();
 builder.Services.Configure<RouteConfig>(
     builder.Configuration.GetSection(RouteConfig.Routes));
+builder.Services.AddScoped<ICurrencyService, CurrencyService>();
 
 // Api Client, and Resilience Policies
 builder.Services.AddHttpContextAccessor();
@@ -60,8 +61,8 @@ builder.Services.AddFluxor(options =>
 
 
 // Repositories
-builder.Services.AddScoped<IBasketRepository, BasketRepository>();
-//builder.Services.AddSingleton<IBasketRepository, InMemoryBasketRepository>();
+//builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+builder.Services.AddSingleton<IBasketRepository, JsonBasketRepository>();
 
 //MudBlazor and UI elements
 builder.Services.AddMudServices();

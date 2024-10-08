@@ -1,6 +1,8 @@
 ﻿@using MyOrder.Shared.Dtos.SharedComponents
 @using System.Globalization
 @typeparam T
+@using MyOrder.Services
+@inject ICurrencyService Currency
 @inherits GenericInputBase<T>
 
  @if (Field is not null && !_hidden)
@@ -30,9 +32,9 @@
 @code {
     [Parameter] public int Lines { get; set; } = 1;
     [Parameter] public string? Format { get; set; }
-    [Parameter] public CultureInfo? Culture { get; set; }
     [Parameter] public Variant variant { get; set; } = Variant.Text;
     [Parameter] public Typo Typo { get; set; } = Typo.body2;
+    public CultureInfo? Culture { get; set; }
     private string cssClass = string.Empty;
     private bool shrinkLabel = false;
 
@@ -53,5 +55,11 @@
             cssClass = "required-field";
         else
             cssClass = string.Empty;
+    }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Culture = Currency.GetCurrency();
     }
 }

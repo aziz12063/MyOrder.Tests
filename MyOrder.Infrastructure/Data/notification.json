@@ -1,0 +1,12 @@
+[
+  {
+    "notificationId": 3,
+    "severity": "Info",
+    "message": "<strong>[Commande]</strong> Notes de commande: **IMPERATIF POUR CHAQUE CDE DESTINEE SUR CE SITE, CREER UNE TACHE \"DOCUMENTATION\" POUR DEMANDE DE CERTIFICAT DE CONFORMITE NFL00015C AUPRES DU SCE QUALITE ET L ENVOYER A : fournisseurs.thales.c@logitrade.fr. POUR TTES LES CDES a livrer A LAVAL CHEZ THALES SIX",
+    "createdDate": "0001-01-01 00:00:00",
+    "procedureCall": [
+      "RemoveLog",
+      "3"
+    ]
+  }
+]

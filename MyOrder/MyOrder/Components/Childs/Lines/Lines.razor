@@ -110,7 +110,8 @@
                     <CellTemplate>
                         <GenericNumericField Field="context.Item.DiscountRate"
                                              Min="0"
-                                             HideLabel="true" /> @* Format="0.##' %'" *@
+                                             HideLabel="true"
+                                             Format="P"/>
                     </CellTemplate>
                 </TemplateColumn>
 
@@ -129,7 +130,8 @@
                                 CellStyle="text-align: center; margin: 5% auto; font-size: 12px;">
                     <CellTemplate>
                         <GenericNumericField Field="context.Item.SalesPrice"
-                                             HideLabel="true" />
+                                             HideLabel="true"
+                                             Format="C"/>
                     </CellTemplate>
                 </TemplateColumn>
 
@@ -146,7 +148,7 @@
                                 CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
                                 CellClass="pa-1 ma-1"
                                 Editable="IsLineAmountEditable"
-                                Format="c" />
+                                Format="C" />
             </Columns>
 
             <ChildRowContent>

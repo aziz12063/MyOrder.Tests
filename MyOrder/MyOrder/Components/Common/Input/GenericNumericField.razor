@@ -1,6 +1,8 @@
 ﻿@* We should use (where T : INumber<T>) but the latter doesn't accept nullable *@
 @typeparam T
-
+@using System.Globalization
+@using MyOrder.Services
+@inject ICurrencyService Currency
 @inherits GenericInputBase<T>
 
 @if (Field is not null && !_hidden)
@@ -19,6 +21,8 @@
                          Error="_required"
                          ReadOnly="_readOnly"
                          Disabled="_readOnly"
+                         Format="@Format"
+                         Culture="@Culture"
                          @bind-value="ValueProperty"
                          @bind-value:after="OnBindValueAfter"
                          Clearable="Clearable"
@@ -37,13 +41,16 @@
     public Variant Variant { get; set; } = Variant.Text;
     [Parameter]
     public bool Clearable { get; set; } = false;
-
+    [Parameter]
+    public string? Format { get; set; }
+    
+    private CultureInfo? Culture { get; set; }
     private Type _underLyingType = GetUnderlyingType(typeof(T));
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
-
+        Culture = Currency.GetCurrency();
         if (_underLyingType != typeof(int) && _underLyingType != typeof(short) && _underLyingType != typeof(decimal) &&
             _underLyingType != typeof(long) && _underLyingType != typeof(float) && _underLyingType != typeof(double) &&
             _underLyingType != typeof(byte) && _underLyingType != typeof(sbyte) && _underLyingType != typeof(uint) &&

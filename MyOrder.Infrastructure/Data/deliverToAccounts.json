@@ -1,0 +1,62 @@
+[
+  {
+    "accountId": "",
+    "name": "-- Aucune adresse renseignée --",
+    "recipient": null,
+    "building": null,
+    "street": "-- Aucune adresse renseignée --",
+    "locality": null,
+    "zipCode": null,
+    "city": null,
+    "country": null,
+    "email": null,
+    "phone": null,
+    "cellularPhone": null,
+    "blocked": false
+  },
+  {
+    "accountId": "34141770",
+    "name": "LOGITRADE SAS",
+    "recipient": "COMPTABILITE FOURNISSEURS",
+    "building": "PARC D ACTIVITE JEAN MERMOZ",
+    "street": "52 RUE GEORGES GUYNEMER",
+    "locality": "CS 70052",
+    "zipCode": "34170",
+    "city": "CASTELNAU LE LEZ",
+    "country": "FRANCE",
+    "email": "raja1234@raja.fr",
+    "phone": "0120281279",
+    "cellularPhone": "0120281279",
+    "blocked": false
+  },
+  {
+    "accountId": "97155786",
+    "name": "ST MICROELECTRONICS ROUSSET SAS",
+    "recipient": "",
+    "building": "SOPHIA ANTIPOLIS",
+    "street": "635 ROUTE DES LUCIOLES",
+    "locality": "SOPHIA ANTIPOLIS",
+    "zipCode": "06560",
+    "city": "VALBONNE",
+    "country": "FRANCE",
+    "email": "raja1234@raja.fr",
+    "phone": "0120281279",
+    "cellularPhone": "0120281279",
+    "blocked": false
+  },
+  {
+    "accountId": "97803755",
+    "name": "STMICROELECTRONICS ROUSSET SAS",
+    "recipient": "",
+    "building": "ZONE INDUSTRIELLE",
+    "street": "190 AVENUE CELESTIN COQ",
+    "locality": "",
+    "zipCode": "13106",
+    "city": "ROUSSET CEDEX",
+    "country": "FRANCE",
+    "email": "raja1234@raja.fr",
+    "phone": "0120281279",
+    "cellularPhone": "0120281279",
+    "blocked": false
+  }
+]

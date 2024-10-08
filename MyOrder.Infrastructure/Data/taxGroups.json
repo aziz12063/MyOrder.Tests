@@ -1,0 +1,17 @@
+[
+  {
+    "value": null
+  },
+  {
+    "description": "Commande normale",
+    "value": "NOR"
+  },
+  {
+    "description": "Commande liée",
+    "value": "LIE"
+  },
+  {
+    "description": "Commande d'échantillons",
+    "value": "ECH"
+  }
+]

@@ -1,0 +1,6 @@
+{
+  "Success": true,
+  "Message": "Basket created successfully.",
+  "BasketId": "1234567890",
+  "Url": "https://example.com/basket/1234567890"
+}

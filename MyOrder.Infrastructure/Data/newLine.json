@@ -1,0 +1,251 @@
+    {
+      "lineNum": {
+        "name": "N° de ligne",
+        "status": "readWrite",
+        "value": 1,
+        "procedureCall": [
+          "UpdateOrderLinePropertyValue",
+          "267071",
+          "CustomerLineNum",
+          "System.Int32",
+          "<value>"
+        ]
+      },
+      "isCustomLineNum": false,
+      "lineTags": [],
+      "itemId": {
+        "name": "Code article",
+        "status": "readWrite",
+        "value": "CAS11"
+      },
+      "name": {
+        "name": "Description",
+        "status": "readOnly",
+        "value": "C.A SC10 26X20X18 BRUN"
+      },
+      "inventLocationId": {
+        "name": "Entrepôt",
+        "status": "readWrite",
+        "value": "PN2"
+      },
+      "salesQuantity": {
+        "name": "Quantité",
+        "status": "readWrite",
+        "value": 25,
+        "procedureCall": [
+          "UpdateOrderLinePropertyValue",
+          "267071",
+          "SalesQty",
+          "System.Double",
+          "<value>"
+        ]
+      },
+      "salesPrice": {
+        "name": "Prix unitaire",
+        "status": "readOnly",
+        "value": 0.86
+      },
+      "discountTypes": [
+        {
+          "description": "Remise Commande",
+          "value": "Default"
+        },
+        {
+          "description": "Pas de remise - Prix catalogue",
+          "value": "NoDiscount"
+        },
+        {
+          "description": "Remise Standard (%)",
+          "value": "StandardDiscount"
+        },
+        {
+          "description": "Remise DC (%)",
+          "value": "LastColumnDiscount"
+        },
+        {
+          "description": "Prix manuel",
+          "value": "ManualPrice"
+        }
+      ],
+      "discountType": {
+        "name": "Tarification",
+        "status": "readWrite",
+        "value": {
+          "description": "Remise DC (%)",
+          "value": "LastColumnDiscount"
+        },
+        "procedureCall": [
+          "UpdateOrderLinePropertyValue",
+          "267071",
+          "DiscountType",
+          "MyOrderDataModel.Model.MyOrderLineDiscount",
+          "<<one of line discountTypes value>>"
+        ]
+      },
+      "lineAmount": {
+        "name": "Montant HT",
+        "status": "onlyForDisplay",
+        "value": 21.5
+      },
+      "updateReason": {
+        "name": "Motif Modif.",
+        "status": "readWrite",
+        "value": {
+          "value": "GCO"
+        }
+      },
+      "initialSalesQuantity": {
+        "name": "Qté initiale",
+        "status": "readWrite",
+        "value": 0,
+        "procedureCall": [
+          "UpdateOrderLinePropertyValue",
+          "267071",
+          "RAJ_SalesQtyVA",
+          "System.Int32",
+          "<value>"
+        ]
+      },
+      "multipleQuantity": {
+        "name": "Vendu par",
+        "status": "onlyForDisplay",
+        "value": 25
+      },
+      "vatRate": {
+        "name": "Taux de TVA",
+        "status": "onlyForDisplay",
+        "value": 10
+      },
+      "note": {
+        "name": "Note",
+        "status": "readWrite",
+        "value": "",
+        "procedureCall": [
+          "UpdateOrderLinePropertyValue",
+          "267071",
+          "Note",
+          "System.String",
+          "<value>"
+        ]
+      },
+      "productInfo": null,
+      "logisticFlow": {
+        "name": "Flux logistique",
+        "status": "readWrite",
+        "value": {
+          "value": "Stock"
+        },
+        "procedureCall": [
+          "UpdateOrderLinePropertyValue",
+          "267071",
+          "MOMLogisticalFlow",
+          "AxaptaConnector.Enums.MOMLogisticalFlowType",
+          "<one of /logisticFlows value>"
+        ]
+      },
+      "physicalAvailableQuantity": {
+        "name": "Livré maintenant",
+        "status": "onlyForDisplay",
+        "value": 25
+      },
+      "onOrderQuantity": {
+        "name": "A livrer plus tard",
+        "status": "onlyForDisplay",
+        "value": 0
+      },
+      "paletteQuantity": {
+        "name": "Quantité/palette",
+        "status": "onlyForDisplay",
+        "value": 1100
+      },
+      "quantityAtPaletteThreshold": {
+        "name": "Diff Palette",
+        "status": "onlyForDisplay",
+        "value": 1075
+      },
+      "itemType": {
+        "name": "Type d'article",
+        "status": "onlyForDisplay",
+        "value": "Standard"
+      },
+      "deliveryDate": {
+        "name": "Date de liv.",
+        "status": "readWrite",
+        "value": null,
+        "procedureCall": [
+          "UpdateOrderLinePropertyValue",
+          "267071",
+          "MyManualDeliveryDate",
+          "System.DateTime",
+          "<value>"
+        ]
+      },
+      "itemPhysicalInventQuantity": {
+        "name": "Stock total",
+        "status": "onlyForDisplay",
+        "value": 5925
+      },
+      "itemReservPhysicalQuantity": {
+        "name": "Stock réservé",
+        "status": "onlyForDisplay",
+        "value": 1050
+      },
+      "itemPhysicalAvailableQuantity": {
+        "name": "Stock disponible",
+        "status": "onlyForDisplay",
+        "value": 4875
+      },
+      "itemOnOrderQuantity": {
+        "name": "En commande",
+        "status": "onlyForDisplay",
+        "value": 0
+      },
+      "itemOrderedQuantity": {
+        "name": "Commandé total",
+        "status": "onlyForDisplay",
+        "value": 0
+      },
+      "itemOrderedAvailableQuantity": {
+        "name": "Commandé disp.",
+        "status": "onlyForDisplay",
+        "value": 0
+      },
+      "supplyFamily": {
+        "name": "Famille d'appro.",
+        "status": "onlyForDisplay",
+        "value": "C1 - CAISSES ET CONTAINERS"
+      },
+      "itemManager": {
+        "name": "Gestionnaire",
+        "status": "onlyForDisplay",
+        "value": "ERIC DAVACH"
+      },
+      "transportMode": {
+        "name": "Mode de transport",
+        "status": "onlyForDisplay",
+        "value": "PAR DÉFAUT"
+      },
+      "purchaseId": {
+        "name": "Commande d'achat",
+        "status": "hidden",
+        "value": ""
+      },
+      "discountDescription": {
+        "name": "Description Tarif",
+        "status": "onlyForDisplay",
+        "value": ""
+      },
+      "discountRate": {
+        "name": "Remise sup.",
+        "status": "readWrite",
+        "value": 10
+      },
+      "discountPrice": {
+        "name": "PU HT",
+        "status": "readOnly",
+        "value": 0.86
+      },
+      "prices": null
+    }
+    
+  

@@ -1,0 +1,49 @@
+[
+  {
+    "value": ""
+  },
+  {
+    "description": "Carte Bancaire",
+    "value": "CB"
+  },
+  {
+    "description": "Chèque",
+    "value": "CH"
+  },
+  {
+    "description": "Paypal",
+    "value": "PAYPAL"
+  },
+  {
+    "description": "Préautorisation CB",
+    "value": "PCB"
+  },
+  {
+    "description": "Carte Bancaire Manuelle",
+    "value": "TPE"
+  },
+  {
+    "description": "Virement Bancaire",
+    "value": "VB"
+  },
+  {
+    "description": "Virement Marketplace La Poste",
+    "value": "VMP"
+  },
+  {
+    "description": "Préautorisation CB manuelle",
+    "value": "ZCB"
+  },
+  {
+    "description": "Paypal sur Ebay",
+    "value": "ZEBAY"
+  },
+  {
+    "description": "Préautorisation PC manuelle",
+    "value": "ZPC"
+  },
+  {
+    "description": "Préautorisation Paypal manuelle",
+    "value": "ZPY"
+  }
+]

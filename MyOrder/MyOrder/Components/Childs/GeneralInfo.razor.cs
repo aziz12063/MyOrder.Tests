@@ -1,4 +1,6 @@
-﻿using MyOrder.Components.Common;
+﻿using Microsoft.AspNetCore.Components;
+using MyOrder.Components.Common;
+using MyOrder.Services;
 using MyOrder.Shared.Dtos;
 using MyOrder.Store.GeneralInfoUseCase;
 using MyOrder.Utils;
@@ -8,6 +10,8 @@ namespace MyOrder.Components.Childs;
 
 public partial class GeneralInfo : FluxorComponentBase<GeneralInfoState, FetchGeneralInfoAction>
 {
+    [Inject]
+    private ICurrencyService? CurrencyService { get; set; }
     private BasketGeneralInfoDto? BasketGeneralInfo { get; set; }
     private ClaimsPrincipal? User { get; set; }
 
@@ -18,6 +22,7 @@ public partial class GeneralInfo : FluxorComponentBase<GeneralInfoState, FetchGe
         BasketGeneralInfo = State?.Value.GeneralInfo
                              ?? throw new ArgumentNullException(nameof(State.Value.GeneralInfo), "Unexpected null for BasketGeneralInfo object.");
         User = State.Value.User;
+        CurrencyService?.SetCurrency(BasketGeneralInfo?.Company?.Locale ?? "fr-FR");
     }
 
     private string AuthentifiedUser => $"Utilisateur: {FieldUtility.NullOrWhiteSpaceHelperWithDash(User?.Identity?.Name)}"

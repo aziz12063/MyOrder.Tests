@@ -59,7 +59,6 @@
                     </MudItem>
                     <MudItem xs="6">
                         <GenericTextField Format="C"
-                                          Culture="cultureInfo"
                                           Field="BasketPricesInfo!.ShippingCostAmount" />
                     </MudItem>
                 </MudGrid>
@@ -115,8 +114,3 @@
         </MudItem>
     </MudGrid>
 </FetchActionTypeCascadingValue>
-@code
-{
-#warning Code for testing purposes
-    private CultureInfo cultureInfo = CultureInfo.CreateSpecificCulture("fr-FR");
-}

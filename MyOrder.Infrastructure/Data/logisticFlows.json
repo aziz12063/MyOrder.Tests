@@ -1,0 +1,14 @@
+[
+  {
+    "description": "Stock",
+    "value": "Stock"
+  },
+  {
+    "description": "Livraison directe",
+    "value": "DropShipped"
+  },
+  {
+    "description": "Passage en stock",
+    "value": "CrossDocked"
+  }
+]
