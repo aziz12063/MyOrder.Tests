@@ -11,16 +11,18 @@ namespace MyOrder.Components.Common;
 
 public abstract class FluxorComponentBase<TState, TAction> : ComponentBase, IDisposable where TState : class
 {
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
     [Inject]
-    protected IState<TState>? State { get; set; }
+    protected IState<TState> State { get; set; }
     [Inject]
-    protected IState<RessourcesState>? RessourcesState { get; set; }
+    protected IState<RessourcesState> RessourcesState { get; set; }
     [Inject]
     protected IDispatcher Dispatcher { get; set; }
     [Inject]
     protected BasketService BasketService { get; set; }
     [Inject]
     protected ILogger<FluxorComponentBase<TState, TAction>> Logger { get; set; }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 
     protected Type FetchActionType { get; } = typeof(TAction);
     protected string BasketId => BasketService.BasketId;
@@ -61,12 +63,11 @@ public abstract class FluxorComponentBase<TState, TAction> : ComponentBase, IDis
 
     private void OnBasketIdChanged(string basketId) => Dispatcher.Dispatch(CreateFetchAction(State.Value, basketId));
 
-    protected static string GetFieldValue(string? value) => FieldUtility.NullOrWhiteSpaceHelper(value);
-
     public void Dispose()
     {
         State.StateChanged -= OnStateChanged;
         BasketService.BasketIdChanged -= OnBasketIdChanged;
+        GC.SuppressFinalize(this);
     }
 
     protected abstract TAction CreateFetchAction(TState state, string basketId);

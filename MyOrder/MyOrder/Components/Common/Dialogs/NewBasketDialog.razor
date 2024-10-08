@@ -50,18 +50,24 @@
     public string ContactId { get; set; }
 
 
-
+#warning TODO: This code is for test and is not complete, please complete and refactor.
     private void Submit()
     {
         if (position == 1)
         {
-            dispatcher.Dispatch(
-                    new CreateBasketAction(new Dictionary<string, string>() { { "AccountId", this.AccountId } })); // Refactor this
+            dispatcher.Dispatch(new CreateBasketAction(new Dictionary<string, string>()
+                {
+                    { "AccountId", this.AccountId },
+                    { "New", "1"}
+                }));
         }
         if (position == 2)
         {
-            dispatcher.Dispatch(
-                    new CreateBasketAction(new Dictionary<string, string>() { { "ContactId", this.ContactId } })); // Refactor this
+            dispatcher.Dispatch(new CreateBasketAction(new Dictionary<string, string>()
+                {
+                    { "ContactId", this.ContactId },
+                    { "New", "1"}
+                }));
         }
 
         MudDialog.Close(DialogResult.Ok(true));

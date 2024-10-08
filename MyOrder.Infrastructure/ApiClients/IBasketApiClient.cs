@@ -95,7 +95,7 @@ public interface IBasketApiClient
     #endregion
 
     //=======================================================================================================
-    // Prices Info Section
+    // PriceLines Info Section
     //=======================================================================================================
     #region Prices Info
     [Get("/api/orderContext/{basketId}/pricesInfo")]

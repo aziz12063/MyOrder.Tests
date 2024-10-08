@@ -247,7 +247,7 @@ public class BasketRepository(IBasketApiClient apiClient,
     }
     #endregion
     //=======================================================================================================
-    //Prices info section
+    //PriceLines info section
     //=======================================================================================================
     #region PricesInfo
 

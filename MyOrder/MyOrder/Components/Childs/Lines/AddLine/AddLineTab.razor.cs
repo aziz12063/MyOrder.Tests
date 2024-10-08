@@ -1,12 +1,9 @@
-﻿using Fluxor;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using MyOrder.Components.Common;
-using MyOrder.Components.Common.Dialogs;
 using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.Lines;
 using MyOrder.Store.NewLineUseCase;
-using MyOrder.Store.RessourcesUseCase;
 
 namespace MyOrder.Components.Childs.Lines.AddLine;
 
@@ -14,8 +11,6 @@ public partial class AddLineTab : FluxorComponentBase<NewLineState, FetchNewLine
 {
     [Inject]
     private IDialogService DialogService { get; set; }
-    [Inject]
-    private IState<RessourcesState> RessourcesState { get; set; }
     [CascadingParameter]
     private MudDialogInstance DialogInstance { get; set; }
     private BasketLineDto? NewLine { get; set; }

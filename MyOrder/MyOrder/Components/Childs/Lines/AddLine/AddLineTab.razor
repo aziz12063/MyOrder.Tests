@@ -12,70 +12,72 @@
 
 <FetchActionTypeCascadingValue FetchActionTypeValue="FetchActionType">
     <MudGrid Spacing="1">
-        <MudItem xs="3">
-            <GenericTextField Field="NewLine!.ItemId" />
-        </MudItem>
-        <MudItem xs="3">
-            <MudStack Row="true"
-                      Spacing="1"
-                      StretchItems="StretchItems.Start">
-                <GenericNumericField Field="NewLine!.SalesQuantity"
-                                     Step="NewLine!.MultipleQuantity?.Value"
-                                     Min="NewLine!.MultipleQuantity?.Value" />
-                <MudText>X</MudText>
+        <MudFocusTrap DefaultFocus="DefaultFocus.FirstChild" Disabled="false">
+            <MudItem xs="3">
+                <GenericTextField Field="NewLine!.ItemId" />
+            </MudItem>
+            <MudItem xs="3">
+                <MudStack Row="true"
+                          Spacing="1"
+                          StretchItems="StretchItems.Start">
+                    <GenericNumericField Field="NewLine!.SalesQuantity"
+                                         Step="NewLine!.MultipleQuantity?.Value"
+                                         Min="NewLine!.MultipleQuantity?.Value" />
+                    <MudText>X</MudText>
+                </MudStack>
+            </MudItem>
+            @* Vendu par*@
+            @*                 <MudItem xs="1">
+            <MudText>X</MudText>
+            </MudItem> *@
+            <MudItem xs="3">
+                <MudStack Row="true"
+                          Spacing="1"
+                          StretchItems="StretchItems.Start">
+                    <DisplayField Field="NewLine!.SalesPrice" />
+                    <MudText>=</MudText>
+                </MudStack>
+            </MudItem>
+            @*                 <MudItem xs="1">
+            <MudText>=</MudText>
+            </MudItem> *@
+            <MudItem xs="3">
+                <DisplayField Field="NewLine.LineAmount" />
+            </MudItem>
+
+            <MudItem xs="12">
+                <DisplayField Field="NewLine!.Name" />
+            </MudItem>
+            <MudItem xs="3">
+                <GenericCheckBox Field="NewLine!.IsUpselling" />
+            </MudItem>
+            <MudItem xs="3">
+                <GenericNumericField Field="NewLine!.InitialSalesQuantity" />
+            </MudItem>
+            <MudItem xs="6">
+                <GenericTextField Field="NewLine!.Note" />
+            </MudItem>
+            @*
+            Code article //rw required w/ error article non trouvé
+            dimensions
+            link
+            poids/volume
+            - actif
+            *@
+            @*   <MudItem xs="12">
+            <MudStack Row="true" Justify="Justify.SpaceAround">
+            FormuleQ
+
             </MudStack>
-        </MudItem>
-        @* Vendu par*@
-        @*                 <MudItem xs="1">
-        <MudText>X</MudText>
-        </MudItem> *@
-        <MudItem xs="3">
-            <MudStack Row="true"
-                      Spacing="1"
-                      StretchItems="StretchItems.Start">
-                <DisplayField Field="NewLine!.SalesPrice" />
-                <MudText>=</MudText>
-            </MudStack>
-        </MudItem>
-        @*                 <MudItem xs="1">
-        <MudText>=</MudText>
-        </MudItem> *@
-        <MudItem xs="3">
-            <DisplayField Field="NewLine.LineAmount" />
-        </MudItem>
+            </MudItem> *@
+            @*    <MudItem xs="12">
 
-        <MudItem xs="12">
-            <DisplayField Field="NewLine!.Name" />
-        </MudItem>
-        <MudItem xs="3">
-            <MudText>Vente Additionelle</MudText>
-        </MudItem>
-        <MudItem xs="3">
-            <GenericNumericField Field="NewLine!.InitialSalesQuantity" />
-        </MudItem>
-        <MudItem xs="6">
-            <GenericTextField Field="NewLine!.Note" />
-        </MudItem>
-        @*
-        Code article //rw required w/ error article non trouvé
-        dimensions
-        link
-        poids/volume
-        - actif
-        *@
-        @*   <MudItem xs="12">
-        <MudStack Row="true" Justify="Justify.SpaceAround">
-        FormuleQ
+            Vente add
+            Quantité initiale du client
+            notes de ligne
 
-        </MudStack>
-        </MudItem> *@
-        @*    <MudItem xs="12">
-
-        Vente add
-        Quantité initiale du client
-        notes de ligne
-
-        </MudItem> *@
+            </MudItem> *@
+        </MudFocusTrap>
         <MudItem xs="6">
             <LineStockQuantities BasketLine="NewLine"
                                  LogisticFlows="LogisticFlows" />

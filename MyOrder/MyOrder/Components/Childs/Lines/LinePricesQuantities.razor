@@ -1,6 +1,6 @@
 ﻿<MudPaper Elevation="2" Class="header-cards-height header-cards-height-content">
     <MudText Typo="Typo.h6" Color="Color.Secondary" Class="pb-4">Prix et remises</MudText>
-    <MudStack Spacing="2" Justify="Justify.SpaceBetween" Style="height: inherit;">
+    <MudStack Spacing="2" Style="height: inherit;">
         <MudGrid Spacing="1">
             <!--Tarification-->
             <MudItem xs="12">
@@ -24,31 +24,78 @@
                 <GenericTextField Field="@BasketLine!.DiscountPrice" />
             </MudItem>
         </MudGrid>
-        <MudDivider />
-        <MudDataGrid T="BasketPriceLine" Items="@BasketLine.Prices"
+
+        <MudDataGrid T="BasketPriceLine" Items="@BasketPrices?.PriceLines"
                      Bordered="true"
                      SortMode="@SortMode.None"
                      Striped="true"
                      Hover="true"
                      Dense="true"
-                     Elevation="2"
+                     Elevation="0"
                      Class="mx-n3"
-                     RowStyleFunc="((item, x) => RowStyleFunc(item, x ,BasketLine))">
+                     RowStyleFunc="(item, _) => RowStyleFunc(item)">
             <Columns>
-                <PropertyColumn Property="x => x == null? 0 : x.Quantity"
-                                Title="Quantity"
-                                CellClass="pa-1 ma-1" />
-                <PropertyColumn Property="x => x == null? 0 : x.CatalogPrice"
-                                Title="Prix Cat."
-                                CellClass="pa-1 ma-1" />
-                <PropertyColumn Property="x => x == null? 0 : x.DiscountPrice"
-                                Title="Prix Rem." />
-                <PropertyColumn Property="x => x == null? 0 : x.MultiplePrice"
-                                Title="Prix / 25"
-                                CellClass="pa-1 ma-1" />
-                <PropertyColumn Property="x => x == null? 0 : x.DiscountRate"
-                                Title="% Dégress."
-                                CellClass="pa-1 ma-1" />
+                @if (BasketPrices?.QuantityVisible == true)
+                {
+                    <PropertyColumn Property="line => line == null? 0 : line.Quantity"
+                                    HeaderClass="pa-1 ma-1"
+                                    CellClass="pa-1 ma-1">
+                        <HeaderTemplate>
+                            <MudText Typo="Typo.body2" Class="prices-matrix-header-content">Quantité</MudText>
+                        </HeaderTemplate>
+                    </PropertyColumn>
+                }
+                @if (BasketPrices?.CatalogPriceVisible == true)
+                {
+                    <PropertyColumn Property="line => line == null? 0 : line.CatalogPrice"
+                                    HeaderClass="pa-1 ma-1"
+                                    CellClass="pa-1 ma-1">
+                        <HeaderTemplate>
+                            <MudText Typo="Typo.body2" Class="prices-matrix-header-content">Prix Cat.</MudText>
+                        </HeaderTemplate>
+                    </PropertyColumn>
+                }
+                @if (BasketPrices?.DiscountRateVisible == true)
+                {
+                    <PropertyColumn Property="line => line == null? 0 : line.DiscountPrice"
+                                    HeaderClass="pa-1 ma-1"
+                                    CellClass="pa-1 ma-1">
+                        <HeaderTemplate>
+                            <MudText Typo="Typo.body2" Class="prices-matrix-header-content">Prix Rem.</MudText>
+                        </HeaderTemplate>
+                    </PropertyColumn>
+                }
+                @if (BasketPrices?.MultiplePriceVisible == true)
+                {
+                    <PropertyColumn Property="line => line == null? 0 : line.MultiplePrice"
+                                    HeaderClass="pa-1 ma-1"
+                                    CellClass="pa-1 ma-1">
+                        <HeaderTemplate>
+                            <MudText Typo="Typo.body2" Class="prices-matrix-header-content">Prix / 25</MudText>
+                        </HeaderTemplate>
+                    </PropertyColumn>
+                }
+                @if (BasketPrices?.DiscountRateVisible == true)
+                {
+                    <PropertyColumn Property="line => line == null? 0 : line.DiscountRate"
+                                    HeaderClass="pa-1 ma-1"
+                                    CellClass="pa-1 ma-1">
+                        <HeaderTemplate>
+                            <MudText Typo="Typo.body2" Class="prices-matrix-header-content">% Dégress.</MudText>
+                        </HeaderTemplate>
+                    </PropertyColumn>
+                }
+                @if (BasketPrices?.MarginRateVisible == true)
+                {
+                    <PropertyColumn Property="line => line == null? 0 : line.MarginRate"
+                                    Title="% Marg."
+                                    HeaderClass="pa-1 ma-1"
+                                    CellClass="pa-1 ma-1">
+                        <HeaderTemplate>
+                            <MudText Typo="Typo.body2" Style="font-weight:500">Prix Rem.</MudText>
+                        </HeaderTemplate>
+                    </PropertyColumn>
+                }
             </Columns>
         </MudDataGrid>
     </MudStack>

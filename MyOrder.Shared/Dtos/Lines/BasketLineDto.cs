@@ -15,6 +15,7 @@ public class BasketLineDto
     public List<BasketValueDto?>? DiscountTypes { get; set; }
     public Field<BasketValueDto?>? DiscountType { get; set; }  //RW
     public Field<decimal?>? LineAmount { get; set; }  //RW
+    public Field<bool?>? IsUpselling { get; set; }
 
     // =============================================================================================================
     // Article detail
@@ -52,20 +53,33 @@ public class BasketLineDto
     public Field<string?>? PurchaseId { get; set; }  // COULD BE HIDDEN
 
     // =============================================================================================================
-    // Prices quantities
+    // PriceLines quantities
     // =============================================================================================================
 
     public Field<string?>? DiscountDescription { get; set; }  //ONLY FOR D
     public Field<decimal?>? DiscountRate { get; set; }  //RO
     public Field<decimal?>? DiscountPrice { get; set; }  //RO
-    public List<BasketPriceLine?>? Prices { get; set; }  //NULL
+    public BasketPriceLinesDto? Prices { get; set; }  //NULL
+}
+
+public class BasketPriceLinesDto
+{
+    public List<BasketPriceLine?>? PriceLines { get; set; }
+
+    public bool? QuantityVisible { get; set; }
+    public bool? CatalogPriceVisible { get; set; }
+    public bool? DiscountRateVisible { get; set; }
+    public bool? MultiplePriceVisible { get; set; }
+    public bool? MarginRateVisible { get; set; }
 }
 
 public class BasketPriceLine
 {
+    public bool? IsCurrent { get; set; }
     public int? Quantity { get; set; }
     public decimal? CatalogPrice { get; set; }
     public decimal? DiscountPrice { get; set; }
     public decimal? MultiplePrice { get; set; }
     public int? DiscountRate { get; set; }
+    public int? MarginRate { get; set; }
 }

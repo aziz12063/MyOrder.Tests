@@ -57,8 +57,11 @@
         var basketId = generalInfoState?.Value?.GeneralInfo?.BasketId;
         if (!string.IsNullOrWhiteSpace(basketId))
         {
-            dispatcher.Dispatch(
-                new CreateBasketAction(new Dictionary<string, string>() { { "BasketId", basketId } }));
+            dispatcher.Dispatch(new CreateBasketAction(new Dictionary<string, string>()
+                {
+                    { "BasketId", basketId },
+                    { "New", "1"}
+                }));
         }
     }
 

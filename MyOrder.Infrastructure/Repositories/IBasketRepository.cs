@@ -48,7 +48,7 @@ public interface IBasketRepository
     Task<BasketTradeInfoDto> GetBasketTradeInfoAsync(string basketId);
 
     //=======================================================================================================
-    //Prices info section
+    //PriceLines info section
     //=======================================================================================================
     Task<BasketPricesInfoDto> GetBasketPricesInfoAsync(string basketId);
     Task<List<BasketValueDto?>> GetCouponsAsync(string basketId);

@@ -150,7 +150,7 @@
             </Columns>
 
             <ChildRowContent>
-                <MudGrid Class="py-1" Spacing="0" Justify="Justify.SpaceAround">
+                <MudGrid Class="py-1" Spacing="4" Justify="Justify.Center">
                     @if (context.Item is BasketLineDto basketLineDto)
                     {
                         <!--S1-->
@@ -164,7 +164,7 @@
                         </MudItem>
 
                         <!--S3-->
-                        <MudItem xs="12" sm="3">
+                        <MudItem xs="12" sm="4">
                             <LinePricesQuantities BasketLine="@context.Item" />
                         </MudItem>
                     }

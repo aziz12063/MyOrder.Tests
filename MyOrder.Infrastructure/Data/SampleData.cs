@@ -1327,7 +1327,7 @@
 
 
 
-//        //coupons Prices info section   P0130938
+//        //coupons PriceLines info section   P0130938
 //        public static List<BasketValueDto?> couponsP0130938 = new List<BasketValueDto?>()
 //            {
 //                new BasketValueDto
@@ -1408,7 +1408,7 @@
 //            };
 
 
-//        //warrantyCostOptions Prices info section   P0130938
+//        //warrantyCostOptions PriceLines info section   P0130938
 //        public static List<BasketValueDto?> warrantyCostOptionsP0130938 = new List<BasketValueDto?>()
 //            {
 //                 new BasketValueDto
@@ -1420,7 +1420,7 @@
 //            };
 
 
-//        //shippingCostOptions Prices info section   P0130938
+//        //shippingCostOptions PriceLines info section   P0130938
 //        public static List<BasketValueDto?> shippingCostOptionsP0130938 = new List<BasketValueDto?>()
 //            {
 //                 new BasketValueDto
@@ -1662,8 +1662,8 @@
 //            Status = "readOnly",
 //            Value = 0.68m
 //        },
-//         //in the api this Prices is null,  adding data for test
-//        Prices = new List<BasketPriceLine?>()
+//         //in the api this PriceLines is null,  adding data for test
+//        PriceLines = new List<BasketPriceLine?>()
 //{
 //    new BasketPriceLine
 //    {
@@ -1920,7 +1920,7 @@
 //            Status = "readOnly",
 //            Value = 1.2m
 //        },
-//        Prices = null
+//        PriceLines = null
 //    }
 //        }
 //        };
@@ -3152,7 +3152,7 @@
 //        };
 
 
-//        //coupons Prices info section   P0130140
+//        //coupons PriceLines info section   P0130140
 //        public static List<BasketValueDto?> couponsP0130140 = new List<BasketValueDto?>
 //{
 //    new BasketValueDto { Description = null, Value = "" },
@@ -3196,7 +3196,7 @@
 //};
 
 
-//        //warrantyCostOptions Prices info section   P0130140
+//        //warrantyCostOptions PriceLines info section   P0130140
 //        public static List<BasketValueDto?> warrantyCostOptionsP0130140 = new List<BasketValueDto?>
 //{
 //    new BasketValueDto { Description = "GO activée", Value = "Enabled" },
@@ -3205,7 +3205,7 @@
 //};
 
 
-//        //shippingCostOptions Prices info section   P0130140
+//        //shippingCostOptions PriceLines info section   P0130140
 //        public static List<BasketValueDto?> shippingCostOptionsP0130140 = new List<BasketValueDto?>
 //{
 //    new BasketValueDto { Description = "Frais de livraison", Value = "Standard" },
