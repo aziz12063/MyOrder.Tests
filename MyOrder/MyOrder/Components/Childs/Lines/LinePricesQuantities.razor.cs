@@ -9,7 +9,7 @@ partial class LinePricesQuantities
     public BasketLineDto? BasketLine { get; set; }
     public BasketPriceLinesDto? BasketPrices { get; set; }
 
-    protected override void OnInitialized()
+    protected override void OnParametersSet()
     {
         BasketPrices = BasketLine?.Prices;
     }
