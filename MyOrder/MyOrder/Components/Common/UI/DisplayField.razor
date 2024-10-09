@@ -11,9 +11,9 @@
                   Variant="Variant.Outlined"
                   FullWidth="true"
                   InnerPadding="false"
-                  Class="outlined-display-field"
+                  Class="@CssClass"
                   Label="@Field?.Name">
-            <MudText Typo="Typo.body2" >
+            <MudText Typo="Typo.body2">
                 @if (Field!.Value is List<string> stringList && stringList is { Count: > 0 })
                 {
                     for (var i = 0; i < stringList.Count - 2; i++)
@@ -36,7 +36,7 @@
                 }
                 else
                 {
-                    @FieldUtility.NullOrWhiteSpaceHelperWithDash(Field.Value?.ToString());
+                    @FieldUtility.NullOrWhiteSpaceHelperWithDash(Field.Value?.ToString())
                 }
             </MudText>
         </MudField>
@@ -47,5 +47,18 @@
     [Parameter, EditorRequired]
     public Field<T>? Field { get; set; }
 
+    private string CssClass { get; set; } = "outlined-display-field";
     private string? TooltipText => Field?.Description ?? Field?.Name;
+
+    protected override void OnParametersSet()
+    {
+        CssClass = Field!.DisplayStyle switch
+        {
+            FieldDisplayStyle.Emphasize => string.Concat(
+                CssClass, " ", "onlyfordisplay-field-emphasize"),
+            FieldDisplayStyle.Warn => string.Concat(
+                CssClass, " ", "onlyfordisplay-field-warn"),
+            _ => CssClass
+        };
+    }
 }

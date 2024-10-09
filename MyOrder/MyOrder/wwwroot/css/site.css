@@ -54,7 +54,16 @@
     border: none; /* No border to show it's non-interactive */
     color: #888; /* Dimmed text color */
     font-style: italic; /* Italic to reinforce it's display-only */
-    cursor: default; /* Default cursor to show non-interactive state */
+    /*cursor: default;*/ /* Default cursor to show non-interactive state */
+}
+
+.onlyfordisplay-field-emphasize label {
+    font-weight: 500 !important;
+}
+
+.onlyfordisplay-field-warn label {
+    font-weight: 500 !important;
+    color: red !important;
 }
 
 .readonly-field input {
