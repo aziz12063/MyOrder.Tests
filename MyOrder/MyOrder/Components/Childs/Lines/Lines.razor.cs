@@ -78,7 +78,7 @@ public partial class Lines : FluxorComponentBase<LinesState, FetchLinesAction>
         selectedBasketLineDto = items.ToList();
     }
 
-    private Task OpenAddLineDialogAsync()
+    private async Task<IDialogReference> OpenAddLineDialogAsync()
     {
         var options = new DialogOptions
         {
@@ -89,7 +89,7 @@ public partial class Lines : FluxorComponentBase<LinesState, FetchLinesAction>
             BackdropClick = false,
         };
 
-        return DialogService.ShowAsync<AddLineDialog>("AddLineDialog", options);
+        return await DialogService.ShowAsync<AddLineDialog>("AddLineDialog", options);
     }
 
     //private void OnLineAdded(LineDto newLine)

@@ -23,8 +23,9 @@
                          Disabled="_readOnly"
                          Format="@Format"
                          Culture="@Culture"
-                         @bind-value="ValueProperty"
-                         @bind-value:after="OnBindValueAfter"
+                         Value="ValueProperty"
+                         ValueChanged="OnValueChanged"
+                         Text="@_displayedValue"
                          Clearable="Clearable"
                          Min="Min"
                          Step="Step"
@@ -36,32 +37,87 @@
     [Parameter]
     public T Step { get; set; }
     [Parameter]
-    public T? Min { get; set; }
+    public T Min { get; set; }
     [Parameter]
     public Variant Variant { get; set; } = Variant.Text;
     [Parameter]
     public bool Clearable { get; set; } = false;
     [Parameter]
     public string? Format { get; set; }
-    
+
     private CultureInfo? Culture { get; set; }
     private Type _underLyingType = GetUnderlyingType(typeof(T));
+    private string? _displayedValue = string.Empty;
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
         Culture = Currency.GetCurrency();
-        if (_underLyingType != typeof(int) && _underLyingType != typeof(short) && _underLyingType != typeof(decimal) &&
-            _underLyingType != typeof(long) && _underLyingType != typeof(float) && _underLyingType != typeof(double) &&
-            _underLyingType != typeof(byte) && _underLyingType != typeof(sbyte) && _underLyingType != typeof(uint) &&
-            _underLyingType != typeof(ushort) && _underLyingType != typeof(ulong))
+
+        if (!IsNumericType(_underLyingType))
         {
             throw new InvalidOperationException($"The type '{_underLyingType}' is not a numeric type.");
         }
+
         if (Step is null)
             Step = ConvertTo(1);
         if (Min is null)
             Min = (T)GetMinValue(_underLyingType);
+    }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        Format = FormatPercentValue(Format);
+        UpdateDisplayedValue();
+    }
+
+    private void OnValueChanged(T newValue)
+    {
+        if (EqualityComparer<T>.Default.Equals(newValue, ValueProperty))
+            return;
+
+        ValueProperty = newValue; // Update Value
+        OnBindValueAfter(); // Send it to the server
+        UpdateDisplayedValue(); // Update displayed value
+    }
+
+    private void UpdateDisplayedValue()
+    {
+        if (ValueProperty == null)
+        {
+            _displayedValue = string.Empty;
+            return;
+        }
+
+        if (ValueProperty is IFormattable formattable)
+            _displayedValue = formattable.ToString(Format, Culture);
+        else
+            _displayedValue = ValueProperty?.ToString();
+    }
+
+    private static bool IsNumericType(Type underLyingType)
+    {
+        if (underLyingType.IsEnum)
+            return false;
+
+        switch (Type.GetTypeCode(underLyingType))
+        {
+            case TypeCode.Byte:
+            case TypeCode.SByte:
+            case TypeCode.UInt16:
+            case TypeCode.UInt32:
+            case TypeCode.UInt64:
+            case TypeCode.Int16:
+            case TypeCode.Int32:
+            case TypeCode.Int64:
+            case TypeCode.Decimal:
+            case TypeCode.Double:
+            case TypeCode.Single:
+                return true;
+            default:
+                return false;
+        }
     }
 
     private static T ConvertTo(object value)
@@ -95,4 +151,6 @@
 
     private static Type GetUnderlyingType(Type type) =>
     Nullable.GetUnderlyingType(type) ?? type;
+
+
 }

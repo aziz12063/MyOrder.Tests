@@ -36,7 +36,7 @@ public abstract class GenericInputBase<TValue> : ComponentBase
     // Direct handler of the input value change
     protected void OnBindValueAfter() =>
         Dispatcher.Dispatch(new UpdateFieldAction(Field, ValueProperty, SelfFetchAction));
-    
+
     protected override void OnParametersSet()
     {
         base.OnParametersSet();
@@ -55,6 +55,8 @@ public abstract class GenericInputBase<TValue> : ComponentBase
     }
 
     protected string? FieldLabel() => HideLabel ? null : Field!.Name;
+    protected static string? FormatPercentValue(string? format) =>
+        format == "P" || format == "p" ? "0.## '%'" : format;
 
 }
 
