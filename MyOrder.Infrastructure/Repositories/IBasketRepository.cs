@@ -2,6 +2,7 @@
 using MyOrder.Shared.Dtos.Lines;
 using MyOrder.Shared.Dtos.SharedComponents;
 using Refit;
+using System.Collections.Immutable;
 
 namespace MyOrder.Infrastructure.Repositories;
 public interface IBasketRepository
@@ -12,6 +13,7 @@ public interface IBasketRepository
     //=======================================================================================================
     //Actions Section
     //=======================================================================================================
+    Task<ProcedureCallResponseDto?> PostProcedureCallAsync(ImmutableList<string> readToPostProcedureCall, string basketId);
     Task<ProcedureCallResponseDto?> PostProcedureCallAsync(IField field, object value, string basketId);
     Task<NewBasketResponseDto> PostNewBasketAsync(Dictionary<string, string> newBasketRequest);
     Task<NewOrderContextResponse> ReloadOrderContextAsync(string basketId);

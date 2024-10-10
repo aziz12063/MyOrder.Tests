@@ -20,4 +20,24 @@ public class NotificationEffects(IBasketRepository basketRepository, ILogger<Not
             dispatcher.Dispatch(new FetchNotificationsFailureAction(ex.Message));
         }
     }
+
+    [EffectMethod]
+    public async Task HandleDeleteNotificationAction(DeleteNotificationAction action, IDispatcher dispatcher)
+    {
+        try
+        {
+            logger.LogInformation("deleting notification for {BasketId}", action.BasketId);
+            await basketRepository.PostProcedureCallAsync(action.ProcedureCall, action.BasketId);
+#warning TODO: Implement the delete notification response handling logic
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Error while deleting notification");
+            dispatcher.Dispatch(new DeleteNotificationFailureAction(ex.Message));
+        }
+        finally
+        {
+            dispatcher.Dispatch(new FetchNotificationsAction(action.State, action.BasketId));
+        }
+    }
 }

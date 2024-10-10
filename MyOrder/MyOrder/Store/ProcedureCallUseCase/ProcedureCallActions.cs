@@ -3,11 +3,11 @@ using MyOrder.Shared.Dtos.SharedComponents;
 
 namespace MyOrder.Store.ProcedureCallUseCase;
 
-public class UpdateFieldAction(IField field, dynamic? value, Type actionType)
+public class UpdateFieldAction(IField field, dynamic? value, Type selfActionType)
 {
     public IField Field { get; } = field;
     public dynamic? Value { get; } = value;
-    public Type SelfFetchActionType { get; } = actionType;
+    public Type SelfFetchActionType { get; } = selfActionType;
 }
 
 public class PostProcedureCallSuccessAction(string basketId, ProcedureCallResponseDto procedureCallResponse)

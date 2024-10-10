@@ -11,4 +11,12 @@ public static class NotificationReducers
     [ReducerMethod]
     public static NotificationsState ReduceFetchNotificationFailureAction(NotificationsState state, FetchNotificationsFailureAction action) =>
         new();
+
+    [ReducerMethod]
+    public static NotificationsState ReduceDeleteNotificationSuccessAction(NotificationsState state, DeleteNotificationSuccessAction action) =>
+        new();
+
+    [ReducerMethod]
+    public static NotificationsState ReduceDeleteNotificationFailureAction(NotificationsState state, DeleteNotificationFailureAction action) =>
+        new();
 }

@@ -1,4 +1,6 @@
-﻿namespace MyOrder.Shared.Dtos;
+﻿using System.Collections.Immutable;
+
+namespace MyOrder.Shared.Dtos;
 
 public class BasketNotificationDto
 {
@@ -6,5 +8,5 @@ public class BasketNotificationDto
     public string? Severity { get; set; }
     public string? Message { get; set; }
     public DateTime CreatedDate { get; set; }
-    public List<string?>? ProcedureCall { get; set; }
+    public ImmutableList<string?>? ProcedureCall { get; set; }
 }

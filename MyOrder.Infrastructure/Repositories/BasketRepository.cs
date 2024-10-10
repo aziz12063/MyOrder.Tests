@@ -40,6 +40,14 @@ public class BasketRepository(IBasketApiClient apiClient,
     }
 
     #region PostProcedureCall
+
+    public async Task<ProcedureCallResponseDto?> PostProcedureCallAsync(ImmutableList<string?> readyToPostProcedureCall, string basketId)
+    {
+        logger.LogInformation("Posting procedure call : \n{readyProcedureCall} " +
+            "\nfor {BasketId} from repository", string.Join("\n", readyToPostProcedureCall), basketId);
+        return await apiClient.PostProcedureCallAsync(basketId, readyToPostProcedureCall);
+    }
+
     public async Task<ProcedureCallResponseDto?> PostProcedureCallAsync(IField field, object value, string basketId)
     {
         // Get the runtime type of the field and value
@@ -86,10 +94,7 @@ public class BasketRepository(IBasketApiClient apiClient,
 
         var procedureCall = procedureCallTemplate!.SetItem(procedureCallTemplate.Count - 1, procedureCallValue);
 
-        logger.LogInformation("Posting procedure call : \n{procedureCall} " +
-            "\nfor {BasketId} from repository", string.Join("\n", procedureCall), basketId);
-
-        var response = await apiClient.PostProcedureCallAsync(basketId, procedureCall);
+        var response = await PostProcedureCallAsync(procedureCall, basketId);
 
         logger.LogInformation("Procedure call response : \n{response}", response);
 

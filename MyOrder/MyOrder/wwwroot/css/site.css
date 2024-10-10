@@ -58,11 +58,11 @@
 }
 
 .onlyfordisplay-field-emphasize label {
-    font-weight: 500 !important;
+    font-weight: 600 !important;
 }
 
 .onlyfordisplay-field-warn label {
-    font-weight: 500 !important;
+    font-weight: 600 !important;
     color: red !important;
 }
 

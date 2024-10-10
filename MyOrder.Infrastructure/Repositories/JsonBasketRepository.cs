@@ -3,6 +3,7 @@ using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.Lines;
 using MyOrder.Shared.Dtos.SharedComponents;
 using Newtonsoft.Json;
+using System.Collections.Immutable;
 
 namespace MyOrder.Infrastructure.Repositories
 {
@@ -330,6 +331,11 @@ namespace MyOrder.Infrastructure.Repositories
         }
 
         public Task<ProcedureCallResponseDto> PostProcedureCallAsync(IField field, object value, string basketId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ProcedureCallResponseDto?> PostProcedureCallAsync(ImmutableList<string> readToPostProcedureCall, string basketId)
         {
             throw new NotImplementedException();
         }
