@@ -101,4 +101,6 @@ app.MapRazorComponents<App>()
     .AddInteractiveWebAssemblyRenderMode()
     .AddAdditionalAssemblies(typeof(MyOrder.Client._Imports).Assembly);
 
+app.MapGet("/DeployTest", () => "Running!");
+
 app.Run();
