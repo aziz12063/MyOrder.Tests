@@ -1,23 +1,20 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 using MudBlazor;
-using MyOrder.Components.Childs.Lines.AddLine;
 using MyOrder.Components.Common;
-using MyOrder.Components.Common.Dialogs;
+using MyOrder.Services;
 using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.Lines;
-using MyOrder.Shared.Dtos.SharedComponents;
 using MyOrder.Store.LinesUseCase;
-using MyOrder.Store.RessourcesUseCase;
+using MyOrder.Store.NewLineUseCase;
 using MyOrder.Utils;
-using static MudBlazor.CategoryTypes;
 
 
 namespace MyOrder.Components.Childs.Lines;
 
 public partial class Lines : FluxorComponentBase<LinesState, FetchLinesAction>
 {
-    [Inject] IDialogService DialogService { get; set; }
+    [Inject]
+    IModalService ModalService { get; set; }
     private BasketOrderLinesDto? BasketOrderLinesDto { get; set; }
     protected List<BasketValueDto?>? UpdateReasons { get; set; }
     protected List<BasketValueDto?>? LogisticFlows { get; set; }
@@ -80,16 +77,8 @@ public partial class Lines : FluxorComponentBase<LinesState, FetchLinesAction>
 
     private async Task<IDialogReference> OpenAddLineDialogAsync()
     {
-        var options = new DialogOptions
-        {
-            FullWidth = true,
-            MaxWidth = MaxWidth.Medium,
-            CloseOnEscapeKey = true,
-            CloseButton = true,
-            BackdropClick = false,
-        };
-
-        return await DialogService.ShowAsync<AddLineDialog>("AddLineDialog", options);
+        return await ModalService.OpenAddLineDialogAsync(() =>
+            Dispatcher.Dispatch(new ResetNewLineAction(BasketId)));
     }
 
     //private void OnLineAdded(LineDto newLine)

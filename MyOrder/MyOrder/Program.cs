@@ -29,6 +29,7 @@ builder.Services.AddScoped<IUrlService, UrlService>();
 builder.Services.Configure<RouteConfig>(
     builder.Configuration.GetSection(RouteConfig.Routes));
 builder.Services.AddScoped<ICurrencyService, CurrencyService>();
+builder.Services.AddScoped<IModalService, ModalService>();
 
 // Api Client, and Resilience Policies
 builder.Services.AddHttpContextAccessor();

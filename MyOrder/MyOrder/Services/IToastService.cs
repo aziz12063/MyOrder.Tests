@@ -4,8 +4,6 @@ namespace MyOrder.Services;
 
 public interface IToastService
 {
-    event Action<string, string, ToastLevel> OnShow;
-
     void ShowSuccess(string message, Action? onClose = null);
     void ShowError(string message, Action? onClose = null);
     void ShowInfo(string message, Action? onClose = null);

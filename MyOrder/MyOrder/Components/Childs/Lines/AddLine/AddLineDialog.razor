@@ -5,33 +5,48 @@
     <DialogContent>
         <MudTabs Class="tabfix"
                  AlwaysShowScrollButtons="false"
-                 Centered="true">
-            <MudTabPanel Text="Ajout" Icon="@Icons.Material.Filled.AddCircle">
+                 Centered="true"
+                 KeepPanelsAlive="true"
+                 @bind-ActivePanelIndex="CurrentTab">
+
+            <MudTabPanel Text="Ajout"
+                         Icon="@Icons.Material.Filled.AddCircle">
                 <AddLineTab />
             </MudTabPanel>
-            <MudTabPanel Text="Top Ventes" Icon="@Icons.Material.Filled.TrendingUp">
+
+            <MudTabPanel Text="Top Ventes"
+                         Icon="@Icons.Material.Filled.TrendingUp">
                 <MudText>Top Ventes</MudText>
             </MudTabPanel>
-            <MudTabPanel Text="Commandes" Icon="@Icons.Material.Filled.ShoppingCart">
+
+            <MudTabPanel Text="Commandes"
+                         Icon="@Icons.Material.Filled.ShoppingCart">
                 <MudText>Commandes</MudText>
             </MudTabPanel>
-            <MudTabPanel Text="Devis" Icon="@Icons.Material.Filled.Description">
+
+            <MudTabPanel Text="Devis"
+                         Icon="@Icons.Material.Filled.Description">
                 <MudText>Devis</MudText>
             </MudTabPanel>
-            <MudTabPanel Text="Recherche" Icon="@Icons.Material.Filled.Search">
+
+            <MudTabPanel Text="Recherche"
+                         Icon="@Icons.Material.Filled.Search">
                 <MudText>Recherche</MudText>
             </MudTabPanel>
-            <MudTabPanel Text="Saisie Libre" Icon="@Icons.Material.Filled.Edit">
+
+            <MudTabPanel Text="Saisie Libre"
+                         Icon="@Icons.Material.Filled.Edit">
                 <MudText>Saisie Libre</MudText>
             </MudTabPanel>
+
         </MudTabs>
     </DialogContent>
     <DialogActions>
-
+        @if (CurrentTab == 0)
+        {
+            <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="CommitNewLineAndClose">AJOUTER</MudButton>
+            <MudButton Variant="Variant.Text" Color="Color.Success" OnClick="CommitNewLine">CONTINUER</MudButton>
+            <MudButton Variant="Variant.Text" Color="Color.Error" OnClick="ResetLine">ANNULER</MudButton>
+        }
     </DialogActions>
 </MudDialog>
-
-@code {
-    [Inject]
-    public ILogger<AddLineDialog> Logger { get; set; }
-}
