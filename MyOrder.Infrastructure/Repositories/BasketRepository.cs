@@ -1,8 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
 using MyOrder.Infrastructure.ApiClients;
 using MyOrder.Shared.Dtos;
+using MyOrder.Shared.Dtos.BasketItems;
 using MyOrder.Shared.Dtos.Lines;
 using MyOrder.Shared.Dtos.SharedComponents;
+using Newtonsoft.Json;
 using System.Collections.Immutable;
 
 namespace MyOrder.Infrastructure.Repositories;
@@ -319,6 +321,12 @@ public class BasketRepository(IBasketApiClient apiClient,
 
         logger.LogInformation("Procedure call response : \n{response}", response);
         return response;
+    }
+
+    public async Task<List<BestSellerItemDto?>?> GetBasketBestSellersAsync(string basketId)
+    {
+        logger.LogDebug("Fetching OrderedItems for {BasketId} from repository", basketId);
+        return await apiClient.GetBasketBestSellersAsync(basketId);
     }
     #endregion
 }

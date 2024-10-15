@@ -1,4 +1,5 @@
 ﻿using MyOrder.Shared.Dtos;
+using MyOrder.Shared.Dtos.BasketItems;
 using MyOrder.Shared.Dtos.Lines;
 using Refit;
 using System.Collections.Immutable;
@@ -132,5 +133,10 @@ public interface IBasketApiClient
 
     [Post("/api/orderContext/{basketId}/newLine/add")]
     Task<ProcedureCallResponseDto> CommitAddNewLineAsync(string basketId);
+
+    [Post("/api/orderContext/{basketId}/bestSellersItems")]
+    Task<List<BestSellerItemDto?>?> GetBasketBestSellersAsync(string basketId);
     #endregion
+
+
 }

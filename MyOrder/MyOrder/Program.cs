@@ -62,8 +62,8 @@ builder.Services.AddFluxor(options =>
 
 
 // Repositories
-builder.Services.AddScoped<IBasketRepository, BasketRepository>();
-//builder.Services.AddSingleton<IBasketRepository, JsonBasketRepository>();
+//builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+builder.Services.AddSingleton<IBasketRepository, JsonBasketRepository>();
 
 //MudBlazor and UI elements
 builder.Services.AddMudServices();

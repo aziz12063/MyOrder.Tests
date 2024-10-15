@@ -1,0 +1,65 @@
+﻿@using MyOrder.Store.BasketItemsUseCase
+@using MyOrder.Shared.Dtos.BasketItems
+@inherits FluxorComponentBase<BestSellersState, FetchBestSellersAction>
+
+@if (State.Value.IsLoading)
+{
+    <HeaderElementLoadingSkeleton />
+    return;
+}
+<FetchActionTypeCascadingValue FetchActionTypeValue="FetchActionType">
+    <MudContainer Class="pa-0 mx-0 mt-0 mb-10" Style="max-width: none;">
+        <!--Grid-->
+        <MudDataGrid T="BestSellerItemDto"
+                     Bordered="true"
+                     Dense="true"
+                     Striped="true"
+                     Elevation="4"
+                     Items="BestSellers"
+                     SortMode="@SortMode.None"
+                     ApplyDropClassesOnDragStarted="true"
+                     Hideable="true"
+                     ReadOnly="false">
+            <Columns>
+                <TemplateColumn >
+                     
+                    <CellTemplate>
+                        @{
+                            var val = context.Item;
+                            string itemId = val.ItemId;
+                            string url = "https://www.raja.fr/a_sku" + itemId + ".html";
+                        }
+                        <!--Target="blank" to open in a new tab-->
+                        <MudIconButton Icon="@Icons.Material.Filled.Link" Href="@url" Target="blank" Color="Color.Primary" />
+                    </CellTemplate>
+                        
+                </TemplateColumn>
+
+                <PropertyColumn Property="x => x.CatalogUrl == null ? string.Empty : x.CatalogUrl"
+                                Title="Catalogue" />
+
+                <PropertyColumn Property="x => x.Description == null ? string.Empty : x.Description"
+                                Title="Description" />
+
+                <PropertyColumn Property="x => x.ItemId == null? string.Empty : x.ItemId"
+                                Title="Famille Catalogue" />
+
+                <PropertyColumn Property="x => x.MultipleQuantity == null ? 0 : x.MultipleQuantity "
+                                Title="Vendu par" />
+                <TemplateColumn Editable="false"
+                                Title="Chiffre d'affaire'">
+                    <CellTemplate>
+                        <MudNumericField Value="context.Item.Turnover"
+                                         Format="C" />
+                    </CellTemplate>
+                </TemplateColumn>
+
+                <PropertyColumn Property="x => x.Quantity != null ? x.Quantity : null"
+                                Title="Tarification" />
+
+                <PropertyColumn Property="x => x.Status != null ? x.Status : null "
+                                Title="Status" />
+            </Columns>
+        </MudDataGrid>
+    </MudContainer>
+</FetchActionTypeCascadingValue>

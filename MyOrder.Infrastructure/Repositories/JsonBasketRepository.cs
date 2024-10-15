@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using MyOrder.Shared.Dtos;
+using MyOrder.Shared.Dtos.BasketItems;
 using MyOrder.Shared.Dtos.Lines;
 using MyOrder.Shared.Dtos.SharedComponents;
 using Newtonsoft.Json;
@@ -318,12 +319,23 @@ namespace MyOrder.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
+        public async Task<List<BestSellerItemDto>> GetBasketBestSellersAsync(string basketId)
+        {
+            var jsonFilePath = Path.Combine(baseDataPath, "orderedItems.json");
+            if (!File.Exists(jsonFilePath))
+                return null;
+
+            var json = await File.ReadAllTextAsync(jsonFilePath);
+           
+            return JsonConvert.DeserializeObject<List<BestSellerItemDto>>(json);
+        }
 
 
 
 
 
-        
+
+
 
         public Task<NewBasketResponseDto> PostNewBasketAsync(Dictionary<string, string> newBasketRequest)
         {

@@ -4,4 +4,5 @@ public interface IUrlService
 {
     string GetBasketUrl(string basketId);
     string GetErrorUrl();
+    
 }
