@@ -1,0 +1,63 @@
+﻿@using MyOrder.Store.BasketItemsUseCase
+@using MyOrder.Shared.Dtos.BasketItems
+@inherits FluxorComponentBase<OrderedItemsState, FetchOrderedItemsAction>
+
+@if (State.Value.IsLoading)
+{
+    <HeaderElementLoadingSkeleton />
+    return;
+}
+<FetchActionTypeCascadingValue FetchActionTypeValue="FetchActionType">
+    <!--Grid-->
+    <MudDataGrid T="OrderedItemDto"
+                 Elevation="0"
+                 Bordered="true"
+                 Dense="true"
+                 Striped="true"
+                 FixedHeader="true"
+                 Height="50vh"
+                 Virtualize="true"
+                 Items="OrderedItems"
+                 SortMode="@SortMode.None"
+                 QuickFilter="QuickFilter">
+        <ToolBarContent>
+            <FilterItems SearchTextCallback="FilterItemsCallback"
+                         FilterInactiveItemsCallback="ToggleBlockedCallback" />
+        </ToolBarContent>
+        <Columns>
+
+            <PropertyColumn Property="item => item.OrderDate == null ? default : item.OrderDate"
+                            Title="Date" />
+
+            <PropertyColumn Property="item => item.CustomerOrderId == null ? string.Empty : item.CustomerOrderId"
+                            Title="Réf. Client" />
+
+            <PropertyColumn Property="item => item.ItemId == null ? string.Empty : item.ItemId"
+                            Title="Code" />
+
+            <PropertyColumn Property="item => item.Description == null? string.Empty : item.Description"
+                            Title="Description" />
+
+            <PropertyColumn Property="item => item.MultipleQuantity == null ? 0 : item.MultipleQuantity "
+                            Title="Vendu par" />
+
+            <PropertyColumn Property="item => item.Quantity != null ? item.Quantity : null"
+                            Title="Quantité" />
+
+            <PropertyColumn Property="item => item.Price == null? 0 : item.Price"
+                            Title="Prix U"
+                            Format="C"/>
+
+            <PropertyColumn Property="item => item.Discount == null? string.Empty : item.Discount"
+                            Title="Remise" />
+
+           
+            <PropertyColumn Property="item => item.Price == null ? 0 : item.Price "
+                            Title="prop of Montant HT"
+                            Format="C"/>
+
+            <PropertyColumn Property="item => item.Status != null ? item.Status : null "
+                            Title="Statut" />
+        </Columns>
+    </MudDataGrid>
+</FetchActionTypeCascadingValue>

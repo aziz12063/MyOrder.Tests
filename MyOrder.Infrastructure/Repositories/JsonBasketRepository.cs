@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Logging;
 using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.BasketItems;
 using MyOrder.Shared.Dtos.Lines;
@@ -327,7 +328,29 @@ namespace MyOrder.Infrastructure.Repositories
 
             var json = await File.ReadAllTextAsync(jsonFilePath);
            
-            return JsonConvert.DeserializeObject<List<BestSellerItemDto>>(json);
+            return JsonConvert.DeserializeObject<List<BestSellerItemDto?>>(json);
+        }
+
+        public async Task<List<OrderedItemDto?>?> GetBasketOrderedItemsAsync(string basketId, string? filter = null)
+        {
+            var jsonFilePath = Path.Combine(baseDataPath, "orderedItems.json");
+            if (!File.Exists(jsonFilePath))
+                return null;
+
+            var json = await File.ReadAllTextAsync(jsonFilePath);
+
+            return JsonConvert.DeserializeObject<List<OrderedItemDto?>>(json);
+        }
+
+        public async Task<List<BasketItemDto?>?> GetBasketSearchItemsAsync(string basketId, string? filter = null)
+        {
+            var jsonFilePath = Path.Combine(baseDataPath, "orderedItems.json");
+            if (!File.Exists(jsonFilePath))
+                return null;
+
+            var json = await File.ReadAllTextAsync(jsonFilePath);
+
+            return JsonConvert.DeserializeObject<List<BasketItemDto?>>(json);
         }
 
 

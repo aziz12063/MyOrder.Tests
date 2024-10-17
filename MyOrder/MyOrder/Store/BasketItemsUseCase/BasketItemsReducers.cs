@@ -9,6 +9,22 @@ public static class BasketItemsReducers
        new(action.BestSellers);
 
     [ReducerMethod]
-    public static BestSellersState ReduceFetchBestSellersFailureAction(BestSellersState state, FetchBestSellersFailureAction action) =>
+    public static BestSellersState ReduceFetchBestSellersFailureAction(BestSellersState state, FetchBasketItemsFailureAction action) =>
+         new();
+
+    [ReducerMethod]
+    public static OrderedItemsState ReduceFetchOrderedItemsSuccessAction(OrderedItemsState state, FetchOrderedItemsSuccessAction action) =>
+      new(action.OrderedItems);
+
+    [ReducerMethod]
+    public static OrderedItemsState ReduceFetchOrderedItemsFailureAction(OrderedItemsState state, FetchBasketItemsFailureAction action) =>
+         new();
+
+    [ReducerMethod]
+    public static SearchItemsState ReduceFetchBestSellersSuccessAction(SearchItemsState state, FetchSearchItemsSuccessAction action) =>
+      new(action.SearchItems);
+
+    [ReducerMethod]
+    public static SearchItemsState ReduceFetchSearchItemsFailureAction(SearchItemsState state, FetchBasketItemsFailureAction action) =>
          new();
 }

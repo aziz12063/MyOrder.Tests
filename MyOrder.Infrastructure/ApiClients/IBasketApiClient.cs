@@ -138,6 +138,16 @@ public interface IBasketApiClient
     Task<List<BestSellerItemDto?>?> GetBasketBestSellersAsync(
         string basketId,
         [Query] string? filter = null);
+
+    [Get("/api/orderContext/{basketId}/orderedItems")]
+    Task<List<OrderedItemDto?>?> GetBasketOrderedItemsAsync(
+        string basketId,
+        [Query] string? filter = null);
+
+    [Get("/api/orderContext/{basketId}/searchItems")]
+    Task<List<BasketItemDto?>?> GetBasketSearchItemsAsync(
+       string basketId,
+       [Query] string? filter = null);
     #endregion
 
 

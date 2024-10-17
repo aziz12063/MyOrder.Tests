@@ -325,8 +325,19 @@ public class BasketRepository(IBasketApiClient apiClient,
 
     public async Task<List<BestSellerItemDto?>?> GetBasketBestSellersAsync(string basketId, string? filter = null)
     {
-        logger.LogDebug("Fetching OrderedItems for {BasketId} from repository", basketId);
+        logger.LogDebug("Fetching BestSellerItems for {BasketId} from repository", basketId);
         return await apiClient.GetBasketBestSellersAsync(basketId, filter);
+    }
+
+    public async Task<List<OrderedItemDto?>?> GetBasketOrderedItemsAsync(string basketId, string? filter = null)
+    {
+        logger.LogDebug("Fetching OrderedItems for {BasketId} from repository", basketId);
+        return await apiClient.GetBasketOrderedItemsAsync(basketId, filter);
+    }
+    public async Task<List<BasketItemDto?>?> GetBasketSearchItemsAsync(string basketId, string? filter = null)
+    {
+        logger.LogDebug("Fetching BasketItems for {BasketId} from repository", basketId);
+        return await apiClient.GetBasketSearchItemsAsync(basketId, filter);
     }
     #endregion
 }
