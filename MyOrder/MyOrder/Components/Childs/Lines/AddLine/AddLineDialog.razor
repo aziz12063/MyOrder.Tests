@@ -11,12 +11,12 @@
 
             <MudTabPanel Text="Ajout"
                          Icon="@Icons.Material.Filled.AddCircle">
-                <AddLineTab />
+                <AddLineTab @ref="AddLineTab"/>
             </MudTabPanel>
 
             <MudTabPanel Text="Top Ventes"
                          Icon="@Icons.Material.Filled.TrendingUp">
-                <BestSellersTab />
+                <BestSellersTab ItemClicked="ItemClicked"/>
             </MudTabPanel>
 
             <MudTabPanel Text="Commandes/Devis"

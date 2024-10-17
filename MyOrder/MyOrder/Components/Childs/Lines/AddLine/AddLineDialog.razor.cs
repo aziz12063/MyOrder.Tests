@@ -2,14 +2,15 @@
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using MyOrder.Services;
+using MyOrder.Shared.Utils;
 using MyOrder.Store.NewLineUseCase;
 
 namespace MyOrder.Components.Childs.Lines.AddLine;
 
 public partial class AddLineDialog
 {
-    [CascadingParameter]
     private MudDialogInstance DialogInstance { get; set; }
+    private AddLineTab? AddLineTab { get; set; }
 
     [Inject]
     public ILogger<AddLineDialog> Logger { get; set; }
@@ -19,6 +20,17 @@ public partial class AddLineDialog
     public BasketService BasketService { get; set; }
 
     public int CurrentTab { get; set; }
+
+    private void ItemClicked(string? itemId)
+    {
+        if (string.IsNullOrEmpty(itemId))
+        {
+            Logger.LogWarning("ItemClicked: itemId is null or empty. {StackTrace}", LogUtility.GetStackTrace());
+            return;
+        }
+        AddLineTab?.LoadItem(itemId);
+        CurrentTab = 0;
+    }
 
     private void ResetLine()
     {

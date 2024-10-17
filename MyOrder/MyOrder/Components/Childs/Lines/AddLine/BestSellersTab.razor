@@ -23,11 +23,27 @@
         <ToolBarContent>
             <FilterItems SearchTextCallback="FilterItemsCallback"
                          FilterInactiveItemsCallback="ToggleBlockedCallback" />
+            <MudTooltip Text="Copier les données dans le presse-papiers">
+                <MudIconButton Icon="@Icons.Material.Outlined.ContentCopy"
+                               OnClick="CopyDataToClipboard" />
+            </MudTooltip>
         </ToolBarContent>
         <Columns>
-
-            <PropertyColumn Property="item => item.ItemId == null ? string.Empty : item.ItemId"
-                            Title="Code" />
+            <TemplateColumn Title="Code">
+                <CellTemplate>
+                    <MudTooltip Text="Ajouter cet article">
+                        <MudButton Variant="Variant.Text"
+                                   DropShadow="true"
+                                   Color="Color.Primary"
+                                   StartIcon="@Icons.Material.Filled.KeyboardDoubleArrowRight"
+                                   OnClick="() => OnItemClick(context.Item)">
+                            @context.Item.ItemId
+                        </MudButton>
+                    </MudTooltip>
+                </CellTemplate>
+            </TemplateColumn>
+            @*             <PropertyColumn Property="item => item.ItemId == null ? string.Empty : item.ItemId"
+            Title="Code" /> *@
 
             <PropertyColumn Property="item => item.Description == null ? string.Empty : item.Description"
                             Title="Description" />
@@ -35,11 +51,11 @@
             <PropertyColumn Property="item => item.Category1 == null? string.Empty : item.Category1"
                             Title="Famille Catalogue" />
 
-            <PropertyColumn Property="item => item.Category2 == null? string.Empty : item.Category2"
-                            Title="Groupe" />
+            @*             <PropertyColumn Property="item => item.Category2 == null? string.Empty : item.Category2"
+            Title="Groupe" />
 
             <PropertyColumn Property="item => item.Category3 == null? string.Empty : item.Category3"
-                            Title="Sous-groupe" />
+            Title="Sous-groupe" /> *@
 
             <PropertyColumn Property="item => item.MultipleQuantity == null ? 0 : item.MultipleQuantity "
                             Title="Vendu par" />

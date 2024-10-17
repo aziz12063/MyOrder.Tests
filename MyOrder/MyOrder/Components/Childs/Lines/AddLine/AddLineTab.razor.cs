@@ -4,6 +4,7 @@ using MyOrder.Components.Common;
 using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.Lines;
 using MyOrder.Store.NewLineUseCase;
+using MyOrder.Store.ProcedureCallUseCase;
 
 namespace MyOrder.Components.Childs.Lines.AddLine;
 
@@ -28,5 +29,16 @@ public partial class AddLineTab : FluxorComponentBase<NewLineState, FetchNewLine
         NewLine = State?.Value.BasketLine
             ?? throw new ArgumentNullException("BasketLine is null in NewLineState");
         _isLoading = State.Value.IsLoading || RessourcesState.Value.IsLoading;
+    }
+
+    public void LoadItem(string itemIdToLoad)
+    {
+        if (string.IsNullOrEmpty(itemIdToLoad))
+            throw new ArgumentNullException(nameof(itemIdToLoad));
+
+        if (NewLine?.ItemId is null)
+            throw new InvalidOperationException($"Field {nameof(NewLine.ItemId)} cannot be null.");
+
+        Dispatcher.Dispatch(new UpdateFieldAction(NewLine.ItemId, itemIdToLoad, FetchActionType));
     }
 }
