@@ -1,10 +1,12 @@
-﻿using MyOrder.Components.Common;
+﻿using Microsoft.AspNetCore.Components;
+using MyOrder.Components.Common;
 using MyOrder.Shared.Dtos.BasketItems;
 using MyOrder.Store.BasketItemsUseCase;
 
 namespace MyOrder.Components.Childs.Lines.AddLine;
 
-public partial class BestSellersTab : FluxorComponentBase<BestSellersState, FetchBestSellersAction>
+public partial class BestSellersTab : FluxorComponentBase<BestSellersState, FetchBestSellersAction>,
+    IHandleEvent
 {
     private List<BestSellerItemDto?>? BestSellers { get; set; }
     private bool _showBlocked = true;
@@ -32,4 +34,8 @@ public partial class BestSellersTab : FluxorComponentBase<BestSellersState, Fetc
         // Otherwise, return true only if IsBlocked is false or null (treat null as not blocked)
         return _showBlocked || !(item.IsBlocked ?? false);
     }
+
+    Task IHandleEvent.HandleEventAsync(
+        EventCallbackWorkItem callback, object? arg) => 
+        callback.InvokeAsync(arg);
 }
