@@ -134,8 +134,10 @@ public interface IBasketApiClient
     [Post("/api/orderContext/{basketId}/newLine/add")]
     Task<ProcedureCallResponseDto> CommitAddNewLineAsync(string basketId);
 
-    [Post("/api/orderContext/{basketId}/bestSellersItems")]
-    Task<List<BestSellerItemDto?>?> GetBasketBestSellersAsync(string basketId);
+    [Get("/api/orderContext/{basketId}/bestSellerItems")]
+    Task<List<BestSellerItemDto?>?> GetBasketBestSellersAsync(
+        string basketId,
+        [Query] string? filter = null);
     #endregion
 
 

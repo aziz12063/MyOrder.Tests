@@ -323,10 +323,10 @@ public class BasketRepository(IBasketApiClient apiClient,
         return response;
     }
 
-    public async Task<List<BestSellerItemDto?>?> GetBasketBestSellersAsync(string basketId)
+    public async Task<List<BestSellerItemDto?>?> GetBasketBestSellersAsync(string basketId, string? filter = null)
     {
         logger.LogDebug("Fetching OrderedItems for {BasketId} from repository", basketId);
-        return await apiClient.GetBasketBestSellersAsync(basketId);
+        return await apiClient.GetBasketBestSellersAsync(basketId, filter);
     }
     #endregion
 }

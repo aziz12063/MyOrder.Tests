@@ -1,4 +1,4 @@
-﻿<MudDialog>
+﻿<MudDialog Class="add-basket-dialog-modal">
     <TitleContent>
         <MudText Typo="Typo.h5">Ajout d'article</MudText>
     </TitleContent>
@@ -16,19 +16,18 @@
 
             <MudTabPanel Text="Top Ventes"
                          Icon="@Icons.Material.Filled.TrendingUp">
-                <FilterLine/>
-                <BestSellersTab/>
+                <BestSellersTab />
             </MudTabPanel>
 
-            <MudTabPanel Text="Commandes"
+            <MudTabPanel Text="Commandes/Devis"
                          Icon="@Icons.Material.Filled.ShoppingCart">
-                <MudText>Commandes</MudText>
+                <MudText>Commandes/Devis</MudText>
             </MudTabPanel>
 
-            <MudTabPanel Text="Devis"
-                         Icon="@Icons.Material.Filled.Description">
-                <MudText>Devis</MudText>
-            </MudTabPanel>
+            @*             <MudTabPanel Text="Devis"
+            Icon="@Icons.Material.Filled.Description">
+            <MudText>Devis</MudText>
+            </MudTabPanel> *@
 
             <MudTabPanel Text="Recherche"
                          Icon="@Icons.Material.Filled.Search">

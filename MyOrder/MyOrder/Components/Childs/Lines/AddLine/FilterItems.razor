@@ -1,0 +1,42 @@
+﻿<MudGrid Justify="Justify.FlexStart" Spacing="2">
+    <MudItem xs="5">
+        <MudTextField T="string"
+                      Variant="Variant.Text"
+                      Margin="Margin.Dense"
+                      Adornment="Adornment.End"
+                      AdornmentIcon="@Icons.Material.Filled.Search"
+                      Label="Recherche"
+                      @bind-value="@_searchText"
+                      @bind-value:after="OnSearchTextChanged" />
+    </MudItem>
+    <MudItem xs="4" Class="align-content-end">
+        <MudCheckBox T="bool"
+                     Size="Size.Medium"
+                     Class="align-content-end"
+                     Label="Filtrer les articles inactifs"
+                     @bind-value="_filterInactiveItems"
+                     @bind-value:after="OnFilterInactiveChanged" />
+    </MudItem>
+</MudGrid>
+
+@code {
+    private string? _searchText = null;
+    private bool _filterInactiveItems = true;
+
+    [Parameter, EditorRequired]
+    public EventCallback<string?> SearchTextCallback { get; set; }
+
+    [Parameter, EditorRequired]
+    public EventCallback<bool> FilterInactiveItemsCallback { get; set; }
+
+    private void OnSearchTextChanged()
+    {
+        SearchTextCallback.InvokeAsync(_searchText);
+    }
+
+    private void OnFilterInactiveChanged() =>
+        FilterInactiveItemsCallback.InvokeAsync(_filterInactiveItems);
+
+    //public bool check { get; set; }
+}
+

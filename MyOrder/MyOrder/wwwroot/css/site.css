@@ -97,6 +97,15 @@
     color: red !important;
 }
 
+.add-basket-dialog-modal {
+    min-width: 60vw;
+    max-width: 1200px !important;
+    min-height: 60vh;
+    max-height: 750px !important;
+    height: auto;
+    overflow: auto;
+}
+
 .add-basket-dialog-field span:nth-of-type(2) {
     width: 100%;
 }

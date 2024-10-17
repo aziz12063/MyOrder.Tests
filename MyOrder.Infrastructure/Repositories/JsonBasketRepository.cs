@@ -319,7 +319,7 @@ namespace MyOrder.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<List<BestSellerItemDto>> GetBasketBestSellersAsync(string basketId)
+        public async Task<List<BestSellerItemDto?>?> GetBasketBestSellersAsync(string basketId, string? filter = null)
         {
             var jsonFilePath = Path.Combine(baseDataPath, "orderedItems.json");
             if (!File.Exists(jsonFilePath))

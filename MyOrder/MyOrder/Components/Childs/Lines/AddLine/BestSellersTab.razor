@@ -8,58 +8,51 @@
     return;
 }
 <FetchActionTypeCascadingValue FetchActionTypeValue="FetchActionType">
-    <MudContainer Class="pa-0 mx-0 mt-0 mb-10" Style="max-width: none;">
-        <!--Grid-->
-        <MudDataGrid T="BestSellerItemDto"
-                     Bordered="true"
-                     Dense="true"
-                     Striped="true"
-                     Elevation="4"
-                     Items="BestSellers"
-                     SortMode="@SortMode.None"
-                     ApplyDropClassesOnDragStarted="true"
-                     Hideable="true"
-                     ReadOnly="false">
-            <Columns>
-                <TemplateColumn >
-                     
-                    <CellTemplate>
-                        @{
-                            var val = context.Item;
-                            string itemId = val.ItemId;
-                            string url = "https://www.raja.fr/a_sku" + itemId + ".html";
-                        }
-                        <!--Target="blank" to open in a new tab-->
-                        <MudIconButton Icon="@Icons.Material.Filled.Link" Href="@url" Target="blank" Color="Color.Primary" />
-                    </CellTemplate>
-                        
-                </TemplateColumn>
+    <!--Grid-->
+    <MudDataGrid T="BestSellerItemDto"
+                 Elevation="0"
+                 Bordered="true"
+                 Dense="true"
+                 Striped="true"
+                 FixedHeader="true"
+                 Height="50vh"
+                 Virtualize="true"
+                 Items="BestSellers"
+                 SortMode="@SortMode.None"
+                 QuickFilter="QuickFilter">
+        <ToolBarContent>
+            <FilterItems SearchTextCallback="FilterItemsCallback"
+                         FilterInactiveItemsCallback="ToggleBlockedCallback" />
+        </ToolBarContent>
+        <Columns>
 
-                <PropertyColumn Property="x => x.CatalogUrl == null ? string.Empty : x.CatalogUrl"
-                                Title="Catalogue" />
+            <PropertyColumn Property="item => item.ItemId == null ? string.Empty : item.ItemId"
+                            Title="Code" />
 
-                <PropertyColumn Property="x => x.Description == null ? string.Empty : x.Description"
-                                Title="Description" />
+            <PropertyColumn Property="item => item.Description == null ? string.Empty : item.Description"
+                            Title="Description" />
 
-                <PropertyColumn Property="x => x.ItemId == null? string.Empty : x.ItemId"
-                                Title="Famille Catalogue" />
+            <PropertyColumn Property="item => item.Category1 == null? string.Empty : item.Category1"
+                            Title="Famille Catalogue" />
 
-                <PropertyColumn Property="x => x.MultipleQuantity == null ? 0 : x.MultipleQuantity "
-                                Title="Vendu par" />
-                <TemplateColumn Editable="false"
-                                Title="Chiffre d'affaire'">
-                    <CellTemplate>
-                        <MudNumericField Value="context.Item.Turnover"
-                                         Format="C" />
-                    </CellTemplate>
-                </TemplateColumn>
+            <PropertyColumn Property="item => item.Category2 == null? string.Empty : item.Category2"
+                            Title="Groupe" />
 
-                <PropertyColumn Property="x => x.Quantity != null ? x.Quantity : null"
-                                Title="Tarification" />
+            <PropertyColumn Property="item => item.Category3 == null? string.Empty : item.Category3"
+                            Title="Sous-groupe" />
 
-                <PropertyColumn Property="x => x.Status != null ? x.Status : null "
-                                Title="Status" />
-            </Columns>
-        </MudDataGrid>
-    </MudContainer>
+            <PropertyColumn Property="item => item.MultipleQuantity == null ? 0 : item.MultipleQuantity "
+                            Title="Vendu par" />
+
+            <PropertyColumn Property="item => item.Turnover == null ? 0 : item.Turnover "
+                            Title="Chiffre d'affaire"
+                            Format="C" />
+
+            <PropertyColumn Property="item => item.Quantity != null ? item.Quantity : null"
+                            Title="Quantité" />
+
+            <PropertyColumn Property="item => item.Status != null ? item.Status : null "
+                            Title="Statut" />
+        </Columns>
+    </MudDataGrid>
 </FetchActionTypeCascadingValue>

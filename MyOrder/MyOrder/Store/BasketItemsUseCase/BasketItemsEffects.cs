@@ -11,7 +11,7 @@ public class BasketItemsEffects(IBasketRepository basketRepository, ILogger<Bask
         try
         {
             logger.LogInformation("Fetching basket items for {BasketId}", action.BasketId);
-            var basketItems = await basketRepository.GetBasketBestSellersAsync(action.BasketId);
+            var basketItems = await basketRepository.GetBasketBestSellersAsync(action.BasketId, action.Filter);
             dispatcher.Dispatch(new FetchBestSellersSuccessAction(basketItems));
         }
         catch (Exception ex)

@@ -59,11 +59,11 @@ public partial class Notifications : FluxorComponentBase<NotificationsState, Fet
 
         if (notification.Message is not null)
         {
-        //    var snackbar = Snackbar.Add(new MarkupString(notification.Message), severity, config, notification.NotificationId.ToString());
-        //    snackbar.OnClose += 
-        //        sb => Dispatcher.Dispatch(
-        //            new DeleteNotificationAction(
-        //                State.Value, notification.ProcedureCall, BasketId));
+            var snackbar = Snackbar.Add(new MarkupString(notification.Message), severity, config, notification.NotificationId.ToString());
+            snackbar.OnClose +=
+                sb => Dispatcher.Dispatch(
+                    new DeleteNotificationAction(
+                        State.Value, notification.ProcedureCall, BasketId));
         }
 
     }

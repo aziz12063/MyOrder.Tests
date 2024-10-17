@@ -23,8 +23,6 @@ public class ModalService(IDialogService dialogService) : IModalService
     {
         var options = new DialogOptions
         {
-            FullWidth = true,
-            MaxWidth = MaxWidth.Medium,
             CloseOnEscapeKey = true,
             CloseButton = true,
             BackdropClick = false

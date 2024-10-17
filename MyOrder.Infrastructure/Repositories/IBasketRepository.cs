@@ -69,5 +69,5 @@ public interface IBasketRepository
     Task<BasketLineDto?> GetNewLineAsync(string basketId);
     Task<BasketLineDto> ResetNewLineStateAsync(string basketId);
     Task<ProcedureCallResponseDto> CommitAddNewLineAsync(string basketId);
-    Task<List<BestSellerItemDto?>?> GetBasketBestSellersAsync(string basketId);
+    Task<List<BestSellerItemDto?>?> GetBasketBestSellersAsync(string basketId, string? filter = null);
 }
