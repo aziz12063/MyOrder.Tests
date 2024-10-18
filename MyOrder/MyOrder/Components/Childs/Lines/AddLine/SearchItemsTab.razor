@@ -23,11 +23,27 @@
         <ToolBarContent>
             <FilterItems SearchTextCallback="FilterItemsCallback"
                          FilterInactiveItemsCallback="ToggleBlockedCallback" />
+            <MudTooltip Text="Copier les données dans le presse-papiers">
+                <MudIconButton Icon="@Icons.Material.Outlined.ContentCopy"
+                               OnClick="CopyDataToClipboard" />
+            </MudTooltip>
+            
         </ToolBarContent>
         <Columns>
 
-            <PropertyColumn Property="item => item.ItemId == null ? string.Empty : item.ItemId"
-                            Title="Code" />
+            <TemplateColumn Title="Code">
+                <CellTemplate>
+                    <MudTooltip Text="Ajouter cet article">
+                        <MudButton Variant="Variant.Text"
+                                   DropShadow="true"
+                                   Color="Color.Primary"
+                                   StartIcon="@Icons.Material.Filled.KeyboardDoubleArrowRight"
+                                   OnClick="() => OnItemClick(context.Item)">
+                            @context.Item.ItemId
+                        </MudButton>
+                    </MudTooltip>
+                </CellTemplate>
+            </TemplateColumn>
 
             <PropertyColumn Property="item => item.Description == null ? string.Empty : item.Description"
                             Title="Description" />
