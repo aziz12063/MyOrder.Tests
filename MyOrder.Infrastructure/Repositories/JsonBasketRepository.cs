@@ -353,7 +353,15 @@ namespace MyOrder.Infrastructure.Repositories
 
             return JsonConvert.DeserializeObject<List<BasketItemDto?>>(json);
         }
+        public async Task<ProcedureCallResponseDto?> CommitAddFreeTextLineAsync(string basketId, List<string?> freeTexts)
+        {
+            var jsonFilePath = Path.Combine(baseDataPath, "procedureCall.json");
+            if (!File.Exists(jsonFilePath))
+                return null;
 
+            var json = await File.ReadAllTextAsync(jsonFilePath);
+            return JsonConvert.DeserializeObject<ProcedureCallResponseDto>(json);
+        }
 
 
 
@@ -385,5 +393,15 @@ namespace MyOrder.Infrastructure.Repositories
         {
             throw new NotImplementedException();
         }
+        public Task<ProcedureCallResponseDto> DuplicateOrderLinesAsync(string basketId, List<int> linesIds)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ProcedureCallResponseDto> DeleteOrderLinesAsync(string basketId, List<int> linesIds)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

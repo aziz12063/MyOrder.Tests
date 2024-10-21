@@ -83,9 +83,12 @@ public interface IBasketRepository
     Task<BasketOrderLinesDto> GetBasketLinesAsync(string basketId);
     Task<List<BasketValueDto?>> GetlineUpdateReasonsAsync(string basketId);
     Task<List<BasketValueDto?>> GetlogisticFlowsAsync(string basketId);
+    Task<ProcedureCallResponseDto> DuplicateOrderLinesAsync(string basketId, List<int> linesIds);
+    Task<ProcedureCallResponseDto> DeleteOrderLinesAsync(string basketId, List<int> linesIds);
     Task<BasketLineDto?> GetNewLineAsync(string basketId);
     Task<BasketLineDto> ResetNewLineStateAsync(string basketId);
     Task<ProcedureCallResponseDto> CommitAddNewLineAsync(string basketId);
+    Task<ProcedureCallResponseDto?> CommitAddFreeTextLineAsync(string basketId, List<string?> freeTexts);
     Task<List<BestSellerItemDto?>?> GetBasketBestSellersAsync(string basketId, string? filter = null);
     Task<List<OrderedItemDto?>?> GetBasketOrderedItemsAsync(string basketId, string? filter = null);
     Task<List<BasketItemDto?>?> GetBasketSearchItemsAsync(string basketId, string? filter = null);
