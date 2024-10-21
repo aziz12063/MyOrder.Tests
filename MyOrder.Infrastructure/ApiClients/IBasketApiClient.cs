@@ -132,6 +132,14 @@ public interface IBasketApiClient
     [Get("/api/orderContext/{basketId}/logisticFlows")]
     Task<List<BasketValueDto?>> GetlogisticFlowsAsync(string basketId);
 
+    [Post("/api/orderContext/{basketId}/orderLines/duplicate")]
+    Task<ProcedureCallResponseDto> DuplicateOrderLinesAsync(string basketId, 
+        [Body] List<int> linesIds);
+
+    [Post("/api/orderContext/{basketId}/orderLines/delete")]
+    Task<ProcedureCallResponseDto> DeleteOrderLinesAsync(string basketId,
+        [Body] List<int> linesIds);
+
     [Get("/api/orderContext/{basketId}/newLine")]
     Task<BasketLineDto?> GetNewLineAsync(string basketId);
 

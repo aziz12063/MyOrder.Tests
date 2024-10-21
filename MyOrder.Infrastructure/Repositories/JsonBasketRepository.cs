@@ -385,5 +385,15 @@ namespace MyOrder.Infrastructure.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public Task<ProcedureCallResponseDto> DuplicateOrderLinesAsync(string basketId, List<int> linesIds)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ProcedureCallResponseDto> DeleteOrderLinesAsync(string basketId, List<int> linesIds)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

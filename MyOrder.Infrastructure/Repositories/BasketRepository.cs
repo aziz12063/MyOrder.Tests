@@ -314,6 +314,16 @@ public class BasketRepository(IBasketApiClient apiClient,
         logger.LogDebug("Fetching logisticFlows for {BasketId} from repository", basketId);
         return await apiClient.GetlogisticFlowsAsync(basketId);
     }
+    public async Task<ProcedureCallResponseDto> DuplicateOrderLinesAsync(string basketId, List<int> linesIds)
+    {
+        logger.LogDebug("Duplicating order lines for {BasketId} from repository", basketId);
+        return await apiClient.DuplicateOrderLinesAsync(basketId, linesIds);
+    }
+    public async Task<ProcedureCallResponseDto> DeleteOrderLinesAsync(string basketId, List<int> linesIds)
+    {
+        logger.LogDebug("Deleting order lines for {BasketId} from repository", basketId);
+        return await apiClient.DeleteOrderLinesAsync(basketId, linesIds);
+    }
     public async Task<BasketLineDto?> GetNewLineAsync(string basketId)
     {
         logger.LogDebug("Fetching new line for {BasketId} from repository", basketId);
