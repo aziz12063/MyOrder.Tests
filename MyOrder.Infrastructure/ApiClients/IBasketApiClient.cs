@@ -133,7 +133,7 @@ public interface IBasketApiClient
     Task<List<BasketValueDto?>> GetlogisticFlowsAsync(string basketId);
 
     [Post("/api/orderContext/{basketId}/orderLines/duplicate")]
-    Task<ProcedureCallResponseDto> DuplicateOrderLinesAsync(string basketId,
+    Task<ProcedureCallResponseDto> DuplicateOrderLinesAsync(string basketId, 
         [Body] List<int> linesIds);
 
     [Post("/api/orderContext/{basketId}/orderLines/delete")]
@@ -148,9 +148,6 @@ public interface IBasketApiClient
 
     [Post("/api/orderContext/{basketId}/newLine/add")]
     Task<ProcedureCallResponseDto> CommitAddNewLineAsync(string basketId);
-
-    [Post("/api/orderContext/{basketId}/newLine/addFreeText")]
-    Task<ProcedureCallResponseDto> CommitAddFreeTextLineAsync(string basketId, [Body] List<string?> freeTexts);
 
     [Get("/api/orderContext/{basketId}/bestSellerItems")]
     Task<List<BestSellerItemDto?>?> GetBasketBestSellersAsync(
