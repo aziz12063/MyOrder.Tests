@@ -2,6 +2,7 @@
 using MyOrder.Infrastructure.ApiClients;
 using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.BasketItems;
+using MyOrder.Shared.Dtos.GeneralInformation;
 using MyOrder.Shared.Dtos.Lines;
 using MyOrder.Shared.Dtos.SharedComponents;
 using Newtonsoft.Json;
@@ -16,7 +17,7 @@ public class BasketRepository(IBasketApiClient apiClient,
     //General Info Section
     //=======================================================================================================
     #region GeneralInfo
-    public async Task<BasketGeneralInfoDto> GetBasketGeneralInfoAsync(string basketId)
+    public async Task<GeneralInfoDto> GetBasketGeneralInfoAsync(string basketId)
     {
         logger.LogDebug("Fetching basket general info for {BasketId} from repository", basketId);
         return await apiClient.GetBasketGeneralInfoAsync(basketId);

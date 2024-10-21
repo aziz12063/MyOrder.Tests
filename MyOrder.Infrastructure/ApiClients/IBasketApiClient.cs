@@ -1,5 +1,6 @@
 ﻿using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.BasketItems;
+using MyOrder.Shared.Dtos.GeneralInformation;
 using MyOrder.Shared.Dtos.Lines;
 using Refit;
 using System.Collections.Immutable;
@@ -25,7 +26,7 @@ public interface IBasketApiClient
     //=======================================================================================================
     #region General Info
     [Get("/api/orderContext/{basketId}/generalInfo")]
-    Task<BasketGeneralInfoDto> GetBasketGeneralInfoAsync(string basketId);
+    Task<GeneralInfoDto> GetBasketGeneralInfoAsync(string basketId);
 
     [Get("/api/orderContext/{basketId}/notifications")]
     Task<List<BasketNotificationDto?>?> GetNotificationsAsync(string basketId);

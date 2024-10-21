@@ -1,4 +1,4 @@
-﻿using MyOrder.Shared.Dtos;
+﻿using MyOrder.Shared.Dtos.GeneralInformation;
 using MyOrder.Store.Base;
 using System.Security.Claims;
 
@@ -9,9 +9,9 @@ public class FetchGeneralInfoAction(GeneralInfoState state, string basketId) : F
     public string BasketId { get; } = basketId;
 }
 
-public class FetchGeneralInfoSuccessAction(BasketGeneralInfoDto? basketGeneralInfo, ClaimsPrincipal? claimsPrincipal)
+public class FetchGeneralInfoSuccessAction(GeneralInfoDto? basketGeneralInfo, ClaimsPrincipal? claimsPrincipal)
 {
-    public BasketGeneralInfoDto? BasketGeneralInfo { get; } = basketGeneralInfo;
+    public GeneralInfoDto? BasketGeneralInfo { get; } = basketGeneralInfo;
     public ClaimsPrincipal? ClaimsPrincipal { get; } = claimsPrincipal;
 }
 

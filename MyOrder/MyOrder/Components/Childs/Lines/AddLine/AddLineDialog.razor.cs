@@ -9,6 +9,7 @@ namespace MyOrder.Components.Childs.Lines.AddLine;
 
 public partial class AddLineDialog
 {
+    [CascadingParameter]
     private MudDialogInstance DialogInstance { get; set; }
     private AddLineTab? AddLineTab { get; set; }
 

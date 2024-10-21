@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MyOrder.Components.Common;
 using MyOrder.Services;
-using MyOrder.Shared.Dtos;
+using MyOrder.Shared.Dtos.GeneralInformation;
 using MyOrder.Store.GeneralInfoUseCase;
 using MyOrder.Utils;
 using System.Security.Claims;
@@ -12,7 +12,7 @@ public partial class GeneralInfo : FluxorComponentBase<GeneralInfoState, FetchGe
 {
     [Inject]
     private ICurrencyService? CurrencyService { get; set; }
-    private BasketGeneralInfoDto? BasketGeneralInfo { get; set; }
+    private GeneralInfoDto? BasketGeneralInfo { get; set; }
     private ClaimsPrincipal? User { get; set; }
 
     protected override FetchGeneralInfoAction CreateFetchAction(GeneralInfoState state, string basketId) => new(state, basketId);

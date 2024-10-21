@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.BasketItems;
+using MyOrder.Shared.Dtos.GeneralInformation;
 using MyOrder.Shared.Dtos.Lines;
 using MyOrder.Shared.Dtos.SharedComponents;
 using Newtonsoft.Json;
@@ -33,7 +34,7 @@ namespace MyOrder.Infrastructure.Repositories
         }
 
         //=================================================================================================================================
-        public async Task<BasketGeneralInfoDto> GetBasketGeneralInfoAsync(string basketId)
+        public async Task<GeneralInfoDto> GetBasketGeneralInfoAsync(string basketId)
         {
             //var jsonFilePath = Path.Combine(baseDataPath, "generalInfo.json");
             var jsonFilePath = Path.Combine(baseDataPath, "generalInfo.json");
@@ -41,7 +42,7 @@ namespace MyOrder.Infrastructure.Repositories
                 return null;
 
             var json = await File.ReadAllTextAsync(jsonFilePath);
-            return JsonConvert.DeserializeObject<BasketGeneralInfoDto>(json);
+            return JsonConvert.DeserializeObject<GeneralInfoDto>(json);
         }
 
         //========================================================================================================================

@@ -1,5 +1,6 @@
 ﻿using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.BasketItems;
+using MyOrder.Shared.Dtos.GeneralInformation;
 using MyOrder.Shared.Dtos.Lines;
 using MyOrder.Shared.Dtos.SharedComponents;
 using Refit;
@@ -8,7 +9,7 @@ using System.Collections.Immutable;
 namespace MyOrder.Infrastructure.Repositories;
 public interface IBasketRepository
 {
-    Task<BasketGeneralInfoDto> GetBasketGeneralInfoAsync(string basketId);
+    Task<GeneralInfoDto> GetBasketGeneralInfoAsync(string basketId);
     Task<List<BasketNotificationDto?>?> GetNotificationsAsync(string basketId);
 
     //=======================================================================================================

@@ -82,7 +82,7 @@ public partial class BestSellersTab : FluxorComponentBase<BestSellersState, Fetc
                 item?.Description ?? string.Empty,
                 item?.Category1 ?? string.Empty,
                 item?.MultipleQuantity.ToString() ?? string.Empty,
-                item?.Turnover.ToString() ?? string.Empty,
+                item?.Amount.ToString() ?? string.Empty,
                 item?.Quantity.ToString() ??string.Empty,
                 item?.Status ?? string.Empty
             ]);
