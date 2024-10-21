@@ -1,5 +1,6 @@
 ﻿using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.SharedComponents;
+using System.Numerics;
 
 namespace MyOrder.Utils;
 
@@ -15,6 +16,18 @@ public static class FieldUtility
     public static string NullOrWhiteSpaceHelper(string? value) => string.IsNullOrWhiteSpace(value) ? string.Empty : value;
     public static string NullOrWhiteSpaceHelperWithDash(string? value)
         => string.IsNullOrWhiteSpace(value) ? "-" : value;
+
+    /// <summary>
+    /// Returns the value of the field if it's not null; otherwise, returns the default numeric value (e.g., 0).
+    /// </summary>
+    /// <typeparam name="T">A numeric type implementing INumber&lt;T&gt;.</typeparam>
+    /// <param name="field">The field containing the nullable numeric value.</param>
+    /// <returns>The numeric value or the default if null.</returns>
+    public static T NullNumberHelper<T>(Field<T?>? field) where T : struct, INumber<T> =>
+        field?.Value ?? T.Zero;
+    //field is null || field.Value is null ? T.Zero
+    //: field.Value;
+
     public static decimal? NullOrWhiteSpaceHelper(decimal? value) => value == null || value == 0 ? 0 : value;// i will make the return non-nullable
     public static int? NullOrWhiteSpaceHelper(int? value) => value == null || value == 0 ? 0 : value;// i will make the return non-nullable
     public static bool NullOrWhiteSpaceHelper(bool? value) => value ?? false;// i will make the return non-nullable
@@ -43,14 +56,14 @@ public static class FieldUtility
         }
     }
 
-    public static string DisplayAddress(List<string?>? address) => address is var addressList && addressList != null 
-        ? string.Join("\n", addressList) 
+    public static string DisplayAddress(List<string?>? address) => address is var addressList && addressList != null
+        ? string.Join("\n", addressList)
         : string.Empty;
 
     public static string DisplayListNoSpace(List<string?>? list) => list is var newList && newList != null
         ? string.Join("\n", newList)
         : string.Empty;
 
-    
+
 
 }

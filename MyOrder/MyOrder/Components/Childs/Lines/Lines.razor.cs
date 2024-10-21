@@ -4,6 +4,7 @@ using MyOrder.Components.Common;
 using MyOrder.Services;
 using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.Lines;
+using MyOrder.Shared.Utils;
 using MyOrder.Store.LinesUseCase;
 using MyOrder.Store.NewLineUseCase;
 using MyOrder.Utils;
@@ -18,7 +19,7 @@ public partial class Lines : FluxorComponentBase<LinesState, FetchLinesAction>
     private BasketOrderLinesDto? BasketOrderLinesDto { get; set; }
     protected List<BasketValueDto?>? UpdateReasons { get; set; }
     protected List<BasketValueDto?>? LogisticFlows { get; set; }
-    private List<BasketLineDto>? selectedBasketLineDto { get; set; }
+    public MudDataGrid<BasketLineDto> LinesDataGridInstance { get; set; }
     private bool IsLineNbrEditable { get; set; }
     private bool IsItemIdEditable { get; set; }
     private bool IsNameEditable { get; set; }
@@ -40,12 +41,10 @@ public partial class Lines : FluxorComponentBase<LinesState, FetchLinesAction>
             ?? throw new ArgumentNullException("Unexpected null for LogisticFlows object.");
     }
 
-
     protected override void CacheNewFields()
     {
         BasketOrderLinesDto = State?.Value.BasketOrderLines
             ?? throw new ArgumentNullException("Unexpected null for BasketOrderLines object.");
-        selectedBasketLineDto = new List<BasketLineDto>();
         if (BasketOrderLinesDto is not null && BasketOrderLinesDto.lines is not null && BasketOrderLinesDto.lines.Count > 0)
         {
             IsLineNbrEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0]?.LineNum);
@@ -61,19 +60,52 @@ public partial class Lines : FluxorComponentBase<LinesState, FetchLinesAction>
         isLoading = State.Value.IsLoading || RessourcesState.Value.IsLoading;
     }
 
-    protected override FetchLinesAction CreateFetchAction(LinesState state, string basketId)
+    protected override FetchLinesAction CreateFetchAction(LinesState state, string basketId) =>
+        new FetchLinesAction(state, basketId);
+
+    private void OnDuplicateItemsClick()
     {
-        return new FetchLinesAction(state, basketId);
+        var selectedItemsNums = GetSelectedItemsNums();
+        if (selectedItemsNums is null || selectedItemsNums.Count < 1)
+            return; // Show a message to the user
+
+        Dispatcher.Dispatch(new DuplicateLinesAction(
+         BasketId, selectedItemsNums));
+    }
+
+    private void OnDeleteItemsClick()
+    {
+        var selectedItemsNums = GetSelectedItemsNums();
+        if (selectedItemsNums is null || selectedItemsNums.Count < 1)
+            return; // Show a message to the user
+
+        Dispatcher.Dispatch(new DeleteLinesAction(
+         BasketId, selectedItemsNums));
+    }
+
+    private void OnCopyItemsClick()
+    {
+        var selectedItemsNums = GetSelectedItemsNums();
+        if (selectedItemsNums is null || selectedItemsNums.Count < 1)
+            return; // Show a message to the user
+
+        Logger.LogError("Copy items not implemented : {stackTrace}", LogUtility.GetStackTrace());
+    }
+
+    private List<int>? GetSelectedItemsNums()
+    {
+        var selectedItems = LinesDataGridInstance.SelectedItems;
+        if (selectedItems is null || selectedItems.Count < 1)
+            Logger.LogInformation("No item selected.");
+
+        return selectedItems?
+            .Where(x => x.LineNum?.Value != null)?
+            .Select(x => x.LineNum?.Value)?
+            .Cast<int>()?
+            .ToList();
     }
 
     MudDataGrid<BasketLineDto> dataGrid = new();
-
-    // is called when chekbox a row
-    void SelectedItemsChanged(HashSet<BasketLineDto> items)
-    {
-        // selectedBasketLineDto.Clear();
-        selectedBasketLineDto = items.ToList();
-    }
 
     private async Task<IDialogReference> OpenAddLineDialogAsync()
     {

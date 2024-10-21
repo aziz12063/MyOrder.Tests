@@ -11,43 +11,71 @@
 <FetchActionTypeCascadingValue FetchActionTypeValue="FetchActionType">
     <MudContainer Class="pa-0 mx-0 mt-0 mb-10" Style="max-width: none;">
         <!--Grid-->
-        <MudDataGrid T="BasketLineDto"
+        <MudDataGrid @ref="LinesDataGridInstance"
+                     T="BasketLineDto"
                      Bordered="true"
                      Dense="true"
                      Striped="true"
                      Elevation="4"
+                     Class="pt-2"
                      Items="@BasketOrderLinesDto!.lines"
                      SortMode="@SortMode.None"
-                     ApplyDropClassesOnDragStarted="true"
-                     DragIndicatorIcon="@Icons.Material.Filled.DragIndicator"
-                     ColumnsPanelReordering="false"
-                     ShowMenuIcon="true"
                      Hideable="true"
-                     SelectedItemsChanged="@SelectedItemsChanged"
                      EditMode="@DataGridEditMode.Cell"
+                     MultiSelection="true"
                      ReadOnly="false">
-            <!--Buttons-->
             <ToolBarContent>
-                <MudStack Row="true" Spacing="1" StretchItems="StretchItems.Start">
-                    <MudIconButton Icon="@Icons.Material.Filled.Add" Variant="Variant.Filled" Color="Color.Tertiary" OnClick="OpenAddLineDialogAsync">Open</MudIconButton>
-                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Variant="Variant.Filled" Color="Color.Error" OnClick="@ToggleOpen">Open</MudIconButton>
-                    <MudIconButton Icon="@Icons.Material.Filled.ContentCopy" Variant="Variant.Filled" Color="Color.Primary" OnClick="@ToggleOpen">Open</MudIconButton>
-                </MudStack>
+                <MudTooltip Text="Ajouter un article">
+                    <MudIconButton Icon="@Icons.Material.TwoTone.Add"
+                                   Variant="Variant.Filled"
+                                   Size="Size.Large"
+                                   Color="Color.Tertiary"
+                                   OnClick="OpenAddLineDialogAsync" />
+                </MudTooltip>
+
+                <MudSpacer />
+
+                <MudTooltip Text="Dupliquer les articles sélectionnés">
+                    <MudIconButton Icon="@Icons.Material.TwoTone.Layers"
+                                   Variant="Variant.Filled"
+                                   Size="Size.Large"
+                                   Color="Color.Dark"
+                                   OnClick="OnDuplicateItemsClick" />
+                </MudTooltip>
+
+                &emsp;&emsp;
+
+                <MudTooltip Text="Supprimer les articles sélectionnés">
+                    <MudIconButton Icon="@Icons.Material.TwoTone.Delete"
+                                   Variant="Variant.Filled"
+                                   Size="Size.Large"
+                                   Color="Color.Error"
+                                   OnClick="OnDeleteItemsClick" />
+                </MudTooltip>
+
+                &ensp;
+
+                <MudTooltip Text="Copier les articles sélectionnés">
+                    <MudIconButton Icon="@Icons.Material.TwoTone.ContentCopy"
+                                   Variant="Variant.Filled"
+                                   Size="Size.Large"
+                                   Color="Color.Primary"
+                                   OnClick="OnCopyItemsClick" />
+                </MudTooltip>
+
+                &emsp;&emsp;
+
             </ToolBarContent>
             <Columns>
                 <SelectColumn T="BasketLineDto" Size="Size.Small" />
-                <HierarchyColumn T="BasketLineDto" />
-                <TemplateColumn Editable="false"
-                                Title="Ligne"
-                                HeaderClass="header-style"
-                                CellStyle="text-align: center; margin: 5% auto; font-size: 12px;">
-                    <CellTemplate>
-                        <GenericNumericField Field="context.Item.LineNum"
-                                             HideLabel="true" />
-                    </CellTemplate>
-                </TemplateColumn>
 
-                <TemplateColumn Title="not impl" CellClass="pa-1 ma-1" CellStyle="text-align: center; margin: 5% auto; font-size: 12px;">
+                <HierarchyColumn T="BasketLineDto" />
+
+                <PropertyColumn Property="line => FieldUtility.NullNumberHelper(line.LineNum)"
+                                Title="Ligne"
+                                Editable="false" />
+
+                <TemplateColumn Title="Not imp." CellClass="pa-1 ma-1" CellStyle="text-align: center; margin: 5% auto; font-size: 12px;">
                     <CellTemplate>
                         @{
                             var val = context.Item;
@@ -106,12 +134,12 @@
                         <GenericNumericField Field="context.Item.DiscountRate"
                                              Min="0"
                                              HideLabel="true"
-                                             Format="P"/>
+                                             Format="P" />
                     </CellTemplate>
                 </TemplateColumn>
 
                 <TemplateColumn Editable="false"
-                                Title="Remise DC Var not imple"
+                                Title="Remise DC Not impl."
                                 HeaderClass="header-style"
                                 CellStyle="text-align: center; margin: 5% auto; font-size: 12px;">
                     <CellTemplate>
@@ -126,7 +154,7 @@
                     <CellTemplate>
                         <GenericNumericField Field="context.Item.SalesPrice"
                                              HideLabel="true"
-                                             Format="C"/>
+                                             Format="C" />
                     </CellTemplate>
                 </TemplateColumn>
 
@@ -156,8 +184,8 @@
                         </MudItem>
 
                         <!--S2-->
-                        <MudItem  xs="12" sm="5">
-                                <LineStockQuantities BasketLine="@context.Item" LogisticFlows="LogisticFlows" />
+                        <MudItem xs="12" sm="5">
+                            <LineStockQuantities BasketLine="@context.Item" LogisticFlows="LogisticFlows" />
                         </MudItem>
 
                         <!--S3-->
@@ -170,9 +198,3 @@
         </MudDataGrid>
     </MudContainer>
 </FetchActionTypeCascadingValue>
-
-@code {
-    private bool _open = false;
-
-    private void ToggleOpen() => _open = !_open;
-}

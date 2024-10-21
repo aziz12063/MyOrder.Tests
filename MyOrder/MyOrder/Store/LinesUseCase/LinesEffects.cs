@@ -25,7 +25,7 @@ public class LinesEffects(IBasketRepository basketRepository, IStateResolver sta
     }
 
     [EffectMethod]
-    public async Task HandleDuplicateLinesAction(DuplicateLinesActions action, IDispatcher dispatcher)
+    public async Task HandleDuplicateLinesAction(DuplicateLinesAction action, IDispatcher dispatcher)
     {
         try
         {
@@ -42,7 +42,7 @@ public class LinesEffects(IBasketRepository basketRepository, IStateResolver sta
     }
 
     [EffectMethod]
-    public async Task HandleDeleteLinesAction(DeleteLinesActions action, IDispatcher dispatcher)
+    public async Task HandleDeleteLinesAction(DeleteLinesAction action, IDispatcher dispatcher)
     {
         try
         {

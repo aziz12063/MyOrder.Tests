@@ -19,13 +19,13 @@ public class FetchLinesFailureAction(string errorMessage)
     public string ErrorMessage { get; } = errorMessage;
 }
 
-public class DuplicateLinesActions(string basketId, List<int> linesIds)
+public class DuplicateLinesAction(string basketId, List<int> linesIds)
 {
     public string BasketId { get; } = basketId;
     public List<int> LinesIds { get; } = linesIds;
 }
 
-public class DeleteLinesActions(string basketId, List<int> linesIds)
+public class DeleteLinesAction(string basketId, List<int> linesIds)
 {
     public string BasketId { get; } = basketId;
     public List<int> LinesIds { get; } = linesIds;
