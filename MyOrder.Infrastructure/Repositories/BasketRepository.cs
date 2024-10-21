@@ -27,6 +27,16 @@ public class BasketRepository(IBasketApiClient apiClient,
         logger.LogDebug("Fetching basket notification for {BasketId} from repository", basketId);
         return await apiClient.GetNotificationsAsync(basketId);
     }
+    public async Task<List<BasketBlockingReasonDto?>?> GetBlockingReasonsAsync(string basketId)
+    {
+        logger.LogDebug("Fetching blocking reasons for {BasketId} from repository", basketId);
+        return await apiClient.GetBlockingReasonsAsync(basketId);
+    }
+    public async Task<List<BasketNotificationDto?>?> GetValudationRulesAsync(string basketId)
+    {
+        logger.LogDebug("Fetching validation rules for {BasketId} from repository", basketId);
+        return await apiClient.GetValudationRulesAsync(basketId);
+    }
 
     #endregion
     //=======================================================================================================

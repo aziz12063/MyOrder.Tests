@@ -30,6 +30,12 @@ public interface IBasketApiClient
 
     [Get("/api/orderContext/{basketId}/notifications")]
     Task<List<BasketNotificationDto?>?> GetNotificationsAsync(string basketId);
+
+    [Get("/api/orderContext/{basketId}/blockingReasons")]
+    Task<List<BasketBlockingReasonDto?>?> GetBlockingReasonsAsync(string basketId);
+
+    [Get("/api/orderContext/{basketId}/validationRules")]
+    Task<List<BasketNotificationDto?>?> GetValudationRulesAsync(string basketId);
     #endregion
 
     //=======================================================================================================

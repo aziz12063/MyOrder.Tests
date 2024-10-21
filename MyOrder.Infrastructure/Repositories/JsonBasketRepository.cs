@@ -375,5 +375,15 @@ namespace MyOrder.Infrastructure.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public Task<List<BasketBlockingReasonDto?>?> GetBlockingReasonsAsync(string basketId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<BasketNotificationDto?>?> GetValudationRulesAsync(string basketId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
