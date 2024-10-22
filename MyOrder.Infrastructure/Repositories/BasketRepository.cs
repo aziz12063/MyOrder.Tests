@@ -344,6 +344,14 @@ public class BasketRepository(IBasketApiClient apiClient,
         return response;
     }
 
+    public async Task<ProcedureCallResponseDto?> CommitAddFreeTextLineAsync(string basketId, List<string?> freeTexts )
+    {
+        logger.LogInformation("Posting free texts : \n{freeTexts} " +
+            "\nfor {BasketId} from repository", string.Join("\n", freeTexts), basketId);
+
+        return await apiClient.CommitAddFreeTextLineAsync(basketId, freeTexts);
+    }
+
     public async Task<List<BestSellerItemDto?>?> GetBasketBestSellersAsync(string basketId, string? filter = null)
     {
         logger.LogDebug("Fetching BestSellerItems for {BasketId} from repository", basketId);
