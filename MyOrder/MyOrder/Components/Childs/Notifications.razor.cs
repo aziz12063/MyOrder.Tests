@@ -3,7 +3,6 @@ using MudBlazor;
 using MyOrder.Components.Common;
 using MyOrder.Shared.Dtos;
 using MyOrder.Store.NotificationsUseCase;
-using MyOrder.Store.ProcedureCallUseCase;
 
 namespace MyOrder.Components.Childs;
 
@@ -42,10 +41,13 @@ public partial class Notifications : FluxorComponentBase<NotificationsState, Fet
         static void config(SnackbarOptions options)
         {
             options.DuplicatesBehavior = SnackbarDuplicatesBehavior.Prevent;
+            options.HideTransitionDuration = 200;
+            options.ShowTransitionDuration = 200;
             options.VisibleStateDuration = int.MaxValue;
             options.SnackbarVariant = Variant.Text;
             options.ShowCloseIcon = true;
             options.CloseAfterNavigation = false;
+            options.SnackbarTypeClass = "basket-notification-snackbar mt-11";
         }
 
         var severity = notification.Severity switch
@@ -60,7 +62,8 @@ public partial class Notifications : FluxorComponentBase<NotificationsState, Fet
         if (notification.Message is not null)
         {
             var snackbar = Snackbar.Add(new MarkupString(notification.Message), severity, config, notification.NotificationId.ToString());
-            snackbar.OnClose +=
+            if (snackbar is not null)
+                snackbar.OnClose +=
                 sb => Dispatcher.Dispatch(
                     new DeleteNotificationAction(
                         State.Value, notification.ProcedureCall, BasketId));
@@ -72,8 +75,8 @@ public partial class Notifications : FluxorComponentBase<NotificationsState, Fet
     {
         var notification = BasketNotifications?.Find(notification
             => notification?.Message?.Equals(snackbar.Message) ?? false);
-       // if (notification is not null)
-         //   Dispatcher.Dispatch(new UpdateFieldAction(BasketId, notification.ProcedureCall?.ToList()));
+        // if (notification is not null)
+        //   Dispatcher.Dispatch(new UpdateFieldAction(BasketId, notification.ProcedureCall?.ToList()));
     }
 
     private void RemoveNotification(BasketNotificationDto notification)

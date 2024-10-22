@@ -97,6 +97,12 @@
     color: red !important;
 }
 
+.basket-notification-snackbar {
+    max-width: 95vw !important;
+    min-width: 70vw !important;
+    width: 650px;
+}
+
 .add-basket-dialog-modal {
     min-width: 60vw;
     max-width: 1200px !important;

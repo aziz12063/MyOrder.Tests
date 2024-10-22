@@ -17,7 +17,7 @@
                      Dense="true"
                      Striped="true"
                      Elevation="4"
-                     Class="pt-2"
+                     Class="pt-1"
                      Items="@BasketOrderLinesDto!.lines"
                      SortMode="@SortMode.None"
                      Hideable="true"
@@ -28,42 +28,39 @@
                 <MudTooltip Text="Ajouter un article">
                     <MudIconButton Icon="@Icons.Material.TwoTone.Add"
                                    Variant="Variant.Filled"
-                                   Size="Size.Large"
+                                   Size="Size.Medium"
                                    Color="Color.Tertiary"
                                    OnClick="OpenAddLineDialogAsync" />
                 </MudTooltip>
 
                 <MudSpacer />
-
-                <MudTooltip Text="Dupliquer les articles sélectionnés">
-                    <MudIconButton Icon="@Icons.Material.TwoTone.Layers"
+                <MudTooltip Text="Copier les articles sélectionnés">
+                    <MudIconButton Icon="@Icons.Material.TwoTone.ContentCopy"
                                    Variant="Variant.Filled"
-                                   Size="Size.Large"
+                                   Size="Size.Medium"
                                    Color="Color.Dark"
-                                   OnClick="OnDuplicateItemsClick" />
-                </MudTooltip>
-
-                &emsp;&emsp;
-
-                <MudTooltip Text="Supprimer les articles sélectionnés">
-                    <MudIconButton Icon="@Icons.Material.TwoTone.Delete"
-                                   Variant="Variant.Filled"
-                                   Size="Size.Large"
-                                   Color="Color.Error"
-                                   OnClick="OnDeleteItemsClick" />
+                                   OnClick="OnCopyItemsClick" />
                 </MudTooltip>
 
                 &ensp;
 
-                <MudTooltip Text="Copier les articles sélectionnés">
-                    <MudIconButton Icon="@Icons.Material.TwoTone.ContentCopy"
+                <MudTooltip Text="Dupliquer les articles sélectionnés">
+                    <MudIconButton Icon="@Icons.Material.TwoTone.Layers"
                                    Variant="Variant.Filled"
-                                   Size="Size.Large"
+                                   Size="Size.Medium"
                                    Color="Color.Primary"
-                                   OnClick="OnCopyItemsClick" />
+                                   OnClick="OnDuplicateItemsClick" />
                 </MudTooltip>
 
-                &emsp;&emsp;
+                &ensp;
+
+                <MudTooltip Text="Supprimer les articles sélectionnés">
+                    <MudIconButton Icon="@Icons.Material.TwoTone.Delete"
+                                   Variant="Variant.Filled"
+                                   Size="Size.Medium"
+                                   Color="Color.Error"
+                                   OnClick="OnDeleteItemsClick" />
+                </MudTooltip>
 
             </ToolBarContent>
             <Columns>
