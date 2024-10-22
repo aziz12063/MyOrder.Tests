@@ -20,15 +20,12 @@ public partial class Lines : FluxorComponentBase<LinesState, FetchLinesAction>
     protected List<BasketValueDto?>? UpdateReasons { get; set; }
     protected List<BasketValueDto?>? LogisticFlows { get; set; }
     public MudDataGrid<BasketLineDto> LinesDataGridInstance { get; set; }
-    private bool IsLineNbrEditable { get; set; }
+    
     private bool IsItemIdEditable { get; set; }
     private bool IsNameEditable { get; set; }
-    private bool IsInventLocationIdEditable { get; set; }
-    private bool IsSalesQuantityEditable { get; set; }
-    private bool IsSalesPriceEditable { get; set; } // not yet
     private bool IsDiscountTypeEditable { get; set; }
     private bool IsLineAmountEditable { get; set; }
-    private bool IsDiscountRateEditable { get; set; }
+
     private bool isLoading = true;
 
     protected override void OnInitialized()
@@ -47,15 +44,10 @@ public partial class Lines : FluxorComponentBase<LinesState, FetchLinesAction>
             ?? throw new ArgumentNullException("Unexpected null for BasketOrderLines object.");
         if (BasketOrderLinesDto is not null && BasketOrderLinesDto.lines is not null && BasketOrderLinesDto.lines.Count > 0)
         {
-            IsLineNbrEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0]?.LineNum);
             IsItemIdEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0]?.ItemId);
             IsNameEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0]?.Name);
-            IsInventLocationIdEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0]?.InventLocationId);
-            IsSalesQuantityEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0]?.SalesQuantity);
             IsDiscountTypeEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0]?.DiscountType);
             IsLineAmountEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0]?.LineAmount);
-            IsDiscountRateEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0]?.DiscountRate);
-            IsSalesPriceEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0]?.SalesPrice);
         }
         isLoading = State.Value.IsLoading || RessourcesState.Value.IsLoading;
     }

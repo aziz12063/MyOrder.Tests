@@ -353,6 +353,15 @@ namespace MyOrder.Infrastructure.Repositories
 
             return JsonConvert.DeserializeObject<List<BasketItemDto?>>(json);
         }
+        public async Task<ProcedureCallResponseDto?> CommitAddFreeTextLineAsync(string basketId, List<string?> freeTexts)
+        {
+            var jsonFilePath = Path.Combine(baseDataPath, "procedureCall.json");
+            if (!File.Exists(jsonFilePath))
+                return null;
+
+            var json = await File.ReadAllTextAsync(jsonFilePath);
+            return JsonConvert.DeserializeObject<ProcedureCallResponseDto>(json);
+        }
 
 
 
