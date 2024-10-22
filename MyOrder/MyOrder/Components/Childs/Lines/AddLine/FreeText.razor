@@ -6,12 +6,7 @@
     <MudItem xs="12">
         <MudTextField T="string" Lines="10" @bind-Text="@freeText" Variant="Variant.Outlined" />
     </MudItem>
-    <MudItem>
-        <MudIconButton Icon="@Icons.Material.Filled.Add"
-                       Variant="Variant.Filled"
-                       Color="Color.Tertiary"
-                       OnClick="OnAddFreeTexts" />
-    </MudItem>
+    
 </MudGrid>
 
 <MudMessageBox @ref="messageBox"
@@ -19,9 +14,7 @@
                <MessageContent>
                    @Message;
                </MessageContent>
-    <YesButton>
-        <MudButton Variant="Variant.Filled" Color="Color.Warning" StartIcon="@Icons.Material.Filled.ArrowBack">Return</MudButton>
-    </YesButton>
+   
 </MudMessageBox>
 @code {
     [Inject]
@@ -33,7 +26,7 @@
     private MudMessageBox messageBox;
     private string Message { get; set; }
 
-    private void OnAddFreeTexts()
+    public void OnAddFreeTexts()
     {
         var basketId = BasketService?.BasketId;
         var lines = freeText?.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);

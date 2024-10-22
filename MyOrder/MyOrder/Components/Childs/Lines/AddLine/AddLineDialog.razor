@@ -36,7 +36,7 @@
 
             <MudTabPanel Text="Saisie Libre"
                          Icon="@Icons.Material.Filled.Edit">
-                <FreeText/>
+                <FreeText @ref="FreeText"/>
             </MudTabPanel>
 
         </MudTabs>
@@ -47,6 +47,10 @@
             <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="CommitNewLineAndClose">AJOUTER</MudButton>
             <MudButton Variant="Variant.Text" Color="Color.Success" OnClick="CommitNewLine">CONTINUER</MudButton>
             <MudButton Variant="Variant.Text" Color="Color.Error" OnClick="ResetLine">ANNULER</MudButton>
+        }
+        else if(CurrentTab == 4)
+        {
+            <MudButton Variant="Variant.Filled" Color="Color.Warning" StartIcon="@Icons.Material.Filled.Add" OnClick="OnTextSubmited">Ajouter</MudButton>
         }
     </DialogActions>
 </MudDialog>
