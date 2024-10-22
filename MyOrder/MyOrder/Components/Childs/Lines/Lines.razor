@@ -72,7 +72,7 @@
                                 Title="Ligne"
                                 Editable="false" />
 
-                <TemplateColumn Title="Not imp." CellClass="pa-1 ma-1" CellStyle="text-align: center; margin: 5% auto; font-size: 12px;">
+                <TemplateColumn Title="Not imp.">
                     <CellTemplate>
                         @{
                             var val = context.Item;
@@ -94,27 +94,16 @@
                 </TemplateColumn>
 
                 <PropertyColumn Property="x => x.ItemId == null? string.Empty : x.ItemId.Value" Title="CodeArticle"
-                                HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
-                                CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
-                                CellClass="pa-1 ma-1"
                                 Editable="IsItemIdEditable" />
 
                 <PropertyColumn Property="x => x.Name == null ? string.Empty : x.Name.Value" Title="Description"
-                                HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
-                                CellStyle="text-align: center; margin: 5% auto; font-size: 11px;"
-                                CellClass="pa-1 ma-1"
                                 Editable="IsNameEditable" />
 
                 <PropertyColumn Property="x => x.InventLocationId == null ? string.Empty : x.InventLocationId.Value " Title="Entrepôt"
-                                HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
-                                CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
-                                CellClass="pa-1 ma-1"
                                 Editable="false" />
 
                 <TemplateColumn Editable="false"
-                                Title="Quantité"
-                                HeaderClass="header-style"
-                                CellStyle="text-align: center; margin: 5% auto; font-size: 12px;">
+                                Title="Quantité">
                     <CellTemplate>
                         <GenericNumericField Field="context.Item.SalesQuantity"
                                              Step="context.Item.MultipleQuantity?.Value"
@@ -124,9 +113,7 @@
                 </TemplateColumn>
 
                 <TemplateColumn Editable="false"
-                                Title="Remise Std"
-                                HeaderClass="header-style"
-                                CellStyle="text-align: center; margin: 5% auto; font-size: 12px;">
+                                Title="Remise Std">
                     <CellTemplate>
                         <GenericNumericField Field="context.Item.DiscountRate"
                                              Min="0"
@@ -136,18 +123,14 @@
                 </TemplateColumn>
 
                 <TemplateColumn Editable="false"
-                                Title="Remise DC Not impl."
-                                HeaderClass="header-style"
-                                CellStyle="text-align: center; margin: 5% auto; font-size: 12px;">
+                                Title="Remise DC Not impl.">
                     <CellTemplate>
 
                     </CellTemplate>
                 </TemplateColumn>
 
                 <TemplateColumn Editable="false"
-                                Title="Prix Unitaire"
-                                HeaderClass="header-style"
-                                CellStyle="text-align: center; margin: 5% auto; font-size: 12px;">
+                                Title="Prix Unitaire">
                     <CellTemplate>
                         <GenericNumericField Field="context.Item.SalesPrice"
                                              HideLabel="true"
@@ -157,16 +140,10 @@
 
                 <PropertyColumn Property="x => x.DiscountType != null ? x.DiscountType.Value : null"
                                 Title="Tarification"
-                                HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
-                                CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
-                                CellClass="pa-1 ma-1"
                                 Editable="IsDiscountTypeEditable" />
 
                 <PropertyColumn Property="x => x.LineAmount == null ? 0 :  x.LineAmount.Value"
                                 Title="Montant HT"
-                                HeaderStyle="text-align: center; margin: 5% auto; font-weight: bold; font-size: 13px;"
-                                CellStyle="text-align: center; margin: 5% auto; font-size: 12px;"
-                                CellClass="pa-1 ma-1"
                                 Editable="IsLineAmountEditable"
                                 Format="C" />
             </Columns>
