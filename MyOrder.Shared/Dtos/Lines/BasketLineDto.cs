@@ -39,7 +39,7 @@ public class BasketLineDto
     public Field<int?>? PaletteQuantity { get; set; }  //ONLY FOR D
     public Field<int?>? QuantityAtPaletteThreshold { get; set; }  //ONLY FOR D
     public Field<string?>? ItemType { get; set; }  //ONLY FOR D
-    public Field<string?>? DeliveryDate { get; set; }  //RW
+    public Field<DateTime?>? DeliveryDate { get; set; }  //RW
     public Field<bool?>? IsCustomDeliveryDate { get; set; }  //RW
     public Field<int?>? ItemPhysicalInventQuantity { get; set; }  //ONLY FOR D
     public Field<int?>? ItemReservPhysicalQuantity { get; set; }  //ONLY FOR D

@@ -2,10 +2,10 @@
 @typeparam T
 @inherits GenericInputBase<T>
 
-@if (Field is not null && !_hidden)
+@if (Field is not null && !Hidden)
 {
     <MudTooltip RootStyle="width:100%"
-                Text="@_tooltipText"
+                Text="@TooltipText"
                 Placement="Placement.Top">
         <MudSelect T="T"
                    Typo="Typo.body2"
@@ -16,10 +16,10 @@
                    Variant="@Variant"
                    FullWidth="true"
                    AnchorOrigin="Origin.BottomCenter"
-                   Required="_required"
-                   Error="_required"
-                   ReadOnly="_readOnly"
-                   Disabled="_readOnly"
+                   Required="Required"
+                   Error="Required"
+                   ReadOnly="InternalReadOnly"
+                   Disabled="InternalReadOnly"
                    Value="ValueProperty"
                    ValueChanged="(Action<T>)OnValueChanged"
                    OnClose="DropDownClosedHandler"

@@ -1,19 +1,19 @@
 ﻿@using MyOrder.Shared.Dtos.SharedComponents
 @inherits GenericInputBase<bool?>
 
-@if (Field is not null && !_hidden)
+@if (Field is not null && !Hidden)
 {
     <MudTooltip RootStyle="width:100%"
-                Text="@_tooltipText"
+                Text="@TooltipText"
                 Placement="Placement.Top">
         <MudCheckBox Size="Size.Small"
                      Dense="true"
                      Style="display:inline-block;"
                      LabelPosition="LabelPosition.End"
-                     Required="_required"
-                     Error="_required"
-                     ReadOnly="_readOnly"
-                     Disabled="_readOnly"
+                     Required="Required"
+                     Error="Required"
+                     ReadOnly="InternalReadOnly"
+                     Disabled="InternalReadOnly"
                      @bind-Value="ValueProperty"
                      @bind-Value:after="OnBindValueAfter">
             <ChildContent>

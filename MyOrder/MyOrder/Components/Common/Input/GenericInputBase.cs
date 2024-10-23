@@ -8,15 +8,14 @@ using System.Reflection.Emit;
 namespace MyOrder.Components.Common.Input;
 public abstract class GenericInputBase<TValue> : ComponentBase
 {
-    protected bool _hidden;
-    protected bool _readOnly;
-    protected bool _readWrite;
-    protected bool _required;
-    protected bool _onlyForDisplay;
-    protected bool _error;
-    protected string? _tooltipText;
-
-    private TValue? _valueProperty;
+    protected bool Hidden { get; set; }
+    protected bool InternalReadOnly { get; set; }
+    protected bool ReadWrite { get; set; }
+    protected bool Required { get; set; }
+    protected bool OnlyForDisplay { get; set; }
+    protected bool Error { get; set; }
+    protected string? TooltipText { get; set; }
+    protected TValue? ValueProperty { get; set; }
 
     [Inject]
     protected IDispatcher Dispatcher { get; set; }
@@ -31,27 +30,24 @@ public abstract class GenericInputBase<TValue> : ComponentBase
     [Parameter]
     public bool HideLabel { get; set; } = false;
 
-    protected TValue? ValueProperty { get; set; }
-
-    // Direct handler of the input value change
     protected void OnBindValueAfter() =>
         Dispatcher.Dispatch(new UpdateFieldAction(Field, ValueProperty, SelfFetchAction));
 
     protected override void OnParametersSet()
     {
         base.OnParametersSet();
-
+        
         if (Field == null)
             return;
 
         ValueProperty = Field.Value;
-        _hidden = FieldUtility.IsHidden(Field);
-        _readOnly = ReadOnly ?? FieldUtility.IsReadOnly(Field);
-        _readWrite = FieldUtility.IsReadWrite(Field);
-        _required = FieldUtility.IsRequired(Field);
-        _onlyForDisplay = FieldUtility.IsOnlyForDisplay(Field);
-        _tooltipText = Field.Description ?? Field.Name;
-        _error = !string.IsNullOrWhiteSpace(Field!.Error);
+        Hidden = FieldUtility.IsHidden(Field);
+        InternalReadOnly = ReadOnly ?? FieldUtility.IsReadOnly(Field);
+        ReadWrite = FieldUtility.IsReadWrite(Field);
+        Required = FieldUtility.IsRequired(Field);
+        OnlyForDisplay = FieldUtility.IsOnlyForDisplay(Field);
+        TooltipText = Field.Description ?? Field.Name;
+        Error = !string.IsNullOrWhiteSpace(Field!.Error);
     }
 
     protected string? FieldLabel() => HideLabel ? null : Field!.Name;

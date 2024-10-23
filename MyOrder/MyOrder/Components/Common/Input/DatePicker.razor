@@ -1,19 +1,21 @@
 ﻿@using MyOrder.Shared.Dtos.SharedComponents
 @inherits GenericInputBase<DateTime?>
 
-@if (Field is not null && !_hidden)
+@if (Field is not null && !Hidden)
 {
     <MudTooltip RootStyle="width:100%"
-                Text="@_tooltipText"
+                Text="@TooltipText"
                 Placement="Placement.Top">
-        <MudDatePicker Label="@FieldLabel()"
-                       Required="_required"
-                       Error="_required"
-                       ReadOnly="_readOnly"
-                       Disabled="_readOnly"
+        <MudDatePicker ShowToolbar="false"
+                       Label="@FieldLabel()"
+                       Required="Required"
+                       Error="Error"
+                       ErrorText="@Field.Error"
+                       ReadOnly="InternalReadOnly"
+                       Disabled="InternalReadOnly"
                        Clearable="true"
                        DateFormat="d"
-                       @bind-Value="ValueProperty"
-                       @bind-Value:after="OnBindValueAfter" />
+                       @bind-Date="ValueProperty"
+                       @bind-Date:after="OnBindValueAfter" />
     </MudTooltip>
 }
