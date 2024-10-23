@@ -6,6 +6,12 @@ namespace MyOrder.Utils;
 
 public static class FieldUtility
 {
+    /// <summary>
+    /// Returns true if the field is null or if its status is set to hidden; otherwise, returns false.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="field"></param>
+    /// <returns></returns>
     public static bool IsHidden<T>(Field<T>? field) => field == null || field?.Status == "hidden";
     // Refactor to use readOnly and onlyForDisplay
     public static bool IsReadOnly<T>(Field<T>? field) => field?.Status == "readOnly";

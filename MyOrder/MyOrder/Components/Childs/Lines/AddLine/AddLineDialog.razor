@@ -36,7 +36,7 @@
 
             <MudTabPanel Text="Saisie Libre"
                          Icon="@Icons.Material.Filled.Edit">
-                <FreeText @ref="FreeText" />
+                <MudTextField Class="mt-2" T="string" Lines="20" @bind-Text="@FreeText" Variant="Variant.Outlined" />
             </MudTabPanel>
 
         </MudTabs>
@@ -59,7 +59,7 @@
             <MudButton Variant="Variant.Filled"
                        Color="Color.Primary"
                        StartIcon="@Icons.Material.Filled.Add"
-                       OnClick="OnTextSubmited">Ajouter</MudButton>
+                       OnClick="CommitFreetextAndClose">Ajouter</MudButton>
         }
     </DialogActions>
 </MudDialog>

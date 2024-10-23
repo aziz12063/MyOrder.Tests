@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using MyOrder.Services;
 using MyOrder.Shared.Utils;
+using MyOrder.Shared.Extensions;
 using MyOrder.Store.NewLineUseCase;
 using static MudBlazor.CategoryTypes;
 
@@ -13,7 +14,7 @@ public partial class AddLineDialog
     [CascadingParameter]
     private MudDialogInstance DialogInstance { get; set; }
     private AddLineTab? AddLineTab { get; set; }
-    private FreeText? FreeText { get; set; }
+    private string? FreeText { get; set; }
 
     [Inject]
     public ILogger<AddLineDialog> Logger { get; set; }
@@ -21,9 +22,8 @@ public partial class AddLineDialog
     public IDispatcher Dispatcher { get; set; }
     [Inject]
     public BasketService BasketService { get; set; }
-
-    private MudMessageBox? messageBox { get; set; }
-    private string? Message { get; set; }
+    [Inject]
+    public IModalService ModalService { get; set; }
 
     public int CurrentTab { get; set; }
 
@@ -53,8 +53,18 @@ public partial class AddLineDialog
     private void CommitNewLine() =>
         Dispatcher.Dispatch(new CommitNewLineAction(BasketService.BasketId));
 
-    private void OnTextSubmited()
+#warning TODO: Show message to the user if lines is null or empty
+    private void CommitFreetextAndClose()
     {
-        FreeText?.OnAddFreeTexts();
+        var lines = FreeText.ParseTextToList();
+        if (lines is null || lines.Count == 0)
+        {
+            //ModalService.ShowModal();
+            return;
+        }
+
+        Dispatcher.Dispatch(new PostFreeTextAction(BasketService.BasketId, lines!));
+        DialogInstance.Close(DialogResult.Ok(true));
     }
+
 }

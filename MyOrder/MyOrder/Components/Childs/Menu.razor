@@ -1,13 +1,14 @@
 ﻿@using Fluxor
+@using MyOrder.Shared.Dtos.GeneralInformation
 @using MyOrder.Store.CreateBasketUseCase
 @using MyOrder.Store.GeneralInfoUseCase
 @using MyOrder.Store.OrderInfoUseCase
 @using MyOrder.Components.Common.Dialogs
 
 @inject IDispatcher dispatcher
-@inject IState<GeneralInfoState> generalInfoState
 @inject IState<OrderInfoState> orderInfoState
 @inject IDialogService DialogService
+
 
 <MudStack Row="true" Spacing="MenuSectionSpacing">
 
@@ -26,7 +27,19 @@
 
     <MudStack Row="true" Spacing="MenuButtonsInterSpacing">
         <!-- Valider -->
-        <MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Check" Size="Size.Large" />
+        <MudMenu AnchorOrigin="Origin.BottomLeft"
+                 TransformOrigin="Origin.TopCenter">
+            <ActivatorContent>
+                <MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Check" Size="Size.Large" />
+            </ActivatorContent>
+            <ChildContent>
+                <FieldMenuItem Field="BasketActions?.Validate?.LockOrder" />
+                <FieldMenuItem Field="BasketActions?.Validate?.Quotation" />
+                <FieldMenuItem Field="BasketActions?.Validate?.PriceConfirm" />
+                <FieldMenuItem Field="BasketActions?.Validate?.Sales" />
+            </ChildContent>
+        </MudMenu>
+        
         <!-- Blocage-->
         <MudMenu AnchorOrigin="Origin.BottomLeft"
                  TransformOrigin="Origin.TopCenter">
@@ -35,18 +48,48 @@
             </ActivatorContent>
             <ChildContent>
                 <MudMenuItem>Règles de validation</MudMenuItem>
-                <MudMenuItem>Raisons de blocage</MudMenuItem>
+                <FieldMenuItem Field="BasketActions?.Misc?.BlockingReasons"> </FieldMenuItem>
             </ChildContent>
         </MudMenu>
-        
+
         <!-- Annuler -->
-        <MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Close" Size="Size.Large" />
+        <MudMenu AnchorOrigin="Origin.BottomLeft"
+                 TransformOrigin="Origin.TopCenter">
+            <ActivatorContent>
+                <MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Close" Size="Size.Large" />
+            </ActivatorContent>
+            <ChildContent>
+                <FieldMenuItem Field="BasketActions?.Cancel?.CancelBasket" ></FieldMenuItem>
+                <FieldMenuItem Field="BasketActions?.Cancel?.CancelOrder" ></FieldMenuItem>
+            </ChildContent>
+        </MudMenu>
     </MudStack>
 
     <MudStack Row="true" Spacing="MenuButtonsInterSpacing">
+        <!-- Envoyer-->
         <MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Mail" Size="Size.Large" />
-        <MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Description" Size="Size.Large" />
-        <MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Menu" Size="Size.Large" />
+
+        <!-- Notes-->
+        <MudMenu AnchorOrigin="Origin.BottomLeft"
+                 TransformOrigin="Origin.TopCenter">
+            <ActivatorContent>
+                <MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Description" Size="Size.Large" />
+            </ActivatorContent>
+            <ChildContent>
+                <FieldMenuItem Field="BasketActions?.Misc?.Note" />
+            </ChildContent>
+        </MudMenu>
+
+        <!-- Logs-->
+        <MudMenu AnchorOrigin="Origin.BottomLeft"
+                 TransformOrigin="Origin.TopCenter">
+            <ActivatorContent>
+                <MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Menu" Size="Size.Large" />
+            </ActivatorContent>
+            <ChildContent>
+
+            </ChildContent>
+        </MudMenu>
     </MudStack>
 
     <MudStack Row="true" Spacing="MenuButtonsInterSpacing">
@@ -58,13 +101,23 @@
     public const int MenuButtonsInterSpacing = 0;
     public const int MenuSectionSpacing = 12;
 
+    [Parameter, EditorRequired]
+    public GeneralInfoDto GeneralInfo { get; set; }
+
+    public BasketActions? BasketActions { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        BasketActions = GeneralInfo.Actions;
+    }
+
 #warning TODO: This code is for test and is not complete, please complete and refactor.
     string? accountId { get; set; }
     string? contactId { get; set; }
 
     private void CloneBasketConfirmed()
     {
-        var basketId = generalInfoState?.Value?.GeneralInfo?.BasketId;
+        var basketId = GeneralInfo?.BasketId;
         if (!string.IsNullOrWhiteSpace(basketId))
         {
             dispatcher.Dispatch(new CreateBasketAction(new Dictionary<string, string>()
