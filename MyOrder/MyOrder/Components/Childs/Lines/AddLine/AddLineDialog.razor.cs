@@ -56,6 +56,5 @@ public partial class AddLineDialog
     private void OnTextSubmited()
     {
         FreeText?.OnAddFreeTexts();
-
     }
 }

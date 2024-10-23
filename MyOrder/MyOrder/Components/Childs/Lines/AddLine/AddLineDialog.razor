@@ -11,17 +11,17 @@
 
             <MudTabPanel Text="Ajout"
                          Icon="@Icons.Material.Filled.AddCircle">
-                <AddLineTab @ref="AddLineTab"/>
+                <AddLineTab @ref="AddLineTab" />
             </MudTabPanel>
 
             <MudTabPanel Text="Top Ventes"
                          Icon="@Icons.Material.Filled.TrendingUp">
-                <BestSellersTab ItemClicked="ItemClicked"/>
+                <BestSellersTab ItemClicked="ItemClicked" />
             </MudTabPanel>
 
             <MudTabPanel Text="Commandes/Devis"
                          Icon="@Icons.Material.Filled.ShoppingCart">
-               <OrderedItemsTab ItemClicked="ItemClicked"/>
+                <OrderedItemsTab ItemClicked="ItemClicked" />
             </MudTabPanel>
 
             @*             <MudTabPanel Text="Devis"
@@ -31,12 +31,12 @@
 
             <MudTabPanel Text="Recherche"
                          Icon="@Icons.Material.Filled.Search">
-                <SearchItemsTab ItemClicked="ItemClicked"/>
+                <SearchItemsTab ItemClicked="ItemClicked" />
             </MudTabPanel>
 
             <MudTabPanel Text="Saisie Libre"
                          Icon="@Icons.Material.Filled.Edit">
-                <FreeText @ref="FreeText"/>
+                <FreeText @ref="FreeText" />
             </MudTabPanel>
 
         </MudTabs>
@@ -44,13 +44,22 @@
     <DialogActions>
         @if (CurrentTab == 0)
         {
-            <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="CommitNewLineAndClose">AJOUTER</MudButton>
-            <MudButton Variant="Variant.Text" Color="Color.Success" OnClick="CommitNewLine">CONTINUER</MudButton>
-            <MudButton Variant="Variant.Text" Color="Color.Error" OnClick="ResetLine">ANNULER</MudButton>
+            <MudButton Variant="Variant.Text"
+                       Color="Color.Primary"
+                       OnClick="CommitNewLineAndClose">AJOUTER</MudButton>
+            <MudButton Variant="Variant.Text"
+                       Color="Color.Success"
+                       OnClick="CommitNewLine">CONTINUER</MudButton>
+            <MudButton Variant="Variant.Text"
+                       Color="Color.Error"
+                       OnClick="ResetLine">ANNULER</MudButton>
         }
-        else if(CurrentTab == 4)
+        else if (CurrentTab == 4)
         {
-            <MudButton Variant="Variant.Filled" Color="Color.Warning" StartIcon="@Icons.Material.Filled.Add" OnClick="OnTextSubmited">Ajouter</MudButton>
+            <MudButton Variant="Variant.Filled"
+                       Color="Color.Primary"
+                       StartIcon="@Icons.Material.Filled.Add"
+                       OnClick="OnTextSubmited">Ajouter</MudButton>
         }
     </DialogActions>
 </MudDialog>

@@ -43,25 +43,5 @@ public partial class CommercialDetails : FluxorComponentBase<TradeInfoState, Fet
         get => $"{Contract?.ContractId?.Name} {Contract?.ContractType?.Value}";
     }
 
-    private List<BasketContractInfoDto> ContractList
-    {
-        get
-        {
-            var list = new List<BasketContractInfoDto>();
-
-            if (Contract != null)
-            {
-                if (Contract.ContractId != null && Contract.ContractGroup != null && Contract.Status != null)
-                {
-                    if (Contract.ContractId.Value != null && Contract.Status.Value != null && Contract.ContractGroup.Name != null)
-                    {
-                        list.Add(Contract);
-
-                    }
-                }
-            }
-            return list;
-        }
-    }
 }
 

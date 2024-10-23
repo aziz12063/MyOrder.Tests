@@ -39,27 +39,23 @@
 
 
         <!--Contract en cours-->
-        @if (ContractList is { Count: > 0 })
+        @if (Contract is not null)
         {
             <MudStack Spacing="6" Class="mt-6">
                 <div>
                     <MudText Typo="Typo.subtitle1" Color="Color.Warning">Contrats en cours</MudText>
 
-                    <MudDataGrid Items="@ContractList"
-                                 Filterable="false"
-                                 SortMode="@SortMode.None"
-                                 Groupable="false"
-                                 Bordered="true"
-                                 Dense="true"
-                                 Elevation="0"
-                                 Class="my-data-grid mx-n3">
-                        <Columns>
-                            <PropertyColumn Property="x => x.ContractId.Value " Title="@BasketTradeInfoDto?.Contract?.ContractId?.Name" />
-                            <PropertyColumn Property="x => x.ContractGroup.Value" Title="@BasketTradeInfoDto?.Contract?.ContractGroup?.Name" />
-                            <PropertyColumn Property="x => x.Status.Value" Title="@BasketTradeInfoDto?.Contract?.Status?.Name" />
-
-                        </Columns>
-                    </MudDataGrid>
+                    <MudGrid Spacing="1">
+                        <MudItem xs="6">
+                            <DisplayField Field="Contract?.ContractId" />
+                        </MudItem>
+                        <MudItem xs="6">
+                            <DisplayField Field="Contract?.ContractGroup" />
+                        </MudItem>
+                        <MudItem xs="6">
+                            <DisplayField Field="Contract?.Status" />
+                        </MudItem>
+                    </MudGrid>
                 </div>
 
 
@@ -71,27 +67,35 @@
 
                     <!--Contract details-->
 
-                    <MudGrid>
-                        <MudItem xs="4">
-                            <MudText Style="font-size: 13px">Date</MudText>
+                    <MudGrid Spacing="1">
+
+                        <MudItem xs="6">
+                            <MudField Margin="Margin.Dense" T="string"
+                                      Variant="Variant.Outlined"
+                                      Label="Date"
+                                      Class="outlined-display-field"
+                                      InnerPadding="false"
+                                      Disabled="false">
+                                <MudText Typo="Typo.body2">@DateValue</MudText>
+                            </MudField>
                         </MudItem>
-                        <MudItem xs="8">
-                            <MudTextField Margin="Margin.Dense" T="string"
-                                          Variant="Variant.Outlined" Width="200px"
-                                          Disabled="false"
-                                          Style="font-size: 13px; height:22px;"
-                                          Value="@DateValue">
-                            </MudTextField>
+
+                        <MudItem xs="6">
+                            <DisplayField Field="Contract?.CampaignId" />
                         </MudItem>
+
+                        <MudItem xs="6">
+                            <DisplayField Field="Contract?.MainContact" />
+                        </MudItem>
+
+                        <MudItem xs="6">
+                            <DisplayField Field="Contract?.OfficeExecutive" />
+                        </MudItem>
+
                     </MudGrid>
-
-                    <DisplayField Field="Contract?.CampaignId" />
-                    <DisplayField Field="Contract?.MainContact" />
-                    <DisplayField Field="Contract?.OfficeExecutive" />
-
                 </div>
             </MudStack>
-            <MudDivider />
+                <MudDivider Style="visibility:hidden;"/>
             <div>
                 <MudTextField Typo="Typo.caption"
                               Lines="4"

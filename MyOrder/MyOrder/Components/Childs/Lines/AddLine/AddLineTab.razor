@@ -52,7 +52,9 @@
                 <GenericCheckBox Field="NewLine!.IsUpselling" />
             </MudItem>
             <MudItem xs="3">
-                <GenericNumericField Field="NewLine!.InitialSalesQuantity" />
+                <GenericNumericField Field="NewLine!.InitialSalesQuantity"
+                                     Step="NewLine!.MultipleQuantity?.Value"
+                                     Min="NewLine!.MultipleQuantity?.Value" />
             </MudItem>
             <MudItem xs="6">
                 <GenericTextField Field="NewLine!.Note" />
