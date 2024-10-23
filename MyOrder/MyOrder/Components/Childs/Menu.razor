@@ -9,45 +9,55 @@
 @inject IState<OrderInfoState> orderInfoState
 @inject IDialogService DialogService
 
+<MudStack Row="true" Spacing="MenuSectionSpacing">
 
-<MudMenu AnchorOrigin="Origin.BottomCenter"
-         TransformOrigin="Origin.TopCenter"
-         StartIcon="@Icons.Material.Filled.Add">
-    <ActivatorContent>
-        <MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Add" Size="Size.Large" />
-    </ActivatorContent>
-    <ChildContent>
-        <MudMenuItem OnClick="OpenNewBasketDialogAsync">Nouveau panier</MudMenuItem>
-        <MudMenuItem>Ouvrir panier</MudMenuItem>
-        @*     <MudMenuItem>
-        <MudMenu AnchorOrigin="Origin.CenterRight"
-        TransformOrigin="Origin.CenterLeft" EndIcon="@Icons.Material.Filled.ArrowRight" ActivationEvent="MouseEvent.MouseOver">
+    <!-- Nouveau Panier-->
+    <MudMenu AnchorOrigin="Origin.BottomLeft"
+             TransformOrigin="Origin.TopCenter">
         <ActivatorContent>
-        Nouveau panier à partir de...
+            <MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Add" Size="Size.Large" />
         </ActivatorContent>
         <ChildContent>
-        <MudMenuItem>Commande de vente</MudMenuItem>
-        <MudMenuItem>Devis</MudMenuItem>
-        <MudMenuItem>Facture financière</MudMenuItem>
-        <MudMenuItem>Commande Web à intégrer</MudMenuItem>
-        <MudMenuItem>Détermination dynamique</MudMenuItem>
+            <MudMenuItem OnClick="OpenNewBasketDialogAsync">Nouveau panier</MudMenuItem>
+            <MudMenuItem>Ouvrir panier</MudMenuItem>
+            <MudMenuItem OnClick="CloneBasket">Cloner ce panier</MudMenuItem>
         </ChildContent>
-        </MudMenu>
-        </MudMenuItem> *@
-        <MudMenuItem OnClick="CloneBasket">Cloner ce panier</MudMenuItem>
-    </ChildContent>
-</MudMenu>
-<MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Check" Size="Size.Large" />
-<MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Close" Size="Size.Large" />
-<MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Mail" Size="Size.Large" />
-<MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Block" Size="Size.Large" />
-<MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Menu" Size="Size.Large" />
-<MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Description" Size="Size.Large" />
-<MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.LocalBar" Size="Size.Large" />
-<MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Warning" Size="Size.Large" />
-<MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.ShoppingCart" Size="Size.Large" />
+    </MudMenu>
 
+    <MudStack Row="true" Spacing="MenuButtonsInterSpacing">
+        <!-- Valider -->
+        <MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Check" Size="Size.Large" />
+        <!-- Blocage-->
+        <MudMenu AnchorOrigin="Origin.BottomLeft"
+                 TransformOrigin="Origin.TopCenter">
+            <ActivatorContent>
+                <MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Block" Size="Size.Large" />
+            </ActivatorContent>
+            <ChildContent>
+                <MudMenuItem>Règles de validation</MudMenuItem>
+                <MudMenuItem>Raisons de blocage</MudMenuItem>
+            </ChildContent>
+        </MudMenu>
+        
+        <!-- Annuler -->
+        <MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Close" Size="Size.Large" />
+    </MudStack>
+
+    <MudStack Row="true" Spacing="MenuButtonsInterSpacing">
+        <MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Mail" Size="Size.Large" />
+        <MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Description" Size="Size.Large" />
+        <MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Menu" Size="Size.Large" />
+    </MudStack>
+
+    <MudStack Row="true" Spacing="MenuButtonsInterSpacing">
+        <MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Warning" Size="Size.Large" />
+        <MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.ShoppingCart" Size="Size.Large" />
+    </MudStack>
+</MudStack>
 @code {
+    public const int MenuButtonsInterSpacing = 0;
+    public const int MenuSectionSpacing = 12;
+
 #warning TODO: This code is for test and is not complete, please complete and refactor.
     string? accountId { get; set; }
     string? contactId { get; set; }

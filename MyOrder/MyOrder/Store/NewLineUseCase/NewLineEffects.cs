@@ -79,7 +79,7 @@ public class NewLineEffects(IBasketRepository basketRepository, IStateResolver s
     }
 
     [EffectMethod]
-    public async Task HandlePostFreeTextAction(PostFreeTextActions action, IDispatcher dispatcher)
+    public async Task HandlePostFreeTextAction(PostFreeTextAction action, IDispatcher dispatcher)
     {
         var texts = action.FreeTexts;
         var basketId = action.BasketId;

@@ -2,19 +2,15 @@
 @using Fluxor
 @using MyOrder.Services
 @using MyOrder.Store.NewLineUseCase
-<MudGrid Class="d-flex justify-end">
-    <MudItem xs="12">
-        <MudTextField T="string" Lines="10" @bind-Text="@freeText" Variant="Variant.Outlined" />
-    </MudItem>
-    
-</MudGrid>
+
+<MudTextField Class="mt-2" T="string" Lines="20" @bind-Text="@freeText" Variant="Variant.Outlined" />
 
 <MudMessageBox @ref="messageBox"
                Title="Warning">
-               <MessageContent>
-                   @Message;
-               </MessageContent>
-   
+    <MessageContent>
+        @Message;
+    </MessageContent>
+
 </MudMessageBox>
 @code {
     [Inject]
@@ -43,7 +39,7 @@
             messageBox.ShowAsync();
             return;
         }
-        dispatcher.Dispatch(new PostFreeTextActions(basketId, freeTexts));
+        dispatcher.Dispatch(new PostFreeTextAction(basketId, freeTexts));
 
     }
 }
