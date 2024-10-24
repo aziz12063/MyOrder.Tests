@@ -23,7 +23,8 @@
                      Hideable="true"
                      EditMode="@DataGridEditMode.Cell"
                      MultiSelection="true"
-                     ReadOnly="false">
+                     ReadOnly="false"
+                     @bind-SelectedItems="SelectedItems">
             <ToolBarContent>
                 <MudTooltip Text="Ajouter un article">
                     <MudIconButton Icon="@Icons.Material.TwoTone.Add"
@@ -149,6 +150,7 @@
             </Columns>
 
             <ChildRowContent>
+
                 <MudGrid Class="py-1" Spacing="4" Justify="Justify.Center">
                     @if (context.Item is BasketLineDto basketLineDto)
                     {

@@ -12,7 +12,8 @@
                   FullWidth="true"
                   InnerPadding="false"
                   Class="@CssClass"
-                  Label="@Field?.Name">
+                  Label="@Field?.Name"
+                  >
             <MudText Typo="Typo.body2">
                 @if (Field!.Value is List<string> stringList && stringList is { Count: > 0 })
                 {
@@ -33,6 +34,10 @@
                     {
                         @stringList[^1]
                     }
+                }
+                else if (IsMarkupString)
+                {
+                    @FieldUtility.MarkupStringHelper(Field.Value?.ToString())
                 }
                 else
                 {

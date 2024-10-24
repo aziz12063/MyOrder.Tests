@@ -70,14 +70,7 @@
                     <MudGrid Spacing="1">
 
                         <MudItem xs="6">
-                            <MudField Margin="Margin.Dense" T="string"
-                                      Variant="Variant.Outlined"
-                                      Label="Date"
-                                      Class="outlined-display-field"
-                                      InnerPadding="false"
-                                      Disabled="false">
-                                <MudText Typo="Typo.body2">@Contract.ContractDates</MudText>
-                            </MudField>
+                            <DisplayField Field="Contract.ContractDates" />
                         </MudItem>
 
                         <MudItem xs="6">
@@ -95,7 +88,7 @@
                     </MudGrid>
                 </div>
             </MudStack>
-                <MudDivider Style="visibility:hidden;"/>
+            <MudDivider Style="visibility:hidden;" />
             <div>
                 <MudTextField Typo="Typo.caption"
                               Lines="4"

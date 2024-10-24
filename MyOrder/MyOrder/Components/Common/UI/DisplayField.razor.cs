@@ -7,7 +7,13 @@ public partial class DisplayField<T>
 {
     [Parameter, EditorRequired]
     public Field<T>? Field { get; set; }
-    private string CssClass { get; set; } = "outlined-display-field";
+    [Parameter]
+    public bool IsMarkupString { get; set; } = false;
+    [Parameter]
+    public bool FixedMultilineHeight { get; set; } = false;
+    private string CssClass { get; set; } = string.Empty;
+    public string OutlinedDisplayFieldClass { get; set; } = "outlined-display-field";
+    private string FixedMultiLineClass { get; set; } = "fixed-multiline-display-field";
     private string? TooltipText => Field?.Description ?? Field?.Name;
 
     protected override void OnParametersSet()
@@ -15,10 +21,16 @@ public partial class DisplayField<T>
         CssClass = Field!.DisplayStyle switch
         {
             FieldDisplayStyle.Emphasize => string.Concat(
-                CssClass, " ", "onlyfordisplay-field-emphasize"),
+                OutlinedDisplayFieldClass, " ", "onlyfordisplay-field-emphasize"),
             FieldDisplayStyle.Warn => string.Concat(
-                CssClass, " ", "onlyfordisplay-field-warn"),
-            _ => CssClass
+                OutlinedDisplayFieldClass, " ", "onlyfordisplay-field-warn"),
+            _ => OutlinedDisplayFieldClass
         };
+
+        if (FixedMultilineHeight)
+        {
+            CssClass = string.Concat(CssClass, " ", FixedMultiLineClass);
+        }
     }
+
 }

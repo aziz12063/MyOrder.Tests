@@ -91,7 +91,8 @@ public class BasketRepository(IBasketApiClient apiClient,
         // Check if the current field value equals the new value
         if (EqualityComparer<object>.Default.Equals(fieldValue, value))
         {
-            logger.LogWarning("No changes detected: Field value is the same as the new value.");
+            logger.LogWarning("No changes detected while updating the field {Field} value is the same as the new value.\n" +
+                "Old value: {OldValue}, new value: {NewValue}.", field, fieldValue, value); 
             return null;
         }
 

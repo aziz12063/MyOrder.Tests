@@ -1,4 +1,5 @@
-﻿using MyOrder.Shared.Dtos;
+﻿using Microsoft.AspNetCore.Components;
+using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.SharedComponents;
 using System.Numerics;
 
@@ -22,6 +23,9 @@ public static class FieldUtility
     public static string NullOrWhiteSpaceHelper(string? value) => string.IsNullOrWhiteSpace(value) ? string.Empty : value;
     public static string NullOrWhiteSpaceHelperWithDash(string? value)
         => string.IsNullOrWhiteSpace(value) ? "-" : value;
+    public static MarkupString MarkupStringHelper(string? value)
+       => string.IsNullOrWhiteSpace(value) ? new MarkupString(string.Empty)
+        : new MarkupString(value);
 
     /// <summary>
     /// Returns the value of the field if it's not null; otherwise, returns the default numeric value (e.g., 0).

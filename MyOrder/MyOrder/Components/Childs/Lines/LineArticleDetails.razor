@@ -63,16 +63,10 @@
         <MudDivider Light="true" />
         <!--Information produit-->
         <div>
-            <MudTextField Margin="Margin.Dense"
-                          T="string"
-                          Lines="3"
-                          Typo="Typo.body2"
-                          Label="@BasketLine?.ProductInfo?.Name"
-                          Variant="Variant.Outlined"
-                          Required="@FieldUtility.IsRequired(BasketLine?.ProductInfo)"
-                          ReadOnly="@FieldUtility.IsReadOnly(BasketLine?.ProductInfo)"
-                          Disabled="@FieldUtility.IsHidden(BasketLine?.ProductInfo)"
-                          Value="BasketLine?.ProductInfo?.Value" />
+            <DisplayField T="string"
+                          IsMarkupString="true"
+                          FixedMultilineHeight="true"
+                          Field="BasketLine?.ProductInfo" />
         </div>
     </MudStack>
 </MudPaper>

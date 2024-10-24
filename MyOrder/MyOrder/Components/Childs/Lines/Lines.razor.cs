@@ -15,12 +15,15 @@ namespace MyOrder.Components.Childs.Lines;
 public partial class Lines : FluxorComponentBase<LinesState, FetchLinesAction>
 {
     [Inject]
-    IModalService ModalService { get; set; }
+    private IModalService ModalService { get; set; }
+    [Inject]
+    private IClipboardService ClipboardService { get; set; }
     private BasketOrderLinesDto? BasketOrderLinesDto { get; set; }
+    private HashSet<BasketLineDto>? SelectedItems { get; set; }
     protected List<BasketValueDto?>? UpdateReasons { get; set; }
     protected List<BasketValueDto?>? LogisticFlows { get; set; }
     public MudDataGrid<BasketLineDto> LinesDataGridInstance { get; set; }
-    
+
     private bool IsItemIdEditable { get; set; }
     private bool IsNameEditable { get; set; }
     private bool IsDiscountTypeEditable { get; set; }
@@ -63,6 +66,7 @@ public partial class Lines : FluxorComponentBase<LinesState, FetchLinesAction>
 
         Dispatcher.Dispatch(new DuplicateLinesAction(
          BasketId, selectedItemsNums));
+        SelectedItems = null;
     }
 
     private void OnDeleteItemsClick()
@@ -73,15 +77,30 @@ public partial class Lines : FluxorComponentBase<LinesState, FetchLinesAction>
 
         Dispatcher.Dispatch(new DeleteLinesAction(
          BasketId, selectedItemsNums));
+        SelectedItems = null;
     }
 
-    private void OnCopyItemsClick()
+    private async void OnCopyItemsClick()
     {
-        var selectedItemsNums = GetSelectedItemsNums();
-        if (selectedItemsNums is null || selectedItemsNums.Count < 1)
+        if (SelectedItems is null || SelectedItems.Count < 1)
+        {
+            Logger.LogInformation("No selected item.");
             return; // Show a message to the user
+        }
 
-        Logger.LogError("Copy items not implemented : {stackTrace}", LogUtility.GetStackTrace());
+        var headers = new[] { "Code article", "Quantité", "Prix unitaire" };
+
+        string formattedData = DataFormatter.GenerateTabSeparatedData(
+            data: SelectedItems,
+            headers: headers,
+            selector: static (item) =>
+            [
+                item?.ItemId?.Value ?? string.Empty,
+                item?.SalesQuantity?.Value?.ToString() ?? string.Empty,
+                item?.SalesPrice?.Value?.ToString() ?? string.Empty,
+            ]);
+
+        await ClipboardService.CopyTextToClipboardAsync(formattedData);
     }
 
     private List<int>? GetSelectedItemsNums()
@@ -102,7 +121,7 @@ public partial class Lines : FluxorComponentBase<LinesState, FetchLinesAction>
     private async Task<IDialogReference> OpenAddLineDialogAsync()
     {
         return await ModalService.OpenAddLineDialogAsync(() =>
-            Dispatcher.Dispatch(new ResetNewLineAction(BasketId)));
+                   Dispatcher.Dispatch(new ResetNewLineAction(BasketId)));
     }
 
     //private void OnLineAdded(LineDto newLine)
