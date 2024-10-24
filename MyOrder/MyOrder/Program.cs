@@ -26,11 +26,13 @@ builder.Services.AddRazorComponents()
 builder.Services.AddScoped<BasketService>();
 builder.Services.AddScoped<IStateResolver, StateResolver>();
 builder.Services.AddScoped<IUrlService, UrlService>();
-builder.Services.Configure<RouteConfig>(
-    builder.Configuration.GetSection(RouteConfig.Routes));
 builder.Services.AddScoped<ICurrencyService, CurrencyService>();
 builder.Services.AddScoped<IModalService, ModalService>();
+builder.Services.AddScoped<IToastService, ToastService>();
 builder.Services.AddScoped<IClipboardService, ClipboardService>();
+builder.Services.Configure<RouteConfig>(
+    builder.Configuration.GetSection(RouteConfig.Routes));
+
 
 // Api Client, and Resilience Policies
 builder.Services.AddHttpContextAccessor();

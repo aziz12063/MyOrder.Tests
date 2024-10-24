@@ -78,12 +78,18 @@
         <!-- Informations de livraison -->
         <MudStack Spacing="0">
             <MudText Typo="Typo.subtitle1">Informations de livraison</MudText>
-            <GenericMudSelect Field="BasketDeliveryInfo!.DeliveryMode"
-                              Items="DeliveryModes" />
 
-            <GenericCheckBox Field="BasketDeliveryInfo?.CompleteDelivery" />
+            <GenericMudSelect Field="BasketDeliveryInfo!.DeliveryMode"
+                              Items="DeliveryModes"
+                              Variant="Variant.Outlined" />
+
+            <GenericCheckBox Field="BasketDeliveryInfo?.CompleteDelivery"
+                             Typo="Typo.body2" />
+
             <DatePicker Field="BasketDeliveryInfo?.ImperativeDate" />
+            
             <DisplayField Field="BasketDeliveryInfo!.OrderDocuments" />
+
         </MudStack>
         <MudDivider Style="visibility:hidden;" />
 

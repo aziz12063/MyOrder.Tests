@@ -34,7 +34,10 @@
 
                 <!--Quantité initiale-->
                 <MudItem xs="6">
-                    <GenericTextField Field="@BasketLine?.InitialSalesQuantity" />
+                    <GenericNumericField T="int?"
+                                         Field="BasketLine?.InitialSalesQuantity"
+                                         Min="BasketLine?.MultipleQuantity?.Value"
+                                         Step="BasketLine?.MultipleQuantity?.Value" />
                 </MudItem>
 
                 <!--Vendu par-->

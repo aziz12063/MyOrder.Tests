@@ -1,6 +1,7 @@
 ﻿@using Fluxor
 @using MyOrder.Shared.Dtos.GeneralInformation
 @using MyOrder.Store.CreateBasketUseCase
+@using MyOrder.Store.NotificationsUseCase
 @using MyOrder.Store.GeneralInfoUseCase
 @using MyOrder.Store.OrderInfoUseCase
 @using MyOrder.Components.Common.Dialogs
@@ -34,12 +35,12 @@
             </ActivatorContent>
             <ChildContent>
                 <FieldMenuItem Field="BasketActions?.Validate?.LockOrder" />
+                <FieldMenuItem Field="BasketActions?.Validate?.Sales" />
                 <FieldMenuItem Field="BasketActions?.Validate?.Quotation" />
                 <FieldMenuItem Field="BasketActions?.Validate?.PriceConfirm" />
-                <FieldMenuItem Field="BasketActions?.Validate?.Sales" />
             </ChildContent>
         </MudMenu>
-        
+
         <!-- Blocage-->
         <MudMenu AnchorOrigin="Origin.BottomLeft"
                  TransformOrigin="Origin.TopCenter">
@@ -47,8 +48,9 @@
                 <MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Block" Size="Size.Large" />
             </ActivatorContent>
             <ChildContent>
-                <MudMenuItem>Règles de validation</MudMenuItem>
-                <FieldMenuItem Field="BasketActions?.Misc?.BlockingReasons"> </FieldMenuItem>
+                <FieldMenuItem Field="BasketActions?.Blocking?.ValidationRules"
+                               OnClickCallback="ValidationRulesClickHandler" />
+                <FieldMenuItem Field="BasketActions?.Blocking?.BlockingReasons" />
             </ChildContent>
         </MudMenu>
 
@@ -59,8 +61,9 @@
                 <MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Close" Size="Size.Large" />
             </ActivatorContent>
             <ChildContent>
-                <FieldMenuItem Field="BasketActions?.Cancel?.CancelBasket" ></FieldMenuItem>
-                <FieldMenuItem Field="BasketActions?.Cancel?.CancelOrder" ></FieldMenuItem>
+                <FieldMenuItem Field="BasketActions?.Cancel?.CancelBasket" />
+                <FieldMenuItem Field="BasketActions?.Cancel?.CancelOrder" />
+                <FieldMenuItem Field="BasketActions?.Cancel?.CancelOrderButKeepPayment" />
             </ChildContent>
         </MudMenu>
     </MudStack>
@@ -93,10 +96,22 @@
     </MudStack>
 
     <MudStack Row="true" Spacing="MenuButtonsInterSpacing">
-        <MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Warning" Size="Size.Large" />
+        <!-- Paniers récents -->
         <MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.ShoppingCart" Size="Size.Large" />
+
+        <!-- Profile-->
+        <MudMenu AnchorOrigin="Origin.BottomLeft"
+                 TransformOrigin="Origin.TopCenter">
+            <ActivatorContent>
+                <MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.AccountCircle" Size="Size.Large" />
+            </ActivatorContent>
+            <ChildContent>
+                <FieldMenuItem Field="BasketActions?.System?.Admin" />
+            </ChildContent>
+        </MudMenu>
     </MudStack>
 </MudStack>
+
 @code {
     public const int MenuButtonsInterSpacing = 0;
     public const int MenuSectionSpacing = 12;
@@ -109,6 +124,11 @@
     protected override void OnParametersSet()
     {
         BasketActions = GeneralInfo.Actions;
+    }
+
+    private void ValidationRulesClickHandler()
+    {
+        dispatcher.Dispatch(new FetchValidationRulesAction(GeneralInfo?.BasketId));
     }
 
 #warning TODO: This code is for test and is not complete, please complete and refactor.

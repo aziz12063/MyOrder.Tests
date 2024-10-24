@@ -2,13 +2,25 @@
 
 @if (FieldUtility.IsHidden(Field))
     return;
-<MudMenuItem Disabled="!FieldUtility.IsReadWrite(Field)">
+<MudMenuItem Disabled="!FieldUtility.IsReadWrite(Field)"
+             OnClick="OnClick">
+
     <MudTooltip Text="@Field.Description">
         @Field.Name
     </MudTooltip>
 </MudMenuItem>
+
 @code {
     [Parameter, EditorRequired]
     public Field<T> Field { get; set; }
+
+    [Parameter, EditorRequired]
+    public EventCallback OnClickCallback { get; set; }
+
+    private async Task OnClick()
+    {
+#warning TODO: Implement confirmation dialog logic
+        await OnClickCallback.InvokeAsync();
+    }
 
 }

@@ -1,5 +1,9 @@
-﻿using MudBlazor;
+﻿using Fluxor;
+using Microsoft.AspNetCore.Components;
+using MudBlazor;
+using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Utils;
+using MyOrder.Store.NotificationsUseCase;
 
 namespace MyOrder.Services;
 
@@ -14,8 +18,43 @@ public enum ToastLevel
 public class ToastService(ISnackbar snackbarService, ILogger<ToastService> logger)
     : IToastService
 {
-    public void ShowCustom(string message, string? title = null, 
-        ToastLevel level = ToastLevel.Info, Action? onClose = null, 
+
+    public void ShowBasketNotification(BasketNotificationDto notification, Action<Snackbar>? onClose = null)
+    {
+        snackbarService.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
+
+        static void config(SnackbarOptions options)
+        {
+            options.DuplicatesBehavior = SnackbarDuplicatesBehavior.Prevent;
+            options.HideTransitionDuration = 200;
+            options.ShowTransitionDuration = 200;
+            options.VisibleStateDuration = int.MaxValue;
+            options.SnackbarVariant = Variant.Text;
+            options.ShowCloseIcon = true;
+            options.CloseAfterNavigation = false;
+            options.SnackbarTypeClass = "basket-notification-snackbar";
+        }
+
+        var severity = notification.Severity switch
+        {
+            "Error" => Severity.Error,
+            "Warn" => Severity.Warning,
+            "Info" => Severity.Info,
+            "Success" => Severity.Success,
+            _ => Severity.Info
+        };
+
+        if (notification.Message is not null)
+        {
+            var snackbar = snackbarService.Add(new MarkupString(notification.Message), severity, config, notification.NotificationId.ToString());
+
+            if (snackbar is not null && onClose is not null)
+                snackbar.OnClose += onClose;
+        }
+    }
+
+    public void ShowCustom(string message, string? title = null,
+        ToastLevel level = ToastLevel.Info, Action? onClose = null,
         string? icon = null)
     {
         var severity = level switch
