@@ -18,7 +18,7 @@ public partial class DisplayField<T>
 
     protected override void OnParametersSet()
     {
-        CssClass = Field!.DisplayStyle switch
+        CssClass = Field?.DisplayStyle switch
         {
             FieldDisplayStyle.Emphasize => string.Concat(
                 OutlinedDisplayFieldClass, " ", "onlyfordisplay-field-emphasize"),

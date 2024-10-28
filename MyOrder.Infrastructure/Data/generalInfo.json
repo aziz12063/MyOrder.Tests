@@ -5,11 +5,266 @@
     "locale": "fr-fr",
     "name": "RAJA France"
   },
-  "pageTitle": "Commande 24137181 | ST MICROELECTRONICS ROUSSET SAS | MY ORDER",
+  "pageTitle": "Commande 24137181 | QUARTIER GENERAL DU CORPS | MY ORDER",
   "orderType": "Commande",
   "basketId": "P0131385",
   "orderId": "24137181",
-  "orderStatus": "Bloquée",
-  "orderDate": "2024-09-04 14:48:10",
-  "salesResponsible": "Imad.BOUGATAIA.ext"
+  "orderStatus": "Facturée",
+  "orderDate": "2024-05-13 15:13:11",
+  "salesResponsible": "XAVIER REYNAUD",
+  "actions": {
+    "open": {
+      "menuLabel": "Ouvrir",
+      "newBasket": {
+        "name": "Nouveau panier",
+        "status": "readWrite",
+        "displayStyle": "standard",
+        "value": {
+          "account": {
+            "name": "Avec le compte client",
+            "status": "readWrite",
+            "displayStyle": "standard",
+            "value": "98677453",
+            "url": "http://aliasiisq:803/CreateBasket?New=1&AccountId="
+          },
+          "contact": {
+            "name": "Avec le contact",
+            "status": "readWrite",
+            "displayStyle": "standard",
+            "value": "I3684820",
+            "url": "http://aliasiisq:803/CreateBasket?New=1&ContactId="
+          }
+        }
+      },
+      "openBasket": {
+        "name": "Ouvrir commande, devis ou panier",
+        "status": "readWrite",
+        "displayStyle": "standard",
+        "url": "http://aliasiisq:803/CreateBasket?OrderId="
+      },
+      "cloneBasket": {
+        "name": "Cloner ce panier",
+        "status": "readWrite",
+        "displayStyle": "standard",
+        "url": "http://aliasiisq:803/CreateBasket?BasketId=P0131385&New=1",
+        "confirm": "Souhaitez vous copier le contenu de Commande Commande dans un nouveau panier ?"
+      }
+    },
+    "validate": {
+      "lockOrder": {
+        "name": "Verrouiller commande",
+        "status": "hidden",
+        "displayStyle": "standard",
+        "description": "Bloque une commande lancée afin de permettre son édition"
+      },
+      "menuLabel": "Valider",
+      "sales": {
+        "name": "Enregistrer Commande de vente",
+        "status": "readOnly",
+        "displayStyle": "standard",
+        "value": "Sales",
+        "description": "Valider les modifications"
+      },
+      "quotation": {
+        "name": "Enregistrer Offre de prix",
+        "status": "hidden",
+        "displayStyle": "standard",
+        "value": "SalesQuotation"
+      },
+      "priceConfirm": {
+        "name": "Enregistrer Confirmation de tarif",
+        "status": "hidden",
+        "displayStyle": "standard",
+        "value": "PriceConfirmation"
+      }
+    },
+    "blocking": {
+      "menuLabel": "Blocages",
+      "validationRules": {
+        "name": "Règles de validation",
+        "status": "readOnly",
+        "displayStyle": "standard",
+        "description": "Vérifie la validité du panier</>ou affiche les raisons qui bloquent sa synchronisation"
+      },
+      "blockingReasons": {
+        "name": "Blocages commande",
+        "status": "readWrite",
+        "displayStyle": "standard",
+        "description": "Activer ou désactiver des blocages sur la commande",
+        "url": "blockingReasons"
+      }
+    },
+    "cancel": {
+      "menuLabel": "Annuler",
+      "cancelBasket": {
+        "name": "Annuler modifications",
+        "status": "readOnly",
+        "displayStyle": "standard",
+        "value": "CancelBasket",
+        "confirm": "Êtes-vous sûr de vouloir annuler vos modifications sur Commande 24137181 ? (Retour arrière)"
+      },
+      "cancelOrder": {
+        "name": "Annuler Commande",
+        "status": "readOnly",
+        "displayStyle": "standard",
+        "value": "CancelOrder",
+        "description": "Annule la transaction en cours",
+        "confirm": "Êtes-vous sûr de vouloir annuler Commande 24137181 ? <br/>Cette action est définitive et sans possibilité de retour."
+      },
+      "cancelOrderAndPayment": {
+        "name": "Annuler Commande & Paiement",
+        "status": "hidden",
+        "displayStyle": "standard",
+        "value": "CancelOrderAndPayment",
+        "description": "Annule la commande en cours et l'autorisation de paiement associée",
+        "confirm": "Êtes-vous sûr de vouloir annuler Commande 24137181 et l'autorisation de paiement du client ? <br/>Cette action est définitive et sans possibilité de retour."
+      }
+    },
+    "logs": {
+      "menuLabel": "Journaux",
+      "ediMessages": {
+        "name": "Messages EDI",
+        "status": "readOnly",
+        "displayStyle": "standard",
+        "value": "http://aliasieeq:86//OmsOrderHistory?SalesId=24137181"
+      },
+      "orderDiary": {
+        "name": "Journal des modifications",
+        "status": "readWrite",
+        "displayStyle": "standard",
+        "url": "http://aliasieeq:86//OrderHistory?MyOrderId=24137181"
+      }
+    },
+    "notes": {
+      "menuLabel": "Notes",
+      "attachments": {
+        "name": "Pièces jointes",
+        "status": "readOnly",
+        "displayStyle": "standard",
+        "value": "",
+        "description": "Cette fonctionnalité n'est pas encore disponible"
+      },
+      "orderNote": {
+        "name": "Note de commande",
+        "status": "readOnly",
+        "displayStyle": "standard",
+        "value": "ND 04/09/12 BIEN NOTER CONTACT+SERVICE+TEL SUR CHAQUE CDE"
+      }
+    },
+    "sending": {
+      "menuLabel": "Envoyer",
+      "confirmOrder": {
+        "name": "Envoi confirmation",
+        "status": "readWrite",
+        "displayStyle": "standard",
+        "description": "Envoi du mail de confirmation au client"
+      }
+    },
+    "history": {
+      "menuLabel": "Historique",
+      "basketHistory": {
+        "name": "Paniers récents",
+        "status": "readWrite",
+        "displayStyle": "standard",
+        "url": "http://aliasieeq:86//BasketHistory?UserLogin=imad.bougataia.ext"
+      },
+      "lastOpenedBaskets": {
+        "name": "Paniers récents",
+        "status": "readWrite",
+        "displayStyle": "standard",
+        "value": [
+          {
+            "name": "Commande 24137181 - QUARTIER GENERAL DU CORPS - 442,14 €",
+            "url": "http://aliasiisq:803/CreateBasket?SalesId=24137181",
+            "isCurrent": true
+          },
+          {
+            "name": "Panier P0132984 - GINGER BURGEAP SAS - 656,46 €",
+            "url": "http://aliasiisq:803/CreateBasket?BasketId=P0132984",
+            "isCurrent": false
+          },
+          {
+            "name": "Panier P0132980 - GINGER BURGEAP SAS - 13,08 €",
+            "url": "http://aliasiisq:803/CreateBasket?BasketId=P0132980",
+            "isCurrent": false
+          },
+          {
+            "name": "Panier P0132979 - GINGER BURGEAP SAS - 13,08 €",
+            "url": "http://aliasiisq:803/CreateBasket?BasketId=P0132979",
+            "isCurrent": false
+          },
+          {
+            "name": "Panier P0132978 - GINGER BURGEAP SAS - 13,08 €",
+            "url": "http://aliasiisq:803/CreateBasket?BasketId=P0132978",
+            "isCurrent": false
+          },
+          {
+            "name": "Panier P0132977 - GINGER BURGEAP SAS - 13,08 €",
+            "url": "http://aliasiisq:803/CreateBasket?BasketId=P0132977",
+            "isCurrent": false
+          },
+          {
+            "name": "Commande 24137071 - FEDERATION STUDIO FRANCE - 350,40 €",
+            "url": "http://aliasiisq:803/CreateBasket?SalesId=24137071",
+            "isCurrent": false
+          },
+          {
+            "name": "Commande 24137070 - SOUS L OCEAN - 11 046,00 €",
+            "url": "http://aliasiisq:803/CreateBasket?SalesId=24137070",
+            "isCurrent": false
+          },
+          {
+            "name": "Panier P0132892 - BURGEAP - 13,08 €",
+            "url": "http://aliasiisq:803/CreateBasket?BasketId=P0132892",
+            "isCurrent": false
+          },
+          {
+            "name": "Panier P0132859 - BURGEAP - 359,40 €",
+            "url": "http://aliasiisq:803/CreateBasket?BasketId=P0132859",
+            "isCurrent": false
+          },
+          {
+            "name": "Commande 24137635 - MINISTERE DE LA TRANSITION ECOLOGIQUE - 65,51 €",
+            "url": "http://aliasiisq:803/CreateBasket?SalesId=24137635",
+            "isCurrent": false
+          },
+          {
+            "name": "Panier P0132858 - ST MICROELECTRONICS ROUSSET SAS - 0,00 €",
+            "url": "http://aliasiisq:803/CreateBasket?BasketId=P0132858",
+            "isCurrent": false
+          },
+          {
+            "name": "Commande W9003603 - LE LIVRE DANS LA BIBLIOTHEQUE - 354,60 €",
+            "url": "http://aliasiisq:803/CreateBasket?ApiSalesId=W9003603",
+            "isCurrent": false
+          },
+          {
+            "name": "Panier P0132842 - MINISTERE DE LA TRANSITION ECOLOGIQUE - 13,08 €",
+            "url": "http://aliasiisq:803/CreateBasket?BasketId=P0132842",
+            "isCurrent": false
+          },
+          {
+            "name": "Panier P0132411 - BIJOU D OR - 477,60 €",
+            "url": "http://aliasiisq:803/CreateBasket?BasketId=P0132411",
+            "isCurrent": false
+          }
+        ]
+      }
+    },
+    "system": {
+      "menuLabel": "Système",
+      "profile": {
+        "name": "Information profil",
+        "status": "readWrite",
+        "displayStyle": "standard",
+        "value": "Environnement: Qualité<br/>Utilisateur: imad.bougataia.ext<br/>Windows SID: -<br/>Employé Ax.: -<br/>Equipe Kiamo: -<br/>Panier créé par: Imad.BOUGATAIA.ext<br/>Administrateur: Oui"
+      },
+      "settings": {
+        "name": "Paramétrage",
+        "status": "readWrite",
+        "displayStyle": "standard",
+        "url": "http://aliasieeq:86//Admin"
+      }
+    }
+  }
 }
