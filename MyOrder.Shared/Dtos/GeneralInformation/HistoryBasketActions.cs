@@ -2,7 +2,7 @@
 
 namespace MyOrder.Shared.Dtos.GeneralInformation;
 
-public class HistoryBasketActions
+public class HistoryBasketActions : BasketActionsBase
 {
     public Field<List<BasketHistory?>?>? LastOpenedBaskets { get; set; }
     public Field<string?>? BasketHistory { get; set; }

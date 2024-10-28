@@ -14,123 +14,77 @@
 <MudStack Row="true" Spacing="MenuSectionSpacing">
 
     <!-- Nouveau Panier-->
-    <MudMenu AnchorOrigin="Origin.BottomLeft"
-             TransformOrigin="Origin.TopCenter">
-        <ActivatorContent>
-            <MudBadge Overlap="true" Bordered="true" Color="Color.Error" >
-                <MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Add" Size="Size.Large" />
-            </MudBadge>
-        </ActivatorContent>
-        <ChildContent>
-            <FieldMenuItem Field="BasketActions?.Open.NewBasket" OnClickCallback="OpenNewBasketDialogAsync" />
-            <FieldMenuItem Field="BasketActions?.Open.OpenBasket" OnClickCallback="OpenNewBasketDialogAsync" />
-            <FieldMenuItem Field="BasketActions?.Open.CloneBasket" OnClickCallback="OpenNewBasketDialogAsync" />
-        </ChildContent>
-    </MudMenu>
+    <AppbarMenuTemplate BasketActionsBase="BasketActions?.Open"
+                        Icon="@Icons.Material.Filled.Add">
+        <FieldMenuItem Field="BasketActions?.Open.NewBasket" OnClickCallback="OpenNewBasketDialogAsync" />
+        <FieldMenuItem Field="BasketActions?.Open.OpenBasket" OnClickCallback="OpenNewBasketDialogAsync" />
+        <FieldMenuItem Field="BasketActions?.Open.CloneBasket" OnClickCallback="OpenNewBasketDialogAsync" />
+    </AppbarMenuTemplate>
 
     <MudStack Row="true" Spacing="MenuButtonsInterSpacing">
         <!-- Valider -->
-        <MudMenu AnchorOrigin="Origin.BottomLeft"
-                 TransformOrigin="Origin.TopCenter">
-            <ActivatorContent>
-                <MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Check" Size="Size.Large" />
-            </ActivatorContent>
-            <ChildContent>
-                <FieldMenuItem Field="BasketActions?.Validate?.Sales" />
-                <FieldMenuItem Field="BasketActions?.Validate?.Quotation" />
-                <FieldMenuItem Field="BasketActions?.Validate?.PriceConfirm" />
-            </ChildContent>
-        </MudMenu>
+        <AppbarMenuTemplate BasketActionsBase="BasketActions?.Validate"
+                            Icon="@Icons.Material.Filled.Check">
+            <FieldMenuItem Field="BasketActions?.Validate?.Sales" />
+            <FieldMenuItem Field="BasketActions?.Validate?.Quotation" />
+            <FieldMenuItem Field="BasketActions?.Validate?.PriceConfirm" />
+        </AppbarMenuTemplate>
 
         <!-- Blocage-->
-        <MudMenu AnchorOrigin="Origin.BottomLeft"
-                 TransformOrigin="Origin.TopCenter">
-            <ActivatorContent>
-                <MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Block" Size="Size.Large" />
-            </ActivatorContent>
-            <ChildContent>
-                <FieldMenuItem Field="BasketActions?.Blocking?.ValidationRules"
-                               OnClickCallback="ValidationRulesClickHandler" />
-                <FieldMenuItem Field="BasketActions?.Blocking?.BlockingReasons" />
-            </ChildContent>
-        </MudMenu>
+        <AppbarMenuTemplate BasketActionsBase="BasketActions?.Blocking"
+                            Icon="@Icons.Material.Filled.Block">
+            <FieldMenuItem Field="BasketActions?.Blocking?.ValidationRules"
+                           OnClickCallback="ValidationRulesClickHandler" />
+            <FieldMenuItem Field="BasketActions?.Blocking?.BlockingReasons" />
+        </AppbarMenuTemplate>
 
         <!-- Annuler -->
-        <MudMenu AnchorOrigin="Origin.BottomLeft"
-                 TransformOrigin="Origin.TopCenter">
-            <ActivatorContent>
-                <MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Close" Size="Size.Large" />
-            </ActivatorContent>
-            <ChildContent>
-                <FieldMenuItem Field="BasketActions?.Cancel?.CancelBasket" />
-                <FieldMenuItem Field="BasketActions?.Cancel?.CancelOrderAndPayment" />
-                <FieldMenuItem Field="BasketActions?.Cancel?.CancelOrder" />
-            </ChildContent>
-        </MudMenu>
+        <AppbarMenuTemplate BasketActionsBase="BasketActions?.Cancel"
+                            Icon="@Icons.Material.Filled.Close">
+            <FieldMenuItem Field="BasketActions?.Cancel?.CancelBasket" />
+            <FieldMenuItem Field="BasketActions?.Cancel?.CancelOrderAndPayment" />
+            <FieldMenuItem Field="BasketActions?.Cancel?.CancelOrder" />
+        </AppbarMenuTemplate>
+
     </MudStack>
 
     <MudStack Row="true" Spacing="MenuButtonsInterSpacing">
         <!-- Envoyer-->
-        <MudMenu AnchorOrigin="Origin.BottomLeft"
-                 TransformOrigin="Origin.TopCenter">
-            <ActivatorContent>
-                <MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Mail" Size="Size.Large" />
-            </ActivatorContent>
-            <ChildContent>
-                <FieldMenuItem Field="BasketActions?.Sending?.ComfirmOrder" />
-            </ChildContent>
-        </MudMenu>
+        <AppbarMenuTemplate BasketActionsBase="BasketActions?.Sending"
+                            Icon="@Icons.Material.Filled.Mail">
+            <FieldMenuItem Field="BasketActions?.Sending?.ComfirmOrder" />
+        </AppbarMenuTemplate>
 
         <!-- Notes-->
-        <MudMenu AnchorOrigin="Origin.BottomLeft"
-                 TransformOrigin="Origin.TopCenter">
-            <ActivatorContent>
-                <MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Description" Size="Size.Large" />
-            </ActivatorContent>
-            <ChildContent>
-                <FieldMenuItem Field="BasketActions?.Notes.OrderNote" />
-                <FieldMenuItem Field="BasketActions?.Notes.Attachments" />
-            </ChildContent>
-        </MudMenu>
+        <AppbarMenuTemplate BasketActionsBase="BasketActions?.Notes"
+                            Icon="@Icons.Material.Filled.Description">
+            <FieldMenuItem Field="BasketActions?.Notes.OrderNote" />
+            <FieldMenuItem Field="BasketActions?.Notes.Attachments" />
+        </AppbarMenuTemplate>
 
         <!-- Logs-->
-        <MudMenu AnchorOrigin="Origin.BottomLeft"
-                 TransformOrigin="Origin.TopCenter">
-            <ActivatorContent>
-                <MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Menu" Size="Size.Large" />
-            </ActivatorContent>
-            <ChildContent>
-                <FieldMenuItem Field="BasketActions?.Logs.OrderDiary" />
-                <FieldMenuItem Field="BasketActions?.Logs.EdiMessages" />
-            </ChildContent>
-        </MudMenu>
+        <AppbarMenuTemplate BasketActionsBase="BasketActions?.Logs"
+                            Icon="@Icons.Material.Filled.Menu">
+            <FieldMenuItem Field="BasketActions?.Logs.OrderDiary" />
+            <FieldMenuItem Field="BasketActions?.Logs.EdiMessages" />
+        </AppbarMenuTemplate>
+
     </MudStack>
 
     <MudStack Row="true" Spacing="MenuButtonsInterSpacing">
         <!-- System -->
-        <MudMenu AnchorOrigin="Origin.BottomLeft"
-                 TransformOrigin="Origin.TopCenter">
-            <ActivatorContent>
-                <MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.ShoppingCart" Size="Size.Large" />
-            </ActivatorContent>
-            <ChildContent>
-                <FieldMenuItem Field="BasketActions?.System?.Profile" />
-                <FieldMenuItem Field="BasketActions?.System?.Settings" />
-            </ChildContent>
-        </MudMenu>
-
+        <AppbarMenuTemplate BasketActionsBase="BasketActions?.System"
+                            Icon="@Icons.Material.Filled.ShoppingCart">
+            <FieldMenuItem Field="BasketActions?.System?.Profile" />
+            <FieldMenuItem Field="BasketActions?.System?.Settings" />
+        </AppbarMenuTemplate>
 
         <!-- Historique-->
-        <MudMenu AnchorOrigin="Origin.BottomLeft"
-                 TransformOrigin="Origin.TopCenter">
-            <ActivatorContent>
-                <MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.AccountCircle" Size="Size.Large" />
-            </ActivatorContent>
-            <ChildContent>
-                <FieldMenuItem Field="BasketActions?.History.LastOpenedBaskets" />
-                <FieldMenuItem Field="BasketActions?.History?.BasketHistory" />
-            </ChildContent>
-        </MudMenu>
+        <AppbarMenuTemplate BasketActionsBase="BasketActions?.History"
+                            Icon="@Icons.Material.Filled.AccountCircle">
+            <FieldMenuItem Field="BasketActions?.History.LastOpenedBaskets" />
+            <FieldMenuItem Field="BasketActions?.History?.BasketHistory" />
+        </AppbarMenuTemplate>
     </MudStack>
 </MudStack>
 
@@ -148,10 +102,13 @@
         BasketActions = GeneralInfo.Actions;
     }
 
+
     private void ValidationRulesClickHandler()
     {
         dispatcher.Dispatch(new FetchValidationRulesAction(GeneralInfo?.BasketId));
     }
+
+
 
 #warning TODO: This code is for test and is not complete, please complete and refactor.
     string? accountId { get; set; }

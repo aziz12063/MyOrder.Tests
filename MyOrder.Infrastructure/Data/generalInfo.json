@@ -18,7 +18,7 @@
       "newBasket": {
         "name": "Nouveau panier",
         "status": "readWrite",
-        "displayStyle": "standard",
+        "displayStyle": "warn",
         "value": {
           "account": {
             "name": "Avec le compte client",
@@ -30,7 +30,7 @@
           "contact": {
             "name": "Avec le contact",
             "status": "readWrite",
-            "displayStyle": "standard",
+            "displayStyle": "warn",
             "value": "I3684820",
             "url": "http://aliasiisq:803/CreateBasket?New=1&ContactId="
           }
