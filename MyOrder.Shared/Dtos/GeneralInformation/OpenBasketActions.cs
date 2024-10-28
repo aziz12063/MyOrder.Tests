@@ -2,7 +2,7 @@
 
 namespace MyOrder.Shared.Dtos.GeneralInformation;
 
-public class OpenBasketActions
+public class OpenBasketActions : BasketActionsBase
 {
     public Field<NewBasketAction?>? NewBasket { get; set; }
     public Field<string?>? OpenBasket { get; set; }

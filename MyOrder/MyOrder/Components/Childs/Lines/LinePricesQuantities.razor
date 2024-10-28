@@ -73,7 +73,7 @@
                                     HeaderClass="pa-1 ma-1"
                                     CellClass="pa-1 ma-1">
                         <HeaderTemplate>
-                            <MudText Typo="Typo.body2" Class="prices-matrix-header-content">Prix / 25</MudText>
+                            <MudText Typo="Typo.body2" Class="prices-matrix-header-content">Prix / @BasketLine?.MultipleQuantity?.Value</MudText>
                         </HeaderTemplate>
                     </PropertyColumn>
                 }
@@ -94,7 +94,7 @@
                                     HeaderClass="pa-1 ma-1"
                                     CellClass="pa-1 ma-1">
                         <HeaderTemplate>
-                            <MudText Typo="Typo.body2" Style="font-weight:500">Prix Rem.</MudText>
+                            <MudText Typo="Typo.body2" Style="font-weight:500">Marge</MudText>
                         </HeaderTemplate>
                     </PropertyColumn>
                 }

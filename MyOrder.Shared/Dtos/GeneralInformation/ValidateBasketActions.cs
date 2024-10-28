@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 
 namespace MyOrder.Shared.Dtos.GeneralInformation;
 
-public class ValidateBasketActions
+public class ValidateBasketActions : BasketActionsBase
 {
     public Field<string?>? LockOrder { get; set; }
     public Field<string?>? Sales { get; set; }
