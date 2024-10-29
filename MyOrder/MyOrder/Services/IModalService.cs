@@ -11,7 +11,6 @@ public interface IModalService
     public Task<IDialogReference> OpenAddLineDialogAsync(Action? onCloseCallback = null);
     public Task<IDialogReference> OpenNewBasketDialogAsync();
     public Task<IDialogReference> OpenBasketDialogAsync();
-    public Task<IDialogReference> LastOpenedBaskets(List<BasketHistory?>? basketHistories);
 
     public Task<bool> ShowConfirmationDialog(string message, string? title = null,
         Action? onConfirm = null, ModalSeverity modalSeverity = ModalSeverity.info);

@@ -56,18 +56,6 @@ public class ModalService(IDialogService dialogService) : IModalService
         return await dialogService.ShowAsync<OpenBasketDialog>("Simple Dialog", options);
     }
 
-    public async Task<IDialogReference> LastOpenedBaskets(List<BasketHistory?>? basketHistories)
-    {
-        basketHistories = basketHistories.Take(15).ToList();
-
-        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Medium };
-        var parameters = new DialogParameters<LastOpenedBasketsDialogue>
-        {
-           { x => x.BasketHistories , basketHistories }
-        };
-        return await dialogService.ShowAsync<LastOpenedBasketsDialogue>("Simple Dialog", parameters, options);
-    }
-
     public async Task<bool> ShowConfirmationDialog( string message, string? title = null,
         Action? onConfirm = null, ModalSeverity modalSeverity = ModalSeverity.info)
     {

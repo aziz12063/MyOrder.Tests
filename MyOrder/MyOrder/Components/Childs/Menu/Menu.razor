@@ -11,6 +11,7 @@
 @inject IDispatcher dispatcher
 @inject IState<OrderInfoState> orderInfoState
 @inject IDialogService DialogService
+@inject NavigationManager Navigation
 
 
 <MudStack Row="true" Spacing="MenuSectionSpacing">
@@ -95,10 +96,29 @@
         <AppbarMenuTemplate BasketActionsBase="BasketActions?.History"
                             Icon="@Icons.Material.Filled.ShoppingCart">
             <FieldMenuItem Field="BasketActions?.History.LastOpenedBaskets"
-                           OnClickCallback="(async () => await modalService.LastOpenedBaskets(BasketActions?.History?.LastOpenedBaskets.Value))" />
+                           OnClickCallback="(() => HandlePopOverOnClick())" />
             <FieldMenuItem Field="BasketActions?.History?.BasketHistory" />
         </AppbarMenuTemplate>
     </MudStack>
+    <MudPopover Open="@_openPopOver" OverflowBehavior="OverflowBehavior.FlipAlways"
+                AnchorOrigin="Origin.TopRight" TransformOrigin="Origin.TopRight" Paper="false">
+        <MudPaper Outlined="true" Class="pa-2">
+            <MudList T="string" Dense="true">
+                @foreach (var history in BasketHistories)
+                {
+                    if (history?.IsCurrent != null && history?.IsCurrent == false)
+                    {
+                        <MudListItem Text="@history.Name" OnClick="(() => NavigateToLink(history?.Url))" Style="color:blue" />
+                    }
+                    else if (history?.IsCurrent != null && history?.IsCurrent == true)
+                    {
+                        <MudListItem Text="@history.Name" Style="color:black" />
+                    }
+                }
+            </MudList>
+            <MudButton OnClick="@(() => HandlePopOverOnClick())" Color="Color.Error">Fermer</MudButton>
+        </MudPaper>
+    </MudPopover>
 </MudStack>
 
 @code {
@@ -109,10 +129,23 @@
     public GeneralInfoDto GeneralInfo { get; set; }
 
     public BasketActions? BasketActions { get; set; }
+    private bool _openPopOver = false;
+    private List<BasketHistory> BasketHistories { get; set; }
 
     protected override void OnParametersSet()
     {
         BasketActions = GeneralInfo.Actions;
+        BasketHistories = BasketActions.History.LastOpenedBaskets.Value;
+    }
+
+    private void HandlePopOverOnClick()
+    {
+        _openPopOver = !_openPopOver;
+    }
+
+    private void NavigateToLink(string url)
+    {
+        Navigation.NavigateTo(url, true);
     }
 
     private static async Task MenuActionHandler(IModalService modalService, string? confirm, Action callback)
