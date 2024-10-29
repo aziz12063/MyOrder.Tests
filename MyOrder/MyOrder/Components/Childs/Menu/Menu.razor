@@ -18,9 +18,10 @@
     <!-- Nouveau Panier-->
     <AppbarMenuTemplate BasketActionsBase="BasketActions?.Open"
                         Icon="@Icons.Material.Filled.Add">
-        <FieldMenuItem Field="BasketActions?.Open.NewBasket" OnClickCallback="OpenNewBasketDialogAsync" />
-        <FieldMenuItem Field="BasketActions?.Open.OpenBasket" OnClickCallback="OpenNewBasketDialogAsync" />
-        <FieldMenuItem Field="BasketActions?.Open.CloneBasket" OnClickCallback="OpenNewBasketDialogAsync" />
+        <FieldMenuItem Field="BasketActions?.Open?.NewBasket"
+                       OnClickCallback="(async () => await modalService.OpenNewBasketDialogAsync())" />
+        <FieldMenuItem Field="BasketActions?.Open.OpenBasket" />
+        <FieldMenuItem Field="BasketActions?.Open.CloneBasket" />
     </AppbarMenuTemplate>
 
     <MudStack Row="true" Spacing="MenuButtonsInterSpacing">
@@ -139,6 +140,4 @@
             CloneBasketConfirmed();
     }
 
-    private async Task<IDialogReference> OpenNewBasketDialogAsync() =>
-        await modalService.OpenNewBasketDialogAsync();
 }
