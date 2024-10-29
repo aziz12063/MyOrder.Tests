@@ -34,7 +34,7 @@ public class ModalService(IDialogService dialogService) : IModalService
 
         var dialogResult = await dialogReference.Result;
 
-        if(dialogResult?.Canceled == true) 
+        if (dialogResult?.Canceled == true)
             onCloseCallback?.Invoke();
 
         return dialogReference;
@@ -49,7 +49,7 @@ public class ModalService(IDialogService dialogService) : IModalService
 
     public async Task<IDialogReference> OpenBasketDialogAsync()
     {
-        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small };
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, CloseButton = true };
 
         return await dialogService.ShowAsync<OpenBasketDialog>("Simple Dialog", options);
     }

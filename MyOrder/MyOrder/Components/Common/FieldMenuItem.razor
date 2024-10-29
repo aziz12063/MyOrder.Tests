@@ -6,11 +6,19 @@
              OnClick="OnClick">
 
     <MudTooltip Text="@Field.Description">
-        @Field.Name
+            <MudIcon Icon="@Icon"
+                     Color="Color.Primary"
+                     Size="Size.Small"
+                     Style="vertical-align:bottom;"
+                     Class="mr-1"/>
+            @Field.Name
     </MudTooltip>
 </MudMenuItem>
 
 @code {
+    [Parameter, EditorRequired]
+    public string Icon { get; set; } = Icons.Material.Filled.ArrowRight;
+
     [Parameter, EditorRequired]
     public Field<T> Field { get; set; }
 

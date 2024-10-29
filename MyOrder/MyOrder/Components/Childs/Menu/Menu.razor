@@ -18,10 +18,14 @@
     <!-- Nouveau Panier-->
     <AppbarMenuTemplate BasketActionsBase="BasketActions?.Open"
                         Icon="@Icons.Material.Filled.Add">
-        <FieldMenuItem Field="BasketActions?.Open?.NewBasket"
+        <FieldMenuItem Icon="@Icons.Material.Filled.AddShoppingCart"
+                       Field="BasketActions?.Open?.NewBasket"
                        OnClickCallback="(async () => await modalService.OpenNewBasketDialogAsync())" />
-        <FieldMenuItem Field="BasketActions?.Open.OpenBasket" />
-        <FieldMenuItem Field="BasketActions?.Open.CloneBasket" />
+        <FieldMenuItem Icon="@Icons.Material.Filled.ShoppingCartCheckout"
+                       Field="BasketActions?.Open.OpenBasket"
+                       OnClickCallback="(async () => await modalService.OpenBasketDialogAsync())" />
+        <FieldMenuItem Icon="@Icons.Material.Filled.ContentCopy"
+                       Field="BasketActions?.Open.CloneBasket" />
     </AppbarMenuTemplate>
 
     <MudStack Row="true" Spacing="MenuButtonsInterSpacing">

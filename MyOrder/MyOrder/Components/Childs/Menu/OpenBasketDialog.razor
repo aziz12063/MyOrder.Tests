@@ -1,5 +1,51 @@
-﻿<h3>OopenBasketDialog</h3>
+﻿@using Fluxor
+@using MyOrder.Store.CreateBasketUseCase
+@using MyOrder.Store.OrderInfoUseCase
+
+@inject IDispatcher dispatcher
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">Ouvrir panier</MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudTextField @bind-Value="OrderId"
+                      @bind-Value:after="UpdateSubmitDisabledState"
+                      Immediate="true"
+                      FullWidth="true"
+                      Label="Ouvrir Panier, Commande, Offre n°"
+                      Variant="Variant.Outlined"
+                      Margin="Margin.Dense" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary"
+                   OnClick="Submit"
+                   Disabled="_disabled">Ouvrir</MudButton>
+    </DialogActions>
+</MudDialog>
 
 @code {
+    [CascadingParameter]
+    private MudDialogInstance MudDialog { get; set; }
+
+    public string? OrderId { get; set; }
+
+    private bool _disabled = true;
+
+    private void UpdateSubmitDisabledState()
+    {
+        _disabled = string.IsNullOrWhiteSpace(OrderId);
+    }
+
+    private void Submit()
+    {
+        dispatcher.Dispatch(new CreateBasketAction(new Dictionary<string, string>()
+            {
+                { "OrderId", OrderId! }
+            }));
+        MudDialog.Close(DialogResult.Ok(true));
+    }
+
+    private void Cancel() => MudDialog.Cancel();
 
 }
