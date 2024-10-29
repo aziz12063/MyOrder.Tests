@@ -85,7 +85,7 @@
         <!-- Historique-->
         <AppbarMenuTemplate BasketActionsBase="BasketActions?.History"
                             Icon="@Icons.Material.Filled.ShoppingCart">
-            <FieldMenuItem Field="BasketActions?.History.LastOpenedBaskets" />
+            <FieldMenuItem Field="BasketActions?.History.LastOpenedBaskets" OnClickCallback="(async () => await modalService.LastOpenedBaskets(BasketActions?.History?.LastOpenedBaskets.Value))" />
             <FieldMenuItem Field="BasketActions?.History?.BasketHistory" />
         </AppbarMenuTemplate>
     </MudStack>
@@ -116,7 +116,7 @@
 #warning TODO: This code is for test and is not complete, please complete and refactor.
     string? accountId { get; set; }
     string? contactId { get; set; }
-
+ 
     private void CloneBasketConfirmed()
     {
         var basketId = GeneralInfo?.BasketId;
