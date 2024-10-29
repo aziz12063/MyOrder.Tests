@@ -25,6 +25,26 @@ public class CreateBasketEffects(IBasketRepository basketRepository, ILogger<Ord
     }
 
     [EffectMethod]
+    public async Task HandleCloneBasketAction(CloneBasketAction action, IDispatcher dispatcher)
+    {
+        try
+        {
+            // We need basketId and New=1 to clone and create a new basket
+            var response = await basketRepository.PostNewBasketAsync(
+                new Dictionary<string, string> {
+                    { "BasketId", action.BasketId },
+                    { "New", "1"}
+                });
+            dispatcher.Dispatch(new CreateBasketSuccessAction(response));
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, "Error while creating a new basket");
+            dispatcher.Dispatch(new CreateBasketFailureAction(e.Message));
+        }
+    }
+
+    [EffectMethod]
     public Task HandleCreateBasketSuccessAction(CreateBasketSuccessAction action, IDispatcher dispatcher)
     {
         var basketId = action.NewBasketResponse?.BasketId;

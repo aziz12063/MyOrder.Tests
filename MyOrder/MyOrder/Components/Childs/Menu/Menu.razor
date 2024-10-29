@@ -18,14 +18,19 @@
     <!-- Nouveau Panier-->
     <AppbarMenuTemplate BasketActionsBase="BasketActions?.Open"
                         Icon="@Icons.Material.Filled.Add">
+
         <FieldMenuItem Icon="@Icons.Material.Filled.AddShoppingCart"
                        Field="BasketActions?.Open?.NewBasket"
                        OnClickCallback="(async () => await modalService.OpenNewBasketDialogAsync())" />
+
         <FieldMenuItem Icon="@Icons.Material.Filled.ShoppingCartCheckout"
-                       Field="BasketActions?.Open.OpenBasket"
+                       Field="BasketActions?.Open?.OpenBasket"
                        OnClickCallback="(async () => await modalService.OpenBasketDialogAsync())" />
+
         <FieldMenuItem Icon="@Icons.Material.Filled.ContentCopy"
-                       Field="BasketActions?.Open.CloneBasket" />
+                       Field="BasketActions?.Open?.CloneBasket"
+                       OnClickCallback="(async () => await CloneBasketClicked(BasketActions?.Open?.CloneBasket))" />
+
     </AppbarMenuTemplate>
 
     <MudStack Row="true" Spacing="MenuButtonsInterSpacing">
@@ -89,7 +94,8 @@
         <!-- Historique-->
         <AppbarMenuTemplate BasketActionsBase="BasketActions?.History"
                             Icon="@Icons.Material.Filled.ShoppingCart">
-            <FieldMenuItem Field="BasketActions?.History.LastOpenedBaskets" OnClickCallback="(async () => await modalService.LastOpenedBaskets(BasketActions?.History?.LastOpenedBaskets.Value))" />
+            <FieldMenuItem Field="BasketActions?.History.LastOpenedBaskets"
+                           OnClickCallback="(async () => await modalService.LastOpenedBaskets(BasketActions?.History?.LastOpenedBaskets.Value))" />
             <FieldMenuItem Field="BasketActions?.History?.BasketHistory" />
         </AppbarMenuTemplate>
     </MudStack>
@@ -109,39 +115,40 @@
         BasketActions = GeneralInfo.Actions;
     }
 
+    private static async Task MenuActionHandler(IModalService modalService, string? confirm, Action callback)
+    {
+        if (!string.IsNullOrWhiteSpace(confirm))
+        {
+            bool result = await modalService.ShowConfirmationDialog(confirm);
+            if (result == true)
+                callback();
+        }
+        else
+        {
+            callback();
+        }
+    }
+
+
+    private async Task CloneBasketClicked(Field<string?> menuItem)
+    {
+        if (menuItem is null)
+            return;
+
+        await MenuActionHandler(modalService, menuItem.Confirm, () =>
+        {
+            var basketId = GeneralInfo?.BasketId;
+            if (!string.IsNullOrWhiteSpace(basketId))
+            {
+                dispatcher.Dispatch(new CloneBasketAction(basketId));
+            }
+        });
+    }
+
 
     private void ValidationRulesClickHandler()
     {
         dispatcher.Dispatch(new FetchValidationRulesAction(GeneralInfo?.BasketId));
-    }
-
-
-
-#warning TODO: This code is for test and is not complete, please complete and refactor.
-    string? accountId { get; set; }
-    string? contactId { get; set; }
- 
-    private void CloneBasketConfirmed()
-    {
-        var basketId = GeneralInfo?.BasketId;
-        if (!string.IsNullOrWhiteSpace(basketId))
-        {
-            dispatcher.Dispatch(new CreateBasketAction(new Dictionary<string, string>()
-                {
-                    { "BasketId", basketId },
-                    { "New", "1"}
-                }));
-        }
-    }
-
-    private async void CloneBasket()
-    {
-        bool? result = await DialogService.ShowMessageBox(
-            "Confirmation",
-            "Êtes-vous sûr de vouloir cloner ce panier?",
-            yesText: "Confirmer", cancelText: "Retour");
-        if (result == true)
-            CloneBasketConfirmed();
     }
 
 }

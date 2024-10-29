@@ -6,6 +6,10 @@ namespace MyOrder.Store.CreateBasketUseCase
     {
         public Dictionary<string, string> NewBasketRequest { get; set; } = newBasketRequest;
     }
+    public class CloneBasketAction(string basketId)
+    {
+        public string BasketId { get; set; } = basketId;
+    }
     public class CreateBasketSuccessAction(NewBasketResponseDto newBasketResponse)
     {
         public NewBasketResponseDto NewBasketResponse { get; set; } = newBasketResponse;

@@ -1,25 +1,28 @@
-﻿<MudDialog>
+﻿<MudDialog TitleClass="pb-2"
+           ActionsClass="ma-2"
+           ContentClass="pb-0">
+    <TitleContent>
+        <MudText Typo="Typo.subtitle1">@Title</MudText>
+    </TitleContent>
     <DialogContent>
-        @Content
+        <MudText Typo="Typo.body1">@Message</MudText>
     </DialogContent>
     <DialogActions>
-        <MudButton Color="Color.Error" OnClick="Cancel" Size="Size.Small">Annuler</MudButton>
-        <MudButton Color="Color.Primary" OnClick="Submit" Size="Size.Small">Confirmer</MudButton>
+        <MudButton Color="SeverityColor" OnClick="Submit" Size="Size.Small">Confirmer</MudButton>
+        <MudButton OnClick="Cancel" Size="Size.Small">Annuler</MudButton>
     </DialogActions>
 </MudDialog>
+
 @code {
     [CascadingParameter]
     private MudDialogInstance MudDialog { get; set; }
-
     [Parameter]
-    public EventCallback OnConfirmation { get; set; }
+    public string Title { get; set; } = "Confirmation";
+    [Parameter, EditorRequired]
+    public string Message { get; set; }
     [Parameter]
-    public string Content { get; set; }
+    public Color SeverityColor { get; set; } = Color.Primary;
 
-    private void Submit() 
-    {
-        OnConfirmation.InvokeAsync();
-        MudDialog.Close(DialogResult.Ok(true));
-    }
+    private void Submit() => MudDialog.Close(DialogResult.Ok(true));
     private void Cancel() => MudDialog.Cancel();
 }

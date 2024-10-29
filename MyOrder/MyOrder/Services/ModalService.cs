@@ -1,6 +1,7 @@
 ﻿using MudBlazor;
 using MyOrder.Components.Childs.Lines.AddLine;
 using MyOrder.Components.Childs.Menu;
+using MyOrder.Components.Common.Dialogs;
 using MyOrder.Shared.Dtos.GeneralInformation;
 
 namespace MyOrder.Services;
@@ -65,6 +66,47 @@ public class ModalService(IDialogService dialogService) : IModalService
            { x => x.BasketHistories , basketHistories }
         };
         return await dialogService.ShowAsync<LastOpenedBasketsDialogue>("Simple Dialog", parameters, options);
+    }
+
+    public async Task<bool> ShowConfirmationDialog( string message, string? title = null,
+        Action? onConfirm = null, ModalSeverity modalSeverity = ModalSeverity.info)
+    {
+        var parameters = new DialogParameters<ConfirmationDialog>
+        {
+            { dialog => dialog.Message, message},
+            { dialog => dialog.SeverityColor, GetSeverityColor(modalSeverity)}
+
+        };
+
+        if (title != null)
+        {
+            parameters.Add(dialog => dialog.Title, title);
+        }
+
+        var dialogReference = await dialogService.ShowAsync<ConfirmationDialog>(
+            "confirmationDialog", parameters);
+
+        var result = await dialogReference.Result;
+
+        if ((bool?)result?.Data == true)
+        {
+            onConfirm?.Invoke();
+            return true;
+        }
+        else
+            return false;
+    }
+
+    private static Color GetSeverityColor(ModalSeverity modalSeverity)
+    {
+        return modalSeverity switch
+        {
+            ModalSeverity.info => Color.Info,
+            ModalSeverity.success => Color.Success,
+            ModalSeverity.warning => Color.Warning,
+            ModalSeverity.error => Color.Error,
+            _ => Color.Info
+        };
     }
 }
 
