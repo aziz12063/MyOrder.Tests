@@ -1,4 +1,5 @@
 ﻿@using Fluxor
+@using MyOrder.Services
 @using MyOrder.Shared.Dtos.GeneralInformation
 @using MyOrder.Store.CreateBasketUseCase
 @using MyOrder.Store.NotificationsUseCase
@@ -6,6 +7,7 @@
 @using MyOrder.Store.OrderInfoUseCase
 @using MyOrder.Components.Common.Dialogs
 
+@inject IModalService modalService
 @inject IDispatcher dispatcher
 @inject IState<OrderInfoState> orderInfoState
 @inject IDialogService DialogService
@@ -74,14 +76,14 @@
     <MudStack Row="true" Spacing="MenuButtonsInterSpacing">
         <!-- System -->
         <AppbarMenuTemplate BasketActionsBase="BasketActions?.System"
-                            Icon="@Icons.Material.Filled.ShoppingCart">
+                            Icon="@Icons.Material.Filled.AccountCircle">
             <FieldMenuItem Field="BasketActions?.System?.Profile" />
             <FieldMenuItem Field="BasketActions?.System?.Settings" />
         </AppbarMenuTemplate>
 
         <!-- Historique-->
         <AppbarMenuTemplate BasketActionsBase="BasketActions?.History"
-                            Icon="@Icons.Material.Filled.AccountCircle">
+                            Icon="@Icons.Material.Filled.ShoppingCart">
             <FieldMenuItem Field="BasketActions?.History.LastOpenedBaskets" />
             <FieldMenuItem Field="BasketActions?.History?.BasketHistory" />
         </AppbarMenuTemplate>
@@ -90,7 +92,7 @@
 
 @code {
     public const int MenuButtonsInterSpacing = 0;
-    public const int MenuSectionSpacing = 12;
+    public const int MenuSectionSpacing = 10;
 
     [Parameter, EditorRequired]
     public GeneralInfoDto GeneralInfo { get; set; }
@@ -137,17 +139,6 @@
             CloneBasketConfirmed();
     }
 
-    private async Task<IDialogReference> OpenNewBasketDialogAsync()
-    {
-        contactId = orderInfoState?.Value?.BasketOrderInfo?.Contact?.Value?.ContactId;
-        accountId = orderInfoState?.Value?.BasketOrderInfo?.Account?.Value?.AccountId;
-        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small };
-        var parameters = new DialogParameters<NewBasketDialog>
-        {
-            { x => x.AccountId, accountId },
-            { x => x.ContactId, contactId }
-        };
-
-        return await DialogService.ShowAsync<NewBasketDialog>("Simple Dialog", parameters, options);
-    }
+    private async Task<IDialogReference> OpenNewBasketDialogAsync() =>
+        await modalService.OpenNewBasketDialogAsync();
 }

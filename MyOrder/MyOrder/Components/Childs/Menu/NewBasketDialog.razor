@@ -1,7 +1,9 @@
 ﻿@using Fluxor
-@inject IDispatcher dispatcher
 @using MyOrder.Store.CreateBasketUseCase
+@using MyOrder.Store.OrderInfoUseCase
 
+@inject IDispatcher dispatcher
+@inject IState<OrderInfoState> orderInfoState
 
 <MudDialog>
     <TitleContent>
@@ -10,11 +12,14 @@
     <DialogContent>
 
 
-        <MudRadioGroup @bind-Value="position">
+        <MudRadioGroup @bind-Value="_radioPosition"
+                       @bind-Value:after="UpdateSubmitDisabledState">
             <MudStack Justify="Justify.SpaceAround">
                 <MudRadio Value="1"
                           Class="add-basket-dialog-field">
-                    <MudTextField @bind-Value="AccountId"
+                    <MudTextField @bind-Value="_accountId"
+                                  @bind-Value:after="UpdateSubmitDisabledState"
+                                  Immediate="true"
                                   FullWidth="true"
                                   Label="Nouveau panier pour le client n°"
                                   Variant="Variant.Outlined"
@@ -22,7 +27,9 @@
                 </MudRadio>
                 <MudRadio Value="2"
                           Class="add-basket-dialog-field">
-                    <MudTextField @bind-Value="ContactId"
+                    <MudTextField @bind-Value="_contactId"
+                                  @bind-Value:after="UpdateSubmitDisabledState"
+                                  Immediate="true"
                                   FullWidth="true"
                                   Label="Nouveau panier pour le contact n°"
                                   Variant="Variant.Outlined"
@@ -34,8 +41,10 @@
 
     </DialogContent>
     <DialogActions>
-        <MudButton OnClick="Cancel">Cancel</MudButton>
-        <MudButton Color="Color.Primary" OnClick="Submit">Ok</MudButton>
+        <MudButton Color="Color.Primary"
+                   OnClick="Submit"
+                   Disabled="_disabled">Créer</MudButton>
+        <MudButton OnClick="Cancel">Annuler</MudButton>
     </DialogActions>
 </MudDialog>
 
@@ -43,29 +52,40 @@
     [CascadingParameter]
     private MudDialogInstance MudDialog { get; set; }
 
-    [Parameter]
-    public string AccountId { get; set; }
+    public string? _accountId;
+    public string? _contactId;
+    private bool _disabled = true;
+    int _radioPosition = 1;
 
-    [Parameter]
-    public string ContactId { get; set; }
+    protected override void OnInitialized()
+    {
+        _accountId = orderInfoState?.Value?.BasketOrderInfo?.Account?.Value?.AccountId;
+        _contactId = orderInfoState?.Value?.BasketOrderInfo?.Contact?.Value?.ContactId;
+        UpdateSubmitDisabledState();
+    }
 
+    private void UpdateSubmitDisabledState()
+    {
+        _disabled = _radioPosition == 1
+            ? string.IsNullOrWhiteSpace(_accountId)
+            : string.IsNullOrWhiteSpace(_contactId);
+    }
 
-#warning TODO: This code is for test and is not complete, please complete and refactor.
     private void Submit()
     {
-        if (position == 1)
+        if (_radioPosition == 1)
         {
             dispatcher.Dispatch(new CreateBasketAction(new Dictionary<string, string>()
                 {
-                    { "AccountId", this.AccountId },
+                    { "AccountId", _accountId! },
                     { "New", "1"}
                 }));
         }
-        if (position == 2)
+        if (_radioPosition == 2)
         {
             dispatcher.Dispatch(new CreateBasketAction(new Dictionary<string, string>()
                 {
-                    { "ContactId", this.ContactId },
+                    { "ContactId", _contactId! },
                     { "New", "1"}
                 }));
         }
@@ -74,5 +94,5 @@
     }
 
     private void Cancel() => MudDialog.Cancel();
-    int position = 1;
+
 }

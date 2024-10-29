@@ -1,14 +1,19 @@
 ﻿@using MyOrder.Shared.Dtos.GeneralInformation
 
 <MudMenu AnchorOrigin="Origin.BottomLeft"
-         TransformOrigin="Origin.TopCenter">
+         TransformOrigin="Origin.TopLeft"
+         Dense="true" Variant="Variant.Filled">
     <ActivatorContent>
         <MudBadge Dot Overlap="true" Color="Color.Error" Visible="BadgeVisible">
-            @*  <MudChip T="string" Label="true" Variant="Variant.Text" Text="Ouvrir" /> *@
-            @* <MudIconButton Style="color:white;" Icon="@Icons.Material.Filled.Add" Size="Size.Large" /> *@
-            <MudButton Color="Color.Inherit" Variant="Variant.Text" IconSize="Size.Medium"
-                       StartIcon="@Icon" Size="Size.Large">
-                @BasketActionsBase.MenuLabel
+            <MudButton Color="Color.Inherit"
+                       Variant="Variant.Text"
+                       IconSize="Size.Medium"
+                       StartIcon="@Icon"
+                       Size="Size.Large"
+                       Class="px-2">
+                <MudText Typo="Typo.body1" Class="ml-n1">
+                    @BasketActionsBase.MenuLabel
+                </MudText>
             </MudButton>
         </MudBadge>
     </ActivatorContent>

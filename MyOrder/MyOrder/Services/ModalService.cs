@@ -1,5 +1,7 @@
 ﻿using MudBlazor;
 using MyOrder.Components.Childs.Lines.AddLine;
+using MyOrder.Components.Common.Dialogs;
+using MyOrder.Store.OrderInfoUseCase;
 
 namespace MyOrder.Services;
 
@@ -37,6 +39,13 @@ public class ModalService(IDialogService dialogService) : IModalService
             onCloseCallback?.Invoke();
 
         return dialogReference;
+    }
+
+    public async Task<IDialogReference> OpenNewBasketDialogAsync(Action? onCloseCallback = null)
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small };
+
+        return await dialogService.ShowAsync<NewBasketDialog>("Simple Dialog", options);
     }
 }
 

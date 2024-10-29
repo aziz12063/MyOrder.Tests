@@ -14,7 +14,8 @@ public partial class DisplayField<T>
     private string CssClass { get; set; } = string.Empty;
     public string OutlinedDisplayFieldClass { get; set; } = "outlined-display-field";
     private string FixedMultiLineClass { get; set; } = "fixed-multiline-display-field";
-    private string? TooltipText => Field?.Description ?? Field?.Name;
+    private string? TooltipText => Field?.Description ??
+        Field?.Name;
 
     protected override void OnParametersSet()
     {
