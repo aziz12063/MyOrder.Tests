@@ -1,6 +1,8 @@
 ﻿using MudBlazor;
+using MyOrder.Components.Childs;
 using MyOrder.Components.Childs.Lines.AddLine;
 using MyOrder.Components.Childs.Menu;
+using MyOrder.Shared.Dtos.GeneralInformation;
 
 namespace MyOrder.Services;
 
@@ -52,6 +54,18 @@ public class ModalService(IDialogService dialogService) : IModalService
         var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, CloseButton = true };
 
         return await dialogService.ShowAsync<OpenBasketDialog>("Simple Dialog", options);
+    }
+
+    public async Task<IDialogReference> LastOpenedBaskets(List<BasketHistory?>? basketHistories)
+    {
+        basketHistories = basketHistories.Take(15).ToList();
+
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Medium };
+        var parameters = new DialogParameters<LastOpenedBasketsDialogue>
+        {
+           { x => x.BasketHistories , basketHistories }
+        };
+        return await dialogService.ShowAsync<LastOpenedBasketsDialogue>("Simple Dialog", parameters, options);
     }
 }
 

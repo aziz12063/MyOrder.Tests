@@ -1,0 +1,28 @@
+﻿@using MyOrder.Shared.Dtos.GeneralInformation
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h5">Historique de saisie MyOrder</MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudPaper Class=" pa-4" Outlined="true" Elevation="4">
+            <MudList T="string" Dense="true">
+                @foreach (var history in BasketHistories)
+                {
+                    <MudListItem Text="@history.Name" />
+                }
+            </MudList>
+        </MudPaper>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">Cancel</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [CascadingParameter]
+    private MudDialogInstance MudDialog { get; set; }
+
+    [Parameter]
+    public List<BasketHistory> BasketHistories { get; set; }
+    private void Cancel() => MudDialog.Cancel();
+}
