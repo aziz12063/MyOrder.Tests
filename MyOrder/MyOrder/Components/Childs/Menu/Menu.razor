@@ -38,25 +38,25 @@
         <!-- Valider -->
         <AppbarMenuTemplate BasketActionsBase="BasketActions?.Validate"
                             Icon="@Icons.Material.Filled.Check">
-            <FieldMenuItem Field="BasketActions?.Validate?.Sales" />
-            <FieldMenuItem Field="BasketActions?.Validate?.Quotation" />
-            <FieldMenuItem Field="BasketActions?.Validate?.PriceConfirm" />
+            <FieldMenuItem Icon="@Icons.Material.Filled.AttachMoney" Field="BasketActions?.Validate?.Sales" />
+            <FieldMenuItem Icon="@Icons.Material.Filled.RequestQuote" Field="BasketActions?.Validate?.Quotation" />
+            <FieldMenuItem Icon="@Icons.Material.Filled.PriceCheck" Field="BasketActions?.Validate?.PriceConfirm" />
         </AppbarMenuTemplate>
 
         <!-- Blocage-->
         <AppbarMenuTemplate BasketActionsBase="BasketActions?.Blocking"
                             Icon="@Icons.Material.Filled.Block">
-            <FieldMenuItem Field="BasketActions?.Blocking?.ValidationRules"
+            <FieldMenuItem Icon="@Icons.Material.Filled.Checklist" Field="BasketActions?.Blocking?.ValidationRules"
                            OnClickCallback="ValidationRulesClickHandler" />
-            <FieldMenuItem Field="BasketActions?.Blocking?.BlockingReasons" />
+            <FieldMenuItem Icon="@Icons.Material.Filled.ReportProblem" Field="BasketActions?.Blocking?.BlockingReasons" />
         </AppbarMenuTemplate>
 
         <!-- Annuler -->
         <AppbarMenuTemplate BasketActionsBase="BasketActions?.Cancel"
                             Icon="@Icons.Material.Filled.Close">
-            <FieldMenuItem Field="BasketActions?.Cancel?.CancelBasket" />
-            <FieldMenuItem Field="BasketActions?.Cancel?.CancelOrderAndPayment" />
-            <FieldMenuItem Field="BasketActions?.Cancel?.CancelOrder" />
+            <FieldMenuItem Icon="@Icons.Material.Filled.RemoveShoppingCart" Field="BasketActions?.Cancel?.CancelBasket" />
+            <FieldMenuItem Icon="@Icons.Material.Filled.MoneyOff" Field="BasketActions?.Cancel?.CancelOrderAndPayment" />
+            <FieldMenuItem Icon="@Icons.Material.Filled.DeleteForever" Field="BasketActions?.Cancel?.CancelOrder" />
         </AppbarMenuTemplate>
 
     </MudStack>
@@ -65,21 +65,21 @@
         <!-- Envoyer-->
         <AppbarMenuTemplate BasketActionsBase="BasketActions?.Sending"
                             Icon="@Icons.Material.Filled.Mail">
-            <FieldMenuItem Field="BasketActions?.Sending?.ComfirmOrder" />
+            <FieldMenuItem Icon="@Icons.Material.Filled.Done" Field="BasketActions?.Sending?.ComfirmOrder" />
         </AppbarMenuTemplate>
 
         <!-- Notes-->
         <AppbarMenuTemplate BasketActionsBase="BasketActions?.Notes"
                             Icon="@Icons.Material.Filled.Description">
-            <FieldMenuItem Field="BasketActions?.Notes.OrderNote" />
-            <FieldMenuItem Field="BasketActions?.Notes.Attachments" />
+            <FieldMenuItem Icon="@Icons.Material.Filled.Notes" Field="BasketActions?.Notes.OrderNote" />
+            <FieldMenuItem Icon="AttachFile" Field="BasketActions?.Notes.Attachments" />
         </AppbarMenuTemplate>
 
         <!-- Logs-->
         <AppbarMenuTemplate BasketActionsBase="BasketActions?.Logs"
                             Icon="@Icons.Material.Filled.Menu">
-            <FieldMenuItem Field="BasketActions?.Logs.OrderDiary" />
-            <FieldMenuItem Field="BasketActions?.Logs.EdiMessages" />
+            <FieldMenuItem Icon="@Icons.Material.Filled.EventNote" Field="BasketActions?.Logs.OrderDiary" />
+            <FieldMenuItem Icon="@Icons.Material.Filled.Message" Field="BasketActions?.Logs.EdiMessages" />
         </AppbarMenuTemplate>
 
     </MudStack>
@@ -88,16 +88,16 @@
         <!-- System -->
         <AppbarMenuTemplate BasketActionsBase="BasketActions?.System"
                             Icon="@Icons.Material.Filled.AccountCircle">
-            <FieldMenuItem Field="BasketActions?.System?.Profile" />
-            <FieldMenuItem Field="BasketActions?.System?.Settings" />
+            <FieldMenuItem Icon="@Icons.Material.Filled.Message" Field="BasketActions?.System?.Profile" />
+            <FieldMenuItem Icon="@Icons.Material.Filled.Settings" Field="BasketActions?.System?.Settings" />
         </AppbarMenuTemplate>
 
         <!-- Historique-->
         <AppbarMenuTemplate BasketActionsBase="BasketActions?.History"
                             Icon="@Icons.Material.Filled.ShoppingCart">
-            <FieldMenuItem Field="BasketActions?.History.LastOpenedBaskets"
+            <FieldMenuItem Icon="@Icons.Material.Filled.History" Field="BasketActions?.History.LastOpenedBaskets"
                            OnClickCallback="(() => HandlePopOverOnClick())" />
-            <FieldMenuItem Field="BasketActions?.History?.BasketHistory" />
+            <FieldMenuItem Icon="@Icons.Material.Filled.Receipt" Field="BasketActions?.History?.BasketHistory" />
         </AppbarMenuTemplate>
     </MudStack>
     <MudPopover Open="@_openPopOver" OverflowBehavior="OverflowBehavior.FlipAlways"
