@@ -1,21 +1,14 @@
 ﻿@using MyOrder.Shared.Dtos.GeneralInformation
 
+@if (BasketActionsBase is null)
+    return;
+
 <MudMenu AnchorOrigin="Origin.BottomLeft"
          TransformOrigin="Origin.TopLeft"
          Dense="true" Variant="Variant.Filled">
     <ActivatorContent>
-        <MudBadge Dot Overlap="true" Color="Color.Error" Visible="BadgeVisible">
-            <MudButton Color="Color.Inherit"
-                       Variant="Variant.Text"
-                       IconSize="Size.Medium"
-                       StartIcon="@Icon"
-                       Size="Size.Large"
-                       Class="px-2">
-                <MudText Typo="Typo.body1" Class="ml-n1">
-                    @BasketActionsBase.MenuLabel
-                </MudText>
-            </MudButton>
-        </MudBadge>
+        <AppbarMenuItem Icon="@Icon"
+                        BasketActionsBase="BasketActionsBase" />
     </ActivatorContent>
     <ChildContent>
         @ChildContent
@@ -24,42 +17,11 @@
 
 @code {
     [Parameter, EditorRequired]
-    public RenderFragment ChildContent { get; set; }
+    public RenderFragment? ChildContent { get; set; }
 
     [Parameter, EditorRequired]
-    public BasketActionsBase BasketActionsBase { get; set; }
+    public BasketActionsBase? BasketActionsBase { get; set; }
 
     [Parameter, EditorRequired]
     public string? Icon { get; set; }
-
-    private bool BadgeVisible { get; set; }
-
-    protected override void OnParametersSet()
-    {
-        BadgeVisible = IsBadgeVisible(BasketActionsBase);
-    }
-
-    private static bool IsBadgeVisible(BasketActionsBase bab)
-    {
-        var properties = bab.GetType().GetProperties();
-
-        var fieldProperties = properties.Where(prop => prop.PropertyType.IsGenericType &&
-                                                       prop.PropertyType.GetGenericTypeDefinition() == typeof(Field<>));
-
-        foreach (var field in fieldProperties)
-        {
-            var fieldValue = field.GetValue(bab);
-
-            if (fieldValue != null)
-            {
-                var fieldDisplayStyle = fieldValue.GetType().GetProperty(nameof(Field<object>.DisplayStyle));
-                var fieldDisplayStyleValue = fieldDisplayStyle?.GetValue(fieldValue) as FieldDisplayStyle?;
-
-                if (fieldDisplayStyleValue != null && fieldDisplayStyleValue == FieldDisplayStyle.Warn)
-                    return true;
-            }
-        }
-        return false;
-    }
-
 }

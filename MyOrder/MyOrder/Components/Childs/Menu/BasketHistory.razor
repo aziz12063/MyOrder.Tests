@@ -1,0 +1,90 @@
+﻿@using MyOrder.Shared.Dtos.GeneralInformation
+@using BasketHistoryDto = MyOrder.Shared.Dtos.GeneralInformation.BasketHistory
+
+@if (HistoryBasketActions is null)
+    return;
+
+<MudPopover Open="@_openPopover"
+            OverflowBehavior="OverflowBehavior.FlipAlways"
+            AnchorOrigin="Origin.BottomRight"
+            TransformOrigin="Origin.TopRight"
+            Paper="true"
+            Class="pt-1">
+
+    @if (!FieldUtility.IsHidden(LastOpenedBaskets) && BasketHistoryItems is not null && BasketHistoryItems.Count > 0)
+    {
+        <MudList T="string" Dense="true">
+
+            @foreach (var item in BasketHistoryItems)
+            {
+                if (item is null)
+                    continue;
+
+                if (item?.IsCurrent == true)
+                {
+                    <MudListItem Text="@item.Name"
+                                 Dense="true"
+                                 Icon="@Icons.Material.Filled.Visibility"
+                                 IconSize="Size.Small"
+                                 IconColor="Color.Warning"
+                                 Disabled="true" />
+                }
+                else
+                {
+                    <MudListItem Text="@item!.Name"
+                                 Dense="true"
+                                 Icon="@Icons.Material.Filled.NavigateNext"
+                                 IconSize="Size.Small"
+                                 IconColor="Color.Dark"
+                                 Href="@item!.Url" />
+                }
+            }
+        </MudList>
+    }
+    else
+    {
+        <MudText Typo="Typo.caption">Aucun historique pour ce panier.</MudText>
+    }
+    <MudStack Row="true" Justify="Justify.SpaceBetween" Class="px-3 pb-3 pt-1">
+        @if (!FieldUtility.IsHidden(BasketHistoryField))
+        {
+            <MudButton Color="Color.Primary"
+                       Size="Size.Small"
+                       Variant="Variant.Text">@HistoryBasketActions.BasketHistory?.Name</MudButton>
+        }
+        else
+        {
+            <MudText Typo="Typo.caption" Style="visibility:hidden;">Aucun historique pour ce panier.</MudText>
+        }
+
+        <MudButton Color="Color.Error"
+                   Size="Size.Small"
+                   Variant="Variant.Text"
+                   OnClick="ClosePopover">Fermer</MudButton>
+    </MudStack>
+</MudPopover>
+
+@code {
+    private bool _openPopover = false;
+
+    [Parameter, EditorRequired]
+    public HistoryBasketActions? HistoryBasketActions { get; set; }
+
+    private Field<List<BasketHistoryDto?>?>? LastOpenedBaskets { get; set; }
+    private Field<string?>? BasketHistoryField { get; set; }
+
+    private List<BasketHistoryDto?>? BasketHistoryItems { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        LastOpenedBaskets = HistoryBasketActions?.LastOpenedBaskets;
+        BasketHistoryField = HistoryBasketActions?.BasketHistory;
+        BasketHistoryItems = LastOpenedBaskets?.Value;
+    }
+
+    public void TogglePopover() => _openPopover = !_openPopover;
+
+
+    public void ClosePopover() => _openPopover = false;
+
+}

@@ -2,6 +2,7 @@
 
 @if (FieldUtility.IsHidden(Field))
     return;
+
 <MudMenuItem Disabled="!FieldUtility.IsReadWrite(Field)"
              OnClick="OnClick">
 
