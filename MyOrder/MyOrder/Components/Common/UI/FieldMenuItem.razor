@@ -7,12 +7,14 @@
              OnClick="OnClick">
 
     <MudTooltip Text="@Field.Description">
-            <MudIcon Icon="@Icon"
-                     Color="Color.Primary"
-                     Size="Size.Small"
-                     Style="vertical-align:bottom;"
-                     Class="mr-1"/>
-            @Field.Name
+
+        @* Title="@Field.Description" *@
+        <MudIcon Icon="@Icon"
+                 Color="_color"
+                 Size="Size.Small"
+                 Style="vertical-align:bottom;"
+                 Class="mr-1" />
+        <MudText Typo="Typo.inherit" Color="_color">@Field.Name</MudText>
     </MudTooltip>
 </MudMenuItem>
 
@@ -25,6 +27,13 @@
 
     [Parameter, EditorRequired]
     public EventCallback OnClickCallback { get; set; }
+
+    private Color _color = Color.Primary;
+
+    protected override void OnParametersSet()
+    {
+        _color = FieldUtility.GetFieldColor(Field);
+    }
 
     private async Task OnClick()
     {

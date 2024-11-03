@@ -16,7 +16,9 @@ public class ProcedureCallEffects(IBasketRepository basketRepository,
     {
         var field = action.Field;
         var value = action.Value;
+
         bool success = false;
+        string errorMessage = string.Empty;
 
         if (field == null)
         {
@@ -24,11 +26,75 @@ public class ProcedureCallEffects(IBasketRepository basketRepository,
                 LogUtility.GetStackTrace());
             return;
         }
-
-        string errorMessage = "Unhandled error occured." ;
         try
         {
-            var response = await basketRepository.PostProcedureCallAsync(field, value, basket.BasketId);
+            var result = await PostProcedureCall(logger,
+               basket, dispatcher,
+               () => basketRepository.PostProcedureCallAsync(field, value, basket.BasketId));
+            success = result.success;
+            errorMessage = result.errorMessage;
+        }
+        catch (InvalidOperationException e)
+        {
+            logger.LogError(e, "Error while updating procedure call for {Field}", field);
+            //errorMessage = "Une erreur est survenue...";
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, "Error while posting procedure call");
+            //errorMessage = "Une erreur est survenue...";
+        }
+        finally
+        {
+            if (!success)
+                dispatcher.Dispatch(new PostProcedureCallFailureAction(action.SelfFetchActionType, errorMessage));
+            //Handle failure by showing an app notification
+        }
+    }
+
+    [EffectMethod]
+    public async Task HandleValidationRulesPostProcedureCallAction(FetchValidationRulesAction action,
+        IDispatcher dispatcher)
+    {
+        bool success = false;
+        string errorMessage = string.Empty;
+
+        var procedureCall = action.ProcedureCall;
+
+        if (procedureCall is null || procedureCall.Count < 1)
+        {
+            logger.LogError("ProcedureCall is null or empty at {StackTrace}",
+                LogUtility.GetStackTrace());
+        }
+        try
+        {
+            logger.LogDebug("Fetching Validation Rules for {BasketId}", action.BasketId);
+
+            var result = await PostProcedureCall(logger,
+               basket, dispatcher,
+               () => basketRepository.PostProcedureCallAsync(procedureCall, basket.BasketId));
+            success = result.success;
+            errorMessage = result.errorMessage;
+        }
+        finally
+        {
+            if (!success)
+            {
+                logger.LogDebug("Fetching Validation Rules for {BasketId}", action.BasketId);
+                dispatcher.Dispatch(new FetchValidationRulesFailureAction(errorMessage));
+            }
+        }
+    }
+
+    private static async Task<(bool success, string errorMessage)> PostProcedureCall(ILogger<OrderInfoEffects> logger,
+        BasketService basket, IDispatcher dispatcher,
+         Func<Task<ProcedureCallResponseDto>> postProcedureCallFunc)
+    {
+        bool success = false;
+        string errorMessage = "Unhandled error occured.";
+        try
+        {
+            ProcedureCallResponseDto? response = await postProcedureCallFunc();
             if (response == null)
             {
                 errorMessage = "Null response returned.";
@@ -47,21 +113,11 @@ public class ProcedureCallEffects(IBasketRepository basketRepository,
             else
                 errorMessage = response.Message ?? "An error occured!";
         }
-        catch (InvalidOperationException e)
+        catch (Exception )
         {
-            logger.LogError(e, "Error while updating procedure call for {Field}", field);
-            //errorMessage = "Une erreur est survenue...";
+            throw;
         }
-        catch (Exception e)
-        {
-            logger.LogError(e, "Error while posting procedure call");
-            //errorMessage = "Une erreur est survenue...";
-        }
-        finally
-        {
-            if (!success)
-                dispatcher.Dispatch(new PostProcedureCallFailureAction(action.SelfFetchActionType, errorMessage));
-        }
+        return (success, errorMessage);
     }
 
     [EffectMethod]
@@ -73,7 +129,7 @@ public class ProcedureCallEffects(IBasketRepository basketRepository,
         stateResolver.DispatchRefreshCalls(dispatcher, refreshCalls, basketId);
     }
 
-    
+
 
     [EffectMethod]
     public async Task HandlePostProcedureCallFailureAction(PostProcedureCallFailureAction action,
@@ -82,8 +138,8 @@ public class ProcedureCallEffects(IBasketRepository basketRepository,
         logger.LogDebug("Error while posting procedure call: {ErrorMessage}", action.ErrorMessage);
 
         stateResolver.DispatchRefreshAction(
-            StateResolver.EndpointFetchActionMap[action.SelfFetchActionType], 
-            dispatcher, 
+            StateResolver.EndpointFetchActionMap[action.SelfFetchActionType],
+            dispatcher,
             basket.BasketId);
     }
 }

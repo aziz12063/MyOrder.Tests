@@ -46,10 +46,10 @@ public class ToastService(ISnackbar snackbarService, ILogger<ToastService> logge
 
         if (notification.Message is not null)
         {
-            //var snackbar = snackbarService.Add(new MarkupString(notification.Message), severity, config, notification.NotificationId.ToString());
+            var snackbar = snackbarService.Add(new MarkupString(notification.Message), severity, config, notification.NotificationId.ToString());
 
-            //if (snackbar is not null && onClose is not null)
-            //    snackbar.OnClose += onClose;
+            if (snackbar is not null && onClose is not null)
+                snackbar.OnClose += onClose;
         }
     }
 

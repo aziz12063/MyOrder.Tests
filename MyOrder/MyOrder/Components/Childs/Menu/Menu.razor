@@ -6,12 +6,19 @@
 @using MyOrder.Store.GeneralInfoUseCase
 @using MyOrder.Store.OrderInfoUseCase
 @using MyOrder.Components.Common.Dialogs
+@using MyOrder.Store.ProcedureCallUseCase
 
 @inject IModalService modalService
 @inject IDispatcher dispatcher
 @inject IState<OrderInfoState> orderInfoState
 @inject IDialogService DialogService
 
+
+@if (GeneralInfo is null || BasketActions is null)
+{
+    <MudText Typo="Typo.h6">Menu indisponible</MudText>
+    return;
+}
 
 <MudStack Row="true" Spacing="MenuSectionSpacing">
 
@@ -45,7 +52,8 @@
         <!-- Blocage-->
         <AppbarMenuTemplate BasketActionsBase="BasketActions?.Blocking"
                             Icon="@Icons.Material.Filled.Block">
-            <FieldMenuItem Icon="@Icons.Material.Filled.Checklist" Field="BasketActions?.Blocking?.ValidationRules"
+            <FieldMenuItem Icon="@Icons.Material.Filled.Checklist"
+                           Field="BasketActions?.Blocking?.ValidationRules"
                            OnClickCallback="ValidationRulesClickHandler" />
             <FieldMenuItem Icon="@Icons.Material.Filled.ReportProblem" Field="BasketActions?.Blocking?.BlockingReasons" />
         </AppbarMenuTemplate>
@@ -106,7 +114,7 @@
     public const int MenuSectionSpacing = 10;
 
     [Parameter, EditorRequired]
-    public GeneralInfoDto GeneralInfo { get; set; }
+    public GeneralInfoDto? GeneralInfo { get; set; }
 
     public BasketActions? BasketActions { get; set; }
 
@@ -114,7 +122,7 @@
 
     protected override void OnParametersSet()
     {
-        BasketActions = GeneralInfo.Actions;
+        BasketActions = GeneralInfo?.Actions;
     }
 
     private static async Task MenuActionHandler(IModalService modalService, string? confirm, Action callback)
@@ -149,7 +157,9 @@
 
     private void ValidationRulesClickHandler()
     {
-        dispatcher.Dispatch(new FetchValidationRulesAction(GeneralInfo?.BasketId));
+        dispatcher.Dispatch(
+            new FetchValidationRulesAction(BasketActions?.Blocking?.ValidationRules.ProcedureCall,
+                GeneralInfo?.BasketId));
     }
 
     private void ToggleBasketHistoryPopover() => _basketHistoryPopOver?.TogglePopover();

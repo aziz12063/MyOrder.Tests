@@ -39,8 +39,3 @@ public class DeleteNotificationFailureAction(string errorMessage)
 {
     public string ErrorMessage { get; } = errorMessage;
 }
-
-public class FetchValidationRulesAction(string basketId)
-{
-    public string BasketId { get; set; } = basketId;
-}

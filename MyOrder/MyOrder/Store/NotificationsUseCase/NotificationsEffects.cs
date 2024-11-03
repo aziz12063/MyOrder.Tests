@@ -27,25 +27,6 @@ public class NotificationEffects(IBasketRepository basketRepository, ILogger<Not
         }
     }
 
-    [EffectMethod]
-    public async Task HandleFetchValidationRulesAction(FetchValidationRulesAction action, IDispatcher dispatcher)
-    {
-        try
-        {
-            logger.LogDebug("Fetching Validation Rules for {BasketId}", action.BasketId);
-            var notifications = await basketRepository.GetValudationRulesAsync(action.BasketId);
-
-            ShowBasketNotifications(toastService, action.BasketId, dispatcher, notifications);
-
-            //Do we need to persist the validation rules in the state?
-        }
-        catch (Exception ex)
-        {
-            logger.LogError(ex, "Error while fetching Validation Rules");
-            //Handle failure
-        }
-    }
-
     private static void ShowBasketNotifications(IToastService toastService, string basketId, IDispatcher dispatcher, List<BasketNotificationDto?>? notifications, NotificationsState? state = null)
     {
         if (notifications is not null && notifications is { Count: > 0 })

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.SharedComponents;
+using MudBlazor;
 using System.Numerics;
 
 namespace MyOrder.Utils;
@@ -20,6 +21,13 @@ public static class FieldUtility
     public static bool IsOnlyForDisplay<T>(Field<T>? field) => field?.Status == "onlyForDisplay";
     public static bool IsReadWrite<T>(Field<T>? field) => field?.Status == "readWrite";
     public static bool IsRequired<T>(Field<T>? field) => field?.Status == "required";
+    public static Color GetFieldColor<T>(Field<T>? field) => field?.DisplayStyle switch
+    {
+        FieldDisplayStyle.Standard => Color.Primary,
+        FieldDisplayStyle.Emphasize => Color.Warning,
+        FieldDisplayStyle.Warn => Color.Error,
+        _ => Color.Default
+    };
     public static string NullOrWhiteSpaceHelper(string? value) => string.IsNullOrWhiteSpace(value) ? string.Empty : value;
     public static string NullOrWhiteSpaceHelperWithDash(string? value)
         => string.IsNullOrWhiteSpace(value) ? "-" : value;
