@@ -50,7 +50,8 @@
             <MudButton Color="Color.Primary"
                        Size="Size.Small"
                        Variant="Variant.Text"
-                       Href="@HistoryBasketActions.BasketHistory?.Url">
+                       Href="@HistoryBasketActions.BasketHistory?.Url"
+                       Target="_blank">
                 @HistoryBasketActions.BasketHistory?.Name
             </MudButton>
         }
@@ -86,7 +87,5 @@
 
     public void TogglePopover() => _openPopover = !_openPopover;
 
-
     public void ClosePopover() => _openPopover = false;
-
 }
