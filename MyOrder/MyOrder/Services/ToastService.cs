@@ -1,6 +1,8 @@
 ﻿using Fluxor;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Rendering;
 using MudBlazor;
+using MyOrder.Components.Common.UI;
 using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Utils;
 using MyOrder.Store.NotificationsUseCase;
@@ -46,7 +48,14 @@ public class ToastService(ISnackbar snackbarService, ILogger<ToastService> logge
 
         if (notification.Message is not null)
         {
-            var snackbar = snackbarService.Add(new MarkupString(notification.Message), severity, config, notification.NotificationId.ToString());
+            void content(RenderTreeBuilder builder)
+            {
+                builder.OpenComponent<BasketNotificationContent>(0);
+                builder.AddAttribute(1, BasketNotificationContent.ContentParameterName, new MarkupString(notification.Message));
+                builder.CloseComponent();
+            }
+
+            var snackbar = snackbarService.Add(content, severity, config, notification.NotificationId.ToString());
 
             if (snackbar is not null && onClose is not null)
                 snackbar.OnClose += onClose;

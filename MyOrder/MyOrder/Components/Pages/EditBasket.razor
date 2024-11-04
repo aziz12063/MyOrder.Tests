@@ -1,0 +1,17 @@
+﻿@using MyOrder.Components.Childs.Header
+@using MyOrder.Components.Childs.Lines
+@using MyOrder.Components.Childs
+
+@inject NavigationManager NavigationManager
+
+@page "/EditBasket"
+
+<PageTitle>MyOrder</PageTitle>
+
+<MudContainer Class="mt-11 px-14" MaxWidth="MaxWidth.ExtraLarge">
+    <MudStack Spacing="4">
+        <Notifications />
+        <Header />
+        <Lines />
+    </MudStack>
+</MudContainer>

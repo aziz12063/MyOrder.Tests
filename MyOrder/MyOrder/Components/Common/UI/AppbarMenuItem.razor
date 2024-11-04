@@ -3,21 +3,23 @@
 @if (BasketActionsBase is null)
     return;
 
-<MudBadge Dot Overlap="true" Color="Color.Error" Visible="BadgeVisible">
-    <MudButton Color="Color.Inherit"
-               Variant="Variant.Text"
-               IconSize="Size.Medium"
-               StartIcon="@Icon"
-               Size="Size.Large"
-               Class="px-2"
-               OnClick="OnButtonClick">
-        <MudText Typo="Typo.body1" Class="ml-n1">
-            @BasketActionsBase.MenuLabel
-        </MudText>
-    </MudButton>
-</MudBadge>
+<MudTooltip Text="Test Description. Feature not implemented.">
+    <MudBadge Dot Overlap="true" Color="Color.Error" Visible="BadgeVisible">
+        <MudButton Color="Color.Inherit"
+                   Variant="Variant.Text"
+                   IconSize="Size.Medium"
+                   StartIcon="@Icon"
+                   Size="Size.Large"
+                   Class="px-2"
+                   OnClick="OnButtonClick">
+            <MudText Typo="Typo.body1" Class="ml-n1">
+                @BasketActionsBase.MenuLabel
+            </MudText>
+        </MudButton>
+    </MudBadge>
+</MudTooltip>
 
-@code{
+@code {
     [Parameter, EditorRequired]
     public string? Icon { get; set; }
 
@@ -38,7 +40,7 @@
     {
         await OnClickCallback.InvokeAsync();
     }
-    
+
     private static bool IsBadgeVisible(BasketActionsBase bab)
     {
         var properties = bab.GetType().GetProperties();

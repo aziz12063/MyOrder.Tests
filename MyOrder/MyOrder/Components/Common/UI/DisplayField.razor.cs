@@ -5,6 +5,9 @@ namespace MyOrder.Components.Common.UI;
 
 public partial class DisplayField<T>
 {
+    public const string OutlinedDisplayFieldClass = "outlined-display-field";
+    private const string FixedMultiLineClass = "fixed-multiline-display-field";
+
     [Parameter, EditorRequired]
     public Field<T>? Field { get; set; }
     [Parameter]
@@ -12,8 +15,6 @@ public partial class DisplayField<T>
     [Parameter]
     public bool FixedMultilineHeight { get; set; } = false;
     private string CssClass { get; set; } = string.Empty;
-    public string OutlinedDisplayFieldClass { get; set; } = "outlined-display-field";
-    private string FixedMultiLineClass { get; set; } = "fixed-multiline-display-field";
     private string? TooltipText => Field?.Description ??
         Field?.Name;
 

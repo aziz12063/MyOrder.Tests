@@ -26,7 +26,7 @@ public static class FieldUtility
         FieldDisplayStyle.Standard => Color.Primary,
         FieldDisplayStyle.Emphasize => Color.Warning,
         FieldDisplayStyle.Warn => Color.Error,
-        _ => Color.Default
+        _ => Color.Inherit
     };
     public static string NullOrWhiteSpaceHelper(string? value) => string.IsNullOrWhiteSpace(value) ? string.Empty : value;
     public static string NullOrWhiteSpaceHelperWithDash(string? value)

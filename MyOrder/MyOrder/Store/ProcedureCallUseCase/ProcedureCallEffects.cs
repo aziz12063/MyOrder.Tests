@@ -11,7 +11,7 @@ public class ProcedureCallEffects(IBasketRepository basketRepository,
     ILogger<OrderInfoEffects> logger, IStateResolver stateResolver, BasketService basket)
 {
     [EffectMethod]
-    public async Task HandlePostProcedureCallAction(UpdateFieldAction action,
+    public async Task HandleUpdateFieldAction(UpdateFieldAction action,
         IDispatcher dispatcher)
     {
         var field = action.Field;
@@ -47,13 +47,13 @@ public class ProcedureCallEffects(IBasketRepository basketRepository,
         finally
         {
             if (!success)
-                dispatcher.Dispatch(new PostProcedureCallFailureAction(action.SelfFetchActionType, errorMessage));
+                dispatcher.Dispatch(new UpdateFieldProcedureCallFailureAction(action.SelfFetchActionType, errorMessage));
             //Handle failure by showing an app notification
         }
     }
 
     [EffectMethod]
-    public async Task HandleValidationRulesPostProcedureCallAction(FetchValidationRulesAction action,
+    public async Task HandlePostProcedureCallAction(PostProcedureCallAction action,
         IDispatcher dispatcher)
     {
         bool success = false;
@@ -68,7 +68,7 @@ public class ProcedureCallEffects(IBasketRepository basketRepository,
         }
         try
         {
-            logger.LogDebug("Fetching Validation Rules for {BasketId}", action.BasketId);
+            logger.LogDebug("Posting procedure call for {BasketId}", action.BasketId);
 
             var result = await PostProcedureCall(logger,
                basket, dispatcher,
@@ -81,7 +81,7 @@ public class ProcedureCallEffects(IBasketRepository basketRepository,
             if (!success)
             {
                 logger.LogDebug("Fetching Validation Rules for {BasketId}", action.BasketId);
-                dispatcher.Dispatch(new FetchValidationRulesFailureAction(errorMessage));
+                dispatcher.Dispatch(new PostProcedureCallFailureAction(errorMessage));
             }
         }
     }
@@ -132,7 +132,7 @@ public class ProcedureCallEffects(IBasketRepository basketRepository,
 
 
     [EffectMethod]
-    public async Task HandlePostProcedureCallFailureAction(PostProcedureCallFailureAction action,
+    public async Task HandlePostProcedureCallFailureAction(UpdateFieldProcedureCallFailureAction action,
         IDispatcher dispatcher)
     {
         logger.LogDebug("Error while posting procedure call: {ErrorMessage}", action.ErrorMessage);

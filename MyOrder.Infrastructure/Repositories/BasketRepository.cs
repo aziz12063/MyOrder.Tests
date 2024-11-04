@@ -58,7 +58,12 @@ public class BasketRepository(IBasketApiClient apiClient,
     {
         logger.LogInformation("Posting procedure call : \n{readyProcedureCall} " +
             "\nfor {BasketId} from repository", string.Join("\n", readyToPostProcedureCall), basketId);
-        return await apiClient.PostProcedureCallAsync(basketId, readyToPostProcedureCall);
+
+        var response = await apiClient.PostProcedureCallAsync(basketId, readyToPostProcedureCall);
+
+        logger.LogInformation("Procedure call response : \n{response}", response);
+
+        return response;
     }
 
     public async Task<ProcedureCallResponseDto?> PostProcedureCallAsync(IField field, object value, string basketId)

@@ -30,7 +30,7 @@
                        Field="BasketActions?.Open?.NewBasket"
                        OnClickCallback="(async () => await modalService.OpenNewBasketDialogAsync())" />
 
-        <FieldMenuItem Icon="@Icons.Material.Filled.ShoppingCartCheckout"
+        <FieldMenuItem Icon="@Icons.Material.Filled.FolderOpen"
                        Field="BasketActions?.Open?.OpenBasket"
                        OnClickCallback="(async () => await modalService.OpenBasketDialogAsync())" />
 
@@ -44,26 +44,32 @@
         <!-- Valider -->
         <AppbarMenuTemplate BasketActionsBase="BasketActions?.Validate"
                             Icon="@Icons.Material.Filled.Check">
-            <FieldMenuItem Icon="@Icons.Material.Filled.AttachMoney" Field="BasketActions?.Validate?.Sales" />
-            <FieldMenuItem Icon="@Icons.Material.Filled.RequestQuote" Field="BasketActions?.Validate?.Quotation" />
-            <FieldMenuItem Icon="@Icons.Material.Filled.PriceCheck" Field="BasketActions?.Validate?.PriceConfirm" />
+            <FieldMenuItem Icon="@Icons.Material.Filled.ShoppingCartCheckout" Field="BasketActions?.Validate?.Sales" />
+            <FieldMenuItem Icon="@Icons.Material.Filled.Description" Field="BasketActions?.Validate?.Quotation" />
+            <FieldMenuItem Icon="@Icons.Material.Filled.Approval" Field="BasketActions?.Validate?.PriceConfirm" />
         </AppbarMenuTemplate>
 
         <!-- Blocage-->
         <AppbarMenuTemplate BasketActionsBase="BasketActions?.Blocking"
                             Icon="@Icons.Material.Filled.Block">
-            <FieldMenuItem Icon="@Icons.Material.Filled.Checklist"
+            <FieldMenuItem Icon="@Icons.Material.Outlined.FactCheck"
                            Field="BasketActions?.Blocking?.ValidationRules"
                            OnClickCallback="ValidationRulesClickHandler" />
-            <FieldMenuItem Icon="@Icons.Material.Filled.ReportProblem" Field="BasketActions?.Blocking?.BlockingReasons" />
+            <FieldMenuItem Icon="@Icons.Material.Outlined.Rule" Field="BasketActions?.Blocking?.BlockingReasons" />
         </AppbarMenuTemplate>
 
         <!-- Annuler -->
         <AppbarMenuTemplate BasketActionsBase="BasketActions?.Cancel"
                             Icon="@Icons.Material.Filled.Close">
-            <FieldMenuItem Icon="@Icons.Material.Filled.RemoveShoppingCart" Field="BasketActions?.Cancel?.CancelBasket" />
-            <FieldMenuItem Icon="@Icons.Material.Filled.MoneyOff" Field="BasketActions?.Cancel?.CancelOrderAndPayment" />
-            <FieldMenuItem Icon="@Icons.Material.Filled.DeleteForever" Field="BasketActions?.Cancel?.CancelOrder" />
+            <FieldMenuItem Icon="@Icons.Material.Filled.RemoveShoppingCart"
+                           Field="BasketActions?.Cancel?.CancelBasket"
+                           OnClickCallback="(async () => await ProcedureCallMenuAction(BasketActions?.Cancel?.CancelBasket))" />
+            <FieldMenuItem Icon="@Icons.Material.Rounded.HighlightOff"
+                           Field="BasketActions?.Cancel?.CancelOrderAndPayment"
+                           OnClickCallback="(async () => await ProcedureCallMenuAction(BasketActions?.Cancel?.CancelOrderAndPayment))" />
+            <FieldMenuItem Icon="@Icons.Material.Outlined.CancelScheduleSend"
+                           Field="BasketActions?.Cancel?.CancelOrder"
+                           OnClickCallback="(async () => await ProcedureCallMenuAction(BasketActions?.Cancel?.CancelOrder))" />
         </AppbarMenuTemplate>
 
     </MudStack>
@@ -72,21 +78,26 @@
         <!-- Envoyer-->
         <AppbarMenuTemplate BasketActionsBase="BasketActions?.Sending"
                             Icon="@Icons.Material.Filled.Mail">
-            <FieldMenuItem Icon="@Icons.Material.Filled.Done" Field="BasketActions?.Sending?.ComfirmOrder" />
+            <FieldMenuItem Icon="@Icons.Material.Filled.Done"
+                           Field="BasketActions?.Sending?.ComfirmOrder" />
         </AppbarMenuTemplate>
 
         <!-- Notes-->
         <AppbarMenuTemplate BasketActionsBase="BasketActions?.Notes"
                             Icon="@Icons.Material.Filled.Description">
-            <FieldMenuItem Icon="@Icons.Material.Filled.Notes" Field="BasketActions?.Notes.OrderNote" />
-            <FieldMenuItem Icon="AttachFile" Field="BasketActions?.Notes.Attachments" />
+            <FieldMenuItem Icon="@Icons.Material.Rounded.Notes"
+                           Field="BasketActions?.Notes.OrderNote" />
+            <FieldMenuItem Icon="@Icons.Material.Filled.Attachment"
+                           Field="BasketActions?.Notes.Attachments" />
         </AppbarMenuTemplate>
 
         <!-- Logs-->
         <AppbarMenuTemplate BasketActionsBase="BasketActions?.Logs"
                             Icon="@Icons.Material.Filled.Menu">
-            <FieldMenuItem Icon="@Icons.Material.Filled.EventNote" Field="BasketActions?.Logs.OrderDiary" />
-            <FieldMenuItem Icon="@Icons.Material.Filled.Message" Field="BasketActions?.Logs.EdiMessages" />
+            <FieldMenuItem Icon="@Icons.Material.Filled.EventNote"
+                           Field="BasketActions?.Logs.OrderDiary" />
+            <FieldMenuItem Icon="@Icons.Material.Outlined.Chat"
+                           Field="BasketActions?.Logs.EdiMessages" />
         </AppbarMenuTemplate>
 
     </MudStack>
@@ -95,8 +106,10 @@
         <!-- System -->
         <AppbarMenuTemplate BasketActionsBase="BasketActions?.System"
                             Icon="@Icons.Material.Filled.AccountCircle">
-            <FieldMenuItem Icon="@Icons.Material.Filled.Message" Field="BasketActions?.System?.Profile" />
-            <FieldMenuItem Icon="@Icons.Material.Filled.Settings" Field="BasketActions?.System?.Settings" />
+            <FieldMenuItem Icon="@Icons.Material.Outlined.Badge"
+                           Field="BasketActions?.System?.Profile" />
+            <FieldMenuItem Icon="@Icons.Material.Rounded.AdminPanelSettings"
+                           Field="BasketActions?.System?.Settings" />
         </AppbarMenuTemplate>
 
         <!-- Historique-->
@@ -139,7 +152,7 @@
         }
     }
 
-    private async Task CloneBasketClicked(Field<string?> menuItem)
+    private async Task CloneBasketClicked(Field<string?>? menuItem)
     {
         if (menuItem is null)
             return;
@@ -158,8 +171,24 @@
     private void ValidationRulesClickHandler()
     {
         dispatcher.Dispatch(
-            new FetchValidationRulesAction(BasketActions?.Blocking?.ValidationRules.ProcedureCall,
+            new PostProcedureCallAction(BasketActions?.Blocking?.ValidationRules.ProcedureCall,
                 GeneralInfo?.BasketId));
+    }
+
+    private async Task ProcedureCallMenuAction(Field<string?>? menuItem)
+    {
+        if (menuItem is null)
+        {
+            // Add logging
+            return;
+        }
+
+        await MenuActionHandler(modalService, menuItem.Confirm, () =>
+        {
+            dispatcher.Dispatch(
+            new PostProcedureCallAction(menuItem.ProcedureCall,
+                GeneralInfo?.BasketId));
+        });
     }
 
     private void ToggleBasketHistoryPopover() => _basketHistoryPopOver?.TogglePopover();

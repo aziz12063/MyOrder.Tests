@@ -3,18 +3,26 @@
 @if (FieldUtility.IsHidden(Field))
     return;
 
-<MudMenuItem Disabled="!FieldUtility.IsReadWrite(Field)"
+<MudMenuItem Disabled="_disabled"
              OnClick="OnClick">
 
     <MudTooltip Text="@Field.Description">
 
-        @* Title="@Field.Description" *@
+        @* Title="@Field.Description" //info bulle *@
         <MudIcon Icon="@Icon"
+                 Disabled="_disabled"
                  Color="_color"
                  Size="Size.Small"
                  Style="vertical-align:bottom;"
                  Class="mr-1" />
-        <MudText Typo="Typo.inherit" Color="_color">@Field.Name</MudText>
+        @if (_disabled)
+        {
+            @Field.Name
+        }
+        else
+        {
+            <MudText Typo="Typo.inherit" Color="_color">@Field.Name</MudText>
+        }
     </MudTooltip>
 </MudMenuItem>
 
@@ -28,11 +36,13 @@
     [Parameter, EditorRequired]
     public EventCallback OnClickCallback { get; set; }
 
-    private Color _color = Color.Primary;
+    private Color _color = Color.Inherit;
+    private bool _disabled = false;
 
     protected override void OnParametersSet()
     {
         _color = FieldUtility.GetFieldColor(Field);
+        _disabled = !FieldUtility.IsReadWrite(Field);
     }
 
     private async Task OnClick()

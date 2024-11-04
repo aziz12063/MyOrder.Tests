@@ -1,17 +1,14 @@
-﻿@using MyOrder.Components.Childs.Header
-@using MyOrder.Components.Childs.Lines
-@using MyOrder.Components.Childs
+﻿@using Fluxor
+@using MyOrder.Store.CreateBasketUseCase
 
-@inject NavigationManager NavigationManager
+@layout DefaultLayout
+@inject IDispatcher Dispatcher
 
-@page "/EditBasket"
+@page "/"
 
-<PageTitle>MyOrder</PageTitle>
-
-<MudContainer Class="mt-11 px-14" MaxWidth="MaxWidth.ExtraLarge">
-    <MudStack Spacing="4">
-        <Notifications />
-        <Header />
-        <Lines />
-    </MudStack>
-</MudContainer>
+@code {
+    protected override void OnInitialized()
+    {
+        Dispatcher.Dispatch(new CreateBasketAction(new())); //Send an empty OrderContext call
+    }
+}

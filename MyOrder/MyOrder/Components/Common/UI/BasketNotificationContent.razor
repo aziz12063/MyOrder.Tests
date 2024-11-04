@@ -1,0 +1,10 @@
+﻿<MudText Typo="Typo.subtitle2">
+    @Content
+</MudText>
+
+@code {
+    public const string ContentParameterName = nameof(Content);
+
+    [Parameter, EditorRequired]
+    public MarkupString? Content { get; set; }
+}

@@ -17,19 +17,19 @@ public class PostProcedureCallSuccessAction(string basketId, ProcedureCallRespon
     public string BasketId { get; } = basketId;
 }
 
-public class PostProcedureCallFailureAction(Type actionType, string errorMessage)
+public class UpdateFieldProcedureCallFailureAction(Type actionType, string errorMessage)
 {
     public string ErrorMessage { get; } = errorMessage;
     public Type SelfFetchActionType { get; } = actionType;
 }
 
-public class FetchValidationRulesAction(ImmutableList<string> procedureCall, string basketId)
+public class PostProcedureCallAction(ImmutableList<string> procedureCall, string basketId)
 {
     public ImmutableList<string> ProcedureCall { get; } = procedureCall;
     public string BasketId { get; set; } = basketId;
 }
 
-public class FetchValidationRulesFailureAction(string errorMessage)
+public class PostProcedureCallFailureAction(string errorMessage)
 {
     public string ErrorMessage { get; } = errorMessage;
 }

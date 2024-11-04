@@ -5,7 +5,6 @@
     return;
 
 <MudPopover Open="@_openPopover"
-            OverflowBehavior="OverflowBehavior.FlipAlways"
             AnchorOrigin="Origin.BottomRight"
             TransformOrigin="Origin.TopRight"
             Paper="true"
@@ -33,7 +32,7 @@
                 {
                     <MudListItem Text="@item!.Name"
                                  Dense="true"
-                                 Icon="@Icons.Material.Filled.NavigateNext"
+                                 Icon="@Icons.Material.Rounded.KeyboardDoubleArrowRight"
                                  IconSize="Size.Small"
                                  IconColor="Color.Dark"
                                  Href="@item!.Url" />
@@ -50,11 +49,14 @@
         {
             <MudButton Color="Color.Primary"
                        Size="Size.Small"
-                       Variant="Variant.Text">@HistoryBasketActions.BasketHistory?.Name</MudButton>
+                       Variant="Variant.Text"
+                       Href="@HistoryBasketActions.BasketHistory?.Url">
+                @HistoryBasketActions.BasketHistory?.Name
+            </MudButton>
         }
         else
         {
-            <MudText Typo="Typo.caption" Style="visibility:hidden;">Aucun historique pour ce panier.</MudText>
+            <MudSpacer />
         }
 
         <MudButton Color="Color.Error"
