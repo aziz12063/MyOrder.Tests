@@ -24,5 +24,22 @@ public class OrderInfoEffects(IBasketRepository basketRepository, ILogger<OrderI
             dispatcher.Dispatch(new FetchOrderInfoFailureAction(ex.Message));
         }
     }
+
+    [EffectMethod]
+    public async Task HandleFetchOrderContacts(FetchOrderContactsAction action, IDispatcher dispatcher)
+    {
+        try
+        {
+            var isFiltered = !string.IsNullOrEmpty(action.Filter);
+            logger.LogInformation("Fetching order contacts for {BasketId}", action.BasketId);
+            var contactList = await basketRepository.GetOrderByContactsAsync(action.BasketId, action.Filter);
+            dispatcher.Dispatch(new FetchOrderContactsSuccessAction(contactList, isFiltered));
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Error fetching order contacts data");
+            dispatcher.Dispatch(new FetchOrderContactsFailureAction(ex.Message));
+        }
+    }
 }
 

@@ -1,10 +1,6 @@
 ﻿using Fluxor;
 using Microsoft.AspNetCore.Components;
 using MyOrder.Services;
-using MyOrder.Shared.Dtos.SharedComponents;
-using MyOrder.Store.ProcedureCallUseCase;
-using MyOrder.Utils;
-using MyOrder.Shared.Utils;
 using MyOrder.Store.RessourcesUseCase;
 
 namespace MyOrder.Components.Common;
@@ -26,6 +22,7 @@ public abstract class FluxorComponentBase<TState, TAction> : ComponentBase, IDis
 
     protected Type FetchActionType { get; } = typeof(TAction);
     protected string BasketId => BasketService.BasketId;
+    private bool disposed = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -65,9 +62,22 @@ public abstract class FluxorComponentBase<TState, TAction> : ComponentBase, IDis
 
     public void Dispose()
     {
-        State.StateChanged -= OnStateChanged;
-        BasketService.BasketIdChanged -= OnBasketIdChanged;
+        Dispose(true);
         GC.SuppressFinalize(this);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!disposed)
+        {
+            if (disposing)
+            {
+                State.StateChanged -= OnStateChanged;
+                BasketService.BasketIdChanged -= OnBasketIdChanged;
+            }
+
+            disposed = true;
+        }
     }
 
     protected abstract TAction CreateFetchAction(TState state, string basketId);

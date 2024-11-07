@@ -8,15 +8,12 @@ namespace MyOrder.Store.OrderInfoUseCase;
 public class OrderInfoState : StateBase
 {
     public BasketOrderInfoDto? BasketOrderInfo { get; }
-    public List<ContactDto?>? ContactList { get; }
 
     public OrderInfoState() : base(true) { }
 
-    public OrderInfoState(BasketOrderInfoDto? basketOrderInfo,
-        List<ContactDto?>? contactList) : base(false)
+    public OrderInfoState(BasketOrderInfoDto? basketOrderInfo) : base(false)
     {
         BasketOrderInfo = basketOrderInfo;
-        ContactList = contactList;
     }
 
 }

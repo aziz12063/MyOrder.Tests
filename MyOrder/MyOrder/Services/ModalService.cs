@@ -1,26 +1,25 @@
-﻿using MudBlazor;
+﻿using Microsoft.AspNetCore.Components;
+using MudBlazor;
 using MyOrder.Components.Childs.Lines.AddLine;
 using MyOrder.Components.Childs.Menu;
 using MyOrder.Components.Common.Dialogs;
+using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.GeneralInformation;
+using MyOrder.Store;
+using MyOrder.Store.OrderInfoUseCase;
+using System.Runtime.Intrinsics.X86;
 
 namespace MyOrder.Services;
 
 public class ModalService(IDialogService dialogService) : IModalService
 {
-    public event Action<string, string, Action> OnShow;
-    public event Action OnClose;
+    //public event Action<string, string, Action> OnShow;
 
-    public void ShowModal(string title, string message,
-         Action onConfirm, ModalSeverity modalSeverity = ModalSeverity.info)
-    {
-        OnShow?.Invoke(title, message, onConfirm);
-    }
-
-    public void CloseModal()
-    {
-        OnClose?.Invoke();
-    }
+    //public void ShowModal(string title, string message,
+    //     Action onConfirm, ModalSeverity modalSeverity = ModalSeverity.info)
+    //{
+    //    OnShow?.Invoke(title, message, onConfirm);
+    //}
 
     public async Task<IDialogReference> OpenAddLineDialogAsync(Action? onCloseCallback = null)
     {
@@ -56,7 +55,24 @@ public class ModalService(IDialogService dialogService) : IModalService
         return await dialogService.ShowAsync<OpenBasketDialog>("Simple Dialog", options);
     }
 
-    public async Task<bool> ShowConfirmationDialog( string message, string? title = null,
+    public async Task<IDialogReference> OpenSearchContactDialogAsync<TState, TAction>(
+        Action<ContactDto> contactClicked)
+        where TState : class, IContactsState
+        where TAction : class, IFetchContactsAction
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, CloseButton = true };
+        var parameters = new DialogParameters<SearchContactDialog<TState, TAction>>
+        {
+            { dialog => dialog.ContactClicked,
+                EventCallback.Factory.Create(this, contactClicked)
+            }
+        };
+
+        return await dialogService.ShowAsync<SearchContactDialog<TState, TAction>>(
+            "Search contact", parameters, options);
+    }
+
+    public async Task<bool> ShowConfirmationDialog(string message, string? title = null,
         Action? onConfirm = null, ModalSeverity modalSeverity = ModalSeverity.info)
     {
         var parameters = new DialogParameters<ConfirmationDialog>

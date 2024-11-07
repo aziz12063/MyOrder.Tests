@@ -8,17 +8,12 @@ namespace MyOrder.Store.DeliveryInfoUseCase;
 public class DeliveryInfoState : StateBase
 {
     public BasketDeliveryInfoDto? BasketDeliveryInfo { get; }
-    public List<AccountDto?>? DeliverToAccounts { get; }
-    public List<ContactDto?>? DeliverToContacts { get; }
 
     public DeliveryInfoState() : base(true) { }
 
-    public DeliveryInfoState(BasketDeliveryInfoDto? basketDeliveryInfo, List<AccountDto?>? deliverToAccounts,
-        List<ContactDto?>? deliverToContacts) : base(false)
+    public DeliveryInfoState(BasketDeliveryInfoDto? basketDeliveryInfo) : base(false)
     {
         BasketDeliveryInfo = basketDeliveryInfo;
-        DeliverToAccounts = deliverToAccounts;
-        DeliverToContacts = deliverToContacts;
     }
 }
 

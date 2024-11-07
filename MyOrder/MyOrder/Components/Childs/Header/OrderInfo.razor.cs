@@ -3,9 +3,10 @@ using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using MyOrder.Components.Common;
 using MyOrder.Components.Common.Dialogs;
+using MyOrder.Services;
 using MyOrder.Shared.Dtos;
 using MyOrder.Store.OrderInfoUseCase;
-using MyOrder.Store.RessourcesUseCase;
+using MyOrder.Store.ProcedureCallUseCase;
 using MyOrder.Utils;
 
 namespace MyOrder.Components.Childs.Header;
@@ -13,7 +14,9 @@ namespace MyOrder.Components.Childs.Header;
 public partial class OrderInfo : FluxorComponentBase<OrderInfoState, FetchOrderInfoAction>
 {
     [Inject]
-    private IDialogService DialogService { get; set; }
+    private IState<OrderContactsState> OrderContactsState { get; set; }
+    [Inject]
+    private IModalService ModalService { get; set; }
     private BasketOrderInfoDto? BasketOrderInfo { get; set; }
     private List<ContactDto?>? Contacts { get; set; }
     private List<BasketValueDto?>? SalesOrigins { get; set; }
@@ -22,11 +25,16 @@ public partial class OrderInfo : FluxorComponentBase<OrderInfoState, FetchOrderI
     private string SelectedClient { get; set; } = string.Empty;
     private List<string>? AccountAddress { get; set; }
     private bool isLoading = true;
+    private bool disposed = false;
+
 
     protected override FetchOrderInfoAction CreateFetchAction(OrderInfoState state, string basketId) => new(state, basketId);
 
     protected override void OnInitialized()
     {
+        Dispatcher.Dispatch(new FetchOrderContactsAction(OrderContactsState.Value, BasketId));
+        OrderContactsState.StateChanged += OrderContactsStateChanged;
+
         base.OnInitialized();
 
         var rscState = RessourcesState?.Value;
@@ -43,10 +51,24 @@ public partial class OrderInfo : FluxorComponentBase<OrderInfoState, FetchOrderI
     {
         BasketOrderInfo = State?.Value.BasketOrderInfo
             ?? throw new ArgumentNullException(nameof(State.Value.BasketOrderInfo), "Unexpected null for BasketOrderInfo object.");
-        Contacts = State.Value.ContactList;
         SelectedClient = FieldUtility.SelectedAccount(BasketOrderInfo?.Account?.Value);
         AccountAddress = FieldUtility.CreateAddressList(BasketOrderInfo?.Account?.Value);
         isLoading = State.Value.IsLoading || RessourcesState.Value.IsLoading;
+    }
+
+    private void OrderContactsStateChanged(object? sender, EventArgs e)
+    {
+        Logger.LogDebug("State has changed for Contacts in {Component}",
+            GetType().Name);
+
+        InvokeAsync(() =>
+        {
+            Contacts = OrderContactsState.Value.Contacts;
+            StateHasChanged();
+        });
+
+        Logger.LogDebug("StateChanged handler completed for Contacts {Component}",
+            GetType().Name);
     }
 
     private static Color CustomerTagColorHelper(string? value) =>
@@ -56,7 +78,7 @@ public partial class OrderInfo : FluxorComponentBase<OrderInfoState, FetchOrderI
             "noGift" => Color.Error,
             _ => Color.Warning
         };
-
+#warning Tags are not complete
     private static string CustomerTagIconHelper(string? value) =>
         value switch
         {
@@ -65,13 +87,31 @@ public partial class OrderInfo : FluxorComponentBase<OrderInfoState, FetchOrderI
             _ => Icons.Material.Filled.Warning
         };
 
-    private Task OpenContactSearchDialogAsync()
+    private async Task OpenContactSearchDialogAsync()
     {
-        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Medium, CloseButton = true };
-        var parameters = new DialogParameters<SearchContactDialog>
+        if (BasketOrderInfo?.Contact is null)
         {
-            { x => x.Contacts, Contacts }
-        };
-        return DialogService.ShowAsync<SearchContactDialog>("Simple Dialog", parameters, options);
+            Logger.LogWarning("Contact is null in {Component}",
+                GetType().Name);
+            return;
+        }
+
+        await ModalService.OpenSearchContactDialogAsync<OrderContactsState, FetchOrderContactsAction>(
+             contact => Dispatcher.Dispatch(
+                    new UpdateFieldAction(BasketOrderInfo.Contact, contact, typeof(FetchOrderInfoAction)))
+             );
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        if (!disposed)
+        {
+            if (disposing)
+            {
+                OrderContactsState.StateChanged -= OrderContactsStateChanged;
+            }
+            disposed = true;
+        }
+        base.Dispose(disposing);
     }
 }

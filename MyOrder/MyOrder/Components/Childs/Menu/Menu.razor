@@ -138,7 +138,7 @@
         BasketActions = GeneralInfo?.Actions;
     }
 
-    private static async Task MenuActionHandler(IModalService modalService, string? confirm, Action callback)
+    private static async Task MenuActionHandler(IModalService modalService, string? confirm, System.Action callback)
     {
         if (!string.IsNullOrWhiteSpace(confirm))
         {

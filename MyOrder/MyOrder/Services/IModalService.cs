@@ -1,22 +1,24 @@
 ﻿using MudBlazor;
-using MyOrder.Shared.Dtos.GeneralInformation;
+using MyOrder.Shared.Dtos;
+using MyOrder.Store;
 
 namespace MyOrder.Services;
 
 public interface IModalService
 {
-    public event Action<string, string, Action> OnShow;
-    public event Action OnClose;
+    //event Action<string, string, Action> OnShow;
 
-    public Task<IDialogReference> OpenAddLineDialogAsync(Action? onCloseCallback = null);
-    public Task<IDialogReference> OpenNewBasketDialogAsync();
-    public Task<IDialogReference> OpenBasketDialogAsync();
+    Task<IDialogReference> OpenAddLineDialogAsync(Action? onCloseCallback = null);
+    Task<IDialogReference> OpenNewBasketDialogAsync();
+    Task<IDialogReference> OpenBasketDialogAsync();
+    Task<IDialogReference> OpenSearchContactDialogAsync<TState, TAction>(
+        Action<ContactDto> contactClicked)
+        where TState : class, IContactsState
+        where TAction : class, IFetchContactsAction;
 
-    public Task<bool> ShowConfirmationDialog(string message, string? title = null,
+    Task<bool> ShowConfirmationDialog(string message, string? title = null,
         Action? onConfirm = null, ModalSeverity modalSeverity = ModalSeverity.info);
+    //public void ShowModal(string title, string message,
+    // Action onConfirm, ModalSeverity modalSeverity = ModalSeverity.info);
 
-    public void ShowModal(string title, string message,
-     Action onConfirm, ModalSeverity modalSeverity = ModalSeverity.info);
-
-    void CloseModal();
 }

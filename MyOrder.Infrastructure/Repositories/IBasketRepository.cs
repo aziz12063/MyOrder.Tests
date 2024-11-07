@@ -33,7 +33,7 @@ public interface IBasketRepository
     //=======================================================================================================
     #region Order Info
     Task<BasketOrderInfoDto> GetBasketOrderInfoAsync(string basketId);
-    Task<List<ContactDto?>> GetOrderByContactsAsync(string basketId);
+    Task<List<ContactDto?>> GetOrderByContactsAsync(string basketId, string? filter = null);
     Task<List<BasketValueDto?>> GetCustomerTagsAsync(string basketId);
     Task<List<BasketValueDto?>> GetSalesOriginsAsync(string basketId);
     Task<List<BasketValueDto?>> GetWebOriginsAsync(string basketId);
@@ -45,8 +45,8 @@ public interface IBasketRepository
     //=======================================================================================================
     #region Delivery
     Task<BasketDeliveryInfoDto> GetBasketDeliveryInfoAsync(string basketId);
-    Task<List<AccountDto?>> GetDeliverToAccountsAsync(string basketId);
-    Task<List<ContactDto?>> GetDeliverToContactsAsync(string basketId);
+    Task<List<AccountDto?>> GetDeliverToAccountsAsync(string basketId, string? filter = null);
+    Task<List<ContactDto?>> GetDeliverToContactsAsync(string basketId, string? filter = null);
     Task<List<BasketValueDto?>> GetDeliveryModesAsync(string basketId);
     #endregion
 

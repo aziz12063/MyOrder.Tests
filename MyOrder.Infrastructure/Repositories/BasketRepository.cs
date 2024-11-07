@@ -5,7 +5,6 @@ using MyOrder.Shared.Dtos.BasketItems;
 using MyOrder.Shared.Dtos.GeneralInformation;
 using MyOrder.Shared.Dtos.Lines;
 using MyOrder.Shared.Dtos.SharedComponents;
-using Newtonsoft.Json;
 using System.Collections.Immutable;
 
 namespace MyOrder.Infrastructure.Repositories;
@@ -97,7 +96,7 @@ public class BasketRepository(IBasketApiClient apiClient,
         if (EqualityComparer<object>.Default.Equals(fieldValue, value))
         {
             logger.LogWarning("No changes detected while updating the field {Field} value is the same as the new value.\n" +
-                "Old value: {OldValue}, new value: {NewValue}.", field, fieldValue, value); 
+                "Old value: {OldValue}, new value: {NewValue}.", field, fieldValue, value);
             return null;
         }
 
@@ -114,8 +113,6 @@ public class BasketRepository(IBasketApiClient apiClient,
         var procedureCall = procedureCallTemplate!.SetItem(procedureCallTemplate.Count - 1, procedureCallValue);
 
         var response = await PostProcedureCallAsync(procedureCall, basketId);
-
-        logger.LogInformation("Procedure call response : \n{response}", response);
 
         return response;
     }
@@ -169,10 +166,10 @@ public class BasketRepository(IBasketApiClient apiClient,
         return await apiClient.GetBasketOrderInfoAsync(basketId);
     }
 
-    public async Task<List<ContactDto?>> GetOrderByContactsAsync(string basketId)
+    public async Task<List<ContactDto?>> GetOrderByContactsAsync(string basketId, string? filter = null)
     {
         logger.LogDebug("Fetching order by contacts for {BasketId} from repository", basketId);
-        return await apiClient.GetOrderByContactsAsync(basketId);
+        return await apiClient.GetOrderByContactsAsync(basketId, filter);
     }
 
     public async Task<List<BasketValueDto?>> GetCustomerTagsAsync(string basketId)
@@ -211,16 +208,16 @@ public class BasketRepository(IBasketApiClient apiClient,
         return await apiClient.GetBasketDeliveryInfoAsync(basketId);
     }
 
-    public async Task<List<AccountDto?>> GetDeliverToAccountsAsync(string basketId)
+    public async Task<List<AccountDto?>> GetDeliverToAccountsAsync(string basketId, string? filter = null)
     {
         logger.LogDebug("Fetching deliver to accounts for {BasketId} from repository", basketId);
-        return await apiClient.GetDeliverToAccountsAsync(basketId);
+        return await apiClient.GetDeliverToAccountsAsync(basketId, filter);
     }
 
-    public async Task<List<ContactDto?>> GetDeliverToContactsAsync(string basketId)
+    public async Task<List<ContactDto?>> GetDeliverToContactsAsync(string basketId, string? filter = null)
     {
         logger.LogDebug("Fetching deliver to contacts for {BasketId} from repository", basketId);
-        return await apiClient.GetDeliverToContactsAsync(basketId);
+        return await apiClient.GetDeliverToContactsAsync(basketId, filter);
     }
 
     public async Task<List<BasketValueDto?>> GetDeliveryModesAsync(string basketId)
@@ -350,7 +347,7 @@ public class BasketRepository(IBasketApiClient apiClient,
         return response;
     }
 
-    public async Task<ProcedureCallResponseDto?> CommitAddFreeTextLineAsync(string basketId, List<string?> freeTexts )
+    public async Task<ProcedureCallResponseDto?> CommitAddFreeTextLineAsync(string basketId, List<string?> freeTexts)
     {
         logger.LogInformation("Posting free texts : \n{freeTexts} " +
             "\nfor {BasketId} from repository", string.Join("\n", freeTexts), basketId);

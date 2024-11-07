@@ -1,24 +1,77 @@
-﻿<MudDialog>
+﻿@typeparam TState
+@typeparam TFetchAction
+
+@inherits FluxorComponentBase<TState, TFetchAction>
+
+<MudDialog Class="app-dialog-modal">
     <TitleContent>
-        Chercher Contact
+        <MudText Typo="Typo.h5">Chercher contact</MudText>
     </TitleContent>
     <DialogContent>
-        Contacts: @Contacts[1].ToString()
+        @if (State.Value.IsLoading)
+        {
+            <HeaderElementLoadingSkeleton />
+            return;
+        }
+        <FetchActionTypeCascadingValue FetchActionTypeValue="FetchActionType">
+            <!--Grid-->
+
+            <MudDataGrid T="ContactDto"
+                         Elevation="0"
+                         Bordered="true"
+                         Dense="true"
+                         Striped="true"
+                         FixedHeader="true"
+                         Height="48vh"
+                         Virtualize="true"
+                         Items="DisplayedItems()"
+                         SortMode="@SortMode.None"
+                         QuickFilter="SearchContactDialog<TState, TFetchAction>.QuickFilter">
+                <ToolBarContent>
+                    <MudSpacer />
+                    <MudTextField T="string"
+                                  Variant="Variant.Text"
+                                  Margin="Margin.Dense"
+                                  Adornment="Adornment.End"
+                                  AdornmentIcon="@Icons.Material.Filled.Search"
+                                  Label="Recherche"
+                                  @bind-value="_filterString"
+                                  @bind-value:after="OnSearchTextChanged" />
+                </ToolBarContent>
+                <Columns>
+                    <TemplateColumn Title="Numéro contact">
+                        <CellTemplate>
+                            <MudTooltip Text="Choisir ce contact">
+                                <MudButton Variant="Variant.Text"
+                                           DropShadow="true"
+                                           Color="Color.Primary"
+                                           StartIcon="@Icons.Material.Filled.KeyboardDoubleArrowRight"
+                                OnClick="() => OnContactClick(context.Item)">
+                                @context.Item.ContactId
+                                       </MudButton>
+                            </MudTooltip>
+                        </CellTemplate>
+                    </TemplateColumn>
+
+                    <PropertyColumn Title="Titre"
+                                    Property="item => item == null? string.Empty : item.SocialTitle" />
+
+                    <PropertyColumn Title="Prénom"
+                                    Property="item => item == null? string.Empty : item.FirstName" />
+
+                    <PropertyColumn Title="Nom"
+                                    Property="item => item == null? string.Empty : item.LastName" />
+
+                    <PropertyColumn Title="Téléphone"
+                                    Property="item => item == null? string.Empty : item.Phone" />
+
+                    <PropertyColumn Title="Mobile"
+                                    Property="item => item == null? string.Empty : item.CellularPhone" />
+
+                    <PropertyColumn Title="Email"
+                                    Property="item => item == null? string.Empty : item.Email" />
+                </Columns>
+            </MudDataGrid>
+        </FetchActionTypeCascadingValue>
     </DialogContent>
-    <DialogActions>
-        <MudButton OnClick="Cancel">Cancel</MudButton>
-        <MudButton Color="Color.Primary" OnClick="Submit">Ok</MudButton>
-    </DialogActions>
 </MudDialog>
-
-@code {
-    [CascadingParameter]
-    private MudDialogInstance MudDialog { get; set; }
-
-    [Parameter]
-    public List<ContactDto?>? Contacts { get; set; }
-
-    private void Submit() => MudDialog.Close(DialogResult.Ok(true));
-
-    private void Cancel() => MudDialog.Cancel();
-}

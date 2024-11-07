@@ -46,7 +46,9 @@ public interface IBasketApiClient
     Task<BasketOrderInfoDto> GetBasketOrderInfoAsync(string basketId);
 
     [Get("/api/orderContext/{basketId}/orderByContacts")]
-    Task<List<ContactDto?>> GetOrderByContactsAsync(string basketId);
+    Task<List<ContactDto?>> GetOrderByContactsAsync(
+        string basketId,
+        [Query] string? filter = null);
 
     [Get("/api/orderContext/{basketId}/customerTags")]
     Task<List<BasketValueDto?>> GetCustomerTagsAsync(string basketId);
@@ -68,10 +70,14 @@ public interface IBasketApiClient
     Task<BasketDeliveryInfoDto> GetBasketDeliveryInfoAsync(string basketId);
 
     [Get("/api/orderContext/{basketId}/deliverToAccounts")]
-    Task<List<AccountDto?>> GetDeliverToAccountsAsync(string basketId);
+    Task<List<AccountDto?>> GetDeliverToAccountsAsync(
+        string basketId,
+        [Query] string? filter = null);
 
     [Get("/api/orderContext/{basketId}/deliverToContacts")]
-    Task<List<ContactDto?>> GetDeliverToContactsAsync(string basketId);
+    Task<List<ContactDto?>> GetDeliverToContactsAsync(
+        string basketId,
+        [Query] string? filter = null);
 
     [Get("/api/orderContext/{basketId}/deliveryModes")]
     Task<List<BasketValueDto?>> GetDeliveryModesAsync(string basketId);
@@ -134,7 +140,7 @@ public interface IBasketApiClient
 
     [Post("/api/orderContext/{basketId}/orderLines/duplicate")]
     Task<ProcedureCallResponseDto> DuplicateOrderLinesAsync(
-        string basketId, 
+        string basketId,
         [Body] List<int> linesIds);
 
     [Post("/api/orderContext/{basketId}/orderLines/delete")]

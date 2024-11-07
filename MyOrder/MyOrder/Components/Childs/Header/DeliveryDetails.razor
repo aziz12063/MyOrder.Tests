@@ -49,7 +49,9 @@
                 <MudStack Row="true" Spacing="1" StretchItems="StretchItems.Start">
                     <MudText Typo="Typo.subtitle1">@BasketDeliveryInfo!.Contact?.Name</MudText>
                     <MudTooltip Text="Chercher client? -Not Implemented">
-                        <MudIconButton Icon="@Icons.Material.Filled.Search" Size="Size.Small" />
+                        <MudIconButton Icon="@Icons.Material.Filled.Search"
+                                       Size="Size.Small"
+                                       OnClick="OpenContactSearchDialogAsync" />
                     </MudTooltip>
                     <MudTooltip Text="Copier les informations du client -Not Implemented">
                         <MudIconButton Icon="@Icons.Material.Filled.Description" Size="Size.Small" />

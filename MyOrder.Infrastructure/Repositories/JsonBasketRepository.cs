@@ -404,5 +404,20 @@ namespace MyOrder.Infrastructure.Repositories
         {
             throw new NotImplementedException();
         }
+
+        Task<List<ContactDto?>> IBasketRepository.GetOrderByContactsAsync(string basketId, string? filter)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<List<AccountDto?>> IBasketRepository.GetDeliverToAccountsAsync(string basketId, string? filter)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<List<ContactDto?>> IBasketRepository.GetDeliverToContactsAsync(string basketId, string? filter)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

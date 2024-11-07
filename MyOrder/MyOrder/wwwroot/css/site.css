@@ -124,7 +124,7 @@
     width: 650px;
 }
 
-.add-basket-dialog-modal {
+.app-dialog-modal {
     min-width: 60vw;
     max-width: 1200px !important;
     min-height: 60vh;
