@@ -9,7 +9,7 @@ namespace MyOrder.Components.Childs.Header;
 public partial class CommercialDetails : FluxorComponentBase<TradeInfoState, FetchTradeInfoAction>
 {
 
-    private BasketTradeInfoDto? BasketTradeInfoDto { get; set; }
+    private BasketTradeInfoDto? BasketTradeInfo { get; set; }
     private List<BasketTurnoverLineDto?>? Turnover { get; set; }
     private BasketContractInfoDto? Contract { get; set; }
     private string? DiscountDetails { get; set; }
@@ -21,9 +21,9 @@ public partial class CommercialDetails : FluxorComponentBase<TradeInfoState, Fet
 
     protected override void CacheNewFields()
     {
-        BasketTradeInfoDto = State.Value.BasketTradeInfo ?? throw new NullReferenceException("Unexpected null for BasketOrderInfo object.");
-        Turnover = BasketTradeInfoDto?.Turnover?.Value;
-        Contract = BasketTradeInfoDto?.Contract;
+        BasketTradeInfo = State.Value.BasketTradeInfo ?? throw new NullReferenceException("Unexpected null for BasketOrderInfo object.");
+        Turnover = BasketTradeInfo?.Turnover?.Value;
+        Contract = BasketTradeInfo?.Contract;
         DiscountDetails = FieldUtility.DisplayListNoSpace(Contract?.DiscountList?.Value);
         isLoading = State.Value.IsLoading;
     }

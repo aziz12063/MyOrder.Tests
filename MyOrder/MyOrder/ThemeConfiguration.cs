@@ -81,7 +81,7 @@ public static class ThemeConfiguration
                 LineHeight = 1.66,
                 LetterSpacing = "0.03333em",
             },
-            
+
         },
         LayoutProperties = new LayoutProperties
         {
@@ -93,25 +93,29 @@ public static class ThemeConfiguration
     {
         PaletteLight = new PaletteLight
         {
-            Primary = "#D32F2F",  // Vibrant red for primary elements (matching the logo's red)
-            Secondary = "#1976D2",  // Blue for secondary elements (matching the blue in the logo)
-            AppbarBackground = "#D32F2F",  // App bar matches the primary color (red)
+            Primary = "#424242",  // Dark gray for primary elements to create a more neutral feel
+            Secondary = "#D32F2F",  // Signature red for accents
+            AppbarBackground = "#594ae2ff",  // Slightly darker gray app bar for better visual separation
             Background = "#F5F5F5",  // Soft light background for content areas
-            Surface = "#FFFFFF",  // White surfaces for cards and panels
-            DrawerBackground = "#F5F5F5",  // Light background for drawers
-            DrawerText = "#D32F2F",  // Drawer text in primary red
-            TextPrimary = "#212121",  // Dark gray for primary text (ensures good readability)
-            TextSecondary = "#757575",  // Lighter gray for secondary text
-            ActionDefault = "#D32F2F",  // Default action color (red)
+            Surface = "#F9F9F9",  // Slightly off-white surfaces for better contrast against background
+            DrawerBackground = "#DDDDDD",  // Darker gray background for drawers to create better separation
+            DrawerText = "#212121",  // Dark gray text in drawer for readability
+            //DrawerHighlight = "#EEEEEE",  // Highlight for selected elements in drawer
+            TextPrimary = "#212121",  // Dark gray for primary text
+            TextSecondary = "#616161",  // Medium gray for secondary text for a softer contrast
+            ActionDefault = "#D32F2F",  // Default action color (signature red for accents)
+            //ActionHover = "#C62828",  // Darker red for button hover effect
             ActionDisabled = "#BDBDBD",  // Disabled action color
             ActionDisabledBackground = "#E0E0E0",  // Disabled action background
             Divider = "#BDBDBD",  // Divider color
-            DividerLight = "#E0E0E0",  // Lighter dividers
-            HoverOpacity = 0.08f,  // Opacity for hover effect
-            Success = "#4CAF50",  // Green for success messages (unchanged from RAJA)
-            Error = "#F44336",  // Red for error messages (slightly darker red for contrast)
-            Warning = "#FF9800",  // Orange for warnings (unchanged)
-            Info = "#2196F3",  // Blue for informational messages (aligns with the secondary color)
+            DividerLight = "#E0E0E0",  // Lighter dividers for a cleaner look
+            //DividerThickness = "2px",  // Increased divider thickness for better element distinction
+            HoverOpacity = 0.15f,  // Increased hover effect for better feedback
+            Success = "#4CAF50",  // Green for success messages
+            Error = "#B00020",  // Darker red for error messages to contrast against primary accents
+            Warning = "#FF9800",  // Orange for warnings
+            Info = "#1976D2",  // Blue for informational messages to align with the brand
+            TableLines = "#FAFAFA",  // Soft shade for table headers and alternate rows for better readability
         },
         Typography = new Typography
         {
@@ -135,7 +139,7 @@ public static class ThemeConfiguration
             {
                 FontFamily = new[] { "Roboto", "Arial", "sans-serif" },
                 FontSize = "1rem",
-                FontWeight = 600,
+                FontWeight = 500,  // Increased weight to emphasize important elements
                 LineHeight = 1.75,
                 LetterSpacing = "0.00938em",
             },
@@ -143,7 +147,7 @@ public static class ThemeConfiguration
             {
                 FontFamily = new[] { "Roboto", "Arial", "sans-serif" },
                 FontSize = "0.875rem",
-                FontWeight = 500,
+                FontWeight = 400,
                 LineHeight = 1.57,
                 LetterSpacing = "0.00714em",
             },
@@ -166,7 +170,8 @@ public static class ThemeConfiguration
         },
         LayoutProperties = new LayoutProperties
         {
-            DefaultBorderRadius = "12px",  // Softer but slightly sharper border for a modern look
+            DefaultBorderRadius = "8px",  // Slightly softer border for a modern yet professional look
         },
     };
+
 }

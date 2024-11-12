@@ -11,12 +11,12 @@
     <MudStack Justify="Justify.SpaceBetween" Style="height: inherit;">
 
         <div>
-            <MudText Typo="Typo.h6" Color="Color.Secondary" Class="pb-4">Commande</MudText>
+            <MudText Typo="Typo.h6" Color="Color.Secondary" Class="pb-4">@BasketOrderInfo!.PanelLabel</MudText>
 
             <!-- Contact Client -->
             <CustomHeaderCard>
                 <HeaderContent>
-                    <MudText Typo="Typo.subtitle1">Contact Commandeur</MudText>
+                    <MudText Typo="Typo.subtitle1">@BasketOrderInfo!.ContactSectionLabel</MudText>
                     <MudTooltip Text="Chercher contact">
                         <MudIconButton Icon="@Icons.Material.Filled.Search" Size="Size.Small" @onclick="OpenContactSearchDialogAsync" />
                     </MudTooltip>
@@ -56,7 +56,7 @@
 
         <CustomHeaderCard Elevation="0">
             <HeaderContent>
-                <MudText Typo="Typo.subtitle1" Class="pt-0">Informations générales</MudText>
+                <MudText Typo="Typo.subtitle1" Class="pt-0">@BasketOrderInfo!.InformationSectionLabel</MudText>
             </HeaderContent>
             <HeaderActions>
                 <div style="display: flex; align-items: center; justify-content: center; height: 4vh;">

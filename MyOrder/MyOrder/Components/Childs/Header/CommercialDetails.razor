@@ -9,8 +9,8 @@
 <FetchActionTypeCascadingValue FetchActionTypeValue="FetchActionType">
     <MudStack Justify="Justify.SpaceBetween" Style="height: inherit;">
         <MudStack Spacing="2">
-            <MudText Typo="Typo.h6" Color="Color.Secondary" Class="pb-4">Informations Commerciales</MudText>
-            <MudText Typo="Typo.subtitle1">@BasketTradeInfoDto?.Turnover?.Name</MudText>
+            <MudText Typo="Typo.h6" Color="Color.Secondary" Class="pb-4">@BasketTradeInfo!.PanelLabel</MudText>
+            <MudText Typo="Typo.subtitle1">@BasketTradeInfo?.Turnover?.Name</MudText>
             <MudDataGrid Items="@Turnover"
                          SortMode="@SortMode.None"
                          Striped="true"
@@ -43,7 +43,7 @@
         {
             <MudStack Spacing="6" Class="mt-6">
                 <div>
-                    <MudText Typo="Typo.subtitle1" Color="Color.Warning">Contrats en cours</MudText>
+                    <MudText Typo="Typo.subtitle1" Color="Color.Warning">@BasketTradeInfo!.ContractSectionLabel</MudText>
 
                     <MudGrid Spacing="1">
                         <MudItem xs="6">

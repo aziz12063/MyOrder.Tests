@@ -4,9 +4,7 @@
 
 @if (Field is not null && !Hidden)
 {
-    <MudTooltip RootStyle="width:100%"
-                Text="@TooltipText"
-                Placement="Placement.Top">
+    <FieldTooltip TooltipText="@TooltipText">
         <MudSelect T="T"
                    Typo="Typo.body2"
                    Class="@Class"
@@ -32,7 +30,7 @@
                 }
             }
         </MudSelect>
-    </MudTooltip>
+    </FieldTooltip>
 }
 
 @code {

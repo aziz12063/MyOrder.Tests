@@ -75,7 +75,10 @@ public partial class OrderInfo : FluxorComponentBase<OrderInfoState, FetchOrderI
         value switch
         {
             "vip" => Color.Primary,
+            "specialPrep" => Color.Info,
+            "export" => Color.Success,
             "noGift" => Color.Error,
+            "completeDelivery" => Color.Success,
             _ => Color.Warning
         };
 #warning Tags are not complete
@@ -83,7 +86,10 @@ public partial class OrderInfo : FluxorComponentBase<OrderInfoState, FetchOrderI
         value switch
         {
             "vip" => Icons.Material.Filled.Star,
+            "specialPrep" => Icons.Material.Filled.Warning,
+            "export" => Icons.Material.Filled.ImportExport,
             "noGift" => Icons.Material.Filled.CardGiftcard,
+            "completeDelivery" => Icons.Material.Filled.Done,
             _ => Icons.Material.Filled.Warning
         };
 

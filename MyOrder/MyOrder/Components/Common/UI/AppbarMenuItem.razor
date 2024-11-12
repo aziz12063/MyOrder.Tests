@@ -3,19 +3,18 @@
 @if (BasketActionsBase is null)
     return;
 
-<MudTooltip Text="Test Description. Feature not implemented.">
-    <MudBadge Dot Overlap="true" Color="Color.Error" Visible="BadgeVisible">
-        <MudButton Color="Color.Inherit"
-                   Variant="Variant.Text"
-                   IconSize="Size.Medium"
-                   StartIcon="@Icon"
-                   Size="Size.Large"
-                   Class="px-2"
-                   OnClick="OnButtonClick">
-            <MudText Typo="Typo.body1" Class="ml-n1">
-                @BasketActionsBase.MenuLabel
-            </MudText>
-        </MudButton>
+<MudTooltip Text="@BasketActionsBase.MenuLabel">
+    <MudBadge Dot="true"
+              Overlap="true"
+              Icon="@Icons.Material.Rounded.Warning"
+              Color="Color.Error"
+              BadgeClass="mb-n1"
+              Visible="BadgeVisible">
+        <MudIconButton Color="Color.Inherit"
+                       Size="Size.Large"
+                       Icon="@Icon"
+                       OnClick="OnButtonClick"
+                       Class="px-1" />
     </MudBadge>
 </MudTooltip>
 
@@ -24,7 +23,7 @@
     public string? Icon { get; set; }
 
     [Parameter, EditorRequired]
-    public BasketActionsBase? BasketActionsBase { get; set; }
+    public BasketActionsBase? BasketActionsBase { get; set; } 
 
     [Parameter]
     public EventCallback OnClickCallback { get; set; }
