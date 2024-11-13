@@ -43,7 +43,7 @@
     box-shadow: inset 0px 0px 7px #00000025 !important;
 }
 
-.outlined-generic-select input {
+.outlined-generic-select .mud-input-slot{
     padding-top: 8px !important;
     padding-bottom: 7px !important;
 }
