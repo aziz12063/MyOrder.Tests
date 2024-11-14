@@ -3,18 +3,18 @@
 @if (FieldUtility.IsHidden(Field))
     return;
 
-<MudMenuItem Disabled="_disabled"
-             OnClick="OnClick">
-
-    <MudTooltip Text="@Field.Description">
-
-        @* Title="@Field.Description" //info bulle *@
+<MudTooltip Text="@Field.Description"
+            Inline="false"
+            RootStyle="width:100%;">
+    <MudMenuItem Disabled="_disabled"
+                 OnClick="OnClick" 
+                 Class="px-2">
         <MudIcon Icon="@Icon"
                  Disabled="_disabled"
                  Color="_color"
                  Size="Size.Small"
                  Style="vertical-align:bottom;"
-                 Class="mr-1" />
+                 Class="mr-2" />
         @if (_disabled)
         {
             @Field.Name
@@ -23,8 +23,9 @@
         {
             <MudText Typo="Typo.inherit" Color="_color">@Field.Name</MudText>
         }
-    </MudTooltip>
-</MudMenuItem>
+    </MudMenuItem>
+</MudTooltip>
+
 
 @code {
     [Parameter, EditorRequired]
