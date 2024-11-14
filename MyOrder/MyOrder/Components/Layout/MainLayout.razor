@@ -4,13 +4,14 @@
 @using MyOrder.Store.GeneralInfoUseCase
 @using MyOrder.Store.RessourcesUseCase
 @inherits LayoutComponentBase
+@implements IDisposable
 
 @inject NavigationManager NavigationManager
 @inject BasketService BasketService
 
 @* Required for MudBlazor framework *@
-@* <MudThemeProvider Theme="@ThemeConfiguration.MyTheme" /> *@
-<MudThemeProvider Theme="_themeManager.Theme" />
+<MudThemeProvider Theme="@ThemeConfiguration.RajaTheme" />
+@* <MudThemeProvider Theme="_themeManager.Theme" /> *@
 
 <MudPopoverProvider />
 
@@ -45,11 +46,11 @@
     <MudMainContent>
         @Body
         @* RequiredByThemeManager *@
-        <MudThemeManagerButton OnClick="@((e) => OpenThemeManager(true))" />
+@*         <MudThemeManagerButton OnClick="@((e) => OpenThemeManager(true))" />
         <MudThemeManager Open="_themeManagerOpen"
                          OpenChanged="OpenThemeManager"
                          Theme="_themeManager"
-                         ThemeChanged="UpdateTheme" />
+                         ThemeChanged="UpdateTheme" /> *@
     </MudMainContent>
 </MudLayout>
 
@@ -65,29 +66,32 @@
     private IDispatcher Dispatcher { get; set; }
     [Inject]
     private IState<RessourcesState> RessourcesState { get; set; }
-    private ThemeManagerTheme _themeManager = new ThemeManagerTheme() { Theme = ThemeConfiguration.RajaTheme };
-    private string _companyLogoSrc = "images/Raja-Logo.png";
-    public bool _themeManagerOpen = false;
-
     [Inject]
     IState<GeneralInfoState> GeneralInfoState { get; set; }
 
-    void OpenThemeManager(bool value)
-    {
-        _themeManagerOpen = value;
-    }
+    private string _companyLogoSrc = "images/Raja-Logo.png";
 
-    void UpdateTheme(ThemeManagerTheme value)
-    {
-        _themeManager = value;
-        StateHasChanged();
-    }
+
+    // private ThemeManagerTheme _themeManager = new ThemeManagerTheme()
+    //     { Theme = ThemeConfiguration.RajaTheme };
+    // public bool _themeManagerOpen = false;
+
+    // void OpenThemeManager(bool value)
+    // {
+    //     _themeManagerOpen = value;
+    // }
+
+    // void UpdateTheme(ThemeManagerTheme value)
+    // {
+    //     _themeManager = value;
+    //     StateHasChanged();
+    // }
 
     protected override void OnInitialized()
     {
-        /// For Theme manager
-        StateHasChanged();
-        //////////////////////////
+        // /// For Theme manager
+        // StateHasChanged();
+        // //////////////////////////
 
         GeneralInfoState.StateChanged += GenInfoOnStateChanged;
         RessourcesState.StateChanged += ResInfoOnStateChanged;
@@ -111,19 +115,29 @@
         {
             if (GeneralInfoState?.Value?.GeneralInfo?.Company?.GroupId == "viking")
             {
-                _themeManager.Theme = ThemeConfiguration.RajaTheme;
+                //_themeManager.Theme = ThemeConfiguration.RajaTheme;
                 _companyLogoSrc = "images/Viking-Logo.png";
             }
             else
             {
-                _themeManager.Theme = ThemeConfiguration.RajaTheme;
+                //_themeManager.Theme = ThemeConfiguration.RajaTheme;
                 _companyLogoSrc = "images/Raja-Logo.png";
             }
             await InvokeAsync(StateHasChanged);
         });
     }
+
     protected virtual void ResInfoOnStateChanged(object? sender, EventArgs e)
     {
-        StateHasChanged();
+        InvokeAsync(async () =>
+        {
+            await InvokeAsync(StateHasChanged);
+        });
+    }
+
+    public void Dispose()
+    {
+        GeneralInfoState.StateChanged -= GenInfoOnStateChanged;
+        RessourcesState.StateChanged -= ResInfoOnStateChanged;
     }
 }
