@@ -8,6 +8,7 @@ public class BasketLineDto
     public bool? IsCustomLineNum { get; set; }
     public List<BasketValueDto?>? LineTags { get; set; }
     public Field<string?>? ItemId { get; set; }// RW
+    public Field<string?>? ItemProperties { get; set; }
     public Field<string?>? Name { get; set; } // RW
     public Field<string?>? InventLocationId { get; set; }  // RW
     public Field<int?>? SalesQuantity { get; set; }  //RW

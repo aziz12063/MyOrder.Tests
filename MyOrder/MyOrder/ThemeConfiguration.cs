@@ -87,6 +87,15 @@ public static class ThemeConfiguration
         {
             DefaultBorderRadius = "15px",  // Softer borders
         },
+        ZIndex = new ZIndex
+        {
+            Drawer = 1100,
+            Popover = 1300,
+            AppBar = 1200,
+            Dialog = 1400,
+            Snackbar = 1500,
+            Tooltip = 1600
+        }
     };
 
     public static readonly MudTheme vikingMudTheme = new()
@@ -174,4 +183,11 @@ public static class ThemeConfiguration
         },
     };
 
+    public static void ApplyCustomMudGlobals()
+    {
+        MudGlobal.InputDefaults.ShrinkLabel = true;
+        MudGlobal.InputDefaults.Margin = Margin.Dense;
+        MudGlobal.TooltipDefaults.Delay = TimeSpan.FromMilliseconds(650);
+        MudGlobal.TooltipDefaults.Duration = TimeSpan.FromMilliseconds(100);
+    }
 }

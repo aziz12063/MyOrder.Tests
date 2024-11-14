@@ -1,6 +1,7 @@
 using Fluxor;
 using Fluxor.Blazor.Web.ReduxDevTools;
 using MudBlazor.Services;
+using MyOrder;
 using MyOrder.Components;
 using MyOrder.Configuration;
 using MyOrder.Infrastructure.ApiClients;
@@ -70,6 +71,7 @@ builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 
 //MudBlazor and UI elements
 builder.Services.AddMudServices();
+ThemeConfiguration.ApplyCustomMudGlobals();
 
 
 var app = builder.Build();
