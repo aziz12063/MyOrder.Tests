@@ -3,11 +3,12 @@
 @if (BasketActionsBase is null)
     return;
 
-<MudMenu AnchorOrigin="Origin.BottomLeft"
-         TransformOrigin="Origin.TopLeft"
+<MudMenu AnchorOrigin="AnchorOrigin"
+         TransformOrigin="TransformOrigin"
          Dense="true"
          Variant="Variant.Filled"
-         ActivationEvent="MouseEvent.MouseOver">
+         ActivationEvent="MouseEvent.MouseOver"
+         PopoverClass="rounded-lg">
     <ActivatorContent>
         <AppbarMenuItem Icon="@Icon"
                         BasketActionsBase="BasketActionsBase" />
@@ -26,4 +27,10 @@
 
     [Parameter, EditorRequired]
     public string? Icon { get; set; }
+
+    [Parameter]
+    public Origin AnchorOrigin { get; set; } = Origin.BottomLeft;
+
+    [Parameter]
+    public Origin TransformOrigin { get; set; } = Origin.TopLeft;
 }

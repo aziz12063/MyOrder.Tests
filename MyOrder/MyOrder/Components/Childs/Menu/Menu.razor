@@ -39,7 +39,7 @@
                        OnClickCallback="(async () => await CloneBasketClicked(BasketActions?.Open?.CloneBasket))" />
 
     </AppbarMenuTemplate>
-
+    <AppbarDivider />
     <MudStack Row="true" Spacing="MenuButtonsInterSpacing">
         <!-- Valider -->
         <AppbarMenuTemplate BasketActionsBase="BasketActions?.Validate"
@@ -73,7 +73,7 @@
         </AppbarMenuTemplate>
 
     </MudStack>
-
+    <AppbarDivider />
     <MudStack Row="true" Spacing="MenuButtonsInterSpacing">
         <!-- Envoyer-->
         <AppbarMenuTemplate BasketActionsBase="BasketActions?.Sending"
@@ -84,7 +84,9 @@
 
         <!-- Notes-->
         <AppbarMenuTemplate BasketActionsBase="BasketActions?.Notes"
-                            Icon="@Icons.Material.Filled.Description">
+                            Icon="@Icons.Material.Filled.Description"
+                            AnchorOrigin="Origin.BottomCenter"
+                            TransformOrigin="Origin.TopCenter">
             <FieldMenuItem Icon="@Icons.Material.Rounded.Notes"
                            Field="BasketActions?.Notes.OrderNote" />
             <FieldMenuItem Icon="@Icons.Material.Filled.Attachment"
@@ -93,7 +95,9 @@
 
         <!-- Logs-->
         <AppbarMenuTemplate BasketActionsBase="BasketActions?.Logs"
-                            Icon="@Icons.Material.Filled.Menu">
+                            Icon="@Icons.Material.Filled.Menu"
+                            AnchorOrigin="Origin.BottomRight"
+                            TransformOrigin="Origin.TopLeft">
             <FieldMenuItem Icon="@Icons.Material.Filled.EventNote"
                            Field="BasketActions?.Logs.OrderDiary" />
             <FieldMenuItem Icon="@Icons.Material.Outlined.Chat"
@@ -101,11 +105,13 @@
         </AppbarMenuTemplate>
 
     </MudStack>
-
+    <AppbarDivider />
     <MudStack Row="true" Spacing="MenuButtonsInterSpacing">
         <!-- System -->
         <AppbarMenuTemplate BasketActionsBase="BasketActions?.System"
-                            Icon="@Icons.Material.Filled.AccountCircle">
+                            Icon="@Icons.Material.Filled.AccountCircle"
+                            AnchorOrigin="Origin.BottomRight"
+                            TransformOrigin="Origin.TopLeft">
             <FieldMenuItem Icon="@Icons.Material.Outlined.Badge"
                            Field="BasketActions?.System?.Profile" />
             <FieldMenuItem Icon="@Icons.Material.Rounded.AdminPanelSettings"
@@ -124,7 +130,7 @@
 
 @code {
     public const int MenuButtonsInterSpacing = 0;
-    public const int MenuSectionSpacing = 10;
+    public const int MenuSectionSpacing = 2;
 
     [Parameter, EditorRequired]
     public GeneralInfoDto? GeneralInfo { get; set; }

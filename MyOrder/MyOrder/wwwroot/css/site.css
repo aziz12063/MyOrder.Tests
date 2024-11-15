@@ -1,11 +1,12 @@
 .custom-appbar .mud-toolbar {
-    padding-left: 18px !important;
-    padding-right: 0px !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    background: linear-gradient(45deg, rgba(47, 153, 225, 1) 10%, rgba(20, 126, 218, 1) 30%, rgba(10, 116, 218, 1) 50%);
 }
 
 .logo {
-    width: 175px;
-    height: auto;
+    width: auto;
+    height: 40px;
     background-color: #fbfaf7;
     border-radius: 4px;
     box-shadow: 0 0 10px 1px #abc5ff78;
@@ -43,7 +44,7 @@
     box-shadow: inset 0px 0px 7px #00000025 !important;
 }
 
-.outlined-generic-select .mud-input-slot{
+.outlined-generic-select .mud-input-slot {
     padding-top: 8px !important;
     padding-bottom: 7px !important;
 }

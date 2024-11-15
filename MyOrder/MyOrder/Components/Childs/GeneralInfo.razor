@@ -4,7 +4,7 @@
 
 @if (State.Value.IsLoading)
 {
-    <MudStack Class="pl-16" Spacing="2">
+    <MudStack Class="pl-8" Spacing="2">
         <MudSkeleton Animation="Animation.Pulse" SkeletonType="SkeletonType.Rectangle" Width="175px" Height="24px" Style="background-color: rgb(240 248 255 / 11%)" />
         <MudSkeleton Animation="Animation.Pulse" SkeletonType="SkeletonType.Rectangle" Width="250px" Height="20px" Style="background-color: rgb(240 248 255 / 11%)" />
     </MudStack>
@@ -14,15 +14,15 @@
 <FetchActionTypeCascadingValue FetchActionTypeValue="FetchActionType">
     <PageTitle>@State?.Value?.GeneralInfo?.PageTitle</PageTitle>
     <MudTooltip Text="@AuthentifiedUser">
-        <MudStack Class="pl-16" Spacing="2">
+        <MudStack Class="pl-8" Spacing="1">
             <MudText Typo="Typo.body1" Class="d-flex">
                 <b>@BasketGeneralInfo!.OrderType @BasketGeneralInfo!.OrderId [@BasketGeneralInfo!.OrderStatus]</b>
             </MudText>
-            <MudText Typo="Typo.body2" Class="d-flex">
-                @BasketGeneralInfo!.OrderDate - @BasketGeneralInfo!.SalesResponsible
+            <MudText Typo="Typo.body2" Class="d-flex" Style="color:#EBEBEB;">
+                <em>@BasketGeneralInfo!.OrderDate?.ToString("g")</em> &nbsp; - @BasketGeneralInfo!.SalesResponsible
             </MudText>
         </MudStack>
     </MudTooltip>
     <MudSpacer />
-    <Menu GeneralInfo="BasketGeneralInfo"/>
+    <Menu GeneralInfo="BasketGeneralInfo" />
 </FetchActionTypeCascadingValue>

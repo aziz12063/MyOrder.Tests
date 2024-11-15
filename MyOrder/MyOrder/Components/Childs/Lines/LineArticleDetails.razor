@@ -5,17 +5,28 @@
             <MudGrid Spacing="1">
                 <!--Code article-->
                 <MudItem xs="6">
-                    <MudElement @onclick="(() => HandlePopOverOnClick())">
+                    <MudElement @onclick="HandlePopOverOnClick">
                         <DisplayField Field="BasketLine?.ItemId" />
                     </MudElement>
-                    <MudPopover Open="@_openPopOver" OverflowBehavior="OverflowBehavior.FlipAlways" AnchorOrigin="Origin.TopCenter" TransformOrigin="Origin.BottomCenter" Paper="false">
-                        <MudPaper Outlined="true" Class="pa-2">
-                            <MudText>
-                                Num article<br />
-                                Volume<br />
-                                etc...
+                    <MudPopover Open="@_openPopOver"
+                                AnchorOrigin="Origin.TopLeft"
+                                TransformOrigin="Origin.BottomRight"
+                                Paper="false"
+                                Elevation="4">
+                        <MudPaper Outlined="true"
+                                  Class="px-3 pt-2 rounded-lg"
+                                  Style="@($"background-color:{Colors.Gray.Lighten5}; color: {Colors.Gray.Darken4};")">
+                            <MudText Typo="Typo.body2">
+                                @FieldUtility.MarkupStringHelper(BasketLine!.ItemProperties?.Value)
                             </MudText>
-                            <MudButton OnClick="@(() => HandlePopOverOnClick())" Color="Color.Error">Fermer</MudButton>
+                            <MudStack Row="true">
+                                <MudSpacer />
+                                <MudButton OnClick="HandlePopOverOnClick"
+                                           Color="Color.Error"
+                                           Style="@($"color: {Colors.Red.Darken1};")"
+                                           Size="Size.Small"
+                                           Class="mr-n2">Fermer</MudButton>
+                            </MudStack>
                         </MudPaper>
                     </MudPopover>
                 </MudItem>
@@ -63,10 +74,7 @@
         <MudDivider Light="true" />
         <!--Information produit-->
         <div>
-            <DisplayField T="string"
-                          IsMarkupString="true"
-                          FixedMultilineHeight="true"
-                          Field="BasketLine?.ProductInfo" />
+            <DisplayField Field="BasketLine?.ProductInfo" />
         </div>
     </MudStack>
 </MudPaper>

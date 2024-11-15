@@ -3,32 +3,43 @@
 @if (BasketActionsBase is null)
     return;
 
-<MudTooltip Text="@BasketActionsBase.MenuLabel">
-    <MudBadge Dot="true"
-              Overlap="true"
-              Icon="@Icons.Material.Rounded.Warning"
-              Color="Color.Error"
-              BadgeClass="mb-n1"
-              Visible="BadgeVisible">
-        <MudIconButton Color="Color.Inherit"
-                       Size="Size.Large"
-                       Icon="@Icon"
-                       OnClick="OnButtonClick"
-                       Class="px-1" />
-    </MudBadge>
-</MudTooltip>
+<MudBadge Dot="true"
+          Overlap="true"
+          Icon="@Icons.Material.Rounded.Warning"
+          Color="Color.Error"
+          BadgeClass="ml-n2 mb-n1"
+          Visible="BadgeVisible">
+    <MudButton Variant="Variant.Text"
+               DropShadow="false"
+               Color="Color.Inherit"
+               OnClick="OnButtonClick"
+               Class="px-1 rounded-lg"
+               @onmouseover="() => isHovered = true"
+               @onmouseout="() => isHovered = false"
+               Style="@($"background-color: {(isHovered ? "rgba(255, 255, 255, 0.1)" : "transparent")};")">
+        <MudStack Spacing="0"
+                  Class="align-center justify-center">
+            <MudIcon Style="font-size:1.875rem;"
+                     Icon="@Icon" />
+            <MudText Typo="Typo.caption"
+                     Align="Align.Center"
+                     Class="">@BasketActionsBase.MenuLabel</MudText>
+        </MudStack>
+    </MudButton>
+</MudBadge>
 
 @code {
     [Parameter, EditorRequired]
     public string? Icon { get; set; }
 
     [Parameter, EditorRequired]
-    public BasketActionsBase? BasketActionsBase { get; set; } 
+    public BasketActionsBase? BasketActionsBase { get; set; }
 
     [Parameter]
     public EventCallback OnClickCallback { get; set; }
 
     public bool BadgeVisible { get; set; } = false;
+    public bool isHovered = false;
 
     protected override void OnParametersSet()
     {

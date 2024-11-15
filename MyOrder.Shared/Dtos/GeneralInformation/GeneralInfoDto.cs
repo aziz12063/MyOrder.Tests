@@ -8,7 +8,7 @@ public class GeneralInfoDto
     public string? BasketId { get; set; }
     public string? OrderId { get; set; }
     public string? OrderStatus { get; set; }
-    public string? OrderDate { get; set; }
+    public DateTime? OrderDate { get; set; }
     public string? SalesResponsible { get; set; }
     public BasketActions? Actions { get; set; }
 }

@@ -76,7 +76,7 @@ public static class ThemeConfiguration
             Caption = new Caption
             {
                 FontFamily = ["Roboto", "Arial", "sans-serif"],
-                FontSize = "0.75rem",
+                FontSize = "0.725rem",
                 FontWeight = 400,
                 LineHeight = 1.66,
                 LetterSpacing = "0.03333em",
@@ -85,7 +85,7 @@ public static class ThemeConfiguration
         },
         LayoutProperties = new LayoutProperties
         {
-            DefaultBorderRadius = "15px",  // Softer borders
+            DefaultBorderRadius = "13px",  // Softer borders
         },
         ZIndex = new ZIndex
         {
