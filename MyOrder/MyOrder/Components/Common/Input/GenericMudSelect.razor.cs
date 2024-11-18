@@ -161,7 +161,7 @@ public partial class GenericMudSelect<T> : GenericInputBase<T>
 
             DropdownItemsDisplay.Combined => (basketItem.Description?.Trim(), basketItem.Value?.Trim()) switch
             {
-                (not null and { Length: > 0 }, not null and { Length: > 0 }) => $"{basketItem.Description.Trim()} - {basketItem.Value.Trim()}",
+                (not null and { Length: > 0 }, not null and { Length: > 0 }) => $"{basketItem.Value.Trim()} - {basketItem.Description.Trim()}",
                 (not null and { Length: > 0 }, _) => basketItem.Description.Trim(),
                 (_, not null and { Length: > 0 }) => basketItem.Value.Trim(),
                 _ => "N/A",
@@ -172,5 +172,6 @@ public partial class GenericMudSelect<T> : GenericInputBase<T>
     }
 
     public void DropDownClosedHandler() => _isOpen = false;
+
     public void DropDownOpenedHandler() => _isOpen = true;
 }
