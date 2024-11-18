@@ -8,14 +8,12 @@ namespace MyOrder.Store.InvoiceInfoUseCase;
 public class InvoiceInfoState : StateBase
 {
     public BasketInvoiceInfoDto? BasketInvoiceInfo { get; }
-    public List<AccountDto?>? InvoiceToAccounts { get; }
 
     public InvoiceInfoState() : base(true) { }
 
-    public InvoiceInfoState(BasketInvoiceInfoDto? basketInvoiceInfo, List<AccountDto?>? invoiceToAccounts) : base(false)
+    public InvoiceInfoState(BasketInvoiceInfoDto? basketInvoiceInfo) : base(false)
     {
         BasketInvoiceInfo = basketInvoiceInfo;
-        InvoiceToAccounts = invoiceToAccounts;
     }
 
 }

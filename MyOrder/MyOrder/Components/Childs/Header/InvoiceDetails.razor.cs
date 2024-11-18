@@ -1,29 +1,41 @@
 ﻿using Fluxor;
-using MyOrder.Shared.Dtos;
-using MyOrder.Store.InvoiceInfoUseCase;
-using MyOrder.Store.PricesInfoUseCase;
-using System.Text;
+using Microsoft.AspNetCore.Components;
+using MudBlazor;
 using MyOrder.Components.Common;
+using MyOrder.Services;
+using MyOrder.Shared.Dtos;
+using MyOrder.Store.DeliveryInfoUseCase;
+using MyOrder.Store.InvoiceInfoUseCase;
+using MyOrder.Store.ProcedureCallUseCase;
 using MyOrder.Utils;
 
 namespace MyOrder.Components.Childs.Header;
 
 public partial class InvoiceDetails : FluxorComponentBase<InvoiceInfoState, FetchInvoiceInfoAction>
 {
-    public BasketInvoiceInfoDto? BasketInvoiceInfo { get; set; }
-    public List<AccountDto?>? InvoiceToAccounts { get; set; }
-    public List<BasketValueDto?>? TaxGroups { get; set; }
-    public List<BasketValueDto?>? PaymentModes { get; set; }
-    private string SelectedClient { get; set; } = string.Empty;
+    [Inject]
+    private IState<InvoiceAccountsState> InvoiceAccountsState { get; set; }
+    [Inject]
+    private IModalService ModalService { get; set; }
+
+    private BasketInvoiceInfoDto? BasketInvoiceInfo { get; set; }
+    private List<AccountDto?>? InvoiceToAccounts { get; set; }
+    private List<BasketValueDto?>? TaxGroups { get; set; }
+    private List<BasketValueDto?>? PaymentModes { get; set; }
     private List<string>? AccountAddress { get; set; }
     private string? DisplayAddress { get; set; }
-    private bool isLoading = true;
+    private bool _isLoading = true;
+    private bool _disposed = false;
 
     protected override FetchInvoiceInfoAction CreateFetchAction(InvoiceInfoState state, string basketId) =>
         new(state, basketId);
 
     protected override void OnInitialized()
     {
+        Dispatcher.Dispatch(
+            new FetchInvoiceAccountsAction(InvoiceAccountsState.Value, BasketId));
+        InvoiceAccountsState.StateChanged += InvoiceAccountsStateChanged;
+
         base.OnInitialized();
 
         TaxGroups = RessourcesState?.Value.TaxGroups
@@ -35,19 +47,52 @@ public partial class InvoiceDetails : FluxorComponentBase<InvoiceInfoState, Fetc
 
     protected override void CacheNewFields()
     {
-        BasketInvoiceInfo = State.Value.BasketInvoiceInfo ?? throw new NullReferenceException("Unexpected null for BasketInvoiceInfo object.");
-        InvoiceToAccounts = State.Value.InvoiceToAccounts;
-        InvoiceToAccounts = State.Value.InvoiceToAccounts;
+        BasketInvoiceInfo = State.Value.BasketInvoiceInfo
+            ?? throw new NullReferenceException("Unexpected null for BasketInvoiceInfo object.");
 
-        SelectedClient = FieldUtility.SelectedAccount(BasketInvoiceInfo?.Account?.Value);
         AccountAddress = FieldUtility.CreateAddressList(BasketInvoiceInfo?.Account?.Value);
         DisplayAddress = FieldUtility.DisplayAddress(AccountAddress);
-        isLoading = State.Value.IsLoading;
+        _isLoading = State.Value.IsLoading;
     }
 
-    private bool IsPublicEntityValue =>
-        FieldUtility.NullOrWhiteSpaceHelper(BasketInvoiceInfo?.IsPublicEntity);
+    private void InvoiceAccountsStateChanged(object? sender, EventArgs e)
+    {
+        Logger.LogDebug("State has changed for Accounts in {Component}",
+            GetType().Name);
 
-    private string NoteValue =>
-        FieldUtility.NullOrWhiteSpaceHelper(BasketInvoiceInfo?.Note?.Value);
+        InvokeAsync(() =>
+        {
+            InvoiceToAccounts = InvoiceAccountsState.Value.Accounts;
+            StateHasChanged();
+        });
+
+        Logger.LogDebug("StateChanged handler completed for Accounts {Component}", GetType().Name);
+    }
+
+    private async Task OpenAccountSearchDialogAsync()
+    {
+        if (BasketInvoiceInfo?.Account is null)
+        {
+            Logger.LogWarning("Account is null in {Component}",
+                GetType().Name);
+            return;
+        }
+
+        await ModalService.OpenSearchAccountDialogAsync<InvoiceAccountsState, FetchInvoiceAccountsAction>(
+            account => Dispatcher.Dispatch(
+              new UpdateFieldAction(BasketInvoiceInfo.Account, account, typeof(FetchInvoiceAccountsAction))));
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        if (!_disposed)
+        {
+            if (disposing)
+            {
+                InvoiceAccountsState.StateChanged -= InvoiceAccountsStateChanged;
+            }
+            _disposed = true;
+        }
+        base.Dispose(disposing);
+    }
 }

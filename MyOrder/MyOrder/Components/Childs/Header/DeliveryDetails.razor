@@ -15,8 +15,10 @@
                 <HeaderContent>
                     <MudStack Row="true" Spacing="1" StretchItems="StretchItems.Start" Class="pb-2">
                         <MudText Typo="Typo.subtitle1">@BasketDeliveryInfo!.AccountSectionLabel</MudText>
-                        <MudTooltip Text="Chercher client? -Not Implemented">
-                            <MudIconButton Icon="@Icons.Material.Filled.Search" Size="Size.Small" />
+                        <MudTooltip Text="Chercher compte">
+                            <MudIconButton Icon="@Icons.Material.Filled.Search"
+                                           Size="Size.Small"
+                                           OnClick="OpenAccountSearchDialogAsync" />
                         </MudTooltip>
                         <MudTooltip Text="Copier les informations du client -Not Implemented">
                             <MudIconButton Icon="@Icons.Material.Filled.Description" Size="Size.Small" />
@@ -48,7 +50,7 @@
             <HeaderContent>
                 <MudStack Row="true" Spacing="1" StretchItems="StretchItems.Start">
                     <MudText Typo="Typo.subtitle1">@BasketDeliveryInfo!.ContactSectionLabel</MudText>
-                    <MudTooltip Text="Chercher client? -Not Implemented">
+                    <MudTooltip Text="Chercher client">
                         <MudIconButton Icon="@Icons.Material.Filled.Search"
                                        Size="Size.Small"
                                        OnClick="OpenContactSearchDialogAsync" />

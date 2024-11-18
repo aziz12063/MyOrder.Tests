@@ -72,6 +72,23 @@ public class ModalService(IDialogService dialogService) : IModalService
             "Search contact", parameters, options);
     }
 
+    public async Task<IDialogReference> OpenSearchAccountDialogAsync<TState, TAction>(
+        Action<AccountDto> accountClicked)
+        where TState : class, IAccountsState
+        where TAction : class, IFetchAccountsAction
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, CloseButton = true };
+        var parameters = new DialogParameters<SearchAccountDialog<TState, TAction>>
+        {
+            { dialog => dialog.AccountClicked,
+                EventCallback.Factory.Create(this, accountClicked)
+            }
+        };
+
+        return await dialogService.ShowAsync<SearchAccountDialog<TState, TAction>>(
+            "Search compte", parameters, options);
+    }
+
     public async Task<bool> ShowConfirmationDialog(string message, string? title = null,
         Action? onConfirm = null, ModalSeverity modalSeverity = ModalSeverity.info)
     {

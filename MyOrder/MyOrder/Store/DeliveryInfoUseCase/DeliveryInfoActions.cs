@@ -18,7 +18,7 @@ public class FetchDeliveryInfoFailureAction(string errorMessage)
 
 public class FetchDeliveryAccountsAction(DeliveryAccountsState state,
     string basketId, string? filter = null)
-    : FetchDataActionBase(state)
+    : FetchDataActionBase(state), IFetchAccountsAction
 {
     public string BasketId { get; } = basketId;
     public string? Filter { get; } = filter;

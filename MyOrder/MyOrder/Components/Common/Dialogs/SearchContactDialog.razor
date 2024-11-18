@@ -46,30 +46,30 @@
                                            DropShadow="true"
                                            Color="Color.Primary"
                                            StartIcon="@Icons.Material.Filled.KeyboardDoubleArrowRight"
-                                OnClick="() => OnContactClick(context.Item)">
-                                @context.Item.ContactId
-                                       </MudButton>
+                                           OnClick="() => OnContactClick(context.Item)">
+                                    @context.Item.ContactId
+                                </MudButton>
                             </MudTooltip>
                         </CellTemplate>
                     </TemplateColumn>
 
                     <PropertyColumn Title="Titre"
-                                    Property="item => item == null? string.Empty : item.SocialTitle" />
+                                    Property="item => item.SocialTitle ?? string.Empty" />
 
                     <PropertyColumn Title="Prénom"
-                                    Property="item => item == null? string.Empty : item.FirstName" />
+                                    Property="item => item.FirstName ?? string.Empty" />
 
                     <PropertyColumn Title="Nom"
-                                    Property="item => item == null? string.Empty : item.LastName" />
+                                    Property="item => item.LastName ?? string.Empty" />
 
                     <PropertyColumn Title="Téléphone"
-                                    Property="item => item == null? string.Empty : item.Phone" />
+                                    Property="item => item.Phone ?? string.Empty" />
 
                     <PropertyColumn Title="Mobile"
-                                    Property="item => item == null? string.Empty : item.CellularPhone" />
+                                    Property="item => item.CellularPhone ?? string.Empty" />
 
                     <PropertyColumn Title="Email"
-                                    Property="item => item == null? string.Empty : item.Email" />
+                                    Property="item => item.Email ?? string.Empty" />
                 </Columns>
             </MudDataGrid>
         </FetchActionTypeCascadingValue>

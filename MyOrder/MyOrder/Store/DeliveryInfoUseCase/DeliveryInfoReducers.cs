@@ -21,10 +21,8 @@ public static class DeliveryInfoReducers
         new();
 
     [ReducerMethod]
-    public static DeliveryContactsState ReduceFetchDeliveryContactsSuccessAction(DeliveryContactsState state, FetchDeliveryContactsSuccessAction action)
-    {
-        return new(action.DeliveryContacts, action.IsFiltered);
-    }
+    public static DeliveryContactsState ReduceFetchDeliveryContactsSuccessAction(DeliveryContactsState state, FetchDeliveryContactsSuccessAction action) => 
+        new(action.DeliveryContacts, action.IsFiltered);
 
     [ReducerMethod]
     public static DeliveryContactsState ReduceFetchDeliveryContactsFailureAction(DeliveryContactsState state, FetchDeliveryContactsFailureAction action) =>

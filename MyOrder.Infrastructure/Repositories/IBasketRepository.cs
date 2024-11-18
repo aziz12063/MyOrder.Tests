@@ -55,7 +55,7 @@ public interface IBasketRepository
     //=======================================================================================================
     #region Invoice Info
     Task<BasketInvoiceInfoDto> GetBasketInvoiceInfoAsync(string basketId);
-    Task<List<AccountDto?>> GetInvoiceToAccountsAsync(string basketId);
+    Task<List<AccountDto?>> GetInvoiceToAccountsAsync(string basketId, string? filter = null);
     Task<List<BasketValueDto?>> GetTaxGroupsAsync(string basketId);
     Task<List<BasketValueDto?>> GetPaymentModesAsync(string basketId);
     #endregion

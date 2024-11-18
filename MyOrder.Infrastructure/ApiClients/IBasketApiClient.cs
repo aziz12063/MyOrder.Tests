@@ -91,7 +91,9 @@ public interface IBasketApiClient
     Task<BasketInvoiceInfoDto> GetBasketInvoiceInfoAsync(string basketId);
 
     [Get("/api/orderContext/{basketId}/invoiceToAccounts")]
-    Task<List<AccountDto?>> GetInvoiceToAccountsAsync(string basketId);
+    Task<List<AccountDto?>> GetInvoiceToAccountsAsync(
+        string basketId,
+        [Query] string? filter = null);
 
     [Get("/api/orderContext/{basketId}/taxGroups")]
     Task<List<BasketValueDto?>> GetTaxGroupsAsync(string basketId);

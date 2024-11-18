@@ -4,7 +4,6 @@ using MyOrder.Components.Common;
 using MyOrder.Services;
 using MyOrder.Shared.Dtos;
 using MyOrder.Store.DeliveryInfoUseCase;
-using MyOrder.Store.OrderInfoUseCase;
 using MyOrder.Store.ProcedureCallUseCase;
 using MyOrder.Utils;
 
@@ -22,7 +21,6 @@ public partial class DeliveryDetails : FluxorComponentBase<DeliveryInfoState, Fe
     private List<AccountDto?>? Accounts { get; set; }
     private List<ContactDto?>? Contacts { get; set; }
     private List<BasketValueDto?>? DeliveryModes { get; set; }
-    private string SelectedAccount { get; set; } = string.Empty;
     private List<string>? AccountAddress { get; set; }
     private string DisplayAddress { get; set; } = string.Empty;
     private bool isLoading = true;
@@ -47,7 +45,6 @@ public partial class DeliveryDetails : FluxorComponentBase<DeliveryInfoState, Fe
         BasketDeliveryInfo = State?.Value.BasketDeliveryInfo
                              ?? throw new ArgumentNullException(nameof(State.Value.BasketDeliveryInfo), "Unexpected null for BasketOrderInfo object.");
 
-        SelectedAccount = FieldUtility.SelectedAccount(BasketDeliveryInfo?.Account?.Value);
         AccountAddress = FieldUtility.CreateAddressList(BasketDeliveryInfo?.Account?.Value);
         DisplayAddress = FieldUtility.DisplayAddress(AccountAddress);
         isLoading = State.Value.IsLoading || RessourcesState.Value.IsLoading;
@@ -96,6 +93,21 @@ public partial class DeliveryDetails : FluxorComponentBase<DeliveryInfoState, Fe
                     new UpdateFieldAction(BasketDeliveryInfo.Contact, contact, typeof(FetchDeliveryInfoAction)))
              );
     }
+
+    private async Task OpenAccountSearchDialogAsync()
+    {
+        if (BasketDeliveryInfo?.Account is null)
+        {
+            Logger.LogWarning("Account is null in {Component}",
+                GetType().Name);
+            return;
+        }
+        await ModalService.OpenSearchAccountDialogAsync<DeliveryAccountsState, FetchDeliveryAccountsAction>(
+            account => Dispatcher.Dispatch(
+                new UpdateFieldAction(BasketDeliveryInfo.Account, account, typeof(FetchDeliveryInfoAction)))
+            );
+    }
+
     protected override void Dispose(bool disposing)
     {
         if (!disposed)

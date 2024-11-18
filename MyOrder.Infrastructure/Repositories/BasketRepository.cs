@@ -238,10 +238,10 @@ public class BasketRepository(IBasketApiClient apiClient,
         return await apiClient.GetBasketInvoiceInfoAsync(basketId);
     }
 
-    public async Task<List<AccountDto?>> GetInvoiceToAccountsAsync(string basketId)
+    public async Task<List<AccountDto?>> GetInvoiceToAccountsAsync(string basketId, string? filter = null)
     {
         logger.LogDebug("Fetching invoice to accounts for {BasketId} from repository", basketId);
-        return await apiClient.GetInvoiceToAccountsAsync(basketId);
+        return await apiClient.GetInvoiceToAccountsAsync(basketId, filter);
     }
 
     public async Task<List<BasketValueDto?>> GetTaxGroupsAsync(string basketId)

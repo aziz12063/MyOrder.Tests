@@ -15,6 +15,10 @@ public interface IModalService
         Action<ContactDto> contactClicked)
         where TState : class, IContactsState
         where TAction : class, IFetchContactsAction;
+    Task<IDialogReference> OpenSearchAccountDialogAsync<TState, TAction>(
+        Action<AccountDto> accountClicked)
+        where TState : class, IAccountsState
+        where TAction : class, IFetchAccountsAction;
 
     Task<bool> ShowConfirmationDialog(string message, string? title = null,
         Action? onConfirm = null, ModalSeverity modalSeverity = ModalSeverity.info);

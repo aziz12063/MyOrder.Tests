@@ -1,0 +1,77 @@
+﻿@typeparam TState
+@typeparam TFetchAction
+
+@inherits FluxorComponentBase<TState, TFetchAction>
+
+<MudDialog Class="app-dialog-modal">
+    <TitleContent>
+        <MudText Typo="Typo.h5">Chercher compte</MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (State.Value.IsLoading)
+        {
+            <HeaderElementLoadingSkeleton />
+            return;
+        }
+        <FetchActionTypeCascadingValue FetchActionTypeValue="FetchActionType" />
+
+        <MudDataGrid T="AccountDto"
+                     Elevation="0"
+                     Bordered="true"
+                     Dense="true"
+                     Striped="true"
+                     FixedHeader="true"
+                     Height="48vh"
+                     Virtualize="true"
+                     Items="DisplayedItems()"
+                     SortMode="@SortMode.None"
+                     QuickFilter="SearchAccountDialog<TState, TFetchAction>.QuickFilter">
+            <ToolBarContent>
+                <MudSpacer />
+                <MudTextField T="string"
+                              Variant="Variant.Text"
+                              Margin="Margin.Dense"
+                              Adornment="Adornment.End"
+                              AdornmentIcon="@Icons.Material.Filled.Search"
+                              Label="Recherche"
+                              @bind-value="_filterString"
+                              @bind-value:after="OnSearchTextChanged" />
+            </ToolBarContent>
+            <Columns>
+
+                <TemplateColumn Title="Numéro">
+                    <CellTemplate>
+                        <MudTooltip Text="Choisir ce compte">
+                            <MudButton Variant="Variant.Text"
+                                       DropShadow="true"
+                                       Color="Color.Primary"
+                                       StartIcon="@Icons.Material.Filled.KeyboardDoubleArrowRight"
+                                       OnClick="() => OnAccountClick(context.Item)">
+                                @context.Item.AccountId
+                            </MudButton>
+                        </MudTooltip>
+                    </CellTemplate>
+                </TemplateColumn>
+
+                <PropertyColumn Title="Nom"
+                                Property="item => item.Name ?? string.Empty" />
+
+                <PropertyColumn Title="Compte associé"
+                                Property="item => item" />
+
+                <PropertyColumn Title="Voie"
+                                Property="item => item.Street ?? string.Empty" />
+
+                <PropertyColumn Title="CP"
+                                Property="item => item.ZipCode ?? string.Empty" />
+
+                <PropertyColumn Title="Ville"
+                                Property="item => item.City ?? string.Empty" />
+
+                <PropertyColumn Title="Dernière commande"
+                                Property="item => item" />
+            </Columns>
+        </MudDataGrid>
+
+    </DialogContent>
+</MudDialog>

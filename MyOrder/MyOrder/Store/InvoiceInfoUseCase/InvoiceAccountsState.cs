@@ -2,17 +2,17 @@
 using MyOrder.Shared.Dtos;
 using MyOrder.Store.Base;
 
-namespace MyOrder.Store.DeliveryInfoUseCase;
+namespace MyOrder.Store.InvoiceInfoUseCase;
 
 [FeatureState]
-public class DeliveryAccountsState : StateBase, IAccountsState
+public class InvoiceAccountsState : StateBase, IAccountsState
 {
     public List<AccountDto?>? Accounts { get; }
     public List<AccountDto?>? FilteredAccounts { get; }
 
-    public DeliveryAccountsState() : base(true) { }
+    public InvoiceAccountsState() : base(true) { }
 
-    public DeliveryAccountsState(List<AccountDto?>? accountList, bool isFiltered) : base(false)
+    public InvoiceAccountsState(List<AccountDto?>? accountList, bool isFiltered) : base(false)
     {
         if (isFiltered)
             FilteredAccounts = accountList;
