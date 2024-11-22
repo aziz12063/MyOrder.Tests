@@ -1,9 +1,21 @@
 ﻿@inherits LayoutComponentBase
 
-<PageTitle>My Order</PageTitle>
+<MudThemeProvider Theme="@ThemeConfiguration.RajaTheme" />
+<MudPopoverProvider />
 
-<header>
-    <h2>Redirection...</h2>
-</header>
+<PageTitle>Welcome to MyOrder</PageTitle>
 
-@Body
+
+<MudLayout>
+    <MudAppBar Elevation="2" Class="custom-appbar">
+        <MudImage Src="@_companyLogoSrc" Alt="Raja Group" Class="logo" />
+    </MudAppBar>
+
+    <MudMainContent>
+        @Body
+    </MudMainContent>
+</MudLayout>
+
+@code{
+    private string _companyLogoSrc = "images/Raja-Logo.png";
+}

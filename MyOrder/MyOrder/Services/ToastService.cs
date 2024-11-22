@@ -1,11 +1,9 @@
-﻿using Fluxor;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
 using MudBlazor;
 using MyOrder.Components.Common.UI;
 using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Utils;
-using MyOrder.Store.NotificationsUseCase;
 
 namespace MyOrder.Services;
 
@@ -20,7 +18,6 @@ public enum ToastLevel
 public class ToastService(ISnackbar snackbarService, ILogger<ToastService> logger)
     : IToastService
 {
-
     public void ShowBasketNotification(BasketNotificationDto notification, Action<Snackbar>? onClose = null)
     {
         snackbarService.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
