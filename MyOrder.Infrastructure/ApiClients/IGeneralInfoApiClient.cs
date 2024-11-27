@@ -6,7 +6,7 @@ namespace MyOrder.Infrastructure.ApiClients;
 
 public interface IGeneralInfoApiClient
 {
-    [Get("/api/orderContext/{basketId}/generalInfxo")]
+    [Get("/api/orderContext/{basketId}/generalInfo")]
     Task<GeneralInfoDto?> GetBasketGeneralInfoAsync(string basketId, CancellationToken cancellationToken = default);
 
     [Get("/api/orderContext/{basketId}/notifications")]
