@@ -3,11 +3,13 @@
 @using MyOrder.Services
 @using MyOrder.Store.GeneralInfoUseCase
 @using MyOrder.Store.RessourcesUseCase
+@using MyOrder.Shared.Interfaces
 @inherits LayoutComponentBase
 @implements IDisposable
 
 @inject NavigationManager NavigationManager
-@inject BasketService BasketService
+@inject INotificationService NotificationService
+@inject IBasketService BasketService
 
 @* Required for MudBlazor framework *@
 <MudThemeProvider Theme="@ThemeConfiguration.RajaTheme" />
@@ -45,15 +47,8 @@
 
     <MudMainContent>
         @Body
-        @* RequiredByThemeManager *@
-@*         <MudThemeManagerButton OnClick="@((e) => OpenThemeManager(true))" />
-        <MudThemeManager Open="_themeManagerOpen"
-                         OpenChanged="OpenThemeManager"
-                         Theme="_themeManager"
-                         ThemeChanged="UpdateTheme" /> *@
     </MudMainContent>
 </MudLayout>
-
 
 <div id="blazor-error-ui">
     An unhandled error has occurred.
@@ -71,31 +66,10 @@
 
     private string _companyLogoSrc = "images/Raja-Logo.png";
 
-
-    // private ThemeManagerTheme _themeManager = new ThemeManagerTheme()
-    //     { Theme = ThemeConfiguration.RajaTheme };
-    // public bool _themeManagerOpen = false;
-
-    // void OpenThemeManager(bool value)
-    // {
-    //     _themeManagerOpen = value;
-    // }
-
-    // void UpdateTheme(ThemeManagerTheme value)
-    // {
-    //     _themeManager = value;
-    //     StateHasChanged();
-    // }
-
     protected override void OnInitialized()
     {
-        // /// For Theme manager
-        // StateHasChanged();
-        // //////////////////////////
-
         GeneralInfoState.StateChanged += GenInfoOnStateChanged;
         RessourcesState.StateChanged += ResInfoOnStateChanged;
-
 
         var uri = new Uri(NavigationManager.Uri);
         var queryParams = System.Web.HttpUtility.ParseQueryString(uri.Query);

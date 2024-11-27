@@ -1,12 +1,13 @@
 ﻿@using MyOrder.Services
 @using Fluxor
+@using MyOrder.Shared.Interfaces
 @using MyOrder.Store.ReloadUseCase
 
 @implements IDisposable
 
 @inject IDispatcher Dispatcher
 @inject IJSRuntime JSRuntime
-@inject BasketService BasketService
+@inject IBasketService BasketService
 @inject ILogger<F5EventComponent> Logger
 
 @code {

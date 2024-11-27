@@ -5,7 +5,7 @@ using MyOrder.Store.OrderInfoUseCase;
 
 namespace MyOrder.Store.GeneralInfoUseCase
 {
-    public class GeneralInfoEffects(IBasketRepository basketRepository, ILogger<GeneralInfoEffects> logger
+    public class GeneralInfoEffects(IGeneralInfoRepository generalInfoRepository, ILogger<GeneralInfoEffects> logger
         , AuthenticationStateProvider authenticationStateProvider)
     {
         [EffectMethod]
@@ -14,7 +14,7 @@ namespace MyOrder.Store.GeneralInfoUseCase
             try
             {
                 logger.LogInformation("Fetching general info for {BasketId}", action.BasketId);
-                var basketGeneralInfo = await basketRepository.GetBasketGeneralInfoAsync(action.BasketId);
+                var basketGeneralInfo = await generalInfoRepository.GetBasketGeneralInfoAsync();
 
                 logger.LogInformation("Retrieving authenticated user info.");
                 var authState = await authenticationStateProvider.GetAuthenticationStateAsync();

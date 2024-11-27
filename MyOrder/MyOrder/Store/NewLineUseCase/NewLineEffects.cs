@@ -5,20 +5,27 @@ using MyOrder.Store.TradeInfoUseCase;
 
 namespace MyOrder.Store.NewLineUseCase;
 
-public class NewLineEffects(IBasketRepository basketRepository, IStateResolver stateResolver,
+public class NewLineEffects(INewOrderLineRepository newOrderLineRepository, IStateResolver stateResolver,
     ILogger<NewLineEffects> logger, IState<NewLineState> newLineState)
 {
+    private readonly INewOrderLineRepository _newOrderLineRepository = newOrderLineRepository
+        ?? throw new ArgumentNullException(nameof(newOrderLineRepository));
+    private readonly IStateResolver _stateResolver = stateResolver
+        ?? throw new ArgumentNullException(nameof(stateResolver));
+    private readonly ILogger<NewLineEffects> _logger = logger
+        ?? throw new ArgumentNullException(nameof(logger));
+
     [EffectMethod]
     public async Task HandleFetchNewLineAction(FetchNewLineAction action, IDispatcher dispatcher)
     {
         try
         {
-            var basketLine = await basketRepository.GetNewLineAsync(action.BasketId);
+            var basketLine = await _newOrderLineRepository.GetNewLineAsync();
             dispatcher.Dispatch(new FetchNewLineSuccessAction(basketLine));
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Error fetching new line");
+            _logger.LogError(ex, "Error fetching new line");
             dispatcher.Dispatch(new FetchNewLineFailureAction(ex.Message));
         }
     }
@@ -28,14 +35,14 @@ public class NewLineEffects(IBasketRepository basketRepository, IStateResolver s
     {
         try
         {
-            var response = await basketRepository.ResetNewLineStateAsync(action.BasketId);
+            var response = await _newOrderLineRepository.ResetNewLineStateAsync();
 
             // To refetch the latest new line state
             dispatcher.Dispatch(new FetchNewLineAction(newLineState.Value, action.BasketId));
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Error resetting new line");
+            _logger.LogError(ex, "Error resetting new line");
 
             // In case of failure, we dispatch the same action as FetchNewLineFailureAction
             dispatcher.Dispatch(new FetchNewLineFailureAction(ex.Message));
@@ -49,12 +56,12 @@ public class NewLineEffects(IBasketRepository basketRepository, IStateResolver s
         bool success = false;
         try
         {
-            var response = await basketRepository.CommitAddNewLineAsync(action.BasketId);
+            var response = await _newOrderLineRepository.CommitAddNewLineAsync();
             if (response.Success == true)
             {
                 if (response.UpdateDone == true)
                 {
-                    stateResolver.DispatchRefreshCalls(dispatcher, response.RefreshCalls, action.BasketId);
+                    _stateResolver.DispatchRefreshCalls(dispatcher, response.RefreshCalls, action.BasketId);
                     success = true;
                 }
                 else
@@ -67,7 +74,7 @@ public class NewLineEffects(IBasketRepository basketRepository, IStateResolver s
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Error committing new line");
+            _logger.LogError(ex, "Error committing new line");
             errorMessage = ex.Message;
         }
         finally
@@ -86,14 +93,14 @@ public class NewLineEffects(IBasketRepository basketRepository, IStateResolver s
         bool success = false;
         if (texts == null || texts.Count == 0)
         {
-            logger.LogError("free text is null or empty");
+            _logger.LogError("free text is null or empty");
             return;
         }
 
         string errorMessage = "";
         try
         {
-            var response = await basketRepository.CommitAddFreeTextLineAsync(basketId, texts);
+            var response = await _newOrderLineRepository.CommitAddFreeTextLineAsync(texts);
 
 
             if (response == null)
@@ -104,7 +111,7 @@ public class NewLineEffects(IBasketRepository basketRepository, IStateResolver s
             {
                 if (response.UpdateDone == true)
                 {
-                    logger.LogInformation($"dispatching PostFreeTextSuccessAction");
+                    _logger.LogInformation($"dispatching PostFreeTextSuccessAction");
                     dispatcher.Dispatch(new PostFreeTextSuccessAction(basketId, response));
                     success = true;
                 }
@@ -117,12 +124,12 @@ public class NewLineEffects(IBasketRepository basketRepository, IStateResolver s
         }
         catch (InvalidOperationException e)
         {
-            logger.LogError(e, "Error while adding text");
+            _logger.LogError(e, "Error while adding text");
 
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Error while posting text");
+            _logger.LogError(ex, "Error while posting text");
         }
         finally
         {
@@ -140,12 +147,12 @@ public class NewLineEffects(IBasketRepository basketRepository, IStateResolver s
     {
         var refreshCalls = receivedAction?.ProcedureCallResponse?.RefreshCalls;
         var basketId = receivedAction?.BasketId;
-        stateResolver.DispatchRefreshCalls(dispatcher, refreshCalls, basketId);
+        _stateResolver.DispatchRefreshCalls(dispatcher, refreshCalls, basketId);
     }
 
     [EffectMethod]
     public async Task HandlePostFreeTextFailureAction(PostFreeTextFailureAction action, IDispatcher dispatcher)
     {
-        logger.LogInformation(action.ErrorMessage);
+        _logger.LogInformation(action.ErrorMessage);
     }
 }

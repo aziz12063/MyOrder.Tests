@@ -2,14 +2,18 @@
 using MyOrder.Infrastructure.Repositories;
 using MyOrder.Services;
 using MyOrder.Shared.Dtos;
+using MyOrder.Shared.Interfaces;
 using MyOrder.Shared.Utils;
 using MyOrder.Store.OrderInfoUseCase;
 
 namespace MyOrder.Store.ProcedureCallUseCase;
 
-public class ProcedureCallEffects(IBasketRepository basketRepository,
-    ILogger<OrderInfoEffects> logger, IStateResolver stateResolver, BasketService basket)
+public class ProcedureCallEffects(IBasketActionsRepository basketActionsRepository,
+    ILogger<OrderInfoEffects> logger, IStateResolver stateResolver, IBasketService basket)
 {
+    private readonly IBasketActionsRepository _basketActionsRepository = basketActionsRepository
+        ?? throw new ArgumentNullException(nameof(basketActionsRepository));
+
     [EffectMethod]
     public async Task HandleUpdateFieldAction(UpdateFieldAction action,
         IDispatcher dispatcher)
@@ -30,7 +34,7 @@ public class ProcedureCallEffects(IBasketRepository basketRepository,
         {
             var result = await PostProcedureCall(logger,
                basket, dispatcher,
-               () => basketRepository.PostProcedureCallAsync(field, value, basket.BasketId));
+               () => _basketActionsRepository.PostProcedureCallAsync(field, value));
             success = result.success;
             errorMessage = result.errorMessage;
         }
@@ -72,7 +76,7 @@ public class ProcedureCallEffects(IBasketRepository basketRepository,
 
             var result = await PostProcedureCall(logger,
                basket, dispatcher,
-               () => basketRepository.PostProcedureCallAsync(procedureCall, basket.BasketId));
+               () => _basketActionsRepository.PostProcedureCallAsync(procedureCall));
             success = result.success;
             errorMessage = result.errorMessage;
         }
@@ -87,7 +91,7 @@ public class ProcedureCallEffects(IBasketRepository basketRepository,
     }
 
     private static async Task<(bool success, string errorMessage)> PostProcedureCall(ILogger<OrderInfoEffects> logger,
-        BasketService basket, IDispatcher dispatcher,
+        IBasketService basket, IDispatcher dispatcher,
          Func<Task<ProcedureCallResponseDto>> postProcedureCallFunc)
     {
         bool success = false;
@@ -113,7 +117,7 @@ public class ProcedureCallEffects(IBasketRepository basketRepository,
             else
                 errorMessage = response.Message ?? "An error occured!";
         }
-        catch (Exception )
+        catch (Exception)
         {
             throw;
         }

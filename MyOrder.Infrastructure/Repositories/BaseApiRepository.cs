@@ -1,0 +1,84 @@
+﻿using Microsoft.Extensions.Logging;
+using MyOrder.Shared.Events;
+using MyOrder.Shared.Interfaces;
+using Refit;
+using System.Net;
+
+namespace MyOrder.Infrastructure.Repositories;
+
+public abstract class BaseApiRepository(IEventAggregator eventAggregator, IBasketService basketService, ILogger<BaseApiRepository> logger)
+{
+    private readonly IEventAggregator _eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
+    private readonly ILogger<BaseApiRepository> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+    protected readonly IBasketService _basketService = basketService ?? throw new ArgumentNullException(nameof(basketService));
+    protected string BasketId { 
+        get 
+        {
+            var basketId = _basketService.BasketId;
+            if (string.IsNullOrEmpty(basketId))
+            {
+                throw new NullReferenceException(nameof(basketId));
+            }
+            return basketId;
+        } 
+    }
+
+    /// <summary>
+    /// Executes an API call within a standardized try-catch block.
+    /// </summary>
+    /// <typeparam name="T">The type of the API response.</typeparam>
+    /// <param name="apiCall">A function representing the API call.</param>
+    /// <param name="operationDescription">A description of the operation for logging purposes.</param>
+    /// <param name="cancellationToken">Token to observe while waiting for the task to complete.</param>
+    /// <returns>The result of the API call, or null if an exception occurs.</returns>
+    protected async Task<T?> ExecuteAsync<T>(Func<CancellationToken, Task<T?>> apiCall, string operationDescription, CancellationToken cancellationToken) where T : class
+    {
+        try
+        {
+            _logger.LogInformation("Executing operation: {OperationDescription}", operationDescription);
+            return await apiCall(cancellationToken);
+        }
+        catch (ApiException apiEx)
+        {
+            HandleApiException(apiEx, operationDescription);
+            return null; // Return null to signify failure
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Unexpected exception during {OperationDescription}", operationDescription);
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// Handles ApiException by publishing appropriate events based on the HTTP status code.
+    /// </summary>
+    private void HandleApiException(ApiException apiEx, string operationDescription)
+    {
+        _logger.LogError(apiEx, "API Exception during {OperationDescription}", operationDescription);
+
+        switch (apiEx.StatusCode)
+        {
+            case HttpStatusCode.BadRequest:
+                _eventAggregator.Publish(new ApiErrorEvent("Bad request.", (int)apiEx.StatusCode, apiEx));
+                break;
+            case HttpStatusCode.Unauthorized:
+            case HttpStatusCode.Forbidden:
+                _eventAggregator.Publish(new ApiErrorEvent("Authentication or authorization error.", (int)apiEx.StatusCode, apiEx));
+                break;
+            case HttpStatusCode.NotFound:
+                _eventAggregator.Publish(new ApiErrorEvent("Resource not found.", (int)apiEx.StatusCode, apiEx));
+                break;
+            case HttpStatusCode.RequestTimeout:
+                _eventAggregator.Publish(new ApiTimeoutEvent("The request timed out. Please try again later.", apiEx));
+                break;
+            case HttpStatusCode.ServiceUnavailable:
+            case HttpStatusCode.GatewayTimeout:
+                _eventAggregator.Publish(new BackendServiceUnavailableEvent("Service is currently unavailable. Please try again later.", apiEx));
+                break;
+            default:
+                _eventAggregator.Publish(new ApiErrorEvent($"API Error: {(int)apiEx.StatusCode}", (int)apiEx.StatusCode, apiEx));
+                break;
+        }
+    }
+}

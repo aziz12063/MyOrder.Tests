@@ -3,14 +3,16 @@ using MyOrder.Infrastructure.Repositories;
 
 namespace MyOrder.Store.DeliveryInfoUseCase;
 
-public class DeliveryInfoEffects(IBasketRepository basketRepository, ILogger<DeliveryInfoEffects> logger)
+public class DeliveryInfoEffects(IDeliveryInfoRepository deliveryInfoRepository, ILogger<DeliveryInfoEffects> logger)
 {
+    private readonly IDeliveryInfoRepository _deliveryInfoRepo = deliveryInfoRepository 
+        ?? throw new ArgumentNullException(nameof(deliveryInfoRepository));
     [EffectMethod]
     public async Task HandleFetchDeliveryInfoAction(FetchDeliveryInfoAction action, IDispatcher dispatcher)
     {
         try
         {
-            var basketDeliveryInfo = await basketRepository.GetBasketDeliveryInfoAsync(action.BasketId);
+            var basketDeliveryInfo = await deliveryInfoRepository.GetBasketDeliveryInfoAsync();
             dispatcher.Dispatch(new FetchDeliveryInfoSuccessAction(basketDeliveryInfo));
         }
         catch (Exception ex)
@@ -27,7 +29,7 @@ public class DeliveryInfoEffects(IBasketRepository basketRepository, ILogger<Del
         {
             var isFiltered = !string.IsNullOrEmpty(action.Filter);
             logger.LogInformation("Fetching delivery accounts for {BasketId}", action.BasketId);
-            var accountList = await basketRepository.GetDeliverToAccountsAsync(action.BasketId, action.Filter);
+            var accountList = await deliveryInfoRepository.GetDeliverToAccountsAsync(action.Filter);
             dispatcher.Dispatch(new FetchDeliveryAccountsSuccessAction(accountList, isFiltered));
         }
         catch (Exception ex)
@@ -44,7 +46,7 @@ public class DeliveryInfoEffects(IBasketRepository basketRepository, ILogger<Del
         {
             var isFiltered = !string.IsNullOrEmpty(action.Filter);
             logger.LogInformation("Fetching delivery contacts for {BasketId}", action.BasketId);
-            var contactList = await basketRepository.GetDeliverToContactsAsync(action.BasketId, action.Filter);
+            var contactList = await deliveryInfoRepository.GetDeliverToContactsAsync(action.Filter);
             dispatcher.Dispatch(new FetchDeliveryContactsSuccessAction(contactList, isFiltered));
         }
         catch (Exception ex)

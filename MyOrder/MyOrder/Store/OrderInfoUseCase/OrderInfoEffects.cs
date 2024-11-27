@@ -3,16 +3,21 @@ using MyOrder.Infrastructure.Repositories;
 
 namespace MyOrder.Store.OrderInfoUseCase;
 
-public class OrderInfoEffects(IBasketRepository basketRepository, ILogger<OrderInfoEffects> logger)
+public class OrderInfoEffects(IOrderInfoRepository orderInfoRepository, ILogger<OrderInfoEffects> logger)
 {
+    private readonly IOrderInfoRepository _orderInfoRepository = orderInfoRepository 
+        ?? throw new ArgumentNullException(nameof(orderInfoRepository));
+    private readonly ILogger<OrderInfoEffects> _logger = logger
+        ?? throw new ArgumentNullException(nameof(logger));
+
     [EffectMethod]
     public async Task HandleFetchOrderInfo(FetchOrderInfoAction action, IDispatcher dispatcher)
     {
         try
         {
-            logger.LogInformation("Fetching order info for {BasketId}", action.BasketId);
-            var basketOrderInfoTask = basketRepository.GetBasketOrderInfoAsync(action.BasketId);
-            var contactListTask = basketRepository.GetOrderByContactsAsync(action.BasketId);
+            _logger.LogInformation("Fetching order info for {BasketId}", action.BasketId);
+            var basketOrderInfoTask = _orderInfoRepository.GetBasketOrderInfoAsync();
+            var contactListTask = _orderInfoRepository.GetOrderByContactsAsync();
            
             await Task.WhenAll(basketOrderInfoTask, contactListTask);
 
@@ -20,7 +25,7 @@ public class OrderInfoEffects(IBasketRepository basketRepository, ILogger<OrderI
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Error fetching order info data");
+            _logger.LogError(ex, "Error fetching order info data");
             dispatcher.Dispatch(new FetchOrderInfoFailureAction(ex.Message));
         }
     }
@@ -31,15 +36,14 @@ public class OrderInfoEffects(IBasketRepository basketRepository, ILogger<OrderI
         try
         {
             var isFiltered = !string.IsNullOrEmpty(action.Filter);
-            logger.LogInformation("Fetching order contacts for {BasketId}", action.BasketId);
-            var contactList = await basketRepository.GetOrderByContactsAsync(action.BasketId, action.Filter);
+            _logger.LogInformation("Fetching order contacts for {BasketId}", action.BasketId);
+            var contactList = await _orderInfoRepository.GetOrderByContactsAsync(action.Filter);
             dispatcher.Dispatch(new FetchOrderContactsSuccessAction(contactList, isFiltered));
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Error fetching order contacts data");
+            _logger.LogError(ex, "Error fetching order contacts data");
             dispatcher.Dispatch(new FetchOrderContactsFailureAction(ex.Message));
         }
     }
 }
-

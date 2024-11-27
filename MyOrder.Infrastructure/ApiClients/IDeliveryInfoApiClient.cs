@@ -1,0 +1,22 @@
+﻿using MyOrder.Shared.Dtos;
+using Refit;
+
+namespace MyOrder.Infrastructure.ApiClients;
+
+public interface IDeliveryInfoApiClient
+{
+    [Get("/api/orderContext/{basketId}/deliveryInfo")]
+    Task<BasketDeliveryInfoDto?> GetBasketDeliveryInfoAsync(string basketId, CancellationToken cancellationToken = default);
+
+    [Get("/api/orderContext/{basketId}/deliverToAccounts")]
+    Task<List<AccountDto?>?> GetDeliverToAccountsAsync(
+        string basketId,
+        [Query] string? filter = null,
+        CancellationToken cancellationToken = default);
+
+    [Get("/api/orderContext/{basketId}/deliverToContacts")]
+    Task<List<ContactDto?>?> GetDeliverToContactsAsync(
+        string basketId,
+        [Query] string? filter = null,
+        CancellationToken cancellationToken = default);
+}

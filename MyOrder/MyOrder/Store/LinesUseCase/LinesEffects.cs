@@ -4,22 +4,29 @@ using MyOrder.Services;
 
 namespace MyOrder.Store.LinesUseCase;
 
-public class LinesEffects(IBasketRepository basketRepository, IStateResolver stateResolver,
+public class LinesEffects(IOrderLinesRepository basketLinesRepository, IStateResolver stateResolver,
     ILogger<LinesEffects> logger)
 {
+    private readonly IOrderLinesRepository _basketRepository = basketLinesRepository
+        ?? throw new ArgumentNullException(nameof(basketLinesRepository));
+    private readonly IStateResolver _stateResolver = stateResolver
+        ?? throw new ArgumentNullException(nameof(stateResolver));
+    private readonly ILogger<LinesEffects> _logger = logger
+        ?? throw new ArgumentNullException(nameof(logger));
+
     [EffectMethod]
     public async Task HandleFetchLinesAction(FetchLinesAction action, IDispatcher dispatcher)
     {
         try
         {
-            logger.LogInformation("Fetching lines for {BasketId}", action.BasketId);
-            var lines = await basketRepository.GetBasketLinesAsync(action.BasketId);
+            _logger.LogInformation("Fetching lines for {BasketId}", action.BasketId);
+            var lines = await _basketRepository.GetOrderLinesAsync();
 
             dispatcher.Dispatch(new FetchLinesSuccessAction(lines));
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Error while fetching lines");
+            _logger.LogError(ex, "Error while fetching lines");
             dispatcher.Dispatch(new FetchLinesFailureAction(ex.Message));
         }
     }
@@ -29,14 +36,14 @@ public class LinesEffects(IBasketRepository basketRepository, IStateResolver sta
     {
         try
         {
-            logger.LogInformation("Duplicating lines for {BasketId}", action.BasketId);
-            var response = await basketRepository.DuplicateOrderLinesAsync(action.BasketId, action.LinesIds);
+            _logger.LogInformation("Duplicating lines for {BasketId}", action.BasketId);
+            var response = await _basketRepository.DuplicateOrderLinesAsync(action.LinesIds);
 
             dispatcher.Dispatch(new EffectOnLinesSuccessAction(action.BasketId, response));
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Error while duplicating lines");
+            _logger.LogError(ex, "Error while duplicating lines");
             dispatcher.Dispatch(new EffectOnLinesFailureAction(ex.Message));
         }
     }
@@ -46,14 +53,14 @@ public class LinesEffects(IBasketRepository basketRepository, IStateResolver sta
     {
         try
         {
-            logger.LogInformation("Deleting lines for {BasketId}", action.BasketId);
-            var response = await basketRepository.DeleteOrderLinesAsync(action.BasketId, action.LinesIds);
+            _logger.LogInformation("Deleting lines for {BasketId}", action.BasketId);
+            var response = await _basketRepository.DeleteOrderLinesAsync(action.LinesIds);
 
             dispatcher.Dispatch(new EffectOnLinesSuccessAction(action.BasketId, response));
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Error while deleting lines");
+            _logger.LogError(ex, "Error while deleting lines");
             dispatcher.Dispatch(new EffectOnLinesFailureAction(ex.Message));
         }
     }
@@ -63,12 +70,12 @@ public class LinesEffects(IBasketRepository basketRepository, IStateResolver sta
     {
         var refreshCalls = receivedAction?.ProcedureCallResponseDto?.RefreshCalls;
         var basketId = receivedAction?.BasketId;
-        stateResolver.DispatchRefreshCalls(dispatcher, refreshCalls, basketId);
+        _stateResolver.DispatchRefreshCalls(dispatcher, refreshCalls, basketId);
     }
 
     [EffectMethod]
     public async Task HandleEffectOnLineFailureAction(EffectOnLinesFailureAction receivedAction, IDispatcher dispatcher)
     {
-        logger.LogError("Error while performing action on lines: {ErrorMessage}", receivedAction.ErrorMessage);
+        _logger.LogError("Error while performing action on lines: {ErrorMessage}", receivedAction.ErrorMessage);
     }
 }

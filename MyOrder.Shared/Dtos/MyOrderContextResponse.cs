@@ -8,4 +8,3 @@ public abstract class MyOrderContextResponse
 
     override public string ToString() => $"Success: {Success}, Message: {Message}, ErrorCause: {ErrorCause}";
 }
-

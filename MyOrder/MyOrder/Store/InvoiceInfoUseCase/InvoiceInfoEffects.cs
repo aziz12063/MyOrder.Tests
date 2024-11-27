@@ -3,14 +3,17 @@ using MyOrder.Infrastructure.Repositories;
 
 namespace MyOrder.Store.InvoiceInfoUseCase;
 
-public class InvoiceInfoEffects(IBasketRepository basketRepository, ILogger<InvoiceInfoEffects> logger)
+public class InvoiceInfoEffects(IInvoiceInfoRepository invoiceInfoRepository, ILogger<InvoiceInfoEffects> logger)
 {
+    private readonly IInvoiceInfoRepository _invoiceInfoRepository = invoiceInfoRepository
+        ?? throw new ArgumentNullException(nameof(invoiceInfoRepository));
+
     [EffectMethod]
     public async Task HandleFetchInvoiceInfoAction(FetchInvoiceInfoAction action, IDispatcher dispatcher)
     {
         try
         {
-            var invoiceInfo = await basketRepository.GetBasketInvoiceInfoAsync(action.BasketId);
+            var invoiceInfo = await _invoiceInfoRepository.GetBasketInvoiceInfoAsync();
 
             dispatcher.Dispatch(new FetchInvoiceInfoSuccessAction(invoiceInfo));
         }
@@ -28,7 +31,7 @@ public class InvoiceInfoEffects(IBasketRepository basketRepository, ILogger<Invo
         {
             var isFiltered = !string.IsNullOrEmpty(action.Filter);
             logger.LogInformation("Fetching invoice info accounts for {BasketId}", action.BasketId);
-            var accountList = await basketRepository.GetInvoiceToAccountsAsync(action.BasketId, action.Filter);
+            var accountList = await _invoiceInfoRepository.GetInvoiceToAccountsAsync(action.Filter);
             dispatcher.Dispatch(new FetchInvoiceAccountsSuccessAction(accountList, isFiltered));
         }
         catch (Exception ex)

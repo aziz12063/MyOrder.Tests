@@ -1,6 +1,7 @@
 ﻿using Fluxor;
 using Microsoft.AspNetCore.Components;
 using MyOrder.Services;
+using MyOrder.Shared.Interfaces;
 using MyOrder.Store.RessourcesUseCase;
 
 namespace MyOrder.Components.Common;
@@ -15,7 +16,7 @@ public abstract class FluxorComponentBase<TState, TAction> : ComponentBase, IDis
     [Inject]
     protected IDispatcher Dispatcher { get; set; }
     [Inject]
-    protected BasketService BasketService { get; set; }
+    protected IBasketService BasketService { get; set; }
     [Inject]
     protected ILogger<FluxorComponentBase<TState, TAction>> Logger { get; set; }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
@@ -27,7 +28,6 @@ public abstract class FluxorComponentBase<TState, TAction> : ComponentBase, IDis
     protected override async Task OnInitializedAsync()
     {
         State.StateChanged += OnStateChanged;
-        BasketService.BasketIdChanged += OnBasketIdChanged;
         Dispatcher.Dispatch(CreateFetchAction(State.Value, BasketId));
 
         await base.OnInitializedAsync();
@@ -58,8 +58,6 @@ public abstract class FluxorComponentBase<TState, TAction> : ComponentBase, IDis
 
     protected abstract void CacheNewFields();
 
-    private void OnBasketIdChanged(string basketId) => Dispatcher.Dispatch(CreateFetchAction(State.Value, basketId));
-
     public void Dispose()
     {
         Dispose(true);
@@ -73,7 +71,6 @@ public abstract class FluxorComponentBase<TState, TAction> : ComponentBase, IDis
             if (disposing)
             {
                 State.StateChanged -= OnStateChanged;
-                BasketService.BasketIdChanged -= OnBasketIdChanged;
             }
 
             disposed = true;

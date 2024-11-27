@@ -1,21 +1,19 @@
 ﻿namespace MyOrder.Shared.Dtos;
 
-public class AccountDto
+public record AccountDto(
+    string? AccountId,
+    string? Name,
+    string? Recipient,
+    string? Building,
+    string? Street,
+    string? Locality,
+    string? ZipCode,
+    string? City,
+    string? Country,
+    string? Email,
+    string? Phone,
+    string? CellularPhone,
+    bool? Blocked)
 {
-    public string? AccountId { get; set; }
-    public string? Name { get; set; }
-    public string? Recipient { get; set; }
-    public string? Building { get; set; }
-    public string? Street { get; set; }
-    public string? Locality { get; set; }
-    public string? ZipCode { get; set; }
-    public string? City { get; set; }
-    public string? Country { get; set; }
-    public string? Email { get; set; }
-    public string? Phone { get; set; }
-    public string? CellularPhone { get; set; }
-    public bool? Blocked { get; set; }
-
     public override string ToString() => $"{AccountId} - {Name} - {ZipCode}";
 }
-

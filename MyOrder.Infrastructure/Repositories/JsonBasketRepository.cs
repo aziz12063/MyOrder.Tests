@@ -9,7 +9,7 @@ using System.Collections.Immutable;
 
 namespace MyOrder.Infrastructure.Repositories
 {
-    public class JsonBasketRepository : IBasketRepository
+    public class JsonBasketRepository
     {
         private readonly IWebHostEnvironment _environment;
         private readonly string baseDataPath;
@@ -404,17 +404,17 @@ namespace MyOrder.Infrastructure.Repositories
             throw new NotImplementedException();
         }
 
-        Task<List<ContactDto?>> IBasketRepository.GetOrderByContactsAsync(string basketId, string? filter)
+        Task<List<ContactDto?>> GetOrderByContactsAsync(string basketId, string? filter)
         {
             throw new NotImplementedException();
         }
 
-        Task<List<AccountDto?>> IBasketRepository.GetDeliverToAccountsAsync(string basketId, string? filter)
+        Task<List<AccountDto?>> GetDeliverToAccountsAsync(string basketId, string? filter)
         {
             throw new NotImplementedException();
         }
 
-        Task<List<ContactDto?>> IBasketRepository.GetDeliverToContactsAsync(string basketId, string? filter)
+        Task<List<ContactDto?>>GetDeliverToContactsAsync(string basketId, string? filter)
         {
             throw new NotImplementedException();
         }

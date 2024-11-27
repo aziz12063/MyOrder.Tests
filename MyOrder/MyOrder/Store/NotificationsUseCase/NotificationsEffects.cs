@@ -5,17 +5,22 @@ using MyOrder.Shared.Dtos;
 
 namespace MyOrder.Store.NotificationsUseCase;
 
-public class NotificationEffects(IBasketRepository basketRepository, ILogger<NotificationEffects> logger,
-    IToastService toastService)
+public class NotificationEffects(IGeneralInfoRepository generalInfoRepository, IBasketActionsRepository basketActionsRepository,
+    ILogger<NotificationEffects> logger, IToastService toastService)
 {
+    private readonly IGeneralInfoRepository _generalInfoRepository = generalInfoRepository
+        ?? throw new ArgumentNullException(nameof(generalInfoRepository));
+    private readonly IBasketActionsRepository _basketActionsRepository = basketActionsRepository
+        ?? throw new ArgumentNullException(nameof(basketActionsRepository));
+
     [EffectMethod]
     public async Task HandleFetchNotificationAction(FetchNotificationsAction action, IDispatcher dispatcher)
     {
         try
         {
             logger.LogDebug("Fetching Notifications for {BasketId}", action.BasketId);
-            var notifications = await basketRepository.GetNotificationsAsync(action.BasketId);
-            
+            var notifications = await _generalInfoRepository.GetNotificationsAsync();
+
             ShowBasketNotifications(toastService, action.BasketId, dispatcher, notifications, action.State);
 
             dispatcher.Dispatch(new FetchNotificationsSuccessAction(notifications));
@@ -47,7 +52,7 @@ public class NotificationEffects(IBasketRepository basketRepository, ILogger<Not
         try
         {
             logger.LogInformation("deleting notification for {BasketId}", action.BasketId);
-            await basketRepository.PostProcedureCallAsync(action.ProcedureCall, action.BasketId);
+            await _basketActionsRepository.PostProcedureCallAsync(action.ProcedureCall);
 #warning TODO: Implement the delete notification response handling logic
         }
         catch (Exception ex)

@@ -6,15 +6,19 @@ using MyOrder.Store.OrderInfoUseCase;
 
 namespace MyOrder.Store.CreateBasketUseCase;
 
-public class CreateBasketEffects(IBasketRepository basketRepository, ILogger<OrderInfoEffects> logger,
+public class CreateBasketEffects(IBasketActionsRepository basketActionsRepository, ILogger<OrderInfoEffects> logger,
     IUrlService urlService, NavigationManager navigationManager)
 {
+    private readonly IBasketActionsRepository _basketActionsRepository = basketActionsRepository 
+        ?? throw new ArgumentNullException(nameof(basketActionsRepository));
+
+
     [EffectMethod]
     public async Task HandleCreateBasketAction(CreateBasketAction action, IDispatcher dispatcher)
     {
         try
         {
-            var response = await basketRepository.PostNewBasketAsync(action.NewBasketRequest);
+            var response = await _basketActionsRepository.PostNewBasketAsync(action.NewBasketRequest);
             dispatcher.Dispatch(new CreateBasketSuccessAction(response));
         }
         catch (Exception e)
@@ -30,11 +34,11 @@ public class CreateBasketEffects(IBasketRepository basketRepository, ILogger<Ord
         try
         {
             // We need basketId and New=1 to clone and create a new basket
-            var response = await basketRepository.PostNewBasketAsync(
+            var response = await _basketActionsRepository.PostNewBasketAsync(
                 new Dictionary<string, string> {
                     { "BasketId", action.BasketId },
                     { "New", "1"}
-                });
+                }!);
             dispatcher.Dispatch(new CreateBasketSuccessAction(response));
         }
         catch (Exception e)

@@ -6,6 +6,7 @@ using MyOrder.Shared.Utils;
 using MyOrder.Shared.Extensions;
 using MyOrder.Store.NewLineUseCase;
 using static MudBlazor.CategoryTypes;
+using MyOrder.Shared.Interfaces;
 
 namespace MyOrder.Components.Childs.Lines.AddLine;
 
@@ -21,7 +22,7 @@ public partial class AddLineDialog
     [Inject]
     public IDispatcher Dispatcher { get; set; }
     [Inject]
-    public BasketService BasketService { get; set; }
+    public IBasketService BasketService { get; set; }
     [Inject]
     public IModalService ModalService { get; set; }
 
