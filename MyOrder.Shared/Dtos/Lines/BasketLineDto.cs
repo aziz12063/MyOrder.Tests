@@ -4,6 +4,7 @@ namespace MyOrder.Shared.Dtos.Lines;
 
 public class BasketLineDto
 {
+    public long RecId { get; set; }
     public Field<int?>? LineNum { get; set; } // RW
     public bool? IsCustomLineNum { get; set; }
     public List<BasketValueDto?>? LineTags { get; set; }
@@ -61,26 +62,16 @@ public class BasketLineDto
     public Field<decimal?>? DiscountRate { get; set; }  //RO
     public Field<decimal?>? DiscountPrice { get; set; }  //RO
     public BasketPriceLinesDto? Prices { get; set; }  //NULL
-}
 
-public class BasketPriceLinesDto
-{
-    public List<BasketPriceLine?>? PriceLines { get; set; }
+    // =============================================================================================================
+    // Overrides
+    // =============================================================================================================
 
-    public bool? QuantityVisible { get; set; }
-    public bool? CatalogPriceVisible { get; set; }
-    public bool? DiscountRateVisible { get; set; }
-    public bool? MultiplePriceVisible { get; set; }
-    public bool? MarginRateVisible { get; set; }
-}
+    public override bool Equals(object? obj)
+    {
+        if (obj is not BasketLineDto item) return false;
+        return item.RecId == RecId;
+    }
 
-public class BasketPriceLine
-{
-    public bool? IsCurrent { get; set; }
-    public int? Quantity { get; set; }
-    public decimal? CatalogPrice { get; set; }
-    public decimal? DiscountPrice { get; set; }
-    public decimal? MultiplePrice { get; set; }
-    public int? DiscountRate { get; set; }
-    public int? MarginRate { get; set; }
+    public override int GetHashCode() => RecId.GetHashCode();
 }

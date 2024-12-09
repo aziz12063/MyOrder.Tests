@@ -22,7 +22,16 @@ builder.Host.UseSerilog((hostingContext, loggerConfiguration) =>
     loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration));
 
 //MudBlazor and UI elements
-builder.Services.AddMudServices();
+builder.Services.AddMudServices(/*config =>
+{
+    config.PopoverOptions = new()
+    {
+        Mode = MudBlazor.PopoverMode.Legacy,
+        PoolInitialFill = 10,
+        PoolSize = 20
+    };
+}*/
+);
 ThemeConfiguration.ApplyCustomMudGlobals();
 
 // Add services to the container.
@@ -122,6 +131,7 @@ static IHttpClientBuilder RegisterRepositoriesWithRefitClient<TApiClient, TRepos
         ContentSerializer = new NewtonsoftJsonContentSerializer()
     })
      .ConfigureHttpClient(c => c.BaseAddress = new Uri("http://aliasiisq:8080")) // Refactor to use https only
+     //.ConfigureHttpClient(c => c.BaseAddress = new Uri("https://localhost:44324")) // For local testing
      .AddHttpMessageHandler<InfrastructureFailureHandler>()
      .AddPolicyHandler(ResiliencePolicies.GetRetryPolicy())
      .AddPolicyHandler(ResiliencePolicies.GetCircuitBreakerPolicy())

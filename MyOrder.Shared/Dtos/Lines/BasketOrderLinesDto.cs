@@ -1,7 +1,7 @@
-﻿namespace MyOrder.Shared.Dtos.Lines
+﻿namespace MyOrder.Shared.Dtos.Lines;
+
+public class BasketOrderLinesDto
 {
-    public class BasketOrderLinesDto
-    {
-        public List<BasketLineDto?>? lines { get; set; }
-    }
+#warning TODO: Refactor to use BasketLineDto only
+    public List<BasketLineDto?>? lines { get; set; }
 }
