@@ -29,7 +29,8 @@
                          Clearable="Clearable"
                          Min="Min"
                          Step="Step"
-                         HideSpinButtons="false" />
+                         HideSpinButtons="InternalReadOnly" 
+                         OnKeyDown="KeyDownHandler"/>
     </MudTooltip>
 }
 
@@ -44,6 +45,8 @@
     public bool Clearable { get; set; } = false;
     [Parameter]
     public string? Format { get; set; }
+    [Parameter]
+    public EventCallback<KeyboardEventArgs> OnKeyDown { get; set; }
 
     private CultureInfo? Culture { get; set; }
     private Type _underLyingType = GetUnderlyingType(typeof(T));
@@ -70,6 +73,11 @@
         base.OnParametersSet();
         Format = FormatPercentValue(Format);
         UpdateDisplayedValue();
+    }
+
+    private async Task KeyDownHandler(KeyboardEventArgs e)
+    {
+        await OnKeyDown.InvokeAsync(e);
     }
 
     private void OnValueChanged(T newValue)

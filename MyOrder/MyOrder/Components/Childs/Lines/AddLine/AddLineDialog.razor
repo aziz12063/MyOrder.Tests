@@ -11,7 +11,8 @@
 
             <MudTabPanel Text="Ajout"
                          Icon="@Icons.Material.Filled.AddCircle">
-                <AddLineTab @ref="AddLineTab" />
+                <AddLineTab @ref="AddLineTab"
+                            OnEnterPressed="CommitNewLineAndClose" />
             </MudTabPanel>
 
             <MudTabPanel Text="Top Ventes"
@@ -56,9 +57,8 @@
         }
         else if (CurrentTab == 4)
         {
-            <MudButton Variant="Variant.Filled"
+            <MudButton Variant="Variant.Text"
                        Color="Color.Primary"
-                       StartIcon="@Icons.Material.Filled.Add"
                        OnClick="CommitFreetextAndClose">Ajouter</MudButton>
         }
     </DialogActions>

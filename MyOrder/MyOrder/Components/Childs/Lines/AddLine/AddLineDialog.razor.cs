@@ -1,12 +1,12 @@
 ﻿using Fluxor;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using MudBlazor;
 using MyOrder.Services;
-using MyOrder.Shared.Utils;
 using MyOrder.Shared.Extensions;
-using MyOrder.Store.NewLineUseCase;
-using static MudBlazor.CategoryTypes;
 using MyOrder.Shared.Interfaces;
+using MyOrder.Shared.Utils;
+using MyOrder.Store.NewLineUseCase;
 
 namespace MyOrder.Components.Childs.Lines.AddLine;
 
@@ -47,12 +47,21 @@ public partial class AddLineDialog
 
     private void CommitNewLineAndClose()
     {
+#warning TODO: Add validation
+        if (false)
+            return; 
+
         Dispatcher.Dispatch(new CommitNewLineAction(BasketService.BasketId));
         DialogInstance.Close(DialogResult.Ok(true));
     }
 
-    private void CommitNewLine() =>
+    private async Task CommitNewLine(MouseEventArgs e)
+    {
         Dispatcher.Dispatch(new CommitNewLineAction(BasketService.BasketId));
+
+        //Set focus back to the ItemIdField
+        await AddLineTab!.FocusItemIdFieldAsync();
+    }
 
 #warning TODO: Show message to the user if lines is null or empty
     private void CommitFreetextAndClose()
