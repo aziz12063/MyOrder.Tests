@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using MyOrder.Infrastructure.ApiClients;
 using MyOrder.Shared.Dtos;
+using MyOrder.Shared.Dtos.Delivery;
 using MyOrder.Shared.Interfaces;
 
 namespace MyOrder.Infrastructure.Repositories;

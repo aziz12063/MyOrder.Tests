@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.BasketItems;
+using MyOrder.Shared.Dtos.Delivery;
 using MyOrder.Shared.Dtos.GeneralInformation;
 using MyOrder.Shared.Dtos.Lines;
 using MyOrder.Shared.Dtos.SharedComponents;

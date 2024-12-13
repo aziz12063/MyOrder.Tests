@@ -1,4 +1,5 @@
 ﻿using MyOrder.Shared.Dtos;
+using MyOrder.Shared.Dtos.Delivery;
 using Refit;
 
 namespace MyOrder.Infrastructure.ApiClients;

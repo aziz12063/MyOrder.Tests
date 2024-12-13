@@ -1,4 +1,5 @@
 ﻿using MyOrder.Shared.Dtos;
+using MyOrder.Shared.Dtos.Delivery;
 using MyOrder.Store.Base;
 
 namespace MyOrder.Store.DeliveryInfoUseCase;

@@ -1,0 +1,20 @@
+﻿using MyOrder.Shared.Dtos.SharedComponents;
+
+namespace MyOrder.Shared.Dtos.Delivery;
+
+public class DeliveryAccountEditActions
+{
+    // ====================================================================
+    // Menu intermédiaire
+    public Field<string?>? EditMode { get; set; }
+    public Field<string?>? AddressLookup { get; set; }
+
+    // ====================================================================
+    // Menu part
+    public Field<string?>? StatusMessage { get; set; }
+
+    // ====================================================================
+    // Final menu part
+    public Field<string?>? AddAddress { get; set; }
+    public Field<string?>? CancelAddress { get; set; }
+}

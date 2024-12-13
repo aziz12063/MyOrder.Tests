@@ -1,4 +1,5 @@
 ﻿using MyOrder.Shared.Dtos;
+using MyOrder.Shared.Dtos.Delivery;
 
 namespace MyOrder.Infrastructure.Repositories;
 

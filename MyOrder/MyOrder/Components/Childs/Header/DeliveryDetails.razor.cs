@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components;
 using MyOrder.Components.Common;
 using MyOrder.Services;
 using MyOrder.Shared.Dtos;
+using MyOrder.Shared.Dtos.Delivery;
 using MyOrder.Store.DeliveryInfoUseCase;
 using MyOrder.Store.ProcedureCallUseCase;
 using MyOrder.Utils;

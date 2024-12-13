@@ -1,6 +1,6 @@
 ﻿using MyOrder.Shared.Dtos.SharedComponents;
 
-namespace MyOrder.Shared.Dtos;
+namespace MyOrder.Shared.Dtos.Delivery;
 
 public class BasketDeliveryInfoDto
 {
