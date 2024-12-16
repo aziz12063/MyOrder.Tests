@@ -3,7 +3,7 @@ using MyOrder.Infrastructure.ApiClients;
 using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Interfaces;
 
-namespace MyOrder.Infrastructure.Repositories;
+namespace MyOrder.Infrastructure.Repositories.Implementations;
 
 public class PricesInfoRepository(IPricesInfoApiClient pricesInfoApiClient, IEventAggregator eventAggregator,
     IBasketService basketService, ILogger<PricesInfoRepository> logger)

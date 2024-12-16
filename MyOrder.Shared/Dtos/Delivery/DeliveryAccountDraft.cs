@@ -2,7 +2,7 @@
 
 namespace MyOrder.Shared.Dtos.Delivery;
 
-public class DeliveryAccountEdition
+public class DeliveryAccountDraft
 {
 
     // ====================================================================
@@ -25,7 +25,7 @@ public class DeliveryAccountEdition
 
     // ====================================================================
     // Menus
-    public DeliveryAccountEditActions? Actions { get; set; }
+    public DeliveryAccountDraftActions? Actions { get; set; }
 
     // ====================================================================
     // Lookup part

@@ -7,6 +7,7 @@ using MyOrder.Configuration;
 using MyOrder.Infrastructure.ApiClients;
 using MyOrder.Infrastructure.HttpHandlers;
 using MyOrder.Infrastructure.Repositories;
+using MyOrder.Infrastructure.Repositories.Implementations;
 using MyOrder.Infrastructure.Resilience;
 using MyOrder.Services;
 using MyOrder.Shared.Interfaces;

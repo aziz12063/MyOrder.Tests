@@ -4,14 +4,14 @@ using MyOrder.Shared.Dtos.GeneralInformation;
 using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Interfaces;
 
-namespace MyOrder.Infrastructure.Repositories;
+namespace MyOrder.Infrastructure.Repositories.Implementations;
 
 public class GeneralInfoRepository(IGeneralInfoApiClient generalInfoApiClient,
     IEventAggregator eventAggregator, IBasketService basketService,
     ILogger<GeneralInfoRepository> logger)
     : BaseApiRepository(eventAggregator, basketService, logger), IGeneralInfoRepository
 {
-    private readonly IGeneralInfoApiClient _generalInfoApiClient = generalInfoApiClient 
+    private readonly IGeneralInfoApiClient _generalInfoApiClient = generalInfoApiClient
         ?? throw new ArgumentNullException(nameof(generalInfoApiClient));
 
     public async Task<GeneralInfoDto?> GetBasketGeneralInfoAsync(CancellationToken cancellationToken = default)

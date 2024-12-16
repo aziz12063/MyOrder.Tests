@@ -4,10 +4,10 @@ using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.Delivery;
 using MyOrder.Shared.Interfaces;
 
-namespace MyOrder.Infrastructure.Repositories;
+namespace MyOrder.Infrastructure.Repositories.Implementations;
 
-public class DeliveryInfoRepository(IDeliveryInfoApiClient deliveryInfoApiClient, 
-    IEventAggregator eventAggregator, IBasketService basketService, ILogger<DeliveryInfoRepository> logger) 
+public class DeliveryInfoRepository(IDeliveryInfoApiClient deliveryInfoApiClient,
+    IEventAggregator eventAggregator, IBasketService basketService, ILogger<DeliveryInfoRepository> logger)
     : BaseApiRepository(eventAggregator, basketService, logger), IDeliveryInfoRepository
 {
     private readonly IDeliveryInfoApiClient _deliveryInfoApiClient = deliveryInfoApiClient
@@ -31,6 +31,26 @@ public class DeliveryInfoRepository(IDeliveryInfoApiClient deliveryInfoApiClient
             async (token) => await _deliveryInfoApiClient.GetDeliverToAccountsAsync(BasketId, filter, token),
             operationDescription,
             cancellationToken);
+    }
+
+    public async Task<DeliveryAccountDraft?> GetNewDeliveryAccountAsync(string? filter = null, CancellationToken cancellationToken = default)
+    {
+        logger.LogDebug("Fetching new delivery account for {BasketId} with the filter {filter} from repository", BasketId, filter);
+        var operationDescription = $"GetNewDeliveryAccountAsync for basketId {BasketId}, with filter {filter}";
+        return await ExecuteAsync(
+            async (token) => await _deliveryInfoApiClient.GetNewDeliveryAccountAsync(BasketId, filter, token),
+            operationDescription,
+            cancellationToken);
+    }
+
+    public async Task<ProcedureCallResponseDto?> ResetNewDeliveryAccountAsync(CancellationToken? cancellationToken = null)
+    {
+        logger.LogDebug("Resetting new delivery account for {BasketId} from repository", BasketId);
+        var operationDescription = $"ResetNewDeliveryAccountAsync for basketId {BasketId}";
+        return await ExecuteAsync(
+            async (token) => await _deliveryInfoApiClient.ResetNewDeliveryAccountAsync(BasketId, token),
+            operationDescription,
+            cancellationToken ?? default);
     }
 
     public async Task<List<ContactDto?>?> GetDeliverToContactsAsync(string? filter = null, CancellationToken cancellationToken = default)

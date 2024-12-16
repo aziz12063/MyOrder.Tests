@@ -5,7 +5,7 @@ using MyOrder.Shared.Dtos.SharedComponents;
 using MyOrder.Shared.Interfaces;
 using System.Collections.Immutable;
 
-namespace MyOrder.Infrastructure.Repositories;
+namespace MyOrder.Infrastructure.Repositories.Implementations;
 
 public class BasketActionsRepository(IBasketActionsApiClient basketActionsApiClient,
     IEventAggregator eventAggregator, IBasketService basketService,

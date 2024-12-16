@@ -3,7 +3,7 @@ using MyOrder.Infrastructure.ApiClients;
 using MyOrder.Shared.Dtos.BasketItems;
 using MyOrder.Shared.Interfaces;
 
-namespace MyOrder.Infrastructure.Repositories;
+namespace MyOrder.Infrastructure.Repositories.Implementations;
 
 public class BasketItemsRepository(IBasketItemsApiClient basketItemsApiClient, IEventAggregator eventAggregator,
     IBasketService basketService, ILogger<BasketItemsRepository> logger)

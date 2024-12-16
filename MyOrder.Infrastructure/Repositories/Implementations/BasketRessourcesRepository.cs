@@ -3,7 +3,7 @@ using MyOrder.Infrastructure.ApiClients;
 using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Interfaces;
 
-namespace MyOrder.Infrastructure.Repositories;
+namespace MyOrder.Infrastructure.Repositories.Implementations;
 
 public class BasketRessourcesRepository(IBasketRessourcesApiClient ressourcesApiClient,
     IEventAggregator eventAggregator, IBasketService basketService,
@@ -13,10 +13,10 @@ public class BasketRessourcesRepository(IBasketRessourcesApiClient ressourcesApi
     private readonly IBasketRessourcesApiClient _ressourcesApiClient = ressourcesApiClient
         ?? throw new ArgumentNullException(nameof(ressourcesApiClient));
 
-      //==============================//
-     //      Order ressources        //
     //==============================//
-        public async Task<List<BasketValueDto?>?> GetCustomerTagsAsync(CancellationToken cancellationToken = default)
+    //      Order ressources        //
+    //==============================//
+    public async Task<List<BasketValueDto?>?> GetCustomerTagsAsync(CancellationToken cancellationToken = default)
     {
         logger.LogDebug("Fetching customer tags for {BasketId} from repository", BasketId);
         var operationDescription = $"GetCustomerTagsAsync for basketId {BasketId}";
@@ -56,8 +56,8 @@ public class BasketRessourcesRepository(IBasketRessourcesApiClient ressourcesApi
             cancellationToken);
     }
 
-      //==============================//
-     //      Delivery ressources     //
+    //==============================//
+    //      Delivery ressources     //
     //==============================//
     public async Task<List<BasketValueDto?>?> GetDeliveryModesAsync(CancellationToken cancellationToken = default)
     {
@@ -70,8 +70,8 @@ public class BasketRessourcesRepository(IBasketRessourcesApiClient ressourcesApi
     }
 
 
-      //==============================//
-     //      Invoice ressources      //
+    //==============================//
+    //      Invoice ressources      //
     //==============================//
     public async Task<List<BasketValueDto?>?> GetTaxGroupsAsync(CancellationToken cancellationToken = default)
     {
@@ -93,8 +93,8 @@ public class BasketRessourcesRepository(IBasketRessourcesApiClient ressourcesApi
             cancellationToken);
     }
 
-      //==============================//
-     //      Prices ressources       //
+    //==============================//
+    //      Prices ressources       //
     //==============================//
     public async Task<List<BasketValueDto?>?> GetCouponsAsync(CancellationToken cancellationToken = default)
     {
@@ -126,8 +126,8 @@ public class BasketRessourcesRepository(IBasketRessourcesApiClient ressourcesApi
             cancellationToken);
     }
 
-      //==============================//
-     //      Lines ressources        //
+    //==============================//
+    //      Lines ressources        //
     //==============================//
     public async Task<List<BasketValueDto?>?> GetlineUpdateReasonsAsync(CancellationToken cancellationToken = default)
     {

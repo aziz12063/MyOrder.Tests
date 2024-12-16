@@ -7,7 +7,7 @@ public interface INewOrderLineApiClient
 {
     [Get("/api/orderContext/{basketId}/newLine")]
     Task<BasketLineDto?> GetNewLineAsync(string basketId, CancellationToken cancellationToken = default);
-
+#warning This should return a ProcedureCallResponse
     [Put("/api/orderContext/{basketId}/newLine/reset")]
     Task<BasketLineDto?> ResetNewLineStateAsync(string basketId, CancellationToken cancellationToken = default);
 

@@ -4,15 +4,16 @@ using MyOrder.Shared.Interfaces;
 using Refit;
 using System.Net;
 
-namespace MyOrder.Infrastructure.Repositories;
+namespace MyOrder.Infrastructure.Repositories.Implementations;
 
 public abstract class BaseApiRepository(IEventAggregator eventAggregator, IBasketService basketService, ILogger<BaseApiRepository> logger)
 {
     private readonly IEventAggregator _eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
     private readonly ILogger<BaseApiRepository> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     protected readonly IBasketService _basketService = basketService ?? throw new ArgumentNullException(nameof(basketService));
-    protected string BasketId { 
-        get 
+    protected string BasketId
+    {
+        get
         {
             var basketId = _basketService.BasketId;
             if (string.IsNullOrEmpty(basketId))
@@ -20,7 +21,7 @@ public abstract class BaseApiRepository(IEventAggregator eventAggregator, IBaske
                 throw new NullReferenceException(nameof(basketId));
             }
             return basketId;
-        } 
+        }
     }
 
     /// <summary>

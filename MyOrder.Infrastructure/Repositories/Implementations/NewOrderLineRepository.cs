@@ -4,7 +4,7 @@ using MyOrder.Shared.Dtos;
 using MyOrder.Infrastructure.ApiClients;
 using MyOrder.Shared.Interfaces;
 
-namespace MyOrder.Infrastructure.Repositories;
+namespace MyOrder.Infrastructure.Repositories.Implementations;
 
 public class NewOrderLineRepository(INewOrderLineApiClient newOrderLineApiClient, IEventAggregator eventAggregator,
     IBasketService basketService, ILogger<OrderLinesRepository> logger)

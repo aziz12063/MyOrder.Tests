@@ -15,6 +15,15 @@ public interface IDeliveryInfoApiClient
         [Query] string? filter = null,
         CancellationToken cancellationToken = default);
 
+    [Get("/api/orderContext/{basketId}/newDeliverToAccount")]
+    Task<DeliveryAccountDraft?> GetNewDeliveryAccountAsync(
+    string basketId,
+    [Query] string? filter = null,
+    CancellationToken cancellationToken = default);
+
+    [Put("/api/orderContext/{basketId}/newDeliverToAccount/reset")]
+    Task<ProcedureCallResponseDto> ResetNewDeliveryAccountAsync(string basketId, CancellationToken cancellationToken = default);
+
     [Get("/api/orderContext/{basketId}/deliverToContacts")]
     Task<List<ContactDto?>?> GetDeliverToContactsAsync(
         string basketId,

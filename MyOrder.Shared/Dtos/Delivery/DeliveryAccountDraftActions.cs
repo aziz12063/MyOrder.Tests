@@ -2,7 +2,7 @@
 
 namespace MyOrder.Shared.Dtos.Delivery;
 
-public class DeliveryAccountEditActions
+public class DeliveryAccountDraftActions
 {
     // ====================================================================
     // Menu intermédiaire
