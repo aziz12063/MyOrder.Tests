@@ -43,6 +43,16 @@ public class DeliveryInfoRepository(IDeliveryInfoApiClient deliveryInfoApiClient
             cancellationToken);
     }
 
+    public async Task<ProcedureCallResponseDto?> CommitNewDeliveryAccountAsync(CancellationToken? cancellationToken = null)
+    {
+        logger.LogDebug("Committing new delivery account for {BasketId} from repository", BasketId);
+        var operationDescription = $"CommitNewDeliveryAccountAsync for basketId {BasketId}";
+        return await ExecuteAsync(
+            async (token) => await _deliveryInfoApiClient.CommitNewDeliveryAccountAsync(BasketId, token),
+            operationDescription,
+            cancellationToken ?? default);
+    }
+
     public async Task<ProcedureCallResponseDto?> ResetNewDeliveryAccountAsync(CancellationToken? cancellationToken = null)
     {
         logger.LogDebug("Resetting new delivery account for {BasketId} from repository", BasketId);

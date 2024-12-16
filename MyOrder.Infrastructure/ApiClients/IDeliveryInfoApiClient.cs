@@ -21,6 +21,9 @@ public interface IDeliveryInfoApiClient
     [Query] string? filter = null,
     CancellationToken cancellationToken = default);
 
+    [Put("/api/orderContext/{basketId}/newDeliverToAccount/add")]
+    Task<ProcedureCallResponseDto?> CommitNewDeliveryAccountAsync(string basketId, CancellationToken cancellationToken = default);
+
     [Put("/api/orderContext/{basketId}/newDeliverToAccount/reset")]
     Task<ProcedureCallResponseDto> ResetNewDeliveryAccountAsync(string basketId, CancellationToken cancellationToken = default);
 

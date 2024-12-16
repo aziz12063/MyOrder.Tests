@@ -57,7 +57,7 @@ public class NewLineEffects(INewOrderLineRepository newOrderLineRepository, ISta
         try
         {
             var response = await _newOrderLineRepository.CommitAddNewLineAsync();
-            if (response.Success == true)
+            if (response?.Success == true)
             {
                 if (response.UpdateDone == true)
                 {
@@ -68,9 +68,9 @@ public class NewLineEffects(INewOrderLineRepository newOrderLineRepository, ISta
                     errorMessage = (response.Message ?? "No line added.");
             }
             else
-                errorMessage = (response.Message ?? "Failed updating field.")
+                errorMessage = (response?.Message ?? "Failed updating field.")
                         + "\n"
-                        + (response.ErrorCause ?? "Unknown error.");
+                        + (response?.ErrorCause ?? "Unknown error.");
         }
         catch (Exception ex)
         {
