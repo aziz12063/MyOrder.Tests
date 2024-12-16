@@ -1,0 +1,15 @@
+﻿@if (string.IsNullOrEmpty(TextField?.Value))
+    return;
+
+<MudTooltip Text="@TextField.Name">
+    <MudText Typo="Typo"
+             Color="FieldUtility.GetFieldColor(TextField)">@TextField.Value</MudText>
+</MudTooltip>
+
+@code {
+    [Parameter, EditorRequired]
+    public Field<string?>? TextField { get; set; }
+
+    [Parameter]
+    public Typo Typo { get; set; } = Typo.body1;
+}

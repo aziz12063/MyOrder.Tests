@@ -10,10 +10,6 @@ public class DeliveryAccountDraftActions
     public Field<string?>? AddressLookup { get; set; }
 
     // ====================================================================
-    // Menu part
-    public Field<string?>? StatusMessage { get; set; }
-
-    // ====================================================================
     // Final menu part
     public Field<string?>? AddAddress { get; set; }
     public Field<string?>? CancelAddress { get; set; }

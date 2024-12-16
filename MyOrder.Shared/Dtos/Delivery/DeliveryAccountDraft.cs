@@ -9,7 +9,6 @@ public class DeliveryAccountDraft
     public string? AccountSectionLabel { get; set; }
 
     public Field<string?>? AccountId { get; set; }
-    public Field<string?>? OriginAccountId { get; set; }
     public Field<string?>? Name { get; set; }
     public Field<string?>? Recipient { get; set; }
 
@@ -25,6 +24,7 @@ public class DeliveryAccountDraft
 
     // ====================================================================
     // Menus
+    public Field<string?>? StatusMessage { get; set; }
     public DeliveryAccountDraftActions? Actions { get; set; }
 
     // ====================================================================

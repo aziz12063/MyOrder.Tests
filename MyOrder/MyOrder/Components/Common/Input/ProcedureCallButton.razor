@@ -1,0 +1,34 @@
+﻿@using Fluxor
+@using MyOrder.Store.ProcedureCallUseCase
+@typeparam T
+
+@if (Field is null || FieldUtility.IsHidden(Field))
+    return;
+
+<MudTooltip Text="@Field.Name">
+    <MudIconButton Icon="@Icon"
+                   Color="FieldUtility.GetFieldColor(Field)"
+                   Size="Size"
+                   Disabled="!FieldUtility.IsReadWrite(Field)"
+                   OnClick="OnClickHandler" />
+</MudTooltip>
+
+@code {
+    [Parameter, EditorRequired]
+    public Field<T>? Field { get; set; }
+
+    [Parameter, EditorRequired]
+    public string Icon { get; set; } = Icons.Material.Filled.QuestionMark;
+
+    [Parameter]
+    public Size Size { get; set; } = Size.Small;
+
+    [Parameter]
+    public Color Color { get; set; }
+
+    [Inject]
+    private IDispatcher Dispatcher { get; set; }
+
+    private void OnClickHandler() =>
+        Dispatcher.Dispatch(new PostProcedureCallAction(Field!.ProcedureCall));
+}

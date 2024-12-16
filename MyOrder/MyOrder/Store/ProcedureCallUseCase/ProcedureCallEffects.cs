@@ -69,6 +69,7 @@ public class ProcedureCallEffects(IBasketActionsRepository basketActionsReposito
         {
             logger.LogError("ProcedureCall is null or empty at {StackTrace}",
                 LogUtility.GetStackTrace());
+            return;
         }
         try
         {
@@ -92,7 +93,7 @@ public class ProcedureCallEffects(IBasketActionsRepository basketActionsReposito
 
     private static async Task<(bool success, string errorMessage)> PostProcedureCall(ILogger<OrderInfoEffects> logger,
         IBasketService basket, IDispatcher dispatcher,
-         Func<Task<ProcedureCallResponseDto>> postProcedureCallFunc)
+         Func<Task<ProcedureCallResponseDto?>> postProcedureCallFunc)
     {
         bool success = false;
         string errorMessage = "Unhandled error occured.";

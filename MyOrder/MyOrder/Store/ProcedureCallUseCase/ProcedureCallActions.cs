@@ -23,10 +23,10 @@ public class UpdateFieldProcedureCallFailureAction(Type actionType, string error
     public Type SelfFetchActionType { get; } = actionType;
 }
 
-public class PostProcedureCallAction(ImmutableList<string> procedureCall, string basketId)
+public class PostProcedureCallAction(ImmutableList<string?>? procedureCall, string? basketId = default)
 {
-    public ImmutableList<string> ProcedureCall { get; } = procedureCall;
-    public string BasketId { get; set; } = basketId;
+    public ImmutableList<string?>? ProcedureCall { get; } = procedureCall;
+    public string? BasketId { get; set; } = basketId;
 }
 
 public class PostProcedureCallFailureAction(string errorMessage)
