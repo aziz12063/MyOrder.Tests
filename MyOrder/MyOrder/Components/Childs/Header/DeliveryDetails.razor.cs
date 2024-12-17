@@ -104,6 +104,9 @@ public partial class DeliveryDetails : FluxorComponentBase<DeliveryInfoState, Fe
                 GetType().Name);
             return;
         }
+#warning This is a temporary solution to avoid the error of the new account not being reset
+        Dispatcher.Dispatch(new ResetNewDeliveryAccountAction());
+
         await ModalService.OpenSearchAccountDialogAsync<DeliveryAccountsState, FetchDeliveryAccountsAction>(
             account => Dispatcher.Dispatch(
                 new UpdateFieldAction(BasketDeliveryInfo.Account, account, typeof(FetchDeliveryInfoAction))),

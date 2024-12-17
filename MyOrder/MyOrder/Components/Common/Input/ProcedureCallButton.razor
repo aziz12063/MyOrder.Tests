@@ -32,11 +32,17 @@
     [Parameter]
     public bool IconOnly { get; set; } = false;
 
+    [Parameter]
+    public EventCallback OnClickCallback { get; set; }
+
     [Inject]
     private IDispatcher Dispatcher { get; set; }
 
-    private void OnClickHandler() =>
+    private void OnClickHandler()
+    {
         Dispatcher.Dispatch(new PostProcedureCallAction(Field!.ProcedureCall));
+        OnClickCallback.InvokeAsync();
+    }
 
     private string? DisplayedText
     {
