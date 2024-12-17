@@ -17,6 +17,14 @@ public static class DeliveryInfoReducers
         new(action.DeliveryAccounts, action.IsFiltered);
 
     [ReducerMethod]
+    public static NewDeliveryAccountState ReduceFetchNewDeliveryAccountSuccessAction(NewDeliveryAccountState state, FetchNewDeliveryAccountSuccessAction action) =>
+        new(action.DeliveryAccountDraft);
+
+    [ReducerMethod]
+    public static NewDeliveryAccountState ReduceFetchNewDeliveryAccountFailureAction(NewDeliveryAccountState state, FetchNewDeliveryAccountFailureAction action) =>
+        new();
+
+    [ReducerMethod]
     public static DeliveryAccountsState ReduceFetchDeliveryAccountsFailureAction(DeliveryAccountsState state, FetchDeliveryAccountsFailureAction action) =>
         new();
 

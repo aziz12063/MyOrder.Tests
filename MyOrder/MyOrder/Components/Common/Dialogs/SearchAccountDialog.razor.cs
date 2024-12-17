@@ -16,6 +16,10 @@ public partial class SearchAccountDialog<TState, TFetchAction>
 
     [Parameter, EditorRequired]
     public EventCallback<AccountDto> AccountClicked { get; set; }
+
+    [Parameter, EditorRequired]
+    public EventCallback AddNewAccountClicked { get; set; }
+
     [CascadingParameter]
     private MudDialogInstance MudDialog { get; set; }
 
@@ -50,6 +54,12 @@ public partial class SearchAccountDialog<TState, TFetchAction>
 
         await AccountClicked.InvokeAsync(account);
 
+        MudDialog.Close();
+    }
+
+    private async Task OnAddNewAddressClick()
+    {
+        await AddNewAccountClicked.InvokeAsync();
         MudDialog.Close();
     }
 

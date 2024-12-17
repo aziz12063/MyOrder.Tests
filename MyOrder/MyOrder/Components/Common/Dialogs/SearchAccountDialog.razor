@@ -72,6 +72,13 @@
                                 Property="item => item" />
             </Columns>
         </MudDataGrid>
-
     </DialogContent>
+    <DialogActions>
+        <MudTooltip Text="Ajouter une nouvelle adresse">
+            <MudIconButton Color="Color.Primary"
+                           Icon="@Icons.Material.Rounded.AddLocationAlt"
+                           Size="Size.Large"
+                           OnClick="OnAddNewAddressClick" />
+        </MudTooltip>
+    </DialogActions>
 </MudDialog>

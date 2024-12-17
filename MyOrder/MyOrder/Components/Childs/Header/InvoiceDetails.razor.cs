@@ -80,7 +80,9 @@ public partial class InvoiceDetails : FluxorComponentBase<InvoiceInfoState, Fetc
 
         await ModalService.OpenSearchAccountDialogAsync<InvoiceAccountsState, FetchInvoiceAccountsAction>(
             account => Dispatcher.Dispatch(
-              new UpdateFieldAction(BasketInvoiceInfo.Account, account, typeof(FetchInvoiceAccountsAction))));
+                new UpdateFieldAction(BasketInvoiceInfo.Account, account, typeof(FetchInvoiceAccountsAction))),
+                () => throw new NotImplementedException()
+            );
     }
 
     protected override void Dispose(bool disposing)

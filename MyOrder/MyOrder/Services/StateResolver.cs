@@ -18,6 +18,7 @@ public class StateResolver : IStateResolver
     private const string GeneralInfo = "generalInfo";
     private const string OrderInfo = "orderInfo";
     private const string DeliveryInfo = "deliveryInfo";
+    private const string NewDeliveryAccount = "newDeliverToAccount";
     private const string InvoiceInfo = "invoiceInfo";
     private const string TradeInfo = "tradeInfo";
     private const string PricesInfo = "pricesInfo";
@@ -30,6 +31,7 @@ public class StateResolver : IStateResolver
         { typeof(FetchGeneralInfoAction), GeneralInfo },
         { typeof(FetchOrderInfoAction), OrderInfo },
         { typeof(FetchDeliveryInfoAction), DeliveryInfo },
+        { typeof(FetchNewDeliveryAccountAction), NewDeliveryAccount },
         { typeof(FetchInvoiceInfoAction), InvoiceInfo },
         { typeof(FetchTradeInfoAction), TradeInfo },
         { typeof(FetchPricesInfoAction), PricesInfo },
@@ -62,6 +64,7 @@ public class StateResolver : IStateResolver
                     CreateDispatchAction<DeliveryContactsState, FetchDeliveryContactsAction>
                 }
             },
+            { NewDeliveryAccount, new () { CreateDispatchAction<NewDeliveryAccountState, FetchNewDeliveryAccountAction> } },
             { InvoiceInfo, new () { CreateDispatchAction<InvoiceInfoState, FetchInvoiceInfoAction> } },
             { TradeInfo, new () { CreateDispatchAction<TradeInfoState, FetchTradeInfoAction> } },
             { PricesInfo, new () { CreateDispatchAction<PricesInfoState, FetchPricesInfoAction> } },
@@ -71,6 +74,7 @@ public class StateResolver : IStateResolver
             // Add other mappings here as needed : Coupons, Warranty, etc.
         };
     }
+
     private StateBase CreateDispatchAction<TState, TAction>(IDispatcher dispatcher, string basketId)
     where TState : StateBase
     where TAction : FetchDataActionBase
@@ -96,7 +100,7 @@ public class StateResolver : IStateResolver
     {
         return _serviceProvider.GetRequiredService<IState<TState>>().Value;
     }
-
+#warning refactor to remove basketId
     public void DispatchRefreshCalls(IDispatcher dispatcher, List<string?>? refreshCalls, string? basketId)
     {
         if (refreshCalls is null

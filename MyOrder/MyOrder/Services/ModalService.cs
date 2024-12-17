@@ -1,13 +1,11 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
+using MyOrder.Components.Childs.Header;
 using MyOrder.Components.Childs.Lines.AddLine;
 using MyOrder.Components.Childs.Menu;
 using MyOrder.Components.Common.Dialogs;
 using MyOrder.Shared.Dtos;
-using MyOrder.Shared.Dtos.GeneralInformation;
 using MyOrder.Store;
-using MyOrder.Store.OrderInfoUseCase;
-using System.Runtime.Intrinsics.X86;
 
 namespace MyOrder.Services;
 
@@ -73,20 +71,57 @@ public class ModalService(IDialogService dialogService) : IModalService
     }
 
     public async Task<IDialogReference> OpenSearchAccountDialogAsync<TState, TAction>(
-        Action<AccountDto> accountClicked)
+        Action<AccountDto> accountClicked,
+        Action addNewAccountClicked)
         where TState : class, IAccountsState
         where TAction : class, IFetchAccountsAction
     {
-        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, CloseButton = true };
+        var options = new DialogOptions
+        {
+            CloseOnEscapeKey = true,
+            FullWidth = true,
+            MaxWidth = MaxWidth.Small,
+            CloseButton = true
+        };
         var parameters = new DialogParameters<SearchAccountDialog<TState, TAction>>
         {
             { dialog => dialog.AccountClicked,
                 EventCallback.Factory.Create(this, accountClicked)
+            },
+            {
+                dialog => dialog.AddNewAccountClicked,
+                EventCallback.Factory.Create(this, addNewAccountClicked)
             }
         };
 
         return await dialogService.ShowAsync<SearchAccountDialog<TState, TAction>>(
             "Search compte", parameters, options);
+    }
+
+    public async Task<IDialogReference> OpenEditDeliveryAccountDialogAsync(Action? onCloseCallback = null, string? accountId = null)
+    {
+
+        var parameters = new DialogParameters<NewDeliveryAccountDialog>
+        {
+            { dialog => dialog.AccountId, accountId},
+        };
+
+        var options = new DialogOptions
+        {
+            CloseOnEscapeKey = true,
+            CloseButton = true,
+            BackdropClick = false
+        };
+
+        var dialogReference = await dialogService.ShowAsync<NewDeliveryAccountDialog>(
+            "EditDeliveryAccountDialog", parameters, options);
+
+        var dialogResult = await dialogReference.Result;
+
+        if (dialogResult?.Canceled == true)
+            onCloseCallback?.Invoke();
+
+        return dialogReference;
     }
 
     public async Task<bool> ShowConfirmationDialog(string message, string? title = null,

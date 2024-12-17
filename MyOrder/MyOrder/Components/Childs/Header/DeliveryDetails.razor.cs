@@ -1,5 +1,6 @@
 ﻿using Fluxor;
 using Microsoft.AspNetCore.Components;
+using MudBlazor;
 using MyOrder.Components.Common;
 using MyOrder.Services;
 using MyOrder.Shared.Dtos;
@@ -105,8 +106,16 @@ public partial class DeliveryDetails : FluxorComponentBase<DeliveryInfoState, Fe
         }
         await ModalService.OpenSearchAccountDialogAsync<DeliveryAccountsState, FetchDeliveryAccountsAction>(
             account => Dispatcher.Dispatch(
-                new UpdateFieldAction(BasketDeliveryInfo.Account, account, typeof(FetchDeliveryInfoAction)))
+                new UpdateFieldAction(BasketDeliveryInfo.Account, account, typeof(FetchDeliveryInfoAction))),
+                async () => await ModalService.OpenEditDeliveryAccountDialogAsync(
+                        () => Dispatcher.Dispatch(new ResetNewDeliveryAccountAction()))
             );
+    }
+
+    private async Task<IDialogReference> OpenEditAccountDeliveryAsync()
+    {
+        return await ModalService.OpenEditDeliveryAccountDialogAsync(
+            () => Dispatcher.Dispatch(new ResetNewDeliveryAccountAction()), BasketDeliveryInfo?.Account?.Value?.AccountId);
     }
 
     protected override void Dispose(bool disposing)

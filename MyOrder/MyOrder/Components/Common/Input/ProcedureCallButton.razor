@@ -6,11 +6,14 @@
     return;
 
 <MudTooltip Text="@Field.Name">
-    <MudIconButton Icon="@Icon"
-                   Color="FieldUtility.GetFieldColor(Field)"
-                   Size="Size"
-                   Disabled="!FieldUtility.IsReadWrite(Field)"
-                   OnClick="OnClickHandler" />
+    <MudButton EndIcon="@Icon"
+               IconSize="Size"
+               Color="FieldUtility.GetFieldColor(Field)"
+               Size="Size"
+               Disabled="!FieldUtility.IsReadWrite(Field)"
+               OnClick="OnClickHandler">
+        @DisplayedText
+    </MudButton>
 </MudTooltip>
 
 @code {
@@ -26,9 +29,20 @@
     [Parameter]
     public Color Color { get; set; }
 
+    [Parameter]
+    public bool IconOnly { get; set; } = false;
+
     [Inject]
     private IDispatcher Dispatcher { get; set; }
 
     private void OnClickHandler() =>
         Dispatcher.Dispatch(new PostProcedureCallAction(Field!.ProcedureCall));
+
+    private string? DisplayedText
+    {
+        get
+        {
+            return IconOnly ? string.Empty : Field!.Name;
+        }
+    }
 }
