@@ -19,7 +19,7 @@ public class GeneralInfoRepository(IGeneralInfoApiClient generalInfoApiClient,
         logger.LogDebug("Fetching basket generalInfo for {BasketId} from repository", BasketId);
         var operationDescription = $"GetBasketGeneralInfoAsync for basketId {BasketId}";
         return await ExecuteAsync(
-            async (token) => await _generalInfoApiClient.GetBasketGeneralInfoAsync(BasketId, token),
+            async (token) => await _generalInfoApiClient.GetBasketGeneralInfoAsync(CompanyId, BasketId, token),
             operationDescription,
             cancellationToken);
     }
@@ -30,7 +30,7 @@ public class GeneralInfoRepository(IGeneralInfoApiClient generalInfoApiClient,
         var operationDescription = $"GetNotificationsAsync for basketId {BasketId}";
 
         return await ExecuteAsync(
-            async (token) => await _generalInfoApiClient.GetNotificationsAsync(BasketId, token),
+            async (token) => await _generalInfoApiClient.GetNotificationsAsync(CompanyId, BasketId, token),
             operationDescription,
             cancellationToken);
     }
@@ -40,7 +40,7 @@ public class GeneralInfoRepository(IGeneralInfoApiClient generalInfoApiClient,
         logger.LogDebug("Fetching blocking reasons for {BasketId} from repository", BasketId);
         var operationDescription = $"GetBlockingReasonsAsync for basketId {BasketId}";
         return await ExecuteAsync(
-            async (token) => await _generalInfoApiClient.GetBlockingReasonsAsync(BasketId, token),
+            async (token) => await _generalInfoApiClient.GetBlockingReasonsAsync(CompanyId, BasketId, token),
             operationDescription,
             cancellationToken);
     }
@@ -50,7 +50,17 @@ public class GeneralInfoRepository(IGeneralInfoApiClient generalInfoApiClient,
         logger.LogDebug("Fetching validation rules for {BasketId} from repository", BasketId);
         var operationDescription = $"GetValidationRulesAsync for basketId {BasketId}";
         return await ExecuteAsync(
-            async (token) => await _generalInfoApiClient.GetValidationRulesAsync(BasketId, token),
+            async (token) => await _generalInfoApiClient.GetValidationRulesAsync(CompanyId, BasketId, token),
+            operationDescription,
+            cancellationToken);
+    }
+
+    public async Task<BasketPublishingProgress?> BasketPublicationStateAsync(CancellationToken cancellationToken = default)
+    {
+        logger.LogDebug("Fetching basket publication state for {BasketId} from repository", BasketId);
+        var operationDescription = $"BasketPublicationStateAsync for basketId {BasketId}";
+        return await ExecuteAsync(
+            async (token) => await _generalInfoApiClient.BasketPublicationStateAsync(CompanyId, BasketId, token),
             operationDescription,
             cancellationToken);
     }

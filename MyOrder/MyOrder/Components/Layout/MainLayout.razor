@@ -4,8 +4,8 @@
 @using MyOrder.Store.GeneralInfoUseCase
 @using MyOrder.Store.RessourcesUseCase
 @using MyOrder.Shared.Interfaces
+
 @inherits LayoutComponentBase
-@implements IDisposable
 
 @inject NavigationManager NavigationManager
 @inject INotificationService NotificationService
@@ -23,25 +23,10 @@
 @* Needed for snackbars *@
 <MudSnackbarProvider />
 
-@if (RessourcesState.Value.IsLoading)
-{
-    <MudOverlay Visible="RessourcesState.Value.IsLoading" ZIndex="9999" DarkBackground="false">
-        <MudProgressCircular Size="Size.Large" Indeterminate="true" />
-    </MudOverlay>
-    return;
-}
-
-@if (GeneralInfoState.Value.IsLoading)
-{
-    @* #warning "Refactor to use MudDialog fullscreen with close button false" *@
-    <MudOverlay Visible="GeneralInfoState.Value.IsLoading" ZIndex="9999" DarkBackground="false">
-        <MudProgressCircular Size="Size.Large" Indeterminate="true" />
-    </MudOverlay>
-}
+<PublishBasketOverlay />
 
 <MudLayout>
     <MudAppBar Elevation="2" Class="custom-appbar">
-        <MudImage Src="@_companyLogoSrc" Alt="Raja Group" Class="logo" />
         <GeneralInfo />
     </MudAppBar>
 
@@ -55,63 +40,3 @@
     <a href="" class="reload">Reload</a>
     <a class="dismiss">🗙</a>
 </div>
-
-@code {
-    [Inject]
-    private IDispatcher Dispatcher { get; set; }
-    [Inject]
-    private IState<RessourcesState> RessourcesState { get; set; }
-    [Inject]
-    IState<GeneralInfoState> GeneralInfoState { get; set; }
-
-    private string _companyLogoSrc = "images/Raja-Logo.png";
-
-    protected override void OnInitialized()
-    {
-        GeneralInfoState.StateChanged += GenInfoOnStateChanged;
-        RessourcesState.StateChanged += ResInfoOnStateChanged;
-
-        var uri = new Uri(NavigationManager.Uri);
-        var queryParams = System.Web.HttpUtility.ParseQueryString(uri.Query);
-        var basketId = queryParams["basketId"];
-        if (!string.IsNullOrEmpty(basketId))
-        {
-            BasketService.BasketId = basketId; // Cache the basket ID in a service
-        }
-
-        Dispatcher.Dispatch(new FetchRessourcesAction(RessourcesState.Value, basketId)); //Refactor
-    }
-
-    //Duplicate code for testing purpose
-    protected virtual void GenInfoOnStateChanged(object? sender, EventArgs e)
-    {
-        InvokeAsync(async () =>
-        {
-            if (GeneralInfoState?.Value?.GeneralInfo?.Company?.GroupId == "viking")
-            {
-                //_themeManager.Theme = ThemeConfiguration.RajaTheme;
-                _companyLogoSrc = "images/Viking-Logo.png";
-            }
-            else
-            {
-                //_themeManager.Theme = ThemeConfiguration.RajaTheme;
-                _companyLogoSrc = "images/Raja-Logo.png";
-            }
-            await InvokeAsync(StateHasChanged);
-        });
-    }
-
-    protected virtual void ResInfoOnStateChanged(object? sender, EventArgs e)
-    {
-        InvokeAsync(async () =>
-        {
-            await InvokeAsync(StateHasChanged);
-        });
-    }
-
-    public void Dispose()
-    {
-        GeneralInfoState.StateChanged -= GenInfoOnStateChanged;
-        RessourcesState.StateChanged -= ResInfoOnStateChanged;
-    }
-}

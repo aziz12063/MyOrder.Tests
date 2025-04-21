@@ -18,9 +18,7 @@ public class RessourcesEffects(IBasketRessourcesRepository ressourcesRepository,
         {
             var customerTagsTask = _ressourcesRepository.GetCustomerTagsAsync();
             var salesOriginsTask = _ressourcesRepository.GetSalesOriginsAsync();
-            var webOriginsTask = _ressourcesRepository.GetWebOriginsAsync();
             var salesPoolsTask = _ressourcesRepository.GetSalesPoolAsync();
-            var deliveryModesTask = _ressourcesRepository.GetDeliveryModesAsync();
             var taxGroupsTask = _ressourcesRepository.GetTaxGroupsAsync();
             var paymentModesTask = _ressourcesRepository.GetPaymentModesAsync();
             var lineUpdateReasons = _ressourcesRepository.GetlineUpdateReasonsAsync();
@@ -29,12 +27,12 @@ public class RessourcesEffects(IBasketRessourcesRepository ressourcesRepository,
             var warrantyCostOptionsTask = _ressourcesRepository.GetWarrantyCostOptionsAsync();
             var shippingCostOptionsTask = _ressourcesRepository.GetShippingCostOptionsAsync();
 
-            await Task.WhenAll(customerTagsTask, salesOriginsTask, webOriginsTask, salesPoolsTask, deliveryModesTask,
+            await Task.WhenAll(customerTagsTask, salesOriginsTask, salesPoolsTask,
                 taxGroupsTask, paymentModesTask, lineUpdateReasons, logisticFlows, couponsTask, warrantyCostOptionsTask,
                 shippingCostOptionsTask);
 
             dispatcher.Dispatch(new FetchRessourcesSuccessAction(customerTagsTask.Result, salesOriginsTask.Result,
-                webOriginsTask.Result, salesPoolsTask.Result, deliveryModesTask.Result, taxGroupsTask.Result,
+                salesPoolsTask.Result, taxGroupsTask.Result,
                 paymentModesTask.Result, lineUpdateReasons.Result, logisticFlows.Result, couponsTask.Result,
                 warrantyCostOptionsTask.Result, shippingCostOptionsTask.Result));
         }

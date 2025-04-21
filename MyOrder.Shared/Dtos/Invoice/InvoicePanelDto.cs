@@ -1,7 +1,7 @@
 ﻿using MyOrder.Shared.Dtos.SharedComponents;
 
-namespace MyOrder.Shared.Dtos;
-public class BasketInvoiceInfoDto
+namespace MyOrder.Shared.Dtos.Invoice;
+public class InvoicePanelDto
 {
     // ============================================
     // Facturation
@@ -26,6 +26,8 @@ public class BasketInvoiceInfoDto
     // Modifiable Resource taxGroup
     public Field<BasketValueDto?>? TaxGroup { get; set; }
 
+    public Field<string?>? PaymentAuthorizationAction { get; set; }
+
     // Condition de paiement  
     // Non modifiable Resource paymentTerms
     public Field<BasketValueDto?>? PaymentTerm { get; set; }
@@ -33,8 +35,6 @@ public class BasketInvoiceInfoDto
     // Mode de paiement
     // Modifiable Obligatoire Resouce paymentModes
     public Field<BasketValueDto?>? PaymentMode { get; set; }
-
-    public bool? IsPublicEntity { get; set; }
 
     // Chorus / service exéc.
     // Modifiable et obligatoire uniquement si isPublicEntity = true

@@ -18,8 +18,8 @@ public partial class AddLineTab : FluxorComponentBase<NewLineState, FetchNewLine
     private GenericTextField<string?>? ItemIdField { get; set; }
     private bool _isLoading = true;
 
-    protected override FetchNewLineAction CreateFetchAction(NewLineState state, string basketId) =>
-        new(state, basketId);
+    protected override FetchNewLineAction CreateFetchAction(NewLineState state) =>
+        new(state);
 
     protected override void OnInitialized()
     {

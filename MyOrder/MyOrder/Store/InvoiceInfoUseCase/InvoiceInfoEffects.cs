@@ -1,5 +1,6 @@
 ﻿using Fluxor;
 using MyOrder.Infrastructure.Repositories;
+using MyOrder.Shared.Dtos.Invoice;
 
 namespace MyOrder.Store.InvoiceInfoUseCase;
 
@@ -29,15 +30,34 @@ public class InvoiceInfoEffects(IInvoiceInfoRepository invoiceInfoRepository, IL
     {
         try
         {
-            var isFiltered = !string.IsNullOrEmpty(action.Filter);
-            logger.LogInformation("Fetching invoice info accounts for {BasketId}", action.BasketId);
-            var accountList = await _invoiceInfoRepository.GetInvoiceToAccountsAsync(action.Filter);
-            dispatcher.Dispatch(new FetchInvoiceAccountsSuccessAction(accountList, isFiltered));
+            var isSearch = action.IsSearch ?? false;
+            logger.LogInformation("Fetching invoice info accounts.");
+            var accountList = await _invoiceInfoRepository.GetInvoiceToAccountsAsync(action.Filter, action.IsSearch);
+            dispatcher.Dispatch(new FetchInvoiceAccountsSuccessAction(accountList, isSearch));
         }
         catch (Exception ex)
         {
             logger.LogError(ex, "Error fetching invoice info accounts data");
             dispatcher.Dispatch(new FetchInvoiceAccountsFailureAction(ex.Message));
+        }
+    }
+
+    [EffectMethod]
+    public async Task HandleFetchPaymentAuthorizationAction(FetchPaymentAuthorizationAction action, IDispatcher dispatcher)
+    {
+        try
+        {
+            var paymentAuthorization = await _invoiceInfoRepository.GetPaymentAuthorizationAsync();
+
+            if (paymentAuthorization is null)
+                dispatcher.Dispatch(new FetchPaymentAuthorizationFailureAction($"Server returned null for {nameof(PaymentAuthorizationDto)}."));
+            else
+                dispatcher.Dispatch(new FetchPaymentAuthorizationSuccessAction(paymentAuthorization));
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Error fetching payment authorization data");
+            dispatcher.Dispatch(new FetchPaymentAuthorizationFailureAction(ex.Message));
         }
     }
 }

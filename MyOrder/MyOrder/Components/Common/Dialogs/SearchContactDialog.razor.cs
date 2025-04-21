@@ -19,11 +19,11 @@ public partial class SearchContactDialog<TState, TFetchAction>
     [CascadingParameter]
     private MudDialogInstance MudDialog { get; set; }
 
-    protected override TFetchAction CreateFetchAction(TState state, string basketId) =>
-        CreateFetchAction(state, basketId, null);
+    protected override TFetchAction CreateFetchAction(TState state) =>
+        CreateFetchAction(state, null);
 
-    private static TFetchAction CreateFetchAction(TState state, string basketId, string? filter = null) =>
-        Activator.CreateInstance(typeof(TFetchAction), state, basketId, filter) as TFetchAction
+    private static TFetchAction CreateFetchAction(TState state, string? filter = null) =>
+        Activator.CreateInstance(typeof(TFetchAction), state, filter) as TFetchAction
         ?? throw new InvalidOperationException($"Unable to create instance of {typeof(TFetchAction)}.");
 
     protected override void CacheNewFields()
@@ -40,7 +40,7 @@ public partial class SearchContactDialog<TState, TFetchAction>
 
     private void OnSearchTextChanged()
     {
-        Dispatcher.Dispatch(CreateFetchAction(State.Value, BasketId, _filterString));
+        Dispatcher.Dispatch(CreateFetchAction(State.Value, _filterString));
     }
 
     private async Task OnContactClick(ContactDto? contact)

@@ -15,6 +15,7 @@ public partial class AddLineDialog
     [CascadingParameter]
     private MudDialogInstance DialogInstance { get; set; }
     private AddLineTab? AddLineTab { get; set; }
+    private MudButton? AddLineButton { get; set; }
     private string? FreeText { get; set; }
 
     [Inject]
@@ -27,6 +28,19 @@ public partial class AddLineDialog
     public IModalService ModalService { get; set; }
 
     public int CurrentTab { get; set; }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+        if (!firstRender)
+        {
+            ArgumentNullException.ThrowIfNull(AddLineButton, $"{nameof(AddLineTab)} component is not found.");
+            ArgumentNullException.ThrowIfNull(AddLineButton, $"{nameof(AddLineButton)} {nameof(MudButton)} is not found.");
+        }
+    }
+
+    private async Task OnAddLineFormEnterPressed() =>
+            await AddLineButton!.FocusAsync();
 
     private void ItemClicked(string? itemId)
     {
@@ -41,7 +55,7 @@ public partial class AddLineDialog
 
     private void ResetLine()
     {
-        Dispatcher.Dispatch(new ResetNewLineAction(BasketService.BasketId));
+        Dispatcher.Dispatch(new ResetNewLineAction());
         DialogInstance.Close(DialogResult.Ok(true));
     }
 
@@ -49,15 +63,15 @@ public partial class AddLineDialog
     {
 #warning TODO: Add validation
         if (false)
-            return; 
+            return;
 
-        Dispatcher.Dispatch(new CommitNewLineAction(BasketService.BasketId));
+        Dispatcher.Dispatch(new CommitNewLineAction());
         DialogInstance.Close(DialogResult.Ok(true));
     }
 
     private async Task CommitNewLine(MouseEventArgs e)
     {
-        Dispatcher.Dispatch(new CommitNewLineAction(BasketService.BasketId));
+        Dispatcher.Dispatch(new CommitNewLineAction());
 
         //Set focus back to the ItemIdField
         await AddLineTab!.FocusItemIdFieldAsync();
@@ -73,8 +87,7 @@ public partial class AddLineDialog
             return;
         }
 
-        Dispatcher.Dispatch(new PostFreeTextAction(BasketService.BasketId, lines!));
+        Dispatcher.Dispatch(new PostFreeTextAction(lines!));
         DialogInstance.Close(DialogResult.Ok(true));
     }
-
 }

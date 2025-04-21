@@ -20,8 +20,8 @@ public partial class BestSellersTab : FluxorComponentBase<BestSellersState, Fetc
     [Parameter, EditorRequired]
     public EventCallback<string> ItemClicked { get; set; }
 
-    protected override FetchBestSellersAction CreateFetchAction(BestSellersState state, string basketId) =>
-        new(state, basketId);
+    protected override FetchBestSellersAction CreateFetchAction(BestSellersState state) =>
+        new(state);
 
     protected override void CacheNewFields()
     {
@@ -29,7 +29,7 @@ public partial class BestSellersTab : FluxorComponentBase<BestSellersState, Fetc
     }
 
     private void FilterItemsCallback(string filterString) =>
-        Dispatcher.Dispatch(new FetchBestSellersAction(State.Value, BasketId, filterString));
+        Dispatcher.Dispatch(new FetchBestSellersAction(State.Value, filterString));
 
     private void ToggleBlockedCallback(bool applyFilter) =>
         _showBlocked = !applyFilter;

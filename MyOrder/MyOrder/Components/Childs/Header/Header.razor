@@ -1,36 +1,26 @@
-﻿<!-- Refactor Style="overflow-y: auto;" and put it in the right place -->
+﻿@using MyOrder.Components.Childs.Header.Delivery
+<!-- Refactor Style="overflow-y: auto;" and put it in the right place -->
 
 <MudGrid Style="min-width: 1150px;" Spacing="2" Justify="Justify.Center">
 
     <MudItem xs="12" sm="3" md="3">
-        <HoverableMudPaper Class="flexible-paper header-cards-height header-cards-height-content">
-            <OrderInfo />
-        </HoverableMudPaper>
+        <OrderInfo />
     </MudItem>
 
     <MudItem xs="12" sm="3" md="3">
-        <HoverableMudPaper Class="flexible-paper header-cards-height header-cards-height-content" Style="padding-bottom:4px;">
-            <DeliveryDetails />
-        </HoverableMudPaper>
-    </MudItem>
-
-
-    <MudItem xs="12" sm="3" md="3">
-        <HoverableMudPaper Class="flexible-paper header-cards-height header-cards-height-content">
-            <InvoiceDetails />
-        </HoverableMudPaper>
+        <DeliveryDetails />
     </MudItem>
 
     <MudItem xs="12" sm="3" md="3">
-        <HoverableMudPaper Class="flexible-paper header-cards-height header-cards-height-content">
-            <CommercialDetails />
-        </HoverableMudPaper>
+        <InvoiceInfo />
+    </MudItem>
+
+    <MudItem xs="12" sm="3" md="3">
+        <TradeInfo />
     </MudItem>
 
     <MudItem xs="12">
-        <HoverableMudPaper Class="flexible-paper">
-            <PriceInfo />
-        </HoverableMudPaper>
+        <PriceInfo />
     </MudItem>
 
 </MudGrid>

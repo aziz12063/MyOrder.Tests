@@ -6,8 +6,8 @@
     <MudTooltip RootStyle="width:100%"
                 Text="@TooltipText"
                 Placement="Placement.Top">
-        <MudCheckBox Size="Size.Small"
-                     Dense="true"
+        <MudCheckBox Size="Size"
+                     Dense="Dense"
                      Style="display:inline-block;"
                      LabelPosition="LabelPosition.End"
                      Required="Required"
@@ -27,6 +27,10 @@
 {
     [Parameter]
     public Typo Typo { get; set; } = Typo.body2;
+    [Parameter]
+    public Size Size { get; set; } = Size.Small;
+    [Parameter]
+    public bool Dense { get; set; } = true;
 
     protected override void OnParametersSet()
     {

@@ -18,17 +18,17 @@ public class DeliveryInfoRepository(IDeliveryInfoApiClient deliveryInfoApiClient
         logger.LogDebug("Fetching basket delivery info for {BasketId} from repository", BasketId);
         var operationDescription = $"GetBasketDeliveryInfoAsync for basketId {BasketId}";
         return await ExecuteAsync(
-            async (token) => await _deliveryInfoApiClient.GetBasketDeliveryInfoAsync(BasketId, token),
+            async (token) => await _deliveryInfoApiClient.GetBasketDeliveryInfoAsync(CompanyId, BasketId, token),
             operationDescription,
             cancellationToken);
     }
 
-    public async Task<List<AccountDto?>?> GetDeliverToAccountsAsync(string? filter = null, CancellationToken cancellationToken = default)
+    public async Task<List<AccountDto?>?> GetDeliverToAccountsAsync(string? filter = null, bool? search = null, CancellationToken cancellationToken = default)
     {
         logger.LogDebug("Fetching deliver to accounts for {BasketId} from repository", BasketId);
         var operationDescription = $"GetDeliverToAccountsAsync for basketId {BasketId}";
         return await ExecuteAsync(
-            async (token) => await _deliveryInfoApiClient.GetDeliverToAccountsAsync(BasketId, filter, token),
+            async (token) => await _deliveryInfoApiClient.GetDeliverToAccountsAsync(CompanyId, BasketId, filter, search, token),
             operationDescription,
             cancellationToken);
     }
@@ -38,7 +38,7 @@ public class DeliveryInfoRepository(IDeliveryInfoApiClient deliveryInfoApiClient
         logger.LogDebug("Fetching new delivery account for {BasketId} with the filter {filter} from repository", BasketId, filter);
         var operationDescription = $"GetNewDeliveryAccountAsync for basketId {BasketId}, with filter {filter}";
         return await ExecuteAsync(
-            async (token) => await _deliveryInfoApiClient.GetNewDeliveryAccountAsync(BasketId, filter, token),
+            async (token) => await _deliveryInfoApiClient.GetNewDeliveryAccountAsync(CompanyId, BasketId, filter, token),
             operationDescription,
             cancellationToken);
     }
@@ -48,7 +48,7 @@ public class DeliveryInfoRepository(IDeliveryInfoApiClient deliveryInfoApiClient
         logger.LogDebug("Committing new delivery account for {BasketId} from repository", BasketId);
         var operationDescription = $"CommitNewDeliveryAccountAsync for basketId {BasketId}";
         return await ExecuteAsync(
-            async (token) => await _deliveryInfoApiClient.CommitNewDeliveryAccountAsync(BasketId, token),
+            async (token) => await _deliveryInfoApiClient.CommitNewDeliveryAccountAsync(CompanyId, BasketId, token),
             operationDescription,
             cancellationToken ?? default);
     }
@@ -58,7 +58,7 @@ public class DeliveryInfoRepository(IDeliveryInfoApiClient deliveryInfoApiClient
         logger.LogDebug("Resetting new delivery account for {BasketId} from repository", BasketId);
         var operationDescription = $"ResetNewDeliveryAccountAsync for basketId {BasketId}";
         return await ExecuteAsync(
-            async (token) => await _deliveryInfoApiClient.ResetNewDeliveryAccountAsync(BasketId, token),
+            async (token) => await _deliveryInfoApiClient.ResetNewDeliveryAccountAsync(CompanyId, BasketId, token),
             operationDescription,
             cancellationToken ?? default);
     }
@@ -68,7 +68,17 @@ public class DeliveryInfoRepository(IDeliveryInfoApiClient deliveryInfoApiClient
         logger.LogDebug("Fetching deliver to contacts for {BasketId} from repository", BasketId);
         var operationDescription = $"GetDeliverToContactsAsync for basketId {BasketId}";
         return await ExecuteAsync(
-            async (token) => await _deliveryInfoApiClient.GetDeliverToContactsAsync(BasketId, filter, token),
+            async (token) => await _deliveryInfoApiClient.GetDeliverToContactsAsync(CompanyId, BasketId, filter, token),
+            operationDescription,
+            cancellationToken);
+    }
+
+    public async Task<List<BasketValueDto?>?> GetDeliveryModesAsync(CancellationToken cancellationToken = default)
+    {
+        logger.LogDebug("Fetching delivery modes for {BasketId} from repository", BasketId);
+        var operationDescription = $"GetDeliveryModesAsync for basketId {BasketId}";
+        return await ExecuteAsync(
+            async (token) => await _deliveryInfoApiClient.GetDeliveryModesAsync(CompanyId, BasketId, token),
             operationDescription,
             cancellationToken);
     }

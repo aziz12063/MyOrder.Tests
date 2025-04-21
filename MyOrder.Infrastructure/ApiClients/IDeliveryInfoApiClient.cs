@@ -6,30 +6,38 @@ namespace MyOrder.Infrastructure.ApiClients;
 
 public interface IDeliveryInfoApiClient
 {
-    [Get("/api/orderContext/{basketId}/deliveryInfo")]
-    Task<BasketDeliveryInfoDto?> GetBasketDeliveryInfoAsync(string basketId, CancellationToken cancellationToken = default);
+    [Get("/api/myorder/{companyId}/{basketId}/deliveryInfo")]
+    Task<BasketDeliveryInfoDto?> GetBasketDeliveryInfoAsync(string companyId, string basketId, CancellationToken cancellationToken = default);
 
-    [Get("/api/orderContext/{basketId}/deliverToAccounts")]
+    [Get("/api/myorder/{companyId}/{basketId}/deliverToAccounts")]
     Task<List<AccountDto?>?> GetDeliverToAccountsAsync(
+        string companyId, 
         string basketId,
         [Query] string? filter = null,
+        [Query] bool? search = null,
         CancellationToken cancellationToken = default);
 
-    [Get("/api/orderContext/{basketId}/newDeliverToAccount")]
+    [Get("/api/myorder/{companyId}/{basketId}/newDeliverToAccount")]
     Task<DeliveryAccountDraft?> GetNewDeliveryAccountAsync(
+         string companyId,
          string basketId,
         [Query] string? accountId = null,
         CancellationToken cancellationToken = default);
 
-    [Put("/api/orderContext/{basketId}/newDeliverToAccount/add")]
-    Task<ProcedureCallResponseDto?> CommitNewDeliveryAccountAsync(string basketId, CancellationToken cancellationToken = default);
+    [Put("/api/myorder/{companyId}/{basketId}/newDeliverToAccount/add")]
+    Task<ProcedureCallResponseDto?> CommitNewDeliveryAccountAsync(string companyId, string basketId, CancellationToken cancellationToken = default);
 
-    [Put("/api/orderContext/{basketId}/newDeliverToAccount/reset")]
-    Task<ProcedureCallResponseDto> ResetNewDeliveryAccountAsync(string basketId, CancellationToken cancellationToken = default);
+    [Put("/api/myorder/{companyId}/{basketId}/newDeliverToAccount/reset")]
+    Task<ProcedureCallResponseDto> ResetNewDeliveryAccountAsync(string companyId, string basketId, CancellationToken cancellationToken = default);
 
-    [Get("/api/orderContext/{basketId}/deliverToContacts")]
+    [Get("/api/myorder/{companyId}/{basketId}/deliverToContacts")]
     Task<List<ContactDto?>?> GetDeliverToContactsAsync(
+        string companyId, 
         string basketId,
         [Query] string? filter = null,
         CancellationToken cancellationToken = default);
+
+    [Get("/api/myorder/{companyId}/{basketId}/deliveryModes")]
+    Task<List<BasketValueDto?>?> GetDeliveryModesAsync(string companyId, string basketId, CancellationToken cancellationToken = default);
+
 }

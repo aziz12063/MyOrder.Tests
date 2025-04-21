@@ -3,7 +3,7 @@
     "https": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "EditBasket?BasketId=P0132997",
+      "launchUrl": "Raja-fr/EditBasket?BasketId=P0132997",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

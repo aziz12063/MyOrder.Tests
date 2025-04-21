@@ -6,17 +6,19 @@ namespace MyOrder.Infrastructure.ApiClients;
 
 public interface IOrderLinesApiClient
 {
-    [Get("/api/orderContext/{basketId}/orderLines")]
-    Task<BasketOrderLinesDto?> GetOrderLinesAsync(string basketId, CancellationToken cancellationToken = default);
+    [Get("/api/myorder/{companyId}/{basketId}/orderLines")]
+    Task<BasketOrderLinesDto?> GetOrderLinesAsync(string companyId, string basketId, CancellationToken cancellationToken = default);
 
-    [Post("/api/orderContext/{basketId}/orderLines/duplicate")]
+    [Post("/api/myorder/{companyId}/{basketId}/orderLines/duplicate")]
     Task<ProcedureCallResponseDto?> DuplicateOrderLinesAsync(
+        string companyId,
         string basketId,
         [Body] List<int> linesIds,
         CancellationToken cancellationToken = default);
 
-    [Post("/api/orderContext/{basketId}/orderLines/delete")]
+    [Post("/api/myorder/{companyId}/{basketId}/orderLines/delete")]
     Task<ProcedureCallResponseDto?> DeleteOrderLinesAsync(
+        string companyId,
         string basketId,
         [Body] List<int> linesIds,
         CancellationToken cancellationToken = default);

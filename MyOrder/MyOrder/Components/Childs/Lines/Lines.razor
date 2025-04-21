@@ -3,175 +3,172 @@
 @using static MudBlazor.CategoryTypes
 @inherits FluxorComponentBase<LinesState, FetchLinesAction>
 
-@if (State.Value.IsLoading)
+@if (_isLoading)
 {
     <HeaderElementLoadingSkeleton />
     return;
 }
 <FetchActionTypeCascadingValue FetchActionTypeValue="FetchActionType">
-    <MudContainer Class="pa-0 mx-0 mt-0 mb-10" Style="max-width: none;">
-        <!--Grid-->
-        <MudDataGrid @ref="LinesDataGridInstance"
-                     T="BasketLineDto"
-                     Bordered="true"
-                     Dense="true"
-                     Striped="true"
-                     Elevation="4"
-                     Class="pt-1"
-                     Items="@BasketOrderLinesDto!.lines"
-                     SortMode="@SortMode.None"
-                     Hideable="true"
-                     EditMode="@DataGridEditMode.Cell"
-                     MultiSelection="true"
-                     ReadOnly="false"
-                     @bind-SelectedItems="SelectedItems">
-            <ToolBarContent>
-                <MudTooltip Text="Ajouter un article"
-                            ShowOnFocus="false">
-                    <MudIconButton Icon="@Icons.Material.TwoTone.Add"
-                                   Variant="Variant.Filled"
-                                   Size="Size.Medium"
-                                   Color="Color.Tertiary"
-                                   OnClick="OpenAddLineDialogAsync" />
-                </MudTooltip>
+    <MudGrid Spacing="4" Class="mt-1 mb-5">
 
-                <MudSpacer />
-                <MudTooltip Text="Copier les articles sélectionnés">
-                    <MudIconButton Icon="@Icons.Material.TwoTone.ContentCopy"
-                                   Variant="Variant.Filled"
-                                   Size="Size.Medium"
-                                   Color="Color.Dark"
-                                   OnClick="OnCopyItemsClick" />
-                </MudTooltip>
+        <MudItem xs="12">
+            <MudDataGrid @ref="LinesDataGridInstance"
+                         T="BasketLineDto"
+                         Bordered="true"
+                         Dense="true"
+                         Striped="true"
+                         Elevation="4"
+                         Hover="true"
+                         Class="pt-1"
+                         Items="@BasketOrderLinesDto!.lines"
+                         SortMode="@SortMode.None"
+                         Hideable="true"
+                         FixedHeader="true"
+                         Height="@(BasketOrderLinesDto?.lines is {Count: > 7} ? "400px" : "")"
+                         EditMode="@DataGridEditMode.Cell"
+                         MultiSelection="true"
+                         SelectOnRowClick="false"
+                         ReadOnly="false"
+                         RowClick="RowClicked"
+                         RowStyleFunc="RowStyleFunc">
+                <ToolBarContent>
+                    <MudTooltip Text="Ajouter un article"
+                                ShowOnFocus="false">
+                        <MudIconButton Icon="@Icons.Material.TwoTone.Add"
+                                       Variant="Variant.Filled"
+                                       Size="Size.Medium"
+                                       Color="Color.Tertiary"
+                                       OnClick="OpenAddLineDialogAsync" />
+                    </MudTooltip>
 
-                &ensp;
+                    <MudSpacer />
+                    <MudTooltip Text="Copier les articles sélectionnés">
+                        <MudIconButton Icon="@Icons.Material.TwoTone.ContentCopy"
+                                       Variant="Variant.Filled"
+                                       Size="Size.Medium"
+                                       Color="Color.Dark"
+                                       Disabled="!IsAnyItemSelected()"
+                                       OnClick="OnCopyItemsClick" />
+                    </MudTooltip>
 
-                <MudTooltip Text="Dupliquer les articles sélectionnés">
-                    <MudIconButton Icon="@Icons.Material.TwoTone.Layers"
-                                   Variant="Variant.Filled"
-                                   Size="Size.Medium"
-                                   Color="Color.Primary"
-                                   OnClick="OnDuplicateItemsClick" />
-                </MudTooltip>
+                    &ensp;
 
-                &ensp;
+                    <MudTooltip Text="Dupliquer les articles sélectionnés">
+                        <MudIconButton Icon="@Icons.Material.TwoTone.Layers"
+                                       Variant="Variant.Filled"
+                                       Size="Size.Medium"
+                                       Color="Color.Primary"
+                                       Disabled="!IsAnyItemSelected()"
+                                       OnClick="OnDuplicateItemsClick" />
+                    </MudTooltip>
 
-                <MudTooltip Text="Supprimer les articles sélectionnés">
-                    <MudIconButton Icon="@Icons.Material.TwoTone.Delete"
-                                   Variant="Variant.Filled"
-                                   Size="Size.Medium"
-                                   Color="Color.Error"
-                                   OnClick="OnDeleteItemsClick" />
-                </MudTooltip>
+                    &ensp;
 
-            </ToolBarContent>
-            <Columns>
-                <SelectColumn T="BasketLineDto" Size="Size.Small" />
+                    <MudTooltip Text="Supprimer les articles sélectionnés"
+                                RootClass="pr-2">
+                        <MudIconButton Icon="@Icons.Material.TwoTone.Delete"
+                                       Variant="Variant.Filled"
+                                       Size="Size.Medium"
+                                       Color="Color.Error"
+                                       Disabled="!IsAnyItemSelected()"
+                                       OnClick="OnDeleteItemsClick" />
+                    </MudTooltip>
+                </ToolBarContent>
+                <Columns>
+                    <SelectColumn T="BasketLineDto" Size="Size.Small" />
 
-                <HierarchyColumn T="BasketLineDto" />
+                    <PropertyColumn Property="line => FieldUtility.NullNumberHelper(line.LineNum)"
+                                    Title="Ligne"
+                                    Editable="false" />
 
-                <PropertyColumn Property="line => FieldUtility.NullNumberHelper(line.LineNum)"
-                                Title="Ligne"
-                                Editable="false" />
+                    <PropertyColumn Property="x => x.ItemId == null? string.Empty : x.ItemId.Value"
+                                    Title="Code Article"
+                                    Editable="false" />
 
-                <TemplateColumn Title="Not imp.">
-                    <CellTemplate>
-                        @{
-                            var val = context.Item;
-                            if (val.OnOrderQuantity?.Value > 0)
-                            {
-                                <MudIcon Icon="@Icons.Material.Filled.BackHand" Color="Color.Error" Size="Size.Small" />
-                            }
-                            if (val.OnOrderQuantity?.Value == 0 && val.PhysicalAvailableQuantity?.Value > 0)
-                            {
+                    <PropertyColumn Property="x => x.Name == null ? string.Empty : x.Name.Value" Title="Description"
+                                    Editable="IsNameEditable" />
 
-                            }
-                            if (val.OnOrderQuantity?.Value == 0 && val.PhysicalAvailableQuantity?.Value == 0)
-                            {
-                                <MudIcon Icon="@Icons.Material.Filled.Done" Color="Color.Primary" />
-                            }
-                        }
+                    <PropertyColumn Property="x => x.InventLocationId == null ? string.Empty : x.InventLocationId.Value " Title="Entrepôt"
+                                    Editable="false" />
 
-                    </CellTemplate>
-                </TemplateColumn>
+                    <TemplateColumn Editable="false"
+                                    Title="Quantité">
+                        <CellTemplate>
+                            <GenericNumericField Field="context.Item.SalesQuantity"
+                                                 Step="context.Item.MultipleQuantity?.Value"
+                                                 Min="context.Item.MultipleQuantity?.Value"
+                                                 HideLabel="true" />
+                        </CellTemplate>
+                    </TemplateColumn>
 
-                <PropertyColumn Property="x => x.ItemId == null? string.Empty : x.ItemId.Value" Title="CodeArticle"
-                                Editable="IsItemIdEditable" />
+                    @* <TemplateColumn Editable="false" *@
+                    @*                 Title="Remise Std"> *@
+                    @*     <CellTemplate> *@
+                    @*         <GenericNumericField Field="context.Item.DiscountRate" *@
+                    @*                              Min="0" *@
+                    @*                              HideLabel="true" *@
+                    @*                              Format="P" *@
+                    @*                              Margin="Margin.None" /> *@
+                    @*     </CellTemplate> *@
+                    @* </TemplateColumn> *@
 
-                <PropertyColumn Property="x => x.Name == null ? string.Empty : x.Name.Value" Title="Description"
-                                Editable="IsNameEditable" />
+                    @* <TemplateColumn Editable="false" *@
+                    @*                 Title="Remise DC Not impl."> *@
+                    @*     <CellTemplate> *@
 
-                <PropertyColumn Property="x => x.InventLocationId == null ? string.Empty : x.InventLocationId.Value " Title="Entrepôt"
-                                Editable="false" />
+                    @*     </CellTemplate> *@
+                    @* </TemplateColumn> *@
 
-                <TemplateColumn Editable="false"
-                                Title="Quantité">
-                    <CellTemplate>
-                        <GenericNumericField Field="context.Item.SalesQuantity"
-                                             Step="context.Item.MultipleQuantity?.Value"
-                                             Min="context.Item.MultipleQuantity?.Value"
-                                             HideLabel="true" />
-                    </CellTemplate>
-                </TemplateColumn>
+                    <PropertyColumn Property="context => context.SalesPrice.Value"
+                                    Title="Prix Unitaire"
+                                    Editable="false"
+                                    Format="C"
+                                    CellStyle="text-align:right" />
 
-                <TemplateColumn Editable="false"
-                                Title="Remise Std">
-                    <CellTemplate>
-                        <GenericNumericField Field="context.Item.DiscountRate"
-                                             Min="0"
-                                             HideLabel="true"
-                                             Format="P" />
-                    </CellTemplate>
-                </TemplateColumn>
+                    @* <TemplateColumn Editable="false" *@
+                    @*                 Title="Prix Unitaire"> *@
+                    @*     <CellTemplate> *@
+                    @*         <GenericNumericField Field="context.Item.SalesPrice" *@
+                    @*                              HideLabel="true" *@
+                    @*                              Format="C" *@
+                    @*                              ReadOnly="true" *@
+                    @*                              Margin="Margin.None" /> *@
+                    @*     </CellTemplate> *@
+                    @* </TemplateColumn> *@
 
-                <TemplateColumn Editable="false"
-                                Title="Remise DC Not impl.">
-                    <CellTemplate>
+                    <PropertyColumn Property="x => x.DiscountType.Value.Description ?? string.Empty"
+                                    Title="Tarification"
+                                    Editable="false" />
 
-                    </CellTemplate>
-                </TemplateColumn>
+                    <PropertyColumn Property="x => x.LineAmount == null ? 0 :  x.LineAmount.Value"
+                                    Title="Montant HT"
+                                    Editable="IsLineAmountEditable"
+                                    Format="C"
+                                    CellStyle="text-align:right" />
+                </Columns>
 
-                <TemplateColumn Editable="false"
-                                Title="Prix Unitaire">
-                    <CellTemplate>
-                        <GenericNumericField Field="context.Item.SalesPrice"
-                                             HideLabel="true"
-                                             Format="C" />
-                    </CellTemplate>
-                </TemplateColumn>
+                <NoRecordsContent>
+                    <MudText Typo="Typo.body1" Class="pt-5 pb-10">
+                        <em>Veuillez ajouter une nouvelle ligne en cliquant sur le boutton "+".</em>
+                    </MudText>
+                </NoRecordsContent>
 
-                <PropertyColumn Property="x => x.DiscountType != null ? x.DiscountType.Value : null"
-                                Title="Tarification"
-                                Editable="IsDiscountTypeEditable" />
+            </MudDataGrid>
+        </MudItem>
 
-                <PropertyColumn Property="x => x.LineAmount == null ? 0 :  x.LineAmount.Value"
-                                Title="Montant HT"
-                                Editable="IsLineAmountEditable"
-                                Format="C" />
-            </Columns>
+        <!--S1-->
+        <MudItem xs="12" sm="3">
+            <LineArticleDetails BasketLine="DetailedLine" UpdateReasons="UpdateReasons" />
+        </MudItem>
 
-            <ChildRowContent>
+        <!--S2-->
+        <MudItem xs="12" sm="5">
+            <LineStockQuantities BasketLine="DetailedLine" LogisticFlows="LogisticFlows" />
+        </MudItem>
 
-                <MudGrid Class="py-1" Spacing="4" Justify="Justify.Center">
-                    @if (context.Item is BasketLineDto basketLineDto)
-                    {
-                        <!--S1-->
-                        <MudItem xs="12" sm="3">
-                            <LineArticleDetails BasketLine="@context.Item" UpdateReasons="UpdateReasons" />
-                        </MudItem>
-
-                        <!--S2-->
-                        <MudItem xs="12" sm="5">
-                            <LineStockQuantities BasketLine="@context.Item" LogisticFlows="LogisticFlows" />
-                        </MudItem>
-
-                        <!--S3-->
-                        <MudItem xs="12" sm="4">
-                            <LinePricesQuantities BasketLine="@context.Item" />
-                        </MudItem>
-                    }
-                </MudGrid>
-            </ChildRowContent>
-        </MudDataGrid>
-    </MudContainer>
+        <!--S3-->
+        <MudItem xs="12" sm="4">
+            <LinePricesQuantities BasketLine="DetailedLine" />
+        </MudItem>
+    </MudGrid>
 </FetchActionTypeCascadingValue>

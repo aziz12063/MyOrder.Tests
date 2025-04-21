@@ -13,7 +13,9 @@ public record AccountDto(
     string? Email,
     string? Phone,
     string? CellularPhone,
-    bool? Blocked)
+    bool? Blocked,
+    DateTime? LastOrderDate,
+    bool? IsLinked)
 {
     public override string ToString() => $"{AccountId} - {Name} - {ZipCode}";
 }

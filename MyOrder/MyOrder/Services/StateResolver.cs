@@ -18,13 +18,18 @@ public class StateResolver : IStateResolver
     private const string GeneralInfo = "generalInfo";
     private const string OrderInfo = "orderInfo";
     private const string DeliveryInfo = "deliveryInfo";
+    private const string DeliveryModes = "deliveryModes";
+    private const string DeliveryAccounts = "deliverToAccounts";
     private const string NewDeliveryAccount = "newDeliverToAccount";
+    private const string DeliveryContacts = "deliverToContacts";
     private const string InvoiceInfo = "invoiceInfo";
+    private const string InvoiceAccounts = "invoiceToAccounts";
     private const string TradeInfo = "tradeInfo";
     private const string PricesInfo = "pricesInfo";
     private const string Notifications = "notifications";
     private const string OrderLines = "orderLines";
     private const string NewLine = "newLine";
+    private const string PaymentAuthorization = "paymentAuthorization";
 
     public static readonly Dictionary<Type, string> EndpointFetchActionMap = new()
     {
@@ -33,22 +38,24 @@ public class StateResolver : IStateResolver
         { typeof(FetchDeliveryInfoAction), DeliveryInfo },
         { typeof(FetchNewDeliveryAccountAction), NewDeliveryAccount },
         { typeof(FetchInvoiceInfoAction), InvoiceInfo },
+        { typeof(FetchInvoiceAccountsAction), InvoiceAccounts },
         { typeof(FetchTradeInfoAction), TradeInfo },
         { typeof(FetchPricesInfoAction), PricesInfo },
         { typeof(FetchNotificationsAction), Notifications },
         { typeof(FetchLinesAction), OrderLines },
-        { typeof(FetchNewLineAction), NewLine }
+        { typeof(FetchNewLineAction), NewLine },
+        { typeof(FetchPaymentAuthorizationAction), PaymentAuthorization }
     };
 
     private readonly IServiceProvider _serviceProvider;
     private readonly ILogger<StateResolver> _logger;
-    private readonly Dictionary<string, List<Func<IDispatcher, string, StateBase>>> _refreshCallActions;
+    private readonly Dictionary<string, List<Func<IDispatcher, StateBase>>> _refreshCallActions;
 
     public StateResolver(IServiceProvider serviceProvider, ILogger<StateResolver> logger)
     {
         _serviceProvider = serviceProvider;
         _logger = logger;
-        _refreshCallActions = new Dictionary<string, List<Func<IDispatcher, string, StateBase>>>
+        _refreshCallActions = new Dictionary<string, List<Func<IDispatcher, StateBase>>>
         {
             { GeneralInfo, new () { CreateDispatchAction<GeneralInfoState, FetchGeneralInfoAction> } },
             { OrderInfo, new ()
@@ -57,51 +64,58 @@ public class StateResolver : IStateResolver
                     CreateDispatchAction<OrderContactsState, FetchOrderContactsAction>
                 }
             },
-            { DeliveryInfo, new ()
-                {
-                    CreateDispatchAction<DeliveryInfoState, FetchDeliveryInfoAction>,
-                    CreateDispatchAction<DeliveryAccountsState, FetchDeliveryAccountsAction>,
-                    CreateDispatchAction<DeliveryContactsState, FetchDeliveryContactsAction>
-                }
-            },
+            { DeliveryInfo, new () { CreateDispatchAction<DeliveryInfoState, FetchDeliveryInfoAction> } },
+            { DeliveryModes, new () { CreateDispatchAction<DeliveryInfoState, FetchDeliveryInfoAction> } }, // Unecessary. Remove to avoid redundant call
+            { DeliveryAccounts, new() { CreateDispatchAction<DeliveryAccountsState, FetchDeliveryAccountsAction> } },
             { NewDeliveryAccount, new () { CreateDispatchAction<NewDeliveryAccountState, FetchNewDeliveryAccountAction> } },
+            { DeliveryContacts, new() { CreateDispatchAction<DeliveryContactsState, FetchDeliveryContactsAction> } },
             { InvoiceInfo, new () { CreateDispatchAction<InvoiceInfoState, FetchInvoiceInfoAction> } },
+            { InvoiceAccounts, new () { CreateDispatchAction<InvoiceAccountsState, FetchInvoiceAccountsAction> } },
             { TradeInfo, new () { CreateDispatchAction<TradeInfoState, FetchTradeInfoAction> } },
             { PricesInfo, new () { CreateDispatchAction<PricesInfoState, FetchPricesInfoAction> } },
             { Notifications, new () { CreateDispatchAction<NotificationsState, FetchNotificationsAction> } },
             { OrderLines, new () { CreateDispatchAction<LinesState, FetchLinesAction> } },
-            { NewLine, new () { CreateDispatchAction<NewLineState, FetchNewLineAction> } }
+            { NewLine, new () { CreateDispatchAction<NewLineState, FetchNewLineAction> } },
+            { PaymentAuthorization, new () { CreateDispatchAction<PaymentAuthorizationState, FetchPaymentAuthorizationAction> } },
             // Add other mappings here as needed : Coupons, Warranty, etc.
         };
     }
 
-    private StateBase CreateDispatchAction<TState, TAction>(IDispatcher dispatcher, string basketId)
+    private StateBase CreateDispatchAction<TState, TAction>(IDispatcher dispatcher)
     where TState : StateBase
     where TAction : FetchDataActionBase
     {
-        var state = ResolveState<TState>() ?? throw new InvalidOperationException($"Failed to resolve state of type {typeof(TState).Name}");
+        var state = ResolveState<TState>()
+            ?? throw new InvalidOperationException($"Failed to resolve state of type {typeof(TState).Name}");
+        try
+        {
+            var action = Activator.CreateInstance(
+                typeof(TAction),
+                BindingFlags.CreateInstance |
+                BindingFlags.Public |
+                BindingFlags.Instance |
+                BindingFlags.OptionalParamBinding,
+                null,
+                [state],
+                null)
+                ?? throw new InvalidOperationException($"Failed to create an instance of {typeof(TAction).Name}.");
 
-        var action = Activator.CreateInstance(
-            typeof(TAction),
-            BindingFlags.CreateInstance |
-            BindingFlags.Public |
-            BindingFlags.Instance |
-            BindingFlags.OptionalParamBinding,
-            null,
-            [state, basketId],
-            null)
-            ?? throw new InvalidOperationException($"Failed to create an instance of {typeof(TAction).Name}.");
-
-        dispatcher.Dispatch(action);
-        return state;
+            dispatcher.Dispatch(action);
+            return state;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to create an instance of {Action}", typeof(TAction).Name);
+            throw;
+        }
     }
 
     private StateBase ResolveState<TState>() where TState : StateBase
     {
         return _serviceProvider.GetRequiredService<IState<TState>>().Value;
     }
-#warning refactor to remove basketId
-    public void DispatchRefreshCalls(IDispatcher dispatcher, List<string?>? refreshCalls, string? basketId)
+
+    public void DispatchRefreshCalls(IDispatcher dispatcher, List<string?>? refreshCalls)
     {
         if (refreshCalls is null
                     || refreshCalls.Count < 1)
@@ -118,17 +132,17 @@ public class StateResolver : IStateResolver
                 continue;
             }
             _logger.LogInformation("Dispatching refresh action for {Call}", call);
-            DispatchRefreshAction(call, dispatcher, basketId!);
+            DispatchRefreshAction(dispatcher, call);
         }
     }
 
-    public void DispatchRefreshAction(string key, IDispatcher dispatcher, string basketId)
+    public void DispatchRefreshAction(IDispatcher dispatcher, string key)
     {
         if (_refreshCallActions.TryGetValue(key, out var createActionList))
         {
             foreach (var createAction in createActionList)
             {
-                createAction(dispatcher, basketId);
+                createAction(dispatcher);
             }
         }
         else
@@ -137,78 +151,3 @@ public class StateResolver : IStateResolver
         }
     }
 }
-
-//public class StateResolver : IStateResolver
-//{
-//    private readonly IServiceProvider _serviceProvider;
-//    private readonly Dictionary<string, Action<IDispatcher, string>> _refreshCallActions;
-
-//    public StateResolver(IServiceProvider serviceProvider)
-//    {
-//        _serviceProvider = serviceProvider;
-//        _refreshCallActions = new Dictionary<string, Action<IDispatcher, string>>()
-//        {
-//            {
-//                "generalInfo",
-//                (dispatcher, basketId) =>
-//                    dispatcher.Dispatch(new FetchGeneralInfoAction((GeneralInfoState) ResolveState(typeof(GeneralInfoState)), basketId))
-//            },
-//            {
-//                "orderInfo",
-//                (dispatcher, basketId) =>
-//                    dispatcher.Dispatch(new FetchOrderInfoAction((OrderInfoState) ResolveState(typeof(OrderInfoState)), basketId))
-//            },
-//            {
-//                "deliveryInfo",
-//                (dispatcher, basketId) =>
-//                    dispatcher.Dispatch(new FetchDeliveryInfoAction((DeliveryInfoState) ResolveState(typeof(DeliveryInfoState)), basketId))
-//            },
-//            {
-//                "invoiceInfo",
-//                (dispatcher, basketId) =>
-//                    dispatcher.Dispatch(new FetchInvoiceInfoAction((InvoiceInfoState) ResolveState(typeof(InvoiceInfoState)), basketId))
-//            },
-//            {
-//                "tradeInfo",
-//                (dispatcher, basketId) =>
-//                    dispatcher.Dispatch(new FetchTradeInfoAction((TradeInfoState) ResolveState(typeof(TradeInfoState)), basketId))
-//            },
-//            {
-//                "pricesInfo",
-//                (dispatcher, basketId) =>
-//                    dispatcher.Dispatch(new FetchPricesInfoAction((PricesInfoState) ResolveState(typeof(PricesInfoState)), basketId))
-//            }
-
-//    //{ "coupons" , (dispatcher, basketId) => dispatcher.Dispatch(new FetchPricesInfoAction(basketId)) },
-//    //{ "warrantyC"
-//    //{ "notifications", dispatcher => dispatcher.Dispatch(new FetchNotificationsAction()) },
-//};
-//    }
-
-
-//    public StateBase ResolveState(string key)
-//    {
-//        return key switch
-//        {
-//            "generalInfo" => _serviceProvider.GetRequiredService<IState<GeneralInfoState>>().Value,
-//            "orderInfo" => _serviceProvider.GetRequiredService<IState<OrderInfoState>>().Value,
-//            "deliveryInfo" => _serviceProvider.GetRequiredService<IState<DeliveryInfoState>>().Value,
-//            "invoiceInfo" => _serviceProvider.GetRequiredService<IState<InvoiceInfoState>>().Value,
-//            "tradeInfo" => _serviceProvider.GetRequiredService<IState<TradeInfoState>>().Value,
-//            "pricesInfo" => _serviceProvider.GetRequiredService<IState<PricesInfoState>>().Value,
-//            _ => throw new KeyNotFoundException($"No state found for key: {key}")
-//        };
-//    }
-
-//    public void DispatchRefreshAction(string key, IDispatcher dispatcher, string basketId)
-//    {
-//        if (_refreshCallActions.TryGetValue(key, out var action))
-//        {
-//            action(dispatcher, basketId);
-//        }
-//        else
-//        {
-//            throw new KeyNotFoundException($"No refresh action found for key: {key}");
-//        }
-//    }
-//}

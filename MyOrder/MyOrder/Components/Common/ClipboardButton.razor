@@ -1,0 +1,22 @@
+﻿@using MyOrder.Services
+
+<MudTooltip Text="@TooltipText"
+            RootClass="align-self-center">
+    <MudIconButton Icon="@Icons.Material.Filled.ContentCopy"
+                   Size="Size.Small"
+                   OnClick="OnCopyButtonClicked" />
+</MudTooltip>
+@code {
+    [Inject]
+    public IClipboardService ClipboardService { get; set; }
+    [Parameter, EditorRequired]
+    public string? StringToCopy { get; set; }
+    [Parameter]
+    public string? TooltipText { get; set; }
+
+    private async Task OnCopyButtonClicked()
+    {
+        if (!string.IsNullOrEmpty(StringToCopy))
+            await ClipboardService.CopyTextToClipboardAsync(StringToCopy);
+    }
+}

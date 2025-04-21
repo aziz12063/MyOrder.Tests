@@ -3,10 +3,8 @@ using MyOrder.Store.Base;
 
 namespace MyOrder.Store.TradeInfoUseCase;
 
-public class FetchTradeInfoAction(TradeInfoState state, string basketId) : FetchDataActionBase(state)
-{
-    public string BasketId { get; } = basketId;
-}
+public class FetchTradeInfoAction(TradeInfoState state) : FetchDataActionBase(state)
+{ }
 
 public class FetchTradeInfoSuccessAction(BasketTradeInfoDto? basketTradeInfo)
 {

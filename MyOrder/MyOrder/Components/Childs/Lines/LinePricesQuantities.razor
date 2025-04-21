@@ -1,4 +1,4 @@
-﻿<MudPaper Elevation="2" Class="header-cards-height header-cards-height-content">
+﻿<LineDetailsTemplate NoContent="BasketLine is null">
     <MudText Typo="Typo.h6" Color="Color.Secondary" Class="pb-4">Prix et remises</MudText>
     <MudStack Spacing="2" Style="height: inherit;">
         <MudGrid Spacing="1">
@@ -12,7 +12,9 @@
 
             <!--Description-->
             <MudItem xs="12">
-                <DisplayField Field="@BasketLine!.DiscountDescription" />
+                <DisplayField Field="@BasketLine!.DiscountDescription"
+                              FixedMultilineHeight="true"
+                              Lines="2"/>
             </MudItem>
 
             <!--Remise sup-->
@@ -101,4 +103,4 @@
             </Columns>
         </MudDataGrid>
     </MudStack>
-</MudPaper>
+</LineDetailsTemplate>

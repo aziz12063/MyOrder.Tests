@@ -11,7 +11,7 @@ public partial class Notifications : FluxorComponentBase<NotificationsState, Fet
 {
     private List<BasketNotificationDto?>? BasketNotifications { get; set; }
 
-    protected override FetchNotificationsAction CreateFetchAction(NotificationsState state, string basketId) => new(state, basketId);
+    protected override FetchNotificationsAction CreateFetchAction(NotificationsState state) => new(state);
 
     protected override void CacheNewFields()
     {

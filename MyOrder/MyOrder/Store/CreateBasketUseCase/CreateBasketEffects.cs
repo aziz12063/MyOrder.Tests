@@ -2,15 +2,22 @@
 using Microsoft.AspNetCore.Components;
 using MyOrder.Infrastructure.Repositories;
 using MyOrder.Services;
+using MyOrder.Shared.Interfaces;
 using MyOrder.Store.OrderInfoUseCase;
 
 namespace MyOrder.Store.CreateBasketUseCase;
 
-public class CreateBasketEffects(IBasketActionsRepository basketActionsRepository, ILogger<OrderInfoEffects> logger,
-    IUrlService urlService, NavigationManager navigationManager)
+public class CreateBasketEffects(IBasketActionsRepository basketActionsRepository, IBasketService basketService,
+    ILogger<OrderInfoEffects> logger, IUrlService urlService, NavigationManager navigationManager)
 {
-    private readonly IBasketActionsRepository _basketActionsRepository = basketActionsRepository 
+    private readonly IBasketActionsRepository _basketActionsRepository = basketActionsRepository
         ?? throw new ArgumentNullException(nameof(basketActionsRepository));
+    private readonly IBasketService _basketService = basketService
+        ?? throw new ArgumentNullException(nameof(basketService));
+    private readonly ILogger<OrderInfoEffects> _logger = logger
+        ?? throw new ArgumentNullException(nameof(logger));
+    private readonly IUrlService _urlService = urlService
+        ?? throw new ArgumentNullException(nameof(urlService));
 
 
     [EffectMethod]
@@ -23,7 +30,7 @@ public class CreateBasketEffects(IBasketActionsRepository basketActionsRepositor
         }
         catch (Exception e)
         {
-            logger.LogError(e, "Error while creating a new basket");
+            _logger.LogError(e, "Error while creating a new basket");
             dispatcher.Dispatch(new CreateBasketFailureAction(e.Message));
         }
     }
@@ -35,15 +42,16 @@ public class CreateBasketEffects(IBasketActionsRepository basketActionsRepositor
         {
             // We need basketId and New=1 to clone and create a new basket
             var response = await _basketActionsRepository.PostNewBasketAsync(
-                new Dictionary<string, string> {
-                    { "BasketId", action.BasketId },
+                new Dictionary<string, string> 
+                {
+                    { "BasketId", _basketService.BasketId },
                     { "New", "1"}
                 }!);
             dispatcher.Dispatch(new CreateBasketSuccessAction(response));
         }
         catch (Exception e)
         {
-            logger.LogError(e, "Error while creating a new basket");
+            _logger.LogError(e, "Error while creating a new basket");
             dispatcher.Dispatch(new CreateBasketFailureAction(e.Message));
         }
     }
@@ -55,7 +63,7 @@ public class CreateBasketEffects(IBasketActionsRepository basketActionsRepositor
 
         if (!string.IsNullOrWhiteSpace(basketId))
         {
-            navigationManager.NavigateTo(urlService.GetBasketUrl(basketId), true);
+            navigationManager.NavigateTo(_urlService.GetBasketUrl(basketId), true);
         }
         else
         {

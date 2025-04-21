@@ -23,7 +23,7 @@
                      FixedHeader="true"
                      Height="48vh"
                      Virtualize="true"
-                     Items="DisplayedItems()"
+                     Items="_searchedAccounts"
                      SortMode="@SortMode.None"
                      QuickFilter="SearchAccountDialog<TState, TFetchAction>.QuickFilter">
             <ToolBarContent>
@@ -56,9 +56,6 @@
                 <PropertyColumn Title="Nom"
                                 Property="item => item.Name ?? string.Empty" />
 
-                <PropertyColumn Title="Compte associé"
-                                Property="item => item" />
-
                 <PropertyColumn Title="Voie"
                                 Property="item => item.Street ?? string.Empty" />
 
@@ -69,7 +66,22 @@
                                 Property="item => item.City ?? string.Empty" />
 
                 <PropertyColumn Title="Dernière commande"
-                                Property="item => item" />
+                                Property="item => item.LastOrderDate"
+                                Format="d" />
+
+                <TemplateColumn Title="Compte lié"
+                                CellStyle="text-align: center;">
+                    <CellTemplate>
+                        @if (context.Item.IsLinked ?? false)
+                        {
+                            <MudIcon Icon="@Icons.Material.Rounded.CheckCircle"
+                                     Color="Color.Tertiary"
+                                     Size="Size.Small"
+                                     Style="vertical-align:middle;" />
+                        }
+                    </CellTemplate>
+                </TemplateColumn>
+
             </Columns>
         </MudDataGrid>
     </DialogContent>

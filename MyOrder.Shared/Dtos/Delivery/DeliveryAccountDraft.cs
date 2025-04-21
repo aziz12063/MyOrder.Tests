@@ -9,6 +9,7 @@ public class DeliveryAccountDraft
     public string? AccountSectionLabel { get; set; }
 
     public Field<string?>? AccountId { get; set; }
+    public Field<string?>? AccountType { get; set; }
     public Field<string?>? Name { get; set; }
     public Field<string?>? Recipient { get; set; }
 
@@ -21,6 +22,16 @@ public class DeliveryAccountDraft
     public Field<string?>? Zipcode { get; set; }
     public Field<string?>? City { get; set; }
     public Field<string?>? Country { get; set; }
+
+    // ====================================================================
+    // Instruction de livraison
+
+    public Field<bool?>? Lift { get; set; }
+    public Field<string?>? Floor { get; set; }
+    public Field<string?>? DigiCode { get; set; }
+    public Field<string?>? CarrierType { get; set; }
+    public Field<bool?>? AppointmentRequired { get; set; }
+    public Field<string?>? DeliveryNote { get; set; }
 
     // ====================================================================
     // Menus

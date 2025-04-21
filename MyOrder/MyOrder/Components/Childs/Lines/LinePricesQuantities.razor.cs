@@ -13,9 +13,10 @@ partial class LinePricesQuantities
     {
         BasketPrices = BasketLine?.Prices;
     }
-    protected string RowStyleFunc(BasketPriceLine? line) =>
+
+    private static string RowStyleFunc(BasketPriceLine? line) =>
         line?.IsCurrent == true
-            ? "background-color:#8CED8C"
+            ? "background-color : #cce4ff; color: #084298"
             : string.Empty;
 
 }

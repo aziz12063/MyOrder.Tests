@@ -18,8 +18,8 @@ public partial class OrderedItemsTab : FluxorComponentBase<OrderedItemsState, Fe
     [Parameter, EditorRequired]
     public EventCallback<string> ItemClicked { get; set; }
 
-    protected override FetchOrderedItemsAction CreateFetchAction(OrderedItemsState state, string basketId) =>
-   new(state, basketId);
+    protected override FetchOrderedItemsAction CreateFetchAction(OrderedItemsState state) =>
+   new(state);
 
     protected override void CacheNewFields()
     {
@@ -27,7 +27,7 @@ public partial class OrderedItemsTab : FluxorComponentBase<OrderedItemsState, Fe
     }
 
     private void FilterItemsCallback(string filterString) =>
-        Dispatcher.Dispatch(new FetchOrderedItemsAction(State.Value, BasketId, filterString));
+        Dispatcher.Dispatch(new FetchOrderedItemsAction(State.Value, filterString));
 
     private void ToggleBlockedCallback(bool applyFilter) =>
         _showBlocked = !applyFilter;

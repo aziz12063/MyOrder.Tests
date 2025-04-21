@@ -18,7 +18,7 @@ public class OrderLinesRepository(IOrderLinesApiClient basketLinesApiClient, IEv
         logger.LogDebug("Fetching basket lines for basketId {BasketId}", BasketId);
         var operationDescription = $"GetBasketLinesAsync for basketId {BasketId}";
         return await ExecuteAsync(
-            async (token) => await _basketLinesApiClient.GetOrderLinesAsync(BasketId, token),
+            async (token) => await _basketLinesApiClient.GetOrderLinesAsync(CompanyId, BasketId, token),
             operationDescription,
             cancellationToken);
     }
@@ -28,7 +28,7 @@ public class OrderLinesRepository(IOrderLinesApiClient basketLinesApiClient, IEv
         logger.LogDebug("Duplicating order lines for basketId {BasketId}", BasketId);
         var operationDescription = $"DuplicateOrderLinesAsync for basketId {BasketId}";
         return await ExecuteAsync(
-            async (token) => await _basketLinesApiClient.DuplicateOrderLinesAsync(BasketId, linesIds, token),
+            async (token) => await _basketLinesApiClient.DuplicateOrderLinesAsync(CompanyId, BasketId, linesIds, token),
             operationDescription,
             cancellationToken);
     }
@@ -38,7 +38,7 @@ public class OrderLinesRepository(IOrderLinesApiClient basketLinesApiClient, IEv
         logger.LogDebug("Deleting order lines for basketId {BasketId}", BasketId);
         var operationDescription = $"DeleteOrderLinesAsync for basketId {BasketId}";
         return await ExecuteAsync(
-            async (token) => await _basketLinesApiClient.DeleteOrderLinesAsync(BasketId, linesIds, token),
+            async (token) => await _basketLinesApiClient.DeleteOrderLinesAsync(CompanyId, BasketId, linesIds, token),
             operationDescription,
             cancellationToken);
     }

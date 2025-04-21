@@ -5,6 +5,6 @@ namespace MyOrder.Infrastructure.ApiClients;
 
 public interface ITradeInfoApiClient
 {
-    [Get("/api/orderContext/{basketId}/tradeInfo")]
-    Task<BasketTradeInfoDto?> GetBasketTradeInfoAsync(string basketId, CancellationToken cancellationToken = default);
+    [Get("/api/myorder/{companyId}/{basketId}/tradeInfo")]
+    Task<BasketTradeInfoDto?> GetBasketTradeInfoAsync(string companyId, string basketId, CancellationToken cancellationToken = default);
 }

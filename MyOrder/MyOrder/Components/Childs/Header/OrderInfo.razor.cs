@@ -23,16 +23,15 @@ public partial class OrderInfo : FluxorComponentBase<OrderInfoState, FetchOrderI
     private List<BasketValueDto?>? WebOrigins { get; set; }
     private List<BasketValueDto?>? SalesPools { get; set; }
     private string SelectedClient { get; set; } = string.Empty;
-    private List<string>? AccountAddress { get; set; }
     private bool isLoading = true;
     private bool disposed = false;
 
 
-    protected override FetchOrderInfoAction CreateFetchAction(OrderInfoState state, string basketId) => new(state, basketId);
+    protected override FetchOrderInfoAction CreateFetchAction(OrderInfoState state) => new(state);
 
     protected override void OnInitialized()
     {
-        Dispatcher.Dispatch(new FetchOrderContactsAction(OrderContactsState.Value, BasketId));
+        Dispatcher.Dispatch(new FetchOrderContactsAction(OrderContactsState.Value));
         OrderContactsState.StateChanged += OrderContactsStateChanged;
 
         base.OnInitialized();
@@ -40,19 +39,19 @@ public partial class OrderInfo : FluxorComponentBase<OrderInfoState, FetchOrderI
         var rscState = RessourcesState?.Value;
 
         SalesOrigins = rscState?.SalesOrigins
-            ?? throw new ArgumentNullException(nameof(rscState.SalesOrigins), "Unexpected null for SalesOrigins object."); ;
-        WebOrigins = rscState?.WebOrigins
-            ?? throw new ArgumentNullException(nameof(rscState.WebOrigins), "Unexpected null for WebOrigins object."); ;
+            ?? throw new ArgumentNullException(nameof(rscState.SalesOrigins), "Unexpected null for SalesOrigins object.");
         SalesPools = rscState?.SalesPools
-            ?? throw new ArgumentNullException(nameof(rscState.SalesPools), "Unexpected null for SalesPools object."); ;
+            ?? throw new ArgumentNullException(nameof(rscState.SalesPools), "Unexpected null for SalesPools object.");
     }
 
     protected override void CacheNewFields()
     {
         BasketOrderInfo = State?.Value.BasketOrderInfo
             ?? throw new ArgumentNullException(nameof(State.Value.BasketOrderInfo), "Unexpected null for BasketOrderInfo object.");
+        WebOrigins = State?.Value.WebOrigins
+            ?? throw new ArgumentNullException(nameof(State.Value.WebOrigins), "Unexpected null for WebOrigins object.");
+
         SelectedClient = FieldUtility.SelectedAccount(BasketOrderInfo?.Account?.Value);
-        AccountAddress = FieldUtility.CreateAddressList(BasketOrderInfo?.Account?.Value);
         isLoading = State.Value.IsLoading || RessourcesState.Value.IsLoading;
     }
 

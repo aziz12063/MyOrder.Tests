@@ -5,12 +5,11 @@ namespace MyOrder.Shared.Dtos;
 public class BasketOrderInfoDto
 {
     public string? PanelLabel { get; set; }
+    public string? AccountSectionLabel { get; set; }
     public string? ContactSectionLabel { get; set; }
     public string? InformationSectionLabel { get; set; }
     public Field<AccountDto?>? Account { get; set; }
     public Field<ContactDto?>? Contact { get; set; }
-    public Field<string?>? ActivityArea { get; set; }
-    public List<BasketValueDto?>? CustomerTags { get; set; }
     public Field<BasketValueDto?>? SalesOriginId { get; set; }
     public Field<BasketValueDto?>? WebOriginId { get; set; }
     public Field<BasketValueDto?>? SalesPoolId { get; set; }

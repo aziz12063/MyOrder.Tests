@@ -11,40 +11,28 @@
 }
 
 <FetchActionTypeCascadingValue FetchActionTypeValue="FetchActionType">
-    <MudGrid Spacing="1" Class="mt-3">
+    <MudGrid Spacing="1" Class="mt-3" Justify="Justify.SpaceEvenly">
         <MudFocusTrap DefaultFocus="DefaultFocus.FirstChild" Disabled="false">
-            <MudItem xs="3">
-                <GenericTextField @ref="ItemIdField"
-                                  Field="NewLine!.ItemId" />
-            </MudItem>
-            <MudItem xs="3">
-                <MudStack Row="true"
-                          Spacing="1"
-                          StretchItems="StretchItems.Start">
+
+            <MudItem xs="12">
+                <MudStack Row="true" AlignItems="AlignItems.Baseline">
+
+                    <GenericTextField @ref="ItemIdField"
+                                      Field="NewLine!.ItemId" />
+
                     <GenericNumericField Field="NewLine!.SalesQuantity"
                                          Step="NewLine!.MultipleQuantity?.Value"
-                                         Min="NewLine!.MultipleQuantity?.Value" 
+                                         Min="NewLine!.MultipleQuantity?.Value"
                                          OnKeyDown="EnterPressed" />
-                    <MudText>🗙</MudText>
-                </MudStack>
-            </MudItem>
-            @* Vendu par*@
-            @*                 <MudItem xs="1">
-            <MudText>X</MudText>
-            </MudItem> *@
-            <MudItem xs="3">
-                <MudStack Row="true"
-                          Spacing="1"
-                          StretchItems="StretchItems.Start">
+
+                    <MudIcon Icon="@Icons.Material.Filled.Clear" Class="pt-1" Color="Color.Secondary" />
+
                     <DisplayField Field="NewLine!.SalesPrice" />
-                    <MudText>=</MudText>
+
+                    <MudText Color="Color.Secondary" Typo="Typo.h5">=</MudText>
+
+                    <DisplayField Field="NewLine.LineAmount" />
                 </MudStack>
-            </MudItem>
-            @*                 <MudItem xs="1">
-            <MudText>=</MudText>
-            </MudItem> *@
-            <MudItem xs="3">
-                <DisplayField Field="NewLine.LineAmount" />
             </MudItem>
 
             <MudItem xs="12">

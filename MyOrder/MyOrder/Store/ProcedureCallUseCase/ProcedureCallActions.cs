@@ -11,10 +11,9 @@ public class UpdateFieldAction(IField field, dynamic? value, Type selfActionType
     public Type SelfFetchActionType { get; } = selfActionType;
 }
 
-public class PostProcedureCallSuccessAction(string basketId, ProcedureCallResponseDto procedureCallResponse)
+public class PostProcedureCallSuccessAction(ProcedureCallResponseDto procedureCallResponse)
 {
     public ProcedureCallResponseDto ProcedureCallResponse { get; set; } = procedureCallResponse;
-    public string BasketId { get; } = basketId;
 }
 
 public class UpdateFieldProcedureCallFailureAction(Type actionType, string errorMessage)
@@ -23,10 +22,9 @@ public class UpdateFieldProcedureCallFailureAction(Type actionType, string error
     public Type SelfFetchActionType { get; } = actionType;
 }
 
-public class PostProcedureCallAction(ImmutableList<string?>? procedureCall, string? basketId = default)
+public class PostProcedureCallAction(ImmutableList<string?>? procedureCall)
 {
     public ImmutableList<string?>? ProcedureCall { get; } = procedureCall;
-    public string? BasketId { get; set; } = basketId;
 }
 
 public class PostProcedureCallFailureAction(string errorMessage)

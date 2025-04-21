@@ -10,8 +10,7 @@ public partial class SearchAccountDialog<TState, TFetchAction>
     where TState : class, IAccountsState
     where TFetchAction : class, IFetchAccountsAction
 {
-    private List<AccountDto?>? _accounts;
-    private List<AccountDto?>? _filteredAccounts;
+    private List<AccountDto?>? _searchedAccounts;
     private string? _filterString = null;
 
     [Parameter, EditorRequired]
@@ -23,28 +22,24 @@ public partial class SearchAccountDialog<TState, TFetchAction>
     [CascadingParameter]
     private MudDialogInstance MudDialog { get; set; }
 
-    protected override TFetchAction CreateFetchAction(TState state, string basketId) =>
-        CreateFetchAction(state, basketId, null);
+    protected override TFetchAction CreateFetchAction(TState state) =>
+        CreateFetchAction(state, null);
 
-    private static TFetchAction CreateFetchAction(TState state, string basketId, string? filter = null) =>
-        Activator.CreateInstance(typeof(TFetchAction), state, basketId, filter) as TFetchAction
-        ?? throw new InvalidOperationException($"Unable to create instance of {typeof(TFetchAction)}.");
+    private static TFetchAction CreateFetchAction(TState state, string? filter = null, bool search = true) =>
+        Activator.CreateInstance(typeof(TFetchAction), state, filter, search) as TFetchAction
+            ?? throw new InvalidOperationException($"Unable to create instance of {typeof(TFetchAction)}.");
 
     protected override void CacheNewFields()
     {
-        _accounts = State.Value.Accounts;
-        _filteredAccounts = State.Value.FilteredAccounts;
+        _searchedAccounts = State.Value.SearchedAccounts;
     }
 
     private static bool QuickFilter(AccountDto? item) =>
         item is not null && !string.IsNullOrWhiteSpace(item.AccountId);
 
-    private List<AccountDto?>? DisplayedItems() =>
-        string.IsNullOrEmpty(_filterString) ? _accounts : _filteredAccounts;
-
     private void OnSearchTextChanged()
     {
-        Dispatcher.Dispatch(CreateFetchAction(State.Value, BasketId, _filterString));
+        Dispatcher.Dispatch(CreateFetchAction(State.Value, _filterString));
     }
 
     private async Task OnAccountClick(AccountDto? account)

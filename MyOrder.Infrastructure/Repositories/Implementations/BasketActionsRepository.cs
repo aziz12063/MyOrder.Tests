@@ -18,13 +18,14 @@ public class BasketActionsRepository(IBasketActionsApiClient basketActionsApiCli
     public async Task<NewBasketResponseDto?> PostNewBasketAsync(Dictionary<string, string?> newBasketRequest, CancellationToken cancellationToken = default)
     {
         logger.LogDebug("Posting new basket {basketRequest} from repository", newBasketRequest);
-
+        var logString = string.Join(", ", newBasketRequest.Select(kvp => $"{kvp.Key}:{kvp.Value}"));
+        logger.LogInformation("Dictionary contents: {dict}", logString);
         var operationDescription = "PostNewBasketAsync :\n" +
-            $"{newBasketRequest}";
+            $"{logString}";
         return await ExecuteAsync(
              async (token) =>
              {
-                 var response = await _basketActionsApiClient.CreateNewBasketAsync(newBasketRequest, token);
+                 var response = await _basketActionsApiClient.CreateNewBasketAsync(CompanyId, newBasketRequest, token);
                  logger.LogInformation("New basket response : \n{response}", response);
                  return response;
              },
@@ -39,7 +40,7 @@ public class BasketActionsRepository(IBasketActionsApiClient basketActionsApiCli
         return await ExecuteAsync(
             async (token) =>
             {
-                var response = await _basketActionsApiClient.ReloadOrderContextAsync(BasketId, token);
+                var response = await _basketActionsApiClient.ReloadOrderContextAsync(CompanyId, BasketId, token);
                 logger.LogInformation("Reload Order context response : \n{response}", response);
                 return response;
             },
@@ -57,7 +58,7 @@ public class BasketActionsRepository(IBasketActionsApiClient basketActionsApiCli
         return await ExecuteAsync(
             async (token) =>
             {
-                var response = await _basketActionsApiClient.PostProcedureCallAsync(readyToPostProcedureCall, BasketId, token);
+                var response = await _basketActionsApiClient.PostProcedureCallAsync(readyToPostProcedureCall, CompanyId, BasketId, token);
                 logger.LogInformation("Procedure call response : \n{response}", response);
                 return response;
             },

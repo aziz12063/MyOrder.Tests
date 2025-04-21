@@ -6,6 +6,9 @@ public class BasketTradeInfoDto
 {
     public string? PanelLabel { get; set; }
     public Field<List<BasketTurnoverLineDto?>>? Turnover { get; set; }
+    public string? InformationSectionLabel { get; set; }
+    public Field<string?>? ActivityArea { get; set; }
+    public List<BasketValueDto?>? CustomerTags { get; set; }
     public string? ContractSectionLabel { get; set; }
     public BasketContractInfoDto? Contract { get; set; }
 }

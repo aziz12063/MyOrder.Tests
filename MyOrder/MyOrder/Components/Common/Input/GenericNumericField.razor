@@ -11,9 +11,10 @@
                 Text="@TooltipText"
                 Placement="Placement.Top">
         <MudNumericField T="T"
+                         Class="@Class"
                          Typo="Typo.body2"
                          Label="@FieldLabel()"
-                         Margin="Margin.Dense"
+                         Margin="Margin"
                          Variant="@Variant"
                          Underline="!HideLabel"
                          FullWidth="true"
@@ -29,8 +30,8 @@
                          Clearable="Clearable"
                          Min="Min"
                          Step="Step"
-                         HideSpinButtons="InternalReadOnly" 
-                         OnKeyDown="KeyDownHandler"/>
+                         HideSpinButtons="InternalReadOnly"
+                         OnKeyDown="KeyDownHandler" />
     </MudTooltip>
 }
 
@@ -41,6 +42,8 @@
     public T Min { get; set; }
     [Parameter]
     public Variant Variant { get; set; } = Variant.Text;
+    [Parameter]
+    public string Class { get; set; } = string.Empty;
     [Parameter]
     public bool Clearable { get; set; } = false;
     [Parameter]

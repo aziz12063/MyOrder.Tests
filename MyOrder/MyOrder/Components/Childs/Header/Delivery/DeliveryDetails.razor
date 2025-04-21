@@ -1,0 +1,121 @@
+﻿@using MyOrder.Store.DeliveryInfoUseCase
+@inherits FluxorComponentBase<DeliveryInfoState, FetchDeliveryInfoAction>
+
+@if (isLoading)
+{
+    <HeaderElementLoadingSkeleton />
+    return;
+}
+<SectionPaper Title="@BasketDeliveryInfo!.PanelLabel" Style="padding-bottom:4px;">
+
+    <FetchActionTypeCascadingValue FetchActionTypeValue="FetchActionType">
+        <MudStack Justify="Justify.SpaceBetween" Style="height: inherit;">
+            <div>
+                <!-- Compte de livraison -->
+                <CustomHeaderCard>
+                    <HeaderContent>
+                        <MudText Typo="Typo.subtitle2">@BasketDeliveryInfo!.AccountSectionLabel</MudText>
+                        <MudTooltip Text="Chercher compte">
+                            <MudIconButton Icon="@Icons.Material.Filled.Search"
+                                           Size="Size.Small"
+                                           OnClick="OpenAccountSearchDialogAsync" />
+                        </MudTooltip>
+                        <MudTooltip Text="Modifier l'adresse de livraison">
+                            <MudIconButton Icon="@Icons.Material.Filled.Edit"
+                                           Size="Size.Small"
+                                           OnClick="OpenEditAccountDeliveryAsync" />
+                        </MudTooltip>
+                        <MudTooltip Text="Supprimer -Not Implemented">
+                            <MudIconButton Icon="@Icons.Material.Filled.DeleteForever" Size="Size.Small" />
+                        </MudTooltip>
+                        <MudTooltip Text="Salesforce? -Not Implemented">
+                            <MudIconButton Icon="@Icons.Material.Filled.Cloud" Size="Size.Small" />
+                        </MudTooltip>
+                        <MudTooltip Text="Call? -Not Implemented">
+                            <MudIconButton Icon="@Icons.Material.Filled.Phone" Size="Size.Small" />
+                        </MudTooltip>
+                    </HeaderContent>
+                    <BodyContent>
+                        <MudStack Justify="Justify.FlexStart"
+                                  Row="true"
+                                  Spacing="1">
+                            <GenericMudSelect T="AccountDto"
+                                              Field="BasketDeliveryInfo!.Account"
+                                              Items="Accounts"
+                                              Variant="Variant.Outlined"
+                                              HideLabel="true" />
+                            <ClipboardButton TooltipText="Copier l'identifiant du compte de livraison"
+                                             StringToCopy="@BasketDeliveryInfo!.Account?.Value?.AccountId" />
+                        </MudStack>
+                        <DisplayAddress AccountField="BasketDeliveryInfo?.Account" />
+                    </BodyContent>
+                </CustomHeaderCard>
+            </div>
+
+            <!-- Contact  de livraison-->
+            <CustomHeaderCard>
+                <HeaderContent>
+                    <MudText Typo="Typo.subtitle2">@BasketDeliveryInfo!.ContactSectionLabel</MudText>
+                    <MudTooltip Text="Chercher client">
+                        <MudIconButton Icon="@Icons.Material.Filled.Search"
+                                       Size="Size.Small"
+                                       OnClick="OpenContactSearchDialogAsync" />
+                    </MudTooltip>
+                    <MudTooltip Text="Supprimer -Not Implemented">
+                        <MudIconButton Icon="@Icons.Material.Filled.DeleteForever" Size="Size.Small" />
+                    </MudTooltip>
+                    <MudTooltip Text="Salesforce? -Not Implemented">
+                        <MudIconButton Icon="@Icons.Material.Filled.Cloud" Size="Size.Small" />
+                    </MudTooltip>
+                    <MudTooltip Text="Call? -Not Implemented">
+                        <MudIconButton Icon="@Icons.Material.Filled.Phone" Size="Size.Small" />
+                    </MudTooltip>
+                </HeaderContent>
+                <BodyContent>
+                    <MudStack Justify="Justify.FlexStart"
+                              Row="true"
+                              Spacing="1">
+                        <GenericMudSelect T="ContactDto"
+                                          Field="BasketDeliveryInfo!.Contact"
+                                          Items="Contacts"
+                                          Variant="Variant.Outlined"
+                                          HideLabel="true" />
+                        <ClipboardButton TooltipText="Copier l'identifiant du contact de livraison"
+                                         StringToCopy="@BasketDeliveryInfo!.Contact?.Value?.ContactId" />
+                    </MudStack>
+                    <ContactInfo Contact="BasketDeliveryInfo!.Contact?.Value" />
+                </BodyContent>
+            </CustomHeaderCard>
+
+            <!-- Informations de livraison -->
+            <MudStack Spacing="0">
+                <MudText Typo="Typo.subtitle2">@BasketDeliveryInfo!.InformationSectionLabel</MudText>
+
+                <GenericMudSelect Field="BasketDeliveryInfo!.DeliveryMode"
+                                  Items="DeliveryModes"
+                                  Variant="Variant.Outlined" />
+
+                <GenericCheckBox Field="BasketDeliveryInfo?.CompleteDelivery"
+                                 Typo="Typo.body2" />
+
+                <DatePicker Field="BasketDeliveryInfo?.ImperativeDate" />
+
+                <DisplayField Field="BasketDeliveryInfo!.OrderDocuments"
+                              IsMarkupString="true" />
+
+            </MudStack>
+            <MudDivider Style="visibility:hidden;" />
+
+            <!-- Notes de RC -->
+            <div>
+                <GenericTextField Field="BasketDeliveryInfo!.Note"
+                                  Lines="3"
+                                  Variant="Variant.Outlined"
+                                  Typo="Typo.caption" />
+
+                <GenericCheckBox Field="BasketDeliveryInfo?.NoteMustBeSaved"
+                                 Typo="Typo.caption" />
+            </div>
+        </MudStack>
+    </FetchActionTypeCascadingValue>
+</SectionPaper>

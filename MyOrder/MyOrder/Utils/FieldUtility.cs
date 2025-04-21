@@ -3,6 +3,9 @@ using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.SharedComponents;
 using MudBlazor;
 using System.Numerics;
+using MyOrder.Components.Common.UI;
+using System.Globalization;
+using System.Text.Json;
 
 namespace MyOrder.Utils;
 
@@ -19,21 +22,87 @@ public static class FieldUtility
     public static bool IsReadOnly<T>(Field<T>? field) => field?.Status == "readOnly";
     // Refactor to use Variant.Filled to reflect the actual status
     public static bool IsOnlyForDisplay<T>(Field<T>? field) => field?.Status == "onlyForDisplay";
-    public static bool IsReadWrite<T>(Field<T>? field) => field?.Status == "readWrite";
+    public static bool IsReadWrite<T>(Field<T>? field) => field?.Status == "readWrite" || IsRequired(field);
     public static bool IsRequired<T>(Field<T>? field) => field?.Status == "required";
     public static Color GetFieldColor<T>(Field<T>? field) => field?.DisplayStyle switch
     {
         FieldDisplayStyle.Standard => Color.Primary,
         FieldDisplayStyle.Emphasize => Color.Warning,
         FieldDisplayStyle.Warn => Color.Error,
+        FieldDisplayStyle.Success => Color.Success,
         _ => Color.Inherit
     };
     public static string NullOrWhiteSpaceHelper(string? value) => string.IsNullOrWhiteSpace(value) ? string.Empty : value;
+
     public static string NullOrWhiteSpaceHelperWithDash(string? value)
-        => string.IsNullOrWhiteSpace(value) ? "-" : value;
+        => string.IsNullOrWhiteSpace(value) ? "—" : value;
+
     public static MarkupString MarkupStringHelper(string? value)
-       => string.IsNullOrWhiteSpace(value) ? new MarkupString(string.Empty)
+       => string.IsNullOrWhiteSpace(value) ? new MarkupString("—")
         : new MarkupString(value);
+
+    public static string FormatValue(object? value, DisplayFieldFormat format)
+    {
+        if (value == null || string.IsNullOrWhiteSpace(value.ToString()))
+            return "—";
+
+        var culture = CultureInfo.CurrentCulture;
+
+        return format switch
+        {
+            DisplayFieldFormat.None => value.ToString()!,
+
+            DisplayFieldFormat.Currency
+                when value is IFormattable fCur
+                => fCur.ToString("C2", culture)!,
+
+            DisplayFieldFormat.Currency
+                when decimal.TryParse(value.ToString(), NumberStyles.Any, culture, out var dCur)
+                => dCur.ToString("C2", culture),
+
+            DisplayFieldFormat.Percentage
+                when value is IFormattable fPct
+                => $"{fPct.ToString("0", culture)}%",
+
+            DisplayFieldFormat.Percentage
+                when decimal.TryParse(value.ToString(), NumberStyles.Any, culture, out var dPct)
+                => $"{dPct:0} %",
+
+            DisplayFieldFormat.Weight
+                when decimal.TryParse(value.ToString(), NumberStyles.Any, culture, out var w)
+                => $"{w:0.##} kg",
+
+            DisplayFieldFormat.Volume
+                when decimal.TryParse(value.ToString(), NumberStyles.Any, culture, out var v)
+                => $"{v:0.##}\u00A0m\u00B3",
+
+            DisplayFieldFormat.Date
+                when value is DateTime dtDate
+                => dtDate.ToString("d", culture),
+
+            DisplayFieldFormat.Date
+                when DateTime.TryParse(value.ToString(), culture, DateTimeStyles.None, out var dtDate2)
+                => dtDate2.ToString("d", culture),
+
+            DisplayFieldFormat.Time
+                when value is DateTime dtTime
+                => dtTime.ToString("t", culture),
+
+            DisplayFieldFormat.Time
+                when TimeSpan.TryParse(value.ToString(), culture, out var ts)
+                => ts.ToString(@"hh\:mm"),
+
+            DisplayFieldFormat.DateTime
+                when value is DateTime dtDateTime
+                => dtDateTime.ToString("g", culture),
+
+            DisplayFieldFormat.DateTime
+                when DateTime.TryParse(value.ToString(), culture, DateTimeStyles.None, out var dt2)
+                => dt2.ToString("g", culture),
+
+            _ => value.ToString()!
+        };
+    }
 
     /// <summary>
     /// Returns the value of the field if it's not null; otherwise, returns the default numeric value (e.g., 0).
@@ -60,6 +129,7 @@ public static class FieldUtility
         AddIfNotNullOrEmpty(account.Recipient);
         AddIfNotNullOrEmpty(account.Building);
         AddIfNotNullOrEmpty(account.Street);
+        AddIfNotNullOrEmpty(account.Locality);
         AddIfNotNullOrEmpty($"{account.ZipCode} - {account.City}");
         AddIfNotNullOrEmpty(account.Country);
 

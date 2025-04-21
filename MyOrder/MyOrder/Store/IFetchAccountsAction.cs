@@ -2,6 +2,6 @@
 
 public interface IFetchAccountsAction
 {
-    public string BasketId { get; }
     public string? Filter { get; }
+    public bool? IsSearch { get; }
 }

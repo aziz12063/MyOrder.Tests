@@ -1,13 +1,95 @@
-﻿<div class="mt-n1">
-    <MudTextField Typo="Typo.caption"
-                  Class="mudcard-details-info-background rounded"
-                  Lines="4"
-                  Variant="Variant.Outlined"
-                  FullWidth="true"
-                  Margin="Margin.Dense"
-                  ReadOnly="true"
-                  Value="Address" />
+﻿@using System.Text
+@if (AccountField is null || AccountField.Value is null)
+    return;
+
+<MudGrid Spacing="0">
+    <MudItem xs="11" Class="pr-1">
+        <MudTooltip RootStyle="width: 100%;">
+            <ChildContent>
+                <MudField Class="mudcard-details-info-background rounded adress-textarea"
+                          Variant="Variant.Outlined"
+                          FullWidth="true"
+                          Margin="Margin.Dense"
+                          InnerPadding="false">
+                    <div style="overflow-x: scroll; scrollbar-width: none;">
+                        <MudText Typo="Typo.caption" Style="white-space: nowrap">
+                            @DisplayedAddress
+                        </MudText>
+                    </div>
+                </MudField>
+            </ChildContent>
+            <TooltipContent>
+                <MudText Typo="Typo.caption">@((MarkupString)string.Join("<br />", TooltipAddress))</MudText>
+            </TooltipContent>
+        </MudTooltip>
+    </MudItem>
+    <MudItem xs="1" Class="align-content-center">
+        <ClipboardButton TooltipText="Copier l'adresse"
+                         StringToCopy="@(string.Join("\n", TooltipAddress))" />
+    </MudItem>
+</MudGrid>
+
+<div class="mt-n1">
 </div>
 @code {
-    [Parameter, EditorRequired] public string Address { get; set; }
+    [Parameter, EditorRequired]
+    public Field<AccountDto?>? AccountField { get; set; }
+    private MarkupString DisplayedAddress;
+    private List<string> TooltipAddress = null!;
+
+    protected override void OnParametersSet()
+    {
+        DisplayedAddress = CreateDisplayedAddress(AccountField!.Value!);
+        TooltipAddress = CreateTooltipAddress(AccountField!.Value!);
+    }
+    #warning Infinished Code
+    public static List<string> CreateTooltipAddress(AccountDto account)
+    {
+        var address = new List<string>();
+
+        AddIfNotNullOrEmpty(account.Recipient);
+        AddIfNotNullOrEmpty(account.Building);
+        AddIfNotNullOrEmpty(account.Street);
+        AddIfNotNullOrEmpty(account.Locality);
+        AddIfNotNullOrEmpty($"{account.ZipCode} - {account.City}");
+        AddIfNotNullOrEmpty(account.Country);
+
+        return address.Count > 0 ? address : [];
+
+        void AddIfNotNullOrEmpty(string? value)
+        {
+            if (!string.IsNullOrWhiteSpace(value))
+            {
+                address.Add(value);
+            }
+        }
+    }
+
+
+    // AddIfNotNullOrEmpty(account.Recipient);
+    // AddIfNotNullOrEmpty(account.Building);
+    // AddIfNotNullOrEmpty(account.Street);
+    // AddIfNotNullOrEmpty(account.Locality);
+    // AddIfNotNullOrEmpty($"{account.ZipCode} - {account.City}");
+    // AddIfNotNullOrEmpty(account.Country);
+
+    public static MarkupString CreateDisplayedAddress(AccountDto account)
+    {
+        var sb = new StringBuilder();
+
+        string firstLine = string.IsNullOrWhiteSpace(account.Street) ? " -- " : account.Street;
+
+        string secondLine = (string.IsNullOrWhiteSpace(account.ZipCode), string.IsNullOrWhiteSpace(account.City)) switch
+        {
+            (false, false) => $"{account.ZipCode} - {account.City}",
+            (false, true) => account.ZipCode!,
+            (true, false) => account.City!,
+            _ => " -- "
+        };
+        sb.Append(firstLine);
+        sb.Append("<br />");
+        sb.Append(secondLine);
+
+        return new MarkupString(sb.ToString());
+    }
 }

@@ -9,4 +9,5 @@ public interface IGeneralInfoRepository
     Task<List<BasketNotificationDto?>?> GetNotificationsAsync(CancellationToken cancellationToken = default);
     Task<List<BasketBlockingReasonDto?>?> GetBlockingReasonsAsync(CancellationToken cancellationToken = default);
     Task<List<BasketNotificationDto?>?> GetValidationRulesAsync(CancellationToken cancellationToken = default);
+    Task<BasketPublishingProgress?> BasketPublicationStateAsync(CancellationToken cancellationToken = default);
 }

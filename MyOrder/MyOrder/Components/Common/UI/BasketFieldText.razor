@@ -3,6 +3,7 @@
 
 <MudTooltip Text="@TextField.Name">
     <MudText Typo="Typo"
+             Class="@Class"
              Color="FieldUtility.GetFieldColor(TextField)">@TextField.Value</MudText>
 </MudTooltip>
 
@@ -12,4 +13,6 @@
 
     [Parameter]
     public Typo Typo { get; set; } = Typo.body1;
+    [Parameter]
+    public string Class { get; set; } = string.Empty;
 }

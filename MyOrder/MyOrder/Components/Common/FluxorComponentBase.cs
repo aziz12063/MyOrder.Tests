@@ -22,13 +22,12 @@ public abstract class FluxorComponentBase<TState, TAction> : ComponentBase, IDis
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 
     protected Type FetchActionType { get; } = typeof(TAction);
-    protected string BasketId => BasketService.BasketId;
-    private bool disposed = false;
+    private bool _disposed = false;
 
     protected override async Task OnInitializedAsync()
     {
         State.StateChanged += OnStateChanged;
-        Dispatcher.Dispatch(CreateFetchAction(State.Value, BasketId));
+        Dispatcher.Dispatch(CreateFetchAction(State.Value));
 
         await base.OnInitializedAsync();
     }
@@ -48,12 +47,12 @@ public abstract class FluxorComponentBase<TState, TAction> : ComponentBase, IDis
             // Cache the relevant state fields first to ensure they are up-to-date before the UI is re-rendered.
             // This prevents potential null reference issues when the Razor view attempts to access these fields.
             CacheNewFields();
-            Logger.LogDebug("Cached new fields for {Component}", GetType().Name);
+            Logger.LogTrace("Cached new fields for {Component}", GetType().Name);
             // Trigger a re-render of the component to reflect the updated state in the UI.
             // Awaiting this ensures that the state update happens after caching, maintaining consistency.
             await InvokeAsync(StateHasChanged);
         });
-        Logger.LogDebug("StateChanged handler completed for {Component}", GetType().Name);
+        Logger.LogTrace("StateChanged handler completed for {Component}", GetType().Name);
     }
 
     protected abstract void CacheNewFields();
@@ -66,16 +65,16 @@ public abstract class FluxorComponentBase<TState, TAction> : ComponentBase, IDis
 
     protected virtual void Dispose(bool disposing)
     {
-        if (!disposed)
+        if (!_disposed)
         {
             if (disposing)
             {
                 State.StateChanged -= OnStateChanged;
             }
 
-            disposed = true;
+            _disposed = true;
         }
     }
 
-    protected abstract TAction CreateFetchAction(TState state, string basketId);
+    protected abstract TAction CreateFetchAction(TState state);
 }

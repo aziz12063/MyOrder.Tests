@@ -38,7 +38,7 @@ public class NewLineEffects(INewOrderLineRepository newOrderLineRepository, ISta
             var response = await _newOrderLineRepository.ResetNewLineStateAsync();
 
             // To refetch the latest new line state
-            dispatcher.Dispatch(new FetchNewLineAction(newLineState.Value, action.BasketId));
+            dispatcher.Dispatch(new FetchNewLineAction(newLineState.Value));
         }
         catch (Exception ex)
         {
@@ -61,7 +61,7 @@ public class NewLineEffects(INewOrderLineRepository newOrderLineRepository, ISta
             {
                 if (response.UpdateDone == true)
                 {
-                    _stateResolver.DispatchRefreshCalls(dispatcher, response.RefreshCalls, action.BasketId);
+                    _stateResolver.DispatchRefreshCalls(dispatcher, response.RefreshCalls);
                     success = true;
                 }
                 else
@@ -89,7 +89,6 @@ public class NewLineEffects(INewOrderLineRepository newOrderLineRepository, ISta
     public async Task HandlePostFreeTextAction(PostFreeTextAction action, IDispatcher dispatcher)
     {
         var texts = action.FreeTexts;
-        var basketId = action.BasketId;
         bool success = false;
         if (texts == null || texts.Count == 0)
         {
@@ -112,7 +111,7 @@ public class NewLineEffects(INewOrderLineRepository newOrderLineRepository, ISta
                 if (response.UpdateDone == true)
                 {
                     _logger.LogInformation($"dispatching PostFreeTextSuccessAction");
-                    dispatcher.Dispatch(new PostFreeTextSuccessAction(basketId, response));
+                    dispatcher.Dispatch(new PostFreeTextSuccessAction(response));
                     success = true;
                 }
                 else
@@ -146,8 +145,7 @@ public class NewLineEffects(INewOrderLineRepository newOrderLineRepository, ISta
         IDispatcher dispatcher)
     {
         var refreshCalls = receivedAction?.ProcedureCallResponse?.RefreshCalls;
-        var basketId = receivedAction?.BasketId;
-        _stateResolver.DispatchRefreshCalls(dispatcher, refreshCalls, basketId);
+        _stateResolver.DispatchRefreshCalls(dispatcher, refreshCalls);
     }
 
     [EffectMethod]

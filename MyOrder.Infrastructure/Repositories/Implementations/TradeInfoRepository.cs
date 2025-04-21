@@ -17,7 +17,7 @@ public class TradeInfoRepository(ITradeInfoApiClient tradeInfoApiClient, IEventA
         logger.LogDebug("Fetching basket trade info for basket : {BasketId} from repository", BasketId);
         var operationDescription = $"GetBasketTradeInfoAsync for basketId {BasketId}";
         return await ExecuteAsync(
-            async (token) => await _tradeInfoApiClient.GetBasketTradeInfoAsync(BasketId, cancellationToken),
+            async (token) => await _tradeInfoApiClient.GetBasketTradeInfoAsync(CompanyId, BasketId, cancellationToken),
             operationDescription,
             cancellationToken);
     }

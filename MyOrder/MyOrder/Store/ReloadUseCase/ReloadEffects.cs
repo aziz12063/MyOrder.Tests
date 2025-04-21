@@ -20,7 +20,7 @@ public class ReloadEffects(ILogger<ReloadEffects> logger, IBasketActionsReposito
         }
         catch (Exception e)
         {
-            logger.LogError(e, "Error while reloading basket {BasketId}", action.BasketId);
+            logger.LogError(e, "Error while reloading basket.");
         }
         finally
         {

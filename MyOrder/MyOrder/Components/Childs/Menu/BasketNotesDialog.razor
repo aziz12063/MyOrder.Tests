@@ -1,0 +1,33 @@
+﻿@using Fluxor
+@using MyOrder.Store.GeneralInfoUseCase
+
+<FetchActionTypeCascadingValue FetchActionTypeValue="typeof(FetchGeneralInfoAction)">
+    <MudDialog ContentClass="my-0 px-5"
+               ActionsClass="pt-0 pb-1 pr-4">
+        <TitleContent>
+            <MudText Typo="Typo.h6">@NoteField.Name</MudText>
+        </TitleContent>
+        <DialogContent>
+            <GenericTextField Field="NoteField"
+                              Lines="4"
+                              Variant="Variant.Outlined"
+                              Margin="Margin.Dense"
+                              HideLabel="true" />
+        </DialogContent>
+        <DialogActions>
+            <MudButton Color="Color.Primary"
+                       Class=""
+                       OnClick="Close">Fermer</MudButton>
+        </DialogActions>
+    </MudDialog>
+</FetchActionTypeCascadingValue>
+
+@code {
+    [CascadingParameter]
+    private MudDialogInstance MudDialog { get; set; }
+
+    [Parameter, EditorRequired]
+    public Field<string> NoteField { get; set; }
+
+    private void Close() => MudDialog.Close();
+}

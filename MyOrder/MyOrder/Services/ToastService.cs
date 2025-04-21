@@ -18,15 +18,23 @@ public enum ToastLevel
 public class ToastService(ISnackbar snackbarService, ILogger<ToastService> logger)
     : IToastService
 {
+    private static void ToastOptions(SnackbarOptions options)
+    {
+        options.DuplicatesBehavior = SnackbarDuplicatesBehavior.Prevent;
+        options.VisibleStateDuration = 1500;
+        options.HideTransitionDuration = 100;
+        options.ShowTransitionDuration = 100;
+    }
+
     public void ShowBasketNotification(BasketNotificationDto notification, Action<Snackbar>? onClose = null)
     {
         snackbarService.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
 
-        static void config(SnackbarOptions options)
+        static void configureOptions(SnackbarOptions options)
         {
             options.DuplicatesBehavior = SnackbarDuplicatesBehavior.Prevent;
-            options.HideTransitionDuration = 200;
-            options.ShowTransitionDuration = 200;
+            options.HideTransitionDuration = 100;
+            options.ShowTransitionDuration = 100;
             options.VisibleStateDuration = int.MaxValue;
             options.SnackbarVariant = Variant.Text;
             options.ShowCloseIcon = true;
@@ -52,77 +60,87 @@ public class ToastService(ISnackbar snackbarService, ILogger<ToastService> logge
                 builder.CloseComponent();
             }
 
-            var snackbar = snackbarService.Add(content, severity, config, notification.NotificationId.ToString());
+            var snackbar = snackbarService.Add(content, severity, configureOptions, notification.NotificationId.ToString());
 
             if (snackbar is not null && onClose is not null)
                 snackbar.OnClose += onClose;
         }
     }
 
+
+
     public void ShowCustom(string message, string? title = null,
         ToastLevel level = ToastLevel.Info, Action? onClose = null,
         string? icon = null)
     {
-        var severity = level switch
-        {
-            ToastLevel.Success => Severity.Success,
-            ToastLevel.Error => Severity.Error,
-            ToastLevel.Info => Severity.Info,
-            ToastLevel.Warning => Severity.Warning,
-            _ => Severity.Info
-        };
+        //var severity = level switch
+        //{
+        //    ToastLevel.Success => Severity.Success,
+        //    ToastLevel.Error => Severity.Error,
+        //    ToastLevel.Info => Severity.Info,
+        //    ToastLevel.Warning => Severity.Warning,
+        //    _ => Severity.Info
+        //};
 
-        var snackbar = snackbarService.Add(message, severity, options =>
-        {
-            options.Icon = icon;
-            options.VisibleStateDuration = 10000;
-            options.HideTransitionDuration = 500;
-        });
+        //var snackbar = snackbarService.Add(message, severity, options =>
+        //{
+        //    options.Icon = icon;
+        //    options.VisibleStateDuration = 10000;
+        //    options.HideTransitionDuration = 500;
+        //});
 
-        if (snackbar != null)
-            snackbar.OnClose += (sb) => onClose?.Invoke();
-        else
-            logger.LogError("Snackbar is null {stackTrace}", LogUtility.GetStackTrace());
+        //if (snackbar != null)
+        //    snackbar.OnClose += (sb) => onClose?.Invoke();
+        //else
+        //    logger.LogError("Snackbar is null {stackTrace}", LogUtility.GetStackTrace());
 
     }
 
     public void ShowError(string message, Action? onClose = null)
     {
-        var snackbar = snackbarService.Add(message, Severity.Error);
+        //snackbarService.Configuration.PositionClass = Defaults.Classes.Position.BottomLeft;
 
-        if (snackbar != null)
-            snackbar.OnClose += (sb) => onClose?.Invoke();
-        else
-            logger.LogError("Snackbar is null {stackTrace}", LogUtility.GetStackTrace());
+        //var snackbar = snackbarService.Add(message, Severity.Error, ToastOptions);
+
+        //if (snackbar != null)
+        //    snackbar.OnClose += (sb) => onClose?.Invoke();
+        //else
+        //    logger.LogError("Snackbar is null {stackTrace}", LogUtility.GetStackTrace());
     }
 
     public void ShowInfo(string message, Action? onClose = null)
     {
-        var snackbar = snackbarService.Add(message, Severity.Info);
+        //snackbarService.Configuration.PositionClass = Defaults.Classes.Position.BottomLeft;
 
-        if (snackbar != null)
-            snackbar.OnClose += (sb) => onClose?.Invoke();
-        else
-            logger.LogError("Snackbar is null {stackTrace}", LogUtility.GetStackTrace());
+        //var snackbar = snackbarService.Add(message, Severity.Info);
+
+        //if (snackbar != null)
+        //    snackbar.OnClose += (sb) => onClose?.Invoke();
+        //else
+        //    logger.LogError("Snackbar is null {stackTrace}", LogUtility.GetStackTrace());
     }
 
     public void ShowSuccess(string message, Action? onClose = null)
     {
-        var snackbar = snackbarService.Add(message, Severity.Success);
+        //snackbarService.Configuration.PositionClass = Defaults.Classes.Position.BottomLeft;
 
-        if (snackbar != null)
-            snackbar.OnClose += (sb) => onClose?.Invoke();
-        else
-            logger.LogError("Snackbar is null {stackTrace}", LogUtility.GetStackTrace());
+        //var snackbar = snackbarService.Add(message, Severity.Success, ToastOptions);
+
+        //if (snackbar != null)
+        //    snackbar.OnClose += (sb) => onClose?.Invoke();
+        //else
+        //    logger.LogError("Snackbar is null {stackTrace}", LogUtility.GetStackTrace());
     }
 
     public void ShowWarning(string message, Action? onClose = null)
     {
-        var snackbar = snackbarService.Add(message, Severity.Warning);
+        //snackbarService.Configuration.PositionClass = Defaults.Classes.Position.BottomLeft;
 
-        if (snackbar != null)
-            snackbar.OnClose += (sb) => onClose?.Invoke();
-        else
-            logger.LogError("Snackbar is null {stackTrace}", LogUtility.GetStackTrace());
+        //var snackbar = snackbarService.Add(message, Severity.Warning);
+
+        //if (snackbar != null)
+        //    snackbar.OnClose += (sb) => onClose?.Invoke();
+        //else
+        //    logger.LogError("Snackbar is null {stackTrace}", LogUtility.GetStackTrace());
     }
 }

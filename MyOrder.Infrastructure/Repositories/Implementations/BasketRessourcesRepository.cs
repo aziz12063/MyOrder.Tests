@@ -21,7 +21,7 @@ public class BasketRessourcesRepository(IBasketRessourcesApiClient ressourcesApi
         logger.LogDebug("Fetching customer tags for {BasketId} from repository", BasketId);
         var operationDescription = $"GetCustomerTagsAsync for basketId {BasketId}";
         return await ExecuteAsync(
-            async (token) => await _ressourcesApiClient.GetCustomerTagsAsync(BasketId, token),
+            async (token) => await _ressourcesApiClient.GetCustomerTagsAsync(CompanyId, BasketId, token),
             operationDescription,
             cancellationToken);
     }
@@ -31,17 +31,7 @@ public class BasketRessourcesRepository(IBasketRessourcesApiClient ressourcesApi
         logger.LogDebug("Fetching sales origins for {BasketId} from repository", BasketId);
         var operationDescription = $"GetSalesOriginsAsync for basketId {BasketId}";
         return await ExecuteAsync(
-            async (token) => await _ressourcesApiClient.GetSalesOriginsAsync(BasketId, token),
-            operationDescription,
-            cancellationToken);
-    }
-
-    public async Task<List<BasketValueDto?>?> GetWebOriginsAsync(CancellationToken cancellationToken = default)
-    {
-        logger.LogDebug("Fetching web origins for {BasketId} from repository", BasketId);
-        var operationDescription = $"GetWebOriginsAsync for basketId {BasketId}";
-        return await ExecuteAsync(
-            async (token) => await _ressourcesApiClient.GetWebOriginsAsync(BasketId, token),
+            async (token) => await _ressourcesApiClient.GetSalesOriginsAsync(CompanyId, BasketId, token),
             operationDescription,
             cancellationToken);
     }
@@ -51,7 +41,7 @@ public class BasketRessourcesRepository(IBasketRessourcesApiClient ressourcesApi
         logger.LogDebug("Fetching sales pool for {BasketId} from repository", BasketId);
         var operationDescription = $"GetSalesPoolAsync for basketId {BasketId}";
         return await ExecuteAsync(
-            async (token) => await _ressourcesApiClient.GetSalesPoolAsync(BasketId, token),
+            async (token) => await _ressourcesApiClient.GetSalesPoolAsync(CompanyId, BasketId, token),
             operationDescription,
             cancellationToken);
     }
@@ -59,15 +49,7 @@ public class BasketRessourcesRepository(IBasketRessourcesApiClient ressourcesApi
     //==============================//
     //      Delivery ressources     //
     //==============================//
-    public async Task<List<BasketValueDto?>?> GetDeliveryModesAsync(CancellationToken cancellationToken = default)
-    {
-        logger.LogDebug("Fetching delivery modes for {BasketId} from repository", BasketId);
-        var operationDescription = $"GetDeliveryModesAsync for basketId {BasketId}";
-        return await ExecuteAsync(
-            async (token) => await _ressourcesApiClient.GetDeliveryModesAsync(BasketId, token),
-            operationDescription,
-            cancellationToken);
-    }
+
 
 
     //==============================//
@@ -78,7 +60,7 @@ public class BasketRessourcesRepository(IBasketRessourcesApiClient ressourcesApi
         logger.LogDebug("Fetching tax groups for {BasketId} from repository", BasketId);
         var operationDescription = $"GetTaxGroupsAsync for basketId {BasketId}";
         return await ExecuteAsync(
-            async (token) => await _ressourcesApiClient.GetTaxGroupsAsync(BasketId, token),
+            async (token) => await _ressourcesApiClient.GetTaxGroupsAsync(CompanyId, BasketId, token),
             operationDescription,
             cancellationToken);
     }
@@ -88,7 +70,7 @@ public class BasketRessourcesRepository(IBasketRessourcesApiClient ressourcesApi
         logger.LogDebug("Fetching payment modes for {BasketId} from repository", BasketId);
         var operationDescription = $"GetPaymentModesAsync for basketId {BasketId}";
         return await ExecuteAsync(
-            async (token) => await _ressourcesApiClient.GetPaymentModesAsync(BasketId, token),
+            async (token) => await _ressourcesApiClient.GetPaymentModesAsync(CompanyId, BasketId, token),
             operationDescription,
             cancellationToken);
     }
@@ -101,7 +83,7 @@ public class BasketRessourcesRepository(IBasketRessourcesApiClient ressourcesApi
         logger.LogDebug("Fetching coupons for {BasketId} from repository", BasketId);
         var operationDescription = $"GetCouponsAsync for basketId {BasketId}";
         return await ExecuteAsync(
-            async (token) => await _ressourcesApiClient.GetCouponsAsync(BasketId, token),
+            async (token) => await _ressourcesApiClient.GetCouponsAsync(CompanyId, BasketId, token),
             operationDescription,
             cancellationToken);
     }
@@ -111,7 +93,7 @@ public class BasketRessourcesRepository(IBasketRessourcesApiClient ressourcesApi
         logger.LogDebug("Fetching warranty cost options for {BasketId} from repository", BasketId);
         var operationDescription = $"GetWarrantyCostOptionsAsync for basketId {BasketId}";
         return await ExecuteAsync(
-            async (token) => await _ressourcesApiClient.GetWarrantyCostOptionsAsync(BasketId, token),
+            async (token) => await _ressourcesApiClient.GetWarrantyCostOptionsAsync(CompanyId, BasketId, token),
             operationDescription,
             cancellationToken);
     }
@@ -121,7 +103,7 @@ public class BasketRessourcesRepository(IBasketRessourcesApiClient ressourcesApi
         logger.LogDebug("Fetching shipping cost options for {BasketId} from repository", BasketId);
         var operationDescription = $"GetShippingCostOptionsAsync for basketId {BasketId}";
         return await ExecuteAsync(
-            async (token) => await _ressourcesApiClient.GetShippingCostOptionsAsync(BasketId, token),
+            async (token) => await _ressourcesApiClient.GetShippingCostOptionsAsync(CompanyId, BasketId, token),
             operationDescription,
             cancellationToken);
     }
@@ -134,7 +116,7 @@ public class BasketRessourcesRepository(IBasketRessourcesApiClient ressourcesApi
         logger.LogDebug("Fetching line update reasons for {BasketId} from repository", BasketId);
         var operationDescription = $"GetlineUpdateReasonsAsync for basketId {BasketId}";
         return await ExecuteAsync(
-            async (token) => await _ressourcesApiClient.GetlineUpdateReasonsAsync(BasketId, token),
+            async (token) => await _ressourcesApiClient.GetlineUpdateReasonsAsync(CompanyId, BasketId, token),
             operationDescription,
             cancellationToken);
     }
@@ -144,7 +126,7 @@ public class BasketRessourcesRepository(IBasketRessourcesApiClient ressourcesApi
         logger.LogDebug("Fetching logistic flows for {BasketId} from repository", BasketId);
         var operationDescription = $"GetlogisticFlowsAsync for basketId {BasketId}";
         return await ExecuteAsync(
-            async (token) => await _ressourcesApiClient.GetlogisticFlowsAsync(BasketId, token),
+            async (token) => await _ressourcesApiClient.GetlogisticFlowsAsync(CompanyId, BasketId, token),
             operationDescription,
             cancellationToken);
     }

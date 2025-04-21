@@ -1,17 +1,73 @@
-﻿@using MyOrder.Components.Childs.Header
+﻿@using Fluxor
+@using Fluxor.Blazor.Web.Components
+@using MyOrder.Components.Childs.Header
 @using MyOrder.Components.Childs.Lines
 @using MyOrder.Components.Childs
+@using MyOrder.Shared.Interfaces
+@using MyOrder.Store.GeneralInfoUseCase
+@using MyOrder.Store.GlobalOperationsUseCase
+@using MyOrder.Store.RessourcesUseCase
 
-@inject NavigationManager NavigationManager
+@inherits FluxorComponent
 
-@page "/EditBasket"
+@page "/{companyId}/EditBasket"
 
 <PageTitle>MyOrder</PageTitle>
 
-<MudContainer Class="mt-11 px-14" MaxWidth="MaxWidth.ExtraLarge">
+@if(GlobalOperationsState.Value.IsAppGloballyFaulted)
+{
+    <ApiErrorDisplay FaultMessage="@GlobalOperationsState.Value.FaultMessage" />
+    return;
+}
+
+@if (RessourcesState.Value.IsLoading)
+{
+    <MudOverlay Visible="RessourcesState.Value.IsLoading" ZIndex="9999" DarkBackground="false">
+        <MudProgressCircular Size="Size.Large" Indeterminate="true" />
+    </MudOverlay>
+    return;
+}
+
+@if (GeneralInfoState.Value.IsLoading)
+{
+    @* #warning "Refactor to use MudDialog fullscreen with close button false" *@
+    <MudOverlay Visible="GeneralInfoState.Value.IsLoading" ZIndex="9999" DarkBackground="false">
+        <MudProgressCircular Size="Size.Large" Indeterminate="true" />
+    </MudOverlay>
+}
+
+<MudContainer Class="pa-8" MaxWidth="MaxWidth.ExtraLarge">
     <MudStack Spacing="4">
         <Notifications />
         <Header />
         <Lines />
+        @* <TestComponent /> *@
     </MudStack>
 </MudContainer>
+
+@code {
+    [Inject]
+    private IDispatcher Dispatcher { get; set; } = null!;
+    [Inject]
+    private IState<RessourcesState> RessourcesState { get; set; } = null!;
+    [Inject]
+    private IState<RessourcesState> GeneralInfoState { get; set; } = null!;
+    [Inject]
+    private IState<GlobalOperationsState> GlobalOperationsState { get; set; } = null!;
+    [Inject]
+    private IBasketService BasketService { get; set; } = null!;
+
+    [Parameter]
+    public string CompanyId { get; set; } = null!;
+    [SupplyParameterFromQuery]
+    public string BasketId { get; set; } = null!;
+
+    protected override void OnInitialized()
+    {
+        BasketService.CompanyId = CompanyId;
+        BasketService.BasketId = BasketId;
+
+        Dispatcher.Dispatch(new FetchRessourcesAction(RessourcesState.Value)); //Refactor
+        base.OnInitialized();
+    }
+}

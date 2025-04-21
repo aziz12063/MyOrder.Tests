@@ -3,8 +3,7 @@ using MyOrder.Store.Base;
 
 namespace MyOrder.Store.DeliveryInfoUseCase;
 
-#warning Remove basketId
-public class FetchNewDeliveryAccountAction(NewDeliveryAccountState state, string? basketId = null, string? accountId = null) : FetchDataActionBase(state)
+public class FetchNewDeliveryAccountAction(NewDeliveryAccountState state, string? accountId = null) : FetchDataActionBase(state)
 { 
     public string? AccountId { get; } = accountId;
 }

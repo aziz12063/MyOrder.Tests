@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
-using MyOrder.Components.Childs.Header;
+using MyOrder.Components.Childs.Header.Delivery;
 using MyOrder.Components.Childs.Lines.AddLine;
 using MyOrder.Components.Childs.Menu;
 using MyOrder.Components.Common.Dialogs;
 using MyOrder.Shared.Dtos;
+using MyOrder.Shared.Dtos.SharedComponents;
 using MyOrder.Store;
 
 namespace MyOrder.Services;
@@ -43,14 +44,24 @@ public class ModalService(IDialogService dialogService) : IModalService
     {
         var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small };
 
-        return await dialogService.ShowAsync<NewBasketDialog>("Simple Dialog", options);
+        return await dialogService.ShowAsync<NewBasketDialog>("NewBasketDialog", options);
     }
 
     public async Task<IDialogReference> OpenBasketDialogAsync()
     {
         var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, CloseButton = true };
 
-        return await dialogService.ShowAsync<OpenBasketDialog>("Simple Dialog", options);
+        return await dialogService.ShowAsync<OpenBasketDialog>("OpenBasketDialog", options);
+    }
+
+    public async Task<IDialogReference> OpenBasketOrderNoteDialogAsync(Field<string> noteField)
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, CloseButton = true, BackdropClick = false };
+        var parameters = new DialogParameters<BasketNotesDialog>
+        {
+            { dialog => dialog.NoteField, noteField }
+        };
+        return await dialogService.ShowAsync<BasketNotesDialog>("BasketNotesDialog", parameters, options);
     }
 
     public async Task<IDialogReference> OpenSearchContactDialogAsync<TState, TAction>(
@@ -163,6 +174,13 @@ public class ModalService(IDialogService dialogService) : IModalService
             ModalSeverity.error => Color.Error,
             _ => Color.Info
         };
+    }
+
+    public async Task<IDialogReference> OpenPaymentAuthorizationDialog()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, BackdropClick = false, CloseButton = true };
+
+        return await dialogService.ShowAsync<PaymentAuthorizationDialog>("PaymentAuthorization", options);
     }
 }
 

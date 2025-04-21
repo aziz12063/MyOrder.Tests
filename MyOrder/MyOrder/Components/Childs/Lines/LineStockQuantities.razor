@@ -1,110 +1,117 @@
-﻿<MudPaper Elevation="2" Class="header-cards-height header-cards-height-content">
+﻿<LineDetailsTemplate NoContent="BasketLine is null">
     <MudStack Spacing="2" Justify="Justify.SpaceBetween" Style="height: inherit;">
         <div>
             <MudText Typo="Typo.h6" Color="Color.Secondary" Class="pb-4">Disponibilité et délai de livraison</MudText>
 
             <MudGrid Spacing="1">
                 <!--Flux Logistique-->
-                <MudItem xs="6">
+                <MudItem xs="4 ">
                     <GenericMudSelect Variant="Variant.Outlined"
                                       Field="BasketLine.LogisticFlow"
                                       Items="LogisticFlows" />
                 </MudItem>
 
                 <!--Entrepot-->
-                <MudItem xs="6">
+                <MudItem xs="4">
                     <DisplayField Field="@BasketLine?.InventLocationId" />
                 </MudItem>
 
+                <!--Type d'article-->
+                <MudItem xs="4">
+                    <DisplayField Field="@BasketLine?.ItemType" />
+                </MudItem>
+
                 <!--Livré maintenant-->
-                <MudItem xs="6">
+                <MudItem xs="4">
                     <DisplayField Field="@BasketLine?.PhysicalAvailableQuantity" />
                 </MudItem>
 
                 <!--a livrer plus tard-->
-                <MudItem xs="6">
+                <MudItem xs="4">
                     <DisplayField Field="@BasketLine?.OnOrderQuantity" />
                 </MudItem>
 
+                <!--Date de liv manuelle-->
+                <MudItem xs="4">
+                    <!--Date de liv-->
+                    <DatePicker Field="@BasketLine!.DeliveryDate" />
+                </MudItem>
+
                 <!--Quantité/palette-->
-                <MudItem xs="6">
+                <MudItem xs="4">
                     <DisplayField Field="@BasketLine?.PaletteQuantity" />
                 </MudItem>
 
                 <!--Diff Palette-->
-                <MudItem xs="6">
+                <MudItem xs="4">
                     <DisplayField Field="@BasketLine?.QuantityAtPaletteThreshold" />
                 </MudItem>
 
-                <!--Type d'article-->
-                <MudItem xs="6">
-                    <DisplayField Field="@BasketLine?.ItemType" />
-                </MudItem>
-
-                <!--Date de liv manuelle-->
-                <MudItem xs="6">
-                    <MudStack Spacing="0" Row="true">
-                        <GenericCheckBox Field="BasketLine?.IsCustomDeliveryDate" />
-
-                        <!--Date de liv-->
-                        <DatePicker Field="@BasketLine!.DeliveryDate"
-                                    ReadOnly="@DelivaryDateReadOnly(BasketLine)" />
-                    </MudStack>
+                <!--Mode de transport-->
+                <MudItem xs="4">
+                    <DisplayField Field="@BasketLine?.TransportMode" />
                 </MudItem>
             </MudGrid>
         </div>
         <MudGrid Spacing="2" Class="mt-2">
-            <MudItem xs="6">
-                <MudText Typo="Typo.subtitle2" Class="pt-0 pl-2">Disponible</MudText>
+            <MudItem xs="4">
+                <MudText Typo="Typo.subtitle2" Class="pt-0 pl-2">Stock et commandé</MudText>
             </MudItem>
-            <MudItem xs="6">
-                <MudText Typo="Typo.subtitle2" Class="pt-0 pl-2">En Attente</MudText>
+            <MudItem xs="4">
+                <MudText Typo="Typo.subtitle2" Class="pt-0 pl-2">Vendu</MudText>
+            </MudItem>
+            <MudItem xs="4">
+                <MudText Typo="Typo.subtitle2" Class="pt-0 pl-2">Disponible</MudText>
             </MudItem>
 
             <!--Stock total-->
-            <MudItem xs="6">
+            <MudItem xs="4">
                 <DisplayField Field="@BasketLine?.ItemPhysicalInventQuantity" />
             </MudItem>
 
-            <!--Commandé total-->
-            <MudItem xs="6">
-                <DisplayField Field="@BasketLine?.ItemOrderedQuantity" />
-            </MudItem>
-
             <!--Stock reservé-->
-            <MudItem xs="6">
+            <MudItem xs="4">
                 <DisplayField Field="@BasketLine?.ItemReservPhysicalQuantity" />
             </MudItem>
 
-            <!--En commande-->
-            <MudItem xs="6">
-                <DisplayField Field="@BasketLine?.ItemOnOrderQuantity" />
-            </MudItem>
-
             <!--Stock Dispo-->
-            <MudItem xs="6">
+            <MudItem xs="4">
                 <DisplayField Field="@BasketLine?.ItemPhysicalAvailableQuantity" />
             </MudItem>
 
+            <!--Commandé total-->
+            <MudItem xs="4">
+                <DisplayField Field="@BasketLine?.ItemOrderedQuantity" />
+            </MudItem>
+
+            <!--En commande-->
+            <MudItem xs="4">
+                <DisplayField Field="@BasketLine?.ItemOnOrderQuantity" />
+            </MudItem>
+
             <!--Commandé Dispo-->
-            <MudItem xs="6">
+            <MudItem xs="4">
                 <DisplayField Field="@BasketLine?.ItemOrderedAvailableQuantity" />
             </MudItem>
 
+            <MudItem xs="12">
+                <MudText Typo="Typo.subtitle2" Class="pt-0 pl-2">Approvisionnements</MudText>
+            </MudItem>
+
             <!--Famille d'appro-->
-            <MudItem xs="6">
+            <MudItem xs="4">
                 <DisplayField Field="@BasketLine?.SupplyFamily" />
             </MudItem>
 
             <!--Gestionnaire-->
-            <MudItem xs="6">
+            <MudItem xs="4">
                 <DisplayField Field="@BasketLine?.ItemManager" />
             </MudItem>
 
-            <!--Mode de transport-->
-            <MudItem xs="6">
-                <DisplayField Field="@BasketLine?.TransportMode" />
+            <!--Commande d'achat-->
+            <MudItem xs="4">
+                <DisplayField Field="@BasketLine?.PurchaseId" />
             </MudItem>
         </MudGrid>
     </MudStack>
-</MudPaper>
+</LineDetailsTemplate>

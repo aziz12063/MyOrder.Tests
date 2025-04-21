@@ -6,16 +6,51 @@
     <MudTooltip RootStyle="width:100%"
                 Text="@TooltipText"
                 Placement="Placement.Top">
-        <MudDatePicker ShowToolbar="false"
+        <MudDatePicker Margin="Margin"
                        Label="@FieldLabel()"
                        Required="Required"
                        Error="Error"
                        ErrorText="@Field.Error"
                        ReadOnly="InternalReadOnly"
-                       Disabled="InternalReadOnly"
+                       Disabled="InternalReadOnly || OnlyForDisplay"
                        Clearable="true"
                        DateFormat="d"
-                       @bind-Date="ValueProperty"
-                       @bind-Date:after="OnBindValueAfter" />
+                       Elevation="2"
+                       Date="ValueProperty"
+                       DateChanged="OnBindDateAfter" />
     </MudTooltip>
+}
+@code {
+    
+    // This method handles the date-binding process for the MudDatePicker component.
+    // The DateChanged event in MudDatePicker is triggered not only by user interactions
+    // but also when the date is updated programmatically, even if the new value is the same as the current value.
+    // To avoid executing unnecessary logic when the value hasn't truly changed (e.g., due to code-based updates),
+    // this method checks whether the old and new date values are actually different before invoking the base OnBindValueAfter().
+    // This ensures that the value-changed logic is only executed when the date is genuinely updated by the user.
+    //
+    // Why this logic works:
+    // When the date is modified programmatically, the DateChanged event is triggered,
+    // but the value passed to the event handler is identical to the old value.
+    // The check compares the `Date` parts of the values, and if they are the same,
+    // the event handler exits early without executing unnecessary logic.
+    // This prevents the value-changed logic from being fired redundantly during programmatic updates.
+    //
+    // Conclusion:
+    // By comparing the `Date` values and ensuring they are different before invoking the base logic,
+    // the method avoids unnecessary event handling triggered by programmatic updates.
+    // This guarantees that the value-changed logic is only executed when the user explicitly changes the date.
+    private void OnBindDateAfter(DateTime? newValue)
+    {
+        // If both the current value and the new value are null, there is no change, so exit early.
+        if (ValueProperty is null && newValue is null)
+            return;
+
+        // If either value is null or the dates are different, proceed with the value-changed logic.
+        if (ValueProperty is null || newValue is null || ValueProperty.Value.Date != newValue.Value.Date)
+        {
+            ValueProperty = newValue;
+            base.OnBindValueAfter();
+        }
+    }
 }

@@ -1,39 +1,38 @@
 ﻿using Fluxor;
 using Microsoft.AspNetCore.Components;
-using MudBlazor;
 using MyOrder.Components.Common;
 using MyOrder.Services;
 using MyOrder.Shared.Dtos;
-using MyOrder.Store.DeliveryInfoUseCase;
+using MyOrder.Shared.Dtos.Invoice;
+using MyOrder.Shared.Dtos.SharedComponents;
 using MyOrder.Store.InvoiceInfoUseCase;
 using MyOrder.Store.ProcedureCallUseCase;
 using MyOrder.Utils;
 
 namespace MyOrder.Components.Childs.Header;
 
-public partial class InvoiceDetails : FluxorComponentBase<InvoiceInfoState, FetchInvoiceInfoAction>
+public partial class InvoiceInfo : FluxorComponentBase<InvoiceInfoState, FetchInvoiceInfoAction>
 {
     [Inject]
-    private IState<InvoiceAccountsState> InvoiceAccountsState { get; set; }
+    private IState<InvoiceAccountsState> InvoiceAccountsState { get; set; } = null!;
     [Inject]
-    private IModalService ModalService { get; set; }
+    private IModalService ModalService { get; set; } = null!;
 
-    private BasketInvoiceInfoDto? BasketInvoiceInfo { get; set; }
+    private InvoicePanelDto? BasketInvoiceInfo { get; set; }
     private List<AccountDto?>? InvoiceToAccounts { get; set; }
     private List<BasketValueDto?>? TaxGroups { get; set; }
     private List<BasketValueDto?>? PaymentModes { get; set; }
-    private List<string>? AccountAddress { get; set; }
-    private string? DisplayAddress { get; set; }
+    private Field<string?>? PaymentAuthorizationAction { get; set; }
     private bool _isLoading = true;
     private bool _disposed = false;
 
-    protected override FetchInvoiceInfoAction CreateFetchAction(InvoiceInfoState state, string basketId) =>
-        new(state, basketId);
+    protected override FetchInvoiceInfoAction CreateFetchAction(InvoiceInfoState state) =>
+        new(state);
 
     protected override void OnInitialized()
     {
         Dispatcher.Dispatch(
-            new FetchInvoiceAccountsAction(InvoiceAccountsState.Value, BasketId));
+            new FetchInvoiceAccountsAction(InvoiceAccountsState.Value));
         InvoiceAccountsState.StateChanged += InvoiceAccountsStateChanged;
 
         base.OnInitialized();
@@ -49,9 +48,7 @@ public partial class InvoiceDetails : FluxorComponentBase<InvoiceInfoState, Fetc
     {
         BasketInvoiceInfo = State.Value.BasketInvoiceInfo
             ?? throw new NullReferenceException("Unexpected null for BasketInvoiceInfo object.");
-
-        AccountAddress = FieldUtility.CreateAddressList(BasketInvoiceInfo?.Account?.Value);
-        DisplayAddress = FieldUtility.DisplayAddress(AccountAddress);
+        PaymentAuthorizationAction = BasketInvoiceInfo.PaymentAuthorizationAction;
         _isLoading = State.Value.IsLoading;
     }
 

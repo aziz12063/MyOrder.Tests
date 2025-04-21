@@ -11,29 +11,18 @@
                   Variant="Variant.Outlined"
                   FullWidth="true"
                   InnerPadding="false"
-                  Class="@CssClass"
+                  Class="@InternalCssClass"
+                  Style="@Style"
                   Label="@Field?.Name"
-                  >
+                  Adornment="Adornment"
+                  AdornmentIcon="@AdornmentIcon"
+                  AdornmentColor="AdornmentColor"
+                  AdornmentText="@AdornmentText"
+                  IconSize="Size.Small">
             <MudText Typo="Typo.body2">
                 @if (Field!.Value is List<string> stringList && stringList is { Count: > 0 })
                 {
-                    for (var i = 0; i < stringList.Count - 2; i++)
-                    {
-                        var x = i;
-                        @stringList[x]
-                        <br />
-                    }
-
-                    if (stringList.Count > 1)
-                    {
-                        @stringList[stringList.Count - 2]
-                        <br />
-                        @stringList[^1]
-                    }
-                    else
-                    {
-                        @stringList[^1]
-                    }
+                    @((MarkupString)string.Join("<br />", stringList))
                 }
                 else if (IsMarkupString)
                 {
@@ -41,7 +30,7 @@
                 }
                 else
                 {
-                    @FieldUtility.NullOrWhiteSpaceHelperWithDash(Field.Value?.ToString())
+                    @FieldUtility.FormatValue(Field.Value, Format)
                 }
             </MudText>
         </MudField>

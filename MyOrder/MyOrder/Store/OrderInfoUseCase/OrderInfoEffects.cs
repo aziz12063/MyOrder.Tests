@@ -5,7 +5,7 @@ namespace MyOrder.Store.OrderInfoUseCase;
 
 public class OrderInfoEffects(IOrderInfoRepository orderInfoRepository, ILogger<OrderInfoEffects> logger)
 {
-    private readonly IOrderInfoRepository _orderInfoRepository = orderInfoRepository 
+    private readonly IOrderInfoRepository _orderInfoRepository = orderInfoRepository
         ?? throw new ArgumentNullException(nameof(orderInfoRepository));
     private readonly ILogger<OrderInfoEffects> _logger = logger
         ?? throw new ArgumentNullException(nameof(logger));
@@ -15,13 +15,13 @@ public class OrderInfoEffects(IOrderInfoRepository orderInfoRepository, ILogger<
     {
         try
         {
-            _logger.LogInformation("Fetching order info for {BasketId}", action.BasketId);
+            _logger.LogInformation("Fetching order info.");
             var basketOrderInfoTask = _orderInfoRepository.GetBasketOrderInfoAsync();
-            var contactListTask = _orderInfoRepository.GetOrderByContactsAsync();
-           
-            await Task.WhenAll(basketOrderInfoTask, contactListTask);
+            var webOriginsTask = _orderInfoRepository.GetWebOriginsAsync();
 
-            dispatcher.Dispatch(new FetchOrderInfoSuccessAction(basketOrderInfoTask.Result, contactListTask.Result));
+            await Task.WhenAll(basketOrderInfoTask, webOriginsTask);
+
+            dispatcher.Dispatch(new FetchOrderInfoSuccessAction(basketOrderInfoTask.Result, webOriginsTask.Result));
         }
         catch (Exception ex)
         {
@@ -36,7 +36,7 @@ public class OrderInfoEffects(IOrderInfoRepository orderInfoRepository, ILogger<
         try
         {
             var isFiltered = !string.IsNullOrEmpty(action.Filter);
-            _logger.LogInformation("Fetching order contacts for {BasketId}", action.BasketId);
+            _logger.LogInformation("Fetching order contacts.");
             var contactList = await _orderInfoRepository.GetOrderByContactsAsync(action.Filter);
             dispatcher.Dispatch(new FetchOrderContactsSuccessAction(contactList, isFiltered));
         }

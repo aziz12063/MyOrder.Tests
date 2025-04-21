@@ -1,33 +1,29 @@
+:root {
+    --outlined-input-padding-top: 8px;
+    --outlined-input-padding-bottom: 7px;
+}
+
 .custom-appbar .mud-toolbar {
-    padding-left: 16px !important;
-    padding-right: 16px !important;
-    background: linear-gradient(45deg, rgba(47, 153, 225, 1) 10%, rgba(20, 126, 218, 1) 30%, rgba(10, 116, 218, 1) 50%);
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+/*    background: linear-gradient(45deg, rgba(47, 153, 225, 1) 10%, rgba(20, 126, 218, 1) 30%, rgba(10, 116, 218, 1) 50%);*/
 }
 
 .logo {
     width: auto;
-    height: 40px;
+    height: 44px;
     background-color: #fbfaf7;
     border-radius: 4px;
     box-shadow: 0 0 10px 1px #abc5ff78;
 }
 
 .header-cards-height {
+    min-height: 20vh;
     height: 100%;
 }
 
 .header-cards-height-content {
-    flex: 1;
-    padding: 12px;
-}
-
-.compact-client-details {
-    padding: 4px 8px;
-    font-size: 0.875rem;
-    background-color: #f5f5f5;
-    border-radius: 4px;
-    width: 100%;
-    display: inline-block;
+    padding: 8px;
 }
 
 .full-height-container {
@@ -45,30 +41,67 @@
 }
 
 .outlined-generic-select .mud-input-slot {
-    padding-top: 8px !important;
-    padding-bottom: 7px !important;
+    padding-top: var(--outlined-input-padding-top) !important;
+    padding-bottom: var(--outlined-input-padding-bottom) !important;
 }
 
-.outlined-display-field p {
+.outlined-generic-textfield .mud-input-slot {
+    padding-top: var(--outlined-input-padding-top) !important;
+    padding-bottom: var(--outlined-input-padding-bottom) !important;
+}
+
+.outlined-generic-numeric-field .mud-input-slot {
+    padding-top: var(--outlined-input-padding-top) !important;
+    padding-bottom: var(--outlined-input-padding-bottom) !important;
+}
+
+.outlined-generic-numeric-field .mud-input-outlined .mud-input-numeric-spin {
+    padding-right: 6px !important;
+    padding-top: 2px !important;
+    padding-bottom: 2px !important;
+}
+
+    .outlined-generic-numeric-field .mud-input-outlined .mud-input-numeric-spin button .mud-icon-root {
+        font-size: 1.125rem;
+    }
+
+
+.outlined-display-field * {
+    cursor: default !important;
+}
+
+.outlined-display-field p,
+.outlined-display-field span {
     padding-top: 2px !important;
     padding-bottom: 4px !important;
     color: #6C757D;
 }
 
-.fixed-multiline-display-field div div div {
-    height: 100px !important;
-    display: ruby !important;
-    padding-right: 0px !important;
-    padding-top: 0px !important;
-    padding-bottom: 0px !important;
+
+.fixed-multiline-display-field {
+    --multiple-factor: 1;
 }
 
-    .fixed-multiline-display-field div div div p {
+    .fixed-multiline-display-field
+    .mud-input-control-input-container
+    .mud-input
+    .mud-input-slot {
+        height: calc(25px * var(--multiple-factor)) !important;
+        display: ruby !important;
+        padding-right: 2px !important;
+        padding-top: 12px !important;
+        padding-bottom: 12px !important;
+    }
+
+    .fixed-multiline-display-field p {
         max-height: 100%;
         width: 100%;
-        padding-top: 8px !important;
-        overflow-y: scroll;
-        overflow-x: auto;
+        padding-top: 0px !important;
+        padding-bottom: 0px !important;
+        white-space: normal;
+        word-wrap: break-word;
+        overflow-y: visible;
+        overflow-x: hidden;
     }
 
 .onlyfordisplay-field input {
@@ -76,7 +109,7 @@
     border: none; /* No border to show it's non-interactive */
     color: #888; /* Dimmed text color */
     font-style: italic; /* Italic to reinforce it's display-only */
-    /*cursor: default;*/ /* Default cursor to show non-interactive state */
+    /*cursor: default;*/
 }
 
 .onlyfordisplay-field-emphasize label {
@@ -87,6 +120,18 @@
     font-weight: 600 !important;
     color: red !important;
 }
+
+.adress-textarea textarea {
+    margin: 8px 14px !important;
+    line-height: 1.32 !important;
+}
+
+/*.mud-input[readonly] {
+    background-color: #f9f9f9;*/ /* Subtle light gray for read-only fields */
+/*border: none;*/ /* Remove border */
+/*cursor: default;*/ /* No pointer on hover */
+/*color: #666666;*/ /* Dimmed text color */
+/*}*/
 
 .readonly-field input {
     background-color: #f7f7f7; /* Light gray background */
@@ -119,6 +164,10 @@
     color: red !important;
 }
 
+.mud-input-control > .mud-input-control-input-container > div.mud-input.mud-input-text.mud-input-text-with-label {
+    margin-top: 16px !important;
+}
+
 .basket-notification-snackbar {
     max-width: 95vw !important;
     min-width: 70vw !important;
@@ -138,13 +187,23 @@
     width: 100%;
 }
 
-.prices-matrix-header-content {
-    font-size: 0.75rem;
-    font-weight: 500 !important;
+/* Order in the follozing "mud shrink label" overrides is important. Go from more general to more specific.*/
+:where(.mud-shrink ~ label.mud-input-label.mud-input-label-inputcontrol) {
+    transform: translate(0px, 1.5px) scale(0.9) !important;
 }
 
-/*======================= Tabs inside Dialogs =======================*/
+:where(.mud-shrink ~ label.mud-input-label.mud-input-label-inputcontrol.mud-input-label-outlined) {
+    transform: translate(14px, -6px) scale(0.9) !important;
+}
 
+/*============ fonts overrides ============*/
+
+:where(.column-header) {
+    font-size: 0.95rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.02em;
+}
+/*======================= Tabs inside Dialogs =======================*/
 .tabfix .mud-tab-slider.mud-tab-slider-horizontal {
     height: 0px;
 }
@@ -165,25 +224,13 @@
 
 /*===================================================================*/
 
-/*===============*/
-.my-data-grid .mud-data-grid-header th,
-.my-data-grid .mud-data-grid-cell {
-    border: 1px solid blue; /* Adjust the border color and style as needed */
-}
-
-/* Optional: Add border color and style to the rows and columns as well */
-.my-data-grid .mud-data-grid-row {
-    border-bottom: 1px solid blue; /* Add a bottom border to rows */
-}
-
-.change-mudselect-font .mud-select-input {
-    font-size: .75rem;
-}
-
-.header-style {
-    text-align: center;
-    margin: 5% auto;
-    font-weight: bold;
-    font-size: 10px;
-    color: red;
-}
+.overline-label {
+    position: absolute;
+    top: -18px;
+    left: 16px;
+    background-color: white;
+    padding: 2px 8px;
+    border-radius: 8px;
+    z-index: 1;
+    box-shadow: inset 0 -1px 6px rgba(0, 0, 0, 0.15);
+} 

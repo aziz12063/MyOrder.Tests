@@ -2,26 +2,41 @@
 @using MyOrder.Store.ProcedureCallUseCase
 @typeparam T
 
-@if (Field is null || FieldUtility.IsHidden(Field))
+@if (FieldUtility.IsHidden(Field))
     return;
 
 <MudTooltip Text="@Field.Name">
-    <MudButton EndIcon="@Icon"
-               IconSize="Size"
-               Color="FieldUtility.GetFieldColor(Field)"
-               Size="Size"
-               Disabled="!FieldUtility.IsReadWrite(Field)"
-               OnClick="OnClickHandler">
-        @DisplayedText
-    </MudButton>
+    @if (IconOnly)
+    {
+        <MudIconButton @ref="MudIconButton"
+        Class="@Class"
+        Icon="@Icon"
+        Size="Size"
+        Color="FieldUtility.GetFieldColor(Field)"
+        Disabled="!FieldUtility.IsReadWrite(Field) && !FieldUtility.IsRequired(Field)"
+        OnClick="OnClickHandler" />
+    }
+    else
+    {
+        <MudButton @ref="MudButton"
+        Class="@Class"
+        EndIcon="@Icon"
+        IconSize="Size"
+        Color="FieldUtility.GetFieldColor(Field)"
+        Size="Size"
+        Disabled="!FieldUtility.IsReadWrite(Field) && !FieldUtility.IsRequired(Field)"
+        OnClick="OnClickHandler">
+            @DisplayedText
+        </MudButton>
+    }
 </MudTooltip>
 
 @code {
     [Parameter, EditorRequired]
     public Field<T>? Field { get; set; }
 
-    [Parameter, EditorRequired]
-    public string Icon { get; set; } = Icons.Material.Filled.QuestionMark;
+    [Parameter]
+    public string Icon { get; set; }
 
     [Parameter]
     public Size Size { get; set; } = Size.Small;
@@ -35,8 +50,27 @@
     [Parameter]
     public EventCallback OnClickCallback { get; set; }
 
+    [Parameter]
+    public string Class { get; set; } = string.Empty;
+
     [Inject]
     private IDispatcher Dispatcher { get; set; }
+
+    private MudIconButton? MudIconButton { get; set; }
+    private MudButton? MudButton { get; set; }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+
+        if (!FieldUtility.IsHidden(Field))
+        {
+            if (IconOnly)
+                ArgumentNullException.ThrowIfNull(MudIconButton, "Couldn't find a reference to the MudIconButton in the razor file.");
+            else
+                ArgumentNullException.ThrowIfNull(MudButton, "Couldn't find a reference to the MudButton in the razor file.");
+        }
+    }
 
     private void OnClickHandler()
     {
@@ -50,5 +84,13 @@
         {
             return IconOnly ? string.Empty : Field!.Name;
         }
+    }
+
+    public async ValueTask FocusAsync()
+    {
+        if (IconOnly)
+            await MudIconButton!.FocusAsync(); // Already checked for null in OnAfterRender
+        else
+            await MudButton!.FocusAsync(); // Already checked for null in OnAfterRender
     }
 }

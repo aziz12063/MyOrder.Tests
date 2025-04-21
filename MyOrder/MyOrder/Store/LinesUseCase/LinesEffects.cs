@@ -19,7 +19,7 @@ public class LinesEffects(IOrderLinesRepository basketLinesRepository, IStateRes
     {
         try
         {
-            _logger.LogInformation("Fetching lines for {BasketId}", action.BasketId);
+            _logger.LogInformation("Fetching lines");
             var lines = await _basketRepository.GetOrderLinesAsync();
 
             dispatcher.Dispatch(new FetchLinesSuccessAction(lines));
@@ -36,10 +36,10 @@ public class LinesEffects(IOrderLinesRepository basketLinesRepository, IStateRes
     {
         try
         {
-            _logger.LogInformation("Duplicating lines for {BasketId}", action.BasketId);
+            _logger.LogInformation("Duplicating lines.");
             var response = await _basketRepository.DuplicateOrderLinesAsync(action.LinesIds);
 
-            dispatcher.Dispatch(new EffectOnLinesSuccessAction(action.BasketId, response));
+            dispatcher.Dispatch(new EffectOnLinesSuccessAction(response));
         }
         catch (Exception ex)
         {
@@ -53,10 +53,10 @@ public class LinesEffects(IOrderLinesRepository basketLinesRepository, IStateRes
     {
         try
         {
-            _logger.LogInformation("Deleting lines for {BasketId}", action.BasketId);
+            _logger.LogInformation("Deleting lines.");
             var response = await _basketRepository.DeleteOrderLinesAsync(action.LinesIds);
 
-            dispatcher.Dispatch(new EffectOnLinesSuccessAction(action.BasketId, response));
+            dispatcher.Dispatch(new EffectOnLinesSuccessAction(response));
         }
         catch (Exception ex)
         {
@@ -69,8 +69,7 @@ public class LinesEffects(IOrderLinesRepository basketLinesRepository, IStateRes
     public async Task HandleEffectOnLineSuccessAction(EffectOnLinesSuccessAction receivedAction, IDispatcher dispatcher)
     {
         var refreshCalls = receivedAction?.ProcedureCallResponseDto?.RefreshCalls;
-        var basketId = receivedAction?.BasketId;
-        _stateResolver.DispatchRefreshCalls(dispatcher, refreshCalls, basketId);
+        _stateResolver.DispatchRefreshCalls(dispatcher, refreshCalls);
     }
 
     [EffectMethod]

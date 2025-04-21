@@ -8,14 +8,20 @@ namespace MyOrder.Store.DeliveryInfoUseCase;
 public class DeliveryAccountsState : StateBase, IAccountsState
 {
     public List<AccountDto?>? Accounts { get; }
-    public List<AccountDto?>? FilteredAccounts { get; }
+    public List<AccountDto?>? SearchedAccounts { get; }
 
     public DeliveryAccountsState() : base(true) { }
 
-    public DeliveryAccountsState(List<AccountDto?>? accountList, bool isFiltered) : base(false)
+#warning Temporary fix for state management. Remove oldState parameter, and refactor to use records.
+    //oldState is used to copy the old state and update the partialnew state
+    public DeliveryAccountsState(List<AccountDto?>? accountList, bool isSearch, DeliveryAccountsState oldState) : base(false)
     {
-        if (isFiltered)
-            FilteredAccounts = accountList;
+        if (isSearch)
+        {
+            // Temporary fix to keep the old state of accounts
+            Accounts = oldState.Accounts;
+            SearchedAccounts = accountList;
+        }
         else
             Accounts = accountList;
     }

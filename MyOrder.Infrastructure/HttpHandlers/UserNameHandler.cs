@@ -9,6 +9,13 @@ public class UserNameHandler(IHttpContextAccessor httpContextAccessor, ILogger<U
 
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
+#if DEBUG
+        logger.LogWarning("Hardcoded http header {Param} value for testing purposes", HEADER_PARAM_AUTHENTICATED_USER);
+
+        request.Headers.Add(HEADER_PARAM_AUTHENTICATED_USER, "RAJA-GROUP\\imad.BOUGATAIA.ext");
+
+        return await base.SendAsync(request, cancellationToken);
+#else
         try
         {
             if (httpContextAccessor.HttpContext != null)
@@ -51,5 +58,7 @@ public class UserNameHandler(IHttpContextAccessor httpContextAccessor, ILogger<U
         }
 
         return await base.SendAsync(request, cancellationToken);
+#endif
+
     }
 }

@@ -1,0 +1,90 @@
+﻿@using Fluxor.Blazor.Web.Components
+@using MyOrder.Store.InvoiceInfoUseCase
+@using MyOrder.Shared.Dtos.Invoice
+
+@inherits FluxorComponent
+
+<MudDialog TitleClass="pb-2" ContentClass="py-1" ActionsClass="pt-0 pb-1">
+    <TitleContent>
+        <MudText Typo="Typo.subtitle1">Paiement de la commande</MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudTabs Class="tabfix"
+                 Elevation="2"
+                 Rounded="true"
+                 ApplyEffectsToContainer="true"
+                 PanelClass="pa-6"
+                 Centered="true"
+                 @bind-ActivePanelIndex="ActiveTabIndex">
+            <FetchActionTypeCascadingValue FetchActionTypeValue="typeof(FetchPaymentAuthorizationAction)">
+
+                <MudTabPanel Text="Lien Sécurisé">
+                    @if (PaymentAuthorizationState.Value.IsLoading)
+                    {
+                        <MudStack Justify="Justify.Center" AlignItems="AlignItems.Center">
+                            <MudProgressCircular Color="Color.Primary" Size="Size.Medium" Indeterminate="true" />
+                        </MudStack>
+                    }
+                    else
+                    {
+                        <GenericTextField Field="PaymentAuthorization.ContactName" />
+
+                        <MudRadioGroup @bind-Value="SendPaymentLinkMode">
+                            <GenericRadio Field="PaymentAuthorization.SendPaymentLinkMode">
+                                <MudGrid Spacing="2">
+                                    <MudItem xs="6">
+                                        <MudRadio T="SendPaymentLinkMode?" Value="SendPaymentLinkMode.Phone">
+                                            <GenericTextField Field="PaymentAuthorization.ContactPhone" />
+                                        </MudRadio>
+                                    </MudItem>
+
+                                    <MudItem xs="6">
+                                        <MudRadio T="SendPaymentLinkMode?" Value="SendPaymentLinkMode.Email">
+                                            <GenericTextField Field="PaymentAuthorization.ContactEmail" />
+                                        </MudRadio>
+                                    </MudItem>
+                                </MudGrid>
+                            </GenericRadio>
+                        </MudRadioGroup>
+                    }
+                </MudTabPanel>
+
+                <MudTabPanel Text="Autorisation Ogone">
+                    @if (PaymentAuthorizationState.Value.IsLoading)
+                    {
+                        <MudStack Justify="Justify.Center" AlignItems="AlignItems.Center">
+                            <MudProgressCircular Color="Color.Primary" Size="Size.Medium" Indeterminate="true" />
+                        </MudStack>
+                    }
+                    else
+                    {
+                        <GenericTextField Field="PaymentAuthorization.SalesId" />
+                        <GenericTextField Field="PaymentAuthorization.AuthorizationNumber" />
+                        <DisplayField Field="PaymentAuthorization.AuthorizationAmount" />
+                        <DisplayField Field="PaymentAuthorization.AuthorizationDate" />
+                        <DisplayField Field="PaymentAuthorization.AuthorizationStatus" />
+                    }
+                </MudTabPanel>
+
+            </FetchActionTypeCascadingValue>
+        </MudTabs>
+    </DialogContent>
+    <DialogActions>
+        @if (!PaymentAuthorizationState.Value.IsLoading)
+        {
+
+            if (ActiveTabIndex == 0)
+            {
+                <ProcedureCallButton Field="PaymentAuthorization.Actions.StartPaymentAuthorization"
+                                     Size="Size.Medium"
+                                     Color="Color.Primary" />
+            }
+            else
+            {
+                <ProcedureCallButton Field="PaymentAuthorization.Actions.CheckPaymentAuthorization"
+                                     Size="Size.Medium"
+                                     Color="Color.Primary" />
+            }
+        }
+    </DialogActions>
+</MudDialog>

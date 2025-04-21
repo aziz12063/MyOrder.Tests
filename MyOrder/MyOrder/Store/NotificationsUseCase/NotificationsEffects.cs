@@ -18,10 +18,10 @@ public class NotificationEffects(IGeneralInfoRepository generalInfoRepository, I
     {
         try
         {
-            logger.LogDebug("Fetching Notifications for {BasketId}", action.BasketId);
+            logger.LogDebug("Effect: Handling fetch notifications action");
             var notifications = await _generalInfoRepository.GetNotificationsAsync();
 
-            ShowBasketNotifications(toastService, action.BasketId, dispatcher, notifications, action.State);
+            ShowBasketNotifications(toastService, dispatcher, notifications, action.State);
 
             dispatcher.Dispatch(new FetchNotificationsSuccessAction(notifications));
         }
@@ -32,7 +32,7 @@ public class NotificationEffects(IGeneralInfoRepository generalInfoRepository, I
         }
     }
 
-    private static void ShowBasketNotifications(IToastService toastService, string basketId, IDispatcher dispatcher, List<BasketNotificationDto?>? notifications, NotificationsState? state = null)
+    private static void ShowBasketNotifications(IToastService toastService, IDispatcher dispatcher, List<BasketNotificationDto?>? notifications, NotificationsState? state = null)
     {
         if (notifications is not null && notifications is { Count: > 0 })
         {
@@ -41,7 +41,7 @@ public class NotificationEffects(IGeneralInfoRepository generalInfoRepository, I
                 if (notification is not null)
                     toastService.ShowBasketNotification(notification,
                         sb => dispatcher.Dispatch(new DeleteNotificationAction(
-                            notification.ProcedureCall, basketId, state)));
+                            notification.ProcedureCall, state)));
             }
         }
     }
@@ -51,7 +51,7 @@ public class NotificationEffects(IGeneralInfoRepository generalInfoRepository, I
     {
         try
         {
-            logger.LogInformation("deleting notification for {BasketId}", action.BasketId);
+            logger.LogInformation("deleting notification.");
             await _basketActionsRepository.PostProcedureCallAsync(action.ProcedureCall);
 #warning TODO: Implement the delete notification response handling logic
         }
@@ -62,7 +62,7 @@ public class NotificationEffects(IGeneralInfoRepository generalInfoRepository, I
         }
         finally
         {
-            dispatcher.Dispatch(new FetchNotificationsAction(action.State, action.BasketId));
+            dispatcher.Dispatch(new FetchNotificationsAction(action.State));
         }
     }
 

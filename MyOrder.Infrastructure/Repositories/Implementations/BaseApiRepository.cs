@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using MyOrder.Infrastructure.Utils;
 using MyOrder.Shared.Events;
 using MyOrder.Shared.Interfaces;
 using Refit;
@@ -23,6 +24,18 @@ public abstract class BaseApiRepository(IEventAggregator eventAggregator, IBaske
             return basketId;
         }
     }
+    protected string CompanyId
+    {
+        get
+        {
+            var myOrderController = _basketService.CompanyId;
+            if (string.IsNullOrEmpty(myOrderController))
+            {
+                throw new NullReferenceException(nameof(myOrderController));
+            }
+            return myOrderController;
+        }
+    }
 
     /// <summary>
     /// Executes an API call within a standardized try-catch block.
@@ -41,7 +54,7 @@ public abstract class BaseApiRepository(IEventAggregator eventAggregator, IBaske
         }
         catch (ApiException apiEx)
         {
-            HandleApiException(apiEx, operationDescription);
+            await HandleApiException(apiEx, operationDescription);
             return null; // Return null to signify failure
         }
         catch (Exception ex)
@@ -54,32 +67,40 @@ public abstract class BaseApiRepository(IEventAggregator eventAggregator, IBaske
     /// <summary>
     /// Handles ApiException by publishing appropriate events based on the HTTP status code.
     /// </summary>
-    private void HandleApiException(ApiException apiEx, string operationDescription)
+    private async Task HandleApiException(ApiException apiEx, string operationDescription)
     {
-        _logger.LogError(apiEx, "API Exception during {OperationDescription}", operationDescription);
+        var errorMessage = await ApiErrorHelper.GetApiError(apiEx, _logger);
+        _logger.LogError(apiEx,
+            "API Exception during {OperationDescription}\n" +
+            "Server returned : \n" +
+            "{ApiErrorResponse}",
+            operationDescription,
+            errorMessage);
 
-        switch (apiEx.StatusCode)
-        {
-            case HttpStatusCode.BadRequest:
-                _eventAggregator.Publish(new ApiErrorEvent("Bad request.", (int)apiEx.StatusCode, apiEx));
-                break;
-            case HttpStatusCode.Unauthorized:
-            case HttpStatusCode.Forbidden:
-                _eventAggregator.Publish(new ApiErrorEvent("Authentication or authorization error.", (int)apiEx.StatusCode, apiEx));
-                break;
-            case HttpStatusCode.NotFound:
-                _eventAggregator.Publish(new ApiErrorEvent("Resource not found.", (int)apiEx.StatusCode, apiEx));
-                break;
-            case HttpStatusCode.RequestTimeout:
-                _eventAggregator.Publish(new ApiTimeoutEvent("The request timed out. Please try again later.", apiEx));
-                break;
-            case HttpStatusCode.ServiceUnavailable:
-            case HttpStatusCode.GatewayTimeout:
-                _eventAggregator.Publish(new BackendServiceUnavailableEvent("Service is currently unavailable. Please try again later.", apiEx));
-                break;
-            default:
-                _eventAggregator.Publish(new ApiErrorEvent($"API Error: {(int)apiEx.StatusCode}", (int)apiEx.StatusCode, apiEx));
-                break;
-        }
+        _eventAggregator.Publish(new ApiErrorEvent(errorMessage, (int)apiEx.StatusCode, apiEx));
+
+        //switch (apiEx.StatusCode)
+        //{
+        //    case HttpStatusCode.BadRequest:
+        //        _eventAggregator.Publish(new ApiErrorEvent("Bad request.", (int)apiEx.StatusCode, apiEx));
+        //        break;
+        //    case HttpStatusCode.Unauthorized:
+        //    case HttpStatusCode.Forbidden:
+        //        _eventAggregator.Publish(new ApiErrorEvent("Authentication or authorization error.", (int)apiEx.StatusCode, apiEx));
+        //        break;
+        //    case HttpStatusCode.NotFound:
+        //        _eventAggregator.Publish(new ApiErrorEvent("Resource not found.", (int)apiEx.StatusCode, apiEx));
+        //        break;
+        //    case HttpStatusCode.RequestTimeout:
+        //        _eventAggregator.Publish(new ApiTimeoutEvent("The request timed out. Please try again later.", apiEx));
+        //        break;
+        //    case HttpStatusCode.ServiceUnavailable:
+        //    case HttpStatusCode.GatewayTimeout:
+        //        _eventAggregator.Publish(new BackendServiceUnavailableEvent("Service is currently unavailable. Please try again later.", apiEx));
+        //        break;
+        //    default:
+        //        _eventAggregator.Publish(new ApiErrorEvent($"API Error: {(int)apiEx.StatusCode}", (int)apiEx.StatusCode, apiEx));
+        //        break;
+        //}
     }
 }

@@ -1,5 +1,6 @@
 using Fluxor;
 using Fluxor.Blazor.Web.ReduxDevTools;
+using MudBlazor;
 using MudBlazor.Services;
 using MyOrder;
 using MyOrder.Components;
@@ -12,6 +13,7 @@ using MyOrder.Infrastructure.Resilience;
 using MyOrder.Services;
 using MyOrder.Shared.Interfaces;
 using MyOrder.Shared.Services;
+using MyOrder.Store.Middlewares.GlobalOperations;
 using Refit;
 using Serilog;
 
@@ -23,22 +25,28 @@ builder.Host.UseSerilog((hostingContext, loggerConfiguration) =>
     loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration));
 
 //MudBlazor and UI elements
-builder.Services.AddMudServices(/*config =>
+builder.Services.AddMudServices(config =>
 {
-    config.PopoverOptions = new()
-    {
-        Mode = MudBlazor.PopoverMode.Legacy,
-        PoolInitialFill = 10,
-        PoolSize = 20
-    };
-}*/
-);
+    config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomLeft;
+    config.SnackbarConfiguration.PreventDuplicates = true;
+    config.SnackbarConfiguration.NewestOnTop = false;
+    config.SnackbarConfiguration.VisibleStateDuration = 1500;
+    config.SnackbarConfiguration.HideTransitionDuration = 100;
+    config.SnackbarConfiguration.ShowTransitionDuration = 100;
+    //config.PopoverOptions = new()
+    //{
+    //    Mode = MudBlazor.PopoverMode.Legacy,
+    //    PoolInitialFill = 10,
+    //    PoolSize = 20
+    //};
+});
 ThemeConfiguration.ApplyCustomMudGlobals();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
+builder.Services.AddSingleton<VersionInfoService>();
 builder.Services.AddScoped<IEventAggregator, EventAggregator>();
 builder.Services.AddScoped<IBasketService, BasketService>();
 builder.Services.AddScoped<IStateResolver, StateResolver>();
@@ -55,10 +63,8 @@ builder.Services.Configure<RouteConfig>(
 // Repositories, Api Client, and Resilience Policies
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddTransient<InfrastructureFailureHandler>();
-if (builder.Environment.IsDevelopment())
-    builder.Services.AddTransient<UserNameHandlerDev>();
-else
-    builder.Services.AddTransient<UserNameHandler>();
+builder.Services.AddTransient<UserNameHandler>();
+builder.Services.AddTransient<ApiMetricsHandler>();
 
 RegisterRepositoriesWithRefitClient<IBasketRessourcesApiClient, IBasketRessourcesRepository, BasketRessourcesRepository>(builder);
 RegisterRepositoriesWithRefitClient<IGeneralInfoApiClient, IGeneralInfoRepository, GeneralInfoRepository>(builder);
@@ -75,7 +81,8 @@ RegisterRepositoriesWithRefitClient<IBasketItemsApiClient, IBasketItemsRepositor
 //Fluxor
 builder.Services.AddFluxor(options =>
 {
-    options.ScanAssemblies(typeof(Program).Assembly);
+    options.ScanAssemblies(typeof(Program).Assembly)
+    .AddMiddleware<BlockingOperationMiddleware>();
     if (builder.Environment.IsDevelopment())
         options.UseReduxDevTools();
 });
@@ -126,22 +133,26 @@ static IHttpClientBuilder RegisterRepositoriesWithRefitClient<TApiClient, TRepos
 {
 
     builder.Services.AddScoped<TRepositoryInterface, TConcreteRepository>();
+    var apiUri = builder.Configuration["ApiUri"] ?? "http://aliasieeq:8080";
 
     var httpBuilder = builder.Services.AddRefitClient<TApiClient>(new RefitSettings
     {
         ContentSerializer = new NewtonsoftJsonContentSerializer()
     })
-     .ConfigureHttpClient(c => c.BaseAddress = new Uri("http://aliasiisq:8080")) // Refactor to use https only
-     //.ConfigureHttpClient(c => c.BaseAddress = new Uri("https://localhost:44324")) // For local testing
-     .AddHttpMessageHandler<InfrastructureFailureHandler>()
-     .AddPolicyHandler(ResiliencePolicies.GetRetryPolicy())
-     .AddPolicyHandler(ResiliencePolicies.GetCircuitBreakerPolicy())
-     .AddPolicyHandler(ResiliencePolicies.GetTimeoutPolicy());
+#if DEBUG
+    .ConfigureHttpClient(c => c.BaseAddress = new Uri("https://localhost:44324")) // For local testing
+    //.ConfigureHttpClient(c => c.BaseAddress = new Uri(apiUri)) // Refactor to use https only
+#else
+        .ConfigureHttpClient(c => c.BaseAddress = new Uri(apiUri)) // Refactor to use https only
+#endif
+        .AddHttpMessageHandler<InfrastructureFailureHandler>()
+        .AddHttpMessageHandler<ApiMetricsHandler>();
+#warning TODO: Add resilience policies
+    //.AddPolicyHandler(ResiliencePolicies.GetRetryPolicy())
+    //.AddPolicyHandler(ResiliencePolicies.GetCircuitBreakerPolicy())
+    //.AddPolicyHandler(ResiliencePolicies.GetTimeoutPolicy());
 
-    if (builder.Environment.IsDevelopment())
-        httpBuilder.AddHttpMessageHandler<UserNameHandlerDev>();
-    else
-        httpBuilder.AddHttpMessageHandler<UserNameHandler>();
+    httpBuilder.AddHttpMessageHandler<UserNameHandler>();
 
     return httpBuilder;
 }

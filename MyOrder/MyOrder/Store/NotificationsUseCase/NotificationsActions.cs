@@ -5,11 +5,10 @@ using System.Collections.Immutable;
 
 namespace MyOrder.Store.NotificationsUseCase;
 
-public class FetchNotificationsAction(NotificationsState state, string basketId)
+public class FetchNotificationsAction(NotificationsState state)
     : FetchDataActionBase(state)
 {
     public NotificationsState State => state;
-    public string BasketId { get; } = basketId;
 }
 
 public class FetchNotificationsSuccessAction(List<BasketNotificationDto?>? notifications)
@@ -23,10 +22,9 @@ public class FetchNotificationsFailureAction(string errorMessage)
 }
 
 public class DeleteNotificationAction(ImmutableList<string> procedureCall,
-    string basketId, NotificationsState? state = null) : FetchDataActionBase(state)
+    NotificationsState? state = null) : FetchDataActionBase(state)
 {
     public ImmutableList<string> ProcedureCall { get; } = procedureCall;
-    public string BasketId { get; } = basketId;
 
 #warning Code smell: This property should be removed
     public NotificationsState? State => state;

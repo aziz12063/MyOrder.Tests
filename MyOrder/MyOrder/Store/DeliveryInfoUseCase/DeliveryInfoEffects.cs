@@ -7,7 +7,7 @@ namespace MyOrder.Store.DeliveryInfoUseCase;
 public class DeliveryInfoEffects(IDeliveryInfoRepository deliveryInfoRepository,
     IStateResolver stateResolver, ILogger<DeliveryInfoEffects> logger)
 {
-    private readonly IDeliveryInfoRepository _deliveryInfoRepo = deliveryInfoRepository 
+    private readonly IDeliveryInfoRepository _deliveryInfoRepo = deliveryInfoRepository
         ?? throw new ArgumentNullException(nameof(deliveryInfoRepository));
     private readonly ILogger<DeliveryInfoEffects> _logger = logger
         ?? throw new ArgumentNullException(nameof(logger));
@@ -19,8 +19,12 @@ public class DeliveryInfoEffects(IDeliveryInfoRepository deliveryInfoRepository,
     {
         try
         {
-            var basketDeliveryInfo = await _deliveryInfoRepo.GetBasketDeliveryInfoAsync();
-            dispatcher.Dispatch(new FetchDeliveryInfoSuccessAction(basketDeliveryInfo));
+            var deliveryModesTask = _deliveryInfoRepo.GetDeliveryModesAsync();
+            var basketDeliveryTask = _deliveryInfoRepo.GetBasketDeliveryInfoAsync();
+
+            await Task.WhenAll(deliveryModesTask, basketDeliveryTask);
+
+            dispatcher.Dispatch(new FetchDeliveryInfoSuccessAction(basketDeliveryTask.Result, deliveryModesTask.Result));
         }
         catch (Exception ex)
         {
@@ -34,10 +38,10 @@ public class DeliveryInfoEffects(IDeliveryInfoRepository deliveryInfoRepository,
     {
         try
         {
-            var isFiltered = !string.IsNullOrEmpty(action.Filter);
-            _logger.LogInformation("Fetching delivery accounts for {BasketId}", action.BasketId);
-            var accountList = await _deliveryInfoRepo.GetDeliverToAccountsAsync(action.Filter);
-            dispatcher.Dispatch(new FetchDeliveryAccountsSuccessAction(accountList, isFiltered));
+            var isSearch = action.IsSearch ?? false;
+            _logger.LogInformation("Fetching delivery accounts");
+            var accountList = await _deliveryInfoRepo.GetDeliverToAccountsAsync(action.Filter, action.IsSearch);
+            dispatcher.Dispatch(new FetchDeliveryAccountsSuccessAction(accountList, isSearch));
         }
         catch (Exception ex)
         {
@@ -119,7 +123,7 @@ public class DeliveryInfoEffects(IDeliveryInfoRepository deliveryInfoRepository,
         try
         {
             var isFiltered = !string.IsNullOrEmpty(action.Filter);
-            _logger.LogInformation("Fetching delivery contacts for {BasketId}", action.BasketId);
+            _logger.LogInformation("Fetching delivery contacts.");
             var contactList = await _deliveryInfoRepo.GetDeliverToContactsAsync(action.Filter);
             dispatcher.Dispatch(new FetchDeliveryContactsSuccessAction(contactList, isFiltered));
         }

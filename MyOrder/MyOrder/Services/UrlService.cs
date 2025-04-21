@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
 using MyOrder.Configuration;
+using MyOrder.Shared.Interfaces;
+using System.ComponentModel.Design;
 
 namespace MyOrder.Services;
 
@@ -7,16 +9,18 @@ public class UrlService : IUrlService
 {
     private readonly RouteConfig _routeConfig;
     private readonly ILogger<UrlService> _logger;
+    private readonly IBasketService _basketService;
 
-    public UrlService(IOptions<RouteConfig> routeConfig, ILogger<UrlService> logger)
+    public UrlService(IOptions<RouteConfig> routeConfig, ILogger<UrlService> logger, IBasketService basketService)
     {
         _routeConfig = routeConfig?.Value ?? throw new ArgumentNullException(nameof(routeConfig), "RouteConfig is not provided.");
         _logger = logger ?? throw new ArgumentNullException(nameof(logger), "Logger is not provided.");
+        _basketService = basketService ?? throw new ArgumentNullException(nameof(basketService), "BasketService is not provided.");
 
         if (string.IsNullOrEmpty(_routeConfig.Basket))
         {
             _logger.LogWarning("Basket route is not configured. Using fallback route.");
-            _routeConfig.Basket = "/EditBasket?BasketId={basketId}";
+            _routeConfig.Basket = "/raja-fr/EditBasket?BasketId={basketId}";
         }
         if (string.IsNullOrEmpty(_routeConfig.Error))
         {
@@ -35,7 +39,9 @@ public class UrlService : IUrlService
 
         try
         {
-            return _routeConfig.Basket!.Replace("{basketId}", basketId);
+            return _routeConfig.Basket!
+                .Replace("{companyId}", _basketService.CompanyId)
+                .Replace("{basketId}", basketId);
         }
         catch (Exception ex)
         {

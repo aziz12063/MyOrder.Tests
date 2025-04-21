@@ -2,10 +2,7 @@
 
 namespace MyOrder.Store.ReloadUseCase;
 
-public class ReloadAction(string basketId)
-{
-    public string BasketId { get; } = basketId;
-}
+public class ReloadAction { }
 
 public class ReloadSuccessAction(NewOrderContextResponse response)
 {

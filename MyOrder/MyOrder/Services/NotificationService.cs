@@ -1,7 +1,9 @@
-﻿using MyOrder.Shared.Attributes;
+﻿using Fluxor;
+using MyOrder.Shared.Attributes;
 using MyOrder.Shared.Enums;
 using MyOrder.Shared.Events;
 using MyOrder.Shared.Interfaces;
+using MyOrder.Store.GlobalOperationsUseCase;
 using System.Reflection;
 
 namespace MyOrder.Services;
@@ -12,19 +14,31 @@ public class NotificationService : INotificationService
     private readonly IToastService _toastService;
     private readonly IModalService _modalService;
     private readonly ILogger<NotificationService> _logger;
+    private readonly IDispatcher _dispatcher;
+
+    private bool _subscriptionInitialized = false;
 
     public NotificationService(IEventAggregator eventAggregator, IToastService toastService,
-        IModalService modalService, ILogger<NotificationService> logger)
+        IModalService modalService, ILogger<NotificationService> logger, IDispatcher dispatcher)
     {
         _eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
         _toastService = toastService ?? throw new ArgumentNullException(nameof(toastService));
         _modalService = modalService ?? throw new ArgumentNullException(nameof(modalService));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        _dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
         SubscribeToEvents();
     }
 
     private void SubscribeToEvents()
     {
+        if (_subscriptionInitialized)
+        {
+            _logger.LogWarning("Event subscription has already been initialized.");
+            return;
+        }
+
+        _subscriptionInitialized = true;
+
         try
         {
             var methods = GetType().GetMethods(BindingFlags.NonPublic | BindingFlags.Instance)
@@ -103,7 +117,8 @@ public class NotificationService : INotificationService
     [HandlesEvent(typeof(ApiErrorEvent))]
     private void ShowInfrastructureError(ApiErrorEvent @event)
     {
-        _logger.LogError(@event.Exception, "An error occurred while processing a request to the API.");
-        _toastService.ShowError("An error occurred while processing a request to the API.");
+        _dispatcher.Dispatch(new FaultAppAction(@event.Message));
+        //_logger.LogError(@event.Exception, "An error occurred while processing a request to the API.");
+        //_toastService.ShowError("An error occurred while processing a request to the API.");
     }
 }

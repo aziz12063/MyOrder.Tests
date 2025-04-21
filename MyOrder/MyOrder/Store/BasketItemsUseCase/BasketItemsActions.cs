@@ -3,9 +3,8 @@ using MyOrder.Store.Base;
 
 namespace MyOrder.Store.BasketItemsUseCase;
 
-public class FetchBestSellersAction(BestSellersState state, string basketId, string? filter = null) : FetchDataActionBase(state)
+public class FetchBestSellersAction(BestSellersState state, string? filter = null) : FetchDataActionBase(state)
 {
-    public string BasketId { get; } = basketId;
     public string? Filter { get; set; } = filter;
 }
 
@@ -19,9 +18,8 @@ public class FetchBasketItemsFailureAction(string errorMessage)
     public string ErrorMessage { get; } = errorMessage;
 }
 
-public class FetchOrderedItemsAction(OrderedItemsState state, string basketId, string? filter = null) : FetchDataActionBase(state)
+public class FetchOrderedItemsAction(OrderedItemsState state, string? filter = null) : FetchDataActionBase(state)
 {
-    public string BasketId { get; } = basketId;
     public string? Filter { get; set; } = filter;
 }
 
@@ -30,9 +28,8 @@ public class FetchOrderedItemsSuccessAction(List<OrderedItemDto?>? orderedItems)
     public List<OrderedItemDto?>? OrderedItems { get; } = orderedItems;
 }
 
-public class FetchSearchItemsAction(SearchItemsState state, string basketId, string? filter = null) : FetchDataActionBase(state)
+public class FetchSearchItemsAction(SearchItemsState state, string? filter = null) : FetchDataActionBase(state)
 {
-    public string BasketId { get; } = basketId;
     public string? Filter { get; set; } = filter;
 }
 

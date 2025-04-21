@@ -17,7 +17,7 @@ public class PricesInfoRepository(IPricesInfoApiClient pricesInfoApiClient, IEve
         logger.LogDebug("Fetching basket prices info for basket : {BasketId} from repository", BasketId);
         var operationDescription = $"GetBasketPricesInfoAsync for basketId {BasketId}";
         return await ExecuteAsync(
-            async (token) => await _pricesInfoApiClient.GetBasketPricesInfoAsync(BasketId, cancellationToken),
+            async (token) => await _pricesInfoApiClient.GetBasketPricesInfoAsync(CompanyId, BasketId, cancellationToken),
             operationDescription,
             cancellationToken);
     }

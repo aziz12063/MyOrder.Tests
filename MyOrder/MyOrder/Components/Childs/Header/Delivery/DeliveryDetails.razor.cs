@@ -9,7 +9,8 @@ using MyOrder.Store.DeliveryInfoUseCase;
 using MyOrder.Store.ProcedureCallUseCase;
 using MyOrder.Utils;
 
-namespace MyOrder.Components.Childs.Header;
+namespace MyOrder.Components.Childs.Header.Delivery;
+
 public partial class DeliveryDetails : FluxorComponentBase<DeliveryInfoState, FetchDeliveryInfoAction>
 {
     [Inject]
@@ -23,32 +24,28 @@ public partial class DeliveryDetails : FluxorComponentBase<DeliveryInfoState, Fe
     private List<AccountDto?>? Accounts { get; set; }
     private List<ContactDto?>? Contacts { get; set; }
     private List<BasketValueDto?>? DeliveryModes { get; set; }
-    private List<string>? AccountAddress { get; set; }
-    private string DisplayAddress { get; set; } = string.Empty;
     private bool isLoading = true;
     private bool disposed = false;
 
 
     protected override void OnInitialized()
     {
-        Dispatcher.Dispatch(new FetchDeliveryAccountsAction(DeliveryAccountsState.Value, BasketId));
+        Dispatcher.Dispatch(new FetchDeliveryAccountsAction(DeliveryAccountsState.Value));
         DeliveryAccountsState.StateChanged += DeliveryAccountsStateChanged;
-        Dispatcher.Dispatch(new FetchDeliveryContactsAction(DeliveryContactsState.Value, BasketId));
+        Dispatcher.Dispatch(new FetchDeliveryContactsAction(DeliveryContactsState.Value));
         DeliveryContactsState.StateChanged += DeliveryContactsStateChanged;
 
         base.OnInitialized();
-        DeliveryModes = RessourcesState?.Value.DeliveryModes
-            ?? throw new ArgumentNullException(nameof(RessourcesState.Value.DeliveryModes), "Unexpected null for DeliveryModes object.");
     }
-    protected override FetchDeliveryInfoAction CreateFetchAction(DeliveryInfoState state, string basketId) => new(state, basketId);
+    protected override FetchDeliveryInfoAction CreateFetchAction(DeliveryInfoState state) => new(state);
 
     protected override void CacheNewFields()
     {
+        DeliveryModes = State?.Value.DeliveryModes
+           ?? throw new ArgumentNullException(nameof(State.Value.DeliveryModes), "Unexpected null for DeliveryModes object.");
+
         BasketDeliveryInfo = State?.Value.BasketDeliveryInfo
                              ?? throw new ArgumentNullException(nameof(State.Value.BasketDeliveryInfo), "Unexpected null for BasketOrderInfo object.");
-
-        AccountAddress = FieldUtility.CreateAddressList(BasketDeliveryInfo?.Account?.Value);
-        DisplayAddress = FieldUtility.DisplayAddress(AccountAddress);
         isLoading = State.Value.IsLoading || RessourcesState.Value.IsLoading;
     }
 
@@ -117,6 +114,9 @@ public partial class DeliveryDetails : FluxorComponentBase<DeliveryInfoState, Fe
 
     private async Task<IDialogReference> OpenEditAccountDeliveryAsync()
     {
+#warning This is a temporary solution to avoid the error of the new account not being reset. Force hard reset from the server whenever we want to edit an account (when account ID is set as a parameter)
+        Dispatcher.Dispatch(new ResetNewDeliveryAccountAction());
+
         return await ModalService.OpenEditDeliveryAccountDialogAsync(
             () => Dispatcher.Dispatch(new ResetNewDeliveryAccountAction()), BasketDeliveryInfo?.Account?.Value?.AccountId);
     }
@@ -135,4 +135,3 @@ public partial class DeliveryDetails : FluxorComponentBase<DeliveryInfoState, Fe
         base.Dispose(disposing);
     }
 }
-

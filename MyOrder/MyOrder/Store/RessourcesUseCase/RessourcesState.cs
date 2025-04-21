@@ -9,9 +9,7 @@ public class RessourcesState : StateBase
 {
     public List<BasketValueDto?>? CustomerTags { get; }
     public List<BasketValueDto?>? SalesOrigins { get; }
-    public List<BasketValueDto?>? WebOrigins { get; }
     public List<BasketValueDto?>? SalesPools { get; }
-    public List<BasketValueDto?>? DeliveryModes { get; }
     public List<BasketValueDto?>? TaxGroups { get; }
     public List<BasketValueDto?>? PaymentModes { get; }
     public List<BasketValueDto?>? UpdateReasons { get; }
@@ -23,8 +21,8 @@ public class RessourcesState : StateBase
     public RessourcesState() : base(true) { }
 
     public RessourcesState(List<BasketValueDto?>? customerTags,
-        List<BasketValueDto?>? salesOrigins, List<BasketValueDto?>? webOrigins,
-        List<BasketValueDto?>? salesPools, List<BasketValueDto?>? deliveryModes,
+        List<BasketValueDto?>? salesOrigins,
+        List<BasketValueDto?>? salesPools,
         List<BasketValueDto?>? taxGroups, List<BasketValueDto?>? paymentModes,
         List<BasketValueDto?>? updateReasons, List<BasketValueDto?>? logisticFlows,
         List<BasketValueDto?>? coupons, List<BasketValueDto?>? warrantyCostOptions,
@@ -32,9 +30,7 @@ public class RessourcesState : StateBase
     {
         CustomerTags = customerTags;
         SalesOrigins = salesOrigins;
-        WebOrigins = webOrigins;
         SalesPools = salesPools;
-        DeliveryModes = deliveryModes;
         TaxGroups = taxGroups;
         PaymentModes = paymentModes;
         UpdateReasons = updateReasons;

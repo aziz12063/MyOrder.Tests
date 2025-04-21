@@ -1,82 +1,28 @@
-﻿@using MyOrder.Shared.Dtos.SharedComponents
-@using System.Globalization
-@typeparam T
-@using MyOrder.Services
-@inject ICurrencyService Currency
+﻿@typeparam T
 @inherits GenericInputBase<T>
 
  @if (Field is not null && !Hidden)
 {
     <MudTooltip RootStyle="width: 100%;"
-    Text="@TooltipText">
+                Text="@TooltipText">
         <MudTextField @ref="TextField"
-        Typo="Typo"
-        Margin="Margin.Dense"
-        Variant="variant"
-        Lines="Lines"
-        ShrinkLabel="shrinkLabel"
-        Format="@Format"
-        Culture="@Culture"
-        Class="@cssClass"
-        Label="@FieldLabel()"
-        Required="Required"
-        RequiredError="Ce champ est obligatoire"
-        Error="Error"
-        ErrorText="@Field!.Error"
-        ReadOnly="InternalReadOnly"
-        Disabled="InternalReadOnly"
-        @bind-Value="ValueProperty"
-        @bind-Value:after="OnBindValueAfter" 
-        OnKeyDown="KeyDownHandler"/>
+                      Typo="Typo"
+                      Margin="Margin"
+                      Variant="Variant"
+                      Lines="Lines"
+                      ShrinkLabel="ShrinkLabel"
+                      Format="@Format"
+                      Culture="@Culture"
+                      Class="@cssClass"
+                      Label="@FieldLabel()"
+                      Required="Required"
+                      RequiredError="Ce champ est obligatoire"
+                      Error="Error"
+                      ErrorText="@Field!.Error"
+                      ReadOnly="InternalReadOnly || OnlyForDisplay"
+                      Disabled="InternalReadOnly || OnlyForDisplay"
+                      @bind-Value="ValueProperty"
+                      @bind-Value:after="OnBindValueAfter"
+                      OnKeyDown="KeyDownHandler" />
     </MudTooltip>
-}
-
-@code {
-    [Parameter] public int Lines { get; set; } = 1;
-    [Parameter] public string? Format { get; set; }
-    [Parameter] public Variant variant { get; set; } = Variant.Text;
-    [Parameter] public Typo Typo { get; set; } = Typo.body2;
-    [Parameter] public EventCallback<KeyboardEventArgs> OnKeyDown { get; set; }
-    private MudTextField<T?>? TextField { get; set; }
-    public CultureInfo? Culture { get; set; }
-    private string cssClass = string.Empty;
-    private bool shrinkLabel = false;
-
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
-        Culture = Currency.GetCurrency();
-    }
-
-    protected override void OnParametersSet()
-    {
-        base.OnParametersSet();
-
-        // if (ReadOnly)
-        // {
-        //     //cssClass = ".readonly-field";
-
-        // }
-        // else if (readWrite)
-        // {
-        //     //cssClass = "readwrite-field";
-        // }
-
-        Format = FormatPercentValue(Format);
-
-        if (Required)
-            cssClass = "required-field";
-        else
-            cssClass = string.Empty;
-    }
-
-    private async Task KeyDownHandler(KeyboardEventArgs e)
-    {
-        await OnKeyDown.InvokeAsync(e);
-    }
-
-    public async ValueTask FocusAsync()
-    {
-        await TextField!.FocusAsync();
-    }
 }

@@ -6,7 +6,7 @@ public static class OrderInfoReducers
 {
     [ReducerMethod]
     public static OrderInfoState ReduceFetchOrderInfoSuccessAction(OrderInfoState state, FetchOrderInfoSuccessAction action) =>
-        new(action.BasketOrderInfo);
+        new(action.BasketOrderInfo, action.WebOrigins);
 
     [ReducerMethod]
     public static OrderInfoState ReduceFetchOrderInfoFailureAction(OrderInfoState state, FetchOrderInfoFailureAction action) =>

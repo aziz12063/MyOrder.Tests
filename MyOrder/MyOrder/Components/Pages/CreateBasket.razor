@@ -1,22 +1,47 @@
 ﻿@using Fluxor
+@using Fluxor.Blazor.Web.Components
 @using Microsoft.AspNetCore.WebUtilities
+@using MyOrder.Shared.Interfaces
 @using MyOrder.Store.CreateBasketUseCase
+@using MyOrder.Store.GlobalOperationsUseCase
 
-@page "/CreateBasket"
 @layout DefaultLayout
-
-@inject NavigationManager navigationManager
-@inject IDispatcher dispatcher
-
+@page "/{companyId}/CreateBasket"
 @rendermode InteractiveServer
 
-<h2>Redirection...</h2>
+@inherits FluxorComponent
+
+@if (State.Value.IsAppGloballyFaulted)
+{
+    <ApiErrorDisplay FaultMessage="@State.Value.FaultMessage" />
+    return;
+}
+
+<MudOverlay Visible="true" ZIndex="9999" DarkBackground="false">
+    <MudElement HtmlTag="div" Class="d-flex flex-column align-center gap-6" Style="width:512px;">
+        <MudProgressCircular Size="Size.Large" Indeterminate="true" />
+        <MudText Typo="Typo.subtitle2">Création d'un nouveau panier</MudText>
+    </MudElement>
+</MudOverlay>
 
 @code {
+    [Inject]
+    private IBasketService BasketService { get; set; } = null!;
+    [Inject]
+    private IDispatcher Dispatcher { get; set; } = null!;
+    [Inject]
+    private NavigationManager NavigationManager { get; set; } = null!;
+    [Inject]
+    private IState<GlobalOperationsState> State { get; set; } = null!;
+
+    [Parameter]
+    public string CompanyId { get; set; } = null!;
 
     protected override void OnInitialized()
     {
-        var uri = navigationManager.ToAbsoluteUri(navigationManager.Uri);
+        BasketService.CompanyId = CompanyId;
+
+        var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
         var queryParams = QueryHelpers.ParseQuery(uri.Query);
 
         // Convert StringValues to take only one string per key
@@ -25,6 +50,7 @@
             kvp => kvp.Value.FirstOrDefault() ?? string.Empty
         );
 
-        dispatcher.Dispatch(new CreateBasketAction(postData));
+        Dispatcher.Dispatch(new CreateBasketAction(postData));
+        base.OnInitialized();
     }
 }

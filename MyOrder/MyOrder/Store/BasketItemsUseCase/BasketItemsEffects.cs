@@ -15,7 +15,7 @@ public class BasketItemsEffects(IBasketItemsRepository basketItemsRepository, IL
     {
         try
         {
-            _logger.LogInformation("Fetching best sellers for {BasketId}", action.BasketId);
+            _logger.LogInformation("Fetching best sellers.");
             var basketItems = await _basketItemsRepository.GetBasketBestSellersAsync(action.Filter);
             dispatcher.Dispatch(new FetchBestSellersSuccessAction(basketItems));
         }
@@ -31,7 +31,7 @@ public class BasketItemsEffects(IBasketItemsRepository basketItemsRepository, IL
     {
         try
         {
-            _logger.LogInformation("Fetching ordered items for {BasketId}", action.BasketId);
+            _logger.LogInformation("Fetching ordered items.");
             var basketItems = await _basketItemsRepository.GetBasketOrderedItemsAsync(action.Filter);
             dispatcher.Dispatch(new FetchOrderedItemsSuccessAction(basketItems));
         }
@@ -47,7 +47,7 @@ public class BasketItemsEffects(IBasketItemsRepository basketItemsRepository, IL
     {
         try
         {
-            _logger.LogInformation("Fetching basket items for {BasketId}", action.BasketId);
+            _logger.LogInformation("Fetching basket items>");
             var basketItems = await _basketItemsRepository.GetBasketSearchItemsAsync(action.Filter);
             dispatcher.Dispatch(new FetchSearchItemsSuccessAction(basketItems));
         }

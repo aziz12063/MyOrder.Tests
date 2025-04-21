@@ -18,7 +18,7 @@ public class OrderInfoRepository(IOrderInfoApiClient orderInfoApiClient,
         logger.LogDebug("Fetching orderinfo for {BasketId} from repository", BasketId);
         var operationDescription = $"GetOrderInfoAsync for basketId {BasketId}";
         return await ExecuteAsync(
-            async (token) => await _orderInfoApiClient.GetBasketOrderInfoAsync(BasketId, token),
+            async (token) => await _orderInfoApiClient.GetBasketOrderInfoAsync(CompanyId, BasketId, token),
             operationDescription,
             cancellationToken);
     }
@@ -28,7 +28,18 @@ public class OrderInfoRepository(IOrderInfoApiClient orderInfoApiClient,
         logger.LogDebug("Fetching order by contacts for {BasketId} from repository", BasketId);
         var operationDescription = $"GetOrderByContactsAsync for basketId {BasketId}";
         return ExecuteAsync(
-            async (token) => await _orderInfoApiClient.GetOrderByContactsAsync(BasketId, filter, token),
+            async (token) => await _orderInfoApiClient.GetOrderByContactsAsync(CompanyId, BasketId, filter, token),
+            operationDescription,
+            cancellationToken);
+    }
+
+
+    public async Task<List<BasketValueDto?>?> GetWebOriginsAsync(CancellationToken cancellationToken = default)
+    {
+        logger.LogDebug("Fetching web origins for {BasketId} from repository", BasketId);
+        var operationDescription = $"GetWebOriginsAsync for basketId {BasketId}";
+        return await ExecuteAsync(
+            async (token) => await _orderInfoApiClient.GetWebOriginsAsync(CompanyId, BasketId, token),
             operationDescription,
             cancellationToken);
     }

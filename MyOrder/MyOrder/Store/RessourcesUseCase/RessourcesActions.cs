@@ -3,15 +3,13 @@ using MyOrder.Store.Base;
 
 namespace MyOrder.Store.RessourcesUseCase;
 
-public class FetchRessourcesAction(RessourcesState state, string basketId)
+public class FetchRessourcesAction(RessourcesState state)
     : FetchDataActionBase(state)
-{
-    public string BasketId { get; } = basketId;
-}
+{ }
 
 public class FetchRessourcesSuccessAction(List<BasketValueDto?>? customerTags,
-        List<BasketValueDto?>? salesOrigins, List<BasketValueDto?>? webOrigins,
-        List<BasketValueDto?>? salesPools, List<BasketValueDto?>? deliveryModes,
+        List<BasketValueDto?>? salesOrigins,
+        List<BasketValueDto?>? salesPools,
         List<BasketValueDto?>? taxGroups, List<BasketValueDto?>? paymentModes,
         List<BasketValueDto?>? updateReasons, List<BasketValueDto?>? logisticFlows,
         List<BasketValueDto?>? coupons, List<BasketValueDto?>? warrantyCostOptions,
@@ -19,9 +17,7 @@ public class FetchRessourcesSuccessAction(List<BasketValueDto?>? customerTags,
 {
     public List<BasketValueDto?>? CustomerTags { get; } = customerTags;
     public List<BasketValueDto?>? SalesOrigins { get; } = salesOrigins;
-    public List<BasketValueDto?>? WebOrigins { get; } = webOrigins;
     public List<BasketValueDto?>? SalesPools { get; } = salesPools;
-    public List<BasketValueDto?>? DeliveryModes { get; } = deliveryModes;
     public List<BasketValueDto?>? TaxGroups { get; } = taxGroups;
     public List<BasketValueDto?>? PaymentModes { get; } = paymentModes;
     public List<BasketValueDto?>? UpdateReasons { get; } = updateReasons;

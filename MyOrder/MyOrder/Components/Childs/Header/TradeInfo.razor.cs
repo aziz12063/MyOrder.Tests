@@ -1,12 +1,10 @@
-﻿using Fluxor;
-using MyOrder.Components.Common;
+﻿using MyOrder.Components.Common;
 using MyOrder.Shared.Dtos;
-using MyOrder.Store.PricesInfoUseCase;
 using MyOrder.Store.TradeInfoUseCase;
 using MyOrder.Utils;
 
 namespace MyOrder.Components.Childs.Header;
-public partial class CommercialDetails : FluxorComponentBase<TradeInfoState, FetchTradeInfoAction>
+public partial class TradeInfo : FluxorComponentBase<TradeInfoState, FetchTradeInfoAction>
 {
 
     private BasketTradeInfoDto? BasketTradeInfo { get; set; }
@@ -16,8 +14,8 @@ public partial class CommercialDetails : FluxorComponentBase<TradeInfoState, Fet
     private bool isLoading = true;
 
 
-    protected override FetchTradeInfoAction CreateFetchAction(TradeInfoState state, string basketId)
-        => new(state, basketId);
+    protected override FetchTradeInfoAction CreateFetchAction(TradeInfoState state)
+        => new(state);
 
     protected override void CacheNewFields()
     {
@@ -34,4 +32,3 @@ public partial class CommercialDetails : FluxorComponentBase<TradeInfoState, Fet
     }
 
 }
-

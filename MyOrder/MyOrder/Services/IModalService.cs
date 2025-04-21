@@ -1,5 +1,6 @@
 ﻿using MudBlazor;
 using MyOrder.Shared.Dtos;
+using MyOrder.Shared.Dtos.SharedComponents;
 using MyOrder.Store;
 
 namespace MyOrder.Services;
@@ -13,6 +14,8 @@ public interface IModalService
 
     Task<IDialogReference> OpenNewBasketDialogAsync();
     Task<IDialogReference> OpenBasketDialogAsync();
+    Task<IDialogReference> OpenBasketOrderNoteDialogAsync(Field<string> noteField);
+
     Task<IDialogReference> OpenSearchContactDialogAsync<TState, TAction>(
         Action<ContactDto> contactClicked)
         where TState : class, IContactsState
@@ -24,6 +27,8 @@ public interface IModalService
         where TAction : class, IFetchAccountsAction;
     Task<bool> ShowConfirmationDialog(string message, string? title = null,
         Action? onConfirm = null, ModalSeverity modalSeverity = ModalSeverity.info);
+
+    Task<IDialogReference> OpenPaymentAuthorizationDialog();
     //public void ShowModal(string title, string message,
     // Action onConfirm, ModalSeverity modalSeverity = ModalSeverity.info);
 

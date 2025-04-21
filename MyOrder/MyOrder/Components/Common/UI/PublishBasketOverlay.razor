@@ -1,0 +1,34 @@
+﻿@using Fluxor
+@using Fluxor.Blazor.Web.Components
+@using MyOrder.Shared.Dtos.GeneralInformation
+@using MyOrder.Store.GlobalOperationsUseCase
+
+@inherits FluxorComponent
+@inject IState<GlobalOperationsState> OperationsState
+
+<MudOverlay Visible="Visible" LightBackground="true" AutoClose="false" ZIndex="9999">
+    <MudElement HtmlTag="div" Class="d-flex flex-column align-center gap-6" Style="width:512px;">
+        <MudProgressCircular Size="Size.Large" Color="Color.Primary" Indeterminate="true" />
+
+        <MudProgressLinear Color="Color.Tertiary"
+                           Rounded="true"
+                           Size="Size.Large"
+                           Value="@(Progress?.ProgressPercentage ?? 0)">
+
+            <MudText Typo="Typo.subtitle1" Color="Color.Dark">
+                <b>@Progress?.ProgressPercentage%</b>
+            </MudText>
+        </MudProgressLinear>
+        <MudText Typo="Typo.subtitle2">@Progress?.CurrentAction</MudText>
+        @* <MudText Typo="Typo.subtitle1"> *@
+        @*     Action Elapsed: @(_progress?.ActionElapsedTime / 60) s *@
+        @*     <br /> *@
+        @*     Process Elapsed: @(_progress?.ProcessElapsedTime / 60) s *@
+        @* </MudText> *@
+    </MudElement>
+</MudOverlay>
+
+@code {
+    private BasketPublishingProgress? Progress => OperationsState.Value.CurrentPublishProgress;
+    private bool Visible => Progress is not null;
+}

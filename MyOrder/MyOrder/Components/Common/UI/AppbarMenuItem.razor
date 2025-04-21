@@ -11,7 +11,7 @@
           Visible="BadgeVisible">
     <MudButton Variant="Variant.Text"
                DropShadow="false"
-               Color="Color.Inherit"
+               Color="@Color"
                OnClick="OnButtonClick"
                Class="px-1 rounded-lg"
                @onmouseover="() => isHovered = true"
@@ -21,7 +21,7 @@
                   Class="align-center justify-center">
             <MudIcon Style="font-size:1.875rem;"
                      Icon="@Icon" />
-            <MudText Typo="Typo.caption"
+            <MudText Typo="Typo.subtitle2"
                      Align="Align.Center"
                      Class="">@BasketActionsBase.MenuLabel</MudText>
         </MudStack>
@@ -34,6 +34,9 @@
 
     [Parameter, EditorRequired]
     public BasketActionsBase? BasketActionsBase { get; set; }
+
+    [Parameter]
+    public Color Color { get; set; }
 
     [Parameter]
     public EventCallback OnClickCallback { get; set; }

@@ -9,13 +9,11 @@ public interface IBasketRessourcesRepository
     //==============================//
     Task<List<BasketValueDto?>?> GetCustomerTagsAsync(CancellationToken cancellationToken = default);
     Task<List<BasketValueDto?>?> GetSalesOriginsAsync(CancellationToken cancellationToken = default);
-    Task<List<BasketValueDto?>?> GetWebOriginsAsync(CancellationToken cancellationToken = default);
     Task<List<BasketValueDto?>?> GetSalesPoolAsync(CancellationToken cancellationToken = default);
 
       //==============================//
      //      Delivery ressources     //
     //==============================//
-    Task<List<BasketValueDto?>?> GetDeliveryModesAsync(CancellationToken cancellationToken = default);
 
       //==============================//
      //      Invoice ressources      //

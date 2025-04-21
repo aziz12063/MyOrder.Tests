@@ -1,4 +1,7 @@
-﻿@inherits LayoutComponentBase
+﻿@using MyOrder.Shared.Interfaces
+@inherits LayoutComponentBase
+
+@inject INotificationService NotificationService
 
 <MudThemeProvider Theme="@ThemeConfiguration.RajaTheme" />
 <MudPopoverProvider />

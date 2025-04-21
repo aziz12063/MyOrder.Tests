@@ -4,10 +4,8 @@ using MyOrder.Store.Base;
 
 namespace MyOrder.Store.LinesUseCase;
 
-public class FetchLinesAction(LinesState state, string basketId) : FetchDataActionBase(state)
-{
-    public string BasketId { get; } = basketId;
-}
+public class FetchLinesAction(LinesState state) : FetchDataActionBase(state)
+{ }
 
 public class FetchLinesSuccessAction(BasketOrderLinesDto? basketOrderLinesDto)
 {
@@ -19,21 +17,18 @@ public class FetchLinesFailureAction(string errorMessage)
     public string ErrorMessage { get; } = errorMessage;
 }
 
-public class DuplicateLinesAction(string basketId, List<int> linesIds)
+public class DuplicateLinesAction(List<int> linesIds)
 {
-    public string BasketId { get; } = basketId;
     public List<int> LinesIds { get; } = linesIds;
 }
 
-public class DeleteLinesAction(string basketId, List<int> linesIds)
+public class DeleteLinesAction(List<int> linesIds)
 {
-    public string BasketId { get; } = basketId;
     public List<int> LinesIds { get; } = linesIds;
 }
 
-public class EffectOnLinesSuccessAction(string basketId, ProcedureCallResponseDto? procedureCallResponse)
+public class EffectOnLinesSuccessAction(ProcedureCallResponseDto? procedureCallResponse)
 {
-    public string BasketId { get; } = basketId;
     public ProcedureCallResponseDto? ProcedureCallResponseDto { get; } = procedureCallResponse;
 }
 

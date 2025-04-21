@@ -5,17 +5,18 @@ namespace MyOrder.Infrastructure.ApiClients;
 
 public interface INewOrderLineApiClient
 {
-    [Get("/api/orderContext/{basketId}/newLine")]
-    Task<BasketLineDto?> GetNewLineAsync(string basketId, CancellationToken cancellationToken = default);
+    [Get("/api/myorder/{companyId}/{basketId}/newLine")]
+    Task<BasketLineDto?> GetNewLineAsync(string companyId, string basketId, CancellationToken cancellationToken = default);
 #warning This should return a ProcedureCallResponse
-    [Put("/api/orderContext/{basketId}/newLine/reset")]
-    Task<BasketLineDto?> ResetNewLineStateAsync(string basketId, CancellationToken cancellationToken = default);
+    [Put("/api/myorder/{companyId}/{basketId}/newLine/reset")]
+    Task<BasketLineDto?> ResetNewLineStateAsync(string companyId, string basketId, CancellationToken cancellationToken = default);
 
-    [Post("/api/orderContext/{basketId}/newLine/add")]
-    Task<ProcedureCallResponseDto?> CommitAddNewLineAsync(string basketId, CancellationToken cancellationToken = default);
+    [Post("/api/myorder/{companyId}/{basketId}/newLine/add")]
+    Task<ProcedureCallResponseDto?> CommitAddNewLineAsync(string companyId, string basketId, CancellationToken cancellationToken = default);
 
-    [Post("/api/orderContext/{basketId}/newLine/addFreeText")]
+    [Post("/api/myorder/{companyId}/{basketId}/newLine/addFreeText")]
     Task<ProcedureCallResponseDto?> CommitAddFreeTextLineAsync(
+        string companyId, 
         string basketId,
         [Body] List<string?> freeTexts,
         CancellationToken cancellationToken = default);

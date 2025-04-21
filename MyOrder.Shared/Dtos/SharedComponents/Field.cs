@@ -2,7 +2,12 @@
 
 namespace MyOrder.Shared.Dtos.SharedComponents;
 
-public record Field<T>(string? Name, T? Value,
-    string? Description, string? Status, string? Error,
-    string? Confirm, ImmutableList<string?>? ProcedureCall, 
-    string? Url, FieldDisplayStyle? DisplayStyle) : IField;
+public record Field<T>(string? Name,
+    T? Value,
+    string? Description,
+    string? Status,
+    string? Error,
+    string? Confirm,
+    ImmutableList<string?>? ProcedureCall,
+    string? Url,
+    FieldDisplayStyle? DisplayStyle) : IField;

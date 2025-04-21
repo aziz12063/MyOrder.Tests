@@ -32,6 +32,6 @@ public partial class PriceInfo : FluxorComponentBase<PricesInfoState, FetchPrice
         isLoading = State.Value.IsLoading || RessourcesState.Value.IsLoading;
     }
 
-    protected override FetchPricesInfoAction CreateFetchAction(PricesInfoState state, string basketId) => new(state, basketId);
+    protected override FetchPricesInfoAction CreateFetchAction(PricesInfoState state) => new(state);
 
 }

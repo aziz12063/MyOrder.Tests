@@ -6,7 +6,7 @@ public static class DeliveryInfoReducers
 {
     [ReducerMethod]
     public static DeliveryInfoState ReduceFetchDeliveryInfoSuccessAction(DeliveryInfoState state, FetchDeliveryInfoSuccessAction action) =>
-        new (action.BasketDeliveryInfo);
+        new (action.BasketDeliveryInfo, action.DeliveryModes);
 
     [ReducerMethod]
     public static DeliveryInfoState ReduceFetchDeliveryInfoFailureAction(DeliveryInfoState state, FetchDeliveryInfoFailureAction action) =>
@@ -14,7 +14,7 @@ public static class DeliveryInfoReducers
 
     [ReducerMethod]
     public static DeliveryAccountsState ReduceFetchDeliveryAccountsSuccessAction(DeliveryAccountsState state, FetchDeliveryAccountsSuccessAction action) =>
-        new(action.DeliveryAccounts, action.IsFiltered);
+        new(action.DeliveryAccounts, action.IsSearch, state);
 
     [ReducerMethod]
     public static NewDeliveryAccountState ReduceFetchNewDeliveryAccountSuccessAction(NewDeliveryAccountState state, FetchNewDeliveryAccountSuccessAction action) =>

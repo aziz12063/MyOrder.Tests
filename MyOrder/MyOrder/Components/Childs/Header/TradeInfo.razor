@@ -1,0 +1,146 @@
+﻿@using MyOrder.Store.TradeInfoUseCase
+@inherits FluxorComponentBase<TradeInfoState, FetchTradeInfoAction>
+
+@if (isLoading)
+{
+    <HeaderElementLoadingSkeleton />
+    return;
+}
+<SectionPaper Title="@BasketTradeInfo!.PanelLabel">
+    <FetchActionTypeCascadingValue FetchActionTypeValue="FetchActionType">
+        <MudStack Justify="Justify.SpaceBetween" Style="height: inherit;">
+            <MudStack Spacing="2">
+                <MudText Typo="Typo.subtitle2">@BasketTradeInfo?.Turnover?.Name</MudText>
+                <MudDataGrid Items="@Turnover"
+                             SortMode="@SortMode.None"
+                             Striped="true"
+                             Hover="true"
+                             Dense="true"
+                             Elevation="0"
+                             Class="mx-n1">
+                    <Columns>
+                        <PropertyColumn Property="x => x == null? string.Empty : x.Name"
+                                        Title="@string.Empty"
+                                        CellClass="py-1 pl-1 pr-4" />
+
+                        <PropertyColumn Property="x => x == null? string.Empty : x.Ytd"
+                                        Title="YTD"
+                                        CellClass="py-1 pl-1 pr-4"
+                                        CellStyle="text-align: right" />
+
+                        <PropertyColumn Property="x => x == null? string.Empty : x.YtdN1"
+                                        Title="YTD-1"
+                                        CellClass="py-1 pl-1 pr-4"
+                                        CellStyle="text-align: right" />
+
+                        <PropertyColumn Property="x => x == null? string.Empty : x.N1"
+                                        Title="N-1"
+                                        CellClass="py-1 pl-1 pr-4"
+                                        CellStyle="text-align: right" />
+
+                        <PropertyColumn Property="x => x == null? string.Empty : x.N2"
+                                        Title="N-2"
+                                        CellClass="py-1 pl-1 pr-4"
+                                        CellStyle="text-align: right" />
+                    </Columns>
+                </MudDataGrid>
+            </MudStack>
+
+            <CustomHeaderCard Elevation="0">
+                <HeaderContent>
+                    <MudText Typo="Typo.subtitle2" Class="pt-0">@BasketTradeInfo.InformationSectionLabel</MudText>
+                </HeaderContent>
+                <HeaderActions>
+                    <div style="display: flex; align-items: center; justify-content: center; height: 4vh;">
+                        @* @if (BasketOrderInfo?.CustomerTags is { Count: > 0 }) *@
+                        @* { *@
+                        @*     <MudStack Row="true" Spacing="2" Justify="Justify.FlexStart" Style=""> *@
+                        @*         @foreach (var item in BasketOrderInfo.CustomerTags) *@
+                        @*         { *@
+                        @*             if (item is not null) *@
+                        @*             { *@
+                        @*                 <MudIcon Color="@CustomerTagColorHelper(item.Value)" *@
+                        @*                          Title="@FieldUtility.NullOrWhiteSpaceHelperWithDash(item.Description)" *@
+                        @*                          Icon="@CustomerTagIconHelper(item.Value)" *@
+                        @*                          Size="Size.Large" /> *@
+                        @*             } *@
+                        @*         } *@
+                        @*     </MudStack> *@
+                        @* } *@
+                        <MudIcon Color="Color.Warning"
+                                 Icon="@Icons.Material.Filled.WarningAmber"
+                                 Title="Not implemented"
+                                 Size="Size.Medium" />
+                    </div>
+                </HeaderActions>
+                <BodyContent>
+                    <DisplayField Field="@BasketTradeInfo!.ActivityArea" />
+                </BodyContent>
+            </CustomHeaderCard>
+
+            <!--Contract en cours-->
+            @if (Contract is not null)
+            {
+                <MudStack Spacing="6" Class="mt-6">
+                    <div>
+                        <MudText Typo="Typo.subtitle2" Color="Color.Warning">@BasketTradeInfo!.ContractSectionLabel</MudText>
+
+                        <MudGrid Spacing="1">
+                            <MudItem xs="6">
+                                <DisplayField Field="Contract?.ContractType" />
+                            </MudItem>
+                            <MudItem xs="6">
+                                <DisplayField Field="Contract?.ContractGroup" />
+                            </MudItem>
+                            <MudItem xs="6">
+                                <DisplayField Field="Contract?.ContractId" />
+                            </MudItem>
+                            <MudItem xs="6">
+                                <DisplayField Field="Contract?.Status" />
+                            </MudItem>
+                        </MudGrid>
+                        <!--Contract details-->
+
+                        <MudGrid Spacing="1">
+
+                            <MudItem xs="6">
+                                <DisplayField Field="Contract.ContractDates" />
+                            </MudItem>
+
+                            <MudItem xs="6">
+                                <DisplayField Field="Contract?.CampaignId" />
+                            </MudItem>
+
+                            <MudItem xs="6">
+                                <DisplayField Field="Contract?.MainContact" />
+                            </MudItem>
+
+                            <MudItem xs="6">
+                                <DisplayField Field="Contract?.OfficeExecutive" />
+                            </MudItem>
+
+                        </MudGrid>
+                    </div>
+                </MudStack>
+
+                <MudSpacer />
+
+                <MudTextField Typo="Typo.caption"
+                              Lines="4"
+                              Variant="Variant.Outlined"
+                              FullWidth="true"
+                              Margin="Margin.Dense"
+                              ReadOnly="true"
+                              Label="@Contract?.DiscountList?.Name"
+                              Value="DiscountDetails" />
+
+            }
+            else
+            {
+                <MudText Typo="Typo.subtitle1" Color="Color.Warning">Contrat en cours</MudText>
+                <MudText Typo="Typo.body1">Aucun contrat en cours</MudText>
+                <MudSpacer />
+            }
+        </MudStack>
+    </FetchActionTypeCascadingValue>
+</SectionPaper>

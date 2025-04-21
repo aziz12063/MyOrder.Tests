@@ -16,7 +16,7 @@ public class BasketItemsRepository(IBasketItemsApiClient basketItemsApiClient, I
         logger.LogDebug("Fetching basket best sellers for basketId {BasketId}", BasketId);
         var operationDescription = $"GetBasketBestSellersAsync for basketId {BasketId}";
         return await ExecuteAsync(
-            async (token) => await _basketItemsApiClient.GetBasketBestSellersAsync(BasketId, filter, token),
+            async (token) => await _basketItemsApiClient.GetBasketBestSellersAsync(CompanyId, BasketId, filter, token),
             operationDescription,
             cancellationToken);
     }
@@ -26,7 +26,7 @@ public class BasketItemsRepository(IBasketItemsApiClient basketItemsApiClient, I
         logger.LogDebug("Fetching basket ordered items for basketId {BasketId}", BasketId);
         var operationDescription = $"GetBasketOrderedItemsAsync for basketId {BasketId}";
         return await ExecuteAsync(
-            async (token) => await _basketItemsApiClient.GetBasketOrderedItemsAsync(BasketId, filter, token),
+            async (token) => await _basketItemsApiClient.GetBasketOrderedItemsAsync(CompanyId, BasketId, filter, token),
             operationDescription,
             cancellationToken);
     }
@@ -36,7 +36,7 @@ public class BasketItemsRepository(IBasketItemsApiClient basketItemsApiClient, I
         logger.LogDebug("Fetching basket search items for basketId {BasketId}", BasketId);
         var operationDescription = $"GetBasketSearchItemsAsync for basketId {BasketId}";
         return await ExecuteAsync(
-            async (token) => await _basketItemsApiClient.GetBasketSearchItemsAsync(BasketId, filter, token),
+            async (token) => await _basketItemsApiClient.GetBasketSearchItemsAsync(CompanyId, BasketId, filter, token),
             operationDescription,
             cancellationToken);
     }

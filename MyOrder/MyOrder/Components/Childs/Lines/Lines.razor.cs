@@ -8,6 +8,7 @@ using MyOrder.Shared.Utils;
 using MyOrder.Store.LinesUseCase;
 using MyOrder.Store.NewLineUseCase;
 using MyOrder.Utils;
+using System.Drawing;
 
 
 namespace MyOrder.Components.Childs.Lines;
@@ -17,19 +18,28 @@ public partial class Lines : FluxorComponentBase<LinesState, FetchLinesAction>
     [Inject]
     private IModalService ModalService { get; set; }
     [Inject]
+    private IToastService ToastService { get; set; }
+    [Inject]
     private IClipboardService ClipboardService { get; set; }
+
+    private MudDataGrid<BasketLineDto> LinesDataGridInstance { get; set; }
     private BasketOrderLinesDto? BasketOrderLinesDto { get; set; }
-    private HashSet<BasketLineDto>? SelectedItems { get; set; }
-    protected List<BasketValueDto?>? UpdateReasons { get; set; }
-    protected List<BasketValueDto?>? LogisticFlows { get; set; }
-    public MudDataGrid<BasketLineDto> LinesDataGridInstance { get; set; }
+    private List<BasketValueDto?>? UpdateReasons { get; set; }
+    private List<BasketValueDto?>? LogisticFlows { get; set; }
+
+    private BasketLineDto? CurrentLine { get; set; }
+    private BasketLineDto? DetailedLine =>
+        State.Value.BasketOrderLines?.lines?.FirstOrDefault(line => line?.RecId == CurrentLine?.RecId);
 
     private bool IsItemIdEditable { get; set; }
     private bool IsNameEditable { get; set; }
     private bool IsDiscountTypeEditable { get; set; }
     private bool IsLineAmountEditable { get; set; }
 
-    private bool isLoading = true;
+    private bool _isLoading = true;
+
+    protected override FetchLinesAction CreateFetchAction(LinesState state) =>
+    new(state);
 
     protected override void OnInitialized()
     {
@@ -52,46 +62,25 @@ public partial class Lines : FluxorComponentBase<LinesState, FetchLinesAction>
             IsDiscountTypeEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0]?.DiscountType);
             IsLineAmountEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0]?.LineAmount);
         }
-        isLoading = State.Value.IsLoading || RessourcesState.Value.IsLoading;
+        _isLoading = State.Value.IsLoading || RessourcesState.Value.IsLoading;
+
+        if (!BasketOrderLinesDto?.lines?.Contains(CurrentLine) ?? false)
+            CurrentLine = BasketOrderLinesDto?.lines?.FirstOrDefault();
     }
 
-    protected override FetchLinesAction CreateFetchAction(LinesState state, string basketId) =>
-        new FetchLinesAction(state, basketId);
-
-    private void OnDuplicateItemsClick()
+    private async Task OnCopyItemsClick()
     {
-        var selectedItemsNums = GetSelectedItemsNums();
-        if (selectedItemsNums is null || selectedItemsNums.Count < 1)
-            return; // Show a message to the user
-
-        Dispatcher.Dispatch(new DuplicateLinesAction(
-         BasketId, selectedItemsNums));
-        SelectedItems = null;
-    }
-
-    private void OnDeleteItemsClick()
-    {
-        var selectedItemsNums = GetSelectedItemsNums();
-        if (selectedItemsNums is null || selectedItemsNums.Count < 1)
-            return; // Show a message to the user
-
-        Dispatcher.Dispatch(new DeleteLinesAction(
-         BasketId, selectedItemsNums));
-        SelectedItems = null;
-    }
-
-    private async void OnCopyItemsClick()
-    {
-        if (SelectedItems is null || SelectedItems.Count < 1)
+        if (!IsAnyItemSelected())
         {
-            Logger.LogInformation("No selected item.");
-            return; // Show a message to the user
+            Logger.LogWarning("No selected item to copy. At : {StackTrace}", LogUtility.GetStackTrace());
+            ToastService.ShowError($"Erreur lors de la copie dans le presse-papiers.");
+            return;
         }
 
         var headers = new[] { "Code article", "Quantité", "Prix unitaire" };
 
         string formattedData = DataFormatter.GenerateTabSeparatedData(
-            data: SelectedItems,
+            data: LinesDataGridInstance.SelectedItems,
             headers: headers,
             selector: static (item) =>
             [
@@ -100,7 +89,45 @@ public partial class Lines : FluxorComponentBase<LinesState, FetchLinesAction>
                 item?.SalesPrice?.Value?.ToString() ?? string.Empty,
             ]);
 
-        await ClipboardService.CopyTextToClipboardAsync(formattedData);
+        try
+        {
+            await ClipboardService.CopyTextToClipboardAsync(formattedData);
+            ToastService.ShowInfo("Les lignes sélectionnées ont été copiées dans le presse-papiers.");
+        }
+        catch (Exception ex)
+        {
+            Logger.LogError(ex, "Couldn't copy items into clipboard.");
+            ToastService.ShowError($"Erreur lors de la copie dans le presse-papiers.");
+        }
+    }
+
+    private async Task OnDuplicateItemsClick()
+    {
+        var selectedItemsNums = GetSelectedItemsNums();
+        if (selectedItemsNums is null || selectedItemsNums.Count < 1)
+            return; // Show a message to the user
+
+        await ModalService.ShowConfirmationDialog("Voulez-vous dupliquer les lignes sélectionnées?",
+            onConfirm: () =>
+            {
+                Dispatcher.Dispatch(new DuplicateLinesAction(selectedItemsNums));
+                LinesDataGridInstance.SelectedItems.Clear();
+            });
+    }
+
+    private async Task OnDeleteItemsClick()
+    {
+        var selectedItemsNums = GetSelectedItemsNums();
+        if (selectedItemsNums is null || selectedItemsNums.Count < 1)
+            return; // Show a message to the user
+
+        await ModalService.ShowConfirmationDialog("Voulez-vous supprimer les lignes sélectionnées?",
+            onConfirm: () =>
+            {
+                Dispatcher.Dispatch(new DeleteLinesAction(selectedItemsNums));
+                LinesDataGridInstance.SelectedItems.Clear();
+            });
+
     }
 
     private List<int>? GetSelectedItemsNums()
@@ -116,28 +143,22 @@ public partial class Lines : FluxorComponentBase<LinesState, FetchLinesAction>
             .ToList();
     }
 
-    MudDataGrid<BasketLineDto> dataGrid = new();
+    private bool IsAnyItemSelected() =>
+        LinesDataGridInstance.SelectedItems.Count > 0;
 
     private async Task<IDialogReference> OpenAddLineDialogAsync()
     {
         return await ModalService.OpenAddLineDialogAsync(() =>
-                   Dispatcher.Dispatch(new ResetNewLineAction(BasketId)));
+                   Dispatcher.Dispatch(new ResetNewLineAction()));
     }
 
-    //private void OnLineAdded(LineDto newLine)
-    //{
-    //    newLine.Ligne = lines.Count + 1; // Set the line number or other default values
-    //    lines.Add(newLine);
-    //    grid.Reload();
-    //    Console.WriteLine("nbr of line = " + lines.Count.ToString());
+    private void RowClicked(DataGridRowClickEventArgs<BasketLineDto> ClickedRow)
+    {
+        CurrentLine = ClickedRow.Item;
+    }
 
-    //}
-
-    //private void OnDeleteLineClick()
-    //{
-    //    // Handle Delete Line button click event
-    //    Console.WriteLine("Delete Line button clicked");
-    //}
+    private string RowStyleFunc(BasketLineDto? line, int index) =>
+        line == CurrentLine
+            ? "background-color : #cce4ff; color: #084298"
+            : string.Empty;
 }
-
-

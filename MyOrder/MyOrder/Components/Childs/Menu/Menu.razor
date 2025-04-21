@@ -12,7 +12,8 @@
 @inject IDispatcher dispatcher
 @inject IState<OrderInfoState> orderInfoState
 @inject IDialogService DialogService
-
+@inject IJSRuntime JSRuntime
+@inject VersionInfoService VersionInfoService
 
 @if (GeneralInfo is null || BasketActions is null)
 {
@@ -24,7 +25,8 @@
 
     <!-- Nouveau Panier-->
     <AppbarMenuTemplate BasketActionsBase="BasketActions?.Open"
-                        Icon="@Icons.Material.Filled.Add">
+                        Icon="@Icons.Material.Filled.Add"
+                        Color="Color.Success">
 
         <FieldMenuItem Icon="@Icons.Material.Filled.AddShoppingCart"
                        Field="BasketActions?.Open?.NewBasket"
@@ -42,24 +44,31 @@
     <AppbarDivider />
     <MudStack Row="true" Spacing="MenuButtonsInterSpacing">
         <!-- Valider -->
-        <AppbarMenuTemplate BasketActionsBase="BasketActions?.Validate"
+        <AppbarMenuTemplate Color="Color.Primary" BasketActionsBase="BasketActions?.Validate"
                             Icon="@Icons.Material.Filled.Check">
-            <FieldMenuItem Icon="@Icons.Material.Filled.ShoppingCartCheckout" Field="BasketActions?.Validate?.Sales" />
-            <FieldMenuItem Icon="@Icons.Material.Filled.Description" Field="BasketActions?.Validate?.Quotation" />
-            <FieldMenuItem Icon="@Icons.Material.Filled.Approval" Field="BasketActions?.Validate?.PriceConfirm" />
+            <FieldMenuItem  Icon="@Icons.Material.Filled.ShoppingCartCheckout"
+                           Field="BasketActions?.Validate?.Sales"
+                           OnClickCallback="ValidateSalesHandler" />
+            <FieldMenuItem Icon="@Icons.Material.Filled.Description"
+                           Field="BasketActions?.Validate?.Quotation"
+                           OnClickCallback="ValidateQuotationHandler" />
+            <FieldMenuItem Icon="@Icons.Material.Filled.Approval"
+                           Field="BasketActions?.Validate?.PriceConfirm"
+                           OnClickCallback="ValidatePriceConfirmHandler" />
         </AppbarMenuTemplate>
 
         <!-- Blocage-->
-        <AppbarMenuTemplate BasketActionsBase="BasketActions?.Blocking"
+        <AppbarMenuTemplate Color="Color.Warning" BasketActionsBase="BasketActions?.Blocking"
                             Icon="@Icons.Material.Filled.Block">
             <FieldMenuItem Icon="@Icons.Material.Outlined.FactCheck"
                            Field="BasketActions?.Blocking?.ValidationRules"
                            OnClickCallback="ValidationRulesClickHandler" />
-            <FieldMenuItem Icon="@Icons.Material.Outlined.Rule" Field="BasketActions?.Blocking?.BlockingReasons" />
+            <FieldMenuItem Icon="@Icons.Material.Outlined.Rule"
+                           Field="BasketActions?.Blocking?.BlockingReasons" />
         </AppbarMenuTemplate>
 
         <!-- Annuler -->
-        <AppbarMenuTemplate BasketActionsBase="BasketActions?.Cancel"
+        <AppbarMenuTemplate Color="Color.Error" BasketActionsBase="BasketActions?.Cancel"
                             Icon="@Icons.Material.Filled.Close">
             <FieldMenuItem Icon="@Icons.Material.Filled.RemoveShoppingCart"
                            Field="BasketActions?.Cancel?.CancelBasket"
@@ -76,10 +85,10 @@
     <AppbarDivider />
     <MudStack Row="true" Spacing="MenuButtonsInterSpacing">
         <!-- Envoyer-->
-        <AppbarMenuTemplate BasketActionsBase="BasketActions?.Sending"
+        <AppbarMenuTemplate Color="Color.Info" BasketActionsBase="BasketActions?.Sending"
                             Icon="@Icons.Material.Filled.Mail">
             <FieldMenuItem Icon="@Icons.Material.Filled.Done"
-                           Field="BasketActions?.Sending?.ComfirmOrder" />
+                           Field="BasketActions?.Sending?.ConfirmOrder" />
         </AppbarMenuTemplate>
 
         <!-- Notes-->
@@ -88,7 +97,8 @@
                             AnchorOrigin="Origin.BottomCenter"
                             TransformOrigin="Origin.TopCenter">
             <FieldMenuItem Icon="@Icons.Material.Rounded.Notes"
-                           Field="BasketActions?.Notes.OrderNote" />
+                           Field="BasketActions?.Notes?.OrderNote"
+                           OnClickCallback="(async () => await modalService.OpenBasketOrderNoteDialogAsync(BasketActions?.Notes?.OrderNote))" />
             <FieldMenuItem Icon="@Icons.Material.Filled.Attachment"
                            Field="BasketActions?.Notes.Attachments" />
         </AppbarMenuTemplate>
@@ -99,9 +109,13 @@
                             AnchorOrigin="Origin.BottomRight"
                             TransformOrigin="Origin.TopLeft">
             <FieldMenuItem Icon="@Icons.Material.Filled.EventNote"
-                           Field="BasketActions?.Logs.OrderDiary" />
+                           Field="BasketActions?.Logs.OrderDiary"
+                           BrowseUrl="true"
+                           OnClickCallback="()=>{}" />
             <FieldMenuItem Icon="@Icons.Material.Outlined.Chat"
-                           Field="BasketActions?.Logs.EdiMessages" />
+                           Field="BasketActions?.Logs.EdiMessages"
+                           BrowseUrl="true"
+                           OnClickCallback="()=>{}" />
         </AppbarMenuTemplate>
 
     </MudStack>
@@ -112,10 +126,37 @@
                             Icon="@Icons.Material.Filled.AccountCircle"
                             AnchorOrigin="Origin.BottomRight"
                             TransformOrigin="Origin.TopLeft">
-            <FieldMenuItem Icon="@Icons.Material.Outlined.Badge"
-                           Field="BasketActions?.System?.Profile" />
-            <FieldMenuItem Icon="@Icons.Material.Rounded.AdminPanelSettings"
-                           Field="BasketActions?.System?.Settings" />
+            @{
+                var profileField = BasketActions?.System?.Profile;
+                var settingsField = BasketActions?.System?.Settings;
+            }
+            @if (profileField is not null)
+            {
+                <MudCard>
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.h6">@profileField.Name</MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent Class="pt-0">
+                        <MudText Typo="Typo.body2">
+                            @((MarkupString)(profileField?.Value?.Replace("\n", "<br />") ?? "Aucune information sur l'api"))<br />
+                            Client version: @VersionInfoService.InformationalVersion
+                        </MudText>
+                    </MudCardContent>
+                    @if (!FieldUtility.IsHidden(settingsField))
+                    {
+                        <MudCardActions Class="pt-0">
+                            <MudButton FullWidth="true"
+                                       Color="Color.Primary"
+                                       Variant="Variant.Text"
+                                       OnClick="async () => await OpenAdminPanel(settingsField?.Url)">
+                                @settingsField!.Name
+                            </MudButton>
+                        </MudCardActions>
+                    }
+                </MudCard>
+            }
         </AppbarMenuTemplate>
 
         <!-- Historique-->
@@ -165,20 +206,35 @@
 
         await MenuActionHandler(modalService, menuItem.Confirm, () =>
         {
-            var basketId = GeneralInfo?.BasketId;
-            if (!string.IsNullOrWhiteSpace(basketId))
-            {
-                dispatcher.Dispatch(new CloneBasketAction(basketId));
-            }
+            dispatcher.Dispatch(new CloneBasketAction());
         });
+    }
+
+    public void ValidateSalesHandler()
+    {
+#warning TODO: Implement confirmation dialog logic
+        dispatcher.Dispatch(
+                           new PublishBasketAction(BasketActions?.Validate.Sales.ProcedureCall));
+    }
+
+    public void ValidateQuotationHandler()
+    {
+#warning TODO: Implement confirmation dialog logic
+        dispatcher.Dispatch(
+                           new PublishBasketAction(BasketActions?.Validate.Quotation.ProcedureCall));
+    }
+    public void ValidatePriceConfirmHandler()
+    {
+#warning TODO: Implement confirmation dialog logic
+        dispatcher.Dispatch(
+                    new PublishBasketAction(BasketActions?.Validate.PriceConfirm.ProcedureCall));
     }
 
 
     private void ValidationRulesClickHandler()
     {
         dispatcher.Dispatch(
-            new PostProcedureCallAction(BasketActions?.Blocking?.ValidationRules.ProcedureCall,
-                GeneralInfo?.BasketId));
+            new PostProcedureCallAction(BasketActions?.Blocking?.ValidationRules.ProcedureCall));
     }
 
     private async Task ProcedureCallMenuAction(Field<string?>? menuItem)
@@ -192,9 +248,16 @@
         await MenuActionHandler(modalService, menuItem.Confirm, () =>
         {
             dispatcher.Dispatch(
-            new PostProcedureCallAction(menuItem.ProcedureCall,
-                GeneralInfo?.BasketId));
+            new PostProcedureCallAction(menuItem.ProcedureCall));
         });
+    }
+
+    private async Task OpenAdminPanel(string? url)
+    {
+        if (string.IsNullOrWhiteSpace(url))
+            return;
+
+        await JSRuntime.InvokeAsync<object>("open", url, "_blank");
     }
 
     private void ToggleBasketHistoryPopover() => _basketHistoryPopOver?.TogglePopover();

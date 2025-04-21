@@ -1,14 +1,29 @@
 ﻿@using Fluxor
+@using MyOrder.Shared.Interfaces
 @using MyOrder.Store.CreateBasketUseCase
 
 @layout DefaultLayout
 @inject IDispatcher Dispatcher
 
-@page "/"
+@page "/{companyId}"
+
+<MudOverlay Visible="true" ZIndex="9999" DarkBackground="false">
+    <MudElement HtmlTag="div" Class="d-flex flex-column align-center gap-6" Style="width:512px;">
+        <MudProgressCircular Size="Size.Large" Indeterminate="true" />
+        <MudText Typo="Typo.subtitle2">Vous serez redirigé vers votre dernier panier...</MudText>
+    </MudElement>
+</MudOverlay>
 
 @code {
+    [Parameter]
+    public string CompanyId { get; set; } = default!;
+
+    [Inject]
+    private IBasketService BasketService { get; set; } = null!;
+
     protected override void OnInitialized()
     {
+        BasketService.CompanyId = CompanyId;
         Dispatcher.Dispatch(new CreateBasketAction(new())); //Send an empty OrderContext call
     }
 }

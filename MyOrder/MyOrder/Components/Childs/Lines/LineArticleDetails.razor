@@ -1,80 +1,84 @@
-﻿<MudPaper Elevation="2" Class="header-cards-height header-cards-height-content">
+﻿<LineDetailsTemplate NoContent="BasketLine is null">
     <MudStack Spacing="2" Justify="Justify.SpaceBetween" Style="height: inherit;">
-        <div>
-            <MudText Typo="Typo.h6" Color="Color.Secondary" Class="pb-4">Informations générales</MudText>
-            <MudGrid Spacing="1">
-                <!--Code article-->
-                <MudItem xs="6">
-                    <MudElement @onclick="HandlePopOverOnClick">
-                        <DisplayField Field="BasketLine?.ItemId" />
-                    </MudElement>
-                    <MudPopover Open="@_openPopOver"
-                                AnchorOrigin="Origin.TopLeft"
-                                TransformOrigin="Origin.BottomRight"
-                                Paper="false"
-                                Elevation="4">
-                        <MudPaper Outlined="true"
-                                  Class="px-3 pt-2 rounded-lg"
-                                  Style="@($"background-color:{Colors.Gray.Lighten5}; color: {Colors.Gray.Darken4};")">
-                            <MudText Typo="Typo.body2">
-                                @FieldUtility.MarkupStringHelper(BasketLine!.ItemProperties?.Value)
-                            </MudText>
-                            <MudStack Row="true">
-                                <MudSpacer />
-                                <MudButton OnClick="HandlePopOverOnClick"
-                                           Color="Color.Error"
-                                           Style="@($"color: {Colors.Red.Darken1};")"
-                                           Size="Size.Small"
-                                           Class="mr-n2">Fermer</MudButton>
-                            </MudStack>
-                        </MudPaper>
-                    </MudPopover>
-                </MudItem>
+        <MudText Typo="Typo.h6" Color="Color.Secondary" Class="pb-4">Informations générales</MudText>
+        <MudGrid Spacing="1">
+            <!--Code article-->
+            <MudItem xs="6">
+                <MudElement @onclick="HandlePopOverOnClick">
+                    <DisplayField Field="BasketLine?.ItemId"
+                                  Adornment="Adornment.End"
+                                  AdornmentIcon="@Icons.Material.Outlined.ReadMore"
+                                  AdornmentColor="Color.Primary" />
+                </MudElement>
+                <MudPopover Open="@_openPopOver"
+                            AnchorOrigin="Origin.TopLeft"
+                            TransformOrigin="Origin.BottomRight"
+                            Paper="false"
+                            Elevation="4">
+                    <MudPaper Outlined="true"
+                              Class="px-3 pt-2 rounded-lg"
+                              Style="@($"background-color:{Colors.Gray.Lighten5}; color: {Colors.Gray.Darken4};")">
+                        <MudText Typo="Typo.body2">
+                            @FieldUtility.MarkupStringHelper(BasketLine!.ItemProperties?.Value)
+                        </MudText>
+                        <MudStack Row="true">
+                            <MudSpacer />
+                            <MudButton OnClick="HandlePopOverOnClick"
+                                       Color="Color.Error"
+                                       Style="@($"color: {Colors.Red.Darken1};")"
+                                       Size="Size.Small"
+                                       Class="mr-n2">Fermer</MudButton>
+                        </MudStack>
+                    </MudPaper>
+                </MudPopover>
+            </MudItem>
 
-                <!--N de ligne-->
-                <MudItem xs="6">
-                    <GenericTextField Field="@BasketLine!.LineNum" />
-                </MudItem>
+            <!--N de ligne-->
+            <MudItem xs="6">
+                <GenericTextField Field="@BasketLine!.LineNum"
+                                  Variant="Variant.Outlined"
+                                  Class="outlined-generic-textfield" />
+            </MudItem>
 
-                <!--Motif Modif-->
-                <MudItem xs="6">
-                    <GenericMudSelect Variant="Variant.Outlined"
-                                      Field="BasketLine?.UpdateReason"
-                                      Items="UpdateReasons" />
-                </MudItem>
+            <!--Motif Modif-->
+            <MudItem xs="6">
+                <GenericMudSelect Variant="Variant.Outlined"
+                                  Field="BasketLine?.UpdateReason"
+                                  Items="UpdateReasons" />
+            </MudItem>
 
-                <!--Quantité initiale-->
-                <MudItem xs="6">
-                    <GenericNumericField T="int?"
-                                         Field="BasketLine?.InitialSalesQuantity"
-                                         Min="BasketLine?.MultipleQuantity?.Value"
-                                         Step="BasketLine?.MultipleQuantity?.Value" />
-                </MudItem>
+            <!--Quantité initiale-->
+            <MudItem xs="6">
+                <GenericNumericField T="int?"
+                                     Field="BasketLine?.InitialSalesQuantity"
+                                     Min="BasketLine?.MultipleQuantity?.Value"
+                                     Step="BasketLine?.MultipleQuantity?.Value"
+                                     Variant="Variant.Outlined"
+                                     Class="outlined-generic-numeric-field" />
+            </MudItem>
 
-                <!--Vendu par-->
-                <MudItem xs="6">
-                    <DisplayField Field="@BasketLine?.MultipleQuantity" />
-                </MudItem>
+            <!--Vendu par-->
+            <MudItem xs="6">
+                <DisplayField Field="@BasketLine?.MultipleQuantity" />
+            </MudItem>
 
-                <!--Taux de TVA-->
-                <MudItem xs="6">
-                    <DisplayField Field="@BasketLine?.VatRate" />
-                </MudItem>
+            <!--Taux de TVA-->
+            <MudItem xs="6">
+                <DisplayField Field="@BasketLine?.VatRate" />
+            </MudItem>
 
-                <!--Description-->
-                <MudItem xs="12">
-                    <GenericTextField Field="@BasketLine?.Name" />
-                </MudItem>
-            </MudGrid>
+            <!--Description-->
+            <MudItem xs="12">
+                <GenericTextField Field="@BasketLine?.Name" />
+            </MudItem>
+        </MudGrid>
 
-            <!--Notes de ligne-->
-            <GenericTextField Field="@BasketLine?.Note" />
-        </div>
+        <!--Notes de ligne-->
+        <GenericTextField Field="@BasketLine?.Note" Lines="1" Variant="Variant.Text" />
 
-        <MudDivider Light="true" />
+        <MudDivider Light="true" Style="visibility:hidden" />
+
         <!--Information produit-->
-        <div>
-            <DisplayField Field="BasketLine?.ProductInfo" />
-        </div>
+        <DisplayField Field="BasketLine?.ProductInfo" FixedMultilineHeight="true" Lines="2" />
     </MudStack>
-</MudPaper>
+</LineDetailsTemplate>

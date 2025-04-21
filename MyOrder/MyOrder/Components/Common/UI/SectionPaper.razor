@@ -1,0 +1,21 @@
+﻿@inherits MudPaper
+
+<div class="header-cards-height" style="position: relative;">
+    @if (string.IsNullOrEmpty(Title))
+    {
+        <MudSkeleton Class="overline-label" />
+    }
+    else
+    {
+        <MudText Typo="Typo.subtitle1"
+                 Color="Color.Secondary"
+                 Class="overline-label">@Title</MudText>
+    }
+    <MudPaper @onmouseenter="MouseEnterHandler"
+              @onmouseleave="MouseLeaveHandler"
+              Elevation="@currentElevation"
+              Class="@($"{Class} header-cards-height pt-6 pb-2 px-4")"
+              Style="@Style">
+        @ChildContent
+    </MudPaper>
+</div>

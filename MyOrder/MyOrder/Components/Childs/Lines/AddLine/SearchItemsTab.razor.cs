@@ -17,8 +17,8 @@ public partial class SearchItemsTab : FluxorComponentBase<SearchItemsState, Fetc
     [Parameter, EditorRequired]
     public EventCallback<string> ItemClicked { get; set; }
 
-    protected override FetchSearchItemsAction CreateFetchAction(SearchItemsState state, string basketId) =>
-   new(state, basketId);
+    protected override FetchSearchItemsAction CreateFetchAction(SearchItemsState state) =>
+   new(state);
 
     protected override void CacheNewFields()
     {
@@ -26,7 +26,7 @@ public partial class SearchItemsTab : FluxorComponentBase<SearchItemsState, Fetc
     }
 
     private void FilterItemsCallback(string filterString) =>
-        Dispatcher.Dispatch(new FetchSearchItemsAction(State.Value, BasketId, filterString));
+        Dispatcher.Dispatch(new FetchSearchItemsAction(State.Value, filterString));
 
     private void ToggleBlockedCallback(bool applyFilter) =>
         _showBlocked = !applyFilter;

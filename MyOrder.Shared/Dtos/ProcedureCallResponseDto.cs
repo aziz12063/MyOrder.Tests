@@ -5,9 +5,11 @@ public class ProcedureCallResponseDto : MyOrderContextResponse
 {
     public bool? UpdateDone { get; set; }
     public List<string?>? RefreshCalls { get; set; }
+    public ProcedureCallUrlDto? Target { get; set; }
 
-    public override string ToString() => base.ToString() 
+    public override string ToString() => base.ToString()
         + $"\nUpdateDone: {UpdateDone}, " +
-        $"RefreshCalls: {string.Join("\n", RefreshCalls ?? [])}";
+        $"RefreshCalls: {string.Join("\n", RefreshCalls ?? [])}\n" +
+        $"Target: {Target?.TargetUrl}";
 }
 

@@ -1,14 +1,18 @@
-﻿@typeparam T
+﻿@using Fluxor
+@using MyOrder.Store.ProcedureCallUseCase
+@typeparam T
 
 @if (FieldUtility.IsHidden(Field))
     return;
 
-<MudTooltip Text="@Field.Description"
+<MudTooltip Text="@Field?.Description"
             Inline="false"
             RootStyle="width:100%;">
     <MudMenuItem Disabled="_disabled"
-                 OnClick="OnClick" 
-                 Class="px-2">
+                 OnClick="OnClick"
+                 Class="px-2"
+                 Href="@GetHref"
+                 Target="_blank">
         <MudIcon Icon="@Icon"
                  Disabled="_disabled"
                  Color="_color"
@@ -28,14 +32,19 @@
 
 
 @code {
+    [Inject]
+    private IDispatcher Dispatcher { get; set; }
     [Parameter, EditorRequired]
     public string Icon { get; set; } = Icons.Material.Filled.ArrowRight;
 
     [Parameter, EditorRequired]
-    public Field<T> Field { get; set; }
+    public Field<T>? Field { get; set; }
 
     [Parameter, EditorRequired]
     public EventCallback OnClickCallback { get; set; }
+
+    [Parameter]
+    public bool BrowseUrl { get; set; } = false;
 
     private Color _color = Color.Inherit;
     private bool _disabled = false;
@@ -46,9 +55,17 @@
         _disabled = !FieldUtility.IsReadWrite(Field);
     }
 
+    private string? GetHref => BrowseUrl ? Field?.Url : null;
+
     private async Task OnClick()
     {
 #warning TODO: Implement confirmation dialog logic
+
+        // #warning TODO: This is a quick fix
+
+        //         if (Field is not null && Field.ProcedureCall?.Count > 0)
+        //             Dispatcher.Dispatch(new PostProcedureCallAction(Field.ProcedureCall));
+
         await OnClickCallback.InvokeAsync();
     }
 

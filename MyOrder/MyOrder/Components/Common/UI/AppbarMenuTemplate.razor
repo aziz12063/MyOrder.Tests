@@ -11,6 +11,7 @@
          PopoverClass="rounded-lg">
     <ActivatorContent>
         <AppbarMenuItem Icon="@Icon"
+                        Color="@Color"
                         BasketActionsBase="BasketActionsBase" />
     </ActivatorContent>
     <ChildContent>
@@ -33,4 +34,7 @@
 
     [Parameter]
     public Origin TransformOrigin { get; set; } = Origin.TopLeft;
+
+    [Parameter]
+    public Color Color { get; set; }
 }

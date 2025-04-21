@@ -12,13 +12,4 @@ partial class LineStockQuantities
 
     [Parameter, EditorRequired]
     public List<BasketValueDto?>? LogisticFlows { get; set; }
-
-    private static bool DelivaryDateReadOnly(BasketLineDto basketLineDto)
-    {
-        if (!FieldUtility.IsReadOnly(basketLineDto.DeliveryDate) 
-            && !FieldUtility.IsReadOnly(basketLineDto.IsCustomDeliveryDate) 
-            && basketLineDto.IsCustomDeliveryDate?.Value == true)
-            return false;
-        return true;
-    }
 }
