@@ -1,4 +1,5 @@
-﻿(function () {
+﻿(
+    function () {
     let f5Handler = null;
 
     window.registerF5Handler = function (dotNetHelper) {
@@ -12,4 +13,7 @@
         };
         window.addEventListener('keydown', f5Handler);
     };
-})();
+    }
+)();
+
+

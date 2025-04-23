@@ -1,17 +1,26 @@
 [
-  {
-    "value": null
-  },
-  {
-    "description": "Commande normale",
-    "value": "NOR"
-  },
-  {
-    "description": "Commande liée",
-    "value": "LIE"
-  },
-  {
-    "description": "Commande d'échantillons",
-    "value": "ECH"
-  }
+    {
+        "value": "",
+        "description": "-- Non renseigné --"
+    },
+    {
+        "value": "CLT_UE",
+        "description": "CLIENT UNION EUROPEENNE"
+    },
+    {
+        "value": "CLT_HUE",
+        "description": "CLIENT HORS UNION EUROPEENNE"
+    },
+    {
+        "value": "CLT_MONACO",
+        "description": "CLIENT MONACO NON EXONÉRÉ"
+    },
+    {
+        "value": "CLT_EXO",
+        "description": "CLIENT EXONERE"
+    },
+    {
+        "value": "CLT_FRANCE",
+        "description": "CLIENT FRANCE"
+    }
 ]

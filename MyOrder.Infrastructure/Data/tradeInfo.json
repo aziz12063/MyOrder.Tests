@@ -1,81 +1,56 @@
 {
-  "turnover": {
-    "name": "Chiffre d'affaire",
-    "status": "onlyForDisplay",
-    "value": [
-      {
-        "name": "Classe",
-        "ytd": "99",
-        "ytdN1": "",
-        "n1": "99",
-        "n2": "99"
-      },
-      {
-        "name": "CA.",
-        "ytd": "0 €",
-        "ytdN1": "0 €",
-        "n1": "0 €",
-        "n2": "0 €"
-      },
-      {
-        "name": "Evol. CA.",
-        "ytd": "0 %",
-        "ytdN1": "",
-        "n1": "",
-        "n2": ""
-      }
-    ]
-  },
-  "contract": {
-    "contractId": {
-      "name": "Contrat",
-      "status": "onlyForDisplay",
-      "value": null
+    "panelLabel": "Informations Commerciales",
+    "turnover": {
+        "name": "Chiffre d'affaire",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": [
+            {
+                "name": "Classe",
+                "ytd": "07",
+                "ytdN1": "",
+                "n1": "99",
+                "n2": "09"
+            },
+            {
+                "name": "CA. Com.",
+                "ytd": "2 496 €",
+                "ytdN1": "0 €",
+                "n1": "0 €",
+                "n2": "4 105 €"
+            },
+            {
+                "name": "CA. Fact.",
+                "ytd": "2 496 €",
+                "ytdN1": "0 €",
+                "n1": "0 €",
+                "n2": "4 105 €"
+            },
+            {
+                "name": "Marge",
+                "ytd": "68,35 %",
+                "ytdN1": "",
+                "n1": "0 %",
+                "n2": "65,47 %"
+            },
+            {
+                "name": "Evol. CA.",
+                "ytd": "9999 %",
+                "ytdN1": "",
+                "n1": "",
+                "n2": ""
+            }
+        ]
     },
-    "contractType": {
-      "name": "Type",
-      "status": "onlyForDisplay",
-      "value": null
-    },
-    "contractGroup": {
-      "name": "Groupe de contrat",
-      "status": "onlyForDisplay",
-      "value": ""
-    },
-    "status": {
-      "name": "Statut",
-      "status": "onlyForDisplay",
-      "value": null
-    },
-    "startDate": {
-      "name": "Date de début",
-      "status": "onlyForDisplay",
-      "value": null
-    },
-    "endDate": {
-      "name": "Date de fin",
-      "status": "onlyForDisplay",
-      "value": null
-    },
-    "campaignId": {
-      "name": "Campagne de prix",
-      "status": "onlyForDisplay",
-      "value": "Par défaut"
-    },
-    "mainContact": {
-      "name": "Commercial terrain",
-      "status": "onlyForDisplay",
-      "value": null
-    },
-    "officeExecutive": {
-      "name": "Commercial sédentaire",
-      "status": "onlyForDisplay",
-      "value": null
-    },
-    "discountList": {
-      "name": "Description",
-      "status": "onlyForDisplay",
-      "value": []
+    "contractSectionLabel": "Contrat en cours",
+    "contract": null,
+    "informationSectionLabel": "Informations générales",
+    "customerTags": [],
+    "activityArea": {
+        "name": "Secteur d'activité",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": "8411Z",
+        "description": "Code NAF: 8411Z"
     }
-  }
 }

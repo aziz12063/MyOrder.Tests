@@ -14,7 +14,7 @@
             <MudItem xs="12">
                 <DisplayField Field="@BasketLine!.DiscountDescription"
                               FixedMultilineHeight="true"
-                              Lines="2"/>
+                              Lines="2" />
             </MudItem>
 
             <!--Remise sup-->
@@ -43,7 +43,8 @@
                 {
                     <PropertyColumn Property="line => line == null? 0 : line.Quantity"
                                     HeaderClass="pa-1 ma-1"
-                                    CellClass="pa-1 ma-1">
+                                    CellClass="pa-1 ma-1"
+                                    CellStyle="text-align: right">
                         <HeaderTemplate>
                             <MudText Typo="Typo.body2" Class="prices-matrix-header-content">Quantité</MudText>
                         </HeaderTemplate>
@@ -53,7 +54,9 @@
                 {
                     <PropertyColumn Property="line => line == null? 0 : line.CatalogPrice"
                                     HeaderClass="pa-1 ma-1"
-                                    CellClass="pa-1 ma-1">
+                                    CellClass="pa-1 ma-1"
+                                    CellStyle="text-align: right"
+                                    Format="C">
                         <HeaderTemplate>
                             <MudText Typo="Typo.body2" Class="prices-matrix-header-content">Prix Cat.</MudText>
                         </HeaderTemplate>
@@ -63,7 +66,8 @@
                 {
                     <PropertyColumn Property="line => line == null? 0 : line.DiscountPrice"
                                     HeaderClass="pa-1 ma-1"
-                                    CellClass="pa-1 ma-1">
+                                    CellClass="pa-1 ma-1"
+                                    CellStyle="text-align: right">
                         <HeaderTemplate>
                             <MudText Typo="Typo.body2" Class="prices-matrix-header-content">Prix Rem.</MudText>
                         </HeaderTemplate>
@@ -73,9 +77,11 @@
                 {
                     <PropertyColumn Property="line => line == null? 0 : line.MultiplePrice"
                                     HeaderClass="pa-1 ma-1"
-                                    CellClass="pa-1 ma-1">
+                                    CellClass="pa-1 ma-1"
+                                    CellStyle="text-align: right"
+                                    Format="C">
                         <HeaderTemplate>
-                            <MudText Typo="Typo.body2" Class="prices-matrix-header-content">Prix / @BasketLine?.MultipleQuantity?.Value</MudText>
+                            <MudText Typo="Typo.body2" Class="prices-matrix-header-content" Style="align-items:flex-end">Prix / @BasketLine?.MultipleQuantity?.Value</MudText>
                         </HeaderTemplate>
                     </PropertyColumn>
                 }
@@ -83,7 +89,8 @@
                 {
                     <PropertyColumn Property="line => line == null? 0 : line.DiscountRate"
                                     HeaderClass="pa-1 ma-1"
-                                    CellClass="pa-1 ma-1">
+                                    CellClass="pa-1 ma-1"
+                                    CellStyle="text-align: right">
                         <HeaderTemplate>
                             <MudText Typo="Typo.body2" Class="prices-matrix-header-content">% Dégress.</MudText>
                         </HeaderTemplate>
@@ -94,7 +101,9 @@
                     <PropertyColumn Property="line => line == null? 0 : line.MarginRate"
                                     Title="% Marg."
                                     HeaderClass="pa-1 ma-1"
-                                    CellClass="pa-1 ma-1">
+                                    CellClass="pa-1 ma-1"
+                                    CellStyle="text-align: right" 
+                                    Format="P">
                         <HeaderTemplate>
                             <MudText Typo="Typo.body2" Style="font-weight:500">Marge</MudText>
                         </HeaderTemplate>

@@ -14,10 +14,12 @@ public partial class AddLineDialog
 {
     [CascadingParameter]
     private MudDialogInstance DialogInstance { get; set; }
+    [Parameter]
+    public int Index { get; set; } = 0;
     private AddLineTab? AddLineTab { get; set; }
     private MudButton? AddLineButton { get; set; }
     private string? FreeText { get; set; }
-
+    
     [Inject]
     public ILogger<AddLineDialog> Logger { get; set; }
     [Inject]
@@ -34,6 +36,7 @@ public partial class AddLineDialog
         base.OnAfterRender(firstRender);
         if (!firstRender)
         {
+            CurrentTab = Index;
             ArgumentNullException.ThrowIfNull(AddLineButton, $"{nameof(AddLineTab)} component is not found.");
             ArgumentNullException.ThrowIfNull(AddLineButton, $"{nameof(AddLineButton)} {nameof(MudButton)} is not found.");
         }

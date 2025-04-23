@@ -1,0 +1,122 @@
+[
+    {
+        "itemId": "BL30",
+        "description": "CA LONGUE 100X30X15",
+        "isBlocked": false,
+        "isAlreadyAdded": false
+    },
+    {
+        "itemId": "BL40",
+        "description": "CA LONGUE 100X40X40",
+        "isBlocked": false,
+        "isAlreadyAdded": false
+    },
+    {
+        "itemId": "BL11",
+        "description": "CA LONGUE 120X10X10",
+        "isBlocked": false,
+        "isAlreadyAdded": false
+    },
+    {
+        "itemId": "BL04",
+        "description": "CA LONGUE 70X10X10",
+        "isBlocked": false,
+        "isAlreadyAdded": false
+    },
+    {
+        "itemId": "BL01",
+        "description": "CA LONGUE 62X8X8",
+        "isBlocked": false,
+        "isAlreadyAdded": false
+    },
+    {
+        "itemId": "CTP220C",
+        "description": "COUV CA TELE PDTPLAT120X18X100",
+        "isBlocked": false,
+        "isAlreadyAdded": false
+    },
+    {
+        "itemId": "CTP200C",
+        "description": "COUV CA TELES PDTPLAT100X18X80",
+        "isBlocked": false,
+        "isAlreadyAdded": false
+    },
+    {
+        "itemId": "CPL55",
+        "description": "CA PLATE 20KG 60X40X10",
+        "isBlocked": false,
+        "isAlreadyAdded": false
+    },
+    {
+        "itemId": "CPL52",
+        "description": "CA PLATE 20KG 55X35X10",
+        "isBlocked": false,
+        "isAlreadyAdded": false
+    },
+    {
+        "itemId": "CPL45",
+        "description": "CA PLATE 20KG 50X40X15",
+        "isBlocked": false,
+        "isAlreadyAdded": false
+    },
+    {
+        "itemId": "CPL50",
+        "description": "CA PLATE 20KG 50X50X20",
+        "isBlocked": false,
+        "isAlreadyAdded": false
+    },
+    {
+        "itemId": "CPL43",
+        "description": "CA PLATE 20KG 50X30X20",
+        "isBlocked": false,
+        "isAlreadyAdded": false
+    },
+    {
+        "itemId": "CPL40",
+        "description": "CA PLATE 20KG 50X30X15",
+        "isBlocked": false,
+        "isAlreadyAdded": false
+    },
+    {
+        "itemId": "CPL33",
+        "description": "CA PLATE 10KG 40X40X10",
+        "isBlocked": false,
+        "isAlreadyAdded": false
+    },
+    {
+        "itemId": "CPL30",
+        "description": "CA PLATE 10KG 40X30X10",
+        "isBlocked": false,
+        "isAlreadyAdded": false
+    },
+    {
+        "itemId": "CPL20",
+        "description": "CA PLATE 10KG 40X20X10",
+        "isBlocked": false,
+        "isAlreadyAdded": false
+    },
+    {
+        "itemId": "CPL15",
+        "description": "CA PLATE 10KG 35X25X10",
+        "isBlocked": false,
+        "isAlreadyAdded": false
+    },
+    {
+        "itemId": "CPL13",
+        "description": "CA PLATE 10KG 30X30X10",
+        "isBlocked": false,
+        "isAlreadyAdded": false
+    },
+    {
+        "itemId": "CPL10",
+        "description": "CA PLATE 10KG 30X20X10",
+        "isBlocked": false,
+        "isAlreadyAdded": false
+    },
+    {
+        "itemId": "CAS22D",
+        "description": "CA SC10 35X30X30 BRUN",
+        "isBlocked": false,
+        "isAlreadyAdded": false
+    }
+]

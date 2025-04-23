@@ -7,6 +7,7 @@ using MyOrder.Components.Common.Dialogs;
 using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.SharedComponents;
 using MyOrder.Store;
+using static MudBlazor.CategoryTypes;
 
 namespace MyOrder.Services;
 
@@ -19,8 +20,10 @@ public class ModalService(IDialogService dialogService) : IModalService
     //{
     //    OnShow?.Invoke(title, message, onConfirm);
     //}
+    
+    
 
-    public async Task<IDialogReference> OpenAddLineDialogAsync(Action? onCloseCallback = null)
+    public async Task<IDialogReference> OpenAddLineDialogAsync(Action? onCloseCallback = null )
     {
         var options = new DialogOptions
         {
@@ -28,7 +31,7 @@ public class ModalService(IDialogService dialogService) : IModalService
             CloseButton = true,
             BackdropClick = false
         };
-
+        
         var dialogReference = await dialogService.ShowAsync<AddLineDialog>(
             "AddLineDialog", options);
 
@@ -182,6 +185,8 @@ public class ModalService(IDialogService dialogService) : IModalService
 
         return await dialogService.ShowAsync<PaymentAuthorizationDialog>("PaymentAuthorization", options);
     }
+
+    
 }
 
 public enum ModalSeverity

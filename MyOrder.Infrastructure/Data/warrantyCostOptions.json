@@ -1,10 +1,14 @@
 [
-  {
-    "description": "GO non dispo.",
-    "value": "Disabled"
-  },
-  {
-    "description": "GO activée",
-    "value": "Enabled"
-  }
+    {
+        "value": "Enabled",
+        "description": "GO activée"
+    },
+    {
+        "value": "Disabled",
+        "description": "GO désactivée"
+    },
+    {
+        "value": "Offered",
+        "description": "GO offerte"
+    }
 ]

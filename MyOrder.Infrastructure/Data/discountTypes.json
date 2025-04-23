@@ -1,18 +1,22 @@
 [
-  {
-    "description": "Remise par d�faut",
-    "value": "Default"
-  },
-  {
-    "description": "Pas de remise - Prix catalogue",
-    "value": "NoDiscount"
-  },
-  {
-    "description": "Remise Standard (%)",
-    "value": "StandardDiscount"
-  },
-  {
-    "description": "Remise DC (%)",
-    "value": "LastColumnDiscount"
-  }
+    {
+        "value": "Default",
+        "description": "Remise par défaut"
+    },
+    {
+        "value": "NoDiscount",
+        "description": "Pas de remise - Prix catalogue"
+    },
+    {
+        "value": "StandardDiscount",
+        "description": "Remise Standard (%)"
+    },
+    {
+        "value": "LastColumnDiscount",
+        "description": "Remise DC (%)"
+    },
+    {
+        "value": "MarginDiscount",
+        "description": "Remise / Marge (%)"
+    }
 ]
