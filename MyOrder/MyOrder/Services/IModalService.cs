@@ -1,4 +1,5 @@
 ﻿using MudBlazor;
+using MyOrder.Components.Childs.Lines.AddLine;
 using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.SharedComponents;
 using MyOrder.Store;
@@ -9,7 +10,7 @@ public interface IModalService
 {
     //event Action<string, string, Action> OnShow;
 
-    Task<IDialogReference> OpenAddLineDialogAsync(Action? onCloseCallback = null);
+    Task<IDialogReference> OpenAddLineDialogAsync(AddLineDialogTab index, Action? onCloseCallback = null);
     Task<IDialogReference> OpenEditDeliveryAccountDialogAsync(Action? onCloseCallback = null, string? accountId = null);
 
     Task<IDialogReference> OpenNewBasketDialogAsync();

@@ -10,6 +10,14 @@ using MyOrder.Store.NewLineUseCase;
 
 namespace MyOrder.Components.Childs.Lines.AddLine;
 
+public enum AddLineDialogTab
+{
+    AddLine,
+    BestSellers,
+    OrdredItems,
+    Search,
+    FreeText
+}
 public partial class AddLineDialog
 {
     [CascadingParameter]
@@ -29,14 +37,24 @@ public partial class AddLineDialog
     [Inject]
     public IModalService ModalService { get; set; }
 
-    public int CurrentTab { get; set; }
+    [Parameter]
+    public AddLineDialogTab CurrentTab { get; set; }
+
+    private int CurrentTabIndex
+    {
+        get => (int)CurrentTab;
+        set
+        {
+            CurrentTab = (AddLineDialogTab)value;
+            
+        }
+    }
 
     protected override void OnAfterRender(bool firstRender)
     {
         base.OnAfterRender(firstRender);
         if (!firstRender)
         {
-            CurrentTab = Index;
             ArgumentNullException.ThrowIfNull(AddLineButton, $"{nameof(AddLineTab)} component is not found.");
             ArgumentNullException.ThrowIfNull(AddLineButton, $"{nameof(AddLineButton)} {nameof(MudButton)} is not found.");
         }

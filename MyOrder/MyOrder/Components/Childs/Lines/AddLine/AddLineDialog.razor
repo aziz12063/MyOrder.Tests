@@ -7,7 +7,7 @@
                  AlwaysShowScrollButtons="false"
                  Centered="true"
                  KeepPanelsAlive="true"
-                 @bind-ActivePanelIndex="CurrentTab">
+                 @bind-ActivePanelIndex="CurrentTabIndex">
 
             <MudTabPanel Text="Ajout"
                          Icon="@Icons.Material.Filled.AddCircle">
@@ -43,7 +43,7 @@
         </MudTabs>
     </DialogContent>
     <DialogActions>
-        @if (CurrentTab == 0)
+        @if (CurrentTab == AddLineDialogTab.AddLine)
         {
             <MudButton @ref="AddLineButton"
                        Variant="Variant.Text"
@@ -56,7 +56,7 @@
                        Color="Color.Error"
                        OnClick="ResetLine">ANNULER</MudButton>
         }
-        else if (CurrentTab == 4)
+        else if (CurrentTab == AddLineDialogTab.FreeText)
         {
             <MudButton Variant="Variant.Text"
                        Color="Color.Primary"

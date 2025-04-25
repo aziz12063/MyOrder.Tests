@@ -38,6 +38,7 @@
                      Elevation="0"
                      Class="mx-n3"
                      RowStyleFunc="(item, _) => RowStyleFunc(item)">
+                     
             <Columns>
                 @if (BasketPrices?.QuantityVisible == true)
                 {
@@ -102,14 +103,17 @@
                                     Title="% Marg."
                                     HeaderClass="pa-1 ma-1"
                                     CellClass="pa-1 ma-1"
-                                    CellStyle="text-align: right" 
+                                    CellStyle="text-align: right"
                                     Format="P">
                         <HeaderTemplate>
                             <MudText Typo="Typo.body2" Style="font-weight:500">Marge</MudText>
                         </HeaderTemplate>
                     </PropertyColumn>
                 }
+
             </Columns>
         </MudDataGrid>
+        
+
     </MudStack>
 </LineDetailsTemplate>

@@ -1,5 +1,6 @@
 ﻿@using MyOrder.Components.Common.Input
 @using MyOrder.Store.LinesUseCase
+@using MyOrder.Components.Childs.Lines.AddLine;
 @using static MudBlazor.CategoryTypes
 @inherits FluxorComponentBase<LinesState, FetchLinesAction>
 
@@ -12,6 +13,7 @@
     <MudGrid Spacing="4" Class="mt-1 mb-5">
 
         <MudItem xs="12">
+           
             <MudDataGrid @ref="LinesDataGridInstance"
                          T="BasketLineDto"
                          Bordered="true"
@@ -39,10 +41,47 @@
                                        Variant="Variant.Filled"
                                        Size="Size.Medium"
                                        Color="Color.Tertiary"
-                                       OnClick="OpenAddLineDialogAsync" />
+                                       OnClick="@(() => OpenAddLineDialogAsync(AddLineDialogTab.AddLine))" />
+                    </MudTooltip>
+                    &ensp;
+                    <MudTooltip Text="Top ventes"
+                                ShowOnFocus="false">
+                        <MudIconButton Icon="@Icons.Material.Filled.TrendingUp"
+                                       Variant="Variant.Filled"
+                                       Size="Size.Medium"
+                                       Color="Color.Primary"
+                                       OnClick="@(() => OpenAddLineDialogAsync(AddLineDialogTab.BestSellers))" />
+                    </MudTooltip>
+                    &ensp;
+                    <MudTooltip Text="Commandes et Devis"
+                                ShowOnFocus="false">
+                        <MudIconButton Icon="@Icons.Material.Filled.ShoppingCart"
+                                       Variant="Variant.Filled"
+                                       Size="Size.Medium"
+                                       Color="Color.Secondary"
+                                       OnClick="@(() => OpenAddLineDialogAsync(AddLineDialogTab.OrdredItems))" />
+                    </MudTooltip>
+                    &ensp;
+                    <MudTooltip Text="Recherche"
+                                ShowOnFocus="false">
+                        <MudIconButton Icon="@Icons.Material.Filled.Search"
+                                       Variant="Variant.Filled"
+                                       Size="Size.Medium"
+                                       Color="Color.Dark"
+                                       OnClick="@(() => OpenAddLineDialogAsync(AddLineDialogTab.Search))" />
+                    </MudTooltip>
+                    &ensp;
+                    <MudTooltip Text="Saisie Libre"
+                                ShowOnFocus="false">
+                        <MudIconButton Icon="@Icons.Material.Filled.Create"
+                                       Variant="Variant.Filled"
+                                       Size="Size.Medium"
+                                       Color="Color.Warning"
+                                       OnClick="@(() => OpenAddLineDialogAsync(AddLineDialogTab.FreeText))" />
                     </MudTooltip>
 
                     <MudSpacer />
+
                     <MudTooltip Text="Copier les articles sélectionnés">
                         <MudIconButton Icon="@Icons.Material.TwoTone.ContentCopy"
                                        Variant="Variant.Filled"
@@ -86,10 +125,12 @@
                                     Title="Code Article"
                                     Editable="false" />
 
-                    <PropertyColumn Property="x => x.Name == null ? string.Empty : x.Name.Value" Title="Description"
+                    <PropertyColumn Property="x => x.Name == null ? string.Empty : x.Name.Value"
+                                    Title="Description"
                                     Editable="IsNameEditable" />
 
-                    <PropertyColumn Property="x => x.InventLocationId == null ? string.Empty : x.InventLocationId.Value " Title="Entrepôt"
+                    <PropertyColumn Property="x => x.InventLocationId == null ? string.Empty : x.InventLocationId.Value "
+                                    Title="Entrepôt"
                                     Editable="false" />
 
                     <TemplateColumn Editable="false"
@@ -155,36 +196,33 @@
                 </NoRecordsContent>
 
             </MudDataGrid>
-            <MudMenu PositionAtCursor="true" @ref="_contextMenu" id="_contextMenu">
-                <MudStack>
-                    <MudText>@LineRightClicked?.LineNum?.Value</MudText>
-                    <MudTooltip Text="Copier la ligne sélectionné">
+           
+            <MudMenu PositionAtCursor="true" @ref="_contextMenu" id="_contextMenu" 
+                Dense="true">
+                
+                   
                         <MudMenuItem Icon="@Icons.Material.TwoTone.ContentCopy"
-                        OnClick="@(() => OnCopyItemsClick(LineRightClicked))">
+                                     OnClick="@(() => OnCopyItemsClick(LineRightClicked))">
+                            Copier
                         </MudMenuItem>
-                    </MudTooltip>
+                   
 
-                    @* <MudIconButton Icon="@Icons.Material.TwoTone.Layers"
-                                   Variant="Variant.Filled"
-                                   Size="Size.Medium"
-                                   Color="Color.Primary"
-
-                                   OnClick="OnDuplicateItemsClick" /> *@
-
-                    <MudTooltip Text="Dupliquer la ligne sélectionnée">
+                   
                         <MudMenuItem Icon="@Icons.Material.TwoTone.Layers"
                                      OnClick="@(() => OnDuplicateItemsClick(LineRightClicked))">
+                            Dupliquer
                         </MudMenuItem>
-                    </MudTooltip>
+                   
 
-                    <MudTooltip Text="Supprimer la ligne sélectionnée">
+                   
                         <MudMenuItem Icon="@Icons.Material.TwoTone.Delete"
                                      OnClick="@(() => OnDeleteItemsClick(LineRightClicked))">
-
+                            Supprimer
                         </MudMenuItem>
-                    </MudTooltip>
-                </MudStack>
+                  
+                
             </MudMenu>
+           
         </MudItem>
 
         <!--S1-->

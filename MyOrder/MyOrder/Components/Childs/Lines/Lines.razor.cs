@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 using MudBlazor;
+using MyOrder.Components.Childs.Lines.AddLine;
 using MyOrder.Components.Common;
 using MyOrder.Services;
 using MyOrder.Shared.Dtos;
@@ -214,9 +216,9 @@ public partial class Lines : FluxorComponentBase<LinesState, FetchLinesAction>
 
 
     //open add line dialog
-    private async Task<IDialogReference> OpenAddLineDialogAsync()
+    private async Task<IDialogReference> OpenAddLineDialogAsync(AddLineDialogTab index)
     {
-        return await ModalService.OpenAddLineDialogAsync(() =>
+        return await ModalService.OpenAddLineDialogAsync(index, () =>
                    Dispatcher.Dispatch(new ResetNewLineAction()));
     }
 
@@ -224,7 +226,7 @@ public partial class Lines : FluxorComponentBase<LinesState, FetchLinesAction>
     public async void CtrlIPressed()
     {
         Logger.LogDebug("CtrlIPressed called");
-        await OpenAddLineDialogAsync();
+        await OpenAddLineDialogAsync(0);
     }
 
     private void RowClicked(DataGridRowClickEventArgs<BasketLineDto> ClickedRow)
@@ -237,6 +239,9 @@ public partial class Lines : FluxorComponentBase<LinesState, FetchLinesAction>
     private async Task RowRightClicked(DataGridRowClickEventArgs<BasketLineDto> ClickedRow)
     {
         LineRightClicked = ClickedRow.Item;
+        Logger.LogDebug($"the x position is {ClickedRow.MouseEventArgs.ClientX}");
+        Logger.LogDebug($"the y position is {ClickedRow.MouseEventArgs.ClientY}");
+       
         await _contextMenu.OpenMenuAsync(ClickedRow.MouseEventArgs);
     }
 

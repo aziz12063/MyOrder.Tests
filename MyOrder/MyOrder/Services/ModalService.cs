@@ -23,7 +23,7 @@ public class ModalService(IDialogService dialogService) : IModalService
     
     
 
-    public async Task<IDialogReference> OpenAddLineDialogAsync(Action? onCloseCallback = null )
+    public async Task<IDialogReference> OpenAddLineDialogAsync(AddLineDialogTab index, Action? onCloseCallback = null )
     {
         var options = new DialogOptions
         {
@@ -31,9 +31,14 @@ public class ModalService(IDialogService dialogService) : IModalService
             CloseButton = true,
             BackdropClick = false
         };
-        
+
+        var parameters = new DialogParameters<AddLineDialog>
+        {
+            { dialog => dialog.CurrentTab, index }
+        };
+
         var dialogReference = await dialogService.ShowAsync<AddLineDialog>(
-            "AddLineDialog", options);
+            "AddLineDialog", parameters, options);
 
         var dialogResult = await dialogReference.Result;
 
