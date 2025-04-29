@@ -32,11 +32,6 @@
     margin-block: 4px !important;
 }
 
-.mudcard-details-info-background {
-    background: transparent !important;
-    box-shadow: inset 0px 0px 7px #00000025 !important;
-}
-
 .outlined-generic-select .mud-input-slot {
     padding-top: var(--outlined-input-padding-top) !important;
     padding-bottom: var(--outlined-input-padding-bottom) !important;
@@ -88,10 +83,10 @@
     color: var(--mud-palette-error) !important;
 }
 
-.outlined-display-field
-.mud-input-outlined-border {
+.outlined-display-field .mud-input-outlined-border,
+.mudcard-details-info-background {
     background-color: transparent;
-    box-shadow: inset 0px 0px 8px #00000020 !important
+    box-shadow: inset 0px 0px 10px #b7cbef20 !important;
 }
 
 .outlined-display-field * {

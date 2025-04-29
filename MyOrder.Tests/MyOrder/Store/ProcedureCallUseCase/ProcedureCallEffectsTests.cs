@@ -1,6 +1,6 @@
-﻿namespace MyOrder.Tests.MyOrder.Store.ProcedureCallUseCase;
+﻿//namespace MyOrder.Tests.MyOrder.Store.ProcedureCallUseCase;
 
-public class ProcedureCallEffectsTests
-{
+//public class ProcedureCallEffectsTests
+//{
 
-}
+//}

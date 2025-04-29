@@ -77,7 +77,7 @@ public abstract class BaseApiRepository(IEventAggregator eventAggregator, IBaske
             operationDescription,
             errorMessage);
 
-        _eventAggregator.Publish(new ApiErrorEvent(errorMessage, (int)apiEx.StatusCode, apiEx));
+        await _eventAggregator.PublishAsync(new ApiErrorEvent(errorMessage, (int)apiEx.StatusCode, apiEx));
 
         //switch (apiEx.StatusCode)
         //{

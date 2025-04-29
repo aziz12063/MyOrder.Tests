@@ -20,7 +20,7 @@ public partial class SearchAccountDialog<TState, TFetchAction>
     public EventCallback AddNewAccountClicked { get; set; }
 
     [CascadingParameter]
-    private MudDialogInstance MudDialog { get; set; }
+    private IMudDialogInstance MudDialog { get; set; }
 
     protected override TFetchAction CreateFetchAction(TState state) =>
         CreateFetchAction(state, null);

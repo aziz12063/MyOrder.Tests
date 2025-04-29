@@ -17,7 +17,7 @@ public partial class SearchContactDialog<TState, TFetchAction>
     [Parameter, EditorRequired]
     public EventCallback<ContactDto> ContactClicked { get; set; }
     [CascadingParameter]
-    private MudDialogInstance MudDialog { get; set; }
+    private IMudDialogInstance MudDialog { get; set; }
 
     protected override TFetchAction CreateFetchAction(TState state) =>
         CreateFetchAction(state, null);

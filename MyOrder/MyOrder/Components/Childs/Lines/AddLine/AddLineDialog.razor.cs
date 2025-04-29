@@ -22,7 +22,7 @@ public enum AddLineDialogTab
 public partial class AddLineDialog
 {
     [CascadingParameter]
-    private MudDialogInstance DialogInstance { get; set; }
+    private IMudDialogInstance DialogInstance { get; set; } = null!;
     private AddLineTab? AddLineTab { get; set; }
     private MudButton? AddLineButton { get; set; }
     private string? FreeText { get; set; }

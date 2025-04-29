@@ -14,7 +14,7 @@ public partial class PaymentAuthorizationDialog : FluxorComponent
     [Inject]
     private IDispatcher Dispatcher { get; set; } = null!;
     [CascadingParameter]
-    private MudDialogInstance DialogInstance { get; set; } = null!;
+    private IMudDialogInstance DialogInstance { get; set; } = null!;
 
     private PaymentAuthorizationDto PaymentAuthorization => PaymentAuthorizationState.Value.PaymentAuthorization;
 

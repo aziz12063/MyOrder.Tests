@@ -13,7 +13,7 @@ namespace MyOrder.Components.Childs.Header.Delivery;
 public partial class NewDeliveryAccountDialog : FluxorComponentBase<NewDeliveryAccountState, FetchNewDeliveryAccountAction>
 {
     [CascadingParameter]
-    private MudDialogInstance MudDialog { get; set; }
+    private IMudDialogInstance MudDialog { get; set; }
     [Parameter]
     public string? AccountId { get; set; }
     private DeliveryAccountDraft? DeliveryAccountDraft { get; set; }

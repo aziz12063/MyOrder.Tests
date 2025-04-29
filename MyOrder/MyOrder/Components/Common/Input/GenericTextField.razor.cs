@@ -21,7 +21,7 @@ public partial class GenericTextField<T> : GenericInputBase<T>
     [Parameter]
     public bool ShrinkLabel { get; set; } = true;
     [Parameter]
-    public Typo Typo { get; set; } = Typo.input;
+    public Typo Typo { get; set; } = Typo.subtitle2;
     [Parameter]
     public EventCallback<KeyboardEventArgs> OnKeyDown { get; set; }
 

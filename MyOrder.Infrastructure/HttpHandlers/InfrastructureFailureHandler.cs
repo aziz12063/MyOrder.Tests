@@ -26,7 +26,7 @@ public class InfrastructureFailureHandler(IEventAggregator eventAggregator, ILog
                 exception: trex
             );
 
-            _eventAggregator.Publish(timeoutEvent);
+            await _eventAggregator.PublishAsync(timeoutEvent);
             _logger.LogError(trex, "API request to {RequestUri} timed out.", request.RequestUri);
 
             return new HttpResponseMessage(HttpStatusCode.RequestTimeout)
@@ -42,7 +42,7 @@ public class InfrastructureFailureHandler(IEventAggregator eventAggregator, ILog
                 exception: httpEx
             );
 
-            _eventAggregator.Publish(serverUnreachableEvent);
+            await _eventAggregator.PublishAsync(serverUnreachableEvent);
             _logger.LogError(httpEx, "Server is unreachable.");
 
             return new HttpResponseMessage(HttpStatusCode.ServiceUnavailable)
@@ -58,7 +58,7 @@ public class InfrastructureFailureHandler(IEventAggregator eventAggregator, ILog
                 exception: ex
             );
 
-            _eventAggregator.Publish(generalErrorEvent);
+            await _eventAggregator.PublishAsync(generalErrorEvent);
             _logger.LogError(ex, "An unexpected infrastructure error occurred.");
 
             throw;
