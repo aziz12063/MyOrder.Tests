@@ -20,7 +20,7 @@ public partial class GenericMudSelect<T> : GenericInputBase<T>
     [Parameter, EditorRequired]
     public List<T>? Items { get; set; }
     [Parameter]
-    public Variant Variant { get; set; } = 0;
+    public Variant Variant { get; set; } = Variant.Outlined;
     [Parameter]
     public string? Class { get; set; }
     [Parameter]

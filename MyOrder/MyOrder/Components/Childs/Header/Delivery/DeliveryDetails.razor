@@ -14,7 +14,7 @@
                 <!-- Compte de livraison -->
                 <CustomHeaderCard>
                     <HeaderContent>
-                        <MudText Typo="Typo.subtitle2">@BasketDeliveryInfo!.AccountSectionLabel</MudText>
+                        <MudText Typo="Typo.subtitle1" Color="Color.Secondary">@BasketDeliveryInfo!.AccountSectionLabel</MudText>
                         <MudTooltip Text="Chercher compte">
                             <MudIconButton Icon="@Icons.Material.Filled.Search"
                                            Size="Size.Small"
@@ -55,7 +55,7 @@
             <!-- Contact  de livraison-->
             <CustomHeaderCard>
                 <HeaderContent>
-                    <MudText Typo="Typo.subtitle2">@BasketDeliveryInfo!.ContactSectionLabel</MudText>
+                    <MudText Typo="Typo.subtitle1" Color="Color.Secondary">@BasketDeliveryInfo!.ContactSectionLabel</MudText>
                     <MudTooltip Text="Chercher client">
                         <MudIconButton Icon="@Icons.Material.Filled.Search"
                                        Size="Size.Small"
@@ -89,7 +89,7 @@
 
             <!-- Informations de livraison -->
             <MudStack Spacing="0">
-                <MudText Typo="Typo.subtitle2">@BasketDeliveryInfo!.InformationSectionLabel</MudText>
+                <MudText Typo="Typo.subtitle1" Color="Color.Secondary">@BasketDeliveryInfo!.InformationSectionLabel</MudText>
 
                 <GenericMudSelect Field="BasketDeliveryInfo!.DeliveryMode"
                                   Items="DeliveryModes"

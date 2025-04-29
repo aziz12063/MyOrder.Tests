@@ -1,17 +1,16 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.JSInterop;
 using MudBlazor;
 using MyOrder.Components.Childs.Lines.AddLine;
 using MyOrder.Components.Common;
 using MyOrder.Services;
 using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.Lines;
+using MyOrder.Shared.Events;
+using MyOrder.Shared.Interfaces;
 using MyOrder.Shared.Utils;
 using MyOrder.Store.LinesUseCase;
 using MyOrder.Store.NewLineUseCase;
 using MyOrder.Utils;
-using System.Drawing;
 
 
 namespace MyOrder.Components.Childs.Lines;
@@ -19,13 +18,13 @@ namespace MyOrder.Components.Childs.Lines;
 public partial class Lines : FluxorComponentBase<LinesState, FetchLinesAction>
 {
     [Inject]
-    private IModalService ModalService { get; set; }
+    private IModalService ModalService { get; set; } = null!;
     [Inject]
-    private IToastService ToastService { get; set; }
+    private IToastService ToastService { get; set; } = null!;
     [Inject]
-    private IClipboardService ClipboardService { get; set; }
+    private IClipboardService ClipboardService { get; set; } = null!;
     [Inject]
-    IJSRuntime JSRuntime { get; set; }
+    private IEventAggregator EventAggregator { get; set; } = null!;
 
     private MudDataGrid<BasketLineDto> LinesDataGridInstance { get; set; }
     private BasketOrderLinesDto? BasketOrderLinesDto { get; set; }
@@ -33,12 +32,8 @@ public partial class Lines : FluxorComponentBase<LinesState, FetchLinesAction>
     private List<BasketValueDto?>? LogisticFlows { get; set; }
 
     private BasketLineDto? CurrentLine { get; set; }
-    private BasketLineDto? LineRightClicked { get; set; }
-
     private BasketLineDto? DetailedLine =>
         State.Value.BasketOrderLines?.lines?.FirstOrDefault(line => line?.RecId == CurrentLine?.RecId);
-
-    private DotNetObjectReference<Lines>? _dotNetHelper;
 
     private bool IsItemIdEditable { get; set; }
     private bool IsNameEditable { get; set; }
@@ -46,6 +41,8 @@ public partial class Lines : FluxorComponentBase<LinesState, FetchLinesAction>
     private bool IsLineAmountEditable { get; set; }
 
     private bool _isLoading = true;
+    private bool _disposed = false;
+    private IDisposable CtrlIShortcutHandlerSubscription { get; set; } = null!;
 
     protected override FetchLinesAction CreateFetchAction(LinesState state) =>
     new(state);
@@ -59,11 +56,8 @@ public partial class Lines : FluxorComponentBase<LinesState, FetchLinesAction>
         LogisticFlows = RessourcesState?.Value.LogisticFlows
             ?? throw new ArgumentNullException("Unexpected null for LogisticFlows object.");
 
-        _dotNetHelper = DotNetObjectReference.Create(this);
-        JSRuntime.InvokeVoidAsync("registerCtrlIHandler", _dotNetHelper);
-        Logger.LogDebug("Lines initialized");
+        CtrlIShortcutHandlerSubscription = EventAggregator.Subscribe<ShortcutTriggeredEvent>(CtrlIShortcutHandler);
     }
-
 
     protected override void CacheNewFields()
     {
@@ -90,25 +84,11 @@ public partial class Lines : FluxorComponentBase<LinesState, FetchLinesAction>
             ToastService.ShowError($"Erreur lors de la copie dans le presse-papiers.");
             return;
         }
-        List<BasketLineDto?> items = [];
-        
-        await OnCopyItemsClick(LinesDataGridInstance.SelectedItems.ToList());
-    }
 
-    private async Task OnCopyItemsClick(BasketLineDto? LineRightClicked)
-    {
-        List<BasketLineDto?> items = [];
-        items.Add(LineRightClicked);
-
-        await OnCopyItemsClick(items);
-    }
-
-    private async Task OnCopyItemsClick(List<BasketLineDto> items)
-    {
         var headers = new[] { "Code article", "Quantité", "Prix unitaire" };
 
         string formattedData = DataFormatter.GenerateTabSeparatedData(
-            data: items,
+            data: LinesDataGridInstance.SelectedItems,
             headers: headers,
             selector: static (item) =>
             [
@@ -129,61 +109,34 @@ public partial class Lines : FluxorComponentBase<LinesState, FetchLinesAction>
         }
     }
 
-    private async Task OnDuplicateItemsClick(BasketLineDto? LineRightClicked)
-    {
-        var selectedItemsNums = GetRightClickedItemNums(LineRightClicked);
-        if (selectedItemsNums is null)
-            return; // Show a message to the user
-        await OnDuplicateItemsClick(selectedItemsNums, "Voulez-vous dupliquer cette ligne?");
-    }
-
     private async Task OnDuplicateItemsClick()
     {
         var selectedItemsNums = GetSelectedItemsNums();
         if (selectedItemsNums is null || selectedItemsNums.Count < 1)
             return; // Show a message to the user
 
-        await OnDuplicateItemsClick(selectedItemsNums, "Voulez-vous dupliquer les lignes sélectionnées?");
+        await ModalService.ShowConfirmationDialog("Voulez-vous dupliquer les lignes sélectionnées?",
+            onConfirm: () =>
+            {
+                Dispatcher.Dispatch(new DuplicateLinesAction(selectedItemsNums));
+                LinesDataGridInstance.SelectedItems.Clear();
+            });
     }
 
-    private async Task OnDuplicateItemsClick(List<int> items, string message)
-    {
-        await ModalService.ShowConfirmationDialog(message,
-           onConfirm: () =>
-           {
-               Dispatcher.Dispatch(new DuplicateLinesAction(items));
-               LinesDataGridInstance.SelectedItems.Clear();
-           });
-    }
-
-    private async Task OnDeleteItemsClick(BasketLineDto? LineRightClicked)
-    {
-        var selectedItemsNums = GetRightClickedItemNums(LineRightClicked);
-        if (selectedItemsNums is null)
-            return; // Show a message to the user
-
-        await OnDeleteItemsClick(selectedItemsNums, "Voulez-vous supprimer cette ligne??");
-    }
     private async Task OnDeleteItemsClick()
     {
         var selectedItemsNums = GetSelectedItemsNums();
         if (selectedItemsNums is null || selectedItemsNums.Count < 1)
             return; // Show a message to the user
 
-        await OnDeleteItemsClick(selectedItemsNums, "Voulez-vous supprimer les lignes sélectionnées?");
-    }
-
-    private async Task OnDeleteItemsClick(List<int> items, string message)
-    {
-        await ModalService.ShowConfirmationDialog(message,
+        await ModalService.ShowConfirmationDialog("Voulez-vous supprimer les lignes sélectionnées?",
             onConfirm: () =>
             {
-                Dispatcher.Dispatch(new DeleteLinesAction(items));
+                Dispatcher.Dispatch(new DeleteLinesAction(selectedItemsNums));
                 LinesDataGridInstance.SelectedItems.Clear();
             });
+
     }
-
-
 
     private List<int>? GetSelectedItemsNums()
     {
@@ -198,35 +151,19 @@ public partial class Lines : FluxorComponentBase<LinesState, FetchLinesAction>
             .ToList();
     }
 
-    private List<int>? GetRightClickedItemNums(BasketLineDto? LineRightClicked)
-    {
-        List<int> selectedItemsNums = [];
-        if (LineRightClicked != null)
-        {
-            if (LineRightClicked.LineNum?.Value != null)
-            {
-                selectedItemsNums.Add((int)LineRightClicked?.LineNum?.Value!);
-            }
-        }
-        return selectedItemsNums;
-    }
-
     private bool IsAnyItemSelected() =>
         LinesDataGridInstance.SelectedItems.Count > 0;
 
+    private async Task<IDialogReference> OpenAddLineDialogAsync(AddLineDialogTab index) =>
+         await ModalService.OpenAddLineDialogAsync(index, () =>
+                           Dispatcher.Dispatch(new ResetNewLineAction()));
 
-    //open add line dialog
-    private async Task<IDialogReference> OpenAddLineDialogAsync(AddLineDialogTab index)
+    private async void CtrlIShortcutHandler(ShortcutTriggeredEvent @event)
     {
-        return await ModalService.OpenAddLineDialogAsync(index, () =>
-                   Dispatcher.Dispatch(new ResetNewLineAction()));
-    }
+        ArgumentNullException.ThrowIfNull(@event);
 
-    [JSInvokable("CtrlIPressed")]
-    public async void CtrlIPressed()
-    {
-        Logger.LogDebug("CtrlIPressed called");
-        await OpenAddLineDialogAsync(0);
+        if (@event.Shortcut == Shortcut.CtrlI)
+            await OpenAddLineDialogAsync(AddLineDialogTab.AddLine);
     }
 
     private void RowClicked(DataGridRowClickEventArgs<BasketLineDto> ClickedRow)
@@ -234,19 +171,21 @@ public partial class Lines : FluxorComponentBase<LinesState, FetchLinesAction>
         CurrentLine = ClickedRow.Item;
     }
 
-    private MudMenu _contextMenu = null!;
-
-    private async Task RowRightClicked(DataGridRowClickEventArgs<BasketLineDto> ClickedRow)
-    {
-        LineRightClicked = ClickedRow.Item;
-        Logger.LogDebug($"the x position is {ClickedRow.MouseEventArgs.ClientX}");
-        Logger.LogDebug($"the y position is {ClickedRow.MouseEventArgs.ClientY}");
-       
-        await _contextMenu.OpenMenuAsync(ClickedRow.MouseEventArgs);
-    }
-
     private string RowStyleFunc(BasketLineDto? line, int index) =>
         line == CurrentLine
-            ? "background-color : #cce4ff; color: #084298"
+            ? "selected-row"
             : string.Empty;
+
+    protected override void Dispose(bool disposing)
+    {
+        if (!_disposed)
+        {
+            if (disposing)
+            {
+                CtrlIShortcutHandlerSubscription.Dispose();
+            }
+            _disposed = true;
+        }
+        base.Dispose(disposing);
+    }
 }

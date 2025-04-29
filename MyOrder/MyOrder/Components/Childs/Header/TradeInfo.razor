@@ -10,7 +10,7 @@
     <FetchActionTypeCascadingValue FetchActionTypeValue="FetchActionType">
         <MudStack Justify="Justify.SpaceBetween" Style="height: inherit;">
             <MudStack Spacing="2">
-                <MudText Typo="Typo.subtitle2">@BasketTradeInfo?.Turnover?.Name</MudText>
+                <MudText Typo="Typo.subtitle1" Color="Color.Secondary">@BasketTradeInfo?.Turnover?.Name</MudText>
                 <MudDataGrid Items="@Turnover"
                              SortMode="@SortMode.None"
                              Striped="true"
@@ -46,44 +46,38 @@
                 </MudDataGrid>
             </MudStack>
 
-            <CustomHeaderCard Elevation="0">
-                <HeaderContent>
-                    <MudText Typo="Typo.subtitle2" Class="pt-0">@BasketTradeInfo.InformationSectionLabel</MudText>
-                </HeaderContent>
-                <HeaderActions>
-                    <div style="display: flex; align-items: center; justify-content: center; height: 4vh;">
-                        @* @if (BasketOrderInfo?.CustomerTags is { Count: > 0 }) *@
-                        @* { *@
-                        @*     <MudStack Row="true" Spacing="2" Justify="Justify.FlexStart" Style=""> *@
-                        @*         @foreach (var item in BasketOrderInfo.CustomerTags) *@
-                        @*         { *@
-                        @*             if (item is not null) *@
-                        @*             { *@
-                        @*                 <MudIcon Color="@CustomerTagColorHelper(item.Value)" *@
-                        @*                          Title="@FieldUtility.NullOrWhiteSpaceHelperWithDash(item.Description)" *@
-                        @*                          Icon="@CustomerTagIconHelper(item.Value)" *@
-                        @*                          Size="Size.Large" /> *@
-                        @*             } *@
-                        @*         } *@
-                        @*     </MudStack> *@
-                        @* } *@
-                        <MudIcon Color="Color.Warning"
-                                 Icon="@Icons.Material.Filled.WarningAmber"
-                                 Title="Not implemented"
-                                 Size="Size.Medium" />
-                    </div>
-                </HeaderActions>
-                <BodyContent>
-                    <DisplayField Field="@BasketTradeInfo!.ActivityArea" />
-                </BodyContent>
-            </CustomHeaderCard>
+            <div>
+                <MudStack Row="true" StretchItems="StretchItems.Start" Spacing="0">
+                    <MudText Typo="Typo.subtitle1" Color="Color.Secondary" Class="ml-n">@BasketTradeInfo.InformationSectionLabel</MudText>
+                    @* @if (BasketOrderInfo?.CustomerTags is { Count: > 0 }) *@
+                    @* { *@
+                    @*     <MudStack Row="true" Spacing="2" Justify="Justify.FlexStart" Style=""> *@
+                    @*         @foreach (var item in BasketOrderInfo.CustomerTags) *@
+                    @*         { *@
+                    @*             if (item is not null) *@
+                    @*             { *@
+                    @*                 <MudIcon Color="@CustomerTagColorHelper(item.Value)" *@
+                    @*                          Title="@FieldUtility.NullOrWhiteSpaceHelperWithDash(item.Description)" *@
+                    @*                          Icon="@CustomerTagIconHelper(item.Value)" *@
+                    @*                          Size="Size.Large" /> *@
+                    @*             } *@
+                    @*         } *@
+                    @*     </MudStack> *@
+                    @* } *@
+                    <MudIcon Color="Color.Warning"
+                             Icon="@Icons.Material.Filled.WarningAmber"
+                             Title="Not implemented"
+                             Size="Size.Medium" />
+                </MudStack>
+                <DisplayField Field="@BasketTradeInfo!.ActivityArea" />
+            </div>
 
             <!--Contract en cours-->
             @if (Contract is not null)
             {
                 <MudStack Spacing="6" Class="mt-6">
                     <div>
-                        <MudText Typo="Typo.subtitle2" Color="Color.Warning">@BasketTradeInfo!.ContractSectionLabel</MudText>
+                        <MudText Typo="Typo.subtitle1" Color="Color.Warning">@BasketTradeInfo!.ContractSectionLabel</MudText>
 
                         <MudGrid Spacing="1">
                             <MudItem xs="6">
@@ -137,8 +131,8 @@
             }
             else
             {
-                <MudText Typo="Typo.subtitle1" Color="Color.Warning">Contrat en cours</MudText>
-                <MudText Typo="Typo.body1">Aucun contrat en cours</MudText>
+                <MudText Typo="Typo.subtitle1" Color="Color.Secondary">Contrat en cours</MudText>
+                <MudText Typo="Typo.body2"><em>Aucun contrat en cours</em></MudText>
                 <MudSpacer />
             }
         </MudStack>

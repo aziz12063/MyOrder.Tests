@@ -47,12 +47,6 @@ public partial class DisplayField<T>
     private string? TooltipText => Field?.Description ??
         Field?.Name;
 
-    protected override void OnInitialized()
-    {
-        //FormatField();
-        base.OnInitialized();
-    }
-
     protected override void OnParametersSet()
     {
         InternalCssClass = Field?.DisplayStyle switch

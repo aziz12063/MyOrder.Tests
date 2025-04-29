@@ -11,7 +11,6 @@
           Visible="BadgeVisible">
     <MudButton Variant="Variant.Text"
                DropShadow="false"
-               Color="@Color"
                OnClick="OnButtonClick"
                Class="px-1 rounded-lg"
                @onmouseover="() => isHovered = true"
@@ -19,11 +18,12 @@
                Style="@($"background-color: {(isHovered ? "rgba(255, 255, 255, 0.1)" : "transparent")};")">
         <MudStack Spacing="0"
                   Class="align-center justify-center">
-            <MudIcon Style="font-size:1.875rem;"
+            <MudIcon Style="@($"font-size:2.5rem; {ColorStyle}")"
                      Icon="@Icon" />
             <MudText Typo="Typo.subtitle2"
                      Align="Align.Center"
-                     Class="">@BasketActionsBase.MenuLabel</MudText>
+                     Class="mt-n1"
+                     Style="color: var(--mud-palette-dark-lighten)">@BasketActionsBase.MenuLabel</MudText>
         </MudStack>
     </MudButton>
 </MudBadge>
@@ -36,10 +36,10 @@
     public BasketActionsBase? BasketActionsBase { get; set; }
 
     [Parameter]
-    public Color Color { get; set; }
+    public EventCallback OnClickCallback { get; set; }
 
     [Parameter]
-    public EventCallback OnClickCallback { get; set; }
+    public string ColorStyle { get; set; } = string.Empty;
 
     public bool BadgeVisible { get; set; } = false;
     public bool isHovered = false;

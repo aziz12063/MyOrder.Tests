@@ -1,6 +1,6 @@
-﻿@using MyOrder.Components.Common.Input
+﻿@using MyOrder.Components.Childs.Lines.AddLine
+@using MyOrder.Components.Common.Input
 @using MyOrder.Store.LinesUseCase
-@using MyOrder.Components.Childs.Lines.AddLine;
 @using static MudBlazor.CategoryTypes
 @inherits FluxorComponentBase<LinesState, FetchLinesAction>
 
@@ -13,7 +13,6 @@
     <MudGrid Spacing="4" Class="mt-1 mb-5">
 
         <MudItem xs="12">
-           
             <MudDataGrid @ref="LinesDataGridInstance"
                          T="BasketLineDto"
                          Bordered="true"
@@ -32,15 +31,14 @@
                          SelectOnRowClick="false"
                          ReadOnly="false"
                          RowClick="RowClicked"
-                         RowStyleFunc="RowStyleFunc"
-                         RowContextMenuClick="RowRightClicked">
+                         RowClassFunc="RowStyleFunc">
                 <ToolBarContent>
                     <MudTooltip Text="Ajouter un article"
                                 ShowOnFocus="false">
                         <MudIconButton Icon="@Icons.Material.TwoTone.Add"
                                        Variant="Variant.Filled"
                                        Size="Size.Medium"
-                                       Color="Color.Tertiary"
+                                       Color="Color.Success"
                                        OnClick="@(() => OpenAddLineDialogAsync(AddLineDialogTab.AddLine))" />
                     </MudTooltip>
                     &ensp;
@@ -58,7 +56,7 @@
                         <MudIconButton Icon="@Icons.Material.Filled.ShoppingCart"
                                        Variant="Variant.Filled"
                                        Size="Size.Medium"
-                                       Color="Color.Secondary"
+                                       Color="Color.Info"
                                        OnClick="@(() => OpenAddLineDialogAsync(AddLineDialogTab.OrdredItems))" />
                     </MudTooltip>
                     &ensp;
@@ -67,7 +65,7 @@
                         <MudIconButton Icon="@Icons.Material.Filled.Search"
                                        Variant="Variant.Filled"
                                        Size="Size.Medium"
-                                       Color="Color.Dark"
+                                       Color="Color.Secondary"
                                        OnClick="@(() => OpenAddLineDialogAsync(AddLineDialogTab.Search))" />
                     </MudTooltip>
                     &ensp;
@@ -81,7 +79,6 @@
                     </MudTooltip>
 
                     <MudSpacer />
-
                     <MudTooltip Text="Copier les articles sélectionnés">
                         <MudIconButton Icon="@Icons.Material.TwoTone.ContentCopy"
                                        Variant="Variant.Filled"
@@ -143,23 +140,25 @@
                         </CellTemplate>
                     </TemplateColumn>
 
-                    @* <TemplateColumn Editable="false" *@
-                    @*                 Title="Remise Std"> *@
-                    @*     <CellTemplate> *@
-                    @*         <GenericNumericField Field="context.Item.DiscountRate" *@
-                    @*                              Min="0" *@
-                    @*                              HideLabel="true" *@
-                    @*                              Format="P" *@
-                    @*                              Margin="Margin.None" /> *@
-                    @*     </CellTemplate> *@
-                    @* </TemplateColumn> *@
+                    <PropertyColumn Property="context => context.ReferencePrice.Value"
+                                    Title="Prix DC"
+                                    Editable="false"
+                                    Format="C"
+                                    CellStyle="text-align:right" />
 
-                    @* <TemplateColumn Editable="false" *@
-                    @*                 Title="Remise DC Not impl."> *@
-                    @*     <CellTemplate> *@
 
-                    @*     </CellTemplate> *@
-                    @* </TemplateColumn> *@
+                    <PropertyColumn Property="context => context.ReferencePriceDiscount.Value"
+                                    Title="Remise DC"
+                                    Editable="false"
+                                    Format="#0 '%'"
+                                    CellStyle="text-align:right" />
+
+
+                    <PropertyColumn Property="context => context.ReferencePrice.Value"
+                                    Title="Marge"
+                                    Editable="false"
+                                    Format="#0 '%'"
+                                    CellStyle="text-align:right" />
 
                     <PropertyColumn Property="context => context.SalesPrice.Value"
                                     Title="Prix Unitaire"
@@ -167,18 +166,7 @@
                                     Format="C"
                                     CellStyle="text-align:right" />
 
-                    @* <TemplateColumn Editable="false" *@
-                    @*                 Title="Prix Unitaire"> *@
-                    @*     <CellTemplate> *@
-                    @*         <GenericNumericField Field="context.Item.SalesPrice" *@
-                    @*                              HideLabel="true" *@
-                    @*                              Format="C" *@
-                    @*                              ReadOnly="true" *@
-                    @*                              Margin="Margin.None" /> *@
-                    @*     </CellTemplate> *@
-                    @* </TemplateColumn> *@
-
-                    <PropertyColumn Property="x => x.DiscountType.Value.Description ?? string.Empty"
+                    <PropertyColumn Property="x => x.ShortDiscountDescription.Value ?? string.Empty"
                                     Title="Tarification"
                                     Editable="false" />
 
@@ -196,33 +184,6 @@
                 </NoRecordsContent>
 
             </MudDataGrid>
-           
-            <MudMenu PositionAtCursor="true" @ref="_contextMenu" id="_contextMenu" 
-                Dense="true">
-                
-                   
-                        <MudMenuItem Icon="@Icons.Material.TwoTone.ContentCopy"
-                                     OnClick="@(() => OnCopyItemsClick(LineRightClicked))">
-                            Copier
-                        </MudMenuItem>
-                   
-
-                   
-                        <MudMenuItem Icon="@Icons.Material.TwoTone.Layers"
-                                     OnClick="@(() => OnDuplicateItemsClick(LineRightClicked))">
-                            Dupliquer
-                        </MudMenuItem>
-                   
-
-                   
-                        <MudMenuItem Icon="@Icons.Material.TwoTone.Delete"
-                                     OnClick="@(() => OnDeleteItemsClick(LineRightClicked))">
-                            Supprimer
-                        </MudMenuItem>
-                  
-                
-            </MudMenu>
-           
         </MudItem>
 
         <!--S1-->
@@ -240,8 +201,4 @@
             <LinePricesQuantities BasketLine="DetailedLine" />
         </MudItem>
     </MudGrid>
-
-
 </FetchActionTypeCascadingValue>
-
-

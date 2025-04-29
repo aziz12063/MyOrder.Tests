@@ -4,101 +4,125 @@ using System.Collections.Concurrent;
 
 namespace MyOrder.Shared.Services;
 
+/// <inheritdoc />
 public class EventAggregator(ILogger<EventAggregator> logger) : IEventAggregator
 {
     private readonly ConcurrentDictionary<Type, List<Delegate>> _subscribers = new();
-    private readonly ConcurrentDictionary<Type, Delegate> _defaultHandlers = new();
     private readonly object _subscriptionLock = new();
     private readonly ILogger<EventAggregator> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
-    public void Subscribe<TEvent>(Action<TEvent> action)
+    /// <inheritdoc />
+    public IDisposable Subscribe<TEvent>(Func<TEvent, Task> asyncHandler)
     {
-        ArgumentNullException.ThrowIfNull(action);
-        var eventType = typeof(TEvent);
+        ArgumentNullException.ThrowIfNull(asyncHandler);
+        AddHandler(asyncHandler);
+        return new Subscription(() => RemoveHandler(asyncHandler));
+    }
 
+    /// <inheritdoc />
+    public IDisposable Subscribe<TEvent>(Action<TEvent> syncHandler)
+    {
+        ArgumentNullException.ThrowIfNull(syncHandler);
+
+        // Wrap sync handler into a Task-returning delegate
+        Func<TEvent, Task> wrapper = evt =>
+        {
+            syncHandler(evt);
+            return Task.CompletedTask;
+        };
+
+        AddHandler(wrapper);
+        return new Subscription(() => RemoveHandler(wrapper));
+    }
+
+
+    private void AddHandler<TEvent>(Func<TEvent, Task> handler)
+    {
+        var eventType = typeof(TEvent);
         lock (_subscriptionLock)
         {
-            // Add or update the list of subscribers for the given event type
-            _subscribers.AddOrUpdate(eventType,
-                _ => [action],
+            _subscribers.AddOrUpdate(
+                eventType,
+                _ => [handler],
                 (_, list) =>
                 {
-                    list.Add(action);
+                    list.Add(handler);
                     return list;
                 });
         }
     }
 
-    public void Unsubscribe<TEvent>(Action<TEvent> action)
+    private void RemoveHandler<TEvent>(Func<TEvent, Task> handler)
     {
-        ArgumentNullException.ThrowIfNull(action);
         var eventType = typeof(TEvent);
-
         lock (_subscriptionLock)
         {
-            if (_subscribers.TryGetValue(eventType, out var actions))
+            if (_subscribers.TryGetValue(eventType, out var list))
             {
-                // Remove the specified action from the subscriber list
-                actions.RemoveAll(a => a.Equals(action));
-                if (actions.Count == 0)
-                {
-                    // Remove the event type if there are no more subscribers
+                list.RemoveAll(d => d.Equals(handler));
+                if (list.Count == 0)
                     _subscribers.TryRemove(eventType, out _);
-                }
             }
         }
     }
 
-    public void SetDefaultHandler<TEvent>(Action<TEvent> handler)
+    /// <inheritdoc />
+    public async Task PublishAsync<TEvent>(TEvent evt)
     {
-        ArgumentNullException.ThrowIfNull(handler);
-        var eventType = typeof(TEvent);
-        // Set a default handler for the specified event type
-        _defaultHandlers[eventType] = handler;
-    }
+        ArgumentNullException.ThrowIfNull(evt);
 
-    public void Publish<TEvent>(TEvent eventToPublish)
-    {
-        ArgumentNullException.ThrowIfNull(eventToPublish);
         var eventType = typeof(TEvent);
+        List<Delegate>? snapshot = null;
 
-        if (_subscribers.TryGetValue(eventType, out var actions))
+        // Take a quick snapshot under lock
+        lock (_subscriptionLock)
         {
-            foreach (var action in actions)
-            {
-                try
-                {
-                    ((Action<TEvent>)action)(eventToPublish);
-                }
-                catch (Exception ex)
-                {
-                    // Log exceptions thrown by subscribers to ensure they do not affect the publisher
-                    _logger.LogError(ex, "Subscriber threw an exception for event {EventType}", eventType.Name);
-                }
-            }
+            if (_subscribers.TryGetValue(eventType, out var handlers))
+                snapshot = new List<Delegate>(handlers);
         }
-        else if (_defaultHandlers.TryGetValue(eventType, out var defaultHandler))
+
+        if (snapshot is null || snapshot.Count == 0)
+        {
+            _logger.LogWarning("No subscribers for event {Event}", eventType.Name);
+            return;
+        }
+
+        // Invoke all handlers in parallel, isolating exceptions
+        var tasks = snapshot.Select(async del =>
         {
             try
             {
-                ((Action<TEvent>)defaultHandler)(eventToPublish);
+                await ((Func<TEvent, Task>)del)(evt).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
-                // Log exceptions thrown by the default handler to ensure they do not affect the publisher
-                _logger.LogError(ex, "Default handler threw an exception for event {EventType}", eventType.Name);
+                _logger.LogError(ex, "Subscriber threw for {Event}", eventType.Name);
             }
-        }
-        else
-        {
-            // Log a warning if no subscribers or default handler exist for the event type
-            _logger.LogWarning("Unhandled event of type {EventType}", eventType.Name);
-        }
+        });
+
+        await Task.WhenAll(tasks).ConfigureAwait(false);
     }
 
+    /// <inheritdoc />
     public bool HasSubscribers<TEvent>()
+        => _subscribers.TryGetValue(typeof(TEvent), out var list)
+           && list.Count > 0;
+
+    /// <summary>
+    /// Lightweight <see cref="IDisposable"/> that calls back to remove a subscription.
+    /// </summary>
+    private class Subscription(Action unsubscribe) : IDisposable
     {
-        // Check if there are any subscribers for the specified event type
-        return _subscribers.TryGetValue(typeof(TEvent), out var actions) && actions.Count > 0;
+        private readonly Action _unsubscribe = unsubscribe;
+        private bool _disposed;
+
+        public void Dispose()
+        {
+            if (!_disposed)
+            {
+                _unsubscribe();
+                _disposed = true;
+            }
+        }
     }
 }

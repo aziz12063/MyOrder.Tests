@@ -18,16 +18,15 @@ public enum AddLineDialogTab
     Search,
     FreeText
 }
+
 public partial class AddLineDialog
 {
     [CascadingParameter]
     private MudDialogInstance DialogInstance { get; set; }
-    [Parameter]
-    public int Index { get; set; } = 0;
     private AddLineTab? AddLineTab { get; set; }
     private MudButton? AddLineButton { get; set; }
     private string? FreeText { get; set; }
-    
+
     [Inject]
     public ILogger<AddLineDialog> Logger { get; set; }
     [Inject]
@@ -46,17 +45,7 @@ public partial class AddLineDialog
         set
         {
             CurrentTab = (AddLineDialogTab)value;
-            
-        }
-    }
 
-    protected override void OnAfterRender(bool firstRender)
-    {
-        base.OnAfterRender(firstRender);
-        if (!firstRender)
-        {
-            ArgumentNullException.ThrowIfNull(AddLineButton, $"{nameof(AddLineTab)} component is not found.");
-            ArgumentNullException.ThrowIfNull(AddLineButton, $"{nameof(AddLineButton)} {nameof(MudButton)} is not found.");
         }
     }
 
@@ -71,7 +60,7 @@ public partial class AddLineDialog
             return;
         }
         AddLineTab?.LoadItem(itemId);
-        CurrentTab = 0;
+        CurrentTab = AddLineDialogTab.AddLine;
     }
 
     private void ResetLine()

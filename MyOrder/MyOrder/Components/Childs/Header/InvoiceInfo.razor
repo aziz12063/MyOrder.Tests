@@ -14,7 +14,7 @@
                 <!--Compte facturé-->
                 <CustomHeaderCard>
                     <HeaderContent>
-                        <MudText Typo="Typo.subtitle2">@BasketInvoiceInfo!.AccountSectionLabel</MudText>
+                        <MudText Typo="Typo.subtitle1" Color="Color.Secondary">@BasketInvoiceInfo!.AccountSectionLabel</MudText>
                         <MudTooltip Text="Chercher client">
                             <MudIconButton Icon="@Icons.Material.Filled.Search"
                                            Size="Size.Small"
@@ -49,7 +49,7 @@
                     <CardHeaderContent>
                         <MudStack Row="true" Spacing="1" StretchItems="StretchItems.Start" Class="pb-2" AlignItems="AlignItems.Center">
 
-                            <MudText Typo="Typo.subtitle2">@BasketInvoiceInfo!.PaymentSectionLabel</MudText>
+                            <MudText Typo="Typo.subtitle1" Color="Color.Secondary">@BasketInvoiceInfo!.PaymentSectionLabel</MudText>
                             @if (!FieldUtility.IsHidden(PaymentAuthorizationAction))
                             {
                                 <MudTooltip Text="@PaymentAuthorizationAction!.Description">
@@ -94,7 +94,7 @@
             <MudCard Elevation="0" Class="px-2 py-0" Style="background-color: transparent;">
                 <MudCardHeader Class="px-1 py-2 ma-n1">
                     <CardHeaderContent>
-                        <MudText Typo="Typo.subtitle2">@BasketInvoiceInfo!.InformationSectionLabel</MudText>
+                        <MudText Typo="Typo.subtitle1" Color="Color.Secondary">@BasketInvoiceInfo!.InformationSectionLabel</MudText>
                     </CardHeaderContent>
                 </MudCardHeader>
                 <MudCardContent Class="pa-0">

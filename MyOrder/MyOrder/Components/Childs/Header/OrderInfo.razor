@@ -13,7 +13,7 @@
             <!-- Contact Client -->
             <CustomHeaderCard>
                 <HeaderContent>
-                    <MudText Typo="Typo.subtitle2">@BasketOrderInfo!.AccountSectionLabel</MudText>
+                    <MudText Typo="Typo.subtitle1" Color="Color.Secondary">@BasketOrderInfo!.AccountSectionLabel</MudText>
                     <MudTooltip Text="Salesforce? -Not Implemented">
                         <MudIconButton Icon="@Icons.Material.Filled.Cloud" Size="Size.Small" />
                     </MudTooltip>
@@ -45,7 +45,7 @@
 
             <CustomHeaderCard>
                 <HeaderContent>
-                    <MudText Typo="Typo.subtitle2">@BasketOrderInfo!.ContactSectionLabel</MudText>
+                    <MudText Typo="Typo.subtitle1" Color="Color.Secondary">@BasketOrderInfo!.ContactSectionLabel</MudText>
                     <MudTooltip Text="Chercher contact">
                         <MudIconButton Icon="@Icons.Material.Filled.Search" Size="Size.Small" OnClick="OpenContactSearchDialogAsync" />
                     </MudTooltip>
@@ -78,7 +78,8 @@
 
             <CustomHeaderCard Elevation="0">
                 <HeaderContent>
-                    <MudText Typo="Typo.subtitle2" Class="pt-0">@BasketOrderInfo!.InformationSectionLabel</MudText>
+                    <MudText Typo="Typo.subtitle1" Color="Color.Secondary"
+                             Class="pt-0">@BasketOrderInfo!.InformationSectionLabel</MudText>
                 </HeaderContent>
 
                 <BodyContent>

@@ -6,15 +6,12 @@
 .custom-appbar .mud-toolbar {
     padding-left: 20px !important;
     padding-right: 20px !important;
-/*    background: linear-gradient(45deg, rgba(47, 153, 225, 1) 10%, rgba(20, 126, 218, 1) 30%, rgba(10, 116, 218, 1) 50%);*/
+    /*    background: linear-gradient(45deg, rgba(47, 153, 225, 1) 10%, rgba(20, 126, 218, 1) 30%, rgba(10, 116, 218, 1) 50%);*/
 }
 
 .logo {
-    width: auto;
-    height: 44px;
-    background-color: #fbfaf7;
-    border-radius: 4px;
-    box-shadow: 0 0 10px 1px #abc5ff78;
+    height: 42px !important;
+    width: auto !important;
 }
 
 .header-cards-height {
@@ -66,6 +63,37 @@
     }
 
 
+
+.adress-textarea textarea {
+    margin: 8px 14px !important;
+    line-height: 1.32 !important;
+}
+
+/* Fields */
+
+.onlyfordisplay-field input {
+    background-color: #f0f0f0; /* Slightly darker gray background */
+    border: none; /* No border to show it's non-interactive */
+    color: #888; /* Dimmed text color */
+    font-style: italic; /* Italic to reinforce it's display-only */
+    /*cursor: default;*/
+}
+
+.onlyfordisplay-field-emphasize label {
+    font-weight: 700 !important;
+}
+
+.onlyfordisplay-field-warn label {
+    font-weight: 700 !important;
+    color: var(--mud-palette-error) !important;
+}
+
+.outlined-display-field
+.mud-input-outlined-border {
+    background-color: transparent;
+    box-shadow: inset 0px 0px 8px #00000020 !important
+}
+
 .outlined-display-field * {
     cursor: default !important;
 }
@@ -74,9 +102,8 @@
 .outlined-display-field span {
     padding-top: 2px !important;
     padding-bottom: 4px !important;
-    color: #6C757D;
+    /*        color: #6C757D;*/
 }
-
 
 .fixed-multiline-display-field {
     --multiple-factor: 1;
@@ -104,34 +131,6 @@
         overflow-x: hidden;
     }
 
-.onlyfordisplay-field input {
-    background-color: #f0f0f0; /* Slightly darker gray background */
-    border: none; /* No border to show it's non-interactive */
-    color: #888; /* Dimmed text color */
-    font-style: italic; /* Italic to reinforce it's display-only */
-    /*cursor: default;*/
-}
-
-.onlyfordisplay-field-emphasize label {
-    font-weight: 600 !important;
-}
-
-.onlyfordisplay-field-warn label {
-    font-weight: 600 !important;
-    color: red !important;
-}
-
-.adress-textarea textarea {
-    margin: 8px 14px !important;
-    line-height: 1.32 !important;
-}
-
-/*.mud-input[readonly] {
-    background-color: #f9f9f9;*/ /* Subtle light gray for read-only fields */
-/*border: none;*/ /* Remove border */
-/*cursor: default;*/ /* No pointer on hover */
-/*color: #666666;*/ /* Dimmed text color */
-/*}*/
 
 .readonly-field input {
     background-color: #f7f7f7; /* Light gray background */
@@ -196,6 +195,16 @@
     transform: translate(14px, -6px) scale(0.9) !important;
 }
 
+.selected-row {
+    background-color: rgba(96, 165, 250, 0.3) !important;
+    border-left: 4px solid var(--mud-palette-secondary) !important;
+    color: var(--mud-palette-primary-darken) !important;
+}
+
+    .selected-row * {
+        color: inherit !important;
+    }
+
 /*============ fonts overrides ============*/
 
 :where(.column-header) {
@@ -233,4 +242,4 @@
     border-radius: 8px;
     z-index: 1;
     box-shadow: inset 0 -1px 6px rgba(0, 0, 0, 0.15);
-} 
+}

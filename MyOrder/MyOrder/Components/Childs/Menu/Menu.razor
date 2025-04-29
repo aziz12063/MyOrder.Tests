@@ -26,7 +26,7 @@
     <!-- Nouveau Panier-->
     <AppbarMenuTemplate BasketActionsBase="BasketActions?.Open"
                         Icon="@Icons.Material.Filled.Add"
-                        Color="Color.Success">
+                        ColorStyle="@NewActionColorStyle">
 
         <FieldMenuItem Icon="@Icons.Material.Filled.AddShoppingCart"
                        Field="BasketActions?.Open?.NewBasket"
@@ -44,9 +44,10 @@
     <AppbarDivider />
     <MudStack Row="true" Spacing="MenuButtonsInterSpacing">
         <!-- Valider -->
-        <AppbarMenuTemplate Color="Color.Primary" BasketActionsBase="BasketActions?.Validate"
-                            Icon="@Icons.Material.Filled.Check">
-            <FieldMenuItem  Icon="@Icons.Material.Filled.ShoppingCartCheckout"
+        <AppbarMenuTemplate BasketActionsBase="BasketActions?.Validate"
+                            Icon="@Icons.Material.Filled.Check"
+                            ColorStyle="@ValidateActionColorStyle">
+            <FieldMenuItem Icon="@Icons.Material.Filled.ShoppingCartCheckout"
                            Field="BasketActions?.Validate?.Sales"
                            OnClickCallback="ValidateSalesHandler" />
             <FieldMenuItem Icon="@Icons.Material.Filled.Description"
@@ -58,8 +59,9 @@
         </AppbarMenuTemplate>
 
         <!-- Blocage-->
-        <AppbarMenuTemplate Color="Color.Warning" BasketActionsBase="BasketActions?.Blocking"
-                            Icon="@Icons.Material.Filled.Block">
+        <AppbarMenuTemplate BasketActionsBase="BasketActions?.Blocking"
+                            Icon="@Icons.Material.Filled.Block"
+                            ColorStyle="@BlockingActionColorStyle">
             <FieldMenuItem Icon="@Icons.Material.Outlined.FactCheck"
                            Field="BasketActions?.Blocking?.ValidationRules"
                            OnClickCallback="ValidationRulesClickHandler" />
@@ -68,8 +70,9 @@
         </AppbarMenuTemplate>
 
         <!-- Annuler -->
-        <AppbarMenuTemplate Color="Color.Error" BasketActionsBase="BasketActions?.Cancel"
-                            Icon="@Icons.Material.Filled.Close">
+        <AppbarMenuTemplate BasketActionsBase="BasketActions?.Cancel"
+                            Icon="@Icons.Material.Filled.Close"
+                            ColorStyle="@CancelActionColorStyle">
             <FieldMenuItem Icon="@Icons.Material.Filled.RemoveShoppingCart"
                            Field="BasketActions?.Cancel?.CancelBasket"
                            OnClickCallback="(async () => await ProcedureCallMenuAction(BasketActions?.Cancel?.CancelBasket))" />
@@ -85,8 +88,9 @@
     <AppbarDivider />
     <MudStack Row="true" Spacing="MenuButtonsInterSpacing">
         <!-- Envoyer-->
-        <AppbarMenuTemplate Color="Color.Info" BasketActionsBase="BasketActions?.Sending"
-                            Icon="@Icons.Material.Filled.Mail">
+        <AppbarMenuTemplate BasketActionsBase="BasketActions?.Sending"
+                            Icon="@Icons.Material.Filled.Mail"
+                            ColorStyle="@SendingActionColorStyle">
             <FieldMenuItem Icon="@Icons.Material.Filled.Done"
                            Field="BasketActions?.Sending?.ConfirmOrder" />
         </AppbarMenuTemplate>
@@ -94,6 +98,7 @@
         <!-- Notes-->
         <AppbarMenuTemplate BasketActionsBase="BasketActions?.Notes"
                             Icon="@Icons.Material.Filled.Description"
+                            ColorStyle="@NotesActionColorStyle"
                             AnchorOrigin="Origin.BottomCenter"
                             TransformOrigin="Origin.TopCenter">
             <FieldMenuItem Icon="@Icons.Material.Rounded.Notes"
@@ -106,6 +111,7 @@
         <!-- Logs-->
         <AppbarMenuTemplate BasketActionsBase="BasketActions?.Logs"
                             Icon="@Icons.Material.Filled.Menu"
+                            ColorStyle="@LogsActionColorStyle"
                             AnchorOrigin="Origin.BottomRight"
                             TransformOrigin="Origin.TopLeft">
             <FieldMenuItem Icon="@Icons.Material.Filled.EventNote"
@@ -124,6 +130,7 @@
         <!-- System -->
         <AppbarMenuTemplate BasketActionsBase="BasketActions?.System"
                             Icon="@Icons.Material.Filled.AccountCircle"
+                            ColorStyle="@SystemActionColorStyle"
                             AnchorOrigin="Origin.BottomRight"
                             TransformOrigin="Origin.TopLeft">
             @{
@@ -161,6 +168,7 @@
 
         <!-- Historique-->
         <AppbarMenuItem Icon="@Icons.Material.Filled.History"
+                        ColorStyle="@HistoryActionColorStyle"
                         BasketActionsBase="BasketActions?.History"
                         OnClickCallback="ToggleBasketHistoryPopover" />
 
@@ -170,8 +178,22 @@
 </MudStack>
 
 @code {
-    public const int MenuButtonsInterSpacing = 0;
-    public const int MenuSectionSpacing = 2;
+    public const int MenuButtonsInterSpacing = 2;
+    public const int MenuSectionSpacing = 4;
+
+    public const string NewActionColorStyle = "color: var(--mud-palette-primary);"; 
+           
+    public const string ValidateActionColorStyle = "color: var(--mud-palette-success);";
+    public const string CancelActionColorStyle = "color: var(--mud-palette-error);";    
+    public const string BlockingActionColorStyle = "color: var(--mud-palette-warning);";
+           
+    public const string SendingActionColorStyle = "color: var(--mud-palette-primary-darken);";
+    public const string NotesActionColorStyle = "color: var(--mud-palette-warning-lighten);"; 
+    public const string LogsActionColorStyle = "color: var(--mud-palette-info-darken);";      
+           
+    public const string SystemActionColorStyle = "color: var(--mud-palette-tertiary-darken);";
+    public const string HistoryActionColorStyle = "color: var(--mud-palette-info-lighten);";  
+
 
     [Parameter, EditorRequired]
     public GeneralInfoDto? GeneralInfo { get; set; }

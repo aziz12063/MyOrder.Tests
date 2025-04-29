@@ -11,99 +11,157 @@ public static class ThemeConfiguration
     {
         PaletteLight = new PaletteLight()
         {
-            Primary = "#0A74DA",
-            Secondary = "#FF4081",
-            AppbarBackground = "#F5F5F5", // <- Better than pure white
-            AppbarText = "#212121",
-            Background = "#F9FAFB",
+            Primary = "#276EF1",
+            PrimaryContrastText = "#FFFFFF",
+            PrimaryDarken = "#1A56C8",
+            PrimaryLighten = "#538BFF",
+
+            Secondary = "#5C6BC0",
+            SecondaryContrastText = "#FFFFFF",
+            SecondaryDarken = "#3949AB",
+            SecondaryLighten = "#8E99F3",
+
+            Tertiary = "#9FA8DA",
+            TertiaryContrastText = "#212121",
+            TertiaryDarken = "#7986CB",
+            TertiaryLighten = "#C5CAE9",
+
+            Info = "#00ACC1",
+            InfoContrastText = "#FFFFFF",
+            InfoDarken = "#00838F",
+            InfoLighten = "#4DD0E1",
+
+            Success = "#3AA655",
+            SuccessContrastText = "#FFFFFF",
+            SuccessDarken = "#2E7D32",
+            SuccessLighten = "#66BB6A",
+
+            Warning = "#F2994A",
+            WarningContrastText = "#FFFFFF",
+            WarningDarken = "#EF6C00",
+            WarningLighten = "#FFB74D",
+
+            Error = "#D44333",
+            ErrorContrastText = "#FFFFFF",
+            ErrorDarken = "#B71C1C",
+            ErrorLighten = "#E57373",
+
+            Black = "#000000",
+            Dark = "#212121",
+            DarkContrastText = "#FFFFFF",
+            DarkDarken = "#000000",
+            DarkLighten = "#484848",
+
+            White = "#FFFFFF",
+            GrayDefault = "#9E9E9E",
+            GrayLight = "#E0E0E0",
+            GrayLighter = "#F5F5F5",
+            GrayDark = "#757575",
+            GrayDarker = "#424242",
+
+            Background = "#FFFFFF",
+            BackgroundGray = "#F4F5F7",
             Surface = "#FFFFFF",
-            DrawerBackground = "#F9FAFB",
+            DrawerBackground = "#FFFFFF",
             DrawerText = "#212121",
+            DrawerIcon = "#757575",
+
+            AppbarBackground = "#FFFFFF",
+            AppbarText = "#212121",
+
+            LinesDefault = "#DDE2E6",
+            LinesInputs = "#B0BEC5",
+            TableLines = "#ECEFF1",
+            TableStriped = "#F9FAFB",
+            TableHover = "#E3F2FD",
+            DividerLight = "#ECEFF1",
+            Divider = "#CFD8DC",
+
             TextPrimary = "#212121",
-            TextSecondary = "#616161",
-            ActionDefault = "#0A74DA",
+            TextSecondary = "#757575",
+            TextDisabled = "#BDBDBD",
+
+            ActionDefault = "#276EF1",
             ActionDisabled = "#BDBDBD",
             ActionDisabledBackground = "#E0E0E0",
-            Divider = "#E0E0E0",
-            DividerLight = "#F0F0F0",
-            HoverOpacity = 0.06f,
-            Success = "#4CAF50",
-            Error = "#F44336",
-            Warning = "#FB8C00",
-            Info = "#2196F3",
-            OverlayLight = "#FFFFFFD9",
-            TableHover = "#f0f8ff"
+            HoverOpacity = 0.08f,
+            RippleOpacity = 0.12f,
+            RippleOpacitySecondary = 0.2f,
+
+            OverlayDark = "rgba(33,33,33,0.5)",
+            OverlayLight = "rgba(255,255,255,0.5)",
+
+            Skeleton = "#E0E0E0"
         },
         Typography = new Typography
         {
-            Default = new Default
-            {
+            Default = new Default 
+            { 
                 FontFamily = ["Roboto", "Arial", "sans-serif"],
-                FontSize = "1rem",
-                FontWeight = 400,
-                LineHeight = 1.5,
+                FontSize = "1rem", 
+                FontWeight = 400, 
+                LineHeight = 1.5, 
                 LetterSpacing = "0.00938em"
             },
             H1 = new H1
-            {
+            { 
                 FontFamily = ["Roboto", "Arial", "sans-serif"],
                 FontSize = "2.5rem",
-                FontWeight = 300,
-                LineHeight = 1.2,
-                LetterSpacing = "-0.01562em"
+                FontWeight = 300, 
+                LineHeight = 1.2, 
+                LetterSpacing = "-0.01562em" 
             },
-            H2 = new H2
+            H2 = new H2 
             {
-                FontFamily = ["Roboto", "Arial", "sans-serif"],
+                FontFamily = ["Roboto", "Arial", "sans-serif"], 
                 FontSize = "2rem",
                 FontWeight = 300,
-                LineHeight = 1.3,
-                LetterSpacing = "-0.00833em"
+                LineHeight = 1.3, 
+                LetterSpacing = "-0.00833em" 
             },
-            H3 = new H3
-            {
-                FontFamily = ["Roboto", "Arial", "sans-serif"],
-                FontSize = "1.75rem",
+            H3 = new H3 
+            { 
+                FontFamily = ["Roboto", "Arial", "sans-serif"], 
+                FontSize = "1.75rem", 
                 FontWeight = 400,
-                LineHeight = 1.4,
+                LineHeight = 1.4, 
                 LetterSpacing = "0em"
             },
-            H4 = new H4
-            {
+            H4 = new H4 
+            { 
                 FontFamily = ["Roboto", "Arial", "sans-serif"],
-                FontSize = "1.5rem",
-                FontWeight = 400,
+                FontSize = "1.5rem", FontWeight = 400,
                 LineHeight = 1.4,
-                LetterSpacing = "0.00735em"
+                LetterSpacing = "0.00735em" 
             },
-            H5 = new H5
-            {
+            H5 = new H5 
+            { 
                 FontFamily = ["Roboto", "Arial", "sans-serif"],
-                FontSize = "1.25rem",
-                FontWeight = 500,
-                LineHeight = 1.5,
+                FontSize = "1.25rem", 
+                FontWeight = 500, 
+                LineHeight = 1.5, 
                 LetterSpacing = "0em"
             },
-            H6 = new H6
+            H6 = new H6 
             {
-                FontFamily = ["Roboto", "Arial", "sans-serif"],
+                FontFamily = ["Roboto", "Arial", "sans-serif"], 
                 FontSize = "1.125rem",
-                FontWeight = 500,
+                FontWeight = 600,
                 LineHeight = 1.6,
                 LetterSpacing = "0.0075em"
             },
             Subtitle1 = new Subtitle1
             {
                 FontFamily = ["Roboto", "Arial", "sans-serif"],
-                FontSize = "1.125rem",
+                FontSize = "1rem",
                 FontWeight = 500,
-                LineHeight = 1.75,
+                LineHeight = 1.6,
                 LetterSpacing = "0.00938em"
             },
             Subtitle2 = new Subtitle2
             {
                 FontFamily = ["Roboto", "Arial", "sans-serif"],
-                FontSize = "1rem",
+                FontSize = "0.9375rem",
                 FontWeight = 500,
                 LineHeight = 1.57,
                 LetterSpacing = "0.00938em"
@@ -119,7 +177,7 @@ public static class ThemeConfiguration
             Body2 = new Body2
             {
                 FontFamily = ["Roboto", "Arial", "sans-serif"],
-                FontSize = "0.9375rem",
+                FontSize = "0.875rem",
                 FontWeight = 400,
                 LineHeight = 1.43,
                 LetterSpacing = "0.01071em"

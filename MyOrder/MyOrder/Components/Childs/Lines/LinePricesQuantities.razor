@@ -38,7 +38,6 @@
                      Elevation="0"
                      Class="mx-n3"
                      RowStyleFunc="(item, _) => RowStyleFunc(item)">
-                     
             <Columns>
                 @if (BasketPrices?.QuantityVisible == true)
                 {
@@ -68,7 +67,8 @@
                     <PropertyColumn Property="line => line == null? 0 : line.DiscountPrice"
                                     HeaderClass="pa-1 ma-1"
                                     CellClass="pa-1 ma-1"
-                                    CellStyle="text-align: right">
+                                    CellStyle="text-align: right"
+                                    Format="#0 '%'">
                         <HeaderTemplate>
                             <MudText Typo="Typo.body2" Class="prices-matrix-header-content">Prix Rem.</MudText>
                         </HeaderTemplate>
@@ -82,7 +82,7 @@
                                     CellStyle="text-align: right"
                                     Format="C">
                         <HeaderTemplate>
-                            <MudText Typo="Typo.body2" Class="prices-matrix-header-content" Style="align-items:flex-end">Prix / @BasketLine?.MultipleQuantity?.Value</MudText>
+                            <MudText Typo="Typo.body2" Class="prices-matrix-header-content">Prix / @BasketLine?.MultipleQuantity?.Value</MudText>
                         </HeaderTemplate>
                     </PropertyColumn>
                 }
@@ -91,7 +91,8 @@
                     <PropertyColumn Property="line => line == null? 0 : line.DiscountRate"
                                     HeaderClass="pa-1 ma-1"
                                     CellClass="pa-1 ma-1"
-                                    CellStyle="text-align: right">
+                                    CellStyle="text-align: right"
+                                    Format="#0 '%'">
                         <HeaderTemplate>
                             <MudText Typo="Typo.body2" Class="prices-matrix-header-content">% Dégress.</MudText>
                         </HeaderTemplate>
@@ -104,16 +105,13 @@
                                     HeaderClass="pa-1 ma-1"
                                     CellClass="pa-1 ma-1"
                                     CellStyle="text-align: right"
-                                    Format="P">
+                                    Format="#0 '%'">
                         <HeaderTemplate>
                             <MudText Typo="Typo.body2" Style="font-weight:500">Marge</MudText>
                         </HeaderTemplate>
                     </PropertyColumn>
                 }
-
             </Columns>
         </MudDataGrid>
-        
-
     </MudStack>
 </LineDetailsTemplate>

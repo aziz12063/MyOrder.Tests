@@ -15,7 +15,7 @@ public partial class GenericTextField<T> : GenericInputBase<T>
     [Parameter]
     public string? Format { get; set; }
     [Parameter]
-    public Variant Variant { get; set; } = Variant.Text;
+    public Variant Variant { get; set; } = Variant.Outlined;
     [Parameter]
     public string Class { get; set; } = string.Empty;
     [Parameter]

@@ -62,7 +62,7 @@ public static class FieldUtility
 
             DisplayFieldFormat.Percentage
                 when value is IFormattable fPct
-                => $"{fPct.ToString("0", culture)}%",
+                => $"{fPct.ToString("0", culture)} %",
 
             DisplayFieldFormat.Percentage
                 when decimal.TryParse(value.ToString(), NumberStyles.Any, culture, out var dPct)

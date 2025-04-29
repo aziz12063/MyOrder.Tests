@@ -12,7 +12,8 @@
 @inject IBasketService BasketService
 
 @* Required for MudBlazor framework *@
-<MudThemeProvider Theme="@ThemeConfiguration.RajaTheme" />
+<MudThemeProvider @ref="_themeProvider"
+                  Theme="@ThemeConfiguration.RajaTheme" />
 @* <MudThemeProvider Theme="_themeManager.Theme" /> *@
 
 <MudPopoverProvider />
@@ -26,13 +27,16 @@
 <PublishBasketOverlay />
 
 <MudLayout>
-    <MudAppBar Elevation="2" Class="custom-appbar">
-        <GeneralInfo />
-    </MudAppBar>
+    <CascadingValue IsFixed="true"
+                    Value="_themeProvider">
+        <MudAppBar Elevation="2" Class="custom-appbar">
+            <GeneralInfo />
+        </MudAppBar>
 
-    <MudMainContent>
-        @Body
-    </MudMainContent>
+        <MudMainContent>
+            @Body
+        </MudMainContent>
+    </CascadingValue>
 </MudLayout>
 
 <div id="blazor-error-ui">
@@ -40,3 +44,7 @@
     <a href="" class="reload">Reload</a>
     <a class="dismiss">🗙</a>
 </div>
+
+@code {
+    private MudThemeProvider _themeProvider = null!;
+}

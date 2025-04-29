@@ -8,7 +8,7 @@ using System.Reflection;
 
 namespace MyOrder.Services;
 
-public class NotificationService : INotificationService
+public sealed class NotificationService : INotificationService, IDisposable
 {
     private readonly IEventAggregator _eventAggregator;
     private readonly IToastService _toastService;
@@ -16,6 +16,7 @@ public class NotificationService : INotificationService
     private readonly ILogger<NotificationService> _logger;
     private readonly IDispatcher _dispatcher;
 
+    private readonly List<IDisposable> _subscriptions = [];
     private bool _subscriptionInitialized = false;
 
     public NotificationService(IEventAggregator eventAggregator, IToastService toastService,
@@ -39,37 +40,47 @@ public class NotificationService : INotificationService
 
         _subscriptionInitialized = true;
 
-        try
-        {
-            var methods = GetType().GetMethods(BindingFlags.NonPublic | BindingFlags.Instance)
-              .Where(m => m.GetCustomAttributes(typeof(HandlesEventAttribute), false).Length != 0);
+        var methods = GetType()
+          .GetMethods(BindingFlags.NonPublic | BindingFlags.Instance)
+          .Where(m => m.GetCustomAttributes(typeof(HandlesEventAttribute), false).Length != 0);
 
-            foreach (var method in methods)
+        foreach (var method in methods)
+        {
+            var attr = method.GetCustomAttribute<HandlesEventAttribute>()!;
+            var eventType = attr.EventType;
+            if (eventType is null)
             {
-                var attr = (HandlesEventAttribute?)method.GetCustomAttribute(typeof(HandlesEventAttribute));
-                var eventType = attr?.EventType;
-
-                if (eventType is null)
-                {
-                    _logger.LogWarning("Method {MethodName} is marked with the [HandlesEvent] attribute, but the EventType property is not set.", method.Name);
-                    continue;
-                }
-
-                var subscribeMethod = typeof(IEventAggregator).GetMethod("Subscribe")?.MakeGenericMethod(eventType);
-
-                if (subscribeMethod is null)
-                {
-                    _logger.LogError("Could not find the Subscribe method on the IEventAggregator interface.");
-                }
-
-                var handlerDelegate = Delegate.CreateDelegate(typeof(Action<>).MakeGenericType(eventType), this, method);
-
-                subscribeMethod!.Invoke(_eventAggregator, [handlerDelegate]);
+                _logger.LogWarning(
+                    "Method {MethodName} is marked [HandlesEvent] but EventType was null.",
+                    method.Name);
+                continue;
             }
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "An error occurred while subscribing to events.");
+
+            // pick sync vs async overload
+            bool returnsTask = typeof(Task).IsAssignableFrom(method.ReturnType);
+            Type delegateType = returnsTask
+                ? typeof(Func<,>).MakeGenericType(eventType, typeof(Task))
+                : typeof(Action<>).MakeGenericType(eventType);
+
+            // create your handler delegate
+            var handlerDelegate = Delegate.CreateDelegate(delegateType, this, method);
+
+            // find the correct Subscribe<TEvent>(…) overload
+            var subscribeMethod = typeof(IEventAggregator)
+                .GetMethods()
+                .Where(m => m.Name == nameof(IEventAggregator.Subscribe)
+                         && m.IsGenericMethodDefinition
+                         && m.GetParameters().Length == 1
+                         && m.GetParameters()[0].ParameterType.GetGenericTypeDefinition()
+                              == (returnsTask ? typeof(Func<,>) : typeof(Action<>)))
+                .Single()
+                .MakeGenericMethod(eventType);
+
+            // invoke and *capture* the IDisposable token
+            var token = (IDisposable)subscribeMethod
+                .Invoke(_eventAggregator, [handlerDelegate])!;
+
+            _subscriptions.Add(token);
         }
     }
 
@@ -120,5 +131,18 @@ public class NotificationService : INotificationService
         _dispatcher.Dispatch(new FaultAppAction(@event.Message));
         //_logger.LogError(@event.Exception, "An error occurred while processing a request to the API.");
         //_toastService.ShowError("An error occurred while processing a request to the API.");
+    }
+
+    public void Dispose()
+    {
+        foreach (var sub in _subscriptions)
+        {
+            try { sub.Dispose(); }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error disposing subscription token");
+            }
+        }
+        _subscriptions.Clear();
     }
 }
