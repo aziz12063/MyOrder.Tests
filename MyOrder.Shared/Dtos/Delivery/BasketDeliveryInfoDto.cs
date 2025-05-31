@@ -8,6 +8,8 @@ public class BasketDeliveryInfoDto
     public string? AccountSectionLabel { get; set; }
     public string? ContactSectionLabel { get; set; }
     public string? InformationSectionLabel { get; set; }
+#warning TODO: Refactor to use another model that reflects the delivery account actions and not the delivery account draft actions
+    public DeliveryAccountDraftActions? AccountActions { get; set; }
     public Field<AccountDto?>? Account { get; set; }
     public Field<ContactDto?>? Contact { get; set; }
     public Field<BasketValueDto?>? DeliveryMode { get; set; }

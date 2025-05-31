@@ -2,15 +2,12 @@
 
 namespace MyOrder.Shared.Dtos.Delivery;
 
-public class DeliveryAccountDraftActions
+public class DeliveryAccountDraftActions : AccountActions
 {
-    // ====================================================================
-    // Menu intermédiaire
-    public Field<string?>? EditMode { get; set; }
-    public Field<string?>? AddressLookup { get; set; }
-
-    // ====================================================================
-    // Final menu part
+    public Field<string?>? DeliveryInstructions { get; set; }
     public Field<string?>? AddAddress { get; set; }
+    public Field<string?>? EditAddress { get; set; }
     public Field<string?>? CancelAddress { get; set; }
+    public Field<string?>? UpdateDeliveryInstructions { get; set; }
+
 }

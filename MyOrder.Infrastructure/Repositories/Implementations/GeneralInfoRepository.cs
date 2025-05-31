@@ -35,7 +35,7 @@ public class GeneralInfoRepository(IGeneralInfoApiClient generalInfoApiClient,
             cancellationToken);
     }
 
-    public async Task<List<BasketBlockingReasonDto?>?> GetBlockingReasonsAsync(CancellationToken cancellationToken = default)
+    public async Task<BasketBlockingReasonsDto?> GetBlockingReasonsAsync(CancellationToken cancellationToken = default)
     {
         logger.LogDebug("Fetching blocking reasons for {BasketId} from repository", BasketId);
         var operationDescription = $"GetBlockingReasonsAsync for basketId {BasketId}";

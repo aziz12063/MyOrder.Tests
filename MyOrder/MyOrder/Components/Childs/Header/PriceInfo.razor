@@ -3,13 +3,12 @@
 @using System.Globalization
 @inherits MyOrder.Components.Common.FluxorComponentBase<PricesInfoState, FetchPricesInfoAction>
 
-@if (isLoading)
-{
-    <PricesAndLinesElementLoadingSkeleton />
-    return;
-}
-<SectionPaper Title="@BasketPricesInfo!.PanelLabel" Class="mt-3">
-
+<SectionPaper Title="@BasketPricesInfo?.PanelLabel" IsLoading="isLoading" Class="mt-3">
+    @if (isLoading)
+    {
+        <PricesLoadingSkeleton />
+        return;
+    }
     <FetchActionTypeCascadingValue FetchActionTypeValue="FetchActionType">
         <MudGrid Class="pa-4" Justify="Justify.SpaceAround" Spacing="12">
             <!--Column1-->

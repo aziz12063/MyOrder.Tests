@@ -36,3 +36,12 @@ public class EffectOnLinesFailureAction(string errorMessage)
 {
     public string ErrorMessage { get; } = errorMessage;
 }
+
+public record FetchSuppliersAction(
+    SuppliersState State,
+    bool Search,
+    string? Filter = null);
+
+public record FetchSuppliersSuccessAction(List<Supplier?>? Suppliers);
+
+public record FetchSuppliersFailureAction(string ErrorMessage);

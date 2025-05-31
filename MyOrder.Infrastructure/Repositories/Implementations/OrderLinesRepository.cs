@@ -42,4 +42,14 @@ public class OrderLinesRepository(IOrderLinesApiClient basketLinesApiClient, IEv
             operationDescription,
             cancellationToken);
     }
+
+    public async Task<List<Supplier>?> GetSuppliersAsync(bool search = true, string? filter = null, CancellationToken cancellationToken = default)
+    {
+        logger.LogDebug("Fetching suppliers for basketId {BasketId}", BasketId);
+        var operationDescription = $"GetSuppliersAsync for basketId {BasketId}";
+        return await ExecuteAsync(
+            async (token) => await _basketLinesApiClient.GetSuppliersAsync(CompanyId, BasketId, search, filter, token),
+            operationDescription,
+            cancellationToken);
+    }
 }

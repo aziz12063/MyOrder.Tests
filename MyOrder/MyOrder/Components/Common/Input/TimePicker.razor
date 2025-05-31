@@ -1,0 +1,45 @@
+﻿@using MyOrder.Shared.Dtos.SharedComponents
+@inherits GenericInputBase<TimeSpan?>
+
+@if (Field is not null && !Hidden)
+{
+    <MudTooltip RootStyle="width:100%"
+                Text="@TooltipText"
+                Placement="Placement.Top">
+        <MudTimePicker Margin="Margin"
+                       Label="@FieldLabel()"
+                       Required="Required"
+                       Error="Error"
+                       ErrorText="@Field.Error"
+                       ReadOnly="InternalReadOnly"
+                       Disabled="InternalReadOnly || OnlyForDisplay"
+                       Clearable="false"
+                       TimeFormat="HH:mm"
+                       Elevation="2"
+                       AmPm="false"
+                       MinuteSelectionStep="5"
+                       Time="ValueProperty"
+                       TimeChanged="OnBindTimeAfter" />
+    </MudTooltip>
+}
+
+@code {
+
+    // Mimic DatePicker logic, but for TimeSpan
+    private void OnBindTimeAfter(TimeSpan? newValue)
+    {
+        // 1) No change if both are null
+        if (ValueProperty is null && newValue is null)
+            return;
+
+        // 2) Otherwise only fire if they truly differ
+        if (ValueProperty is null
+            || newValue is null
+            || ValueProperty.Value != newValue.Value)
+        {
+            ValueProperty = newValue;
+            // Calls the same base logic your date picker was using
+            base.OnBindValueAfter();
+        }
+    }
+}

@@ -1,130 +1,121 @@
 {
-    "panelLabel": "Commande",
-    "accountSectionLabel": "Compte commandeur",
-    "contactSectionLabel": "Contact Commandeur",
-    "account": {
-        "name": "",
-        "status": "onlyForDisplay",
-        "displayStyle": "standard",
-        "value": {
-            "accountId": "98677453",
-            "name": "QUARTIER GENERAL DU CORPS",
-            "recipient": "EUROPEEN G8 FISCAL",
-            "building": "",
-            "street": "BP 70082",
-            "locality": "",
-            "zipCode": "67020",
-            "city": "STRASBOURG CEDEX 1",
-            "county": null,
-            "country": null,
-            "email": "raja1234@raja.fr",
-            "phone": "0120281279",
-            "cellularPhone": "0120281279",
-            "blocked": false,
-            "lastOrderDate": null,
-            "isLinked": true
-        }
-    },
-    "contact": {
-        "name": "",
-        "status": "readWrite",
-        "displayStyle": "standard",
-        "value": {
-            "contactId": "61476510",
-            "socialTitle": "M.",
-            "firstName": "",
-            "lastName": "BRAVO",
-            "email": "raja1234@raja.fr",
-            "phone": "0120281279",
-            "cellularPhone": "0120281279"
-        },
-        "procedureCall": [
-            "UpdateContact",
-            "orderBy",
-            "<one of /orderByContacts contactId>"
-        ]
-    },
-    "informationSectionLabel": "Informations de commande",
-    "salesOriginId": {
-        "name": "Canal de vente",
-        "status": "readWrite",
-        "displayStyle": "standard",
-        "value": {
-            "value": "E-proc",
-            "description": "E-proc"
-        },
-        "procedureCall": [
-            "UpdateOrderTablePropertyValue",
-            "SalesOriginId",
-            "System.String",
-            "<one of /salesOrigins value>"
-        ]
-    },
-    "webOriginId": {
-        "name": "Origine e-commerce",
-        "status": "readWrite",
-        "displayStyle": "standard",
-        "value": {
-            "value": "E-PROC",
-            "description": "E-PROC"
-        },
-        "procedureCall": [
-            "UpdateOrderTablePropertyValue",
-            "RAJ_WebOriginId",
-            "System.String",
-            "<one of /webOrigins value>"
-        ]
-    },
-    "salesPoolId": {
-        "name": "Type de transaction",
-        "status": "readWrite",
-        "displayStyle": "standard",
-        "value": {
-            "value": "NOR",
-            "description": "NOR"
-        },
-        "procedureCall": [
-            "UpdateOrderTablePropertyValue",
-            "SalesPoolId",
-            "System.String",
-            "<one of /salesPools value>"
-        ]
-    },
-    "customerOrderRef": {
-        "name": "Référence Client",
-        "status": "readWrite",
-        "displayStyle": "standard",
-        "value": "14/11/2024",
-        "procedureCall": [
-            "UpdateOrderTablePropertyValue",
-            "PurchOrderFormNum",
-            "System.String",
-            "<value>"
-        ]
-    },
-    "webSalesId": {
-        "name": "Commande Web",
-        "status": "required",
-        "displayStyle": "warn",
-        "error": "Le numéro de commmande web est obligatoire",
-        "value": "",
-        "procedureCall": [
-            "UpdateOrderTablePropertyValue",
-            "RAJ_WebSalesId",
-            "System.String",
-            "<value>"
-        ]
-    },
-    "relatedLink": {
-        "name": "Devis",
-        "status": "hidden",
-        "displayStyle": "standard",
-        "value": ""
-    },
-    "note": {
-        "name": "Note de RC",
-        "status": "onlyForDisplay",
-        "displayStyle": "standard",
-        "value": ""
+  "panelLabel": "Commande",
+  "contactSectionLabel": "Contact Commandeur",
+  "account": {
+    "name": "Compte commandeur",
+    "status": "onlyForDisplay",
+    "value": {
+      "accountId": "97155786",
+      "name": "ST MICROELECTRONICS ROUSSET SAS",
+      "recipient": "",
+      "building": "SOPHIA ANTIPOLIS",
+      "street": "635 ROUTE DES LUCIOLES",
+      "locality": "SOPHIA ANTIPOLIS",
+      "zipCode": "06560",
+      "city": "VALBONNE",
+      "country": "FRANCE",
+      "email": "raja1234@raja.fr",
+      "phone": "0120281279",
+      "cellularPhone": "0120281279",
+      "blocked": false
     }
+  },
+  "contact": {
+    "name": "Contact commandeur",
+    "status": "readWrite",
+    "value": {
+      "contactId": "I1687264",
+      "socialTitle": "Mme",
+      "firstName": "PASCALE",
+      "lastName": "LIZOT",
+      "email": "raja1234@raja.fr",
+      "phone": "0120281279",
+      "cellularPhone": "0120281279"
+    },
+    "procedureCall": [
+      "UpdateContact",
+      "OrderBy",
+      "<one of /orderByContacts contactId>"
+    ]
+  },
+  "informationSectionLabel": "Informations générales",
+  "customerTags": [],
+  "activityArea": {
+    "name": "Secteur d'activité",
+    "status": "onlyForDisplay",
+    "value": "Fabrication de composants électroniques",
+    "description": "Code NAF: 2611Z"
+  },
+  "salesOriginId": {
+    "name": "Canal de vente",
+    "status": "readWrite",
+    "value": {
+      "value": "Internet"
+    },
+    "procedureCall": [
+      "UpdateOrderTablePropertyValue",
+      "SalesOriginId",
+      "System.String",
+      "<one of /salesOrigins value>"
+    ]
+  },
+  "webOriginId": {
+    "name": "Origine e-commerce",
+    "status": "readWrite",
+    "value": {
+      "value": "DESKTOP"
+    },
+    "procedureCall": [
+      "UpdateOrderTablePropertyValue",
+      "RAJ_WebOriginId",
+      "System.String",
+      "<one of /webOrigins value>"
+    ]
+  },
+  "salesPoolId": {
+    "name": "Type de transaction",
+    "status": "readWrite",
+    "value": {
+      "value": "NOR"
+    },
+    "procedureCall": [
+      "UpdateOrderTablePropertyValue",
+      "SalesPoolId",
+      "System.String",
+      "<one of /salesPools value>"
+    ]
+  },
+  "customerOrderRef": {
+    "name": "Référence Client",
+    "status": "readWrite",
+    "value": "30/08/2024",
+    "procedureCall": [
+      "UpdateOrderTablePropertyValue",
+      "PurchOrderFormNum",
+      "System.String",
+      "<value>"
+    ]
+  },
+  "webSalesId": {
+    "name": "Commande Web",
+    "status": "required",
+    "error": "Le numéro de commmande web est obligatoire",
+    "value": "",
+    "procedureCall": [
+      "UpdateOrderTablePropertyValue",
+      "RAJ_WebSalesId",
+      "System.String",
+      "<value>"
+    ]
+  },
+  "relatedLink": {
+    "name": "Devis",
+    "status": "hidden",
+    "value": ""
+  },
+  "note": {
+    "name": "Note de RC",
+    "status": "onlyForDisplay",
+    "value": ""
+  }
 }

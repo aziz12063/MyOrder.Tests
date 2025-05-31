@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Fluxor;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using MudBlazor;
 using MyOrder.Components.Common;
@@ -7,6 +8,7 @@ using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.Delivery;
 using MyOrder.Shared.Dtos.SharedComponents;
 using MyOrder.Store.DeliveryInfoUseCase;
+using MyOrder.Store.RessourcesUseCase;
 
 namespace MyOrder.Components.Childs.Header.Delivery;
 
@@ -14,10 +16,12 @@ public partial class NewDeliveryAccountDialog : FluxorComponentBase<NewDeliveryA
 {
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; }
+    [Inject]
+    private IState<RessourcesState> RessourcesState { get; set; }
     [Parameter]
     public string? AccountId { get; set; }
     private DeliveryAccountDraft? DeliveryAccountDraft { get; set; }
-    private ProcedureCallButton<string?>? LookupButton { get; set; }
+    private FieldButton<string?>? LookupButton { get; set; }
     private bool _isLoading = true;
 
     protected override FetchNewDeliveryAccountAction CreateFetchAction(NewDeliveryAccountState state) =>
@@ -66,5 +70,12 @@ public partial class NewDeliveryAccountDialog : FluxorComponentBase<NewDeliveryA
             FieldDisplayStyle.Warn => "background-color: #f8d7da",
             _ => string.Empty
         };
+    }
+
+    private string GetFullAddress(Address? item)
+    {
+        var parts = new[] { item?.Building, item?.Street, item?.Locality }
+                        .Where(s => !string.IsNullOrWhiteSpace(s));
+        return string.Join(", ", parts);
     }
 }

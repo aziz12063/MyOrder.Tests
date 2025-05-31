@@ -9,7 +9,7 @@
         <MudCheckBox Size="Size"
                      Dense="Dense"
                      Style="display:inline-block;"
-                     LabelPosition="LabelPosition.End"
+                     LabelPlacement="Placement.End"
                      Required="Required"
                      Error="Required"
                      ReadOnly="InternalReadOnly"
@@ -17,7 +17,10 @@
                      @bind-Value="ValueProperty"
                      @bind-Value:after="OnBindValueAfter">
             <ChildContent>
-                <MudText Typo="Typo">@Field?.Name</MudText>
+                @if (!HideLabel)
+                {
+                    <MudText Typo="Typo">@Field?.Name</MudText>
+                }
             </ChildContent>
         </MudCheckBox>
     </MudTooltip>

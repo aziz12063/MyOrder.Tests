@@ -1,0 +1,136 @@
+trigger:
+ branches:
+   include:
+     - Dev
+
+pool: RajaAgent
+
+variables:
+  buildConfiguration: 'Release'
+  publishDirectory: '$(Build.ArtifactStagingDirectory)\publish'
+  sitePhysicalPath: '\\rro-qviis10\WEB\MyOrderClient'                         # Path du ancien serveur
+  sitePhysicalPathNewServer: '\\aliasieeq\WEB\MyOrderClient'                  # Path du nouveau serveur
+  CurrentSemVer: '0.9'
+
+name: '$(CurrentSemVer).$(Build.BuildId)-alpha'
+
+stages:
+  - stage: Build
+    displayName: 'Build MyOrder Client'
+    jobs:
+      - job: Build
+        displayName: 'Build MyOrder Blazor Client'
+        steps:
+          - task: PowerShell@2
+            displayName: 'Set Clean Branch Name'
+            inputs:
+              targetType: 'inline'
+              script: |
+                # $env:BUILD_SOURCEBRANCHNAME might be something like 'refs/heads/Dev'
+                $cleanBranchName = $env:BUILD_SOURCEBRANCHNAME -replace 'refs/heads/', ''
+                Write-Host "##vso[task.setvariable variable=BranchName]$cleanBranchName"
+            
+          - script: |
+              echo ##vso[build.updatebuildnumber]$(Build.BuildNumber)-$(BranchName)
+            displayName: 'Append Branch to Build Number'
+
+          - script: |
+              dotnet restore
+            displayName: 'Restore NuGet Packages'
+          
+          - script: |
+              # Building and setting version (e.g: like 0.1.0-alpha.Dev.12)
+              dotnet build --configuration $(buildConfiguration) --no-restore ^
+                /p:Version=$(CurrentSemVer) ^
+                /p:FileVersion=$(CurrentSemVer) ^
+                /p:InformationalVersion="$(Build.BuildNumber)"
+            displayName: 'Build Solution'
+
+          - script: |
+              dotnet publish --configuration $(buildConfiguration) --output $(publishDirectory) --no-build ^
+                /p:Version=$(CurrentSemVer) ^
+                /p:FileVersion=$(CurrentSemVer) ^
+                /p:InformationalVersion="$(Build.BuildNumber)"
+            displayName: 'Publish Application'
+
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish Artifacts'
+            inputs:
+              PathtoPublish: '$(publishDirectory)'
+              ArtifactName: 'drop'
+              publishLocation: 'Container'
+
+  - stage: Deploy
+    displayName: 'Deploy to IIS'
+    dependsOn: Build
+    jobs:
+      - deployment: DeployToIIS
+        displayName: 'Deploy to IIS Server'
+        environment: 'Development'
+        pool:
+          name: RajaAgent
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                # Étape 1 : Télécharger les artefacts publiés
+                - download: current
+                  artifact: drop
+                  displayName: 'Download Artifacts'
+
+                # Étape 2 : Déployer les fichiers sur les serveurs IIS
+                - task: PowerShell@2
+                  displayName: 'Deploy New Build'
+                  inputs:
+                    targetType: 'inline'
+                    script: |
+                      # Chemins source et destination temp 
+                      $source = "$(Pipeline.Workspace)\drop"
+                      $destinationTmp = "$(sitePhysicalPath)\_tmp"
+                      $destinationTmpNewServer = "$(sitePhysicalPathNewServer)\_tmp"
+
+                      # Log des chemins
+                      Write-Host "Deploying files from $source to temp $destinationTmp and $destinationTmpNewServer"
+
+                      # Vérifier existance du 1er repo
+                      if (!(Test-Path $destinationTmp)) {
+                          New-Item -Path $destinationTmp -ItemType Directory -Force
+                      }
+                      # Vérifier existance du 2eme repo
+                      if (!(Test-Path $destinationTmpNewServer)) {
+                          New-Item -Path $destinationTmpNewServer -ItemType Directory -Force
+                      }
+                      # Copier les fichiers avec robocopy pour 1er serveur
+                      robocopy $source $destinationTmp /MIR /FFT /Z /XA:H /W:5 /R:3
+
+                      # Vérification si aucune erreur pour copie 1er serveur
+                      if ($LASTEXITCODE -gt 8) {
+                          Write-Error "Robocopy failed for first server with exit code $LASTEXITCODE"
+                          exit 1
+                      }
+
+                      # Copier les fichiers avec robocopy pour 2eme serveur
+                      robocopy $source $destinationTmpNewServer /MIR /FFT /Z /XA:H /W:5 /R:3
+
+                      # Vérification si aucune erreur pour copie 2eme serveur
+                      if ($LASTEXITCODE -gt 8) {
+                          Write-Error "Robocopy failed for second server with exit code $LASTEXITCODE"
+                          exit 1
+                      }
+
+                      Write-Host "Deployment to tmp completed."
+                      exit 0
+
+                # Étape 3 : Déclencher la release après le déploiement
+                - task: TriggerPipeline@2
+                  displayName: 'Trigger release for MyOrderClient'
+                  inputs:
+                    serviceConnection: 'TriggerRelease-DotNet'
+                    project: 'd2023a78-b18d-451a-b55f-c2f0d8645b95'  
+                    Pipeline: 'Release'  
+                    releaseDefinition: '13' 
+                    Description: 'Start trigger release pipeline for MyOrderClient'
+                    Stages: 'DEV_IIS_Q'  
+                    buildapiversion: '6.0'
+                    releaseapiversion: '6.0'
+                

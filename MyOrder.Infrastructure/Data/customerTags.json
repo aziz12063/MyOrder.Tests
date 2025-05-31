@@ -1,22 +1,22 @@
 [
   {
-    "value": "vip",
-    "description": "Client VIP"
+    "description": "Client VIP",
+    "value": "vip"
   },
   {
-    "value": "specialPrep",
-    "description": "Préparation spéciale"
+    "description": "Préparation spéciale",
+    "value": "specialPrep"
   },
   {
-    "value": "export",
-    "description": "Client Export"
+    "description": "Client Export",
+    "value": "export"
   },
   {
-    "value": "noGift",
-    "description": "Pas de cadeaux"
+    "description": "Pas de cadeaux",
+    "value": "noGift"
   },
   {
-    "value": "completeDelivery",
-    "description": "Livraison complète"
+    "description": "Livraison complète",
+    "value": "completeDelivery"
   }
 ]

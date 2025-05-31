@@ -1,9 +1,15 @@
 ﻿<MudPaper Outlined="true" Class="px-2 py-1 mudcard-details-info-background">
     <MudStack Row="true" StretchItems="StretchItems.Start" Class="px-1">
         <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
-            <MudIcon Title="Téléphone" Icon="@Icons.Material.Filled.Phone" Color="Color.Success" Size="Size.Small" />
-            <MudText Typo="Typo.body2">@FieldValue(Contact?.Phone)</MudText>
+            <MudIcon Title="@HeaderField.Title"
+                     Icon="@HeaderField.Icon"
+                     Color="HeaderField.Color"
+                     Size="Size.Small" />
+            <MudText Typo="Typo.body2">
+                @FieldValue(HeaderField.RawValue)
+            </MudText>
         </MudStack>
+
         <MudTooltip Text="@(_showDetails ? "Masquer les informations" : "Afficher plus d'informations" )">
             <MudIconButton Icon="@(_showDetails ? Icons.Material.Filled.ExpandLess : Icons.Material.Filled.ExpandMore)"
                            Color="Color.Primary"
@@ -11,28 +17,60 @@
                            OnClick="@ToggleDetails" />
         </MudTooltip>
     </MudStack>
+
     <MudCollapse Expanded="@_showDetails">
-        <MudDivider Light="true"/>
+        <MudDivider Light="true" />
         <MudGrid Spacing="1" Class="mt-1 px-1">
-            <MudItem xs="12" sm="5">
+
+            <MudItem xs="12"
+                     sm="@(Field2.Title == "Email" ? 7 : 5)"
+                     Class="@(Field2.Title == "Email" ? "pl-4" : null)">
                 <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
-                    <MudIcon Title="Mobile" Icon="@Icons.Material.Filled.PhoneIphone" Color="Color.Info" Size="Size.Small" />
-                    <MudText Typo="Typo.body2">@FieldUtility.NullOrWhiteSpaceHelperWithDash(Contact?.CellularPhone)</MudText>
+                    <MudIcon Title="@Field2.Title"
+                             Icon="@Field2.Icon"
+                             Color="Field2.Color"
+                             Size="Size.Small" />
+                    <MudText Typo="Typo.body2">@FieldValue(Field2.RawValue)</MudText>
                 </MudStack>
             </MudItem>
-            <MudItem xs="12" sm="7" Class="pl-4">
+
+            <MudItem xs="12"
+                     sm="@(Field3.Title == "Email" ? 7 : 5)"
+                     Class="@(Field3.Title == "Email" ? "pl-4" : null)">
                 <MudStack Row="true" Spacing="1" AlignItems="AlignItems.Center">
-                    <MudIcon Title="Email" Icon="@Icons.Material.Filled.Email" Color="Color.Surface" Size="Size.Small" />
-                    <MudText Typo="Typo.body2">@FieldUtility.NullOrWhiteSpaceHelperWithDash(Contact?.Email)</MudText>
+                    <MudIcon Title="@Field3.Title"
+                             Icon="@Field3.Icon"
+                             Color="Field3.Color"
+                             Size="Size.Small" />
+                    <MudText Typo="Typo.body2">@FieldValue(Field3.RawValue)</MudText>
                 </MudStack>
             </MudItem>
+
         </MudGrid>
     </MudCollapse>
-
 </MudPaper>
 @code {
     [Parameter, EditorRequired]
     public ContactDto? Contact { get; set; }
+
+    record ContactField(string Title, string Icon, Color Color, string? RawValue);
+
+    private List<ContactField> _fieldsInOrder => new()
+    {
+        new("Téléphone", Icons.Material.Filled.Phone,   Color.Success,       Contact?.Phone),
+        new("Mobile",    Icons.Material.Filled.PhoneIphone, Color.Info,   Contact?.CellularPhone),
+        new("Email",     Icons.Material.Filled.Email, Color.Surface,         Contact?.Email)
+    };
+
+    private ContactField HeaderField =>
+        _fieldsInOrder.FirstOrDefault(f => !string.IsNullOrWhiteSpace(f.RawValue))
+        ?? _fieldsInOrder[0];
+
+    private List<ContactField> OtherFields =>
+         _fieldsInOrder.Where(f => f != HeaderField).ToList();
+
+    private ContactField Field2 => OtherFields[0];
+    private ContactField Field3 => OtherFields[1];
 
     private bool _showDetails = false;
 

@@ -37,9 +37,12 @@ public static class FieldUtility
     public static string NullOrWhiteSpaceHelperWithDash(string? value)
         => string.IsNullOrWhiteSpace(value) ? "—" : value;
 
-    public static MarkupString MarkupStringHelper(string? value)
-       => string.IsNullOrWhiteSpace(value) ? new MarkupString("—")
-        : new MarkupString(value);
+    public static MarkupString MarkupStringHelper(string? value, bool replaceWithDashIfEmpty = true) =>
+        string.IsNullOrWhiteSpace(value) 
+        ? replaceWithDashIfEmpty
+            ? new MarkupString("—") 
+            : new MarkupString()
+        : new MarkupString(value.Replace("\n", "<br />"));
 
     public static string FormatValue(object? value, DisplayFieldFormat format)
     {

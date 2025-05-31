@@ -1,70 +1,49 @@
 [
-    {
-        "value": "",
-        "description": "-- Non renseigné --"
-    },
-    {
-        "value": "CH",
-        "description": "CHÈQUE"
-    },
-    {
-        "value": "IMP",
-        "description": "IMPAYES LC"
-    },
-    {
-        "value": "LRC",
-        "description": "LETTRE DE CHANGE EMISE PAR LE CLIENT"
-    },
-    {
-        "value": "LRR",
-        "description": "LETTRE DE CHANGE EMISE PAR RAJA"
-    },
-    {
-        "value": "PAYPAL",
-        "description": "PAYPAL"
-    },
-    {
-        "value": "PC",
-        "description": "PURCHASING CARD"
-    },
-    {
-        "value": "PVT",
-        "description": "PRÉLÈVEMENT"
-    },
-    {
-        "value": "VE",
-        "description": "REMBOURSEMENT VIREMENT ÉTRANGER"
-    },
-    {
-        "value": "VF",
-        "description": "REMBOURSEMENT VIREMENT DOMESTIQUE"
-    },
-    {
-        "value": "VMP",
-        "description": "VIREMENT MARKETPLACE LA POSTE"
-    },
-    {
-        "value": "VS",
-        "description": "REMBOURSEMENT VIREMENT SEPA"
-    },
-    {
-        "value": "CB",
-        "description": "CARTE BANCAIRE"
-    },
-    {
-        "value": "ES",
-        "description": "ESPÈCES"
-    },
-    {
-        "value": "TPE",
-        "description": "CARTE BANCAIRE MANUELLE"
-    },
-    {
-        "value": "VB",
-        "description": "VIREMENT BANCAIRE"
-    },
-    {
-        "value": "VDIR",
-        "description": "VIREMENT DIRECT"
-    }
+  {
+    "value": ""
+  },
+  {
+    "description": "Carte Bancaire",
+    "value": "CB"
+  },
+  {
+    "description": "Chèque",
+    "value": "CH"
+  },
+  {
+    "description": "Paypal",
+    "value": "PAYPAL"
+  },
+  {
+    "description": "Préautorisation CB",
+    "value": "PCB"
+  },
+  {
+    "description": "Carte Bancaire Manuelle",
+    "value": "TPE"
+  },
+  {
+    "description": "Virement Bancaire",
+    "value": "VB"
+  },
+  {
+    "description": "Virement Marketplace La Poste",
+    "value": "VMP"
+  },
+  {
+    "description": "Préautorisation CB manuelle",
+    "value": "ZCB"
+  },
+  {
+    "description": "Paypal sur Ebay",
+    "value": "ZEBAY"
+  },
+  {
+    "description": "Préautorisation PC manuelle",
+    "value": "ZPC"
+  },
+  {
+    "description": "Préautorisation Paypal manuelle",
+    "value": "ZPY"
+  }
 ]

@@ -10,6 +10,8 @@ public class RessourcesState : StateBase
     public List<BasketValueDto?>? CustomerTags { get; }
     public List<BasketValueDto?>? SalesOrigins { get; }
     public List<BasketValueDto?>? SalesPools { get; }
+    public List<BasketValueDto?>? Countries { get; }
+    public List<BasketValueDto?>? CarrierTypes { get; }
     public List<BasketValueDto?>? TaxGroups { get; }
     public List<BasketValueDto?>? PaymentModes { get; }
     public List<BasketValueDto?>? UpdateReasons { get; }
@@ -23,14 +25,21 @@ public class RessourcesState : StateBase
     public RessourcesState(List<BasketValueDto?>? customerTags,
         List<BasketValueDto?>? salesOrigins,
         List<BasketValueDto?>? salesPools,
-        List<BasketValueDto?>? taxGroups, List<BasketValueDto?>? paymentModes,
-        List<BasketValueDto?>? updateReasons, List<BasketValueDto?>? logisticFlows,
-        List<BasketValueDto?>? coupons, List<BasketValueDto?>? warrantyCostOptions,
+        List<BasketValueDto?>? countries,
+        List<BasketValueDto?>? carrierTypes,
+        List<BasketValueDto?>? taxGroups, 
+        List<BasketValueDto?>? paymentModes,
+        List<BasketValueDto?>? updateReasons, 
+        List<BasketValueDto?>? logisticFlows,
+        List<BasketValueDto?>? coupons,
+        List<BasketValueDto?>? warrantyCostOptions,
         List<BasketValueDto?>? shippingCostOptions) : base(false)
     {
         CustomerTags = customerTags;
         SalesOrigins = salesOrigins;
         SalesPools = salesPools;
+        Countries = countries;
+        CarrierTypes = carrierTypes;
         TaxGroups = taxGroups;
         PaymentModes = paymentModes;
         UpdateReasons = updateReasons;

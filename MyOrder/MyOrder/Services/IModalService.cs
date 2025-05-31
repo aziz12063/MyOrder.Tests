@@ -12,9 +12,12 @@ public interface IModalService
 
     Task<IDialogReference> OpenAddLineDialogAsync(AddLineDialogTab index, Action? onCloseCallback = null);
     Task<IDialogReference> OpenEditDeliveryAccountDialogAsync(Action? onCloseCallback = null, string? accountId = null);
+    Task<IDialogReference> OpenEditDeliveryInstructionsDialogAsync(Action? onCloseCallback = null, string? accountId = null);
+    Task<IDialogReference> OpenEditDeliveryContactDialogAsync(Action? onCloseCallback = null, string? contactId = null);
 
     Task<IDialogReference> OpenNewBasketDialogAsync();
     Task<IDialogReference> OpenBasketDialogAsync();
+    Task<IDialogReference> OpenBlockingReasonsDialogAsync();
     Task<IDialogReference> OpenBasketOrderNoteDialogAsync(Field<string> noteField);
 
     Task<IDialogReference> OpenSearchContactDialogAsync<TState, TAction>(
@@ -30,6 +33,7 @@ public interface IModalService
         Action? onConfirm = null, ModalSeverity modalSeverity = ModalSeverity.info);
 
     Task<IDialogReference> OpenPaymentAuthorizationDialog();
+    Task<IDialogReference> OpenSearchSupplierDialog();
     //public void ShowModal(string title, string message,
     // Action onConfirm, ModalSeverity modalSeverity = ModalSeverity.info);
 

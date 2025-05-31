@@ -37,7 +37,13 @@ public interface IDeliveryInfoApiClient
         [Query] string? filter = null,
         CancellationToken cancellationToken = default);
 
+    [Get("/api/myorder/{companyId}/{basketId}/newDeliverToContact")]
+    Task<DeliveryContactDraft?> GetNewDeliveryContactAsync(
+        string companyId, 
+        string basketId,
+        [Query] string? contactId = null,
+        CancellationToken cancellationToken = default);
+
     [Get("/api/myorder/{companyId}/{basketId}/deliveryModes")]
     Task<List<BasketValueDto?>?> GetDeliveryModesAsync(string companyId, string basketId, CancellationToken cancellationToken = default);
-
 }

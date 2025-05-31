@@ -33,12 +33,12 @@ public class DeliveryInfoRepository(IDeliveryInfoApiClient deliveryInfoApiClient
             cancellationToken);
     }
 
-    public async Task<DeliveryAccountDraft?> GetNewDeliveryAccountAsync(string? filter = null, CancellationToken cancellationToken = default)
+    public async Task<DeliveryAccountDraft?> GetNewDeliveryAccountAsync(string? accountId = null, CancellationToken cancellationToken = default)
     {
-        logger.LogDebug("Fetching new delivery account for {BasketId} with the filter {filter} from repository", BasketId, filter);
-        var operationDescription = $"GetNewDeliveryAccountAsync for basketId {BasketId}, with filter {filter}";
+        logger.LogDebug("Fetching new delivery account for {BasketId} with accountId {AccountId} from repository", BasketId, accountId);
+        var operationDescription = $"GetNewDeliveryAccountAsync for basketId {BasketId}, with accountId {accountId}";
         return await ExecuteAsync(
-            async (token) => await _deliveryInfoApiClient.GetNewDeliveryAccountAsync(CompanyId, BasketId, filter, token),
+            async (token) => await _deliveryInfoApiClient.GetNewDeliveryAccountAsync(CompanyId, BasketId, accountId, token),
             operationDescription,
             cancellationToken);
     }
@@ -69,6 +69,16 @@ public class DeliveryInfoRepository(IDeliveryInfoApiClient deliveryInfoApiClient
         var operationDescription = $"GetDeliverToContactsAsync for basketId {BasketId}";
         return await ExecuteAsync(
             async (token) => await _deliveryInfoApiClient.GetDeliverToContactsAsync(CompanyId, BasketId, filter, token),
+            operationDescription,
+            cancellationToken);
+    }
+
+    public async Task<DeliveryContactDraft?> GetNewDeliveryContactAsync(string? contactId = null, CancellationToken cancellationToken = default)
+    {
+        logger.LogDebug("Fetching new delivery contact for {BasketId} with contactId {contactId} from repository", BasketId, contactId);
+        var operationDescription = $"GetNewDeliveryContactAsync for basketId {BasketId}, with contactId {contactId}";
+        return await ExecuteAsync(
+            async (token) => await _deliveryInfoApiClient.GetNewDeliveryContactAsync(CompanyId, BasketId, contactId, token),
             operationDescription,
             cancellationToken);
     }

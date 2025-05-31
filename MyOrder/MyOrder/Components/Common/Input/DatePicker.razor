@@ -6,7 +6,9 @@
     <MudTooltip RootStyle="width:100%"
                 Text="@TooltipText"
                 Placement="Placement.Top">
-        <MudDatePicker Margin="Margin"
+        <MudDatePicker Variant="Variant.Outlined"
+                       Class="@cssClass"
+                       Margin="Margin"
                        Label="@FieldLabel()"
                        Required="Required"
                        Error="Error"
@@ -16,12 +18,13 @@
                        Clearable="true"
                        DateFormat="d"
                        Elevation="2"
+                       IconSize="Size.Small"
                        Date="ValueProperty"
                        DateChanged="OnBindDateAfter" />
     </MudTooltip>
 }
 @code {
-    
+
     // This method handles the date-binding process for the MudDatePicker component.
     // The DateChanged event in MudDatePicker is triggered not only by user interactions
     // but also when the date is updated programmatically, even if the new value is the same as the current value.
@@ -52,5 +55,16 @@
             ValueProperty = newValue;
             base.OnBindValueAfter();
         }
+    }
+
+    private string cssClass = string.Empty;
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+        string newCssClass = "outlined-generic-textfield"; // default
+        if (Required)
+            cssClass += " required-field";
+        cssClass = newCssClass;
     }
 }

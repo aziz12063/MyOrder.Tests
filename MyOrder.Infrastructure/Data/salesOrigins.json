@@ -1,46 +1,105 @@
 [
-    {
-        "value": "",
-        "description": "-- Non renseigné --"
-    },
-    {
-        "value": "Entrant",
-        "description": "Tél Entrant"
-    },
-    {
-        "value": "E-mail",
-        "description": "E-mail"
-    },
-    {
-        "value": "Rajadrive",
-        "description": "RAJADRIVE"
-    },
-    {
-        "value": "Chat",
-        "description": "Chat"
-    },
-    {
-        "value": "E-proc",
-        "description": "E-procurement"
-    },
-    {
-        "value": "Sortant",
-        "description": "Tél Sortant"
-    },
-    {
-        "value": "Internet",
-        "description": "Internet"
-    },
-    {
-        "value": "EDI",
-        "description": "EDI"
-    },
-    {
-        "value": "Terrain",
-        "description": "Terrain"
-    },
-    {
-        "value": "Interne",
-        "description": "Interne"
-    }
+  {
+    "value": ""
+  },
+  {
+    "value": "Téléphone"
+  },
+  {
+    "value": "E-mail"
+  },
+  {
+    "value": "Fax"
+  },
+  {
+    "value": "Courrier"
+  },
+  {
+    "value": "Comptoir"
+  },
+  {
+    "value": "Chat"
+  },
+  {
+    "value": "E-Proc"
+  },
+  {
+    "value": "Sortant"
+  },
+  {
+    "value": "Internet"
+  },
+  {
+    "value": "Auto"
+  },
+  {
+    "value": "EDI"
+  },
+  {
+    "value": "Terrain"
+  },
+  {
+    "value": "Interne"
+  }
 ]
+
+
+
+//[
+//  {
+//    "description": "No communication method specified",
+//    "value": ""
+//  },
+//  {
+//    "description": "Contact by telephone",
+//    "value": "Téléphone"
+//  },
+//  {
+//    "description": "Contact via email",
+//    "value": "E-mail"
+//  },
+//  {
+//    "description": "Contact by fax",
+//    "value": "Fax"
+//  },
+//  {
+//    "description": "Contact by post/mail",
+//    "value": "Courrier"
+//  },
+//  {
+//    "description": "Contact in person at the counter",
+//    "value": "Comptoir"
+//  },
+//  {
+//    "description": "Contact via chat",
+//    "value": "Chat"
+//  },
+//  {
+//    "description": "Electronic procurement platform",
+//    "value": "E-Proc"
+//  },
+//  {
+//    "description": "Outgoing communication",
+//    "value": "Sortant"
+//  },
+//  {
+//    "description": "Internet-based communication",
+//    "value": "Internet"
+//  },
+//  {
+//    "description": "Automated system",
+//    "value": "Auto"
+//  },
+//  {
+//    "description": "Electronic Data Interchange",
+//    "value": "EDI"
+//  },
+//  {
+//    "description": "On-site communication",
+//    "value": "Terrain"
+//  },
+//  {
+//    "description": "Internal communication",
+//    "value": "Interne"
+//  }
+//]

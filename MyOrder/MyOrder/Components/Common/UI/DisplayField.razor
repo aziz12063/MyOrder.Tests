@@ -3,9 +3,10 @@
 
 @if (Field != null && !FieldUtility.IsHidden(Field))
 {
-    <MudTooltip RootStyle="width:100%"
-                Text="@TooltipText"
-                Placement="Placement.Top">
+    @* Placement = "Placement.Top" *@
+    @* RootStyle="width:100%" *@
+    <MarkupTooltip Text="@TooltipText"
+                   Color="FieldUtility.GetFieldColor(Field)">
 
         <MudField Margin="Margin.Dense"
                   Variant="Variant.Outlined"
@@ -19,7 +20,7 @@
                   AdornmentColor="AdornmentColor"
                   AdornmentText="@AdornmentText"
                   IconSize="Size.Small">
-            <MudText Typo="Typo.body2">
+            <MudText Typo="Typo.body2" Style="@TextStyle">
                 @if (Field!.Value is List<string> stringList && stringList is { Count: > 0 })
                 {
                     @((MarkupString)string.Join("<br />", stringList))
@@ -34,5 +35,5 @@
                 }
             </MudText>
         </MudField>
-    </MudTooltip>
+    </MarkupTooltip>
 }

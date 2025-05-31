@@ -1,0 +1,56 @@
+﻿@using MyOrder.Store.LinesUseCase
+@inherits FluxorComponentBase<SuppliersState, FetchSuppliersAction>
+
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h5">Recherche de fournisseur</MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (_isLoading)
+        {
+            <MudProgressLinear Color="Color.Primary" Indeterminate="true" />
+            <MudText>Chargement ...</MudText>
+        }
+        else
+        {
+            <FetchActionTypeCascadingValue FetchActionTypeValue="FetchActionType">
+                <MudDataGrid Elevation="0"
+                             Bordered="true"
+                             Dense="true"
+                             Striped="true"
+                             FixedHeader="true"
+                             Height="50vh"
+                             Virtualize="true"
+                             Items="Suppliers"
+                             Loading="_isLoading"
+                             SortMode="@SortMode.None">
+                             <ToolBarContent>
+                        <MudSpacer />
+                        <MudTextField T="string"
+                                      Variant="Variant.Text"
+                                      Margin="Margin.Dense"
+                                      Adornment="Adornment.End"
+                                      AdornmentIcon="@Icons.Material.Filled.Search"
+                                      Label="Recherche"
+                                      @bind-value="@SearchText"
+                                      @bind-value:after="OnSearchTextChanged" />
+                             </ToolBarContent>
+                    <Columns>
+                        <PropertyColumn Property="s => s.SupplierId"
+                                        Title="Numéro" />
+                        <PropertyColumn Property="s => s.Name"
+                                        Title="Nom" />
+                        <PropertyColumn Property="@(s => string.Join(" ", s.Building, s.Street, s.Locality, s.ZipCode, s.City))"
+                                        Title="Adresse" />
+                    </Columns>
+                    <NoRecordsContent>
+                        @if (!_isLoading)
+                        {
+                            <MudText Typo="Typo.body2" Color="Color.Secondary">Aucun fournisseur trouvé</MudText>
+                        }
+                    </NoRecordsContent>
+                </MudDataGrid>
+            </FetchActionTypeCascadingValue>
+        }
+    </DialogContent>
+</MudDialog>

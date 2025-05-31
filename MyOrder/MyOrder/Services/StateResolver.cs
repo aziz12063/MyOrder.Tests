@@ -16,6 +16,7 @@ namespace MyOrder.Services;
 public class StateResolver : IStateResolver
 {
     private const string GeneralInfo = "generalInfo";
+    private const string BlockingReasons = "blockingReasons";
     private const string OrderInfo = "orderInfo";
     private const string DeliveryInfo = "deliveryInfo";
     private const string DeliveryModes = "deliveryModes";
@@ -34,6 +35,7 @@ public class StateResolver : IStateResolver
     public static readonly Dictionary<Type, string> EndpointFetchActionMap = new()
     {
         { typeof(FetchGeneralInfoAction), GeneralInfo },
+        { typeof(FetchBlockingReasonsAction), BlockingReasons },
         { typeof(FetchOrderInfoAction), OrderInfo },
         { typeof(FetchDeliveryInfoAction), DeliveryInfo },
         { typeof(FetchNewDeliveryAccountAction), NewDeliveryAccount },
@@ -58,6 +60,7 @@ public class StateResolver : IStateResolver
         _refreshCallActions = new Dictionary<string, List<Func<IDispatcher, StateBase>>>
         {
             { GeneralInfo, new () { CreateDispatchAction<GeneralInfoState, FetchGeneralInfoAction> } },
+            { BlockingReasons, new () { CreateDispatchAction<BlockingReasonsState, FetchBlockingReasonsAction> } },
             { OrderInfo, new ()
                 {
                     CreateDispatchAction<OrderInfoState, FetchOrderInfoAction>,

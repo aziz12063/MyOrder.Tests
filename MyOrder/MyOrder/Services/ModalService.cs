@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MudBlazor;
+using MyOrder.Components.Childs.GeneralInfo;
 using MyOrder.Components.Childs.Header.Delivery;
+using MyOrder.Components.Childs.Lines;
 using MyOrder.Components.Childs.Lines.AddLine;
-using MyOrder.Components.Childs.Menu;
 using MyOrder.Components.Common.Dialogs;
 using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.SharedComponents;
@@ -26,7 +27,8 @@ public class ModalService(IDialogService dialogService) : IModalService
         {
             CloseOnEscapeKey = true,
             CloseButton = true,
-            BackdropClick = false
+            BackdropClick = false,
+            FullWidth = true
         };
 
         var parameters = new DialogParameters<AddLineDialog>
@@ -57,6 +59,19 @@ public class ModalService(IDialogService dialogService) : IModalService
         var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, CloseButton = true };
 
         return await dialogService.ShowAsync<OpenBasketDialog>("OpenBasketDialog", options);
+    }
+
+    public async Task<IDialogReference> OpenBlockingReasonsDialogAsync()
+    {
+        var options = new DialogOptions
+        {
+            CloseOnEscapeKey = true,
+            FullWidth = true,
+            MaxWidth = MaxWidth.Small,
+            CloseButton = true,
+            BackdropClick = true
+        };
+        return await dialogService.ShowAsync<BlockingReasonsDialog>("BlockingReasonsDialog", options);
     }
 
     public async Task<IDialogReference> OpenBasketOrderNoteDialogAsync(Field<string> noteField)
@@ -126,7 +141,9 @@ public class ModalService(IDialogService dialogService) : IModalService
         {
             CloseOnEscapeKey = true,
             CloseButton = true,
-            BackdropClick = false
+            BackdropClick = false,
+            MaxWidth = MaxWidth.Small,
+            FullWidth = true
         };
 
         var dialogReference = await dialogService.ShowAsync<NewDeliveryAccountDialog>(
@@ -137,6 +154,56 @@ public class ModalService(IDialogService dialogService) : IModalService
         if (dialogResult?.Canceled == true)
             onCloseCallback?.Invoke();
 
+        return dialogReference;
+    }
+
+    public async Task<IDialogReference> OpenEditDeliveryInstructionsDialogAsync(Action? onCloseCallback = null, string? accountId = null)
+    {
+
+        var parameters = new DialogParameters<NewDeliveryAccountDialog>
+        {
+            { dialog => dialog.AccountId, accountId},
+        };
+
+        var options = new DialogOptions
+        {
+            CloseOnEscapeKey = true,
+            CloseButton = true,
+            BackdropClick = false,
+            MaxWidth = MaxWidth.Medium,
+            FullWidth = true
+        };
+
+        var dialogReference = await dialogService.ShowAsync<DeliveryInstructionsDialog>(
+            "EditDeliveryAccountDialog", parameters, options);
+
+        var dialogResult = await dialogReference.Result;
+
+        if (dialogResult?.Canceled == true)
+            onCloseCallback?.Invoke();
+
+        return dialogReference;
+    }
+
+    public async Task<IDialogReference> OpenEditDeliveryContactDialogAsync(Action? onCloseCallback = null, string? contactId = null)
+    {
+        var parameters = new DialogParameters<NewDeliveryContactDialog>
+        {
+            { dialog => dialog.ContactId, contactId},
+        };
+        var options = new DialogOptions
+        {
+            CloseOnEscapeKey = true,
+            CloseButton = true,
+            BackdropClick = false,
+            MaxWidth = MaxWidth.Small,
+            FullWidth = true
+        };
+        var dialogReference = await dialogService.ShowAsync<NewDeliveryContactDialog>(
+            "EditDeliveryContactDialog", parameters, options);
+        var dialogResult = await dialogReference.Result;
+        if (dialogResult?.Canceled == true)
+            onCloseCallback?.Invoke();
         return dialogReference;
     }
 
@@ -186,6 +253,12 @@ public class ModalService(IDialogService dialogService) : IModalService
         var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, BackdropClick = false, CloseButton = true };
 
         return await dialogService.ShowAsync<PaymentAuthorizationDialog>("PaymentAuthorization", options);
+    }
+
+    public async Task<IDialogReference> OpenSearchSupplierDialog()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Medium, CloseButton = true };
+        return await dialogService.ShowAsync<SearchSupplierDialog>("SearchSupplierDialog", options);
     }
 }
 

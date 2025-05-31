@@ -1,0 +1,145 @@
+﻿@using MyOrder.Store.DeliveryInfoUseCase
+
+@inherits FluxorComponentBase<NewDeliveryAccountState, FetchNewDeliveryAccountAction>
+
+
+
+
+
+<MudDialog ContentClass="ma-0 pb-2">
+    <TitleContent>
+        <MudText Typo="Typo.h5">Édition des instructions de livraison</MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (_isLoading)
+        {
+            <MudProgressLinear Color="Color.Primary"
+                               Indeterminate="true" />
+            <MudText>Chargement ...</MudText>
+        }
+        else
+        {
+            <FetchActionTypeCascadingValue FetchActionTypeValue="FetchActionType">
+                <MudGrid Spacing="2">
+                    <MudItem xs="4">
+                        <MudPaper Elevation="2" Class="header-cards-height header-cards-height-content">
+                            <MudText Typo="Typo.h6" Color="Color.Secondary" Class="pb-4">@DeliveryAccountDraft!.AddressSectionLabel</MudText>
+                            <MudText Typo="Typo.body1" Class="px-1">
+                                @DeliveryAccountDraft!.AccountId?.Value - @DeliveryAccountDraft!.Name?.Value <br />
+                                @DeliveryAccountDraft!.Street?.Value <br />
+                                @DeliveryAccountDraft!.Zipcode?.Value - @DeliveryAccountDraft!.City?.Value
+                            </MudText>
+                        </MudPaper>
+                    </MudItem>
+                    <MudItem xs="8">
+                        <MudPaper Elevation="2" Class="header-cards-height-content">
+                            <MudText Typo="Typo.h6" Color="Color.Secondary" Class="pb-4">Instructions de livraison</MudText>
+                            <MudGrid Spacing="3" Class="pt-0">
+                                <MudItem xs="5">
+                                    <MudGrid Spacing="0" Justify="Justify.SpaceBetween">
+                                        <MudItem xs="6" Class="pr-4">
+                                            <GenericTextField Field="DeliveryAccountDraft!.Floor" />
+                                        </MudItem>
+                                        <MudItem xs="6" Class="pr-4">
+                                            <GenericTextField Field="DeliveryAccountDraft!.DigiCode" />
+                                        </MudItem>
+                                        <MudItem xs="12">
+                                            <MudStack Justify="Justify.FlexStart" Row="true" Class="ml-n1 my-2">
+                                                <GenericCheckBox Field="DeliveryAccountDraft!.Lift" />
+                                                <GenericCheckBox Field="DeliveryAccountDraft!.AppointmentRequired" />
+                                            </MudStack>
+                                        </MudItem>
+                                        <MudItem xs="12" Class="mt-2 pr-4">
+                                            <GenericMudSelect Field="DeliveryAccountDraft!.CarrierType"
+                                                              Items="RessourcesState.Value.CarrierTypes" />
+                                        </MudItem>
+                                    </MudGrid>
+                                </MudItem>
+                                <MudItem xs="7">
+                                    <GenericTextField Field="DeliveryAccountDraft!.DeliveryNote"
+                                                      Lines="7"
+                                                      Variant="Variant.Outlined" />
+                                </MudItem>
+                            </MudGrid>
+                        </MudPaper>
+                    </MudItem>
+                    <MudItem xs="12">
+                        <MudDataGrid Bordered="true"
+                                     Dense="true"
+                                     Hover="true"
+                                     Elevation="2"
+                                     Striped="true"
+                                     Filterable="false"
+                                     SortMode="SortMode.None"
+                                     Items="DeliveryAccountDraft!.WeekDays">
+                            <ToolBarContent>
+                                <MudText Typo="Typo.h6" Color="Color.Secondary" Class="pb-4">Horaires de livraison</MudText>
+                            </ToolBarContent>
+                            <Columns>
+
+                                <PropertyColumn Title="Jour"
+                                                Property="item => item.WeekDayName ?? string.Empty" />
+
+                                <TemplateColumn Title="Ouvert le matin">
+                                    <CellTemplate>
+                                        <GenericCheckBox Field="context.Item.IsOpenedMorning"
+                                                         Dense="true"
+                                                         HideLabel="true"
+                                                         Margin="Margin.Dense" />
+                                    </CellTemplate>
+                                </TemplateColumn>
+
+                                <TemplateColumn Title="Ouverture matin">
+                                    <CellTemplate>
+                                        <TimePicker Field="context.Item.MorningOpeningTime"
+                                                    HideLabel="true" />
+                                    </CellTemplate>
+                                </TemplateColumn>
+
+                                <TemplateColumn Title="Fermeture matin">
+                                    <CellTemplate>
+                                        <TimePicker Field="context.Item.MorningClosingTime"
+                                                    HideLabel="true" />
+                                    </CellTemplate>
+                                </TemplateColumn>
+
+                                <TemplateColumn Title="Ouvert l'après-midi">
+                                    <CellTemplate>
+                                        <GenericCheckBox Field="context.Item.IsOpenedAfternoon"
+                                                         Dense="true"
+                                                         HideLabel="true"
+                                                         Margin="Margin.Dense" />
+                                    </CellTemplate>
+                                </TemplateColumn>
+
+                                <TemplateColumn Title="Ouverture l'après-midi">
+                                    <CellTemplate>
+                                        <TimePicker Field="context.Item.AfternoonOpeningTime"
+                                                    HideLabel="true" />
+                                    </CellTemplate>
+                                </TemplateColumn>
+
+                                <TemplateColumn Title="Fermeture l'après-midi">
+                                    <CellTemplate>
+                                        <TimePicker Field="context.Item.AfternoonClosingTime"
+                                                    HideLabel="true" />
+                                    </CellTemplate>
+                                </TemplateColumn>
+
+                            </Columns>
+                        </MudDataGrid>
+                    </MudItem>
+                </MudGrid>
+            </FetchActionTypeCascadingValue>
+        }
+    </DialogContent>
+    <DialogActions>
+        @if (_isLoading)
+            return;
+
+        <FieldButton Field="DeliveryAccountDraft!.Actions?.UpdateDeliveryInstructions"
+                     Icon="@Icons.Material.Filled.Add"
+                     Size="Size.Medium"
+                     OnClickCallback="() => MudDialog.Close()" />
+    </DialogActions>
+</MudDialog>

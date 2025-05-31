@@ -21,7 +21,7 @@ public class DeliveryAccountDraft
     public Field<string?>? Locality { get; set; }
     public Field<string?>? Zipcode { get; set; }
     public Field<string?>? City { get; set; }
-    public Field<string?>? Country { get; set; }
+    public Field<BasketValueDto?>? Country { get; set; }
 
     // ====================================================================
     // Instruction de livraison
@@ -29,9 +29,13 @@ public class DeliveryAccountDraft
     public Field<bool?>? Lift { get; set; }
     public Field<string?>? Floor { get; set; }
     public Field<string?>? DigiCode { get; set; }
-    public Field<string?>? CarrierType { get; set; }
+    public Field<BasketValueDto?>? CarrierType { get; set; }
     public Field<bool?>? AppointmentRequired { get; set; }
     public Field<string?>? DeliveryNote { get; set; }
+
+    // ====================================================================
+    // Calendrier de livraison
+    public List<WeekDay?>? WeekDays { get; set; }
 
     // ====================================================================
     // Menus

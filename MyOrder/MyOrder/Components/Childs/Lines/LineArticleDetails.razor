@@ -64,17 +64,21 @@
 
             <!--Taux de TVA-->
             <MudItem xs="6">
-                <DisplayField Field="@BasketLine?.VatRate" />
+                <DisplayField Field="@BasketLine?.VatRate"
+                              Format="DisplayFieldFormat.Percentage" />
             </MudItem>
 
             <!--Description-->
             <MudItem xs="12">
-                <GenericTextField Field="@BasketLine?.Name" />
+                <GenericTextField Field="@BasketLine?.ItemName" />
             </MudItem>
         </MudGrid>
 
         <!--Notes de ligne-->
         <GenericTextField Field="@BasketLine?.Note" Lines="1" Variant="Variant.Text" />
+
+        <!-- Code client de l'article -->
+        <GenericTextField Field="@BasketLine?.CustomerItemId" />
 
         <MudDivider Light="true" Style="visibility:hidden" />
 

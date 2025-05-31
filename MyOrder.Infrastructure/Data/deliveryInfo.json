@@ -1,123 +1,110 @@
 {
-    "panelLabel": "Livraison",
-    "accountSectionLabel": "Compte de livraison",
-    "account": {
-        "name": "Compte de livraison",
-        "status": "readWrite",
-        "displayStyle": "standard",
-        "value": {
-            "accountId": "98677453",
-            "name": "QUARTIER GENERAL DU CORPS",
-            "recipient": "EUROPEEN G8 FISCAL",
-            "building": "",
-            "street": "BP 70082",
-            "locality": "",
-            "zipCode": "67020",
-            "city": "STRASBOURG CEDEX 1",
-            "county": null,
-            "country": null,
-            "email": "raja1234@raja.fr",
-            "phone": "0120281279",
-            "cellularPhone": "0120281279",
-            "blocked": false,
-            "lastOrderDate": null,
-            "isLinked": true
-        },
-        "procedureCall": [
-            "UpdateCustomer",
-            "deliverTo",
-            "<one of /deliverToAccounts accountId>"
-        ]
+  "panelLabel": "Livraison",
+  "accountSectionLabel": "Compte de livraison",
+  "account": {
+    "name": "Compte de livraison",
+    "status": "readWrite",
+    "value": {
+      "accountId": "97155786",
+      "name": "ST MICROELECTRONICS ROUSSET SAS",
+      "recipient": "",
+      "building": "SOPHIA ANTIPOLIS",
+      "street": "635 ROUTE DES LUCIOLES",
+      "locality": "SOPHIA ANTIPOLIS",
+      "zipCode": "06560",
+      "city": "VALBONNE",
+      "country": "FRANCE",
+      "email": "raja1234@raja.fr",
+      "phone": "0120281279",
+      "cellularPhone": "0120281279",
+      "blocked": false
     },
-    "contactSectionLabel": "Contact de livraison",
-    "contact": {
-        "name": "Contact de livraison",
-        "status": "readWrite",
-        "displayStyle": "standard",
-        "value": {
-            "contactId": "-",
-            "socialTitle": null,
-            "firstName": null,
-            "lastName": "-- Aucun contact renseigné --",
-            "email": null,
-            "phone": null,
-            "cellularPhone": null
-        },
-        "procedureCall": [
-            "UpdateContact",
-            "deliverTo",
-            "<one of /deliverToContacts contactId>"
-        ]
+    "procedureCall": [
+      "UpdateCustomer",
+      "DeliverTo",
+      "<one of /deliverToAccounts accountId>"
+    ]
+  },
+  "contactSectionLabel": "Contact de livraison",
+  "contact": {
+    "name": "Contact de livraison",
+    "status": "readWrite",
+    "value": {
+      "contactId": "I1687264",
+      "socialTitle": "Mme",
+      "firstName": "PASCALE",
+      "lastName": "LIZOT",
+      "email": "raja1234@raja.fr",
+      "phone": "0120281279",
+      "cellularPhone": "0120281279"
     },
-    "informationSectionLabel": "Informations de livraison",
-    "deliveryMode": {
-        "name": "Mode de livraison",
-        "status": "readWrite",
-        "displayStyle": "standard",
-        "value": {
-            "value": "EP",
-            "description": "EP"
-        },
-        "description": "EP",
-        "procedureCall": [
-            "UpdateOrderTablePropertyValue",
-            "DlvMode",
-            "System.String",
-            "<one of /deliveryModes value>"
-        ]
+    "procedureCall": [
+      "UpdateContact",
+      "DeliverTo",
+      "<one of /deliverToContacts contactId>"
+    ]
+  },
+  "informationSectionLabel": "Informations de livraison",
+  "deliveryMode": {
+    "name": "Mode de livraison",
+    "status": "readWrite",
+    "value": {
+      "value": "Enlèvement"
     },
-    "completeDelivery": {
-        "name": "Livraison complète",
-        "status": "readWrite",
-        "displayStyle": "standard",
-        "value": false,
-        "procedureCall": [
-            "UpdateOrderTablePropertyValue",
-            "RAJ_CompleteDelivery",
-            "System.Int32",
-            "<0 or 1>"
-        ]
-    },
-    "imperativeDate": {
-        "name": "Date impérative",
-        "status": "readWrite",
-        "displayStyle": "standard",
-        "value": "2025-04-30 00:00:00",
-        "procedureCall": [
-            "UpdateOrderTablePropertyValue",
-            "RAJ_ImperativeDate",
-            "System.DateTime",
-            "<value>"
-        ]
-    },
-    "orderDocuments": {
-        "name": "BL / Factures",
-        "status": "onlyForDisplay",
-        "displayStyle": "standard",
-        "value": ""
-    },
-    "note": {
-        "name": "Note de livraison",
-        "status": "readWrite",
-        "displayStyle": "standard",
-        "value": "",
-        "procedureCall": [
-            "UpdateOrderTablePropertyValue",
-            "DeliveryNote",
-            "System.String",
-            "<value>"
-        ]
-    },
-    "noteMustBeSaved": {
-        "name": "Sauvegarder pour les prochaines commandes",
-        "status": "readWrite",
-        "displayStyle": "standard",
-        "value": true,
-        "procedureCall": [
-            "UpdateOrderTablePropertyValue",
-            "IsDeliveryNoteSaved",
-            "System.Boolean",
-            "<value>"
-        ]
-    }
+    "procedureCall": [
+      "UpdateOrderTablePropertyValue",
+      "RAJ_GenericDlvMode",
+      "System.String",
+      "<one of /deliveryModes value>"
+    ]
+  },
+  "completeDelivery": {
+    "name": "Livraison complète",
+    "status": "readWrite",
+    "value": false,
+    "procedureCall": [
+      "UpdateOrderTablePropertyValue",
+      "RAJ_CompleteDelivery",
+      "System.Int32",
+      "<0 or 1>"
+    ]
+  },
+  "imperativeDate": {
+    "name": "Date impérative",
+    "status": "readWrite",
+    "value": null,
+    "procedureCall": [
+      "UpdateOrderTablePropertyValue",
+      "RAJ_ImperativeDate",
+      "System.DateTime",
+      "<value>"
+    ]
+  },
+  "orderDocuments": {
+    "name": "BL / Factures",
+    "status": "onlyForDisplay",
+    "value": "<br>"
+  },
+  "note": {
+    "name": "Note de livraison",
+    "status": "readWrite",
+    "value": "ENLEVEMENT POUR LE ../../2024",
+    "procedureCall": [
+      "UpdateOrderTablePropertyValue",
+      "DeliveryNote",
+      "System.String",
+      "<value>"
+    ]
+  },
+  "noteMustBeSaved": {
+    "name": "Sauvegarder pour les prochaines commandes",
+    "status": "readWrite",
+    "value": false,
+    "procedureCall": [
+      "UpdateOrderTablePropertyValue",
+      "IsDeliveryNoteSaved",
+      "System.Boolean",
+      "<value>"
+    ]
+  }
 }

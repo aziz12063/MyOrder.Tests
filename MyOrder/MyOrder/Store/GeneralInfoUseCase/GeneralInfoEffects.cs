@@ -88,4 +88,20 @@ public class GeneralInfoEffects(IGeneralInfoRepository generalInfoRepository,
             }
         }
     }
+
+    [EffectMethod]
+    public async Task HandleFetchBlockingReasons(FetchBlockingReasonsAction action, IDispatcher dispatcher)
+    {
+        try
+        {
+            logger.LogInformation("Fetching Blocking Reasons.");
+            var blockingReasons = await generalInfoRepository.GetBlockingReasonsAsync();
+            dispatcher.Dispatch(new FetchBlockingReasonsSuccessAction(blockingReasons));
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Error fetching blocking reasons.");
+            dispatcher.Dispatch(new FetchBlockingReasonsFailureAction(ex.Message));
+        }
+    }
 }

@@ -20,7 +20,12 @@ public interface IBasketRessourcesApiClient
       //==============================//
      //      Delivery ressources     //
     //==============================//
-    
+    [Get("/api/myorder/{companyId}/{basketId}/countries")]
+    Task<List<BasketValueDto?>?> GetDeliveryCountriesAsync(string companyId, string basketId, CancellationToken cancellationToken = default);
+
+    [Get("/api/myorder/{companyId}/{basketId}/carrierTypes")]
+    Task<List<BasketValueDto?>?> GetCarrierTypesAsync(string companyId, string basketId, CancellationToken cancellationToken = default);
+
       //==============================//
      //      Invoice ressources      //
     //==============================//

@@ -2,15 +2,24 @@
 
 namespace MyOrder.Shared.Dtos.Lines;
 
+public enum BasketLinePerspective 
+{
+    SpecialManufacturing, // FS
+    CRC
+}
 public class BasketLineDto
 {
+    public BasketLinePerspective? Perspective { get; set; }
     public long RecId { get; set; }
     public Field<int?>? LineNum { get; set; } // RW
     public bool? IsCustomLineNum { get; set; }
     public List<BasketValueDto?>? LineTags { get; set; }
     public Field<string?>? ItemId { get; set; }// RW
     public Field<string?>? ItemProperties { get; set; }
-    public Field<string?>? Name { get; set; } // RW
+    public Field<string?>? ItemName { get; set; } // RW
+    public Field<string?>? Description { get; set; }
+    public Field<Supplier?>? Supplier { get; set; }
+    public Field<string?>? VendorId { get; set; }
     public Field<string?>? InventLocationId { get; set; }  // RW
     public Field<int?>? SalesQuantity { get; set; }  //RW
     public Field<decimal?>? SalesPrice { get; set; }  //RW
@@ -32,6 +41,7 @@ public class BasketLineDto
     public Field<int?>? MultipleQuantity { get; set; }  //NULL
     public Field<decimal?>? VatRate { get; set; }  //RW
     public Field<string?>? Note { get; set; }  //NULL
+    public Field<string?>? CustomerItemId { get; set; }  //NULL
     public Field<string?>? ProductInfo { get; set; }  //NULL
 
     // =============================================================================================================
@@ -45,6 +55,7 @@ public class BasketLineDto
     public Field<int?>? QuantityAtPaletteThreshold { get; set; }  //ONLY FOR D
     public Field<string?>? ItemType { get; set; }  //ONLY FOR D
     public Field<DateTime?>? DeliveryDate { get; set; }  //RW
+    public Field<DateTime?>? ConfirmedDeliveryDate { get; set; }  //RW
     public Field<int?>? ItemPhysicalInventQuantity { get; set; }  //ONLY FOR D
     public Field<int?>? ItemReservPhysicalQuantity { get; set; }  //ONLY FOR D
     public Field<int?>? ItemPhysicalAvailableQuantity { get; set; } // ONLY FOR D

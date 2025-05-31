@@ -49,7 +49,25 @@ public class BasketRessourcesRepository(IBasketRessourcesApiClient ressourcesApi
     //==============================//
     //      Delivery ressources     //
     //==============================//
+    public async Task<List<BasketValueDto?>?> GetDeliveryCountriesAsync(CancellationToken cancellationToken = default)
+    {
+        logger.LogDebug("Fetching delivery countries for {basketId} from repository", BasketId);
+        var operationDescription = $"GetDeliveryCountriesAsync for basketId {BasketId}";
+        return await ExecuteAsync(
+            async (token) => await _ressourcesApiClient.GetDeliveryCountriesAsync(CompanyId, BasketId, token),
+            operationDescription,
+            cancellationToken);
+    }
 
+    public async Task<List<BasketValueDto?>?> GetCarrierTypesAsync(CancellationToken cancellationToken = default)
+    {
+        logger.LogDebug("Fetching carrier types for {BasketId} from repository", BasketId);
+        var operationDescription = $"GetCarrierTypesAsync for basketId {BasketId}";
+        return await ExecuteAsync(
+            async (token) => await _ressourcesApiClient.GetCarrierTypesAsync(CompanyId, BasketId, token),
+            operationDescription,
+            cancellationToken);
+    }
 
 
     //==============================//

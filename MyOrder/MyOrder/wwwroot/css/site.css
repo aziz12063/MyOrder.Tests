@@ -1,6 +1,6 @@
 :root {
     --outlined-input-padding-top: 8px;
-    --outlined-input-padding-bottom: 7px;
+    --outlined-input-padding-bottom: 6px;
 }
 
 .custom-appbar .mud-toolbar {
@@ -59,9 +59,9 @@
 
 
 
-.adress-textarea textarea {
-    margin: 8px 14px !important;
-    line-height: 1.32 !important;
+.adress-textarea > div > div > div {
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
 }
 
 /* Fields */
@@ -86,7 +86,7 @@
 .outlined-display-field .mud-input-outlined-border,
 .mudcard-details-info-background {
     background-color: transparent;
-    box-shadow: inset 0px 0px 10px #b7cbef20 !important;
+    box-shadow: inset 0px 0px 10px #b7cbef33 !important;
 }
 
 .outlined-display-field * {
@@ -177,17 +177,22 @@
     overflow: auto;
 }
 
-.add-basket-dialog-field span:nth-of-type(2) {
+.mud-radio-group > div[role="group"],
+.mud-radio-group p.mud-typography-body1 {
     width: 100%;
 }
 
-/* Order in the follozing "mud shrink label" overrides is important. Go from more general to more specific.*/
+/* Order in the following "mud shrink label" overrides are important. Go from more general to more specific.*/
 :where(.mud-shrink ~ label.mud-input-label.mud-input-label-inputcontrol) {
     transform: translate(0px, 1.5px) scale(0.9) !important;
 }
 
 :where(.mud-shrink ~ label.mud-input-label.mud-input-label-inputcontrol.mud-input-label-outlined) {
-    transform: translate(14px, -6px) scale(0.9) !important;
+    transform: translate(12px, -9px) scale(0.9) !important;
+}
+
+:where(.mud-input-outlined-with-label.mud-shrink) > fieldset.mud-input-outlined-border > legend {
+    font-size: .9rem !important;
 }
 
 .selected-row {
@@ -217,13 +222,12 @@
 }
 
 .mud-tab {
-    font-size: 12px; /* Reduces the text size */
-    min-width: unset !important; /* Removes the default minimum width */
-    padding: 0 10px !important; /* Adjusts horizontal padding */
+    min-width: unset !important;
+    padding: 0 10px !important; 
 }
 
-    .mud-tab .mud-icon {
-        font-size: 16px; /* Reduces the icon size */
+    .mud-tab .mud-tab-icon-text {
+        font-size: 1.75rem !important; 
     }
 
 /*===================================================================*/

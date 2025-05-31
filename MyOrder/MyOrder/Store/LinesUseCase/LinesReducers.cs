@@ -10,6 +10,13 @@ public static class LinesReducers
 
     [ReducerMethod]
     public static LinesState ReduceFetchLinesFailureAction(LinesState state, FetchLinesFailureAction action) =>
-        new LinesState();
+        new();
+
+    [ReducerMethod]
+    public static SuppliersState ReduceFetchSuppliersSuccessAction(SuppliersState state, FetchSuppliersSuccessAction action) =>
+        new(action.Suppliers);
+    [ReducerMethod]
+    public static SuppliersState ReduceFetchSuppliersFailureAction(SuppliersState state, FetchSuppliersFailureAction action) =>
+        new(action.ErrorMessage);
 
 }

@@ -1,22 +1,23 @@
 [
-    {
-        "value": "",
-        "description": "-- Non renseigné --"
-    },
-    {
-        "value": "EP",
-        "description": "Express Paris - Banlieue"
-    },
-    {
-        "value": "PF",
-        "description": "Normal Paris - Banlieue"
-    },
-    {
-        "value": "EN",
-        "description": "Raja Drive"
-    },
-    {
-        "value": "VCT",
-        "description": "VCT"
-    }
+  {
+    "value": "Catalogue"
+  },
+  {
+    "value": "Enlèvement"
+  },
+  {
+    "value": "Express"
+  },
+  {
+    "value": "Filiale"
+  },
+  {
+    "value": "Interne"
+  },
+  {
+    "value": "Normal"
+  },
+  {
+    "value": "VCT"
+  }
 ]

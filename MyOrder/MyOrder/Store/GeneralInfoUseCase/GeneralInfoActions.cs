@@ -1,4 +1,5 @@
-﻿using MyOrder.Shared.Dtos.GeneralInformation;
+﻿using MyOrder.Shared.Dtos;
+using MyOrder.Shared.Dtos.GeneralInformation;
 using MyOrder.Store.Base;
 using System.Collections.Immutable;
 using System.Security.Claims;
@@ -20,3 +21,7 @@ public class FetchGeneralInfoFailureAction(string errorMessage)
 }
 
 public record PublishBasketAction(ImmutableList<string?>? ProcedureCall);
+
+public class FetchBlockingReasonsAction(BlockingReasonsState state) : FetchDataActionBase(state);
+public record FetchBlockingReasonsSuccessAction(BasketBlockingReasonsDto? BlockingReasons);
+public record FetchBlockingReasonsFailureAction(string ErrorMessage);

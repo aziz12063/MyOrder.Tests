@@ -35,4 +35,12 @@ public static class DeliveryInfoReducers
     [ReducerMethod]
     public static DeliveryContactsState ReduceFetchDeliveryContactsFailureAction(DeliveryContactsState state, FetchDeliveryContactsFailureAction action) =>
         new();
+
+    [ReducerMethod]
+    public static NewDeliveryContactState NewDeliveryContactState(NewDeliveryContactState state, FetchNewDeliveryContactSuccessAction action) =>
+        new(action.DeliveryContactDraft);
+
+    [ReducerMethod]
+    public static NewDeliveryContactState NewDeliveryContactFailureState(NewDeliveryContactState state, FetchNewDeliveryContactFailureAction action) =>
+        new();
 }

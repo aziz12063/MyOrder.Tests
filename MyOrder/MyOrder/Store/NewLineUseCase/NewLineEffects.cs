@@ -57,11 +57,11 @@ public class NewLineEffects(INewOrderLineRepository newOrderLineRepository, ISta
         try
         {
             var response = await _newOrderLineRepository.CommitAddNewLineAsync();
+            _stateResolver.DispatchRefreshCalls(dispatcher, response?.RefreshCalls);
             if (response?.Success == true)
             {
                 if (response.UpdateDone == true)
                 {
-                    _stateResolver.DispatchRefreshCalls(dispatcher, response.RefreshCalls);
                     success = true;
                 }
                 else

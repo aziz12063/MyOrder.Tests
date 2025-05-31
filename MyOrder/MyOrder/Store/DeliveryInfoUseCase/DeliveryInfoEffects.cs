@@ -133,4 +133,20 @@ public class DeliveryInfoEffects(IDeliveryInfoRepository deliveryInfoRepository,
             dispatcher.Dispatch(new FetchDeliveryContactsFailureAction(ex.Message));
         }
     }
+
+    [EffectMethod]
+    public async Task HandleFetchNewDeliveryContactAction(FetchNewDeliveryContactAction action, IDispatcher dispatcher)
+    {
+        try
+        {
+            _logger.LogInformation("Fetching new delivery contact.");
+            var contactDraft = await _deliveryInfoRepo.GetNewDeliveryContactAsync(action.ContactId);
+            dispatcher.Dispatch(new FetchNewDeliveryContactSuccessAction(contactDraft));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error fetching new delivery contact data");
+            dispatcher.Dispatch(new FetchNewDeliveryContactFailureAction(ex.Message));
+        }
+    }
 }

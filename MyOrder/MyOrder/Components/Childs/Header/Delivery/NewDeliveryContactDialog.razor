@@ -1,0 +1,33 @@
+﻿@using MyOrder.Store.DeliveryInfoUseCase
+
+@inherits FluxorComponentBase<NewDeliveryContactState, FetchNewDeliveryContactAction>
+
+<MudDialog ContentClass="mx-0 mb-0 pt-1 pb-2">
+    <TitleContent>
+        <MudText Typo="Typo.h5">Édition de l'adresse de livraison</MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (_isLoading)
+            return;
+
+        <FetchActionTypeCascadingValue FetchActionTypeValue="FetchActionType">
+            <MudStack Spacing="1">
+                <DisplayField Field="DeliveryContactDraft.Type" />
+                <GenericTextField Field="DeliveryContactDraft.SocialTitle" />
+                <GenericTextField Field="DeliveryContactDraft.FirstName" />
+                <GenericTextField Field="DeliveryContactDraft.LastName" />
+                <GenericTextField Field="DeliveryContactDraft.DirectPhone" />
+                <GenericTextField Field="DeliveryContactDraft.CellularPhone" />
+                <GenericTextField Field="DeliveryContactDraft.Email" />
+            </MudStack>
+        </FetchActionTypeCascadingValue>
+    </DialogContent>
+    <DialogActions>
+        <MudTooltip Text="Not Implemented">
+            <MudButton EndIcon="@Icons.Material.Filled.Add"
+                       Size="Size.Medium">
+                - Not Implemented -
+            </MudButton>
+        </MudTooltip>
+    </DialogActions>
+</MudDialog>

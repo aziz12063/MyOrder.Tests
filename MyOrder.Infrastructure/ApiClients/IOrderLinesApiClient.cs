@@ -22,4 +22,12 @@ public interface IOrderLinesApiClient
         string basketId,
         [Body] List<int> linesIds,
         CancellationToken cancellationToken = default);
+
+    [Get("/api/myorder/{companyId}/{basketId}/Suppliers")]
+    Task<List<Supplier>?> GetSuppliersAsync(
+        string companyId, 
+        string basketId,
+        [Query] bool search = true,
+        [Query] string? filter = null,
+        CancellationToken cancellationToken = default);
 }

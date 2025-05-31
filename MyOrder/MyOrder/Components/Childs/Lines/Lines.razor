@@ -6,7 +6,7 @@
 
 @if (_isLoading)
 {
-    <HeaderElementLoadingSkeleton />
+    <LinesLoadingSkeleton />
     return;
 }
 <FetchActionTypeCascadingValue FetchActionTypeValue="FetchActionType">
@@ -118,17 +118,31 @@
                                     Title="Ligne"
                                     Editable="false" />
 
-                    <PropertyColumn Property="x => x.ItemId == null? string.Empty : x.ItemId.Value"
+                    <TemplateColumn T="BasketLineDto"
                                     Title="Code Article"
-                                    Editable="false" />
+                                    Editable="false"
+                                    CellStyleFunc="ItemIdStyleFunc">
+                        <CellTemplate>
+                            <MudTooltip Text="@context.Item.ItemId?.Description">
+                                @context.Item.ItemId?.Value
+                            </MudTooltip>
+                        </CellTemplate>
+                    </TemplateColumn>
 
-                    <PropertyColumn Property="x => x.Name == null ? string.Empty : x.Name.Value"
+                    <PropertyColumn Property="x => x.ItemName == null ? string.Empty : x.ItemName.Value"
                                     Title="Description"
                                     Editable="IsNameEditable" />
 
-                    <PropertyColumn Property="x => x.InventLocationId == null ? string.Empty : x.InventLocationId.Value "
+                    <TemplateColumn T="BasketLineDto"
                                     Title="Entrepôt"
-                                    Editable="false" />
+                                    Editable="false"
+                                    CellStyleFunc="InventoryStyleFunc">
+                        <CellTemplate>
+                            <MudTooltip Text="@context.Item.InventLocationId?.Description">
+                                @context.Item.InventLocationId?.Value
+                            </MudTooltip>
+                        </CellTemplate>
+                    </TemplateColumn>
 
                     <TemplateColumn Editable="false"
                                     Title="Quantité">
@@ -179,7 +193,7 @@
 
                 <NoRecordsContent>
                     <MudText Typo="Typo.body1" Class="pt-5 pb-10">
-                        <em>Veuillez ajouter une nouvelle ligne en cliquant sur le boutton "+".</em>
+                        <em>Veuillez ajouter une nouvelle ligne en cliquant sur le bouton "+".</em>
                     </MudText>
                 </NoRecordsContent>
 

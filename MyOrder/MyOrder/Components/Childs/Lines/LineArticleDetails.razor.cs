@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.Lines;
-using MyOrder.Shared.Dtos.SharedComponents;
 
 namespace MyOrder.Components.Childs.Lines;
 
@@ -22,6 +21,4 @@ public partial class LineArticleDetails
     {
         _openPopOver = !_openPopOver;
     }
-
-
 }

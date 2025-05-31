@@ -1,12 +1,12 @@
 ﻿@using MyOrder.Store.TradeInfoUseCase
 @inherits FluxorComponentBase<TradeInfoState, FetchTradeInfoAction>
 
-@if (isLoading)
-{
-    <HeaderElementLoadingSkeleton />
-    return;
-}
-<SectionPaper Title="@BasketTradeInfo!.PanelLabel">
+<SectionPaper Title="@BasketTradeInfo?.PanelLabel" IsLoading="isLoading">
+    @if (isLoading)
+    {
+        <HeaderElementLoadingSkeleton />
+        return;
+    }
     <FetchActionTypeCascadingValue FetchActionTypeValue="FetchActionType">
         <MudStack Justify="Justify.SpaceBetween" Style="height: inherit;">
             <MudStack Spacing="2">
@@ -64,10 +64,29 @@
                     @*         } *@
                     @*     </MudStack> *@
                     @* } *@
-                    <MudIcon Color="Color.Warning"
-                             Icon="@Icons.Material.Filled.WarningAmber"
-                             Title="Not implemented"
-                             Size="Size.Medium" />
+
+                    @if (BasketTradeInfo?.CustomerTags is { Count: > 0 })
+                    {
+                        <MudStack Row="true" Spacing="2" Justify="Justify.FlexStart" Style="">
+                            @foreach (var item in BasketTradeInfo.CustomerTags)
+                            {
+                                if (item is not null)
+                                {
+                                    <MudTooltip Text="@item.Description">
+                                        <MudImage Src="@CustomerTagIconHelper(item.Value)"
+                                                  Style="@($"{CustomerTagColorHelper(item.Value)}; border-radius: 4px;")"
+                                                  Width="27" Height="27"
+                                                  alt="@item.Value" />
+                                    </MudTooltip>
+                                }
+                            }
+                        </MudStack>
+                    }
+
+                    @* <MudIcon Color="Color.Warning" *@
+                    @*          Icon="@Icons.Material.Filled.WarningAmber" *@
+                    @*          Title="Not implemented" *@
+                    @*          Size="Size.Medium" /> *@
                 </MudStack>
                 <DisplayField Field="@BasketTradeInfo!.ActivityArea" />
             </div>

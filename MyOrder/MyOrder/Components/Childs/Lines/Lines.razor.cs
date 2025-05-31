@@ -66,7 +66,7 @@ public partial class Lines : FluxorComponentBase<LinesState, FetchLinesAction>
         if (BasketOrderLinesDto is not null && BasketOrderLinesDto.lines is not null && BasketOrderLinesDto.lines.Count > 0)
         {
             IsItemIdEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0]?.ItemId);
-            IsNameEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0]?.Name);
+            IsNameEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0]?.ItemName);
             IsDiscountTypeEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0]?.DiscountType);
             IsLineAmountEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0]?.LineAmount);
         }
@@ -175,6 +175,16 @@ public partial class Lines : FluxorComponentBase<LinesState, FetchLinesAction>
         line == CurrentLine
             ? "selected-row"
             : string.Empty;
+
+    private static string ItemIdStyleFunc(BasketLineDto? line) =>
+        string.IsNullOrEmpty(line?.ItemId?.Color)
+            ? string.Empty
+            : $"color: {line.ItemId.Color} !important; font-weight: bolder !important;";
+
+    private static string InventoryStyleFunc(BasketLineDto? line) =>
+        string.IsNullOrEmpty(line?.InventLocationId?.Color)
+            ? string.Empty
+            : $"color: {line.InventLocationId.Color} !important; font-weight: bolder !important;";
 
     protected override void Dispose(bool disposing)
     {

@@ -2,24 +2,32 @@
 @using MyOrder.Store.Base
 @inherits FluxorComponentBase<OrderInfoState, FetchOrderInfoAction>
 
-@if (isLoading)
-{
-    <HeaderElementLoadingSkeleton />
-    return;
-}
-<SectionPaper Title="@BasketOrderInfo!.PanelLabel">
+<SectionPaper Title="@BasketOrderInfo?.PanelLabel" IsLoading="isLoading">
+    @if (isLoading)
+    {
+        <HeaderElementLoadingSkeleton />
+        return;
+    }
     <FetchActionTypeCascadingValue FetchActionTypeValue="FetchActionType">
         <MudStack Justify="Justify.SpaceBetween" Style="height: inherit;">
             <!-- Contact Client -->
             <CustomHeaderCard>
                 <HeaderContent>
+
                     <MudText Typo="Typo.subtitle1" Color="Color.Secondary">@BasketOrderInfo!.AccountSectionLabel</MudText>
-                    <MudTooltip Text="Salesforce? -Not Implemented">
-                        <MudIconButton Icon="@Icons.Material.Filled.Cloud" Size="Size.Small" />
-                    </MudTooltip>
-                    <MudTooltip Text="Infos? -Not Implemented">
-                        <MudIconButton Icon="@Icons.Material.Filled.Info" Size="Size.Small" />
-                    </MudTooltip>
+
+                    <FieldButton Field="BasketOrderInfo.AccountActions?.OrderInfo"
+                                 Icon="@Icons.Material.Filled.Info"
+                                 IconOnly="true" />
+
+                    <FieldButton Field="@BasketOrderInfo!.AccountActions?.SalesforceLink"
+                                 Icon="@Icons.Material.Filled.Cloud"
+                                 IconOnly="true" />
+
+                    <FieldButton Field="BasketOrderInfo.AccountActions?.ClickToCall"
+                                 Icon="@Icons.Material.Filled.Phone"
+                                 IconOnly="true" />
+
                 </HeaderContent>
                 <BodyContent>
                     <MudGrid Spacing="0">
@@ -76,16 +84,18 @@
                 </BodyContent>
             </CustomHeaderCard>
 
-            <CustomHeaderCard Elevation="0">
-                <HeaderContent>
-                    <MudText Typo="Typo.subtitle1" Color="Color.Secondary"
-                             Class="pt-0">@BasketOrderInfo!.InformationSectionLabel</MudText>
-                </HeaderContent>
+            <MudCard Elevation="0">
+                <MudCardHeader Class="px-1 py-2 ma-n1">
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.subtitle1" Color="Color.Secondary"
+                                 Class="pt-0">@BasketOrderInfo!.InformationSectionLabel</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
 
-                <BodyContent>
-                    <MudGrid Spacing="0">
+                <MudCardContent Class="pa-0">
+                    <MudGrid Spacing="1">
                         <MudItem xs="12">
-                            <MudGrid Justify="Justify.SpaceBetween">
+                            <MudGrid Spacing="1">
                                 <MudItem xs="6">
                                     <GenericMudSelect Field="BasketOrderInfo!.SalesOriginId"
                                                       Items="SalesOrigins" />
@@ -115,8 +125,8 @@
                             <GenericTextField Field="BasketOrderInfo.RelatedLink" />
                         </MudItem>
                     </MudGrid>
-                </BodyContent>
-            </CustomHeaderCard>
+                </MudCardContent>
+            </MudCard>
 
             <MudSpacer />
 

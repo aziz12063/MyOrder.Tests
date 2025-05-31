@@ -6,16 +6,16 @@
 <MudBadge Dot="true"
           Overlap="true"
           Icon="@Icons.Material.Rounded.Warning"
-          Color="Color.Error"
+          Color="BadgeColor"
           BadgeClass="ml-n2 mb-n1"
           Visible="BadgeVisible">
     <MudButton Variant="Variant.Text"
                DropShadow="false"
                OnClick="OnButtonClick"
                Class="px-1 rounded-lg"
-               @onmouseover="() => isHovered = true"
-               @onmouseout="() => isHovered = false"
-               Style="@($"background-color: {(isHovered ? "rgba(255, 255, 255, 0.1)" : "transparent")};")">
+               @onmouseover="() => _isHovered = true"
+               @onmouseout="() => _isHovered = false"
+               Style="@($"background-color: {(_isHovered ? "rgba(255, 255, 255, 0.1)" : "transparent")};")">
         <MudStack Spacing="0"
                   Class="align-center justify-center">
             <MudIcon Style="@($"font-size:2.5rem; {ColorStyle}")"
@@ -42,11 +42,43 @@
     public string ColorStyle { get; set; } = string.Empty;
 
     public bool BadgeVisible { get; set; } = false;
-    public bool isHovered = false;
+    public Color BadgeColor { get; set; }
+
+    private static readonly IReadOnlyDictionary<FieldDisplayStyle, int> SeverityMap =
+        new Dictionary<FieldDisplayStyle, int>
+            {
+                [FieldDisplayStyle.Standard] = 0,
+                [FieldDisplayStyle.Emphasize] = 1,
+                [FieldDisplayStyle.Success] = 2,
+                [FieldDisplayStyle.Warn] = 3
+            };
+
+    public bool _isHovered = false;
 
     protected override void OnParametersSet()
     {
-        BadgeVisible = IsBadgeVisible(BasketActionsBase!);
+        // 1) get it once
+        var style = GetBadgeDisplayStyle(BasketActionsBase!);
+
+        // 2) visible if not Standard
+        BadgeVisible = style != FieldDisplayStyle.Standard;
+
+        // 3) pick a MudBlazor.Color
+        switch (style)
+        {
+            case FieldDisplayStyle.Warn:
+                BadgeColor = Color.Error;    // red
+                break;
+            case FieldDisplayStyle.Emphasize:
+                BadgeColor = Color.Warning;  // orange
+                break;
+            case FieldDisplayStyle.Success:
+                BadgeColor = Color.Success;  // green
+                break;
+            default:
+                BadgeColor = Color.Default;  // falls back to your theme’s default
+                break;
+        }
     }
 
     private async Task OnButtonClick()
@@ -54,27 +86,26 @@
         await OnClickCallback.InvokeAsync();
     }
 
-    private static bool IsBadgeVisible(BasketActionsBase bab)
+    private static FieldDisplayStyle GetBadgeDisplayStyle(BasketActionsBase bab)
     {
-        var properties = bab.GetType().GetProperties();
+        var styles = bab.GetType()
+            .GetProperties()
+            .Where(p => p.PropertyType.IsGenericType
+                     && p.PropertyType.GetGenericTypeDefinition() == typeof(Field<>))
+            .Select(p => p.GetValue(bab))
+            .Where(v => v != null)
+            .Select(v => (FieldDisplayStyle?)v
+                 .GetType()
+                 .GetProperty(nameof(Field<object>.DisplayStyle))
+                 ?.GetValue(v))
+            .OfType<FieldDisplayStyle>();
 
-        var fieldProperties = properties.Where(prop => prop.PropertyType.IsGenericType &&
-                                                       prop.PropertyType.GetGenericTypeDefinition() == typeof(Field<>));
-
-        foreach (var field in fieldProperties)
-        {
-            var fieldValue = field.GetValue(bab);
-
-            if (fieldValue != null)
-            {
-                var fieldDisplayStyle = fieldValue.GetType().GetProperty(nameof(Field<object>.DisplayStyle));
-                var fieldDisplayStyleValue = fieldDisplayStyle?.GetValue(fieldValue) as FieldDisplayStyle?;
-
-                if (fieldDisplayStyleValue != null && fieldDisplayStyleValue == FieldDisplayStyle.Warn)
-                    return true;
-            }
-        }
-        return false;
+        // Default to Standard if nothing found,
+        // then pick the one with the highest SeverityMap value.
+        return styles
+            .DefaultIfEmpty(FieldDisplayStyle.Standard)
+            .OrderByDescending(s => SeverityMap.TryGetValue(s, out var lvl) ? lvl : 0)
+            .First();
     }
 
 }

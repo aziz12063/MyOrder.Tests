@@ -7,6 +7,9 @@ public partial class SectionPaper : MudPaper
 {
     [Parameter, EditorRequired]
     public string Title { get; set; } = string.Empty;
+    [Parameter, EditorRequired]
+    public bool IsLoading { get; set; } = false;
+
     [Parameter] 
     public int HoverElevation { get; set; } = 4;
     [Parameter] 

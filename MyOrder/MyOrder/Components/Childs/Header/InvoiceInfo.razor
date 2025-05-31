@@ -1,13 +1,12 @@
 ﻿@using MyOrder.Store.InvoiceInfoUseCase
 @inherits MyOrder.Components.Common.FluxorComponentBase<InvoiceInfoState, FetchInvoiceInfoAction>
 
-@if (_isLoading)
-{
-    <HeaderElementLoadingSkeleton />
-    return;
-}
-<SectionPaper Title="@BasketInvoiceInfo!.PanelLabel">
-
+<SectionPaper Title="@BasketInvoiceInfo?.PanelLabel" IsLoading="_isLoading">
+    @if (_isLoading)
+    {
+        <HeaderElementLoadingSkeleton />
+        return;
+    }
     <FetchActionTypeCascadingValue FetchActionTypeValue="FetchActionType">
         <MudStack Justify="Justify.SpaceBetween" Style="height: inherit;">
             <div>
@@ -98,7 +97,7 @@
                     </CardHeaderContent>
                 </MudCardHeader>
                 <MudCardContent Class="pa-0">
-                    <MudStack Spacing="0">
+                    <MudStack Spacing="1">
                         <!--Siret-->
                         <DisplayField Field="BasketInvoiceInfo!.SiretId" />
 
@@ -124,7 +123,7 @@
                               Margin="Margin.Dense"
                               ReadOnly="true"
                               Label="@BasketInvoiceInfo!.Note?.Name"
-                              Value="@BasketInvoiceInfo!.Note?.Value" />
+                              Value="@BasketInvoiceInfo!.Note?.Value"/>
             </div>
         </MudStack>
     </FetchActionTypeCascadingValue>

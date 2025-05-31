@@ -13,7 +13,7 @@ public interface IGeneralInfoApiClient
     Task<List<BasketNotificationDto?>?> GetNotificationsAsync(string companyId, string basketId, CancellationToken cancellationToken = default);
 
     [Get("/api/myorder/{companyId}/{basketId}/blockingReasons")]
-    Task<List<BasketBlockingReasonDto?>?> GetBlockingReasonsAsync(string companyId, string basketId, CancellationToken cancellationToken = default);
+    Task<BasketBlockingReasonsDto?> GetBlockingReasonsAsync(string companyId, string basketId, CancellationToken cancellationToken = default);
 
     [Get("/api/myorder/{companyId}/{basketId}/validationRules")]
     Task<List<BasketNotificationDto?>?> GetValidationRulesAsync(string companyId, string basketId, CancellationToken cancellationToken = default);

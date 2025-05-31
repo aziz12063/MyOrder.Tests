@@ -7,10 +7,11 @@ public interface IDeliveryInfoRepository
 {
     Task<BasketDeliveryInfoDto?> GetBasketDeliveryInfoAsync(CancellationToken cancellationToken = default);
     Task<List<AccountDto?>?> GetDeliverToAccountsAsync(string? filter = null, bool? search = null, CancellationToken cancellationToken = default);
-    Task<DeliveryAccountDraft?> GetNewDeliveryAccountAsync(string? filter = null, CancellationToken cancellationToken = default);
+    Task<DeliveryAccountDraft?> GetNewDeliveryAccountAsync(string? accountId = null, CancellationToken cancellationToken = default);
     Task<ProcedureCallResponseDto?> CommitNewDeliveryAccountAsync(CancellationToken? cancellationToken = default);
     Task<ProcedureCallResponseDto?> ResetNewDeliveryAccountAsync(CancellationToken? cancellationToken = default);
     Task<List<ContactDto?>?> GetDeliverToContactsAsync(string? filter = null, CancellationToken cancellationToken = default);
+    Task<DeliveryContactDraft?> GetNewDeliveryContactAsync(string? contactId = null, CancellationToken cancellationToken = default);
     Task<List<BasketValueDto?>?> GetDeliveryModesAsync(CancellationToken cancellationToken = default);
 
 }

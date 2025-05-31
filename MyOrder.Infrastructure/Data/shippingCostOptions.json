@@ -1,10 +1,10 @@
 [
-    {
-        "value": "Standard",
-        "description": "Frais de livraison"
-    },
-    {
-        "value": "Offered",
-        "description": "Frais de liv. offerts"
-    }
+  {
+    "description": "Frais de livraison",
+    "value": "Standard"
+  },
+  {
+    "description": "Frais de liv. offerts",
+    "value": "Offered"
+  }
 ]

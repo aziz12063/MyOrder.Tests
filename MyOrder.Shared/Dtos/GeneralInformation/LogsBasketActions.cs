@@ -4,6 +4,7 @@ namespace MyOrder.Shared.Dtos.GeneralInformation;
 
 public class LogsBasketActions : BasketActionsBase
 {
+    public Field<string?>? PublicationLogs { get; set; }
     public Field<string?>? OrderDiary { get; set; }
     public Field<string?>? EdiMessages { get; set; }
 }

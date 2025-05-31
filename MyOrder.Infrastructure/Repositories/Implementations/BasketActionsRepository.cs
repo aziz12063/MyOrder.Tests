@@ -4,6 +4,7 @@ using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.SharedComponents;
 using MyOrder.Shared.Interfaces;
 using System.Collections.Immutable;
+using System.Globalization;
 
 namespace MyOrder.Infrastructure.Repositories.Implementations;
 
@@ -140,6 +141,7 @@ public class BasketActionsRepository(IBasketActionsApiClient basketActionsApiCli
             BasketValueDto basketValue => basketValue.Value,
             AccountDto account => account.AccountId,
             ContactDto contact => contact.ContactId,
+            TimeSpan ts => ts.ToString(@"hh\:mm", CultureInfo.InvariantCulture),
             _ => value?.ToString(),
         };
         return str ?? string.Empty;

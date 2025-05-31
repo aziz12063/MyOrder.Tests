@@ -1,54 +1,161 @@
 [
-    {
-        "value": " ",
-        "description": "-- Non renseigné --"
-    },
-    {
-        "value": "ADD LIGNE",
-        "description": "ADD LIGNE-LIGNE SUPP (CROSS)"
-    },
-    {
-        "value": "ADD QTE",
-        "description": "ADD QTE-QUANTITE SUPP (UP)"
-    },
-    {
-        "value": "BVN",
-        "description": "BVN-Offre de bienvenue"
-    },
-    {
-        "value": "CS",
-        "description": "CS-Conditions spéciales"
-    },
-    {
-        "value": "FS",
-        "description": "FS-Fabrication spéciale"
-    },
-    {
-        "value": "GCO",
-        "description": "GCO-Geste commercial"
-    },
-    {
-        "value": "OFF",
-        "description": "OFF-Offre de prix"
-    },
-    {
-        "value": "PRV",
-        "description": "PRV-Prix provisoire"
-    },
-    {
-        "value": "PRW",
-        "description": "PRW-Prix Web"
-    },
-    {
-        "value": "RPL",
-        "description": "RPL-Produit de remplacement"
-    },
-    {
-        "value": "VU",
-        "description": "VU-Vu avec superviseur"
-    },
-    {
-        "value": "XC",
-        "description": "XC-Concours"
-    }
+  {
+    "value": ""
+  },
+  {
+    "description": "ADD FOLIES",
+    "value": "ADD FOLIES"
+  },
+  {
+    "description": "ADD LIGNE",
+    "value": "ADD LIGNE"
+  },
+  {
+    "description": "ADD QTE",
+    "value": "ADD QTE"
+  },
+  {
+    "description": "ALS",
+    "value": "ALS"
+  },
+  {
+    "description": "ATT",
+    "value": "ATT"
+  },
+  {
+    "description": "BPS",
+    "value": "BPS"
+  },
+  {
+    "description": "BVN",
+    "value": "BVN"
+  },
+  {
+    "description": "CAD",
+    "value": "CAD"
+  },
+  {
+    "description": "CROSS",
+    "value": "CROSS"
+  },
+  {
+    "description": "CS",
+    "value": "CS"
+  },
+  {
+    "description": "DAV",
+    "value": "DAV"
+  },
+  {
+    "description": "DEF",
+    "value": "DEF"
+  },
+  {
+    "description": "ECH",
+    "value": "ECH"
+  },
+  {
+    "description": "EXP",
+    "value": "EXP"
+  },
+  {
+    "description": "FAC",
+    "value": "FAC"
+  },
+  {
+    "description": "FID",
+    "value": "FID"
+  },
+  {
+    "description": "FIN",
+    "value": "FIN"
+  },
+  {
+    "description": "FS",
+    "value": "FS"
+  },
+  {
+    "description": "GCO",
+    "value": "GCO"
+  },
+  {
+    "description": "GRT",
+    "value": "GRT"
+  },
+  {
+    "description": "GSC",
+    "value": "GSC"
+  },
+  {
+    "description": "KC",
+    "value": "KC"
+  },
+  {
+    "description": "LOC",
+    "value": "LOC"
+  },
+  {
+    "description": "MKG",
+    "value": "MKG"
+  },
+  {
+    "description": "MY ORDER",
+    "value": "MY ORDER"
+  },
+  {
+    "description": "NC",
+    "value": "NC"
+  },
+  {
+    "description": "NCM",
+    "value": "NCM"
+  },
+  {
+    "description": "NDI",
+    "value": "NDI"
+  },
+  {
+    "description": "OFF",
+    "value": "OFF"
+  },
+  {
+    "description": "PRA",
+    "value": "PRA"
+  },
+  {
+    "description": "PRV",
+    "value": "PRV"
+  },
+  {
+    "description": "PRW",
+    "value": "PRW"
+  },
+  {
+    "description": "REP",
+    "value": "REP"
+  },
+  {
+    "description": "RFA",
+    "value": "RFA"
+  },
+  {
+    "description": "RPL",
+    "value": "RPL"
+  },
+  {
+    "description": "SAV",
+    "value": "SAV"
+  },
+  {
+    "description": "VU",
+    "value": "VU"
+  },
+  {
+    "description": "WEB",
+    "value": "WEB"
+  },
+  {
+    "description": "XC",
+    "value": "XC"
+  }
 ]

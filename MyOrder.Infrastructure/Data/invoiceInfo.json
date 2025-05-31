@@ -1,108 +1,88 @@
 {
-    "panelLabel": "Facturation",
-    "accountSectionLabel": "Compte de facturation",
-    "account": {
-        "name": "Compte de facturation",
-        "status": "readWrite",
-        "displayStyle": "standard",
-        "value": {
-            "accountId": "98677453",
-            "name": "QUARTIER GENERAL DU CORPS",
-            "recipient": "EUROPEEN G8 FISCAL",
-            "building": "",
-            "street": "BP 70082",
-            "locality": "",
-            "zipCode": "67020",
-            "city": "STRASBOURG CEDEX 1",
-            "county": null,
-            "country": null,
-            "email": "raja1234@raja.fr",
-            "phone": "0120281279",
-            "cellularPhone": "0120281279",
-            "blocked": false,
-            "lastOrderDate": null,
-            "isLinked": true
-        },
-        "procedureCall": [
-            "UpdateCustomer",
-            "invoiceTo",
-            "<one of /invoiceToAccounts accountId>"
-        ]
+  "panelLabel": "Facturation",
+  "accountSectionLabel": "Compte de facturation",
+  "account": {
+    "name": "Compte de facturation",
+    "status": "readWrite",
+    "value": {
+      "accountId": "97155786",
+      "name": "ST MICROELECTRONICS ROUSSET SAS",
+      "recipient": "",
+      "building": "SOPHIA ANTIPOLIS",
+      "street": "635 ROUTE DES LUCIOLES",
+      "locality": "SOPHIA ANTIPOLIS",
+      "zipCode": "06560",
+      "city": "VALBONNE",
+      "country": null,
+      "email": "raja1234@raja.fr",
+      "phone": "0120281279",
+      "cellularPhone": "0120281279",
+      "blocked": false
     },
-    "paymentSectionLabel": "Paiement du client",
-    "paymentAuthorizationAction": {
-        "name": "Paiement CB",
-        "status": "required",
-        "displayStyle": "warn",
-        "value": "",
-        "description": "En attente du paiement client"
+    "procedureCall": [
+      "UpdateCustomer",
+      "InvoiceTo",
+      "<one of /invoiceToAccounts accountId>"
+    ]
+  },
+  "paymentSectionLabel": "Paiement du client",
+  "paymentTerm": {
+    "name": "Conditions",
+    "status": "onlyForDisplay",
+    "value": {
+      "description": "Fin de mois, 45 jours",
+      "value": "FDM45"
     },
-    "paymentTerm": {
-        "name": "Conditions",
-        "status": "onlyForDisplay",
-        "displayStyle": "standard",
-        "value": {
-            "value": "COMPTANT CB",
-            "description": ""
-        },
-        "description": "COMPTANT CB"
+    "description": "Conditions de paiement"
+  },
+  "paymentMode": {
+    "name": "Mode",
+    "status": "readWrite",
+    "value": {
+      "description": "VB - Virement Bancaire",
+      "value": "VB"
     },
-    "paymentMode": {
-        "name": "Mode",
-        "status": "required",
-        "displayStyle": "warn",
-        "error": "En attente du paiement du client",
-        "value": {
-            "value": "CB",
-            "description": "CB"
-        },
-        "description": "CB",
-        "procedureCall": [
-            "UpdateOrderTablePropertyValue",
-            "PaymMode",
-            "System.String",
-            "<value>"
-        ]
+    "description": "Mode de paiement",
+    "procedureCall": [
+      "UpdateOrderTablePropertyValue",
+      "PaymMode",
+      "System.String",
+      "<value>"
+    ]
+  },
+  "informationSectionLabel": "Informations de facturation",
+  "siretId": {
+    "name": "Siret",
+    "status": "onlyForDisplay",
+    "value": "41496958400013"
+  },
+  "note": {
+    "name": "Notes de facturation",
+    "status": "onlyForDisplay",
+    "value": ""
+  },
+  "taxGroup": {
+    "name": "Groupe de taxe",
+    "status": "readWrite",
+    "value": {
+      "description": "France SMICTOM TVA 7%",
+      "value": "F-SMI"
     },
-    "informationSectionLabel": "Informations de facturation",
-    "siretId": {
-        "name": "Siret",
-        "status": "onlyForDisplay",
-        "displayStyle": "standard",
-        "value": ""
-    },
-    "taxGroup": {
-        "name": "Groupe de taxe",
-        "status": "readWrite",
-        "displayStyle": "standard",
-        "value": {
-            "value": "",
-            "description": "-- Non renseigné --"
-        },
-        "description": "F-DEB",
-        "procedureCall": [
-            "UpdateOrderTablePropertyValue",
-            "TaxGroup",
-            "System.String",
-            "<value>"
-        ]
-    },
-    "publicEntityExecutingService": {
-        "name": "Service exécutif",
-        "status": "readOnly",
-        "displayStyle": "standard",
-        "value": ""
-    },
-    "publicEntityLegalCommitment": {
-        "name": "Engagement juridique",
-        "status": "readOnly",
-        "displayStyle": "standard",
-        "value": ""
-    },
-    "note": {
-        "name": "Notes de facturation",
-        "status": "onlyForDisplay",
-        "displayStyle": "standard",
-        "value": ""
-    }
+    "procedureCall": [
+      "UpdateOrderTablePropertyValue",
+      "TaxGroup",
+      "System.String",
+      "<value>"
+    ]
+  },
+  "publicEntityExecutingService": {
+    "name": "Service exécutif",
+    "status": "readOnly",
+    "value": ""
+  },
+  "publicEntityLegalCommitment": {
+    "name": "Engagement juridique",
+    "status": "readOnly",
+    "value": ""
+  }
 }

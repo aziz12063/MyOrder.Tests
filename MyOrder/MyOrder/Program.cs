@@ -135,7 +135,7 @@ static IHttpClientBuilder RegisterRepositoriesWithRefitClient<TApiClient, TRepos
     builder.Services.AddScoped<TRepositoryInterface, TConcreteRepository>();
     var apiUri = builder.Configuration["ApiUri"] ?? "http://aliasieeq:8080";
 
-    var httpBuilder = builder.Services.AddRefitClient<TApiClient>(new RefitSettings
+var httpBuilder = builder.Services.AddRefitClient<TApiClient>(new RefitSettings
     {
         ContentSerializer = new NewtonsoftJsonContentSerializer()
     })

@@ -11,9 +11,7 @@ public class UserNameHandler(IHttpContextAccessor httpContextAccessor, ILogger<U
     {
 #if DEBUG
         logger.LogWarning("Hardcoded http header {Param} value for testing purposes", HEADER_PARAM_AUTHENTICATED_USER);
-
-        request.Headers.Add(HEADER_PARAM_AUTHENTICATED_USER, "RAJA-GROUP\\imad.BOUGATAIA.ext");
-
+        request.Headers.Add(HEADER_PARAM_AUTHENTICATED_USER, Environment.UserName);
         return await base.SendAsync(request, cancellationToken);
 #else
         try

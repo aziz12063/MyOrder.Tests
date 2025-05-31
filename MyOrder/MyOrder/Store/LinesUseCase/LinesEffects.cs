@@ -77,4 +77,20 @@ public class LinesEffects(IOrderLinesRepository basketLinesRepository, IStateRes
     {
         _logger.LogError("Error while performing action on lines: {ErrorMessage}", receivedAction.ErrorMessage);
     }
+
+    [EffectMethod]
+    public async Task HandleFetchSuppliersAction(FetchSuppliersAction action, IDispatcher dispatcher)
+    {
+        try
+        {
+            _logger.LogInformation("Fetching suppliers with search: {Search}, filter: {Filter}", action.Search, action.Filter);
+            var suppliers = await _basketRepository.GetSuppliersAsync(action.Search, action.Filter);
+            dispatcher.Dispatch(new FetchSuppliersSuccessAction(suppliers));
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error while fetching suppliers");
+            dispatcher.Dispatch(new FetchSuppliersFailureAction(ex.Message));
+        }
+    }
 }

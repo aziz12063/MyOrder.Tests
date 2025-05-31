@@ -4,6 +4,7 @@ namespace MyOrder.Shared.Dtos;
 
 public class BasketOrderInfoDto
 {
+    public AccountActions? AccountActions { get; set; }
     public string? PanelLabel { get; set; }
     public string? AccountSectionLabel { get; set; }
     public string? ContactSectionLabel { get; set; }

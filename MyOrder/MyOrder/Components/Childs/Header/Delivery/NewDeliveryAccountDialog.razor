@@ -2,7 +2,7 @@
 
 @inherits FluxorComponentBase<NewDeliveryAccountState, FetchNewDeliveryAccountAction>
 
-<MudDialog Class="app-dialog-modal" ContentClass="ma-0 pb-2">
+<MudDialog ContentClass="ma-0 pb-2">
     <TitleContent>
         <MudText Typo="Typo.h5">Édition de l'adresse de livraison</MudText>
     </TitleContent>
@@ -16,165 +16,119 @@
         else
         {
             <FetchActionTypeCascadingValue FetchActionTypeValue="FetchActionType">
-                <MudGrid Spacing="2">
-                    <MudItem xs="4">
-                        <MudPaper Elevation="2" Class="header-cards-height header-cards-height-content">
-                            <MudText Typo="Typo.h6" Color="Color.Secondary" Class="pb-4">@DeliveryAccountDraft!.AccountSectionLabel</MudText>
-                            <MudGrid Spacing="0">
-                                @if (!FieldUtility.IsHidden(DeliveryAccountDraft?.AccountId))
-                                {
-                                    <MudItem xs="6" Class="pr-2">
-                                        <GenericTextField Field="DeliveryAccountDraft!.AccountId" />
-                                    </MudItem>
-                                }
-                                @if (!FieldUtility.IsHidden(DeliveryAccountDraft?.AccountType))
-                                {
-                                    <MudItem xs="6" Class="pl-2">
-                                        <GenericTextField Field="DeliveryAccountDraft!.AccountType" />
-                                    </MudItem>
-                                }
-                                <MudItem xs="12">
-                                    <GenericTextField Field="DeliveryAccountDraft!.Name" />
-                                </MudItem>
-                                <MudItem xs="12">
-                                    <GenericTextField Field="DeliveryAccountDraft!.Recipient" />
-                                </MudItem>
-                            </MudGrid>
-                        </MudPaper>
-                    </MudItem>
-                    <MudItem xs="8">
-                        <MudPaper Elevation="2" Class="header-cards-height header-cards-height-content">
-                            <MudText Typo="Typo.h6" Color="Color.Secondary" Class="pb-4">Instructions de livraison</MudText>
-                            <MudGrid Spacing="3" Class="pt-0">
-                                <MudItem xs="5">
-                                    <MudGrid Spacing="0" Justify="Justify.SpaceBetween">
-                                        <MudItem xs="6" Class="pr-4">
-                                            <GenericTextField Field="DeliveryAccountDraft!.Floor" />
-                                        </MudItem>
-                                        <MudItem xs="6" Class="pr-4">
-                                            <GenericTextField Field="DeliveryAccountDraft!.DigiCode" />
-                                        </MudItem>
-                                        <MudItem xs="12">
-                                            <MudStack Justify="Justify.FlexStart" Row="true" Class="ml-n1 my-2">
-                                                <GenericCheckBox Field="DeliveryAccountDraft!.Lift" />
-                                                <GenericCheckBox Field="DeliveryAccountDraft!.AppointmentRequired" />
-                                            </MudStack>
-                                        </MudItem>
-                                        <MudItem xs="12" Class="mt-2 pr-4">
-                                            <GenericTextField Field="DeliveryAccountDraft!.CarrierType" />
-                                        </MudItem>
-                                    </MudGrid>
-                                </MudItem>
-                                <MudItem xs="7">
-                                    <GenericTextField Field="DeliveryAccountDraft!.DeliveryNote"
-                                                      Lines="7"
-                                                      Variant="Variant.Outlined" />
-                                </MudItem>
-                            </MudGrid>
-
-                        </MudPaper>
-                    </MudItem>
-                    <MudItem xs="5">
-                        <MudPaper Elevation="2" Class="header-cards-height header-cards-height-content pb-2">
-                            <MudStack Row="true" Justify="Justify.SpaceBetween">
-                                <MudText Typo="Typo.h6" Color="Color.Secondary" Class="pb-4">@DeliveryAccountDraft!.AddressSectionLabel</MudText>
-                                <BasketFieldText TextField="DeliveryAccountDraft!.StatusMessage"
-                                                 Class="pt-2" />
-                            </MudStack>
-                            <MudStack Justify="Justify.FlexEnd">
-                                <MudGrid Spacing="0"
-                                         Class="pr-3"
-                                         Justify="Justify.FlexStart">
-                                    <MudItem xs="12">
-                                        <MudStack Spacing="0">
-                                            <GenericTextField Field="DeliveryAccountDraft!.Building"
-                                                              OnKeyDown="OnAddressFormEnterKeyPressed" />
-                                            <GenericTextField Field="DeliveryAccountDraft!.Street"
-                                                              OnKeyDown="OnAddressFormEnterKeyPressed" />
-                                            <GenericTextField Field="DeliveryAccountDraft!.Locality"
-                                                              OnKeyDown="OnAddressFormEnterKeyPressed" />
-                                        </MudStack>
-                                    </MudItem>
-                                    <MudItem xs="12">
-                                        <MudStack Spacing="4" Row="true">
-                                            <GenericTextField Field="DeliveryAccountDraft!.Zipcode"
-                                                              OnKeyDown="OnAddressFormEnterKeyPressed" />
-                                            <GenericTextField Field="DeliveryAccountDraft!.City"
-                                                              OnKeyDown="OnAddressFormEnterKeyPressed" />
-                                            <GenericTextField Field="DeliveryAccountDraft!.Country"
-                                                              OnKeyDown="OnAddressFormEnterKeyPressed" />
-                                        </MudStack>
-                                    </MudItem>
-                                </MudGrid>
-                                <MudSpacer />
-                                <MudStack Row="true" Justify="Justify.FlexEnd" Class="pt-6">
-                                    <MudSpacer />
-                                    <ProcedureCallButton @ref="LookupButton"
-                                                         Field="DeliveryAccountDraft!.Actions?.AddressLookup"
-                                                         Icon="@Icons.Material.Filled.LocationSearching" />
-                                </MudStack>
-                            </MudStack>
-                        </MudPaper>
-                    </MudItem>
-                    <MudItem xs="7">
-                        @{
-#warning refactor to use class instead of inline style
+                <MudPaper Elevation="2" Class="header-cards-height-content">
+                    <MudText Typo="Typo.h6" Color="Color.Secondary">@DeliveryAccountDraft!.AccountSectionLabel</MudText>
+                    <MudGrid Spacing="0" Class="mt-2">
+                        @if (!FieldUtility.IsHidden(DeliveryAccountDraft?.AccountId))
+                        {
+                            <MudItem xs="6" Class="pr-1">
+                                <GenericTextField Field="DeliveryAccountDraft!.AccountId" />
+                            </MudItem>
                         }
-                        <MudDataGrid T="Address"
-                                     Elevation="2"
-                                     Bordered="true"
-                                     Striped="true"
-                                     Dense="true"
-                                     Hover="true"
-                                     FixedHeader="true"
-                                     Class="header-cards-height pt-2"
-                                     Height="35vh"
-                                     Virtualize="true"
-                                     Items="DeliveryAccountDraft!.AddressLookupResults"
-                                     SortMode="@SortMode.None"
-                                     RowStyleFunc="(address, _) => RowStyleFunc(address)">
-                            <Columns>
-                                <TemplateColumn HeaderStyle="width:1%;" CellStyle="width:1%;" CellClass="px-1 py-1">
-                                    <CellTemplate>
-                                        <ProcedureCallButton Field="context.Item.IsSelected"
-                                                             Color="Color.Primary"
-                                                             IconOnly="true"
-                                                             Icon="@Icons.Material.Filled.KeyboardDoubleArrowRight" />
-                                    </CellTemplate>
-                                </TemplateColumn>
-                                <PropertyColumn Title="Bat ZI"
-                                                CellClass="px-2 py-0"
-                                                Property="item => item.Building ?? string.Empty" />
+                        @if (!FieldUtility.IsHidden(DeliveryAccountDraft?.AccountType))
+                        {
+                            <MudItem xs="6" Class="pl-1">
+                                <GenericTextField Field="DeliveryAccountDraft!.AccountType" />
+                            </MudItem>
+                        }
+                        <MudItem xs="12">
+                            <GenericTextField Field="DeliveryAccountDraft!.Name" />
+                        </MudItem>
+                        <MudItem xs="12">
+                            <GenericTextField Field="DeliveryAccountDraft!.Recipient" />
+                        </MudItem>
+                    </MudGrid>
+                </MudPaper>
 
-                                <PropertyColumn Title="Voie"
-                                                CellClass="px-2 py-0"
-                                                HeaderStyle="min-width: 30% !important;"
-                                                CellStyle="min-width: 30% !important;"
-                                                Property="item => item.Street ?? string.Empty" />
+                <MudPaper Elevation="2" Class="header-cards-height-content mt-2">
+                    <MudStack Row="true" Justify="Justify.SpaceBetween">
+                        <MudText Typo="Typo.h6" Color="Color.Secondary">@DeliveryAccountDraft!.AddressSectionLabel</MudText>
+                        <BasketFieldText TextField="DeliveryAccountDraft!.StatusMessage" />
+                    </MudStack>
+                    <MudGrid Spacing="0"
+                             Class="mt-2"
+                             Justify="Justify.FlexStart">
+                        <MudItem xs="12">
+                            <MudStack Spacing="0">
+                                <GenericTextField Field="DeliveryAccountDraft!.Building"
+                                                  OnKeyDown="OnAddressFormEnterKeyPressed" />
+                                <GenericTextField Field="DeliveryAccountDraft!.Street"
+                                                  OnKeyDown="OnAddressFormEnterKeyPressed" />
+                                <GenericTextField Field="DeliveryAccountDraft!.Locality"
+                                                  OnKeyDown="OnAddressFormEnterKeyPressed" />
+                            </MudStack>
+                        </MudItem>
+                        <MudItem xs="12">
+                            <MudStack Spacing="4" Row="true">
+                                <GenericTextField Field="DeliveryAccountDraft!.Zipcode"
+                                                  OnKeyDown="OnAddressFormEnterKeyPressed" />
+                                <GenericTextField Field="DeliveryAccountDraft!.City"
+                                                  OnKeyDown="OnAddressFormEnterKeyPressed" />
+                                <GenericMudSelect Field="DeliveryAccountDraft!.Country"
+                                                  Items="RessourcesState.Value.Countries" />
+                            </MudStack>
+                        </MudItem>
+                    </MudGrid>
+                    <MudStack Row="true" Justify="Justify.FlexEnd" Class="mt-1">
+                        <MudSpacer />
+                        <FieldButton @ref="LookupButton"
+                                     Field="DeliveryAccountDraft!.Actions?.AddressLookup"
+                                     Icon="@Icons.Material.Filled.LocationSearching" />
+                    </MudStack>
+                    @{
+                #warning refactor to use class instead of inline style
+                    }
+                    <MudDataGrid T="Address"
+                                 Bordered="true"
+                                 Striped="true"
+                                 Outlined="false"
+                                 Dense="true"
+                                 Hover="true"
+                                 Elevation="0"
+                                 FixedHeader="true"
+                                 Class="mt-2"
+                                 Height="25vh"
+                                 Virtualize="true"
+                                 Items="DeliveryAccountDraft!.AddressLookupResults"
+                                 SortMode="@SortMode.None"
+                                 RowStyleFunc="(address, _) => RowStyleFunc(address)">
+                        <Columns>
+                            <TemplateColumn HeaderStyle="width:1%;" CellStyle="width:1%;" CellClass="px-1 py-1">
+                                <CellTemplate>
+                                    <FieldButton Field="context.Item.IsSelected"
+                                                 Color="Color.Primary"
+                                                 IconOnly="true"
+                                                 Icon="@Icons.Material.Filled.KeyboardDoubleArrowRight" />
+                                </CellTemplate>
+                            </TemplateColumn>
 
-                                <PropertyColumn Title="Lieu dit"
-                                                CellClass="px-2 py-0"
-                                                Property="item => item.Locality ?? string.Empty" />
+                            <PropertyColumn Title="Bat ZI, Voie, Lieu dit"
+                                            CellClass="px-2 py-0"
+                                            Property="item => GetFullAddress(item)" />
 
-                                <PropertyColumn Title="CP/Ville"
-                                                CellClass="px-2 py-0"
-                                                Property="@(item => $"{item.ZipCode} {item.City}" +
-                                                                        (!string.IsNullOrWhiteSpace(item.Country) && !item.Country.StartsWith("FR",StringComparison.InvariantCultureIgnoreCase)
-                                                                        ? $", {item.Country}" : string.Empty))" />
-                            </Columns>
-                        </MudDataGrid>
-                    </MudItem>
-                </MudGrid>
-            </FetchActionTypeCascadingValue>
-        }
+                            <PropertyColumn Title="CP/Ville"
+                                            CellClass="px-2 py-0"
+                                            Property="@(item => $"{item.ZipCode} {item.City}" +
+                                             (!string.IsNullOrWhiteSpace(item.Country) && !item.Country.StartsWith("FR", StringComparison.InvariantCultureIgnoreCase)
+                                             ? $", {item.Country}" : string.Empty))" />
+                    </Columns>
+                    <NoRecordsContent>
+                        <MudText Typo="Typo.body1" Class="pt-5 pb-10">
+                            <em>Aucune adresse trouvée</em>
+                        </MudText>
+                    </NoRecordsContent>
+                </MudDataGrid>
+            </MudPaper>
+        </FetchActionTypeCascadingValue>
+                }
     </DialogContent>
     <DialogActions>
         @if (_isLoading)
             return;
 
-        <ProcedureCallButton Field="DeliveryAccountDraft!.Actions?.AddAddress"
-                             Icon="@Icons.Material.Filled.Add"
-                             Size="Size.Medium"
-                             OnClickCallback="OnSaveClicked" />
+        <FieldButton Field="DeliveryAccountDraft!.Actions?.AddAddress"
+                     Icon="@Icons.Material.Filled.Add"
+                     Size="Size.Medium"
+                     OnClickCallback="OnSaveClicked" />
     </DialogActions>
 </MudDialog>
