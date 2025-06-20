@@ -2,12 +2,21 @@
 
 @inherits FluxorComponentBase<NewLineState, FetchNewLineAction>
 
-@if (_isLoading)
+@if (!Initialized)
 {
     <MudProgressLinear Color="Color.Primary"
                        Indeterminate="true" />
     <MudText>Chargement ...</MudText>
     return;
+}
+else if (_isBusy)
+{
+    <MudOverlay Visible="_isBusy" ZIndex="9999" LightBackground="true">
+        <MudElement HtmlTag="div" Class="d-flex flex-column align-center gap-6" Style="width:512px;">
+            <MudProgressCircular Size="Size.Large" Indeterminate="true" />
+            <MudText Typo="Typo.subtitle2">Chargement...</MudText>
+        </MudElement>
+    </MudOverlay>
 }
 
 <FetchActionTypeCascadingValue FetchActionTypeValue="FetchActionType">
@@ -18,7 +27,8 @@
                 <MudStack Row="true" AlignItems="AlignItems.Baseline">
 
                     <GenericTextField @ref="ItemIdField"
-                                      Field="NewLine!.ItemId" />
+                                      Field="NewLine!.ItemId"
+                                      OnValueChange="ItemIdValueChangedCallback" />
 
                     <GenericNumericField Field="NewLine!.SalesQuantity"
                                          Step="NewLine!.MultipleQuantity?.Value"

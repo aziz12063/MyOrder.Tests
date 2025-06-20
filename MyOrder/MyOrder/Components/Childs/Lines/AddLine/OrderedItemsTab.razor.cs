@@ -12,22 +12,16 @@ public partial class OrderedItemsTab : FluxorComponentBase<OrderedItemsState, Fe
 {
     [Inject]
     public IClipboardService ClipboardService { get; set; }
-    private List<OrderedItemDto?>? OrderedItems { get; set; }
+    private List<OrderedItemDto?>? OrderedItems => State.Value.OrderedItems;
     private bool _showBlocked = true;
 
     [Parameter, EditorRequired]
     public EventCallback<string> ItemClicked { get; set; }
 
-    protected override FetchOrderedItemsAction CreateFetchAction(OrderedItemsState state) =>
-   new(state);
-
-    protected override void CacheNewFields()
-    {
-        OrderedItems = State.Value.OrderedItems;
-    }
+    protected override FetchOrderedItemsAction CreateFetchAction() => new();
 
     private void FilterItemsCallback(string filterString) =>
-        Dispatcher.Dispatch(new FetchOrderedItemsAction(State.Value, filterString));
+        Dispatcher.Dispatch(new FetchOrderedItemsAction(filterString));
 
     private void ToggleBlockedCallback(bool applyFilter) =>
         _showBlocked = !applyFilter;

@@ -1,51 +1,56 @@
-﻿using MyOrder.Shared.Dtos.SharedComponents;
+﻿using MyOrder.Generator;
+using MyOrder.Shared.Dtos.SharedComponents;
 
 namespace MyOrder.Shared.Dtos.Invoice;
-public class InvoicePanelDto
-{
+public record InvoicePanelDto(
     // ============================================
     // Facturation
     // ============================================
-    public string? PanelLabel { get; set; }
-    public string? AccountSectionLabel { get; set; }
-    public string? PaymentSectionLabel { get; set; }
-    public string? InformationSectionLabel { get; set; }
+    string? PanelLabel,
+    string? AccountSectionLabel,
+    AccountActions? AccountActions,
+    string? PaymentSectionLabel,
+    string? InformationSectionLabel,
 
 
     // Compte de facturation (Ex: C0123456)
     // Modifiable + menu
-    public Field<AccountDto?>? Account { get; set; }
+    Field<AccountDto?>? Account,
 
     // Pas de contact de facturation dans la version actuelle
 
     // N° de SIRET
     // Modifiable Resource taxGroup
-    public Field<string?>? SiretId { get; set; }
+    [property: DisplayOnlyField]
+    Field<string?>? SiretId,
 
     // Groupe de taxe
     // Modifiable Resource taxGroup
-    public Field<BasketValueDto?>? TaxGroup { get; set; }
+    Field<BasketValueDto?>? TaxGroup,
 
-    public Field<string?>? PaymentAuthorizationAction { get; set; }
+    Field<string?>? CostCenter,
+
+    Field<string?>? PaymentAuthorizationAction,
 
     // Condition de paiement  
     // Non modifiable Resource paymentTerms
-    public Field<BasketValueDto?>? PaymentTerm { get; set; }
+    Field<BasketValueDto?>? PaymentTerm,
 
     // Mode de paiement
     // Modifiable Obligatoire Resouce paymentModes
-    public Field<BasketValueDto?>? PaymentMode { get; set; }
+    Field<BasketValueDto?>? PaymentMode,
 
     // Chorus / service exéc.
-    // Modifiable et obligatoire uniquement si isPublicEntity = true
+    // Modifiable et obligatoire uniquement si isEntity = true
     // Vide et en lecture seule sinon
 
-    public Field<string?>? PublicEntityExecutingService { get; set; }
+    Field<string?>? PublicEntityExecutingService,
 
     // Chorus / engagement juridique
-    // Modifiable et obligatoire uniquement si isPublicEntity = true
+    // Modifiable et obligatoire uniquement si isEntity = true
     // Vide et en lecture seule sinon
-    public Field<string?>? PublicEntityLegalCommitment { get; set; }
-    public Field<string?>? Note { get; set; }
+    Field<string?>? PublicEntityLegalCommitment,
 
-}
+    [property: DisplayOnlyField]
+    Field<string?>? Note
+);

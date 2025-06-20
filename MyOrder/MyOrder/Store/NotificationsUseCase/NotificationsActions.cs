@@ -1,39 +1,17 @@
-﻿using Fluxor;
-using MyOrder.Shared.Dtos;
+﻿using MyOrder.Shared.Dtos;
 using MyOrder.Store.Base;
 using System.Collections.Immutable;
 
 namespace MyOrder.Store.NotificationsUseCase;
 
-public class FetchNotificationsAction(NotificationsState state)
-    : FetchDataActionBase(state)
-{
-    public NotificationsState State => state;
-}
+public record FetchNotificationsAction() : FetchDataActionBase;
 
-public class FetchNotificationsSuccessAction(List<BasketNotificationDto?>? notifications)
-{
-    public List<BasketNotificationDto?>? Notifications { get; } = notifications;
-}
+public record FetchNotificationsSuccessAction(List<BasketNotificationDto?> Notifications);
 
-public class FetchNotificationsFailureAction(string errorMessage)
-{
-    public string ErrorMessage { get; } = errorMessage;
-}
+public record FetchNotificationsFailureAction(string ErrorMessage);
 
-public class DeleteNotificationAction(ImmutableList<string> procedureCall,
-    NotificationsState? state = null) : FetchDataActionBase(state)
-{
-    public ImmutableList<string> ProcedureCall { get; } = procedureCall;
+public record DeleteNotificationAction(ImmutableList<string> ProcedureCall) : FetchDataActionBase;
 
-#warning Code smell: This property should be removed
-    public NotificationsState? State => state;
-}
+public record DeleteNotificationSuccessAction();
 
-public class DeleteNotificationSuccessAction()
-{ }
-
-public class DeleteNotificationFailureAction(string errorMessage)
-{
-    public string ErrorMessage { get; } = errorMessage;
-}
+public record DeleteNotificationFailureAction(string ErrorMessage);

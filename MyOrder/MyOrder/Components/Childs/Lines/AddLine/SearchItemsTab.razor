@@ -2,11 +2,12 @@
 @using MyOrder.Shared.Dtos.BasketItems
 @inherits FluxorComponentBase<SearchItemsState, FetchSearchItemsAction>
 
-@if (State.Value.IsLoading)
+@if (!Initialized)
 {
     <HeaderElementLoadingSkeleton />
     return;
 }
+
 <FetchActionTypeCascadingValue FetchActionTypeValue="FetchActionType">
     <!--Grid-->
     <MudDataGrid T="BasketItemDto"

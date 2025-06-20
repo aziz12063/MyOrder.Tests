@@ -6,7 +6,7 @@
         <MudText Typo="Typo.h5">Recherche de fournisseur</MudText>
     </TitleContent>
     <DialogContent>
-        @if (_isLoading)
+        @if (!Initialized)
         {
             <MudProgressLinear Color="Color.Primary" Indeterminate="true" />
             <MudText>Chargement ...</MudText>
@@ -22,7 +22,7 @@
                              Height="50vh"
                              Virtualize="true"
                              Items="Suppliers"
-                             Loading="_isLoading"
+                             Loading="Initialized"
                              SortMode="@SortMode.None">
                              <ToolBarContent>
                         <MudSpacer />
@@ -44,7 +44,7 @@
                                         Title="Adresse" />
                     </Columns>
                     <NoRecordsContent>
-                        @if (!_isLoading)
+                        @if (!Initialized)
                         {
                             <MudText Typo="Typo.body2" Color="Color.Secondary">Aucun fournisseur trouvé</MudText>
                         }

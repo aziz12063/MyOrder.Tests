@@ -31,6 +31,9 @@
     margin: 0px !important;
     margin-block: 4px !important;
 }
+.mud-input-root-outlined.mud-input-root-margin-dense{
+    padding-top: 5px !important;
+}
 
 .outlined-generic-select .mud-input-slot {
     padding-top: var(--outlined-input-padding-top) !important;
@@ -40,6 +43,10 @@
 .outlined-generic-textfield .mud-input-slot {
     padding-top: var(--outlined-input-padding-top) !important;
     padding-bottom: var(--outlined-input-padding-bottom) !important;
+}
+
+.outlined-generic-textfield textarea {
+    margin-top: 3px !important;
 }
 
 .outlined-generic-numeric-field .mud-input-slot {
@@ -223,11 +230,11 @@
 
 .mud-tab {
     min-width: unset !important;
-    padding: 0 10px !important; 
+    padding: 0 10px !important;
 }
 
     .mud-tab .mud-tab-icon-text {
-        font-size: 1.75rem !important; 
+        font-size: 1.75rem !important;
     }
 
 /*===================================================================*/

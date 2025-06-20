@@ -1,5 +1,5 @@
 ﻿using Fluxor;
-using MudBlazor;
+using MyOrder.Generator;
 using MyOrder.Shared.Dtos.GeneralInformation;
 using MyOrder.Store.Base;
 using System.Security.Claims;
@@ -7,16 +7,10 @@ using System.Security.Claims;
 namespace MyOrder.Store.GeneralInfoUseCase;
 
 [FeatureState]
-public class GeneralInfoState : StateBase
+[GenerateFieldReducers]
+public record GeneralInfoState(
+    GeneralInfoDto GeneralInfo,
+    ClaimsPrincipal User) : StateBase
 {
-    public GeneralInfoDto? GeneralInfo { get; }
-    public ClaimsPrincipal? User { get; }
-
-    public GeneralInfoState() : base(true) { } 
-
-    public GeneralInfoState(GeneralInfoDto? generalInfo, ClaimsPrincipal? user) : base(false)
-    {
-        GeneralInfo = generalInfo;
-        User = user;
-    }
+    public GeneralInfoState() : this(null!, default!) { }
 }

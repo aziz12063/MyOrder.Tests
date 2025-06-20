@@ -1,12 +1,13 @@
 @using MyOrder.Store.GeneralInfoUseCase
-@inherits MyOrder.Components.Common.FluxorComponentBase<GeneralInfoState, FetchGeneralInfoAction>
+
+@inherits FluxorComponentBase<GeneralInfoState, FetchGeneralInfoAction>
 
 <MudImage Src="@_companyLogoSrc" Alt="Raja Group" Class="logo" />
 
 @if (GlobalOperationsState.Value.IsAppGloballyFaulted)
     return;
 
-@if (State.Value.IsLoading)
+@if (!Initialized)
 {
     <MudStack Class="pl-8" Spacing="2">
         <MudSkeleton Animation="Animation.Pulse" SkeletonType="SkeletonType.Rectangle" Width="175px" Height="24px" />
@@ -16,13 +17,13 @@
 }
 
 <FetchActionTypeCascadingValue FetchActionTypeValue="FetchActionType">
-    <PageTitle>@State?.Value?.GeneralInfo?.PageTitle</PageTitle>
+    <PageTitle>@BasketGeneralInfo.PageTitle</PageTitle>
     <MudStack Class="pl-10" Spacing="1">
         <MudText Typo="Typo.h5" Class="d-flex" Style="color: var(--mud-palette-primary-lighten)">
-            <b>@BasketGeneralInfo!.OrderType @BasketGeneralInfo!.OrderId [@BasketGeneralInfo!.OrderStatus]</b>
+            <b>@BasketGeneralInfo.OrderType @BasketGeneralInfo!.OrderId [@BasketGeneralInfo.OrderStatus]</b>
         </MudText>
         <MudText Typo="Typo.subtitle2" Class="d-flex" Color="Color.Dark">
-            <em>@BasketGeneralInfo!.OrderDate?.ToString("g")</em> &nbsp; - @BasketGeneralInfo!.SalesResponsible
+            <em>@BasketGeneralInfo.OrderDate?.ToString("g")</em> &nbsp; - @BasketGeneralInfo.SalesResponsible
         </MudText>
     </MudStack>
     <MudSpacer />

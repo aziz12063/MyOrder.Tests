@@ -1,18 +1,13 @@
 ﻿using Fluxor;
+using MyOrder.Generator;
 using MyOrder.Shared.Dtos.Delivery;
 using MyOrder.Store.Base;
 
 namespace MyOrder.Store.DeliveryInfoUseCase;
 
 [FeatureState]
-public class NewDeliveryAccountState : StateBase
+[GenerateFieldReducers]
+public record NewDeliveryAccountState(DeliveryAccountDraft DeliveryAccountDraft) : StateBase
 {
-    public DeliveryAccountDraft? DeliveryAccountDraft { get; set; }
-
-    public NewDeliveryAccountState() : base(true) { }
-
-    public NewDeliveryAccountState(DeliveryAccountDraft? deliveryAccountDraft) : base(false)
-    {
-        DeliveryAccountDraft = deliveryAccountDraft;
-    }
+    public NewDeliveryAccountState() : this((DeliveryAccountDraft) null!) { }
 }

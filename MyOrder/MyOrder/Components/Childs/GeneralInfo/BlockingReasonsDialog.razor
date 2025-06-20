@@ -9,7 +9,7 @@
             <MudText Typo="Typo.h5">Raisons de blocage</MudText>
         </TitleContent>
         <DialogContent>
-            <MudDataGrid Items="blockingReasons"
+            <MudDataGrid Items="BlockingReasons"
                          Bordered="true"
                          Dense="true"
                          Striped="true"
@@ -18,7 +18,7 @@
                          Outlined="false"
                          FixedHeader="true"
                          Height="20vh"
-                         Loading="State.Value.IsLoading">
+                         Loading="!Initialized || IsLoading">
                 <Columns>
                     <PropertyColumn Title="Code"
                                     Property="item => item.ReasonId.Value" />
@@ -38,13 +38,21 @@
 
                 </Columns>
                 <NoRecordsContent>
-                    @if (State.Value.IsLoading)
+                    @if (!Initialized || IsLoading)
                     {
-                        <MudText Typo="Typo.body1">Chargement des raisons de blocage</MudText>
+                        <MudText Class="pt-5 pb-10"
+                                 Typo="Typo.body1">Chargement des raisons de blocage</MudText>
+                    }
+                    else if (IsFaulted)
+                    {
+                        <MudText Class="pt-5 pb-10"
+                                 Typo="Typo.body1"
+                                 Color="Color.Error">Erreur lors du chargement des raisons de blocage<br />@ErrorMessage</MudText>
                     }
                     else
                     {
-                        <MudText Typo="Typo.body1">Aucune raison de blocage n'est disponible.</MudText>
+                        <MudText Class="pt-5 pb-10"
+                                 Typo="Typo.body1">Aucune raison de blocage n'est disponible.</MudText>
                     }
                 </NoRecordsContent>
             </MudDataGrid>

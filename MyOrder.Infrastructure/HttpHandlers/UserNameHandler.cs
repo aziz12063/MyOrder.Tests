@@ -9,7 +9,7 @@ public class UserNameHandler(IHttpContextAccessor httpContextAccessor, ILogger<U
 
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
-#if DEBUG
+#if DEBUG || SERVERDEBUG
         logger.LogWarning("Hardcoded http header {Param} value for testing purposes", HEADER_PARAM_AUTHENTICATED_USER);
         request.Headers.Add(HEADER_PARAM_AUTHENTICATED_USER, Environment.UserName);
         return await base.SendAsync(request, cancellationToken);

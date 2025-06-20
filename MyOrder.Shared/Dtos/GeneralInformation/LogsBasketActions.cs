@@ -2,9 +2,8 @@
 
 namespace MyOrder.Shared.Dtos.GeneralInformation;
 
-public class LogsBasketActions : BasketActionsBase
-{
-    public Field<string?>? PublicationLogs { get; set; }
-    public Field<string?>? OrderDiary { get; set; }
-    public Field<string?>? EdiMessages { get; set; }
-}
+public record LogsBasketActions(
+    Field<string?>? PublicationLogs,
+    Field<string?>? OrderDiary,
+    Field<string?>? EdiMessages,
+    string? MenuLabel) : BasketActionsBase(MenuLabel);

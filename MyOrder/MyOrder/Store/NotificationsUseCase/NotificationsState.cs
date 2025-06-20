@@ -5,15 +5,8 @@ using MyOrder.Store.Base;
 namespace MyOrder.Store.NotificationsUseCase;
 
 [FeatureState]
-public class NotificationsState : StateBase
+public record NotificationsState(
+    List<BasketNotificationDto?> Notifications) : StateBase
 {
-    public List<BasketNotificationDto?>? Notifications { get; }
-
-    public NotificationsState() : base(true) { }
-
-    public NotificationsState(List<BasketNotificationDto?>? notifications) : base(false)
-    {
-        Notifications = notifications;
-    }
-
+    public NotificationsState() : this([]) { }
 }

@@ -1,5 +1,4 @@
-﻿using Fluxor;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using MudBlazor;
 using MyOrder.Components.Common;
@@ -8,37 +7,26 @@ using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.Delivery;
 using MyOrder.Shared.Dtos.SharedComponents;
 using MyOrder.Store.DeliveryInfoUseCase;
-using MyOrder.Store.RessourcesUseCase;
 
 namespace MyOrder.Components.Childs.Header.Delivery;
 
 public partial class NewDeliveryAccountDialog : FluxorComponentBase<NewDeliveryAccountState, FetchNewDeliveryAccountAction>
 {
     [CascadingParameter]
-    private IMudDialogInstance MudDialog { get; set; }
-    [Inject]
-    private IState<RessourcesState> RessourcesState { get; set; }
+    private IMudDialogInstance MudDialog { get; set; } = null!;
     [Parameter]
     public string? AccountId { get; set; }
-    private DeliveryAccountDraft? DeliveryAccountDraft { get; set; }
+    private DeliveryAccountDraft DeliveryAccountDraft => State.Value.DeliveryAccountDraft;
     private FieldButton<string?>? LookupButton { get; set; }
-    private bool _isLoading = true;
 
-    protected override FetchNewDeliveryAccountAction CreateFetchAction(NewDeliveryAccountState state) =>
-        string.IsNullOrEmpty(AccountId) ? new(state) : new(state, AccountId);
-
-    protected override void CacheNewFields()
-    {
-        DeliveryAccountDraft = State?.Value.DeliveryAccountDraft
-            ?? throw new ArgumentNullException("DeliveryAccountDraft is null in NewDeliveryAccountState");
-        _isLoading = State.Value.IsLoading;
-    }
+    protected override FetchNewDeliveryAccountAction CreateFetchAction() =>
+        string.IsNullOrEmpty(AccountId) ? new() : new(AccountId);
 
     protected override void OnAfterRender(bool firstRender)
     {
         base.OnAfterRender(firstRender);
         
-        if(!_isLoading) //Because the lookup button is not rendered yet
+        if(Initialized) //Because the lookup button is not rendered yet
             ArgumentNullException.ThrowIfNull(LookupButton, "Couldn't find a reference to the LookupButton in the razor file.");
     }
 

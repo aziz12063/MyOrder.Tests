@@ -15,8 +15,14 @@ using MyOrder.Utils;
 
 namespace MyOrder.Components.Childs.Lines;
 
-public partial class Lines : FluxorComponentBase<LinesState, FetchLinesAction>
+public sealed partial class Lines : FluxorComponentBase<LinesState, FetchLinesAction>, IDisposable
 {
+    private const string LineWarning = "lineWarning";
+    private const string LineNotification = "lineNotification";
+    private const string LineOffered = "lineOffered";
+    private const string LineDiscounted = "lineDiscount";
+    private const string LineInfo = "lineInfo";
+
     [Inject]
     private IModalService ModalService { get; set; } = null!;
     [Inject]
@@ -26,54 +32,52 @@ public partial class Lines : FluxorComponentBase<LinesState, FetchLinesAction>
     [Inject]
     private IEventAggregator EventAggregator { get; set; } = null!;
 
-    private MudDataGrid<BasketLineDto> LinesDataGridInstance { get; set; }
-    private BasketOrderLinesDto? BasketOrderLinesDto { get; set; }
+    private MudDataGrid<BasketLineDto> LinesDataGridInstance { get; set; } = null!;
+    private BasketOrderLinesDto BasketOrderLinesDto => State.Value.BasketOrderLines;
     private List<BasketValueDto?>? UpdateReasons { get; set; }
     private List<BasketValueDto?>? LogisticFlows { get; set; }
 
     private BasketLineDto? CurrentLine { get; set; }
     private BasketLineDto? DetailedLine =>
-        State.Value.BasketOrderLines?.lines?.FirstOrDefault(line => line?.RecId == CurrentLine?.RecId);
+        State.Value.BasketOrderLines?.Lines?.FirstOrDefault(line => line?.RecId == CurrentLine?.RecId);
 
     private bool IsItemIdEditable { get; set; }
     private bool IsNameEditable { get; set; }
     private bool IsDiscountTypeEditable { get; set; }
     private bool IsLineAmountEditable { get; set; }
-
-    private bool _isLoading = true;
-    private bool _disposed = false;
     private IDisposable CtrlIShortcutHandlerSubscription { get; set; } = null!;
 
-    protected override FetchLinesAction CreateFetchAction(LinesState state) =>
-    new(state);
+    protected override FetchLinesAction CreateFetchAction() => new();
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
 
-        UpdateReasons = RessourcesState?.Value.UpdateReasons
+        UpdateReasons = ResourcesState?.Value.UpdateReasons
             ?? throw new ArgumentNullException("Unexpected null for UpdateReasons object.");
-        LogisticFlows = RessourcesState?.Value.LogisticFlows
+        LogisticFlows = ResourcesState?.Value.LogisticFlows
             ?? throw new ArgumentNullException("Unexpected null for LogisticFlows object.");
 
         CtrlIShortcutHandlerSubscription = EventAggregator.Subscribe<ShortcutTriggeredEvent>(CtrlIShortcutHandler);
+        State.StateChanged += State_StateChanged;
     }
 
-    protected override void CacheNewFields()
+    private void State_StateChanged(object? sender, EventArgs e)
     {
-        BasketOrderLinesDto = State?.Value.BasketOrderLines
-            ?? throw new ArgumentNullException("Unexpected null for BasketOrderLines object.");
-        if (BasketOrderLinesDto is not null && BasketOrderLinesDto.lines is not null && BasketOrderLinesDto.lines.Count > 0)
+        if (BasketOrderLinesDto is not null && BasketOrderLinesDto.Lines is not null && BasketOrderLinesDto.Lines.Count > 0)
         {
-            IsItemIdEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0]?.ItemId);
-            IsNameEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0]?.ItemName);
-            IsDiscountTypeEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0]?.DiscountType);
-            IsLineAmountEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.lines[0]?.LineAmount);
+            IsItemIdEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.Lines[0]?.ItemId);
+            IsNameEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.Lines[0]?.ItemName);
+            IsDiscountTypeEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.Lines[0]?.DiscountType);
+            IsLineAmountEditable = FieldUtility.IsReadWrite(BasketOrderLinesDto.Lines[0]?.LineAmount);
+            StateHasChanged();
         }
-        _isLoading = State.Value.IsLoading || RessourcesState.Value.IsLoading;
 
-        if (!BasketOrderLinesDto?.lines?.Contains(CurrentLine) ?? false)
-            CurrentLine = BasketOrderLinesDto?.lines?.FirstOrDefault();
+        if (!BasketOrderLinesDto?.Lines?.Contains(CurrentLine) ?? false)
+        {
+            CurrentLine = BasketOrderLinesDto?.Lines?.FirstOrDefault();
+            StateHasChanged();
+        }
     }
 
     private async Task OnCopyItemsClick()
@@ -186,16 +190,30 @@ public partial class Lines : FluxorComponentBase<LinesState, FetchLinesAction>
             ? string.Empty
             : $"color: {line.InventLocationId.Color} !important; font-weight: bolder !important;";
 
-    protected override void Dispose(bool disposing)
-    {
-        if (!_disposed)
+    private static string LineTagIconHelper(string? tag) =>
+        tag switch
         {
-            if (disposing)
-            {
-                CtrlIShortcutHandlerSubscription.Dispose();
-            }
-            _disposed = true;
-        }
-        base.Dispose(disposing);
+            LineWarning => Icons.Material.Filled.Warning,
+            LineNotification => Icons.Material.Filled.NotificationsActive,
+            LineOffered => Icons.Material.Filled.CardGiftcard,
+            LineDiscounted => Icons.Material.Filled.LocalOffer,
+            LineInfo => Icons.Material.Filled.Info,
+            _ => Icons.Material.Filled.QuestionMark
+        };
+
+    private static string LineTagColorHelper(string? tag) =>
+        tag switch
+        {
+            LineWarning => "#FFC107",
+            LineNotification => "#2196F3",
+            LineOffered => "#4CAF50",
+            LineDiscounted => "#FF9800",
+            LineInfo => "#2196F3",
+            _ => "#2196F3"
+        };
+
+    public void Dispose()
+    {
+        CtrlIShortcutHandlerSubscription.Dispose();
     }
 }

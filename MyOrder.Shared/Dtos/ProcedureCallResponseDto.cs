@@ -1,15 +1,20 @@
 ﻿
 namespace MyOrder.Shared.Dtos;
 
-public class ProcedureCallResponseDto : MyOrderContextResponse
+public record ProcedureCallResponseDto(
+    bool? UpdateDone,
+    List<string?>? RefreshCalls,
+    ProcedureCallUrlDto? Target,
+    bool? Success,
+    string? Message,
+    string? ErrorCause)
+    : MyOrderContextResponse(
+        Success,
+        Message,
+        ErrorCause)
 {
-    public bool? UpdateDone { get; set; }
-    public List<string?>? RefreshCalls { get; set; }
-    public ProcedureCallUrlDto? Target { get; set; }
-
     public override string ToString() => base.ToString()
         + $"\nUpdateDone: {UpdateDone}, " +
         $"RefreshCalls: {string.Join("\n", RefreshCalls ?? [])}\n" +
         $"Target: {Target?.TargetUrl}";
 }
-

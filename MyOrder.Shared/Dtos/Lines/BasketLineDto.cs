@@ -1,4 +1,5 @@
-﻿using MyOrder.Shared.Dtos.SharedComponents;
+﻿using MyOrder.Generator;
+using MyOrder.Shared.Dtos.SharedComponents;
 
 namespace MyOrder.Shared.Dtos.Lines;
 
@@ -7,7 +8,7 @@ public enum BasketLinePerspective
     SpecialManufacturing, // FS
     CRC
 }
-public class BasketLineDto
+public record BasketLineDto
 {
     public BasketLinePerspective? Perspective { get; set; }
     public long RecId { get; set; }
@@ -42,6 +43,7 @@ public class BasketLineDto
     public Field<decimal?>? VatRate { get; set; }  //RW
     public Field<string?>? Note { get; set; }  //NULL
     public Field<string?>? CustomerItemId { get; set; }  //NULL
+    [property: DisplayOnlyField]
     public Field<string?>? ProductInfo { get; set; }  //NULL
 
     // =============================================================================================================
@@ -49,28 +51,44 @@ public class BasketLineDto
     // =============================================================================================================
 
     public Field<BasketValueDto?>? LogisticFlow { get; set; }  //RW
+    [property: DisplayOnlyField]
     public Field<int?>? PhysicalAvailableQuantity { get; set; }  //ONLY FOR D
+    [property: DisplayOnlyField]
     public Field<int?>? OnOrderQuantity { get; set; }  // ONLY FOR D
+    [property: DisplayOnlyField]
     public Field<int?>? PaletteQuantity { get; set; }  //ONLY FOR D
+    [property: DisplayOnlyField]
     public Field<int?>? QuantityAtPaletteThreshold { get; set; }  //ONLY FOR D
+    [property: DisplayOnlyField]
     public Field<string?>? ItemType { get; set; }  //ONLY FOR D
     public Field<DateTime?>? DeliveryDate { get; set; }  //RW
     public Field<DateTime?>? ConfirmedDeliveryDate { get; set; }  //RW
+    [property: DisplayOnlyField]
     public Field<int?>? ItemPhysicalInventQuantity { get; set; }  //ONLY FOR D
+    [property: DisplayOnlyField]
     public Field<int?>? ItemReservPhysicalQuantity { get; set; }  //ONLY FOR D
+    [property: DisplayOnlyField]
     public Field<int?>? ItemPhysicalAvailableQuantity { get; set; } // ONLY FOR D
+    [property: DisplayOnlyField]
     public Field<int?>? ItemOnOrderQuantity { get; set; }  //ONLY FOR D
+    [property: DisplayOnlyField]
     public Field<int?>? ItemOrderedQuantity { get; set; }  //ONLY FOR D
+    [property: DisplayOnlyField]
     public Field<int?>? ItemOrderedAvailableQuantity { get; set; }  //ONLY FOR D
+    [property: DisplayOnlyField]
     public Field<string?>? SupplyFamily { get; set; }  //ONLY FOR D
+    [property: DisplayOnlyField]
     public Field<string?>? ItemManager { get; set; }  //ONLY FOR D
+    [property: DisplayOnlyField]
     public Field<string?>? TransportMode { get; set; }  //ONLY FOR D
+    [property: DisplayOnlyField]
     public Field<string?>? PurchaseId { get; set; }  // COULD BE HIDDEN
 
     // =============================================================================================================
     // PriceLines quantities
     // =============================================================================================================
 
+    [property: DisplayOnlyField]
     public Field<string?>? DiscountDescription { get; set; }  //ONLY FOR D
     public Field<decimal?>? DiscountRate { get; set; }  //RO
     public Field<decimal?>? DiscountPrice { get; set; }  //RO
@@ -80,7 +98,7 @@ public class BasketLineDto
     // Overrides
     // =============================================================================================================
 
-    public override bool Equals(object? obj)
+    public virtual bool Equals(BasketLineDto? obj)
     {
         if (obj is not BasketLineDto item) return false;
         return item.RecId == RecId;

@@ -7,7 +7,7 @@
         <MudText Typo="Typo.h5">Édition de l'adresse de livraison</MudText>
     </TitleContent>
     <DialogContent>
-        @if (_isLoading)
+        @if (!Initialized)
         {
             <MudProgressLinear Color="Color.Primary"
                                Indeterminate="true" />
@@ -65,7 +65,7 @@
                                 <GenericTextField Field="DeliveryAccountDraft!.City"
                                                   OnKeyDown="OnAddressFormEnterKeyPressed" />
                                 <GenericMudSelect Field="DeliveryAccountDraft!.Country"
-                                                  Items="RessourcesState.Value.Countries" />
+                                                  Items="ResourcesState.Value.Countries" />
                             </MudStack>
                         </MudItem>
                     </MudGrid>
@@ -123,7 +123,7 @@
                 }
     </DialogContent>
     <DialogActions>
-        @if (_isLoading)
+        @if (!Initialized)
             return;
 
         <FieldButton Field="DeliveryAccountDraft!.Actions?.AddAddress"

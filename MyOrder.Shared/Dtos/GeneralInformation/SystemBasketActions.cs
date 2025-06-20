@@ -2,8 +2,8 @@
 
 namespace MyOrder.Shared.Dtos.GeneralInformation;
 
-public class SystemBasketActions : BasketActionsBase
-{
-    public Field<string?>? Profile { get; set; }
-    public Field<string?>? Settings { get; set; }
-}
+public record SystemBasketActions(
+    Field<string?>? Profile,
+    Field<string?>? Settings,
+    string? MenuLabel
+    ) : BasketActionsBase(MenuLabel);

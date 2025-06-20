@@ -2,8 +2,8 @@
 @using MyOrder.Store.Base
 @inherits FluxorComponentBase<OrderInfoState, FetchOrderInfoAction>
 
-<SectionPaper Title="@BasketOrderInfo?.PanelLabel" IsLoading="isLoading">
-    @if (isLoading)
+<SectionPaper Title="@BasketOrderInfo?.PanelLabel" IsLoading="!Initialized">
+    @if (!Initialized)
     {
         <HeaderElementLoadingSkeleton />
         return;
@@ -22,11 +22,12 @@
 
                     <FieldButton Field="@BasketOrderInfo!.AccountActions?.SalesforceLink"
                                  Icon="@Icons.Material.Filled.Cloud"
-                                 IconOnly="true" />
+                                 IconOnly="true"
+                                 DisableProcedureCall="true" />
 
-                    <FieldButton Field="BasketOrderInfo.AccountActions?.ClickToCall"
-                                 Icon="@Icons.Material.Filled.Phone"
-                                 IconOnly="true" />
+                    <ClickToCallMenu ClickToCallField="BasketOrderInfo.ContactActions?.ClickToCall"
+                                     LandLine="@AccountLandLine"
+                                     Cellular="@AccountCellularPhone" />
 
                 </HeaderContent>
                 <BodyContent>
@@ -54,18 +55,21 @@
             <CustomHeaderCard>
                 <HeaderContent>
                     <MudText Typo="Typo.subtitle1" Color="Color.Secondary">@BasketOrderInfo!.ContactSectionLabel</MudText>
+
                     <MudTooltip Text="Chercher contact">
-                        <MudIconButton Icon="@Icons.Material.Filled.Search" Size="Size.Small" OnClick="OpenContactSearchDialogAsync" />
+                        <MudIconButton Icon="@Icons.Material.Filled.Search"
+                                       Size="Size.Small"
+                                       OnClick="OpenContactSearchDialogAsync" />
                     </MudTooltip>
-                    <MudTooltip Text="Salesforce? -Not Implemented">
-                        <MudIconButton Icon="@Icons.Material.Filled.Cloud" Size="Size.Small" />
-                    </MudTooltip>
-                    <MudTooltip Text="Infos? -Not Implemented">
-                        <MudIconButton Icon="@Icons.Material.Filled.Info" Size="Size.Small" />
-                    </MudTooltip>
-                    <MudTooltip Text="Call? -Not Implemented">
-                        <MudIconButton Icon="@Icons.Material.Filled.Phone" Size="Size.Small" />
-                    </MudTooltip>
+
+                    <FieldButton Field="@BasketOrderInfo!.ContactActions?.SalesforceLink"
+                                 Icon="@Icons.Material.Filled.Cloud"
+                                 IconOnly="true"
+                                 DisableProcedureCall="true" />
+
+                    <ClickToCallMenu ClickToCallField="BasketOrderInfo.ContactActions?.ClickToCall"
+                                     LandLine="@ContactLandLine"
+                                     Cellular="@ContactCellularPhone" />
                 </HeaderContent>
                 <BodyContent>
                     <MudStack Justify="Justify.FlexStart"
@@ -129,16 +133,19 @@
             </MudCard>
 
             <MudSpacer />
-
-            <!-- SUBSECTION : Notes de RC -->
-            <MudTextField Typo="Typo.caption"
-                          Lines="4"
-                          Variant="Variant.Outlined"
-                          FullWidth="true"
-                          Margin="Margin.Dense"
-                          ReadOnly="true"
-                          Label="@BasketOrderInfo!.Note?.Name"
-                          Value="@BasketOrderInfo!.Note?.Value" />
+            <div>
+                <!-- SUBSECTION : Notes de RC -->
+                <MudTextField Typo="Typo.caption"
+                              Lines="4"
+                              Variant="Variant.Outlined"
+                              FullWidth="true"
+                              Margin="Margin.Dense"
+                              ReadOnly="true"
+                              Class="outlined-generic-textfield"
+                              Label="@BasketOrderInfo!.Note?.Name"
+                              Value="@BasketOrderInfo!.Note?.Value" />
+            </div>
         </MudStack>
+
     </FetchActionTypeCascadingValue>
 </SectionPaper>

@@ -2,7 +2,6 @@
 
 namespace MyOrder.Shared.Dtos.GeneralInformation;
 
-public class SendingBasketActions : BasketActionsBase
-{
-    public Field<string?>? ConfirmOrder { get; set; }
-}
+public record SendingBasketActions(
+    Field<string?>? ConfirmOrder,
+    string? MenuLabel) : BasketActionsBase(MenuLabel);

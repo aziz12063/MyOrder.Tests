@@ -3,25 +3,12 @@
 @typeparam T
 @inherits GenericInputBase<T>
 
-<MudRadioGroup Required="Required"
+<MudRadioGroup T="T"
+               Required="Required"
                ReadOnly="InternalReadOnly"
                Disabled="InternalReadOnly"
-               @bind-Value="ValueProperty"
-               @bind-Value:after="OnBindValueAfter">
-        @* <MudGrid Spacing="2"> *@
-        @*     <MudItem xs="6"> *@
-        @*         <MudRadio Value="SendPaymentLinkMode.Phone"> *@
-        @*             <GenericTextField Field="PaymentAuthorization.ContactPhone" /> *@
-        @*         </MudRadio> *@
-        @*     </MudItem> *@
-
-        @*     <MudItem xs="6"> *@
-        @*         <MudRadio Value="SendPaymentLinkMode.Email"> *@
-        @*             <GenericTextField Field="PaymentAuthorization.ContactEmail" /> *@
-        @*         </MudRadio> *@
-        @*     </MudItem> *@
-
-    @* </MudGrid> *@
+               Value="ValueProperty"
+               ValueChanged="ValueChangedHandler">
     @ChildContent
 </MudRadioGroup>
 

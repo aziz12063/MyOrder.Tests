@@ -1,12 +1,12 @@
 ﻿@using Fluxor
 @using Fluxor.Blazor.Web.Components
+@using MyOrder.Components.Childs
 @using MyOrder.Components.Childs.Header
 @using MyOrder.Components.Childs.Lines
-@using MyOrder.Components.Childs
 @using MyOrder.Shared.Interfaces
 @using MyOrder.Store.GeneralInfoUseCase
 @using MyOrder.Store.GlobalOperationsUseCase
-@using MyOrder.Store.RessourcesUseCase
+@using MyOrder.Store.ResourcesUseCase
 
 @inherits FluxorComponent
 
@@ -20,15 +20,15 @@
     return;
 }
 
-@if (RessourcesState.Value.IsLoading)
+@if (!ResourcesState.Value.Initialized)
 {
-    <MudOverlay Visible="RessourcesState.Value.IsLoading" ZIndex="9999" DarkBackground="false">
+    <MudOverlay Visible="ResourcesState.Value.IsLoading" ZIndex="9999" DarkBackground="false">
         <MudProgressCircular Size="Size.Large" Indeterminate="true" />
     </MudOverlay>
     return;
 }
 
-@if (GeneralInfoState.Value.IsLoading)
+@if (!GeneralInfoState.Value.Initialized)
 {
     @* #warning "Refactor to use MudDialog fullscreen with close button false" *@
     <MudOverlay Visible="GeneralInfoState.Value.IsLoading" ZIndex="9999" DarkBackground="false">
@@ -49,9 +49,9 @@
     [Inject]
     private IDispatcher Dispatcher { get; set; } = null!;
     [Inject]
-    private IState<RessourcesState> RessourcesState { get; set; } = null!;
+    private IState<ResourcesState> ResourcesState { get; set; } = null!;
     [Inject]
-    private IState<RessourcesState> GeneralInfoState { get; set; } = null!;
+    private IState<GeneralInfoState> GeneralInfoState { get; set; } = null!;
     [Inject]
     private IState<GlobalOperationsState> GlobalOperationsState { get; set; } = null!;
     [Inject]
@@ -67,7 +67,7 @@
         BasketService.CompanyId = CompanyId;
         BasketService.BasketId = BasketId;
 
-        Dispatcher.Dispatch(new FetchRessourcesAction(RessourcesState.Value)); //Refactor
+        Dispatcher.Dispatch(new FetchResourcesAction()); //Refactor
         base.OnInitialized();
     }
 }

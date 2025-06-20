@@ -26,7 +26,6 @@
                          Culture="@Culture"
                          Value="ValueProperty"
                          ValueChanged="OnValueChanged"
-                         Text="@_displayedValue"
                          Clearable="Clearable"
                          Min="Min"
                          Step="Step"
@@ -53,7 +52,7 @@
 
     private CultureInfo? Culture { get; set; }
     private Type _underLyingType = GetUnderlyingType(typeof(T));
-    private string? _displayedValue = string.Empty;
+    //private string? _displayedValue = string.Empty;
 
     protected override void OnInitialized()
     {
@@ -75,7 +74,7 @@
     {
         base.OnParametersSet();
         Format = FormatPercentValue(Format);
-        UpdateDisplayedValue();
+        //UpdateDisplayedValue();
     }
 
     private async Task KeyDownHandler(KeyboardEventArgs e)
@@ -88,24 +87,23 @@
         if (EqualityComparer<T>.Default.Equals(newValue, ValueProperty))
             return;
 
-        ValueProperty = newValue; // Update Value
-        OnBindValueAfter(); // Send it to the server
-        UpdateDisplayedValue(); // Update displayed value
+        ValueChangedHandler(newValue);
+        //UpdateDisplayedValue(); // Update displayed value
     }
 
-    private void UpdateDisplayedValue()
-    {
-        if (ValueProperty == null)
-        {
-            _displayedValue = string.Empty;
-            return;
-        }
+    // private void UpdateDisplayedValue()
+    // {
+    //     if (ValueProperty == null)
+    //     {
+    //         _displayedValue = string.Empty;
+    //         return;
+    //     }
 
-        if (ValueProperty is IFormattable formattable)
-            _displayedValue = formattable.ToString(Format, Culture);
-        else
-            _displayedValue = ValueProperty?.ToString();
-    }
+    //     if (ValueProperty is IFormattable formattable)
+    //         _displayedValue = formattable.ToString(Format, Culture);
+    //     else
+    //         _displayedValue = ValueProperty?.ToString();
+    // }
 
     private static bool IsNumericType(Type underLyingType)
     {
@@ -162,6 +160,4 @@
 
     private static Type GetUnderlyingType(Type type) =>
     Nullable.GetUnderlyingType(type) ?? type;
-
-
 }

@@ -1,0 +1,68 @@
+﻿@using Fluxor.Blazor.Web.Components
+@using MyOrder.Store.InvoiceInfoUseCase
+@using MyOrder.Shared.Dtos.Invoice
+
+@inherits FluxorComponent
+
+<MudDialog TitleClass="pb-2" ContentClass="py-1" ActionsClass="pt-0 pb-1" Style="min-height:200px">
+    <TitleContent>
+        <MudText Typo="Typo.h6">@PaymentAuthorization?.PanelLabel</MudText>
+    </TitleContent>
+    <DialogContent>
+        <FetchActionTypeCascadingValue FetchActionTypeValue="typeof(FetchPaymentAuthorizationAction)">
+              <MudStack Justify="Justify.Center" AlignItems="AlignItems.Center" Spacing="1">
+            @if (!PaymentAuthorizationState.Value.Initialized)
+            {
+                    <MudProgressCircular Color="Color.Primary" Size="Size.Medium" Indeterminate="true" />
+            }
+            else if (!PaymentAuthorization.HasOngoingAuthorization)
+            {
+                <DisplayField Field="PaymentAuthorization.ContactName" />
+                <GenericRadio Field="PaymentAuthorization.SendPaymentLinkMode">
+                    <MudStack Spacing="2">
+                        <MudRadio T="SendPaymentLinkMode?" Value="SendPaymentLinkMode.Phone">
+                            <GenericTextField Field="PaymentAuthorization.ContactPhone" />
+                        </MudRadio>
+
+                        <MudRadio T="SendPaymentLinkMode?" Value="SendPaymentLinkMode.Email">
+                            <GenericTextField Field="PaymentAuthorization.ContactEmail" />
+                        </MudRadio>
+                    </MudStack>
+                </GenericRadio>
+            }
+            else
+            {
+                <DisplayField Field="PaymentAuthorization.SalesId" />
+                <DisplayField Field="PaymentAuthorization.AuthorizationNumber" />
+                <DisplayField Field="PaymentAuthorization.AuthorizationAmount" 
+                              Format="DisplayFieldFormat.Currency" />
+                <DisplayField Field="PaymentAuthorization.AuthorizationDate" 
+                              Format="DisplayFieldFormat.Date" />
+                <DisplayField Field="PaymentAuthorization.AuthorizationStatus" />
+            }
+            </MudStack>
+        </FetchActionTypeCascadingValue>
+    </DialogContent>
+    <DialogActions>
+        @if (!PaymentAuthorizationState.Value.IsLoading)
+        {
+
+            if (!PaymentAuthorization.HasOngoingAuthorization)
+            {
+                <FieldButton Field="PaymentAuthorization.Actions.StartPaymentAuthorization"
+                             Size="Size.Medium"
+                             Color="Color.Primary" />
+            }
+            else
+            {
+                <FieldButton Field="PaymentAuthorization.Actions.CheckPaymentAuthorization"
+                             Size="Size.Medium"
+                             Color="Color.Primary" />
+
+                <FieldButton Field="PaymentAuthorization.Actions.CancelPaymentAuthorization"
+                             Size="Size.Medium"
+                             Color="Color.Warning" />
+            }
+        }
+    </DialogActions>
+</MudDialog>

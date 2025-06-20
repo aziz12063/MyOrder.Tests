@@ -3,23 +3,12 @@ using MyOrder.Store.Base;
 
 namespace MyOrder.Store.DeliveryInfoUseCase;
 
-public class FetchNewDeliveryAccountAction(NewDeliveryAccountState state, string? accountId = null) : FetchDataActionBase(state)
-{ 
-    public string? AccountId { get; } = accountId;
-}
+public record FetchNewDeliveryAccountAction(string? AccountId = null) : FetchDataActionBase;
 
-public class FetchNewDeliveryAccountSuccessAction(DeliveryAccountDraft? deliveryAccountDraft)
-{
-    public DeliveryAccountDraft? DeliveryAccountDraft { get; } = deliveryAccountDraft;
-}
+public record FetchNewDeliveryAccountSuccessAction(DeliveryAccountDraft DeliveryAccountDraft);
 
-public class FetchNewDeliveryAccountFailureAction(string errorMessage)
-{
-    public string ErrorMessage { get; } = errorMessage;
-}
+public record FetchNewDeliveryAccountFailureAction(string ErrorMessage);
 
-public class ResetNewDeliveryAccountAction()
-{ }
+public record ResetNewDeliveryAccountAction();
 
-public class CommitNewDeliveryAccountAction()
-{ }
+public record CommitNewDeliveryAccountAction();

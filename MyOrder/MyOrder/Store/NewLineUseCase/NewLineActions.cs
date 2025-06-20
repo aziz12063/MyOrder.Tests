@@ -4,36 +4,18 @@ using MyOrder.Shared.Dtos;
 
 namespace MyOrder.Store.NewLineUseCase;
 
-public class FetchNewLineAction(NewLineState state) : FetchDataActionBase(state)
-{ }
+public record FetchNewLineAction() : FetchDataActionBase;
 
-public class FetchNewLineSuccessAction(BasketLineDto? basketLine)
-{
-    public BasketLineDto? NewLine { get; } = basketLine;
-}
+public record FetchNewLineSuccessAction(BasketLineDto NewLine);
 
-public class FetchNewLineFailureAction(string errorMessage)
-{
-    public string ErrorMessage { get; } = errorMessage;
-}
+public record FetchNewLineFailureAction(string ErrorMessage);
 
-public class ResetNewLineAction()
-{ }
+public record ResetNewLineAction();
 
-public class CommitNewLineAction()
-{ }
+public record CommitNewLineAction();
 
-public class PostFreeTextAction(List<string?> freeTexts)
-{
-    public List<string?> FreeTexts { get; } = freeTexts;
-}
+public record PostFreeTextAction(List<string?> FreeTexts);
 
-public class PostFreeTextSuccessAction(ProcedureCallResponseDto procedureCallResponse)
-{
-    public ProcedureCallResponseDto ProcedureCallResponse { get; set; } = procedureCallResponse;
-}
+public record PostFreeTextSuccessAction(ProcedureCallResponseDto ProcedureCallResponse);
 
-public class PostFreeTextFailureAction(string errorMessage)
-{
-    public string ErrorMessage { get; } = errorMessage;
-}
+public record PostFreeTextFailureAction(string ErrorMessage);

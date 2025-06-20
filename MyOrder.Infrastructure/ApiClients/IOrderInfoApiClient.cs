@@ -12,6 +12,7 @@ public interface IOrderInfoApiClient
     Task<List<ContactDto?>?> GetOrderByContactsAsync(
         string companyId, string basketId,
         [Query] string? filter = null,
+        [Query] bool? search = null,
         CancellationToken cancellationToken = default);
 
     [Get("/api/myorder/{companyId}/{basketId}/webOrigins")]

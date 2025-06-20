@@ -3,23 +3,10 @@ using MyOrder.Store.Base;
 
 namespace MyOrder.Store.DeliveryInfoUseCase;
 
-public class FetchNewDeliveryContactAction(NewDeliveryContactState state, string? contactId = null) : FetchDataActionBase(state)
-{
-    public string? ContactId { get; } = contactId;
-}
+public record FetchNewDeliveryContactAction(string? ContactId = null) : FetchDataActionBase;
 
-public class FetchNewDeliveryContactSuccessAction(DeliveryContactDraft? deliveryContactDraft)
-{
-    public DeliveryContactDraft? DeliveryContactDraft { get; } = deliveryContactDraft;
-}
+public record FetchNewDeliveryContactSuccessAction(DeliveryContactDraft DeliveryContactDraft);
 
-public class FetchNewDeliveryContactFailureAction(string errorMessage)
-{
-    public string ErrorMessage { get; } = errorMessage;
-}
+public record FetchNewDeliveryContactFailureAction(string ErrorMessage);
 
-public class ResetNewDeliveryContactAction()
-{ }
-
-public class CommitNewDeliveryContactAction()
-{ }
+public record ResetNewDeliveryContactAction();

@@ -1,7 +1,6 @@
-﻿namespace MyOrder.Shared.Dtos.Lines;
+﻿using System.Collections.Immutable;
 
-public class BasketOrderLinesDto
-{
+namespace MyOrder.Shared.Dtos.Lines;
+
 #warning TODO: Refactor to use BasketLineDto only
-    public List<BasketLineDto?>? lines { get; set; }
-}
+public record BasketOrderLinesDto(ImmutableList<BasketLineDto?>? Lines);

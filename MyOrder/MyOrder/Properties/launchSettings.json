@@ -1,15 +1,23 @@
 {
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:53746/",
+      "sslPort": 44342
+    }
+  },
   "profiles": {
     "https": {
       "commandName": "Project",
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:7017/",
       "launchBrowser": true,
-      "launchUrl": "Raja-fr/EditBasket?BasketId=P0132997",
+      "launchUrl": "Raja-fr/EditBasket?BasketId=P0152946",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "dotnetRunMessages": true,
-      "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
-      "applicationUrl": "https://localhost:7017/"
+      }
     },
     "IIS Express": {
       "commandName": "IISExpress",
@@ -21,15 +29,6 @@
       "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
       "windowsAuthentication": true,
       "anonymousAuthentication": false
-    }
-  },
-  "$schema": "http://json.schemastore.org/launchsettings.json",
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:53746/",
-      "sslPort": 44342
     }
   }
 }

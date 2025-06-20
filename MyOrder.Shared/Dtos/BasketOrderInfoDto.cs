@@ -1,21 +1,23 @@
-﻿using MyOrder.Shared.Dtos.SharedComponents;
+﻿using MyOrder.Generator;
+using MyOrder.Shared.Dtos.SharedComponents;
 
 namespace MyOrder.Shared.Dtos;
 
-public class BasketOrderInfoDto
-{
-    public AccountActions? AccountActions { get; set; }
-    public string? PanelLabel { get; set; }
-    public string? AccountSectionLabel { get; set; }
-    public string? ContactSectionLabel { get; set; }
-    public string? InformationSectionLabel { get; set; }
-    public Field<AccountDto?>? Account { get; set; }
-    public Field<ContactDto?>? Contact { get; set; }
-    public Field<BasketValueDto?>? SalesOriginId { get; set; }
-    public Field<BasketValueDto?>? WebOriginId { get; set; }
-    public Field<BasketValueDto?>? SalesPoolId { get; set; }
-    public Field<string?>? CustomerOrderRef { get; set; }
-    public Field<string?>? WebSalesId { get; set; }
-    public Field<string?>? RelatedLink { get; set; }
-    public Field<string?>? Note { get; set; }
-}
+public record BasketOrderInfoDto(
+    AccountActions? AccountActions,
+    string? PanelLabel,
+    string? AccountSectionLabel,
+    string? ContactSectionLabel,
+    string? InformationSectionLabel,
+    Field<AccountDto?>? Account,
+    Field<ContactDto?>? Contact,
+    ContactSectionActions? ContactActions,
+    Field<BasketValueDto?>? SalesOriginId,
+    Field<BasketValueDto?>? WebOriginId,
+    Field<BasketValueDto?>? SalesPoolId,
+    Field<string?>? CustomerOrderRef,
+    Field<string?>? WebSalesId,
+    Field<string?>? RelatedLink,
+    
+    [property: DisplayOnlyField]
+    Field<string?>? Note);

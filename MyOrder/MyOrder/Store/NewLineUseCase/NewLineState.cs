@@ -1,18 +1,13 @@
 ﻿using Fluxor;
+using MyOrder.Generator;
 using MyOrder.Shared.Dtos.Lines;
 using MyOrder.Store.Base;
 
 namespace MyOrder.Store.NewLineUseCase;
 
 [FeatureState]
-public class NewLineState : StateBase
+[GenerateFieldReducers]
+public record NewLineState(BasketLineDto BasketLine) : StateBase
 {
-    public BasketLineDto? BasketLine { get; set; }
-
-    public NewLineState() : base(true) { }
-
-    public NewLineState(BasketLineDto? basketLine) : base(false)
-    {
-        BasketLine = basketLine;
-    }
+    public NewLineState() : this((BasketLineDto)null!) { }
 }

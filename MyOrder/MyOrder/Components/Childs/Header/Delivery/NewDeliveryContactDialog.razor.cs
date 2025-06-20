@@ -9,19 +9,11 @@ namespace MyOrder.Components.Childs.Header.Delivery;
 public partial class NewDeliveryContactDialog : FluxorComponentBase<NewDeliveryContactState, FetchNewDeliveryContactAction>
 {
     [CascadingParameter]
-    private IMudDialogInstance MudDialog { get; set; }
+    private IMudDialogInstance MudDialog { get; set; } = null!;
     [Parameter]
     public string? ContactId { get; set; }
-    private DeliveryContactDraft? DeliveryContactDraft { get; set; }
-    private bool _isLoading = true;
+    private DeliveryContactDraft? DeliveryContactDraft => State.Value.DeliveryContactDraft;
 
-    protected override FetchNewDeliveryContactAction CreateFetchAction(NewDeliveryContactState state) =>
-        string.IsNullOrEmpty(ContactId) ? new(state) : new(state, ContactId);
-
-    protected override void CacheNewFields()
-    {
-        DeliveryContactDraft = State?.Value.DeliveryContactDraft
-            ?? throw new ArgumentNullException("DeliveryContactDraft is null in NewDeliveryContactState");
-        _isLoading = State.Value.IsLoading;
-    }
+    protected override FetchNewDeliveryContactAction CreateFetchAction() =>
+        string.IsNullOrEmpty(ContactId) ? new() : new(ContactId);
 }

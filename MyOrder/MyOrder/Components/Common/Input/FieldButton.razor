@@ -1,15 +1,17 @@
 ﻿@using Fluxor
+@using MyOrder.Services
 @using MyOrder.Store.ProcedureCallUseCase
 @typeparam T
 
 @if (FieldUtility.IsHidden(Field))
     return;
 
-<MudTooltip Text="@Field.Name">
+<MudTooltip Text="@Field!.Description">
     @if (IconOnly)
     {
         <MudIconButton @ref="MudIconButton"
                        Class="@Class"
+                       Style="@Style"
                        Icon="@Icon"
                        Size="Size"
                        Color="Color ?? FieldUtility.GetFieldColor(Field)"
@@ -22,6 +24,7 @@
     {
         <MudButton @ref="MudButton"
                    Class="@Class"
+                   Style="@Style"
                    EndIcon="@Icon"
                    IconSize="Size"
                    Color="Color ?? FieldUtility.GetFieldColor(Field)"
@@ -36,6 +39,12 @@
 </MudTooltip>
 
 @code {
+    [Inject]
+    private IDispatcher Dispatcher { get; set; }
+
+    [Inject]
+    private IModalService ModalService { get; set; }
+
     [Parameter, EditorRequired]
     public Field<T>? Field { get; set; }
 
@@ -57,8 +66,8 @@
     [Parameter]
     public string Class { get; set; } = string.Empty;
 
-    [Inject]
-    private IDispatcher Dispatcher { get; set; }
+    [Parameter]
+    public string Style { get; set; } = string.Empty;
 
     [Parameter]
     public bool DisableProcedureCall { get; set; }
@@ -83,12 +92,21 @@
         }
     }
 
-    private void OnClickHandler()
+    private async Task OnClickHandler()
     {
         if (!DisableProcedureCall)
-            Dispatcher.Dispatch(new PostProcedureCallAction(Field!.ProcedureCall));
+        {
+            if (!string.IsNullOrWhiteSpace(Field!.Confirm))
+            {
+                bool result = await ModalService.ShowConfirmationDialog(Field!.Confirm);
+                if (result == true)
+                    Dispatcher.Dispatch(new PostProcedureCallAction(Field!.ProcedureCall));
+            }
+            else
+                Dispatcher.Dispatch(new PostProcedureCallAction(Field!.ProcedureCall));
+        }
 
-        OnClickCallback.InvokeAsync();
+        await OnClickCallback.InvokeAsync();
     }
 
     private string? DisplayedText

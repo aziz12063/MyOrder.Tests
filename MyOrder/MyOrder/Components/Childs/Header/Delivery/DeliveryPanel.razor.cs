@@ -7,76 +7,54 @@ using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.Delivery;
 using MyOrder.Store.DeliveryInfoUseCase;
 using MyOrder.Store.ProcedureCallUseCase;
-using MyOrder.Utils;
 
 namespace MyOrder.Components.Childs.Header.Delivery;
 
-public partial class DeliveryPanel : FluxorComponentBase<DeliveryInfoState, FetchDeliveryInfoAction>
+public sealed partial class DeliveryPanel : FluxorComponentBase<DeliveryInfoState, FetchDeliveryInfoAction>, IDisposable
 {
     [Inject]
-    private IState<DeliveryAccountsState> DeliveryAccountsState { get; set; }
+    private IState<DeliveryAccountsState> DeliveryAccountsState { get; set; } = null!;
     [Inject]
-    private IState<DeliveryContactsState> DeliveryContactsState { get; set; }
+    private IState<DeliveryContactsState> DeliveryContactsState { get; set; } = null!;
     [Inject]
-    private IModalService ModalService { get; set; }
+    private IModalService ModalService { get; set; } = null!;
 
-    private BasketDeliveryInfoDto? BasketDeliveryInfo { get; set; }
+    private BasketDeliveryInfoDto BasketDeliveryInfo => State.Value.BasketDeliveryInfo;
     private List<AccountDto?>? Accounts { get; set; }
     private List<ContactDto?>? Contacts { get; set; }
-    private List<BasketValueDto?>? DeliveryModes { get; set; }
-    private bool isLoading = true;
+    private List<BasketValueDto?>? DeliveryModes => State.Value.DeliveryModes;
     private bool disposed = false;
 
+    private string AccountLandLine => BasketDeliveryInfo?.Account?.Value?.Phone ?? string.Empty;
+    private string AccountCellularPhone => BasketDeliveryInfo?.Account?.Value?.CellularPhone ?? string.Empty;
+    private string ContactLandLine => BasketDeliveryInfo?.Contact?.Value?.Phone ?? string.Empty;
+    private string ContactCellularPhone => BasketDeliveryInfo?.Contact?.Value?.CellularPhone ?? string.Empty;
 
     protected override void OnInitialized()
     {
-        Dispatcher.Dispatch(new FetchDeliveryAccountsAction(DeliveryAccountsState.Value));
+        Dispatcher.Dispatch(new FetchDeliveryAccountsAction());
         DeliveryAccountsState.StateChanged += DeliveryAccountsStateChanged;
-        Dispatcher.Dispatch(new FetchDeliveryContactsAction(DeliveryContactsState.Value));
+        Dispatcher.Dispatch(new FetchDeliveryContactsAction());
         DeliveryContactsState.StateChanged += DeliveryContactsStateChanged;
 
         base.OnInitialized();
     }
-    protected override FetchDeliveryInfoAction CreateFetchAction(DeliveryInfoState state) => new(state);
-
-    protected override void CacheNewFields()
-    {
-        DeliveryModes = State?.Value.DeliveryModes
-           ?? throw new ArgumentNullException(nameof(State.Value.DeliveryModes), "Unexpected null for DeliveryModes object.");
-
-        BasketDeliveryInfo = State?.Value.BasketDeliveryInfo
-                             ?? throw new ArgumentNullException(nameof(State.Value.BasketDeliveryInfo), "Unexpected null for BasketOrderInfo object.");
-        isLoading = State.Value.IsLoading || RessourcesState.Value.IsLoading;
-    }
+    protected override FetchDeliveryInfoAction CreateFetchAction() => new();
 
     private void DeliveryAccountsStateChanged(object? sender, EventArgs e)
     {
         Logger.LogDebug("State has changed for Accounts in {Component}",
             GetType().Name);
-
-        InvokeAsync(() =>
-        {
-            Accounts = DeliveryAccountsState.Value.Accounts;
-            StateHasChanged();
-        });
-
-        Logger.LogDebug("StateChanged handler completed for Accounts {Component}",
-            GetType().Name);
+        Accounts = DeliveryAccountsState.Value.Accounts;
+        StateHasChanged();
     }
 
     private void DeliveryContactsStateChanged(object? sender, EventArgs e)
     {
         Logger.LogDebug("State has changed for Contacts in {Component}",
             GetType().Name);
-
-        InvokeAsync(() =>
-        {
-            Contacts = DeliveryContactsState.Value.Contacts;
-            StateHasChanged();
-        });
-
-        Logger.LogDebug("StateChanged handler completed for Contacts {Component}",
-            GetType().Name);
+        Contacts = DeliveryContactsState.Value.Contacts;
+        StateHasChanged();
     }
 
     private async Task OpenContactSearchDialogAsync()
@@ -89,7 +67,8 @@ public partial class DeliveryPanel : FluxorComponentBase<DeliveryInfoState, Fetc
         }
         await ModalService.OpenSearchContactDialogAsync<DeliveryContactsState, FetchDeliveryContactsAction>(
              contact => Dispatcher.Dispatch(
-                    new UpdateFieldAction(BasketDeliveryInfo.Contact, contact, typeof(FetchDeliveryInfoAction)))
+                    new UpdateFieldAction(BasketDeliveryInfo.Contact, contact, typeof(FetchDeliveryInfoAction))),
+             () => Dispatcher.Dispatch(new FetchDeliveryContactsAction(null, null))
              );
     }
 
@@ -108,7 +87,8 @@ public partial class DeliveryPanel : FluxorComponentBase<DeliveryInfoState, Fetc
             account => Dispatcher.Dispatch(
                 new UpdateFieldAction(BasketDeliveryInfo.Account, account, typeof(FetchDeliveryInfoAction))),
                 async () => await ModalService.OpenEditDeliveryAccountDialogAsync(
-                        () => Dispatcher.Dispatch(new ResetNewDeliveryAccountAction()))
+                        () => Dispatcher.Dispatch(new ResetNewDeliveryAccountAction())),
+                () => Dispatcher.Dispatch(new FetchDeliveryAccountsAction(null, null))
             );
     }
 
@@ -142,17 +122,9 @@ public partial class DeliveryPanel : FluxorComponentBase<DeliveryInfoState, Fetc
             () => Dispatcher.Dispatch(new ResetNewDeliveryContactAction()), BasketDeliveryInfo?.Contact?.Value?.ContactId);
     }
 
-    protected override void Dispose(bool disposing)
+    public void Dispose()
     {
-        if (!disposed)
-        {
-            if (disposing)
-            {
-                DeliveryAccountsState.StateChanged -= DeliveryAccountsStateChanged;
-                DeliveryContactsState.StateChanged -= DeliveryContactsStateChanged;
-            }
-            disposed = true;
-        }
-        base.Dispose(disposing);
+        DeliveryAccountsState.StateChanged -= DeliveryAccountsStateChanged;
+        DeliveryContactsState.StateChanged -= DeliveryContactsStateChanged;
     }
 }

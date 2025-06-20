@@ -9,13 +9,8 @@ namespace MyOrder.Components.Childs;
 
 public partial class Notifications : FluxorComponentBase<NotificationsState, FetchNotificationsAction>
 {
-    private List<BasketNotificationDto?>? BasketNotifications { get; set; }
+#warning Review the use of this component. It is not used in the current version of the app.
+    private List<BasketNotificationDto?>? BasketNotifications => State.Value.Notifications;
 
-    protected override FetchNotificationsAction CreateFetchAction(NotificationsState state) => new(state);
-
-    protected override void CacheNewFields()
-    {
-        BasketNotifications = State?.Value.Notifications
-                     ?? throw new ArgumentNullException(nameof(State.Value.Notifications), "Unexpected null for BasketNotifications object.");
-    }
+    protected override FetchNotificationsAction CreateFetchAction() => new();
 }

@@ -1,19 +1,14 @@
 ﻿using Fluxor;
+using MyOrder.Generator;
 using MyOrder.Shared.Dtos.Invoice;
 using MyOrder.Store.Base;
 
 namespace MyOrder.Store.InvoiceInfoUseCase;
 
 [FeatureState]
-public class InvoiceInfoState : StateBase
+[GenerateFieldReducers]
+public record InvoiceInfoState(
+    InvoicePanelDto BasketInvoiceInfo) : StateBase
 {
-    public InvoicePanelDto? BasketInvoiceInfo { get; }
-
-    public InvoiceInfoState() : base(true) { }
-
-    public InvoiceInfoState(InvoicePanelDto? basketInvoiceInfo) : base(false)
-    {
-        BasketInvoiceInfo = basketInvoiceInfo;
-    }
-
+    public InvoiceInfoState() : this((InvoicePanelDto)null!) { }
 }

@@ -2,12 +2,15 @@
 using MudBlazor;
 using MyOrder.Components.Childs.GeneralInfo;
 using MyOrder.Components.Childs.Header.Delivery;
+using MyOrder.Components.Childs.Header.Invoice;
 using MyOrder.Components.Childs.Lines;
 using MyOrder.Components.Childs.Lines.AddLine;
 using MyOrder.Components.Common.Dialogs;
 using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.SharedComponents;
 using MyOrder.Store;
+using MyOrder.Store.Base;
+using static MudBlazor.CategoryTypes;
 
 namespace MyOrder.Services;
 
@@ -85,8 +88,9 @@ public class ModalService(IDialogService dialogService) : IModalService
     }
 
     public async Task<IDialogReference> OpenSearchContactDialogAsync<TState, TAction>(
-        Action<ContactDto> contactClicked)
-        where TState : class, IContactsState
+        Action<ContactDto> contactClicked,
+        Action onCloseCallback)
+        where TState : StateBase, IContactsState
         where TAction : class, IFetchContactsAction
     {
         var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, CloseButton = true };
@@ -97,14 +101,21 @@ public class ModalService(IDialogService dialogService) : IModalService
             }
         };
 
-        return await dialogService.ShowAsync<SearchContactDialog<TState, TAction>>(
+        var dialog = await dialogService.ShowAsync<SearchContactDialog<TState, TAction>>(
             "Search contact", parameters, options);
+
+        var dialogResult = await dialog.Result;
+
+        onCloseCallback?.Invoke();
+
+        return dialog;
     }
 
     public async Task<IDialogReference> OpenSearchAccountDialogAsync<TState, TAction>(
         Action<AccountDto> accountClicked,
-        Action addNewAccountClicked)
-        where TState : class, IAccountsState
+        Action addNewAccountClicked,
+        Action onCloseCallback)
+        where TState : StateBase, IAccountsState
         where TAction : class, IFetchAccountsAction
     {
         var options = new DialogOptions
@@ -125,8 +136,14 @@ public class ModalService(IDialogService dialogService) : IModalService
             }
         };
 
-        return await dialogService.ShowAsync<SearchAccountDialog<TState, TAction>>(
+        var dialog = await dialogService.ShowAsync<SearchAccountDialog<TState, TAction>>(
             "Search compte", parameters, options);
+
+        var dialogResult = await dialog.Result;
+
+        onCloseCallback?.Invoke();
+
+        return dialog;
     }
 
     public async Task<IDialogReference> OpenEditDeliveryAccountDialogAsync(Action? onCloseCallback = null, string? accountId = null)

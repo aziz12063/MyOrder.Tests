@@ -1,4 +1,5 @@
 ﻿using Fluxor;
+using MyOrder.Generator;
 using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.Delivery;
 using MyOrder.Store.Base;
@@ -6,18 +7,10 @@ using MyOrder.Store.Base;
 namespace MyOrder.Store.DeliveryInfoUseCase;
 
 [FeatureState]
-public class DeliveryInfoState : StateBase
+[GenerateFieldReducers]
+public record DeliveryInfoState(
+    BasketDeliveryInfoDto BasketDeliveryInfo,
+    List<BasketValueDto?> DeliveryModes) : StateBase
 {
-    public BasketDeliveryInfoDto? BasketDeliveryInfo { get; }
-    public List<BasketValueDto?>? DeliveryModes { get; }
-
-
-    public DeliveryInfoState() : base(true) { }
-
-    public DeliveryInfoState(BasketDeliveryInfoDto? basketDeliveryInfo, List<BasketValueDto?>? deliveryModes) : base(false)
-    {
-        BasketDeliveryInfo = basketDeliveryInfo;
-        DeliveryModes = deliveryModes;
-    }
+    public DeliveryInfoState() : this(default!, []) { }
 }
-

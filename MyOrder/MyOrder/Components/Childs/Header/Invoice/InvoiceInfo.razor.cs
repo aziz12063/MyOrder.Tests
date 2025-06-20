@@ -7,49 +7,41 @@ using MyOrder.Shared.Dtos.Invoice;
 using MyOrder.Shared.Dtos.SharedComponents;
 using MyOrder.Store.InvoiceInfoUseCase;
 using MyOrder.Store.ProcedureCallUseCase;
-using MyOrder.Utils;
 
-namespace MyOrder.Components.Childs.Header;
+namespace MyOrder.Components.Childs.Header.Invoice;
 
-public partial class InvoiceInfo : FluxorComponentBase<InvoiceInfoState, FetchInvoiceInfoAction>
+public sealed partial class InvoiceInfo : FluxorComponentBase<InvoiceInfoState, FetchInvoiceInfoAction>, IDisposable
 {
     [Inject]
     private IState<InvoiceAccountsState> InvoiceAccountsState { get; set; } = null!;
     [Inject]
     private IModalService ModalService { get; set; } = null!;
 
-    private InvoicePanelDto? BasketInvoiceInfo { get; set; }
+    private InvoicePanelDto BasketInvoiceInfo => State.Value.BasketInvoiceInfo;
     private List<AccountDto?>? InvoiceToAccounts { get; set; }
     private List<BasketValueDto?>? TaxGroups { get; set; }
     private List<BasketValueDto?>? PaymentModes { get; set; }
-    private Field<string?>? PaymentAuthorizationAction { get; set; }
-    private bool _isLoading = true;
-    private bool _disposed = false;
+    private Field<string?>? PaymentAuthorizationAction => BasketInvoiceInfo.PaymentAuthorizationAction;
 
-    protected override FetchInvoiceInfoAction CreateFetchAction(InvoiceInfoState state) =>
-        new(state);
+    private string AccountLandLine => BasketInvoiceInfo?.Account?.Value?.Phone ?? string.Empty;
+    private string AccountCellularPhone => BasketInvoiceInfo?.Account?.Value?.CellularPhone ?? string.Empty;
+
+    protected override FetchInvoiceInfoAction CreateFetchAction() =>
+        new();
 
     protected override void OnInitialized()
     {
         Dispatcher.Dispatch(
-            new FetchInvoiceAccountsAction(InvoiceAccountsState.Value));
+            new FetchInvoiceAccountsAction());
         InvoiceAccountsState.StateChanged += InvoiceAccountsStateChanged;
 
         base.OnInitialized();
 
-        TaxGroups = RessourcesState?.Value.TaxGroups
+        TaxGroups = ResourcesState?.Value.TaxGroups
             ?? throw new NullReferenceException("Unexpected null for TaxGroups object.");
 
-        PaymentModes = RessourcesState?.Value.PaymentModes
+        PaymentModes = ResourcesState?.Value.PaymentModes
             ?? throw new NullReferenceException("Unexpected null for PaymentModes object.");
-    }
-
-    protected override void CacheNewFields()
-    {
-        BasketInvoiceInfo = State.Value.BasketInvoiceInfo
-            ?? throw new NullReferenceException("Unexpected null for BasketInvoiceInfo object.");
-        PaymentAuthorizationAction = BasketInvoiceInfo.PaymentAuthorizationAction;
-        _isLoading = State.Value.IsLoading;
     }
 
     private void InvoiceAccountsStateChanged(object? sender, EventArgs e)
@@ -78,20 +70,10 @@ public partial class InvoiceInfo : FluxorComponentBase<InvoiceInfoState, FetchIn
         await ModalService.OpenSearchAccountDialogAsync<InvoiceAccountsState, FetchInvoiceAccountsAction>(
             account => Dispatcher.Dispatch(
                 new UpdateFieldAction(BasketInvoiceInfo.Account, account, typeof(FetchInvoiceAccountsAction))),
-                () => throw new NotImplementedException()
+                () => throw new NotImplementedException(),
+                () => Dispatcher.Dispatch(new FetchInvoiceAccountsAction(null, null))
             );
     }
 
-    protected override void Dispose(bool disposing)
-    {
-        if (!_disposed)
-        {
-            if (disposing)
-            {
-                InvoiceAccountsState.StateChanged -= InvoiceAccountsStateChanged;
-            }
-            _disposed = true;
-        }
-        base.Dispose(disposing);
-    }
+    public void Dispose() => InvoiceAccountsState.StateChanged -= InvoiceAccountsStateChanged;
 }

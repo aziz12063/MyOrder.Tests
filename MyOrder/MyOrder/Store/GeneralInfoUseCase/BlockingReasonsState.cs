@@ -1,18 +1,14 @@
 ﻿using Fluxor;
+using MyOrder.Generator;
 using MyOrder.Shared.Dtos;
 using MyOrder.Store.Base;
 
 namespace MyOrder.Store.GeneralInfoUseCase;
 
 [FeatureState]
-public class BlockingReasonsState : StateBase
+[GenerateFieldReducers]
+public record BlockingReasonsState(
+    BasketBlockingReasonsDto BlockingReasons) : StateBase
 {
-    public BasketBlockingReasonsDto? BlockingReasons { get; }
-
-    public BlockingReasonsState() : base(true) { }
-
-    public BlockingReasonsState(BasketBlockingReasonsDto? blockingReasons) : base(false)
-    {
-        BlockingReasons = blockingReasons;
-    }
+    public BlockingReasonsState() : this((BasketBlockingReasonsDto) null!) { }
 }

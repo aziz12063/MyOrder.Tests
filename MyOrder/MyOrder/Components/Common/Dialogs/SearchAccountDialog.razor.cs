@@ -2,15 +2,16 @@
 using MudBlazor;
 using MyOrder.Shared.Dtos;
 using MyOrder.Store;
+using MyOrder.Store.Base;
 
 namespace MyOrder.Components.Common.Dialogs;
 
 public partial class SearchAccountDialog<TState, TFetchAction>
     : FluxorComponentBase<TState, TFetchAction>, IHandleEvent
-    where TState : class, IAccountsState
+    where TState : StateBase, IAccountsState
     where TFetchAction : class, IFetchAccountsAction
 {
-    private List<AccountDto?>? _searchedAccounts;
+    private List<AccountDto?>? SearchedAccounts => State.Value.SearchedAccounts;
     private string? _filterString = null;
 
     [Parameter, EditorRequired]
@@ -22,24 +23,19 @@ public partial class SearchAccountDialog<TState, TFetchAction>
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; }
 
-    protected override TFetchAction CreateFetchAction(TState state) =>
-        CreateFetchAction(state, null);
+    protected override TFetchAction CreateFetchAction() => CreateFetchAction(null);
 
-    private static TFetchAction CreateFetchAction(TState state, string? filter = null, bool search = true) =>
-        Activator.CreateInstance(typeof(TFetchAction), state, filter, search) as TFetchAction
+    private static TFetchAction CreateFetchAction(string? filter = null, bool search = true) =>
+        Activator.CreateInstance(typeof(TFetchAction), filter, search) as TFetchAction
             ?? throw new InvalidOperationException($"Unable to create instance of {typeof(TFetchAction)}.");
 
-    protected override void CacheNewFields()
-    {
-        _searchedAccounts = State.Value.SearchedAccounts;
-    }
 
     private static bool QuickFilter(AccountDto? item) =>
         item is not null && !string.IsNullOrWhiteSpace(item.AccountId);
 
     private void OnSearchTextChanged()
     {
-        Dispatcher.Dispatch(CreateFetchAction(State.Value, _filterString));
+        Dispatcher.Dispatch(CreateFetchAction(_filterString));
     }
 
     private async Task OnAccountClick(AccountDto? account)

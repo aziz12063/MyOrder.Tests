@@ -1,36 +1,54 @@
-﻿using MyOrder.Shared.Dtos.SharedComponents;
+﻿using MyOrder.Generator;
+using MyOrder.Shared.Dtos.SharedComponents;
 
 namespace MyOrder.Shared.Dtos;
 
-public class BasketTradeInfoDto
-{
-    public string? PanelLabel { get; set; }
-    public Field<List<BasketTurnoverLineDto?>>? Turnover { get; set; }
-    public string? InformationSectionLabel { get; set; }
-    public Field<string?>? ActivityArea { get; set; }
-    public List<BasketValueDto?>? CustomerTags { get; set; }
-    public string? ContractSectionLabel { get; set; }
-    public BasketContractInfoDto? Contract { get; set; }
-}
-public class BasketTurnoverLineDto
-{
-    public string? Name { get; set; }
-    public string? Ytd { get; set; }
-    public string? YtdN1 { get; set; }
-    public string? N1 { get; set; }
-    public string? N2 { get; set; }
+public record BasketTradeInfoDto(
+    string? PanelLabel,
 
-}
+    [property: DisplayOnlyField]
+    Field<List<BasketTurnoverLineDto?>>? Turnover,
+    string? InformationSectionLabel,
 
-public class BasketContractInfoDto
-{
-    public Field<string?>? ContractId { get; set; }
-    public Field<string?>? ContractType { get; set; }
-    public Field<string?>? ContractGroup { get; set; }
-    public Field<string?>? Status { get; set; }
-    public Field<string?>? ContractDates { get; set; }
-    public Field<string?>? CampaignId { get; set; }
-    public Field<string?>? MainContact { get; set; }
-    public Field<string?>? OfficeExecutive { get; set; }
-    public Field<List<string?>>? DiscountList { get; set; }
-}
+    [property: DisplayOnlyField]
+    Field<string?>? ActivityArea,
+
+    [property: DisplayOnlyField]
+    List<BasketValueDto?>? CustomerTags,
+    string? ContractSectionLabel,
+    BasketContractInfoDto? Contract);
+
+public record BasketTurnoverLineDto(
+    string? Name,
+    string? Ytd,
+    string? YtdN1,
+    string? N1,
+    string? N2);
+
+public record BasketContractInfoDto(
+    [property: DisplayOnlyField]
+    Field<string?>? ContractId,
+
+    [property: DisplayOnlyField]
+    Field<string?>? ContractType,
+
+    [property: DisplayOnlyField]
+    Field<string?>? ContractGroup,
+
+    [property: DisplayOnlyField]
+    Field<string?>? Status,
+
+    [property: DisplayOnlyField]
+    Field<string?>? ContractDates,
+
+    [property: DisplayOnlyField]
+    Field<string?>? CampaignId,
+
+    [property: DisplayOnlyField]
+    Field<string?>? MainContact,
+
+    [property: DisplayOnlyField]
+    Field<string?>? OfficeExecutive,
+
+    [property: DisplayOnlyField]
+    Field<List<string?>>? DiscountList);

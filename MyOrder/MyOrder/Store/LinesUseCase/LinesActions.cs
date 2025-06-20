@@ -4,44 +4,24 @@ using MyOrder.Store.Base;
 
 namespace MyOrder.Store.LinesUseCase;
 
-public class FetchLinesAction(LinesState state) : FetchDataActionBase(state)
-{ }
+public record FetchLinesAction() : FetchDataActionBase;
 
-public class FetchLinesSuccessAction(BasketOrderLinesDto? basketOrderLinesDto)
-{
-    public BasketOrderLinesDto? BasketOrderLinesDto { get; } = basketOrderLinesDto;
-}
+public record FetchLinesSuccessAction(BasketOrderLinesDto BasketOrderLinesDto);
 
-public class FetchLinesFailureAction(string errorMessage)
-{
-    public string ErrorMessage { get; } = errorMessage;
-}
+public record FetchLinesFailureAction(string ErrorMessage);
 
-public class DuplicateLinesAction(List<int> linesIds)
-{
-    public List<int> LinesIds { get; } = linesIds;
-}
+public record DuplicateLinesAction(List<int> LinesIds);
 
-public class DeleteLinesAction(List<int> linesIds)
-{
-    public List<int> LinesIds { get; } = linesIds;
-}
+public record DeleteLinesAction(List<int> LinesIds);
 
-public class EffectOnLinesSuccessAction(ProcedureCallResponseDto? procedureCallResponse)
-{
-    public ProcedureCallResponseDto? ProcedureCallResponseDto { get; } = procedureCallResponse;
-}
+public record EffectOnLinesSuccessAction(ProcedureCallResponseDto ProcedureCallResponse);
 
-public class EffectOnLinesFailureAction(string errorMessage)
-{
-    public string ErrorMessage { get; } = errorMessage;
-}
+public record EffectOnLinesFailureAction(string ErrorMessage);
 
 public record FetchSuppliersAction(
-    SuppliersState State,
     bool Search,
     string? Filter = null);
 
-public record FetchSuppliersSuccessAction(List<Supplier?>? Suppliers);
+public record FetchSuppliersSuccessAction(List<Supplier?> Suppliers);
 
 public record FetchSuppliersFailureAction(string ErrorMessage);

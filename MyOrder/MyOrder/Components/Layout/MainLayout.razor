@@ -2,9 +2,9 @@
 @using MyOrder.Components.Childs
 @using MyOrder.Components.Childs.GeneralInfo
 @using MyOrder.Services
-@using MyOrder.Store.GeneralInfoUseCase
-@using MyOrder.Store.RessourcesUseCase
 @using MyOrder.Shared.Interfaces
+@using MyOrder.Store.GeneralInfoUseCase
+@using MyOrder.Store.ResourcesUseCase
 
 @inherits LayoutComponentBase
 
@@ -26,6 +26,8 @@
 <MudSnackbarProvider />
 
 <PublishBasketOverlay />
+<ShortcutEventsComponent />
+<ExternalNavigationHelper />
 
 <MudLayout>
     <CascadingValue IsFixed="true"

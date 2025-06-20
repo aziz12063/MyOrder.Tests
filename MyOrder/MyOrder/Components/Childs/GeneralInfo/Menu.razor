@@ -117,7 +117,7 @@
                            Field="BasketActions?.Notes?.OrderNote"
                            OnClickCallback="(async () => await modalService.OpenBasketOrderNoteDialogAsync(BasketActions?.Notes?.OrderNote))" />
             <FieldMenuItem Icon="@Icons.Material.Filled.Attachment"
-                           Field="BasketActions?.Notes.Attachments" />
+                           Field="BasketActions?.Notes?.Attachments" />
         </AppbarMenuTemplate>
 
         <!-- Logs-->
@@ -127,14 +127,14 @@
                             AnchorOrigin="Origin.BottomLeft"
                             TransformOrigin="Origin.TopLeft">
             <FieldMenuItem Icon="@Icons.Material.Filled.ChangeHistory"
-                           Field="BasketActions?.Logs.PublicationLogs"
+                           Field="BasketActions?.Logs?.PublicationLogs"
                            OnClickCallback="PublicationLogsClickHandler" />
             <FieldMenuItem Icon="@Icons.Material.Filled.EventNote"
-                           Field="BasketActions?.Logs.OrderDiary"
+                           Field="BasketActions?.Logs?.OrderDiary"
                            BrowseUrl="true"
                            OnClickCallback="()=>{}" />
             <FieldMenuItem Icon="@Icons.Material.Outlined.Chat"
-                           Field="BasketActions?.Logs.EdiMessages"
+                           Field="BasketActions?.Logs?.EdiMessages"
                            BrowseUrl="true"
                            OnClickCallback="()=>{}" />
         </AppbarMenuTemplate>

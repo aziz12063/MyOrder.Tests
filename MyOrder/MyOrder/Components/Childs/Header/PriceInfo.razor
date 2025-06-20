@@ -3,8 +3,8 @@
 @using System.Globalization
 @inherits MyOrder.Components.Common.FluxorComponentBase<PricesInfoState, FetchPricesInfoAction>
 
-<SectionPaper Title="@BasketPricesInfo?.PanelLabel" IsLoading="isLoading" Class="mt-3">
-    @if (isLoading)
+<SectionPaper Title="@BasketPricesInfo?.PanelLabel" IsLoading="!Initialized" Class="mt-3">
+    @if (!Initialized)
     {
         <PricesLoadingSkeleton />
         return;

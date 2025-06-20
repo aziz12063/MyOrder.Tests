@@ -1,80 +1,38 @@
 ﻿using Fluxor;
+using Fluxor.Blazor.Web.Components;
 using Microsoft.AspNetCore.Components;
-using MyOrder.Services;
 using MyOrder.Shared.Interfaces;
-using MyOrder.Store.RessourcesUseCase;
+using MyOrder.Store.Base;
+using MyOrder.Store.ResourcesUseCase;
 
 namespace MyOrder.Components.Common;
 
-public abstract class FluxorComponentBase<TState, TAction> : ComponentBase, IDisposable where TState : class
+public abstract class FluxorComponentBase<TState, TAction> : FluxorComponent
+    where TState : StateBase
 {
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
     [Inject]
-    protected IState<TState> State { get; set; }
+    protected IState<TState> State { get; set; } = null!;
     [Inject]
-    protected IState<RessourcesState> RessourcesState { get; set; }
+    protected IState<ResourcesState> ResourcesState { get; set; } = null!;
     [Inject]
-    protected IDispatcher Dispatcher { get; set; }
+    protected IDispatcher Dispatcher { get; set; } = null!;
     [Inject]
-    protected IBasketService BasketService { get; set; }
+    protected IBasketService BasketService { get; set; } = null!;
     [Inject]
-    protected ILogger<FluxorComponentBase<TState, TAction>> Logger { get; set; }
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+    protected ILogger<FluxorComponentBase<TState, TAction>> Logger { get; set; } = null!;
 
     protected Type FetchActionType { get; } = typeof(TAction);
-    private bool _disposed = false;
+    protected bool Initialized => State.Value.Initialized && ResourcesState.Value.Initialized;
+    protected bool IsLoading => State.Value.IsLoading;
+    protected bool IsFaulted => State.Value.IsFaulted;
+    protected string ErrorMessage => State.Value.ErrorMessage;
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        State.StateChanged += OnStateChanged;
-        Dispatcher.Dispatch(CreateFetchAction(State.Value));
+        Dispatcher.Dispatch(CreateFetchAction());
 
-        await base.OnInitializedAsync();
+        base.OnInitialized();
     }
 
-    /// <summary>
-    /// Handles state changes in the component by ensuring state fields are cached before triggering a UI update.
-    /// </summary>
-    /// <param name="sender">The source of the event.</param>
-    /// <param name="e">Event arguments.</param>
-    protected virtual void OnStateChanged(object? sender, EventArgs e)
-    {
-        Logger.LogDebug("State has changed for {Component}", GetType().Name);
-        // Schedule the execution of this code on the Blazor UI thread. This ensures that any UI-related operations
-        // are executed within the appropriate synchronization context, preventing potential threading issues.
-        InvokeAsync(async () =>
-        {
-            // Cache the relevant state fields first to ensure they are up-to-date before the UI is re-rendered.
-            // This prevents potential null reference issues when the Razor view attempts to access these fields.
-            CacheNewFields();
-            Logger.LogTrace("Cached new fields for {Component}", GetType().Name);
-            // Trigger a re-render of the component to reflect the updated state in the UI.
-            // Awaiting this ensures that the state update happens after caching, maintaining consistency.
-            await InvokeAsync(StateHasChanged);
-        });
-        Logger.LogTrace("StateChanged handler completed for {Component}", GetType().Name);
-    }
-
-    protected abstract void CacheNewFields();
-
-    public void Dispose()
-    {
-        Dispose(true);
-        GC.SuppressFinalize(this);
-    }
-
-    protected virtual void Dispose(bool disposing)
-    {
-        if (!_disposed)
-        {
-            if (disposing)
-            {
-                State.StateChanged -= OnStateChanged;
-            }
-
-            _disposed = true;
-        }
-    }
-
-    protected abstract TAction CreateFetchAction(TState state);
+    protected abstract TAction CreateFetchAction();
 }

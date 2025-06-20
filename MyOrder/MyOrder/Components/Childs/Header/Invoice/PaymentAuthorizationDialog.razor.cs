@@ -5,7 +5,7 @@ using MudBlazor;
 using MyOrder.Shared.Dtos.Invoice;
 using MyOrder.Store.InvoiceInfoUseCase;
 
-namespace MyOrder.Components.Common.Dialogs;
+namespace MyOrder.Components.Childs.Header.Invoice;
 
 public partial class PaymentAuthorizationDialog : FluxorComponent
 {
@@ -18,12 +18,11 @@ public partial class PaymentAuthorizationDialog : FluxorComponent
 
     private PaymentAuthorizationDto PaymentAuthorization => PaymentAuthorizationState.Value.PaymentAuthorization;
 
-    private int ActiveTabIndex { get; set; } = 0;
     private SendPaymentLinkMode SendPaymentLinkMode { get; set; } = SendPaymentLinkMode.Phone;
 
     protected override void OnInitialized()
     {
-        Dispatcher.Dispatch(new FetchPaymentAuthorizationAction(PaymentAuthorizationState.Value));
+        Dispatcher.Dispatch(new FetchPaymentAuthorizationAction());
         base.OnInitialized();
     }
 

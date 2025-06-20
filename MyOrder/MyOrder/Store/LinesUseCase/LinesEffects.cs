@@ -68,7 +68,7 @@ public class LinesEffects(IOrderLinesRepository basketLinesRepository, IStateRes
     [EffectMethod]
     public async Task HandleEffectOnLineSuccessAction(EffectOnLinesSuccessAction receivedAction, IDispatcher dispatcher)
     {
-        var refreshCalls = receivedAction?.ProcedureCallResponseDto?.RefreshCalls;
+        var refreshCalls = receivedAction?.ProcedureCallResponse?.RefreshCalls;
         _stateResolver.DispatchRefreshCalls(dispatcher, refreshCalls);
     }
 

@@ -6,6 +6,7 @@ using MyOrder.Shared.Interfaces;
 using MyOrder.Shared.Utils;
 using MyOrder.Store.GlobalOperationsUseCase;
 using MyOrder.Store.OrderInfoUseCase;
+using System;
 
 namespace MyOrder.Store.ProcedureCallUseCase;
 
@@ -117,19 +118,18 @@ public class ProcedureCallEffects(IBasketActionsRepository basketActionsReposito
             {
                 HandlePostProcedureCallNavigation(dispatcher, response);
 
-                if (response.Success == true)
-                {
-                    if (response.UpdateDone == true)
-                    {
-                        // In case of success, we refresh states indicated in the response
-                        dispatcher.Dispatch(new PostProcedureCallSuccessAction(response));
-                        success = true;
-                    }
-                    else
-                        errorMessage = response.Message ?? "Field not updated.";
-                }
-                else
-                    errorMessage = response.Message ?? "An error occured!";
+                var updateDone = response.UpdateDone.GetValueOrDefault(false);
+                success = response.Success.GetValueOrDefault(false) && updateDone;
+
+                errorMessage = response.Message ??
+                    (!updateDone ?
+                        "No update done upon procedure call completion\nDispatching refresh calls..."
+                        : success ?
+                            "Procedure call completed successfully\nDispatching refresh calls..."
+                            : "Server returned \"OK\" upon procedure call completion with success : false.\n" +
+                            "Dispatching refresh calls...");
+
+                dispatcher.Dispatch(new PostProcedureCallCompletedSuccessfullyAction(response));
             }
 
         }
@@ -156,7 +156,7 @@ public class ProcedureCallEffects(IBasketActionsRepository basketActionsReposito
     }
 
     [EffectMethod]
-    public async Task HandlePostProcedureCallSuccessAction(PostProcedureCallSuccessAction receivedAction,
+    public async Task HandlePostProcedureCallSuccessAction(PostProcedureCallCompletedSuccessfullyAction receivedAction,
         IDispatcher dispatcher)
     {
         var refreshCalls = receivedAction?.ProcedureCallResponse?.RefreshCalls;

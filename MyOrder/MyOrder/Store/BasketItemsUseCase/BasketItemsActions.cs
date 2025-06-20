@@ -3,38 +3,17 @@ using MyOrder.Store.Base;
 
 namespace MyOrder.Store.BasketItemsUseCase;
 
-public class FetchBestSellersAction(BestSellersState state, string? filter = null) : FetchDataActionBase(state)
-{
-    public string? Filter { get; set; } = filter;
-}
+public sealed record FetchBestSellersAction(string? Filter = null) : FetchDataActionBase;
 
-public class FetchBestSellersSuccessAction(List<BestSellerItemDto?>? bestSellers)
-{
-    public List<BestSellerItemDto?>? BestSellers { get; } = bestSellers;
-}
+public record FetchBestSellersSuccessAction(List<BestSellerItemDto?> BestSellers);
 
-public class FetchBasketItemsFailureAction(string errorMessage)
-{
-    public string ErrorMessage { get; } = errorMessage;
-}
+public record FetchBasketItemsFailureAction(string ErrorMessage);
 
-public class FetchOrderedItemsAction(OrderedItemsState state, string? filter = null) : FetchDataActionBase(state)
-{
-    public string? Filter { get; set; } = filter;
-}
+public record FetchOrderedItemsAction(string? Filter = null) : FetchDataActionBase;
 
-public class FetchOrderedItemsSuccessAction(List<OrderedItemDto?>? orderedItems)
-{
-    public List<OrderedItemDto?>? OrderedItems { get; } = orderedItems;
-}
+public record FetchOrderedItemsSuccessAction(List<OrderedItemDto?> OrderedItems);
 
-public class FetchSearchItemsAction(SearchItemsState state, string? filter = null) : FetchDataActionBase(state)
-{
-    public string? Filter { get; set; } = filter;
-}
+public record FetchSearchItemsAction(string? Filter = null) : FetchDataActionBase;
 
-public class FetchSearchItemsSuccessAction(List<BasketItemDto?>? searchItems)
-{
-    public List<BasketItemDto?>? SearchItems { get; } = searchItems;
-}
+public record FetchSearchItemsSuccessAction(List<BasketItemDto?> SearchResults);
 

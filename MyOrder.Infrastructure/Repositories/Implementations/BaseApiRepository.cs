@@ -57,6 +57,11 @@ public abstract class BaseApiRepository(IEventAggregator eventAggregator, IBaske
             await HandleApiException(apiEx, operationDescription);
             return null; // Return null to signify failure
         }
+        catch (TaskCanceledException)
+        {
+            _logger.LogInformation("Repository: Operation {OperationDescription} was cancelled.", operationDescription);
+            throw;
+        }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Unexpected exception during {OperationDescription}", operationDescription);

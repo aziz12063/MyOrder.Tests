@@ -38,7 +38,7 @@ public class NewLineEffects(INewOrderLineRepository newOrderLineRepository, ISta
             var response = await _newOrderLineRepository.ResetNewLineStateAsync();
 
             // To refetch the latest new line state
-            dispatcher.Dispatch(new FetchNewLineAction(newLineState.Value));
+            dispatcher.Dispatch(new FetchNewLineAction());
         }
         catch (Exception ex)
         {

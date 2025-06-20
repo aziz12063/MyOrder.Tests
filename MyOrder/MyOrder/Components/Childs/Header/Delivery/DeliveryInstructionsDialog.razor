@@ -2,16 +2,12 @@
 
 @inherits FluxorComponentBase<NewDeliveryAccountState, FetchNewDeliveryAccountAction>
 
-
-
-
-
 <MudDialog ContentClass="ma-0 pb-2">
     <TitleContent>
         <MudText Typo="Typo.h5">Édition des instructions de livraison</MudText>
     </TitleContent>
     <DialogContent>
-        @if (_isLoading)
+        @if (!Initialized)
         {
             <MudProgressLinear Color="Color.Primary"
                                Indeterminate="true" />
@@ -20,10 +16,10 @@
         else
         {
             <FetchActionTypeCascadingValue FetchActionTypeValue="FetchActionType">
-                <MudGrid Spacing="2">
+                <MudGrid Spacing="2" Class="pt-1">
                     <MudItem xs="4">
                         <MudPaper Elevation="2" Class="header-cards-height header-cards-height-content">
-                            <MudText Typo="Typo.h6" Color="Color.Secondary" Class="pb-4">@DeliveryAccountDraft!.AddressSectionLabel</MudText>
+                            <MudText Typo="Typo.h6" Color="Color.Secondary" Class="pb-4 pl-2">@DeliveryAccountDraft!.AddressSectionLabel</MudText>
                             <MudText Typo="Typo.body1" Class="px-1">
                                 @DeliveryAccountDraft!.AccountId?.Value - @DeliveryAccountDraft!.Name?.Value <br />
                                 @DeliveryAccountDraft!.Street?.Value <br />
@@ -33,14 +29,14 @@
                     </MudItem>
                     <MudItem xs="8">
                         <MudPaper Elevation="2" Class="header-cards-height-content">
-                            <MudText Typo="Typo.h6" Color="Color.Secondary" Class="pb-4">Instructions de livraison</MudText>
+                            <MudText Typo="Typo.h6" Color="Color.Secondary" Class="pb-4 pl-2">Instructions de livraison</MudText>
                             <MudGrid Spacing="3" Class="pt-0">
                                 <MudItem xs="5">
-                                    <MudGrid Spacing="0" Justify="Justify.SpaceBetween">
-                                        <MudItem xs="6" Class="pr-4">
+                                    <MudGrid Spacing="2" Justify="Justify.SpaceBetween">
+                                        <MudItem xs="6">
                                             <GenericTextField Field="DeliveryAccountDraft!.Floor" />
                                         </MudItem>
-                                        <MudItem xs="6" Class="pr-4">
+                                        <MudItem xs="6">
                                             <GenericTextField Field="DeliveryAccountDraft!.DigiCode" />
                                         </MudItem>
                                         <MudItem xs="12">
@@ -51,14 +47,34 @@
                                         </MudItem>
                                         <MudItem xs="12" Class="mt-2 pr-4">
                                             <GenericMudSelect Field="DeliveryAccountDraft!.CarrierType"
-                                                              Items="RessourcesState.Value.CarrierTypes" />
+                                                              Items="ResourcesState.Value.CarrierTypes" />
                                         </MudItem>
                                     </MudGrid>
                                 </MudItem>
                                 <MudItem xs="7">
-                                    <GenericTextField Field="DeliveryAccountDraft!.DeliveryNote"
-                                                      Lines="7"
-                                                      Variant="Variant.Outlined" />
+                                    <MudStack Spacing="1">
+                                        <GenericTextField Field="DeliveryAccountDraft!.DeliveryNote"
+                                                          Lines="2"
+                                                          Variant="Variant.Outlined" />
+                                        <MudGrid Spacing="1">
+                                            <MudItem xs="11">
+                                                <GenericTextField Field="DeliveryAccountDraft.AppointmentDirectPhone" />
+                                            </MudItem>
+                                            <MudItem xs="1" Style="align-self: center">
+                                                <FieldButton Field="DeliveryAccountDraft.AppointmentDirectPhoneDefaultValue"
+                                                             Icon="@Icons.Material.Filled.Restore"
+                                                             IconOnly="true" />
+                                            </MudItem>
+                                            <MudItem xs="11">
+                                                <GenericTextField Field="DeliveryAccountDraft.AppointmentEmail" />
+                                            </MudItem>
+                                            <MudItem xs="1" Style="align-self: center">
+                                                <FieldButton Field="DeliveryAccountDraft.AppointmentEmailDefaultValue"
+                                                             Icon="@Icons.Material.Filled.Restore"
+                                                             IconOnly="true" />
+                                            </MudItem>
+                                        </MudGrid>
+                                    </MudStack>
                                 </MudItem>
                             </MudGrid>
                         </MudPaper>
@@ -73,7 +89,7 @@
                                      SortMode="SortMode.None"
                                      Items="DeliveryAccountDraft!.WeekDays">
                             <ToolBarContent>
-                                <MudText Typo="Typo.h6" Color="Color.Secondary" Class="pb-4">Horaires de livraison</MudText>
+                                <MudText Typo="Typo.h6" Color="Color.Secondary">Horaires de livraison</MudText>
                             </ToolBarContent>
                             <Columns>
 
@@ -134,7 +150,7 @@
         }
     </DialogContent>
     <DialogActions>
-        @if (_isLoading)
+        @if (!Initialized)
             return;
 
         <FieldButton Field="DeliveryAccountDraft!.Actions?.UpdateDeliveryInstructions"

@@ -1,11 +1,12 @@
 ﻿@typeparam T
 @inherits GenericInputBase<T>
 
- @if (Field is not null && !Hidden)
+@if (Field is not null && !Hidden)
 {
     <MudTooltip RootStyle="width: 100%;"
                 Text="@TooltipText">
         <MudTextField @ref="TextField"
+                      T="T"
                       Typo="Typo"
                       Margin="Margin"
                       Variant="Variant"
@@ -17,12 +18,12 @@
                       Label="@FieldLabel()"
                       Required="Required"
                       RequiredError="Ce champ est obligatoire"
-                      Error="Error"
+                      Error="Required || !string.IsNullOrWhiteSpace(Field!.Error)"
                       ErrorText="@Field!.Error"
                       ReadOnly="InternalReadOnly || OnlyForDisplay"
                       Disabled="InternalReadOnly || OnlyForDisplay"
-                      @bind-Value="ValueProperty"
-                      @bind-Value:after="OnBindValueAfter"
+                      Value="ValueProperty"
+                      ValueChanged="ValueChangedHandler"
                       OnKeyDown="KeyDownHandler" />
     </MudTooltip>
 }

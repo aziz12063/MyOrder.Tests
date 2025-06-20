@@ -2,8 +2,6 @@
 
 namespace MyOrder.Shared.Dtos.GeneralInformation;
 
-public class NewBasketAction
-{
-    public Field<string?>? Account { get; set; }
-    public Field<string?>? Contact { get; set; }
-}
+public record NewBasketAction(
+    Field<string?>? Account,
+    Field<string?>? Contact);

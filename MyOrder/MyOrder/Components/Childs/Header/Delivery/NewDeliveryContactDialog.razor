@@ -4,16 +4,17 @@
 
 <MudDialog ContentClass="mx-0 mb-0 pt-1 pb-2">
     <TitleContent>
-        <MudText Typo="Typo.h5">Édition de l'adresse de livraison</MudText>
+        <MudText Typo="Typo.h5">@State.Value.DeliveryContactDraft?.ContactSectionLabel</MudText>
     </TitleContent>
     <DialogContent>
-        @if (_isLoading)
+        @if (!Initialized)
             return;
 
         <FetchActionTypeCascadingValue FetchActionTypeValue="FetchActionType">
             <MudStack Spacing="1">
                 <DisplayField Field="DeliveryContactDraft.Type" />
-                <GenericTextField Field="DeliveryContactDraft.SocialTitle" />
+                <GenericMudSelect Field="DeliveryContactDraft.SocialTitle"
+                                  Items="ResourcesState?.Value?.ContactSalutations" />
                 <GenericTextField Field="DeliveryContactDraft.FirstName" />
                 <GenericTextField Field="DeliveryContactDraft.LastName" />
                 <GenericTextField Field="DeliveryContactDraft.DirectPhone" />
@@ -23,11 +24,7 @@
         </FetchActionTypeCascadingValue>
     </DialogContent>
     <DialogActions>
-        <MudTooltip Text="Not Implemented">
-            <MudButton EndIcon="@Icons.Material.Filled.Add"
-                       Size="Size.Medium">
-                - Not Implemented -
-            </MudButton>
-        </MudTooltip>
+        <FieldButton Field="DeliveryContactDraft?.Actions?.AddContact"
+                     OnClickCallback=" _ => MudDialog.Close()" />
     </DialogActions>
 </MudDialog>

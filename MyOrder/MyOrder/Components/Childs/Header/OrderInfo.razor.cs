@@ -1,8 +1,6 @@
 ﻿using Fluxor;
 using Microsoft.AspNetCore.Components;
-using MudBlazor;
 using MyOrder.Components.Common;
-using MyOrder.Components.Common.Dialogs;
 using MyOrder.Services;
 using MyOrder.Shared.Dtos;
 using MyOrder.Store.OrderInfoUseCase;
@@ -11,32 +9,35 @@ using MyOrder.Utils;
 
 namespace MyOrder.Components.Childs.Header;
 
-public partial class OrderInfo : FluxorComponentBase<OrderInfoState, FetchOrderInfoAction>
+public sealed partial class OrderInfo : FluxorComponentBase<OrderInfoState, FetchOrderInfoAction>, IDisposable
 {
     [Inject]
-    private IState<OrderContactsState> OrderContactsState { get; set; }
+    private IState<OrderContactsState> OrderContactsState { get; set; } = null!;
     [Inject]
-    private IModalService ModalService { get; set; }
-    private BasketOrderInfoDto? BasketOrderInfo { get; set; }
+    private IModalService ModalService { get; set; } = null!;
+
+    private BasketOrderInfoDto BasketOrderInfo => State.Value.BasketOrderInfo;
     private List<ContactDto?>? Contacts { get; set; }
     private List<BasketValueDto?>? SalesOrigins { get; set; }
-    private List<BasketValueDto?>? WebOrigins { get; set; }
+    private List<BasketValueDto?>? WebOrigins => State.Value.WebOrigins;
     private List<BasketValueDto?>? SalesPools { get; set; }
-    private string SelectedClient { get; set; } = string.Empty;
-    private bool isLoading = true;
-    private bool disposed = false;
+    private string SelectedClient => FieldUtility.SelectedAccount(BasketOrderInfo.Account?.Value);
 
+    private string AccountLandLine => BasketOrderInfo?.Account?.Value?.Phone ?? string.Empty;
+    private string AccountCellularPhone => BasketOrderInfo?.Account?.Value?.CellularPhone ?? string.Empty;
+    string ContactLandLine => BasketOrderInfo?.Contact?.Value?.Phone ?? string.Empty;
+    string ContactCellularPhone => BasketOrderInfo?.Contact?.Value?.CellularPhone ?? string.Empty;
 
-    protected override FetchOrderInfoAction CreateFetchAction(OrderInfoState state) => new(state);
+    protected override FetchOrderInfoAction CreateFetchAction() => new();
 
     protected override void OnInitialized()
     {
-        Dispatcher.Dispatch(new FetchOrderContactsAction(OrderContactsState.Value));
+        Dispatcher.Dispatch(new FetchOrderContactsAction());
         OrderContactsState.StateChanged += OrderContactsStateChanged;
 
         base.OnInitialized();
 
-        var rscState = RessourcesState?.Value;
+        var rscState = ResourcesState?.Value;
 
         SalesOrigins = rscState?.SalesOrigins
             ?? throw new ArgumentNullException(nameof(rscState.SalesOrigins), "Unexpected null for SalesOrigins object.");
@@ -44,53 +45,13 @@ public partial class OrderInfo : FluxorComponentBase<OrderInfoState, FetchOrderI
             ?? throw new ArgumentNullException(nameof(rscState.SalesPools), "Unexpected null for SalesPools object.");
     }
 
-    protected override void CacheNewFields()
-    {
-        BasketOrderInfo = State?.Value.BasketOrderInfo
-            ?? throw new ArgumentNullException(nameof(State.Value.BasketOrderInfo), "Unexpected null for BasketOrderInfo object.");
-        WebOrigins = State?.Value.WebOrigins
-            ?? throw new ArgumentNullException(nameof(State.Value.WebOrigins), "Unexpected null for WebOrigins object.");
-
-        SelectedClient = FieldUtility.SelectedAccount(BasketOrderInfo?.Account?.Value);
-        isLoading = State.Value.IsLoading || RessourcesState.Value.IsLoading;
-    }
-
     private void OrderContactsStateChanged(object? sender, EventArgs e)
     {
-        Logger.LogDebug("State has changed for Contacts in {Component}",
+        Logger.LogTrace("State has changed for Contacts in {Component}",
             GetType().Name);
-
-        InvokeAsync(() =>
-        {
-            Contacts = OrderContactsState.Value.Contacts;
-            StateHasChanged();
-        });
-
-        Logger.LogDebug("StateChanged handler completed for Contacts {Component}",
-            GetType().Name);
+        Contacts = OrderContactsState.Value.Contacts;
+        StateHasChanged();
     }
-
-    private static Color CustomerTagColorHelper(string? value) =>
-        value switch
-        {
-            "vip" => Color.Primary,
-            "specialPrep" => Color.Info,
-            "export" => Color.Success,
-            "noGift" => Color.Error,
-            "completeDelivery" => Color.Success,
-            _ => Color.Warning
-        };
-#warning Tags are not complete
-    private static string CustomerTagIconHelper(string? value) =>
-        value switch
-        {
-            "vip" => Icons.Material.Filled.Star,
-            "specialPrep" => Icons.Material.Filled.Warning,
-            "export" => Icons.Material.Filled.ImportExport,
-            "noGift" => Icons.Material.Filled.CardGiftcard,
-            "completeDelivery" => Icons.Material.Filled.Done,
-            _ => Icons.Material.Filled.Warning
-        };
 
     private async Task OpenContactSearchDialogAsync()
     {
@@ -102,21 +63,14 @@ public partial class OrderInfo : FluxorComponentBase<OrderInfoState, FetchOrderI
         }
 
         await ModalService.OpenSearchContactDialogAsync<OrderContactsState, FetchOrderContactsAction>(
-             contact => Dispatcher.Dispatch(
-                    new UpdateFieldAction(BasketOrderInfo.Contact, contact, typeof(FetchOrderInfoAction)))
-             );
+             contact =>
+                Dispatcher.Dispatch(new UpdateFieldAction(BasketOrderInfo.Contact, contact, typeof(FetchOrderInfoAction))),
+             () => Dispatcher.Dispatch(new FetchOrderContactsAction(null, null)));
     }
 
-    protected override void Dispose(bool disposing)
+    public void Dispose()
     {
-        if (!disposed)
-        {
-            if (disposing)
-            {
-                OrderContactsState.StateChanged -= OrderContactsStateChanged;
-            }
-            disposed = true;
-        }
-        base.Dispose(disposing);
+        OrderContactsState.StateChanged -= OrderContactsStateChanged;
+
     }
 }

@@ -13,26 +13,27 @@ public partial class AddLineTab : FluxorComponentBase<NewLineState, FetchNewLine
 {
     [Parameter, EditorRequired]
     public EventCallback OnEnterPressed { get; set; }
-    private BasketLineDto? NewLine { get; set; }
+    private BasketLineDto? NewLine => State.Value.BasketLine;
     private List<BasketValueDto?>? LogisticFlows { get; set; }
     private GenericTextField<string?>? ItemIdField { get; set; }
-    private bool _isLoading = true;
 
-    protected override FetchNewLineAction CreateFetchAction(NewLineState state) =>
-        new(state);
+    private bool _isBusy = false;
+
+    protected override FetchNewLineAction CreateFetchAction() =>
+        new();
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        LogisticFlows = RessourcesState?.Value.LogisticFlows
+        LogisticFlows = ResourcesState?.Value.LogisticFlows
             ?? throw new ArgumentNullException("Unexpected null for LogisticFlows object.");
+        State.StateChanged += State_StateChanged;
     }
 
-    protected override void CacheNewFields()
+    private void State_StateChanged(object? sender, EventArgs e)
     {
-        NewLine = State?.Value.BasketLine
-            ?? throw new ArgumentNullException("BasketLine is null in NewLineState");
-        _isLoading = State.Value.IsLoading || RessourcesState.Value.IsLoading;
+        _isBusy = State.Value.IsLoading && Initialized;
+        StateHasChanged();
     }
 
     public void LoadItem(string itemIdToLoad)
@@ -52,6 +53,9 @@ public partial class AddLineTab : FluxorComponentBase<NewLineState, FetchNewLine
             throw new InvalidOperationException("ItemIdField is null. Are you missing a reference?");
         await ItemIdField!.FocusAsync();
     }
+
+    public void ItemIdValueChangedCallback() =>
+        _isBusy = true;
 
     private async Task EnterPressed(KeyboardEventArgs e)
     {

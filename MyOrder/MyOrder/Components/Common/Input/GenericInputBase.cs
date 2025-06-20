@@ -15,7 +15,7 @@ public abstract class GenericInputBase<TValue> : ComponentBase
     protected bool OnlyForDisplay { get; set; }
     protected bool Error { get; set; }
     protected string? TooltipText { get; set; }
-    protected TValue? ValueProperty { get; set; }
+    protected TValue? ValueProperty => Field.Value;
 
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
@@ -24,7 +24,7 @@ public abstract class GenericInputBase<TValue> : ComponentBase
     [Inject]
     protected IDispatcher Dispatcher { get; set; }
     [CascadingParameter(Name = "FetchActionType")]
-    private Type SelfFetchAction { get; set; }
+    protected Type SelfFetchAction { get; set; }
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
     [Parameter, EditorRequired]
     public required Field<TValue> Field { get; set; }
@@ -34,9 +34,14 @@ public abstract class GenericInputBase<TValue> : ComponentBase
     public bool HideLabel { get; set; } = false;
     [Parameter]
     public Margin Margin { get; set; } = Margin.Dense;
+    [Parameter]
+    public EventCallback OnValueChange { get; set; }
 
-    protected virtual void OnBindValueAfter() =>        
-        Dispatcher.Dispatch(new UpdateFieldAction(Field, ValueProperty, SelfFetchAction));
+    protected virtual async void ValueChangedHandler(TValue newValue)
+    {
+        Dispatcher.Dispatch(new UpdateFieldAction(Field, newValue, SelfFetchAction));
+        await OnValueChange.InvokeAsync(ValueProperty);
+    }
 
 
     protected override void OnInitialized()
@@ -53,7 +58,6 @@ public abstract class GenericInputBase<TValue> : ComponentBase
         if (Field == null)
             return;
 
-        ValueProperty = Field.Value;
         Hidden = FieldUtility.IsHidden(Field);
         InternalReadOnly = ReadOnly ?? FieldUtility.IsReadOnly(Field);
         ReadWrite = FieldUtility.IsReadWrite(Field);

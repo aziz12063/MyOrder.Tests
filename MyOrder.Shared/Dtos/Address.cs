@@ -1,14 +1,14 @@
-﻿using MyOrder.Shared.Dtos.SharedComponents;
+﻿using MyOrder.Generator;
+using MyOrder.Shared.Dtos.SharedComponents;
 
 namespace MyOrder.Shared.Dtos;
 
-public class Address
-{
-    public Field<int?>? IsSelected { get; set; }
-    public string? Building { get; set; }
-    public string? Street { get; set; }
-    public string? Locality { get; set; }
-    public string? ZipCode { get; set; }
-    public string? City { get; set; }
-    public string? Country { get; set; }
-}
+public record Address(
+    [property: DisplayOnlyField]
+    Field<int?>? IsSelected,
+    string? Building,
+    string? Street,
+    string? Locality,
+    string? ZipCode,
+    string? City,
+    string? Country);

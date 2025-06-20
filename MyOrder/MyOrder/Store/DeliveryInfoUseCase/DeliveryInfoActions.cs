@@ -4,48 +4,24 @@ using MyOrder.Store.Base;
 
 namespace MyOrder.Store.DeliveryInfoUseCase;
 
-public class FetchDeliveryInfoAction(DeliveryInfoState state) : FetchDataActionBase(state)
-{ }
-public class FetchDeliveryInfoSuccessAction(BasketDeliveryInfoDto? basketDeliveryInfo, List<BasketValueDto?>? deliveryModes)
-{
-    public BasketDeliveryInfoDto? BasketDeliveryInfo { get; } = basketDeliveryInfo;
-    public List<BasketValueDto?>? DeliveryModes { get; } = deliveryModes;
-}
-public class FetchDeliveryInfoFailureAction(string errorMessage)
-{
-    public string ErrorMessage { get; } = errorMessage;
-}
+public record FetchDeliveryInfoAction() : FetchDataActionBase;
 
-public class FetchDeliveryAccountsAction(DeliveryAccountsState state, string? filter = null, bool? isSearch = null)
-    : FetchDataActionBase(state), IFetchAccountsAction
-{
-    public string? Filter { get; } = filter;
-    public bool? IsSearch { get; } = isSearch;
-}
-public class FetchDeliveryAccountsSuccessAction(List<AccountDto?>? accounts, bool isSearch)
-{
-    public List<AccountDto?>? DeliveryAccounts { get; } = accounts;
-    public bool IsSearch { get; } = isSearch;
-}
-public class FetchDeliveryAccountsFailureAction(string errorMessage)
-{
-    public string ErrorMessage { get; } = errorMessage;
-}
+public record FetchDeliveryInfoSuccessAction(BasketDeliveryInfoDto BasketDeliveryInfo, List<BasketValueDto?> DeliveryModes);
 
-public class FetchDeliveryContactsAction(DeliveryContactsState state, string? filter = null)
-    : FetchDataActionBase(state), IFetchContactsAction
-{
-    public string? Filter { get; } = filter;
-}
-public class FetchDeliveryContactsSuccessAction(List<ContactDto?>? contacts, bool isFiltered)
-{
-    public List<ContactDto?>? DeliveryContacts { get; } = contacts;
-    public bool IsFiltered { get; } = isFiltered;
-}
-public class FetchDeliveryContactsFailureAction(string errorMessage)
-{
-    public string ErrorMessage { get; } = errorMessage;
-}
+public record FetchDeliveryInfoFailureAction(string ErrorMessage);
+
+public record FetchDeliveryAccountsAction(string? Filter = null, bool? IsSearch = null)
+    : FetchDataActionBase, IFetchAccountsAction;
+
+public record FetchDeliveryAccountsSuccessAction(List<AccountDto?> DeliveryAccounts, bool IsSearch);
+
+public record FetchDeliveryAccountsFailureAction(string ErrorMessage);
+
+public record FetchDeliveryContactsAction(string? Filter = null, bool? Search = null) : FetchDataActionBase, IFetchContactsAction;
+
+public record FetchDeliveryContactsSuccessAction(List<ContactDto?> DeliveryContacts, bool IsFiltered);
+
+public record FetchDeliveryContactsFailureAction(string ErrorMessage);
 
 //public record FetchDeliveryModesSuccessAction(List<BasketValueDto?>? deliveryModes)
 //{

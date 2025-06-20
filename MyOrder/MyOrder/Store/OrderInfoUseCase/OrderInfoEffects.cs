@@ -37,7 +37,7 @@ public class OrderInfoEffects(IOrderInfoRepository orderInfoRepository, ILogger<
         {
             var isFiltered = !string.IsNullOrEmpty(action.Filter);
             _logger.LogInformation("Fetching order contacts.");
-            var contactList = await _orderInfoRepository.GetOrderByContactsAsync(action.Filter);
+            var contactList = await _orderInfoRepository.GetOrderByContactsAsync(action.Filter, action.Search);
             dispatcher.Dispatch(new FetchOrderContactsSuccessAction(contactList, isFiltered));
         }
         catch (Exception ex)

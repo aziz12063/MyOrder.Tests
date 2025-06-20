@@ -2,12 +2,18 @@
 
 namespace MyOrder.Shared.Dtos.Delivery;
 
-public class DeliveryAccountDraftActions : AccountActions
-{
-    public Field<string?>? DeliveryInstructions { get; set; }
-    public Field<string?>? AddAddress { get; set; }
-    public Field<string?>? EditAddress { get; set; }
-    public Field<string?>? CancelAddress { get; set; }
-    public Field<string?>? UpdateDeliveryInstructions { get; set; }
-
-}
+public sealed record DeliveryAccountDraftActions(
+    Field<string?>? DeliveryInstructions,
+    Field<string?>? AddAddress,
+    Field<string?>? EditAddress,
+    Field<string?>? CancelAddress,
+    Field<string?>? UpdateDeliveryInstructions,
+    Field<string?>? AddressLookup,
+    Field<string?>? SalesforceLink,
+    Field<string?>? ClickToCall,
+    Field<string?>? OrderInfo) 
+    : AccountActions(
+        AddressLookup,
+        SalesforceLink,
+        ClickToCall,
+        OrderInfo);

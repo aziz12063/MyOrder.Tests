@@ -7,7 +7,9 @@ public record ContactDto(
     string? LastName,
     string? Email,
     string? Phone,
-    string? CellularPhone)
+    string? CellularPhone,
+    string? Description)
 {
-    public override string ToString() => $"{LastName} {FirstName}";
+    public override string ToString() => Description ?? "NO_DESCRIPTION_PROVIDED";
+    public string FullName => $"{SocialTitle} {FirstName} {LastName}".Trim();
 }

@@ -44,8 +44,8 @@ ThemeConfiguration.ApplyCustomMudGlobals();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents()
-    .AddInteractiveWebAssemblyComponents();
+    .AddInteractiveServerComponents();
+
 builder.Services.AddSingleton<VersionInfoService>();
 builder.Services.AddScoped<IEventAggregator, EventAggregator>();
 builder.Services.AddScoped<IBasketService, BasketService>();
@@ -66,7 +66,7 @@ builder.Services.AddTransient<InfrastructureFailureHandler>();
 builder.Services.AddTransient<UserNameHandler>();
 builder.Services.AddTransient<ApiMetricsHandler>();
 
-RegisterRepositoriesWithRefitClient<IBasketRessourcesApiClient, IBasketRessourcesRepository, BasketRessourcesRepository>(builder);
+RegisterRepositoriesWithRefitClient<IBasketResourcesApiClient, IBasketResourcesRepository, BasketResourcesRepository>(builder);
 RegisterRepositoriesWithRefitClient<IGeneralInfoApiClient, IGeneralInfoRepository, GeneralInfoRepository>(builder);
 RegisterRepositoriesWithRefitClient<IBasketActionsApiClient, IBasketActionsRepository, BasketActionsRepository>(builder);
 RegisterRepositoriesWithRefitClient<IOrderInfoApiClient, IOrderInfoRepository, OrderInfoRepository>(builder);
@@ -94,8 +94,6 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseWebAssemblyDebugging();
-
     //To disable caching while in development
     app.Use(async (context, next) =>
     {
@@ -118,9 +116,7 @@ app.UseStaticFiles();
 app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode()
-    .AddInteractiveWebAssemblyRenderMode()
-    .AddAdditionalAssemblies(typeof(MyOrder.Client._Imports).Assembly);
+    .AddInteractiveServerRenderMode();
 
 app.MapGet("/DeployTest", () => "Running!");
 
@@ -135,15 +131,17 @@ static IHttpClientBuilder RegisterRepositoriesWithRefitClient<TApiClient, TRepos
     builder.Services.AddScoped<TRepositoryInterface, TConcreteRepository>();
     var apiUri = builder.Configuration["ApiUri"] ?? "http://aliasieeq:8080";
 
-var httpBuilder = builder.Services.AddRefitClient<TApiClient>(new RefitSettings
+    var httpBuilder = builder.Services.AddRefitClient<TApiClient>(new RefitSettings
     {
         ContentSerializer = new NewtonsoftJsonContentSerializer()
     })
-#if DEBUG
-    //.ConfigureHttpClient(c => c.BaseAddress = new Uri("https://localhost:44324")) // For local testing
+
+#if SERVERDEBUG
     .ConfigureHttpClient(c => c.BaseAddress = new Uri(apiUri)) // Refactor to use https only
+#elif DEBUG
+    .ConfigureHttpClient(c => c.BaseAddress = new Uri("https://localhost:44324")) // For local testing
 #else
-        .ConfigureHttpClient(c => c.BaseAddress = new Uri(apiUri)) // Refactor to use https only
+    .ConfigureHttpClient(c => c.BaseAddress = new Uri(apiUri)) // Refactor to use https only
 #endif
         .AddHttpMessageHandler<InfrastructureFailureHandler>()
         .AddHttpMessageHandler<ApiMetricsHandler>();

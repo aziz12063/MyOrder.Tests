@@ -3,6 +3,7 @@ using MyOrder.Components.Childs.Lines.AddLine;
 using MyOrder.Shared.Dtos;
 using MyOrder.Shared.Dtos.SharedComponents;
 using MyOrder.Store;
+using MyOrder.Store.Base;
 
 namespace MyOrder.Services;
 
@@ -21,13 +22,15 @@ public interface IModalService
     Task<IDialogReference> OpenBasketOrderNoteDialogAsync(Field<string> noteField);
 
     Task<IDialogReference> OpenSearchContactDialogAsync<TState, TAction>(
-        Action<ContactDto> contactClicked)
-        where TState : class, IContactsState
+        Action<ContactDto> contactClicked,
+        Action onCloseCallback)
+        where TState : StateBase, IContactsState
         where TAction : class, IFetchContactsAction;
     Task<IDialogReference> OpenSearchAccountDialogAsync<TState, TAction>(
         Action<AccountDto> accountClicked,
-        Action addNewAccountClicked)
-        where TState : class, IAccountsState
+        Action addNewAccountClicked,
+        Action onCloseCallback)
+        where TState : StateBase, IAccountsState
         where TAction : class, IFetchAccountsAction;
     Task<bool> ShowConfirmationDialog(string message, string? title = null,
         Action? onConfirm = null, ModalSeverity modalSeverity = ModalSeverity.info);

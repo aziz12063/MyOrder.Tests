@@ -39,30 +39,31 @@ public partial class GenericMudSelect<T> : GenericInputBase<T>
         }
     }
 
-    protected override void OnParametersSet()
-    {
-        base.OnParametersSet();
-        if (typeof(T) == typeof(BasketValueDto))
-        {
-            var basketValue = Field.Value as BasketValueDto;
+    //protected override void OnParametersSet()
+    //{
+    //    base.OnParametersSet();
+    //    if (typeof(T) == typeof(BasketValueDto))
+    //    {
+    //        var basketValue = Field.Value as BasketValueDto;
 
-            if (basketValue != null)
-            {
-                // Find the item in Items where item.Value matches value.Value
-                ValueProperty = (T?)(object?)Items?
-                .OfType<BasketValueDto>()
-                .FirstOrDefault(item => item.Value == basketValue.Value);
-            }
-        }
-    }
+    //        if (basketValue != null)
+    //        {
+    //            // Find the item in Items where item.Value matches value.Value
+    //            innerValueProperty = (T?)(object?)Items?
+    //                .OfType<BasketValueDto>()
+    //                .FirstOrDefault(item => item.Value == basketValue.Value);
+    //        }
+    //    }
+    //    else
+    //        innerValueProperty = ValueProperty;
+    //}
 
-    private void OnValueChanged(T value)
+    private void OnValueChanged(T newValue)
     {
         if (_isOpen)
             return;
 
-        ValueProperty = value;
-        OnBindValueAfter();
+        ValueChangedHandler(newValue);
     }
 
     /// <summary>

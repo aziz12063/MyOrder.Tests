@@ -2,8 +2,7 @@
 
 namespace MyOrder.Shared.Dtos.GeneralInformation;
 
-public class BlockingBasketActions : BasketActionsBase
-{
-    public Field<string?>? ValidationRules { get; set; }
-    public Field<string?>? BlockingReasons { get; set; }
-}
+public record BlockingBasketActions(
+    Field<string?>? ValidationRules,
+    Field<string?>? BlockingReasons,
+    string? MenuLabel) : BasketActionsBase(MenuLabel);

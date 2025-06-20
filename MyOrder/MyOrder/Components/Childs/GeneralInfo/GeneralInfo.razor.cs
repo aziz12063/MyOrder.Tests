@@ -5,8 +5,6 @@ using MyOrder.Services;
 using MyOrder.Shared.Dtos.GeneralInformation;
 using MyOrder.Store.GeneralInfoUseCase;
 using MyOrder.Store.GlobalOperationsUseCase;
-using MyOrder.Utils;
-using System.Security.Claims;
 
 namespace MyOrder.Components.Childs.GeneralInfo;
 
@@ -16,23 +14,8 @@ public partial class GeneralInfo : FluxorComponentBase<GeneralInfoState, FetchGe
 
     [Inject]
     private IState<GlobalOperationsState> GlobalOperationsState { get; set; } = null!;
-    [Inject]
-    private ICurrencyService? CurrencyService { get; set; }
-    private GeneralInfoDto? BasketGeneralInfo { get; set; }
-    private ClaimsPrincipal? User { get; set; }
 
-    protected override FetchGeneralInfoAction CreateFetchAction(GeneralInfoState state) => new(state);
+    private GeneralInfoDto BasketGeneralInfo => State.Value.GeneralInfo;
 
-    protected override void CacheNewFields()
-    {
-        BasketGeneralInfo = State?.Value.GeneralInfo
-                             ?? throw new ArgumentNullException(nameof(State.Value.GeneralInfo), "Unexpected null for BasketGeneralInfo object.");
-        User = State.Value.User;
-        CurrencyService?.SetCurrency(BasketGeneralInfo?.Company?.Locale ?? "fr-FR");
-    }
-
-    private string AuthentifiedUser => $"Utilisateur: {FieldUtility.NullOrWhiteSpaceHelperWithDash(User?.Identity?.Name)}"
-        + $"\n Authentifié: {User?.Identity?.IsAuthenticated}"
-        + $"\n Type d'authentification: {FieldUtility.NullOrWhiteSpaceHelperWithDash(User?.Identity?.AuthenticationType)}";
-
+    protected override FetchGeneralInfoAction CreateFetchAction() => new();
 }

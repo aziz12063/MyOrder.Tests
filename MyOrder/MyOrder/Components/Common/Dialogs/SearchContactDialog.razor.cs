@@ -2,16 +2,17 @@
 using MudBlazor;
 using MyOrder.Shared.Dtos;
 using MyOrder.Store;
+using MyOrder.Store.Base;
 
 namespace MyOrder.Components.Common.Dialogs;
 
 public partial class SearchContactDialog<TState, TFetchAction>
     : FluxorComponentBase<TState, TFetchAction>, IHandleEvent
-    where TState : class, IContactsState
+    where TState : StateBase, IContactsState
     where TFetchAction : class, IFetchContactsAction // Update to record later
 {
-    private List<ContactDto?>? _contacts;
-    private List<ContactDto?>? _filteredContacts;
+    private List<ContactDto?>? Contacts => State.Value.Contacts;
+    private List<ContactDto?>? FilteredContacts => State.Value.FilteredContacts;
     private string? _filterString = null;
 
     [Parameter, EditorRequired]
@@ -19,35 +20,26 @@ public partial class SearchContactDialog<TState, TFetchAction>
     [CascadingParameter]
     private IMudDialogInstance MudDialog { get; set; }
 
-    protected override TFetchAction CreateFetchAction(TState state) =>
-        CreateFetchAction(state, null);
+    protected override TFetchAction CreateFetchAction() =>
+        CreateFetchAction(null, true);
 
-    private static TFetchAction CreateFetchAction(TState state, string? filter = null) =>
-        Activator.CreateInstance(typeof(TFetchAction), state, filter) as TFetchAction
+    private static TFetchAction CreateFetchAction(string? filter = null, bool? search = true) =>
+        Activator.CreateInstance(typeof(TFetchAction), filter, search) as TFetchAction
         ?? throw new InvalidOperationException($"Unable to create instance of {typeof(TFetchAction)}.");
-
-    protected override void CacheNewFields()
-    {
-        _contacts = State.Value.Contacts;
-        _filteredContacts = State.Value.FilteredContacts;
-    }
 
     private static bool QuickFilter(ContactDto? item) =>
         item is not null && !string.IsNullOrWhiteSpace(item.ContactId);
 
     private List<ContactDto?>? DisplayedItems() =>
-        string.IsNullOrEmpty(_filterString) ? _contacts : _filteredContacts;
+        string.IsNullOrEmpty(_filterString) ? Contacts : FilteredContacts;
 
     private void OnSearchTextChanged()
     {
-        Dispatcher.Dispatch(CreateFetchAction(State.Value, _filterString));
+        Dispatcher.Dispatch(CreateFetchAction(_filterString, true));
     }
 
-    private async Task OnContactClick(ContactDto? contact)
+    private async Task OnContactClick(ContactDto contact)
     {
-        if (contact is null)
-            return;
-
         await ContactClicked.InvokeAsync(contact);
 
         MudDialog.Close();

@@ -16,7 +16,6 @@
         </DialogContent>
         <DialogActions>
             <MudButton Color="Color.Primary"
-                       Class=""
                        OnClick="Close">Fermer</MudButton>
         </DialogActions>
     </MudDialog>
@@ -24,7 +23,7 @@
 
 @code {
     [CascadingParameter]
-    private IMudDialogInstance MudDialog { get; set; }
+    private IMudDialogInstance MudDialog { get; set; } = null!;
 
     [Parameter, EditorRequired]
     public Field<string> NoteField { get; set; }

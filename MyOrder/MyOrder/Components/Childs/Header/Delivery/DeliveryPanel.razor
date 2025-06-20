@@ -1,8 +1,8 @@
 ﻿@using MyOrder.Store.DeliveryInfoUseCase
 @inherits FluxorComponentBase<DeliveryInfoState, FetchDeliveryInfoAction>
 
-<SectionPaper Title="@BasketDeliveryInfo?.PanelLabel" IsLoading="isLoading" Style="padding-bottom:4px;">
-    @if (isLoading)
+<SectionPaper Title="@BasketDeliveryInfo?.PanelLabel" IsLoading="!Initialized" Style="padding-bottom:4px;">
+    @if (!Initialized)
     {
         <HeaderElementLoadingSkeleton />
         return;
@@ -18,25 +18,30 @@
                         <FieldButton Field="BasketDeliveryInfo.AccountActions?.AddressLookup"
                                      Icon="@Icons.Material.Filled.Search"
                                      IconOnly="true"
-                                     OnClickCallback="OpenAccountSearchDialogAsync" />
+                                     OnClickCallback="OpenAccountSearchDialogAsync"
+                                     DisableProcedureCall="true" />
 
                         <FieldButton Field="BasketDeliveryInfo.AccountActions?.EditAddress"
                                      Icon="@Icons.Material.Filled.Edit"
                                      IconOnly="true"
-                                     OnClickCallback="OpenEditDeliveryAccountDialogAsync" />
+                                     OnClickCallback="OpenEditDeliveryAccountDialogAsync"
+                                     DisableProcedureCall="true" />
 
                         <FieldButton Field="BasketDeliveryInfo.AccountActions?.DeliveryInstructions"
                                      Icon="@Icons.Material.Filled.EditLocation"
                                      IconOnly="true"
-                                     OnClickCallback="OpenDeliveryInstructionsAsync" />
+                                     OnClickCallback="OpenDeliveryInstructionsAsync"
+                                     DisableProcedureCall="true" />
 
                         <FieldButton Field="BasketDeliveryInfo.AccountActions?.SalesforceLink"
                                      Icon="@Icons.Material.Filled.Cloud"
-                                     IconOnly="true" />
+                                     IconOnly="true"
+                                     DisableProcedureCall="true" />
 
-                        <FieldButton Field="BasketDeliveryInfo.AccountActions?.ClickToCall"
-                                     Icon="@Icons.Material.Filled.Phone"
-                                     IconOnly="true" />
+
+                        <ClickToCallMenu ClickToCallField="BasketDeliveryInfo.AccountActions?.ClickToCall"
+                                         LandLine="@AccountLandLine"
+                                         Cellular="@AccountCellularPhone" />
 
                     </HeaderContent>
                     <BodyContent>
@@ -61,27 +66,45 @@
                 <HeaderContent>
                     <MudText Typo="Typo.subtitle1" Color="Color.Secondary">@BasketDeliveryInfo!.ContactSectionLabel</MudText>
                     <MudTooltip Text="Chercher client">
+
                         <MudIconButton Icon="@Icons.Material.Filled.Search"
                                        Size="Size.Small"
                                        OnClick="OpenContactSearchDialogAsync" />
                     </MudTooltip>
-                    <MudTooltip Text="Ajouter contact">
-                        <MudIconButton Icon="@Icons.Material.Filled.Add" Size="Size.Small"
-                                       OnClick="OpenAddDeliveryContactAsync" />
-                    </MudTooltip>
-                    <MudTooltip Text="Éditer contact">
-                        <MudIconButton Icon="@Icons.Material.Filled.Edit" Size="Size.Small"
-                                       OnClick="OpenEditDeliveryContactAsync" />
-                    </MudTooltip>
-                    <MudTooltip Text="Supprimer -Not Implemented">
-                        <MudIconButton Icon="@Icons.Material.Filled.DeleteForever" Size="Size.Small" />
-                    </MudTooltip>
-                    <MudTooltip Text="Salesforce? -Not Implemented">
-                        <MudIconButton Icon="@Icons.Material.Filled.Cloud" Size="Size.Small" />
-                    </MudTooltip>
-                    <MudTooltip Text="Call? -Not Implemented">
-                        <MudIconButton Icon="@Icons.Material.Filled.Phone" Size="Size.Small" />
-                    </MudTooltip>
+
+                    <FieldButton Field="BasketDeliveryInfo!.ContactActions?.AddContact"
+                                 Icon="@Icons.Material.Filled.Add"
+                                 IconOnly="true"
+                                 Size="Size.Small"
+                                 Class="mr-n1"
+                                 Style="margin-left: -6px !important;"
+                                 OnClickCallback="OpenAddDeliveryContactAsync"
+                                 DisableProcedureCall="true" />
+
+                    <FieldButton Field="BasketDeliveryInfo!.ContactActions?.EditContact"
+                                 Icon="@Icons.Material.Filled.Edit"
+                                 IconOnly="true"
+                                 Size="Size.Small"
+                                 Class="mr-n1"
+                                 OnClickCallback="OpenEditDeliveryContactAsync"
+                                 DisableProcedureCall="true" />
+
+                    <FieldButton Field="BasketDeliveryInfo!.ContactActions?.RemoveContact"
+                                 Icon="@Icons.Material.Filled.Delete"
+                                 IconOnly="true"
+                                 Size="Size.Small"
+                                 Color="Color.Error" />
+
+                    <FieldButton Field="BasketDeliveryInfo!.ContactActions?.SalesforceLink"
+                                 Icon="@Icons.Material.Filled.Cloud"
+                                 IconOnly="true"
+                                 Size="Size.Small"
+                                 DisableProcedureCall="true" />
+
+
+                    <ClickToCallMenu ClickToCallField="BasketDeliveryInfo.ContactActions?.ClickToCall"
+                                     LandLine="@ContactLandLine"
+                                     Cellular="@ContactCellularPhone" />
                 </HeaderContent>
                 <BodyContent>
                     <MudStack Justify="Justify.FlexStart"
@@ -126,6 +149,7 @@
                               FullWidth="true"
                               Margin="Margin.Dense"
                               ReadOnly="true"
+                              Class="outlined-generic-textfield"
                               Label="@BasketDeliveryInfo!.Note?.Name"
                               Value="BasketDeliveryInfo!.Note?.Value" />
 

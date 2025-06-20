@@ -21,7 +21,7 @@ public class NotificationEffects(IGeneralInfoRepository generalInfoRepository, I
             logger.LogDebug("Effect: Handling fetch notifications action");
             var notifications = await _generalInfoRepository.GetNotificationsAsync();
 
-            ShowBasketNotifications(toastService, dispatcher, notifications, action.State);
+            ShowBasketNotifications(toastService, dispatcher, notifications);
 
             dispatcher.Dispatch(new FetchNotificationsSuccessAction(notifications));
         }
@@ -32,7 +32,7 @@ public class NotificationEffects(IGeneralInfoRepository generalInfoRepository, I
         }
     }
 
-    private static void ShowBasketNotifications(IToastService toastService, IDispatcher dispatcher, List<BasketNotificationDto?>? notifications, NotificationsState? state = null)
+    private static void ShowBasketNotifications(IToastService toastService, IDispatcher dispatcher, List<BasketNotificationDto?>? notifications)
     {
         if (notifications is not null && notifications is { Count: > 0 })
         {
@@ -41,7 +41,7 @@ public class NotificationEffects(IGeneralInfoRepository generalInfoRepository, I
                 if (notification is not null)
                     toastService.ShowBasketNotification(notification,
                         sb => dispatcher.Dispatch(new DeleteNotificationAction(
-                            notification.ProcedureCall, state)));
+                            notification.ProcedureCall)));
             }
         }
     }
@@ -62,8 +62,7 @@ public class NotificationEffects(IGeneralInfoRepository generalInfoRepository, I
         }
         finally
         {
-            dispatcher.Dispatch(new FetchNotificationsAction(action.State));
+            dispatcher.Dispatch(new FetchNotificationsAction());
         }
     }
-
 }

@@ -2,36 +2,41 @@
 
 namespace MyOrder.Infrastructure.Repositories;
 
-public interface IBasketRessourcesRepository
+public interface IBasketResourcesRepository
 {
       //==============================//
-     //      Order ressources        //
+     //       Common resources       //
+    //==============================//
+    Task<List<BasketValueDto?>?> GetContactSalutationsAsync(CancellationToken cancellationToken = default);
+
+    //==============================//
+    //      Order resources         //
     //==============================//
     Task<List<BasketValueDto?>?> GetCustomerTagsAsync(CancellationToken cancellationToken = default);
     Task<List<BasketValueDto?>?> GetSalesOriginsAsync(CancellationToken cancellationToken = default);
     Task<List<BasketValueDto?>?> GetSalesPoolAsync(CancellationToken cancellationToken = default);
 
       //==============================//
-     //      Delivery ressources     //
+     //      Delivery resources      //
     //==============================//
     Task<List<BasketValueDto?>?> GetDeliveryCountriesAsync(CancellationToken cancellationToken = default);
     Task<List<BasketValueDto?>?> GetCarrierTypesAsync(CancellationToken cancellationToken = default);
 
-    //==============================//
-    //      Invoice ressources      //
+      //==============================//
+     //      Invoice resources       //
     //==============================//
     Task<List<BasketValueDto?>?> GetTaxGroupsAsync(CancellationToken cancellationToken = default);
     Task<List<BasketValueDto?>?> GetPaymentModesAsync(CancellationToken cancellationToken = default);
 
       //==============================//
-     //      Prices ressources       //
+     //      Prices resources        //
     //==============================//
     Task<List<BasketValueDto?>?> GetCouponsAsync(CancellationToken cancellationToken = default);
     Task<List<BasketValueDto?>?> GetWarrantyCostOptionsAsync(CancellationToken cancellationToken = default);
     Task<List<BasketValueDto?>?> GetShippingCostOptionsAsync(CancellationToken cancellationToken = default);
 
       //==============================//
-     //      Lines ressources        //
+     //      Lines resources         //
     //==============================//
     Task<List<BasketValueDto?>?> GetlineUpdateReasonsAsync(CancellationToken cancellationToken = default);
     Task<List<BasketValueDto?>?> GetlogisticFlowsAsync(CancellationToken cancellationToken = default);

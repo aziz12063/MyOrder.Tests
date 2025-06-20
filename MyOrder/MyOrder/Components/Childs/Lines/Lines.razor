@@ -4,7 +4,7 @@
 @using static MudBlazor.CategoryTypes
 @inherits FluxorComponentBase<LinesState, FetchLinesAction>
 
-@if (_isLoading)
+@if (!Initialized)
 {
     <LinesLoadingSkeleton />
     return;
@@ -21,11 +21,11 @@
                          Elevation="4"
                          Hover="true"
                          Class="pt-1"
-                         Items="@BasketOrderLinesDto!.lines"
+                         Items="@BasketOrderLinesDto!.Lines"
                          SortMode="@SortMode.None"
                          Hideable="true"
                          FixedHeader="true"
-                         Height="@(BasketOrderLinesDto?.lines is {Count: > 7} ? "400px" : "")"
+                         Height="@(BasketOrderLinesDto?.Lines is {Count: > 7} ? "400px" : "")"
                          EditMode="@DataGridEditMode.Cell"
                          MultiSelection="true"
                          SelectOnRowClick="false"
@@ -118,6 +118,21 @@
                                     Title="Ligne"
                                     Editable="false" />
 
+                    <TemplateColumn Editable="false" CellClass="px-2 mx-0" CellStyle="justify-items: center">
+                        <CellTemplate>
+                            <MudStack Row="true" Spacing="0">
+                                @foreach (var tag in context?.Item?.LineTags)
+                                {
+                                    <MudTooltip Text="@tag.Description" Inline>
+                                        <MudIcon Icon="@LineTagIconHelper(tag.Value)"
+                                                 Size="Size.Small"
+                                                 Style="@($"color: {LineTagColorHelper(tag.Value)} !important; vertical-align: middle;")" />
+                                    </MudTooltip>
+                                }
+                            </MudStack>
+                        </CellTemplate>
+                    </TemplateColumn>
+
                     <TemplateColumn T="BasketLineDto"
                                     Title="Code Article"
                                     Editable="false"
@@ -184,7 +199,7 @@
                                     Title="Tarification"
                                     Editable="false" />
 
-                    <PropertyColumn Property="x => x.LineAmount == null ? 0 :  x.LineAmount.Value"
+                    <PropertyColumn Property="x => x.LineAmount == null ? 0 : x.LineAmount.Value"
                                     Title="Montant HT"
                                     Editable="IsLineAmountEditable"
                                     Format="C"

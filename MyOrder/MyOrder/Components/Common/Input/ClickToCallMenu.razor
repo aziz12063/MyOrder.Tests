@@ -1,0 +1,56 @@
+﻿@using Fluxor
+@using MyOrder.Store.ProcedureCallUseCase
+@using System.Collections.Immutable
+@if (FieldUtility.IsHidden(ClickToCallField))
+    return;
+
+<MudTooltip Text="@ClickToCallField!.Description">
+    <MudMenu Dense="true" Disabled="FieldUtility.IsReadOnly(ClickToCallField)">
+        <ActivatorContent>
+            <MudIconButton Icon="@Icons.Material.Filled.Phone"
+                           Size="Size.Small"
+                           Style="@($"color: {Colors.DeepOrange.Lighten1}")" />
+        </ActivatorContent>
+        <ChildContent>
+
+            <MudMenuItem Disabled="string.IsNullOrWhiteSpace(LandLine)"
+                         OnClick="() => OnContactClick(LandLine!)"
+                         Icon="@Icons.Material.Filled.Phone"
+                         IconColor="Color.Success">
+                <MudText Typo="Typo.body1">@FieldUtility.NullOrWhiteSpaceHelperWithDash(LandLine)</MudText>
+            </MudMenuItem>
+
+            <MudMenuItem Disabled="string.IsNullOrWhiteSpace(Cellular)"
+                         OnClick="() => OnContactClick(Cellular!)"
+                         Icon="@Icons.Material.Filled.PhoneIphone"
+                         IconColor="Color.Dark">
+                <MudText Typo="Typo.body1">@FieldUtility.NullOrWhiteSpaceHelperWithDash(Cellular)</MudText>
+            </MudMenuItem>
+
+        </ChildContent>
+    </MudMenu>
+</MudTooltip>
+@code {
+    [Inject]
+    private IDispatcher Dispatcher { get; set; } = default!;
+    [Parameter, EditorRequired]
+    public Field<string?>? ClickToCallField { get; set; }
+    [Parameter, EditorRequired]
+    public string? LandLine { get; set; }
+    [Parameter, EditorRequired]
+    public string? Cellular { get; set; }
+
+    private void OnContactClick(string contactToCall)
+    {
+        if (ClickToCallField!.ProcedureCall is { Count: > 1 })
+        {
+            var preparedProcedureCall = ClickToCallField.ProcedureCall.ToList();
+            preparedProcedureCall[^1] = contactToCall;
+
+            var procedureCallList = preparedProcedureCall.ToImmutableList();
+            Dispatcher.Dispatch(new PostProcedureCallAction(procedureCallList!));
+        }
+        else
+            throw new InvalidOperationException("Malformatted procedure call for click to call.");
+    }
+}

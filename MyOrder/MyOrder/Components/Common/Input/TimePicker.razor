@@ -28,18 +28,16 @@
     // Mimic DatePicker logic, but for TimeSpan
     private void OnBindTimeAfter(TimeSpan? newValue)
     {
-        // 1) No change if both are null
+        // No change if both are null
         if (ValueProperty is null && newValue is null)
             return;
 
-        // 2) Otherwise only fire if they truly differ
+        // Otherwise only fire if they truly differ
         if (ValueProperty is null
             || newValue is null
             || ValueProperty.Value != newValue.Value)
         {
-            ValueProperty = newValue;
-            // Calls the same base logic your date picker was using
-            base.OnBindValueAfter();
+            ValueChangedHandler(newValue);
         }
     }
 }

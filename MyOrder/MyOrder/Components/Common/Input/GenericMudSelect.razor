@@ -15,13 +15,13 @@
                    Dense="true"
                    Variant="@Variant"
                    FullWidth="true"
-                   AnchorOrigin="Origin.BottomCenter"
                    Required="Required"
-                   Error="Required"
+                   Error="Required || !string.IsNullOrWhiteSpace(Field!.Error)"
+                   ErrorText="@Field!.Error"
                    ReadOnly="InternalReadOnly"
                    Disabled="InternalReadOnly"
                    Value="ValueProperty"
-                   ValueChanged="(Action<T>)OnValueChanged"
+                   ValueChanged="OnValueChanged"
                    OnClose="DropDownClosedHandler"
                    OnOpen="DropDownOpenedHandler">
             @if (Items is not null)

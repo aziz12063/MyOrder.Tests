@@ -8,7 +8,7 @@
         <MudText Typo="Typo.h5">Chercher contact</MudText>
     </TitleContent>
     <DialogContent>
-        @if (State.Value.IsLoading)
+        @if (!Initialized)
         {
             <HeaderElementLoadingSkeleton />
             return;

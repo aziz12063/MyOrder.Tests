@@ -1,8 +1,8 @@
 ﻿@using MyOrder.Store.InvoiceInfoUseCase
 @inherits MyOrder.Components.Common.FluxorComponentBase<InvoiceInfoState, FetchInvoiceInfoAction>
 
-<SectionPaper Title="@BasketInvoiceInfo?.PanelLabel" IsLoading="_isLoading">
-    @if (_isLoading)
+<SectionPaper Title="@BasketInvoiceInfo?.PanelLabel" IsLoading="!Initialized">
+    @if (!Initialized)
     {
         <HeaderElementLoadingSkeleton />
         return;
@@ -14,17 +14,22 @@
                 <CustomHeaderCard>
                     <HeaderContent>
                         <MudText Typo="Typo.subtitle1" Color="Color.Secondary">@BasketInvoiceInfo!.AccountSectionLabel</MudText>
-                        <MudTooltip Text="Chercher client">
-                            <MudIconButton Icon="@Icons.Material.Filled.Search"
-                                           Size="Size.Small"
-                                           OnClick="OpenAccountSearchDialogAsync" />
-                        </MudTooltip>
-                        <MudTooltip Text="Salesforce? -Not Implemented">
-                            <MudIconButton Icon="@Icons.Material.Filled.Cloud" Size="Size.Small" />
-                        </MudTooltip>
-                        <MudTooltip Text="Call? -Not Implemented">
-                            <MudIconButton Icon="@Icons.Material.Filled.Phone" Size="Size.Small" />
-                        </MudTooltip>
+
+                        <FieldButton Field="BasketInvoiceInfo?.AccountActions?.AddressLookup"
+                                     Icon="@Icons.Material.Filled.Search"
+                                     IconOnly="true"
+                                     OnClickCallback="OpenAccountSearchDialogAsync"
+                                     DisableProcedureCall="true" />
+
+                        <FieldButton Field="BasketInvoiceInfo?.AccountActions?.SalesforceLink"
+                                     Icon="@Icons.Material.Filled.Cloud"
+                                     IconOnly="true"
+                                     DisableProcedureCall="true" />
+
+                        <ClickToCallMenu ClickToCallField="BasketInvoiceInfo.AccountActions?.ClickToCall"
+                                         LandLine="@AccountLandLine"
+                                         Cellular="@AccountCellularPhone" />
+
                     </HeaderContent>
                     <BodyContent>
                         <MudStack Justify="Justify.FlexStart"
@@ -109,6 +114,9 @@
                         <GenericTextField Field="BasketInvoiceInfo!.PublicEntityExecutingService" />
                         <!--Legal Commitment-->
                         <GenericTextField Field="BasketInvoiceInfo!.PublicEntityLegalCommitment" />
+
+                        <GenericTextField Field="BasketInvoiceInfo.CostCenter" />
+
                     </MudStack>
                 </MudCardContent>
             </MudCard>
@@ -122,8 +130,9 @@
                               FullWidth="true"
                               Margin="Margin.Dense"
                               ReadOnly="true"
+                              Class="outlined-generic-textfield"
                               Label="@BasketInvoiceInfo!.Note?.Name"
-                              Value="@BasketInvoiceInfo!.Note?.Value"/>
+                              Value="@BasketInvoiceInfo!.Note?.Value" />
             </div>
         </MudStack>
     </FetchActionTypeCascadingValue>

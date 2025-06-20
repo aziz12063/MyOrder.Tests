@@ -6,7 +6,8 @@
     <MudTooltip RootStyle="width:100%"
                 Text="@TooltipText"
                 Placement="Placement.Top">
-        <MudCheckBox Size="Size"
+        <MudCheckBox T="bool?"
+                     Size="Size"
                      Dense="Dense"
                      Style="display:inline-block;"
                      LabelPlacement="Placement.End"
@@ -14,8 +15,8 @@
                      Error="Required"
                      ReadOnly="InternalReadOnly"
                      Disabled="InternalReadOnly"
-                     @bind-Value="ValueProperty"
-                     @bind-Value:after="OnBindValueAfter">
+                     Value="ValueProperty"
+                     ValueChanged="ValueChangedHandler">
             <ChildContent>
                 @if (!HideLabel)
                 {
@@ -34,13 +35,4 @@
     public Size Size { get; set; } = Size.Small;
     [Parameter]
     public bool Dense { get; set; } = true;
-
-    protected override void OnParametersSet()
-    {
-        base.OnParametersSet();
-        // if (ValueProperty is null)
-        // {
-        //     ValueProperty = false;
-        // }
-    }
 }

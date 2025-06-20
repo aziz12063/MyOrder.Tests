@@ -1,48 +1,50 @@
 ﻿using MyOrder.Shared.Dtos.SharedComponents;
+using System.Collections.Immutable;
 
 namespace MyOrder.Shared.Dtos.Delivery;
+public record DeliveryAccountDraft(
+    // ====================================================================
+    string? AccountSectionLabel,
 
-public class DeliveryAccountDraft
-{
+    Field<string?>? AccountId,
+    Field<string?>? AccountType,
+    Field<string?>? Name,
+    Field<string?>? Recipient,
 
     // ====================================================================
-    public string? AccountSectionLabel { get; set; }
+    string? AddressSectionLabel,
 
-    public Field<string?>? AccountId { get; set; }
-    public Field<string?>? AccountType { get; set; }
-    public Field<string?>? Name { get; set; }
-    public Field<string?>? Recipient { get; set; }
-
-    // ====================================================================
-    public string? AddressSectionLabel { get; set; }
-
-    public Field<string?>? Building { get; set; }
-    public Field<string?>? Street { get; set; }
-    public Field<string?>? Locality { get; set; }
-    public Field<string?>? Zipcode { get; set; }
-    public Field<string?>? City { get; set; }
-    public Field<BasketValueDto?>? Country { get; set; }
+    Field<string?>? Building,
+    Field<string?>? Street,
+    Field<string?>? Locality,
+    Field<string?>? Zipcode,
+    Field<string?>? City,
+    Field<BasketValueDto?>? Country,
 
     // ====================================================================
     // Instruction de livraison
 
-    public Field<bool?>? Lift { get; set; }
-    public Field<string?>? Floor { get; set; }
-    public Field<string?>? DigiCode { get; set; }
-    public Field<BasketValueDto?>? CarrierType { get; set; }
-    public Field<bool?>? AppointmentRequired { get; set; }
-    public Field<string?>? DeliveryNote { get; set; }
+    Field<bool?>? Lift,
+    Field<string?>? Floor,
+    Field<string?>? DigiCode,
+    Field<BasketValueDto?>? CarrierType,
+    Field<bool?>? AppointmentRequired,
+    Field<string?>? AppointmentEmail,
+    Field<string?>? AppointmentEmailDefaultValue,
+    Field<string?>? AppointmentDirectPhone,
+    Field<string?>? AppointmentDirectPhoneDefaultValue,
+    Field<string?>? DeliveryNote,
 
     // ====================================================================
     // Calendrier de livraison
-    public List<WeekDay?>? WeekDays { get; set; }
+    ImmutableList<WeekDay?>? WeekDays,
 
     // ====================================================================
     // Menus
-    public Field<string?>? StatusMessage { get; set; }
-    public DeliveryAccountDraftActions? Actions { get; set; }
+    Field<string?>? StatusMessage,
+    DeliveryAccountDraftActions? Actions,
 
     // ====================================================================
     // Lookup part
-    public List<Address?>? AddressLookupResults { get; set; }
-}
+    ImmutableList<Address?>? AddressLookupResults
+    );

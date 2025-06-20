@@ -52,8 +52,7 @@
         // If either value is null or the dates are different, proceed with the value-changed logic.
         if (ValueProperty is null || newValue is null || ValueProperty.Value.Date != newValue.Value.Date)
         {
-            ValueProperty = newValue;
-            base.OnBindValueAfter();
+            ValueChangedHandler(newValue);
         }
     }
 

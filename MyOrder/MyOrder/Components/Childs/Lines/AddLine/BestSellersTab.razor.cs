@@ -13,22 +13,17 @@ public partial class BestSellersTab : FluxorComponentBase<BestSellersState, Fetc
 {
     [Inject]
     public IClipboardService ClipboardService { get; set; }
-    private List<BestSellerItemDto?>? BestSellers { get; set; }
+    private List<BestSellerItemDto?>? BestSellers => State.Value.BestSellers;
     private bool _showBlocked = true;
 
     [Parameter, EditorRequired]
     public EventCallback<string> ItemClicked { get; set; }
 
-    protected override FetchBestSellersAction CreateFetchAction(BestSellersState state) =>
-        new(state);
-
-    protected override void CacheNewFields()
-    {
-        BestSellers = State.Value.BestSellers;
-    }
+    protected override FetchBestSellersAction CreateFetchAction() =>
+        new();
 
     private void FilterItemsCallback(string filterString) =>
-        Dispatcher.Dispatch(new FetchBestSellersAction(State.Value, filterString));
+        Dispatcher.Dispatch(new FetchBestSellersAction(filterString));
 
     private void ToggleBlockedCallback(bool applyFilter) =>
         _showBlocked = !applyFilter;

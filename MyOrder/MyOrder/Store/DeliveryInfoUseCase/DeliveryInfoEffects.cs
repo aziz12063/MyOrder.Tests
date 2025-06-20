@@ -124,7 +124,7 @@ public class DeliveryInfoEffects(IDeliveryInfoRepository deliveryInfoRepository,
         {
             var isFiltered = !string.IsNullOrEmpty(action.Filter);
             _logger.LogInformation("Fetching delivery contacts.");
-            var contactList = await _deliveryInfoRepo.GetDeliverToContactsAsync(action.Filter);
+            var contactList = await _deliveryInfoRepo.GetDeliverToContactsAsync(action.Filter, action.Search);
             dispatcher.Dispatch(new FetchDeliveryContactsSuccessAction(contactList, isFiltered));
         }
         catch (Exception ex)
@@ -147,6 +147,22 @@ public class DeliveryInfoEffects(IDeliveryInfoRepository deliveryInfoRepository,
         {
             _logger.LogError(ex, "Error fetching new delivery contact data");
             dispatcher.Dispatch(new FetchNewDeliveryContactFailureAction(ex.Message));
+        }
+    }
+
+    [EffectMethod]
+    public async Task HandleResetNewDeliveryContactAction(ResetNewDeliveryContactAction action, IDispatcher dispatcher)
+    {
+        try
+        {
+            _logger.LogInformation("Resetting new delivery contact.");
+            var response = await _deliveryInfoRepo.ResetNewDeliveryContactAsync()
+                ?? throw new Exception("Error resetting new delivery contact");
+            _stateResolver.DispatchRefreshCalls(dispatcher, response.RefreshCalls);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error resetting new delivery contact data");
         }
     }
 }

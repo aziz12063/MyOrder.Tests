@@ -1,23 +1,16 @@
 ﻿using Fluxor;
+using MyOrder.Generator;
 using MyOrder.Shared.Dtos;
 using MyOrder.Store.Base;
 
 namespace MyOrder.Store.OrderInfoUseCase;
 
 [FeatureState]
-public class OrderInfoState : StateBase
+[GenerateFieldReducers]
+public record OrderInfoState(
+    BasketOrderInfoDto BasketOrderInfo,
+    List<BasketValueDto?> WebOrigins) : StateBase
 {
-    public BasketOrderInfoDto? BasketOrderInfo { get; }
-
-    public List<BasketValueDto?>? WebOrigins { get; }
-
-    public OrderInfoState() : base(true) { }
-
-    public OrderInfoState(BasketOrderInfoDto? basketOrderInfo, List<BasketValueDto?>? webOrigins) : base(false)
-    {
-        BasketOrderInfo = basketOrderInfo;
-        WebOrigins = webOrigins;
-    }
-
+    public OrderInfoState() : this(null!, []) { }
 }
 

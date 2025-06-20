@@ -9,19 +9,12 @@ namespace MyOrder.Components.Childs.Header.Delivery;
 public partial class DeliveryInstructionsDialog : FluxorComponentBase<NewDeliveryAccountState, FetchNewDeliveryAccountAction>
 {
     [CascadingParameter]
-    private IMudDialogInstance MudDialog { get; set; }
+    private IMudDialogInstance MudDialog { get; set; } = null!;
     [Parameter]
     public string? AccountId { get; set; }
-    private DeliveryAccountDraft? DeliveryAccountDraft { get; set; }
-    private bool _isLoading = true;
+    private DeliveryAccountDraft DeliveryAccountDraft => State.Value.DeliveryAccountDraft;
 
-    protected override FetchNewDeliveryAccountAction CreateFetchAction(NewDeliveryAccountState state) =>
-       string.IsNullOrEmpty(AccountId) ? new(state) : new(state, AccountId);
+    protected override FetchNewDeliveryAccountAction CreateFetchAction() =>
+       string.IsNullOrEmpty(AccountId) ? new() : new(AccountId);
 
-    protected override void CacheNewFields()
-    {
-        DeliveryAccountDraft = State?.Value.DeliveryAccountDraft
-            ?? throw new ArgumentNullException("DeliveryAccountDraft is null in NewDeliveryAccountState");
-        _isLoading = State.Value.IsLoading;
-    }
 }

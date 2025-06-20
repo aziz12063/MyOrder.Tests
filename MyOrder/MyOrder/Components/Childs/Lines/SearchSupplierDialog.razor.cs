@@ -6,21 +6,14 @@ namespace MyOrder.Components.Childs.Lines;
 
 public partial class SearchSupplierDialog : FluxorComponentBase<SuppliersState, FetchSuppliersAction>
 {
-    public List<Supplier?>? Suppliers { get; set; }
-    private bool _isLoading = true;
+    public List<Supplier?>? Suppliers => State.Value.Suppliers;
     private string SearchText { get; set; } = string.Empty;
 
-    protected override FetchSuppliersAction CreateFetchAction(SuppliersState state) =>
-        new(state, Search: true, Filter: null);
-
-    protected override void CacheNewFields()
-    {
-        Suppliers = State?.Value.Suppliers ?? throw new ArgumentNullException("Suppliers is null in SuppliersState");
-        _isLoading = State.Value.IsLoading;
-    }
+    protected override FetchSuppliersAction CreateFetchAction() =>
+        new(Search: true, Filter: null);
 
     private void OnSearchTextChanged()
     {
-        Dispatcher.Dispatch(new FetchSuppliersAction(State.Value, Search: true, Filter: SearchText));
+        Dispatcher.Dispatch(new FetchSuppliersAction(Search: true, Filter: SearchText));
     }
 }

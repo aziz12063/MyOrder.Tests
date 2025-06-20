@@ -10,7 +10,7 @@ variables:
   publishDirectory: '$(Build.ArtifactStagingDirectory)\publish'
   sitePhysicalPath: '\\rro-qviis10\WEB\MyOrderClient'                         # Path du ancien serveur
   sitePhysicalPathNewServer: '\\aliasieeq\WEB\MyOrderClient'                  # Path du nouveau serveur
-  CurrentSemVer: '0.9'
+  CurrentSemVer: '1.0'
 
 name: '$(CurrentSemVer).$(Build.BuildId)-alpha'
 

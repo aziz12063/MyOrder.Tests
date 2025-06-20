@@ -2,9 +2,8 @@
 
 namespace MyOrder.Shared.Dtos.GeneralInformation;
 
-public class OpenBasketActions : BasketActionsBase
-{
-    public Field<NewBasketAction?>? NewBasket { get; set; }
-    public Field<string?>? OpenBasket { get; set; }
-    public Field<string?>? CloneBasket { get; set; }
-}
+public record OpenBasketActions(
+    Field<NewBasketAction?>? NewBasket,
+    Field<string?>? OpenBasket,
+    Field<string?>? CloneBasket,
+    string? LabelMenu) : BasketActionsBase(LabelMenu);

@@ -4,10 +4,9 @@ using MyOrder.Store.TradeInfoUseCase;
 using MyOrder.Utils;
 
 namespace MyOrder.Components.Childs.Header;
+
 public partial class TradeInfo : FluxorComponentBase<TradeInfoState, FetchTradeInfoAction>
 {
-
-
     private const string VipIcon = "images/opportunity_120.png";
     private const string SpecialPrepIcon = "images/fulfillment_order_120.png";
     private const string ExportIcon = "images/custom20_120.png";
@@ -15,24 +14,13 @@ public partial class TradeInfo : FluxorComponentBase<TradeInfoState, FetchTradeI
     private const string CompleteDeliveryIcon = "images/checkout_120.png";
     private const string ContractGroupWarningIcon = "images/custom17_60.png";
 
-    private BasketTradeInfoDto? BasketTradeInfo { get; set; }
-    private List<BasketTurnoverLineDto?>? Turnover { get; set; }
-    private BasketContractInfoDto? Contract { get; set; }
-    private string? DiscountDetails { get; set; }
-    private bool isLoading = true;
+    private BasketTradeInfoDto BasketTradeInfo => State.Value.BasketTradeInfo;
+    private List<BasketTurnoverLineDto?>? Turnover => BasketTradeInfo?.Turnover?.Value;
+    private BasketContractInfoDto? Contract => BasketTradeInfo?.Contract;
+    private string? DiscountDetails => FieldUtility.DisplayListNoSpace(Contract?.DiscountList?.Value);
 
-
-    protected override FetchTradeInfoAction CreateFetchAction(TradeInfoState state)
-        => new(state);
-
-    protected override void CacheNewFields()
-    {
-        BasketTradeInfo = State.Value.BasketTradeInfo ?? throw new NullReferenceException("Unexpected null for BasketOrderInfo object.");
-        Turnover = BasketTradeInfo?.Turnover?.Value;
-        Contract = BasketTradeInfo?.Contract;
-        DiscountDetails = FieldUtility.DisplayListNoSpace(Contract?.DiscountList?.Value);
-        isLoading = State.Value.IsLoading;
-    }
+    protected override FetchTradeInfoAction CreateFetchAction()
+        => new();
 
     private static string? CustomerTagIconHelper(string? value) => value switch
     {
@@ -55,10 +43,4 @@ public partial class TradeInfo : FluxorComponentBase<TradeInfoState, FetchTradeI
         "contractGroupWarning" => "background-color: #FDD835;",  // Yellow600 (warning)
         _ => "background-color: darkkhaki;" // fallback
     };
-
-    private string ContractDescription
-    {
-        get => $"{Contract?.ContractId?.Name} {Contract?.ContractType?.Value}";
-    }
-
 }

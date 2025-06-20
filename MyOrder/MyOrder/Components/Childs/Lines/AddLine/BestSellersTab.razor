@@ -2,7 +2,7 @@
 @using MyOrder.Shared.Dtos.BasketItems
 @inherits FluxorComponentBase<BestSellersState, FetchBestSellersAction>
 
-@if (State.Value.IsLoading)
+@if (!Initialized)
 {
     <HeaderElementLoadingSkeleton />
     return;

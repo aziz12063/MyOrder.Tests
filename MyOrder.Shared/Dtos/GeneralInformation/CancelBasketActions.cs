@@ -2,9 +2,8 @@
 
 namespace MyOrder.Shared.Dtos.GeneralInformation;
 
-public class CancelBasketActions : BasketActionsBase
-{
-    public Field<string?>? CancelBasket { get; set; }
-    public Field<string?>? CancelOrderAndPayment { get; set; }
-    public Field<string?>? CancelOrder { get; set; }
-}
+public record CancelBasketActions(
+    Field<string?>? CancelBasket,
+    Field<string?>? CancelOrderAndPayment,
+    Field<string?>? CancelOrder,
+    string? MenuLabel) : BasketActionsBase(MenuLabel);

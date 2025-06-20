@@ -23,16 +23,15 @@ public class OrderInfoRepository(IOrderInfoApiClient orderInfoApiClient,
             cancellationToken);
     }
 
-    public Task<List<ContactDto?>?> GetOrderByContactsAsync(string? filter = null, CancellationToken cancellationToken = default)
+    public Task<List<ContactDto?>?> GetOrderByContactsAsync(string? filter = null, bool? search = null, CancellationToken cancellationToken = default)
     {
         logger.LogDebug("Fetching order by contacts for {BasketId} from repository", BasketId);
         var operationDescription = $"GetOrderByContactsAsync for basketId {BasketId}";
         return ExecuteAsync(
-            async (token) => await _orderInfoApiClient.GetOrderByContactsAsync(CompanyId, BasketId, filter, token),
+            async (token) => await _orderInfoApiClient.GetOrderByContactsAsync(CompanyId, BasketId, filter, search, token),
             operationDescription,
             cancellationToken);
     }
-
 
     public async Task<List<BasketValueDto?>?> GetWebOriginsAsync(CancellationToken cancellationToken = default)
     {

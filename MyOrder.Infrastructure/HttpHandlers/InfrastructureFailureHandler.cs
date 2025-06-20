@@ -11,7 +11,7 @@ public class InfrastructureFailureHandler(IEventAggregator eventAggregator, ILog
 {
     private readonly IEventAggregator _eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
     private readonly ILogger<InfrastructureFailureHandler> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-   
+
     protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
     {
         try
@@ -49,6 +49,10 @@ public class InfrastructureFailureHandler(IEventAggregator eventAggregator, ILog
             {
                 Content = new StringContent("Service is currently unavailable. Please try again later.")
             };
+        }
+        catch (TaskCanceledException)
+        {
+            throw; // Rethrow TaskCanceledException to be handled by the caller, as it may indicate a cancellation request
         }
         catch (Exception ex)
         {

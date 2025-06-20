@@ -1,22 +1,14 @@
 ﻿using Fluxor;
+using MyOrder.Generator;
 using MyOrder.Shared.Dtos.Invoice;
 using MyOrder.Store.Base;
 
 namespace MyOrder.Store.InvoiceInfoUseCase;
 
 [FeatureState]
-public class PaymentAuthorizationState : StateBase
+[GenerateFieldReducers]
+public record PaymentAuthorizationState(
+    PaymentAuthorizationDto PaymentAuthorization) : StateBase
 {
-    public PaymentAuthorizationDto PaymentAuthorization { get; set; } = null!;
-    public string ErrorMessage { get; set; } = null!;
-
-    public PaymentAuthorizationState() : base(true) { }
-
-    public PaymentAuthorizationState(
-        PaymentAuthorizationDto paymentAuthorization,
-        string errorMessage) : base(false)
-    {
-        PaymentAuthorization = paymentAuthorization;
-        ErrorMessage = errorMessage;
-    }
+    public PaymentAuthorizationState() : this((PaymentAuthorizationDto)null!) { }
 }

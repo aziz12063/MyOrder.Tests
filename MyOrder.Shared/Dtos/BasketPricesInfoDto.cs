@@ -1,35 +1,62 @@
-﻿using MyOrder.Shared.Dtos.SharedComponents;
+﻿using MyOrder.Generator;
+using MyOrder.Shared.Dtos.SharedComponents;
 
 namespace MyOrder.Shared.Dtos;
-public class BasketPricesInfoDto
-{
-    public string? PanelLabel { get; set; }
+public record BasketPricesInfoDto(
+    string? PanelLabel,
 
     // Column 1
-    public Field<BasketValueDto?>? Coupon { get; set; }
-    public Field<decimal?>? FreeShippingAmountThreshold { get; set; }
-    public Field<decimal?>? GiftAmountThreshold { get; set; }
-    public Field<string?>? ProductsInfo { get; set; }
+    Field<BasketValueDto?>? Coupon,
+
+    [property: DisplayOnlyField]
+    Field<decimal?>? FreeShippingAmountThreshold,
+
+    [property: DisplayOnlyField]
+    Field<decimal?>? GiftAmountThreshold,
+
+    [property: DisplayOnlyField]
+    Field<string?>? ProductsInfo,
 
     // Column 2
-    public Field<decimal?>? ProductsNetAmount { get; set; }
-    public Field<BasketValueDto?>? WarrantyCostOption { get; set; }
-    public Field<decimal?>? WarrantyCostAmount { get; set; }
-    public Field<BasketValueDto?>? ShippingCostOption { get; set; }
-    public Field<decimal?>? ShippingCostAmount { get; set; }
-    public Field<string?>? LogisticInfo { get; set; }
+    [property: DisplayOnlyField]
+    Field<decimal?>? ProductsNetAmount,
+
+    Field<BasketValueDto?>? WarrantyCostOption,
+    Field<decimal?>? WarrantyCostAmount,
+    Field<BasketValueDto?>? ShippingCostOption,
+    Field<decimal?>? ShippingCostAmount,
+
+    [property: DisplayOnlyField]
+    Field<string?>? LogisticInfo,
 
     // Column 3
-    public Field<decimal?>? TotalNetAmount { get; set; }
-    public Field<decimal?>? VatAmount { get; set; }
-    public Field<decimal?>? TotalGrossAmount { get; set; }
-    public Field<string?>? DeliveryDates { get; set; }
+    [property: DisplayOnlyField]
+    Field<decimal?>? TotalNetAmount,
 
-    // Column 4
-    public Field<int?>? OrderDiscountRate { get; set; } 
-    public Field<bool?>? OrderLastColumnDiscount { get; set; } 
-    public Field<decimal?>? DiscountAmount { get; set; } 
-    public Field<decimal?>? AdditionalSalesAmount { get; set; } 
-    public Field<decimal?>? TotalWeight { get; set; } 
-    public Field<decimal?>? TotalVolume { get; set; }
-}
+    [property: DisplayOnlyField]
+    Field<decimal?>? VatAmount,
+
+    [property: DisplayOnlyField]
+    Field<decimal?>? TotalGrossAmount,
+
+    [property: DisplayOnlyField]
+    Field<string?>? DeliveryDates,
+
+        // Column 4
+    [property: DisplayOnlyField]
+    Field<int?>? OrderDiscountRate,
+
+    [property: DisplayOnlyField]
+    Field<bool?>? OrderLastColumnDiscount,
+
+    [property: DisplayOnlyField]
+    Field<decimal?>? DiscountAmount,
+
+    [property: DisplayOnlyField]
+    Field<decimal?>? AdditionalSalesAmount,
+
+    [property: DisplayOnlyField]
+    Field<decimal?>? TotalWeight,
+
+    [property: DisplayOnlyField]
+    Field<decimal?>? TotalVolume);

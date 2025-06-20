@@ -11,22 +11,16 @@ public partial class SearchItemsTab : FluxorComponentBase<SearchItemsState, Fetc
 {
     [Inject]
     public IClipboardService ClipboardService { get; set; }
-    private List<BasketItemDto?>? BasketItems { get; set; }
+    private List<BasketItemDto?>? BasketItems => State.Value.SearchResults;
     private bool _showBlocked = true;
 
     [Parameter, EditorRequired]
     public EventCallback<string> ItemClicked { get; set; }
 
-    protected override FetchSearchItemsAction CreateFetchAction(SearchItemsState state) =>
-   new(state);
-
-    protected override void CacheNewFields()
-    {
-        BasketItems = State.Value.BasketItems;
-    }
+    protected override FetchSearchItemsAction CreateFetchAction() => new();
 
     private void FilterItemsCallback(string filterString) =>
-        Dispatcher.Dispatch(new FetchSearchItemsAction(State.Value, filterString));
+        Dispatcher.Dispatch(new FetchSearchItemsAction(filterString));
 
     private void ToggleBlockedCallback(bool applyFilter) =>
         _showBlocked = !applyFilter;

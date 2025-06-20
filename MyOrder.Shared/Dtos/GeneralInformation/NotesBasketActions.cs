@@ -2,8 +2,7 @@
 
 namespace MyOrder.Shared.Dtos.GeneralInformation;
 
-public class NotesBasketActions : BasketActionsBase
-{
-    public Field<string?>? OrderNote { get; set; }
-    public Field<string?>? Attachments { get; set; }
-}
+public record NotesBasketActions(
+    Field<string?>? OrderNote,
+    Field<string?>? Attachments,
+    string? MenuLabel) : BasketActionsBase(MenuLabel);

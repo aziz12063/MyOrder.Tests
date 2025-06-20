@@ -1,4 +1,5 @@
 ﻿using Fluxor;
+using MyOrder.Store;
 using MyOrder.Store.Base;
 using MyOrder.Store.DeliveryInfoUseCase;
 using MyOrder.Store.GeneralInfoUseCase;
@@ -9,6 +10,7 @@ using MyOrder.Store.NotificationsUseCase;
 using MyOrder.Store.OrderInfoUseCase;
 using MyOrder.Store.PricesInfoUseCase;
 using MyOrder.Store.TradeInfoUseCase;
+using System.Linq.Expressions;
 using System.Reflection;
 
 namespace MyOrder.Services;
@@ -23,6 +25,7 @@ public class StateResolver : IStateResolver
     private const string DeliveryAccounts = "deliverToAccounts";
     private const string NewDeliveryAccount = "newDeliverToAccount";
     private const string DeliveryContacts = "deliverToContacts";
+    private const string NewDeliveryContact = "newDeliverToContact";
     private const string InvoiceInfo = "invoiceInfo";
     private const string InvoiceAccounts = "invoiceToAccounts";
     private const string TradeInfo = "tradeInfo";
@@ -39,6 +42,9 @@ public class StateResolver : IStateResolver
         { typeof(FetchOrderInfoAction), OrderInfo },
         { typeof(FetchDeliveryInfoAction), DeliveryInfo },
         { typeof(FetchNewDeliveryAccountAction), NewDeliveryAccount },
+        { typeof(FetchDeliveryAccountsAction), DeliveryAccounts },
+        { typeof(FetchDeliveryContactsAction), DeliveryContacts },
+        { typeof(FetchNewDeliveryContactAction), NewDeliveryContact },
         { typeof(FetchInvoiceInfoAction), InvoiceInfo },
         { typeof(FetchInvoiceAccountsAction), InvoiceAccounts },
         { typeof(FetchTradeInfoAction), TradeInfo },
@@ -51,13 +57,14 @@ public class StateResolver : IStateResolver
 
     private readonly IServiceProvider _serviceProvider;
     private readonly ILogger<StateResolver> _logger;
-    private readonly Dictionary<string, List<Func<IDispatcher, StateBase>>> _refreshCallActions;
+
+    private readonly Dictionary<string, List<Action<IDispatcher>>> _refreshCallActions;
 
     public StateResolver(IServiceProvider serviceProvider, ILogger<StateResolver> logger)
     {
         _serviceProvider = serviceProvider;
         _logger = logger;
-        _refreshCallActions = new Dictionary<string, List<Func<IDispatcher, StateBase>>>
+        _refreshCallActions = new Dictionary<string, List<Action<IDispatcher>>>
         {
             { GeneralInfo, new () { CreateDispatchAction<GeneralInfoState, FetchGeneralInfoAction> } },
             { BlockingReasons, new () { CreateDispatchAction<BlockingReasonsState, FetchBlockingReasonsAction> } },
@@ -72,6 +79,7 @@ public class StateResolver : IStateResolver
             { DeliveryAccounts, new() { CreateDispatchAction<DeliveryAccountsState, FetchDeliveryAccountsAction> } },
             { NewDeliveryAccount, new () { CreateDispatchAction<NewDeliveryAccountState, FetchNewDeliveryAccountAction> } },
             { DeliveryContacts, new() { CreateDispatchAction<DeliveryContactsState, FetchDeliveryContactsAction> } },
+            { NewDeliveryContact, new () { CreateDispatchAction<NewDeliveryContactState, FetchNewDeliveryContactAction> } },
             { InvoiceInfo, new () { CreateDispatchAction<InvoiceInfoState, FetchInvoiceInfoAction> } },
             { InvoiceAccounts, new () { CreateDispatchAction<InvoiceAccountsState, FetchInvoiceAccountsAction> } },
             { TradeInfo, new () { CreateDispatchAction<TradeInfoState, FetchTradeInfoAction> } },
@@ -84,12 +92,10 @@ public class StateResolver : IStateResolver
         };
     }
 
-    private StateBase CreateDispatchAction<TState, TAction>(IDispatcher dispatcher)
+    private void CreateDispatchAction<TState, TAction>(IDispatcher dispatcher)
     where TState : StateBase
     where TAction : FetchDataActionBase
     {
-        var state = ResolveState<TState>()
-            ?? throw new InvalidOperationException($"Failed to resolve state of type {typeof(TState).Name}");
         try
         {
             var action = Activator.CreateInstance(
@@ -99,23 +105,17 @@ public class StateResolver : IStateResolver
                 BindingFlags.Instance |
                 BindingFlags.OptionalParamBinding,
                 null,
-                [state],
+                null,
                 null)
                 ?? throw new InvalidOperationException($"Failed to create an instance of {typeof(TAction).Name}.");
 
             dispatcher.Dispatch(action);
-            return state;
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to create an instance of {Action}", typeof(TAction).Name);
             throw;
         }
-    }
-
-    private StateBase ResolveState<TState>() where TState : StateBase
-    {
-        return _serviceProvider.GetRequiredService<IState<TState>>().Value;
     }
 
     public void DispatchRefreshCalls(IDispatcher dispatcher, List<string?>? refreshCalls)

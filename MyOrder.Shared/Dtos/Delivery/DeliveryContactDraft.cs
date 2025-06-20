@@ -6,7 +6,7 @@ public record DeliveryContactDraft(
     string? ContactSectionLabel,
     Field<string?>? Type,
     Field<string?>? ContactId,
-    Field<string?>? SocialTitle,
+    Field<BasketValueDto?>? SocialTitle,
     Field<string?>? FirstName,
     Field<string?>? LastName,
     Field<string?>? Email,
