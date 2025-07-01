@@ -24,27 +24,27 @@ public class BlockingOperationMiddleware(
 
     public override bool MayDispatchAction(object action)
     {
-        if (action is StartBlockingOpAction startAction)
-        {
-            var state = _globalState.Value;
+        //if (action is StartBlockingOpAction startAction)
+        //{
+        //    var state = _globalState.Value;
 
-            if (state.BlockingOperation != null)
-            {
-                var conflict = new BlockingOpConflictAction(
-                    ExistingOperationId: state.BlockingOperation.OperationId,
-                    ExistingOperationName: state.BlockingOperation.Name,
-                    AttemptedOperationId: startAction.OperationId,
-                    AttemptedOperationName: startAction.Name,
-                    Timestamp: DateTime.UtcNow
-                );
+        //    if (state.BlockingOperation != null)
+        //    {
+        //        var conflict = new BlockingOpConflictAction(
+        //            ExistingOperationId: state.BlockingOperation.OperationId,
+        //            ExistingOperationName: state.BlockingOperation.Name,
+        //            AttemptedOperationId: startAction.OperationId,
+        //            AttemptedOperationName: startAction.Name,
+        //            Timestamp: DateTime.UtcNow
+        //        );
 
-                _logger.LogWarning("Blocking operation conflict: attempted to start '{NewOperationName}' " +
-                    "while '{OldOperationName}' is still running.", startAction.Name, state.BlockingOperation.Name);
+        //        _logger.LogWarning("Blocking operation conflict: attempted to start '{NewOperationName}' " +
+        //            "while '{OldOperationName}' is still running.", startAction.Name, state.BlockingOperation.Name);
 
-                _dispatcher.Dispatch(conflict);
-                return false;
-            }
-        }
+        //        _dispatcher.Dispatch(conflict);
+        //        return false;
+        //    }
+        //}
 
         return true;
     }

@@ -121,13 +121,18 @@
                     <TemplateColumn Editable="false" CellClass="px-2 mx-0" CellStyle="justify-items: center">
                         <CellTemplate>
                             <MudStack Row="true" Spacing="0">
-                                @foreach (var tag in context?.Item?.LineTags)
+                                @if (context?.Item?.LineTags is { Count: > 0 })
                                 {
-                                    <MudTooltip Text="@tag.Description" Inline>
-                                        <MudIcon Icon="@LineTagIconHelper(tag.Value)"
-                                                 Size="Size.Small"
-                                                 Style="@($"color: {LineTagColorHelper(tag.Value)} !important; vertical-align: middle;")" />
-                                    </MudTooltip>
+                                    foreach (var tag in context.Item.LineTags)
+                                    {
+                                        if (tag is null)
+                                            continue;
+                                        <MudTooltip Text="@tag.Description" Inline>
+                                            <MudIcon Icon="@LineTagIconHelper(tag.Value)"
+                                                     Size="Size.Small"
+                                                     Style="@($"color: {LineTagColorHelper(tag.Value)} !important; vertical-align: middle;")" />
+                                        </MudTooltip>
+                                    }
                                 }
                             </MudStack>
                         </CellTemplate>

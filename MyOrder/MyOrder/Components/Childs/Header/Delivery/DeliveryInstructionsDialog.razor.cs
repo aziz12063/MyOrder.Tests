@@ -17,4 +17,10 @@ public partial class DeliveryInstructionsDialog : FluxorComponentBase<NewDeliver
     protected override FetchNewDeliveryAccountAction CreateFetchAction() =>
        string.IsNullOrEmpty(AccountId) ? new() : new(AccountId);
 
+    protected override void OnInitialized()
+    {
+        // Initialize the state for the new delivery account
+        Dispatcher.Dispatch(new ResetNewDeliveryAccountAction());
+        base.OnInitialized();
+    }
 }

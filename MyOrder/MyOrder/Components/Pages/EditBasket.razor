@@ -16,7 +16,7 @@
 
 @if(GlobalOperationsState.Value.IsAppGloballyFaulted)
 {
-    <ApiErrorDisplay FaultMessage="@GlobalOperationsState.Value.FaultMessage" />
+    <ApiErrorDisplay FaultMessage="@GlobalOperationsState.Value.GlobalFaultMessage" />
     return;
 }
 

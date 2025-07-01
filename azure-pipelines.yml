@@ -8,8 +8,8 @@ pool: RajaAgent
 variables:
   buildConfiguration: 'Release'
   publishDirectory: '$(Build.ArtifactStagingDirectory)\publish'
-  sitePhysicalPath: '\\rro-qviis10\WEB\MyOrderClient'                         # Path du ancien serveur
-  sitePhysicalPathNewServer: '\\aliasieeq\WEB\MyOrderClient'                  # Path du nouveau serveur
+  sitePhysicalPathIISQ: '\\rro-qviis10\WEB\MyOrderClient'
+  sitePhysicalPathIEEQ: '\\aliasieeq\WEB\MyOrderClient'
   CurrentSemVer: '1.0'
 
 name: '$(CurrentSemVer).$(Build.BuildId)-alpha'
@@ -29,36 +29,56 @@ stages:
                 # $env:BUILD_SOURCEBRANCHNAME might be something like 'refs/heads/Dev'
                 $cleanBranchName = $env:BUILD_SOURCEBRANCHNAME -replace 'refs/heads/', ''
                 Write-Host "##vso[task.setvariable variable=BranchName]$cleanBranchName"
-            
+
           - script: |
               echo ##vso[build.updatebuildnumber]$(Build.BuildNumber)-$(BranchName)
             displayName: 'Append Branch to Build Number'
 
-          - script: |
-              dotnet restore
-            displayName: 'Restore NuGet Packages'
-          
-          - script: |
-              # Building and setting version (e.g: like 0.1.0-alpha.Dev.12)
-              dotnet build --configuration $(buildConfiguration) --no-restore ^
-                /p:Version=$(CurrentSemVer) ^
-                /p:FileVersion=$(CurrentSemVer) ^
-                /p:InformationalVersion="$(Build.BuildNumber)"
-            displayName: 'Build Solution'
-
-          - script: |
-              dotnet publish --configuration $(buildConfiguration) --output $(publishDirectory) --no-build ^
-                /p:Version=$(CurrentSemVer) ^
-                /p:FileVersion=$(CurrentSemVer) ^
-                /p:InformationalVersion="$(Build.BuildNumber)"
-            displayName: 'Publish Application'
-
-          - task: PublishBuildArtifacts@1
-            displayName: 'Publish Artifacts'
+          - task: UseDotNet@2
             inputs:
-              PathtoPublish: '$(publishDirectory)'
-              ArtifactName: 'drop'
-              publishLocation: 'Container'
+              packageType: 'sdk'
+              version: '8.x'
+              
+          - script: dotnet --version
+            displayName: 'Show active .NET SDK version'
+            
+          - task: DotNetCoreCLI@2
+            displayName: 'Restore Solution'
+            inputs:
+              command: 'restore'
+              projects: 'MyOrderClient.sln'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Build Solution'
+            inputs:
+              command: 'build'
+              projects: 'MyOrderClient.sln'
+              arguments: >
+                --configuration $(buildConfiguration)
+                --no-restore
+                /p:Version=$(CurrentSemVer)
+                /p:FileVersion=$(CurrentSemVer)
+                /p:InformationalVersion="$(Build.BuildNumber)"
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Publish WebApp'
+            inputs:
+              command: 'publish'
+              projects: 'MyOrder/MyOrder/MyOrder.csproj'
+              arguments: >
+                --configuration $(buildConfiguration)
+                --output $(publishDirectory)
+                --no-restore
+                --no-build
+                /p:Version=$(CurrentSemVer)
+                /p:FileVersion=$(CurrentSemVer)
+                /p:InformationalVersion="$(Build.BuildNumber)"
+
+          - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath: '$(publishDirectory)'
+              artifact: 'drop'
+
 
   - stage: Deploy
     displayName: 'Deploy to IIS'
@@ -73,64 +93,53 @@ stages:
           runOnce:
             deploy:
               steps:
-                # Étape 1 : Télécharger les artefacts publiés
+
+                # 1) Download zipped artifact
                 - download: current
                   artifact: drop
-                  displayName: 'Download Artifacts'
+                  displayName: 'Download Artifacts (ZIP)'
 
-                # Étape 2 : Déployer les fichiers sur les serveurs IIS
+                # 2) Unzip into a clean folder
+                - task: ExtractFiles@1
+                  displayName: 'Unzip drop artifact'
+                  inputs:
+                    archiveFilePatterns: '$(Pipeline.Workspace)\drop\*.zip'
+                    destinationFolder: '$(Pipeline.Workspace)\extracted'
+                    cleanDestinationFolder: true
+                    
+                # 3) Deploy to IIS shares
                 - task: PowerShell@2
                   displayName: 'Deploy New Build'
                   inputs:
                     targetType: 'inline'
                     script: |
-                      # Chemins source et destination temp 
-                      $source = "$(Pipeline.Workspace)\drop"
-                      $destinationTmp = "$(sitePhysicalPath)\_tmp"
-                      $destinationTmpNewServer = "$(sitePhysicalPathNewServer)\_tmp"
-
-                      # Log des chemins
-                      Write-Host "Deploying files from $source to temp $destinationTmp and $destinationTmpNewServer"
-
-                      # Vérifier existance du 1er repo
-                      if (!(Test-Path $destinationTmp)) {
-                          New-Item -Path $destinationTmp -ItemType Directory -Force
+                      $source            = "$(Pipeline.Workspace)\extracted"
+                      $destinationTmp    = "$(sitePhysicalPathIISQ)\_tmp"
+                      $destinationTmpNew = "$(sitePhysicalPathIEEQ)\_tmp"
+                      Write-Host "Deploying fresh build from $source"
+                      foreach ($dest in @($destinationTmp, $destinationTmpNew)) {
+                        Write-Host "Cleaning $dest"
+                        if (Test-Path $dest) { Remove-Item $dest -Recurse -Force }
+                        New-Item -ItemType Directory -Path $dest | Out-Null
+                        Write-Host "Robocopy $source → $dest"
+                        $rc = & robocopy $source $dest /MIR /FFT /Z /XA:H /W:5 /R:3
+                        # Robocopy return codes 0 or 1 mean success; anything >8 is a real error
+                        if ($rc -gt 8) {
+                          throw "Robocopy to $dest failed (exit code $rc)"
+                        }
                       }
-                      # Vérifier existance du 2eme repo
-                      if (!(Test-Path $destinationTmpNewServer)) {
-                          New-Item -Path $destinationTmpNewServer -ItemType Directory -Force
-                      }
-                      # Copier les fichiers avec robocopy pour 1er serveur
-                      robocopy $source $destinationTmp /MIR /FFT /Z /XA:H /W:5 /R:3
-
-                      # Vérification si aucune erreur pour copie 1er serveur
-                      if ($LASTEXITCODE -gt 8) {
-                          Write-Error "Robocopy failed for first server with exit code $LASTEXITCODE"
-                          exit 1
-                      }
-
-                      # Copier les fichiers avec robocopy pour 2eme serveur
-                      robocopy $source $destinationTmpNewServer /MIR /FFT /Z /XA:H /W:5 /R:3
-
-                      # Vérification si aucune erreur pour copie 2eme serveur
-                      if ($LASTEXITCODE -gt 8) {
-                          Write-Error "Robocopy failed for second server with exit code $LASTEXITCODE"
-                          exit 1
-                      }
-
-                      Write-Host "Deployment to tmp completed."
+                      Write-Host "Deployment to tmp location completed."
                       exit 0
 
-                # Étape 3 : Déclencher la release après le déploiement
+                # 4) Trigger next release
                 - task: TriggerPipeline@2
                   displayName: 'Trigger release for MyOrderClient'
                   inputs:
                     serviceConnection: 'TriggerRelease-DotNet'
-                    project: 'd2023a78-b18d-451a-b55f-c2f0d8645b95'  
-                    Pipeline: 'Release'  
-                    releaseDefinition: '13' 
+                    project: 'd2023a78-b18d-451a-b55f-c2f0d8645b95'
+                    Pipeline: 'Release'
+                    releaseDefinition: '13'
                     Description: 'Start trigger release pipeline for MyOrderClient'
-                    Stages: 'DEV_IIS_Q'  
+                    Stages: 'DEV_IIS_Q'
                     buildapiversion: '6.0'
                     releaseapiversion: '6.0'
-                

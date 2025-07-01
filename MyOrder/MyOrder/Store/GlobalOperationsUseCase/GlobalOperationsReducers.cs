@@ -7,23 +7,32 @@ public static class GlobalOperationsReducers
     [ReducerMethod]
     public static GlobalOperationsState OnStartBlockingOp(GlobalOperationsState state, StartBlockingOpAction action)
     {
-        // 1) If there's already a blocking op, ignore
         if (state.BlockingOperation is not null)
-            return state;
-
-        // 2) If we require no non-blocking ops are in flight, check that first
-        if (state.NonBlockingOperations.Count > 0)
         {
-            return state;
+            return state with
+            {
+                IsStateFaulted = true,
+                StateFaultMessage = $"Cannot start a new blocking operation '{action.Name}' while another one is in progress: '{state.BlockingOperation.Name}'."
+            };
         }
 
-        // 3) Accept the new blocking op
+        if (state.NonBlockingOperations.Count > state.NonBlockingConcurrentLimit)
+        {
+            return state with
+            {
+                IsStateFaulted = true,
+                StateFaultMessage = $"Cannot start a new blocking operation '{action.Name}' while there are {state.NonBlockingOperations.Count} non-blocking operations in progress. " +
+                                    $"Please complete or cancel them first."
+            };
+        }
+
         var newOp = new OperationInfo(
             OperationId: action.OperationId,
             Name: action.Name,
             StartTime: DateTime.UtcNow,
             Progress: null,
             IsBlocking: true);
+
         return state with
         {
             BlockingOperation = newOp
@@ -40,19 +49,6 @@ public static class GlobalOperationsReducers
                 BlockingOperation = null
             };
         }
-        return state;
-    }
-
-    [ReducerMethod]
-    public static GlobalOperationsState OnBlockingOpConflict(GlobalOperationsState state, BlockingOpConflictAction action)
-    {
-        //if (state.BlockingOperation?.OperationId == action.OperationId)
-        //{
-        //    return state with
-        //    {
-        //        BlockingOperation = null
-        //    };
-        //}
         return state;
     }
 
@@ -115,21 +111,6 @@ public static class GlobalOperationsReducers
         };
     }
 
-    [ReducerMethod]
-    public static GlobalOperationsState OnFailNonBlockingOp(GlobalOperationsState state, FailNonBlockingOpAction action)
-    {
-        if (!state.NonBlockingOperations.ContainsKey(action.OperationId))
-            return state;
-
-        var updatedDict = new Dictionary<Guid, OperationInfo>(state.NonBlockingOperations);
-        updatedDict.Remove(action.OperationId);
-
-        return state with
-        {
-            NonBlockingOperations = updatedDict
-        };
-    }
-
     /// <summary>
     /// Fault the app globally. We catch only the first fault and ignore the rest.
     /// </summary>
@@ -145,7 +126,7 @@ public static class GlobalOperationsReducers
         return state with
         {
             IsAppGloballyFaulted = true,
-            FaultMessage = action.ErrorMessage
+            GlobalFaultMessage = action.ErrorMessage
         };
     }
 

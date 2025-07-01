@@ -10,6 +10,6 @@ public record PostProcedureCallCompletedSuccessfullyAction(ProcedureCallResponse
 
 public record UpdateFieldProcedureCallFailureAction(Type SelfFetchActionType, string ErrorMessage);
 
-public record PostProcedureCallAction(ImmutableList<string?>? ProcedureCall);
+public record PostProcedureCallAction(ImmutableList<string?>? ProcedureCall, bool IsBlocking);
 
 public record PostProcedureCallFailureAction(string ErrorMessage);

@@ -14,10 +14,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Content Remove="Properties\launchSettings-CR.json" />
-	</ItemGroup>
-
-	<ItemGroup>
+		<ProjectReference Include="..\..\MyOrder.Generator.Abstractions\MyOrder.Generator.Abstractions.csproj" />
 		<ProjectReference Include="..\..\MyOrder.Generator\MyOrder.Generator.csproj" OutputItemType="Analyzer" />
 		<ProjectReference Include="..\..\MyOrder.Infrastructure\MyOrder.Infrastructure.csproj" />
 		<PackageReference Include="Fluxor.Blazor.Web" Version="6.6.0" />

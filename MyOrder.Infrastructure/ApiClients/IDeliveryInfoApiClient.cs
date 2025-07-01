@@ -27,9 +27,6 @@ public interface IDeliveryInfoApiClient
     [Put("/api/myorder/{companyId}/{basketId}/newDeliverToAccount/add")]
     Task<ProcedureCallResponseDto?> CommitNewDeliveryAccountAsync(string companyId, string basketId, CancellationToken cancellationToken = default);
 
-    [Put("/api/myorder/{companyId}/{basketId}/newDeliverToAccount/reset")]
-    Task<ProcedureCallResponseDto> ResetNewDeliveryAccountAsync(string companyId, string basketId, CancellationToken cancellationToken = default);
-
     [Get("/api/myorder/{companyId}/{basketId}/deliverToContacts")]
     Task<List<ContactDto?>?> GetDeliverToContactsAsync(
         string companyId, 
@@ -44,9 +41,6 @@ public interface IDeliveryInfoApiClient
         string basketId,
         [Query] string? contactId = null,
         CancellationToken cancellationToken = default);
-
-    [Put("/api/myorder/{companyId}/{basketId}/newDeliverToContact/reset")]
-    Task<ProcedureCallResponseDto?> ResetNewDeliveryContactAsync(string companyId, string basketId, CancellationToken cancellationToken = default);
 
     [Get("/api/myorder/{companyId}/{basketId}/deliveryModes")]
     Task<List<BasketValueDto?>?> GetDeliveryModesAsync(string companyId, string basketId, CancellationToken cancellationToken = default);

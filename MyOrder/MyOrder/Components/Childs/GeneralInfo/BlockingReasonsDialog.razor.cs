@@ -6,7 +6,7 @@ namespace MyOrder.Components.Childs.GeneralInfo;
 
 public partial class BlockingReasonsDialog : FluxorComponentBase<BlockingReasonsState, FetchBlockingReasonsAction> 
 {
-    private ICollection<BasketBlockingReasonDto?>? BlockingReasons => State.Value.BlockingReasons.BlockingReasons;
+    private ICollection<BasketBlockingReasonDto?>? BlockingReasons => State.Value.BlockingReasons?.BlockingReasons;
 
     protected override FetchBlockingReasonsAction CreateFetchAction() => new();
 }

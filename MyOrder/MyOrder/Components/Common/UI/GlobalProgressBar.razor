@@ -1,0 +1,92 @@
+﻿@using Fluxor
+@using Fluxor.Blazor.Web.Components
+@using MyOrder.Store.GlobalOperationsUseCase
+
+@implements IDisposable
+
+@inject IState<GlobalOperationsState> OperationsState
+
+<div class="fixed-progress-bar">
+    @if (_isVisible)
+    {
+        <MudProgressLinear Indeterminate="true" Color="Color.Warning" />
+    }
+</div>
+@code {
+
+    private bool _isVisible;
+    private CancellationTokenSource? _showCts;
+    private CancellationTokenSource? _hideCts;
+
+    protected override void OnInitialized()
+    {
+        OperationsState.StateChanged += OperationsState_StateChanged;
+        _ = CheckVisibility();
+    }
+
+    private async void OperationsState_StateChanged(object? sender, EventArgs e)
+    {
+        await CheckVisibility();
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task CheckVisibility()
+    {
+        // Check if any indeterminate operation is active.
+        bool hasIndeterminateAndNonBlocking = OperationsState.Value.NonBlockingOperations.Any();
+
+        if (hasIndeterminateAndNonBlocking)
+        {
+            // Cancel any pending hide delay since new operations have started.
+            _hideCts?.Cancel();
+
+            // If not visible, schedule a show delay.
+            if (!_isVisible)
+            {
+                _showCts?.Cancel();
+                _showCts = new CancellationTokenSource();
+                try
+                {
+                    await Task.Delay(100, _showCts.Token);
+                    // After delay, check if operations are still running.
+                    if (OperationsState.Value.NonBlockingOperations.Any())
+                    {
+                        _isVisible = true;
+                    }
+                }
+                catch (TaskCanceledException) { }
+            }
+        }
+        else
+        {
+            // No active operations: if already visible, schedule a hide delay.
+            if (_isVisible)
+            {
+                _hideCts?.Cancel();
+                _hideCts = new CancellationTokenSource();
+                try
+                {
+                    await Task.Delay(600, _hideCts.Token);
+                    // If still no operations, hide the progress bar.
+                    if (!OperationsState.Value.NonBlockingOperations.Any())
+                    {
+                        _isVisible = false;
+                    }
+                }
+                catch (TaskCanceledException) { }
+            }
+            else
+            {
+                // Cancel any pending show delay if nothing is active.
+                _showCts?.Cancel();
+            }
+        }
+    }
+
+    public void Dispose()
+    {
+        OperationsState.StateChanged -= OperationsState_StateChanged;
+        _showCts?.Cancel();
+        _hideCts?.Cancel();
+    }
+}

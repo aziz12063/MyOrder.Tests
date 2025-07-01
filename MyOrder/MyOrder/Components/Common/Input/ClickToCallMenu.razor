@@ -48,7 +48,7 @@
             preparedProcedureCall[^1] = contactToCall;
 
             var procedureCallList = preparedProcedureCall.ToImmutableList();
-            Dispatcher.Dispatch(new PostProcedureCallAction(procedureCallList!));
+            Dispatcher.Dispatch(new PostProcedureCallAction(procedureCallList!, false));
         }
         else
             throw new InvalidOperationException("Malformatted procedure call for click to call.");

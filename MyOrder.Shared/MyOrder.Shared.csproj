@@ -12,7 +12,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\MyOrder.Generator\MyOrder.Generator.csproj" />
+	  <ProjectReference Include="..\MyOrder.Generator.Abstractions\MyOrder.Generator.Abstractions.csproj" />
 	</ItemGroup>
 
 </Project>

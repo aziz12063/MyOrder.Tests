@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyOrder.Tests", "MyOrder.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyOrder.Generator", "MyOrder.Generator\MyOrder.Generator.csproj", "{4E79A5E6-1F5D-4E8D-97C4-6686732D8C00}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyOrder.Generator.Abstractions", "MyOrder.Generator.Abstractions\MyOrder.Generator.Abstractions.csproj", "{0190AEF0-E161-4840-A436-CC02FEFE0544}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +52,12 @@ Global
 		{4E79A5E6-1F5D-4E8D-97C4-6686732D8C00}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4E79A5E6-1F5D-4E8D-97C4-6686732D8C00}.ServerDebug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4E79A5E6-1F5D-4E8D-97C4-6686732D8C00}.ServerDebug|Any CPU.Build.0 = Debug|Any CPU
+		{0190AEF0-E161-4840-A436-CC02FEFE0544}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0190AEF0-E161-4840-A436-CC02FEFE0544}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0190AEF0-E161-4840-A436-CC02FEFE0544}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0190AEF0-E161-4840-A436-CC02FEFE0544}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0190AEF0-E161-4840-A436-CC02FEFE0544}.ServerDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0190AEF0-E161-4840-A436-CC02FEFE0544}.ServerDebug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

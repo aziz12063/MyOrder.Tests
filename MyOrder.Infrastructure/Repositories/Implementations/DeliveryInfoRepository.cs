@@ -53,16 +53,6 @@ public class DeliveryInfoRepository(IDeliveryInfoApiClient deliveryInfoApiClient
             cancellationToken ?? default);
     }
 
-    public async Task<ProcedureCallResponseDto?> ResetNewDeliveryAccountAsync(CancellationToken? cancellationToken = null)
-    {
-        logger.LogDebug("Resetting new delivery account for {BasketId} from repository", BasketId);
-        var operationDescription = $"ResetNewDeliveryAccountAsync for basketId {BasketId}";
-        return await ExecuteAsync(
-            async (token) => await _deliveryInfoApiClient.ResetNewDeliveryAccountAsync(CompanyId, BasketId, token),
-            operationDescription,
-            cancellationToken ?? default);
-    }
-
     public async Task<List<ContactDto?>?> GetDeliverToContactsAsync(string? filter = null, bool? search = null, CancellationToken cancellationToken = default)
     {
         logger.LogDebug("Fetching deliver to contacts for {BasketId} from repository", BasketId);
@@ -81,16 +71,6 @@ public class DeliveryInfoRepository(IDeliveryInfoApiClient deliveryInfoApiClient
             async (token) => await _deliveryInfoApiClient.GetNewDeliveryContactAsync(CompanyId, BasketId, contactId, token),
             operationDescription,
             cancellationToken);
-    }
-
-    public async Task<ProcedureCallResponseDto?> ResetNewDeliveryContactAsync(CancellationToken? cancellationToken = default)
-    {
-        logger.LogDebug("Resetting new delivery contact for {BasketId} from repository", BasketId);
-        var operationDescription = $"ResetNewDeliveryContactAsync for basketId {BasketId}";
-        return await ExecuteAsync(
-            async (token) => await _deliveryInfoApiClient.ResetNewDeliveryContactAsync(CompanyId, BasketId, token),
-            operationDescription,
-            cancellationToken ?? default);
     }
 
     public async Task<List<BasketValueDto?>?> GetDeliveryModesAsync(CancellationToken cancellationToken = default)

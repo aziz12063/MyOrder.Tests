@@ -11,10 +11,10 @@ public interface IModalService
 {
     //event Action<string, string, Action> OnShow;
 
-    Task<IDialogReference> OpenAddLineDialogAsync(AddLineDialogTab index, Action? onCloseCallback = null);
-    Task<IDialogReference> OpenEditDeliveryAccountDialogAsync(Action? onCloseCallback = null, string? accountId = null);
-    Task<IDialogReference> OpenEditDeliveryInstructionsDialogAsync(Action? onCloseCallback = null, string? accountId = null);
-    Task<IDialogReference> OpenEditDeliveryContactDialogAsync(Action? onCloseCallback = null, string? contactId = null);
+    Task<IDialogReference> OpenAddLineDialogAsync(AddLineDialogTab index);
+    Task<IDialogReference> OpenEditDeliveryAccountDialogAsync(string? accountId = null, bool isNew = false);
+    Task<IDialogReference> OpenEditDeliveryInstructionsDialogAsync(string? accountId = null);
+    Task<IDialogReference> OpenEditDeliveryContactDialogAsync(string? contactId = null, bool isNew = false);
 
     Task<IDialogReference> OpenNewBasketDialogAsync();
     Task<IDialogReference> OpenBasketDialogAsync();

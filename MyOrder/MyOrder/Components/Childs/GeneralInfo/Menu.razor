@@ -270,14 +270,16 @@
 
     private void ValidationRulesClickHandler()
     {
+        var field = BasketActions?.Blocking?.ValidationRules;
         dispatcher.Dispatch(
-            new PostProcedureCallAction(BasketActions?.Blocking?.ValidationRules.ProcedureCall));
+            new PostProcedureCallAction(field.ProcedureCall, field.IsBlockingProcedure ?? false));
     }
 
     private void PublicationLogsClickHandler()
     {
+        var field = BasketActions?.Logs?.PublicationLogs;
         dispatcher.Dispatch(
-            new PostProcedureCallAction(BasketActions?.Logs?.PublicationLogs.ProcedureCall));
+            new PostProcedureCallAction(field.ProcedureCall, field.IsBlockingProcedure ?? false));
     }
 
     private async Task ProcedureCallMenuAction(Field<string?>? menuItem)
@@ -291,7 +293,7 @@
         await MenuActionHandler(modalService, menuItem.Confirm, () =>
         {
             dispatcher.Dispatch(
-            new PostProcedureCallAction(menuItem.ProcedureCall));
+            new PostProcedureCallAction(menuItem.ProcedureCall, menuItem.IsBlockingProcedure ?? false));
         });
     }
 

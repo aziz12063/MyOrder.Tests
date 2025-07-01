@@ -12,8 +12,17 @@ public partial class NewDeliveryContactDialog : FluxorComponentBase<NewDeliveryC
     private IMudDialogInstance MudDialog { get; set; } = null!;
     [Parameter]
     public string? ContactId { get; set; }
+    [Parameter]
+    public bool IsNewContact { get; set; } = false;
     private DeliveryContactDraft? DeliveryContactDraft => State.Value.DeliveryContactDraft;
 
+    protected override void OnInitialized()
+    {
+        Dispatcher.Dispatch(new ResetNewDeliveryContactAction());
+        base.OnInitialized();
+    }
     protected override FetchNewDeliveryContactAction CreateFetchAction() =>
-        string.IsNullOrEmpty(ContactId) ? new() : new(ContactId);
+        IsNewContact ? new("-")
+        : string.IsNullOrEmpty(ContactId) ? new()
+        : new(ContactId);
 }

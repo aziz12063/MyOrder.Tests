@@ -24,7 +24,7 @@ public class ModalService(IDialogService dialogService) : IModalService
     //    OnShow?.Invoke(title, message, onConfirm);
     //}
 
-    public async Task<IDialogReference> OpenAddLineDialogAsync(AddLineDialogTab index, Action? onCloseCallback = null)
+    public async Task<IDialogReference> OpenAddLineDialogAsync(AddLineDialogTab index)
     {
         var options = new DialogOptions
         {
@@ -39,15 +39,8 @@ public class ModalService(IDialogService dialogService) : IModalService
             { dialog => dialog.CurrentTab, index }
         };
 
-        var dialogReference = await dialogService.ShowAsync<AddLineDialog>(
+        return await dialogService.ShowAsync<AddLineDialog>(
             "AddLineDialog", parameters, options);
-
-        var dialogResult = await dialogReference.Result;
-
-        if (dialogResult?.Canceled == true)
-            onCloseCallback?.Invoke();
-
-        return dialogReference;
     }
 
     public async Task<IDialogReference> OpenNewBasketDialogAsync()
@@ -146,12 +139,13 @@ public class ModalService(IDialogService dialogService) : IModalService
         return dialog;
     }
 
-    public async Task<IDialogReference> OpenEditDeliveryAccountDialogAsync(Action? onCloseCallback = null, string? accountId = null)
+    public async Task<IDialogReference> OpenEditDeliveryAccountDialogAsync(string? accountId = null, bool isNew = false)
     {
 
         var parameters = new DialogParameters<NewDeliveryAccountDialog>
         {
             { dialog => dialog.AccountId, accountId},
+            { dialog => dialog.IsNewAccount, isNew }
         };
 
         var options = new DialogOptions
@@ -163,20 +157,12 @@ public class ModalService(IDialogService dialogService) : IModalService
             FullWidth = true
         };
 
-        var dialogReference = await dialogService.ShowAsync<NewDeliveryAccountDialog>(
+        return await dialogService.ShowAsync<NewDeliveryAccountDialog>(
             "EditDeliveryAccountDialog", parameters, options);
-
-        var dialogResult = await dialogReference.Result;
-
-        if (dialogResult?.Canceled == true)
-            onCloseCallback?.Invoke();
-
-        return dialogReference;
     }
 
-    public async Task<IDialogReference> OpenEditDeliveryInstructionsDialogAsync(Action? onCloseCallback = null, string? accountId = null)
+    public async Task<IDialogReference> OpenEditDeliveryInstructionsDialogAsync(string? accountId = null)
     {
-
         var parameters = new DialogParameters<NewDeliveryAccountDialog>
         {
             { dialog => dialog.AccountId, accountId},
@@ -191,22 +177,16 @@ public class ModalService(IDialogService dialogService) : IModalService
             FullWidth = true
         };
 
-        var dialogReference = await dialogService.ShowAsync<DeliveryInstructionsDialog>(
+        return await dialogService.ShowAsync<DeliveryInstructionsDialog>(
             "EditDeliveryAccountDialog", parameters, options);
-
-        var dialogResult = await dialogReference.Result;
-
-        if (dialogResult?.Canceled == true)
-            onCloseCallback?.Invoke();
-
-        return dialogReference;
     }
 
-    public async Task<IDialogReference> OpenEditDeliveryContactDialogAsync(Action? onCloseCallback = null, string? contactId = null)
+    public async Task<IDialogReference> OpenEditDeliveryContactDialogAsync(string? contactId = null, bool isNew = false)
     {
         var parameters = new DialogParameters<NewDeliveryContactDialog>
         {
             { dialog => dialog.ContactId, contactId},
+            { dialog => dialog.IsNewContact, isNew }
         };
         var options = new DialogOptions
         {
@@ -216,12 +196,8 @@ public class ModalService(IDialogService dialogService) : IModalService
             MaxWidth = MaxWidth.Small,
             FullWidth = true
         };
-        var dialogReference = await dialogService.ShowAsync<NewDeliveryContactDialog>(
+        return await dialogService.ShowAsync<NewDeliveryContactDialog>(
             "EditDeliveryContactDialog", parameters, options);
-        var dialogResult = await dialogReference.Result;
-        if (dialogResult?.Canceled == true)
-            onCloseCallback?.Invoke();
-        return dialogReference;
     }
 
     public async Task<bool> ShowConfirmationDialog(string message, string? title = null,

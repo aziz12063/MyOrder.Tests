@@ -14,6 +14,14 @@
     width: auto !important;
 }
 
+.fixed-progress-bar {
+    position: fixed;
+    top: var(--mud-appbar-height);
+    left: 0;
+    right: 0;
+    z-index: var(--mud-zindex-appbar);
+}
+
 .header-cards-height {
     min-height: 20vh;
     height: 100%;

@@ -100,10 +100,10 @@
             {
                 bool result = await ModalService.ShowConfirmationDialog(Field!.Confirm);
                 if (result == true)
-                    Dispatcher.Dispatch(new PostProcedureCallAction(Field!.ProcedureCall));
+                    Dispatcher.Dispatch(new PostProcedureCallAction(Field!.ProcedureCall, Field!.IsBlockingProcedure ?? false));
             }
             else
-                Dispatcher.Dispatch(new PostProcedureCallAction(Field!.ProcedureCall));
+                Dispatcher.Dispatch(new PostProcedureCallAction(Field!.ProcedureCall, Field!.IsBlockingProcedure ?? false));
         }
 
         await OnClickCallback.InvokeAsync();

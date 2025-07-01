@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis.Text;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Diagnostics;
+//using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -15,6 +15,7 @@ public class FieldReducersGenerator : IIncrementalGenerator
 {
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
+        //Debugger.Launch();
         // Pick out every type with our marker attribute
         var candidates =
             context.SyntaxProvider.ForAttributeWithMetadataName(
@@ -36,7 +37,6 @@ public class FieldReducersGenerator : IIncrementalGenerator
         ImmutableArray<(TypeDeclarationSyntax _, INamedTypeSymbol Symbol)> slices,
         SourceProductionContext spc)
     {
-        //Debugger.Launch();
         foreach (var (_, sliceSym) in slices)
         {
             // Collect all IField-implementing properties (including nested)
@@ -132,6 +132,7 @@ public static partial class {{slice}}FieldReducers
         // slice-status guard  (always emitted)
         sb.AppendLine("        // slice not ready – abort fast");
         sb.AppendLine("        if (!state.Initialized || state.IsLoading || state.IsFaulted)");
+        //sb.AppendLine("        if (!state.Initialized || state.IsFaulted)");
         sb.AppendLine("            return state;");
         sb.AppendLine();
 

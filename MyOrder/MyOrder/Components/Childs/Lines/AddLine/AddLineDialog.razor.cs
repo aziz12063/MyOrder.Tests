@@ -65,7 +65,6 @@ public partial class AddLineDialog
 
     private void ResetLine()
     {
-        Dispatcher.Dispatch(new ResetNewLineAction());
         DialogInstance.Close(DialogResult.Ok(true));
     }
 

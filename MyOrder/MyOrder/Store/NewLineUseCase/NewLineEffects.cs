@@ -5,8 +5,10 @@ using MyOrder.Store.TradeInfoUseCase;
 
 namespace MyOrder.Store.NewLineUseCase;
 
-public class NewLineEffects(INewOrderLineRepository newOrderLineRepository, IStateResolver stateResolver,
-    ILogger<NewLineEffects> logger, IState<NewLineState> newLineState)
+public class NewLineEffects(
+    INewOrderLineRepository newOrderLineRepository, 
+    IStateResolver stateResolver,
+    ILogger<NewLineEffects> logger)
 {
     private readonly INewOrderLineRepository _newOrderLineRepository = newOrderLineRepository
         ?? throw new ArgumentNullException(nameof(newOrderLineRepository));
@@ -36,16 +38,10 @@ public class NewLineEffects(INewOrderLineRepository newOrderLineRepository, ISta
         try
         {
             var response = await _newOrderLineRepository.ResetNewLineStateAsync();
-
-            // To refetch the latest new line state
-            dispatcher.Dispatch(new FetchNewLineAction());
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error resetting new line");
-
-            // In case of failure, we dispatch the same action as FetchNewLineFailureAction
-            dispatcher.Dispatch(new FetchNewLineFailureAction(ex.Message));
         }
     }
 

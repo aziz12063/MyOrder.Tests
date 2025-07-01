@@ -24,6 +24,8 @@ public partial class AddLineTab : FluxorComponentBase<NewLineState, FetchNewLine
 
     protected override void OnInitialized()
     {
+        Dispatcher.Dispatch(new ResetNewLineAction());
+
         base.OnInitialized();
         LogisticFlows = ResourcesState?.Value.LogisticFlows
             ?? throw new ArgumentNullException("Unexpected null for LogisticFlows object.");

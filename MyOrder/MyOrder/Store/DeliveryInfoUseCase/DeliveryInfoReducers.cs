@@ -1,10 +1,12 @@
 ﻿using Fluxor;
 using MyOrder.Shared.Dtos;
+using MyOrder.Shared.Dtos.Delivery;
 
 namespace MyOrder.Store.DeliveryInfoUseCase;
 
 public static class DeliveryInfoReducers
 {
+    #region Delivery Info Reducers
     [ReducerMethod(typeof(FetchDeliveryInfoAction))]
     public static DeliveryInfoState ReduceFetchDeliveryInfoAction(DeliveryInfoState state)
     {
@@ -41,7 +43,9 @@ public static class DeliveryInfoReducers
             ErrorMessage = action.ErrorMessage
         };
     }
+    #endregion
 
+    #region Delivery Accounts Reducers
     [ReducerMethod(typeof(FetchDeliveryAccountsAction))]
     public static DeliveryAccountsState ReduceFetchDeliveryAccountsAction(DeliveryAccountsState state)
     {
@@ -76,7 +80,7 @@ public static class DeliveryInfoReducers
             ErrorMessage = string.Empty
         };
     }
-    
+
     [ReducerMethod]
     public static DeliveryAccountsState ReduceFetchDeliveryAccountsFailureAction(DeliveryAccountsState state, FetchDeliveryAccountsFailureAction action)
     {
@@ -88,13 +92,28 @@ public static class DeliveryInfoReducers
             ErrorMessage = action.ErrorMessage
         };
     }
+    #endregion
 
+    #region New/Edit Delivery Accounts Reducers
     [ReducerMethod(typeof(FetchNewDeliveryAccountAction))]
     public static NewDeliveryAccountState ReduceFetchNewDeliveryAccountAction(NewDeliveryAccountState state)
     {
         return state with
         {
             IsLoading = true,
+            IsFaulted = false,
+            ErrorMessage = string.Empty
+        };
+    }
+
+    [ReducerMethod(typeof(ResetNewDeliveryAccountAction))]
+    public static NewDeliveryAccountState ReduceResetNewDeliveryAccountAction9(NewDeliveryAccountState state)
+    {
+        return state with
+        {
+            DeliveryAccountDraft = null!,
+            Initialized = false,
+            IsLoading = false,
             IsFaulted = false,
             ErrorMessage = string.Empty
         };
@@ -124,7 +143,9 @@ public static class DeliveryInfoReducers
             ErrorMessage = action.ErrorMessage
         };
     }
+    #endregion
 
+    #region Delivery Contacts Reducers
     [ReducerMethod(typeof(FetchDeliveryContactsAction))]
     public static DeliveryContactsState ReduceFetchDeliveryContactsAction(DeliveryContactsState state)
     {
@@ -170,13 +191,28 @@ public static class DeliveryInfoReducers
             ErrorMessage = action.ErrorMessage
         };
     }
+    #endregion
 
+    #region New/Edit Delivery Contacts Reducers
     [ReducerMethod(typeof(FetchNewDeliveryContactAction))]
     public static NewDeliveryContactState ReduceFetchNewDeliveryContactAction(NewDeliveryContactState state)
     {
         return state with
         {
             IsLoading = true,
+            IsFaulted = false,
+            ErrorMessage = string.Empty
+        };
+    }
+
+    [ReducerMethod(typeof(ResetNewDeliveryContactAction))]
+    public static NewDeliveryContactState ReduceResetNewDeliveryContactAction(NewDeliveryContactState state)
+    {
+        return state with
+        {
+            DeliveryContactDraft = null!,
+            Initialized = false,
+            IsLoading = false,
             IsFaulted = false,
             ErrorMessage = string.Empty
         };
@@ -206,4 +242,5 @@ public static class DeliveryInfoReducers
             ErrorMessage = action.ErrorMessage
         };
     }
+    #endregion
 }

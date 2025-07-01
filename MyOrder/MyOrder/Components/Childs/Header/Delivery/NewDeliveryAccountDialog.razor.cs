@@ -16,11 +16,21 @@ public partial class NewDeliveryAccountDialog : FluxorComponentBase<NewDeliveryA
     private IMudDialogInstance MudDialog { get; set; } = null!;
     [Parameter]
     public string? AccountId { get; set; }
+    [Parameter]
+    public bool IsNewAccount { get; set; } = false;
     private DeliveryAccountDraft DeliveryAccountDraft => State.Value.DeliveryAccountDraft;
     private FieldButton<string?>? LookupButton { get; set; }
 
+    protected override void OnInitialized()
+    {
+        Dispatcher.Dispatch(new ResetNewDeliveryAccountAction());
+        base.OnInitialized();
+    }
+
     protected override FetchNewDeliveryAccountAction CreateFetchAction() =>
-        string.IsNullOrEmpty(AccountId) ? new() : new(AccountId);
+        IsNewAccount ? new("-") // Use "-" to request a new draft account
+        : string.IsNullOrEmpty(AccountId) ? new() 
+        : new(AccountId);
 
     protected override void OnAfterRender(bool firstRender)
     {

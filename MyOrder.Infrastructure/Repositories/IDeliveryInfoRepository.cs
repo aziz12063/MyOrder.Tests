@@ -9,10 +9,8 @@ public interface IDeliveryInfoRepository
     Task<List<AccountDto?>?> GetDeliverToAccountsAsync(string? filter = null, bool? search = null, CancellationToken cancellationToken = default);
     Task<DeliveryAccountDraft?> GetNewDeliveryAccountAsync(string? accountId = null, CancellationToken cancellationToken = default);
     Task<ProcedureCallResponseDto?> CommitNewDeliveryAccountAsync(CancellationToken? cancellationToken = default);
-    Task<ProcedureCallResponseDto?> ResetNewDeliveryAccountAsync(CancellationToken? cancellationToken = default);
     Task<List<ContactDto?>?> GetDeliverToContactsAsync(string? filter = null, bool? search = null, CancellationToken cancellationToken = default);
     Task<DeliveryContactDraft?> GetNewDeliveryContactAsync(string? contactId = null, CancellationToken cancellationToken = default);
-    Task<ProcedureCallResponseDto?> ResetNewDeliveryContactAsync(CancellationToken? cancellationToken = default);
     Task<List<BasketValueDto?>?> GetDeliveryModesAsync(CancellationToken cancellationToken = default);
 
 }

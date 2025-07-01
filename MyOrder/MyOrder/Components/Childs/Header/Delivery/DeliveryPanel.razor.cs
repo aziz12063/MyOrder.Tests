@@ -68,8 +68,7 @@ public sealed partial class DeliveryPanel : FluxorComponentBase<DeliveryInfoStat
         await ModalService.OpenSearchContactDialogAsync<DeliveryContactsState, FetchDeliveryContactsAction>(
              contact => Dispatcher.Dispatch(
                     new UpdateFieldAction(BasketDeliveryInfo.Contact, contact, typeof(FetchDeliveryInfoAction))),
-             () => Dispatcher.Dispatch(new FetchDeliveryContactsAction(null, null))
-             );
+             () => Dispatcher.Dispatch(new FetchDeliveryContactsAction(null, null)));
     }
 
     private async Task OpenAccountSearchDialogAsync()
@@ -80,47 +79,25 @@ public sealed partial class DeliveryPanel : FluxorComponentBase<DeliveryInfoStat
                 GetType().Name);
             return;
         }
-#warning This is a temporary solution to avoid the error of the new account not being reset
-        Dispatcher.Dispatch(new ResetNewDeliveryAccountAction());
 
         await ModalService.OpenSearchAccountDialogAsync<DeliveryAccountsState, FetchDeliveryAccountsAction>(
-            account => Dispatcher.Dispatch(
-                new UpdateFieldAction(BasketDeliveryInfo.Account, account, typeof(FetchDeliveryInfoAction))),
-                async () => await ModalService.OpenEditDeliveryAccountDialogAsync(
-                        () => Dispatcher.Dispatch(new ResetNewDeliveryAccountAction())),
-                () => Dispatcher.Dispatch(new FetchDeliveryAccountsAction(null, null))
-            );
+            account => Dispatcher.Dispatch(new UpdateFieldAction(BasketDeliveryInfo.Account, account, typeof(FetchDeliveryInfoAction))),
+            async () => await ModalService.OpenEditDeliveryAccountDialogAsync(isNew: true),
+            () => Dispatcher.Dispatch(new FetchDeliveryAccountsAction(null, null))); //reset and update delivery accounts state without the search flag
     }
 
-    private async Task<IDialogReference> OpenEditDeliveryAccountDialogAsync()
-    {
-#warning This is a temporary solution to avoid the error of the new account not being reset. Force hard reset from the server whenever we want to edit an account (when account ID is set as a parameter)
-        Dispatcher.Dispatch(new ResetNewDeliveryAccountAction());
+    private async Task<IDialogReference> OpenEditDeliveryAccountDialogAsync() =>
+        await ModalService.OpenEditDeliveryAccountDialogAsync(BasketDeliveryInfo?.Account?.Value?.AccountId);
 
-        return await ModalService.OpenEditDeliveryAccountDialogAsync(
-            () => Dispatcher.Dispatch(new ResetNewDeliveryAccountAction()), BasketDeliveryInfo?.Account?.Value?.AccountId);
-    }
+    private async Task<IDialogReference> OpenDeliveryInstructionsAsync() =>
+        await ModalService.OpenEditDeliveryInstructionsDialogAsync(BasketDeliveryInfo?.Account?.Value?.AccountId);
 
-    private async Task<IDialogReference> OpenDeliveryInstructionsAsync()
-    {
-#warning This is a temporary solution to avoid the error of the new account not being reset. Force hard reset from the server whenever we want to edit an account (when account ID is set as a parameter)
-        Dispatcher.Dispatch(new ResetNewDeliveryAccountAction());
+    private async Task<IDialogReference> OpenAddDeliveryContactAsync() =>
+        await ModalService.OpenEditDeliveryContactDialogAsync(isNew: true);
 
-        return await ModalService.OpenEditDeliveryInstructionsDialogAsync(
-            () => Dispatcher.Dispatch(new ResetNewDeliveryAccountAction()), BasketDeliveryInfo?.Account?.Value?.AccountId);
-    }
 
-    private async Task<IDialogReference> OpenAddDeliveryContactAsync()
-    {
-        return await ModalService.OpenEditDeliveryContactDialogAsync(
-            () => Dispatcher.Dispatch(new ResetNewDeliveryContactAction()));
-    }
-
-    private async Task<IDialogReference> OpenEditDeliveryContactAsync()
-    {
-        return await ModalService.OpenEditDeliveryContactDialogAsync(
-            () => Dispatcher.Dispatch(new ResetNewDeliveryContactAction()), BasketDeliveryInfo?.Contact?.Value?.ContactId);
-    }
+    private async Task<IDialogReference> OpenEditDeliveryContactAsync() =>
+        await ModalService.OpenEditDeliveryContactDialogAsync(contactId: BasketDeliveryInfo?.Contact?.Value?.ContactId);
 
     public void Dispose()
     {

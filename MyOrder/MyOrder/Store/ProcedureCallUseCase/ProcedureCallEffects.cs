@@ -6,75 +6,53 @@ using MyOrder.Shared.Interfaces;
 using MyOrder.Shared.Utils;
 using MyOrder.Store.GlobalOperationsUseCase;
 using MyOrder.Store.OrderInfoUseCase;
-using System;
 
 namespace MyOrder.Store.ProcedureCallUseCase;
 
-public class ProcedureCallEffects(IBasketActionsRepository basketActionsRepository,
+public class ProcedureCallEffects(
+    IBasketActionsRepository basketActionsRepository,
     ILogger<OrderInfoEffects> logger,
+    IState<GlobalOperationsState> globalOperationsState,
     IStateResolver stateResolver,
     IToastService toastService,
     IBasketService basketService)
 {
     private readonly IBasketActionsRepository _basketActionsRepository = basketActionsRepository
         ?? throw new ArgumentNullException(nameof(basketActionsRepository));
-    private readonly IToastService _toastService = toastService
-        ?? throw new ArgumentNullException(nameof(toastService));
     private readonly ILogger<OrderInfoEffects> _logger = logger
         ?? throw new ArgumentNullException(nameof(logger));
-    private readonly IBasketService _basketService = basketService
-        ?? throw new ArgumentNullException(nameof(basketService));
+    private readonly IState<GlobalOperationsState> _globalOperationsState = globalOperationsState
+        ?? throw new ArgumentNullException(nameof(globalOperationsState));
     private readonly IStateResolver _stateResolver = stateResolver
         ?? throw new ArgumentNullException(nameof(stateResolver));
+    private readonly IToastService _toastService = toastService
+        ?? throw new ArgumentNullException(nameof(toastService));
+    private readonly IBasketService _basketService = basketService
+        ?? throw new ArgumentNullException(nameof(basketService));
 
     [EffectMethod]
     public async Task HandleUpdateFieldAction(UpdateFieldAction action,
         IDispatcher dispatcher)
     {
         var field = action.Field;
-        var value = action.Value;
-
-        bool success = false;
-        string errorMessage = string.Empty;
-
-        if (field == null)
+        if (field is null)
         {
             _logger.LogError("Trying to update a null field at {StackTrace}",
                 LogUtility.GetStackTrace());
             return;
         }
-        try
-        {
-            var result = await PostProcedureCall(dispatcher,
-               () => _basketActionsRepository.PostProcedureCallAsync(field, value));
-            success = result.success;
-            errorMessage = result.errorMessage;
-        }
-        catch (InvalidOperationException e)
-        {
-            _logger.LogError(e, "Error while updating procedure call for {Field}", field);
-            //errorMessage = "Une erreur est survenue...";
-        }
-        catch (Exception e)
-        {
-            _logger.LogError(e, "Error while posting procedure call");
-            //errorMessage = "Une erreur est survenue...";
-        }
-        finally
-        {
-            if (!success)
-                dispatcher.Dispatch(new UpdateFieldProcedureCallFailureAction(action.SelfFetchActionType, errorMessage));
-            //Handle failure by showing an app notification
-        }
+
+        await ExecuteProcedureCallAsync(
+            dispatcher,
+            () => _basketActionsRepository.PostProcedureCallAsync(field, action.Value),
+            $"Updating field {action.SelfFetchActionType}",
+            field.IsBlockingProcedure ?? false);
     }
 
     [EffectMethod]
     public async Task HandlePostProcedureCallAction(PostProcedureCallAction action,
         IDispatcher dispatcher)
     {
-        bool success = false;
-        string errorMessage = string.Empty;
-
         var procedureCall = action.ProcedureCall;
 
         if (procedureCall is null || procedureCall.Count < 1)
@@ -83,33 +61,51 @@ public class ProcedureCallEffects(IBasketActionsRepository basketActionsReposito
                 LogUtility.GetStackTrace());
             return;
         }
-        try
-        {
-            _logger.LogDebug("Posting procedure call.");
 
-            var result = await PostProcedureCall(dispatcher,
-               () => _basketActionsRepository.PostProcedureCallAsync(procedureCall));
-            success = result.success;
-            errorMessage = result.errorMessage;
-        }
-        finally
-        {
-            if (!success)
-            {
-                _logger.LogDebug("Error posting procedure call.");
-                dispatcher.Dispatch(new PostProcedureCallFailureAction(errorMessage));
-            }
-        }
+        await ExecuteProcedureCallAsync(
+            dispatcher,
+            () => _basketActionsRepository.PostProcedureCallAsync(procedureCall),
+            $"Posting procedure call {string.Join("\n", procedureCall)}",
+            action.IsBlocking);
     }
 
-    private static async Task<(bool success, string errorMessage)> PostProcedureCall(IDispatcher dispatcher,
-         Func<Task<ProcedureCallResponseDto?>> postProcedureCallFunc)
+    private async Task ExecuteProcedureCallAsync(
+        IDispatcher dispatcher,
+         Func<Task<ProcedureCallResponseDto?>> postProcedureCallFunc,
+         string operationName,
+         bool isBlocking)
     {
-        bool success = false;
-        string errorMessage = "Unhandled error occured.";
+        // check if app is blocked
+        if (_globalOperationsState.Value.IsGlobalBlocked)
+        {
+            // also log the on going operation from the state in addition to the new one
+            _logger.LogError("Global operations are blocked, cannot execute post procedure call: {OperationName}\n" +
+                "--- at: {StackTrace}",
+                operationName,
+                LogUtility.GetStackTrace());
+
+#warning remove this throw when feature is ready
+            throw new InvalidOperationException("Global operations are blocked, cannot post procedure call.");
+            //return;
+        }
+
+        var operationId = Guid.NewGuid();
+
+        if (isBlocking)
+        {
+            dispatcher.Dispatch(new StartBlockingOpAction(operationId, operationName));
+        }
+        else
+        {
+            dispatcher.Dispatch(new StartNonBlockingOpAction(operationId, operationName));
+        }
+
+        var (success, errorMessage) = (false, "Unhandled error occurred.");
+
         try
         {
-            ProcedureCallResponseDto? response = await postProcedureCallFunc();
+            var response = await postProcedureCallFunc();
+
             if (response == null)
             {
                 errorMessage = "Null response returned.";
@@ -133,11 +129,28 @@ public class ProcedureCallEffects(IBasketActionsRepository basketActionsReposito
             }
 
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            throw;
+            _logger.LogError(ex, "Error posting procedure call. {Message}", errorMessage);
+
         }
-        return (success, errorMessage);
+        finally
+        {
+            if (isBlocking)
+            {
+                dispatcher.Dispatch(new CompleteBlockingOpAction(
+                    operationId,
+                    success ? CompletionStatus.Success : CompletionStatus.Failure,
+                    string.Empty));
+            }
+            else
+            {
+                dispatcher.Dispatch(new CompleteNonBlockingOpAction(
+                    operationId,
+                    success ? CompletionStatus.Success : CompletionStatus.Failure,
+                    string.Empty));
+            }
+        }
     }
 
     private static void HandlePostProcedureCallNavigation(IDispatcher dispatcher, ProcedureCallResponseDto? response)

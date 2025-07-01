@@ -44,7 +44,7 @@
         </FetchActionTypeCascadingValue>
     </DialogContent>
     <DialogActions>
-        @if (!PaymentAuthorizationState.Value.IsLoading)
+        @if (PaymentAuthorizationState.Value.Initialized)
         {
 
             if (!PaymentAuthorization.HasOngoingAuthorization)

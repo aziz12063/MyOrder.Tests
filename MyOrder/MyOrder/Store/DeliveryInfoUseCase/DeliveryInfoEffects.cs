@@ -102,22 +102,6 @@ public class DeliveryInfoEffects(IDeliveryInfoRepository deliveryInfoRepository,
     }
 
     [EffectMethod]
-    public async Task HandleResetNewDeliveryAccountAction(ResetNewDeliveryAccountAction action, IDispatcher dispatcher)
-    {
-        try
-        {
-            _logger.LogInformation("Resetting new delivery account");
-            var response = await _deliveryInfoRepo.ResetNewDeliveryAccountAsync()
-                ?? throw new Exception("Error resetting new delivery account");
-            _stateResolver.DispatchRefreshCalls(dispatcher, response.RefreshCalls);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error resetting new delivery account data");
-        }
-    }
-
-    [EffectMethod]
     public async Task HandleFetchDeliveryContactsAction(FetchDeliveryContactsAction action, IDispatcher dispatcher)
     {
         try
@@ -147,22 +131,6 @@ public class DeliveryInfoEffects(IDeliveryInfoRepository deliveryInfoRepository,
         {
             _logger.LogError(ex, "Error fetching new delivery contact data");
             dispatcher.Dispatch(new FetchNewDeliveryContactFailureAction(ex.Message));
-        }
-    }
-
-    [EffectMethod]
-    public async Task HandleResetNewDeliveryContactAction(ResetNewDeliveryContactAction action, IDispatcher dispatcher)
-    {
-        try
-        {
-            _logger.LogInformation("Resetting new delivery contact.");
-            var response = await _deliveryInfoRepo.ResetNewDeliveryContactAsync()
-                ?? throw new Exception("Error resetting new delivery contact");
-            _stateResolver.DispatchRefreshCalls(dispatcher, response.RefreshCalls);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error resetting new delivery contact data");
         }
     }
 }

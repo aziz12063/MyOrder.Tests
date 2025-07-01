@@ -1,0 +1,17 @@
+﻿@using Fluxor
+@using Fluxor.Blazor.Web.Components
+@using MyOrder.Store.GlobalOperationsUseCase
+
+@inherits FluxorComponent
+@inject IState<GlobalOperationsState> OperationsState
+
+<MudOverlay Visible="_visible" LightBackground="true" AutoClose="false" ZIndex="9999">
+    <MudElement HtmlTag="div" Class="d-flex flex-column align-center gap-6">
+        <MudProgressCircular Size="Size.Large" Color="Color.Primary" Indeterminate="true" />
+        <MudText Typo="Typo.h6">Traitement en cours, veuillez patienter...</MudText>
+    </MudElement>
+</MudOverlay>
+
+@code {
+    private bool _visible => OperationsState.Value.IsGlobalBlocked;
+}

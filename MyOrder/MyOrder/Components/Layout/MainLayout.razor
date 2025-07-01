@@ -28,6 +28,7 @@
 <PublishBasketOverlay />
 <ShortcutEventsComponent />
 <ExternalNavigationHelper />
+<BlockingOperationOverlay />
 
 <MudLayout>
     <CascadingValue IsFixed="true"
@@ -37,6 +38,7 @@
         </MudAppBar>
 
         <MudMainContent>
+            <GlobalProgressBar />
             @Body
         </MudMainContent>
     </CascadingValue>

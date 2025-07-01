@@ -159,8 +159,7 @@ public sealed partial class Lines : FluxorComponentBase<LinesState, FetchLinesAc
         LinesDataGridInstance.SelectedItems.Count > 0;
 
     private async Task<IDialogReference> OpenAddLineDialogAsync(AddLineDialogTab index) =>
-         await ModalService.OpenAddLineDialogAsync(index, () =>
-                           Dispatcher.Dispatch(new ResetNewLineAction()));
+        await ModalService.OpenAddLineDialogAsync(index);
 
     private async void CtrlIShortcutHandler(ShortcutTriggeredEvent @event)
     {
