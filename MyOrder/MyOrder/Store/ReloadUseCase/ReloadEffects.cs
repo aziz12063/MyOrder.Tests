@@ -19,8 +19,8 @@ public class ReloadEffects(
     private readonly IState<GlobalOperationsState> _globalOperationsState = globalOperationsState
         ?? throw new ArgumentNullException(nameof(globalOperationsState));
 
-    [EffectMethod]
-    public async Task HandleReloadAction(ReloadAction action, IDispatcher dispatcher)
+    [EffectMethod(typeof(ReloadAction))]
+    public async Task HandleReloadAction(IDispatcher dispatcher)
     {
         var operationName = "reloadBasket";
         // check if app is blocked
@@ -60,17 +60,19 @@ public class ReloadEffects(
         }
     }
 
-    [EffectMethod]
-    public async Task HandleReloadSuccessAction(ReloadSuccessAction action, IDispatcher dispatcher)
+    [EffectMethod(typeof(ReloadSuccessAction))]
+    public Task HandleReloadSuccessAction(IDispatcher _)
     {
         logger.LogInformation("Basket reloaded successfully");
         navigationManager.Refresh(true);
+        return Task.CompletedTask;
     }
 
-    [EffectMethod]
-    public async Task HandleReloadFailureAction(ReloadFailureAction action, IDispatcher dispatcher)
+    [EffectMethod(typeof(ReloadFailureAction))]
+    public Task HandleReloadFailureAction(IDispatcher _)
     {
         logger.LogError("Error while reloading basket");
         navigationManager.Refresh(true);
+        return Task.CompletedTask;
     }
 }

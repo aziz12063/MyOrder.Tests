@@ -14,12 +14,6 @@
 
 <PageTitle>MyOrder</PageTitle>
 
-@if(GlobalOperationsState.Value.IsAppGloballyFaulted)
-{
-    <ApiErrorDisplay FaultMessage="@GlobalOperationsState.Value.GlobalFaultMessage" />
-    return;
-}
-
 @if (!ResourcesState.Value.Initialized)
 {
     <MudOverlay Visible="ResourcesState.Value.IsLoading" ZIndex="9999" DarkBackground="false">

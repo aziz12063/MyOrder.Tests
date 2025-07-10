@@ -16,16 +16,13 @@ namespace MyOrder.Services;
 
 public class ModalService(IDialogService dialogService) : IModalService
 {
-    //public event Action<string, string, Action> OnShow;
-
-    //public void ShowModal(string title, string message,
-    //     Action onConfirm, ModalSeverity modalSeverity = ModalSeverity.info)
-    //{
-    //    OnShow?.Invoke(title, message, onConfirm);
-    //}
+    private IDialogReference? _addLineDialogRef;
 
     public async Task<IDialogReference> OpenAddLineDialogAsync(AddLineDialogTab index)
     {
+        if (_addLineDialogRef is { } current && !current.Result.IsCompleted)
+            return current;
+
         var options = new DialogOptions
         {
             CloseOnEscapeKey = true,
@@ -39,8 +36,11 @@ public class ModalService(IDialogService dialogService) : IModalService
             { dialog => dialog.CurrentTab, index }
         };
 
-        return await dialogService.ShowAsync<AddLineDialog>(
-            "AddLineDialog", parameters, options);
+        _addLineDialogRef = await dialogService.ShowAsync<AddLineDialog>("AddLineDialog", parameters, options);
+
+        _ = _addLineDialogRef.Result.ContinueWith(_ => _addLineDialogRef = null);
+
+        return _addLineDialogRef;
     }
 
     public async Task<IDialogReference> OpenNewBasketDialogAsync()
@@ -52,7 +52,7 @@ public class ModalService(IDialogService dialogService) : IModalService
 
     public async Task<IDialogReference> OpenBasketDialogAsync()
     {
-        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.Small, CloseButton = true };
+        var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true, MaxWidth = MaxWidth.ExtraSmall, CloseButton = true };
 
         return await dialogService.ShowAsync<OpenBasketDialog>("OpenBasketDialog", options);
     }

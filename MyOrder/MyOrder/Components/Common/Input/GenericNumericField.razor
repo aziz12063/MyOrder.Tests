@@ -10,30 +10,33 @@
     <MudTooltip RootStyle="width:100%"
                 Text="@TooltipText"
                 Placement="Placement.Top">
-        <MudNumericField T="T"
+        <MudNumericField @ref="_mudNumericField"
+                         T="T"
+                         Adornment="_isFormatPercentValue ? Adornment.End: Adornment.None"
+                         AdornmentText="@(_isFormatPercentValue ? "%" : null)"
                          Class="@Class"
-                         Typo="Typo.body2"
+                         Style="@(_isFormatPercentValue ? $"text-align-last : end; {Style}" : Style)"
+                         Typo="Typo.subtitle2"
                          Label="@FieldLabel()"
                          Margin="Margin"
                          Variant="@Variant"
                          Underline="!HideLabel"
                          FullWidth="true"
                          Required="Required"
-                         Error="Required"
-                         ReadOnly="InternalReadOnly"
-                         Disabled="InternalReadOnly"
-                         Format="@Format"
+                         Error="Error"
+                         ReadOnly="InternalReadOnly || OnlyForDisplay"
+                         Disabled="InternalReadOnly || OnlyForDisplay"
+                         Format="@(_isFormatPercentValue ? null : Format)"
                          Culture="@Culture"
                          Value="ValueProperty"
                          ValueChanged="OnValueChanged"
                          Clearable="Clearable"
                          Min="Min"
                          Step="Step"
-                         HideSpinButtons="InternalReadOnly"
+                         HideSpinButtons="InternalReadOnly || HideSpinButton"
                          OnKeyDown="KeyDownHandler" />
     </MudTooltip>
 }
-
 @code {
     [Parameter]
     public T Step { get; set; }
@@ -44,37 +47,43 @@
     [Parameter]
     public string Class { get; set; } = string.Empty;
     [Parameter]
+    public string Style { get; set; } = string.Empty;
+    [Parameter]
     public bool Clearable { get; set; } = false;
     [Parameter]
     public string? Format { get; set; }
     [Parameter]
+    public bool HideSpinButton { get; set; } = false;
+    [Parameter]
     public EventCallback<KeyboardEventArgs> OnKeyDown { get; set; }
 
     private CultureInfo? Culture { get; set; }
+
+    private MudNumericField<T> _mudNumericField = null!;
     private Type _underLyingType = GetUnderlyingType(typeof(T));
-    //private string? _displayedValue = string.Empty;
+    private bool _isFormatPercentValue;
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
         Culture = Currency.GetCurrency();
-
         if (!IsNumericType(_underLyingType))
         {
             throw new InvalidOperationException($"The type '{_underLyingType}' is not a numeric type.");
         }
-
         if (Step is null)
             Step = ConvertTo(1);
         if (Min is null)
             Min = (T)GetMinValue(_underLyingType);
     }
-
     protected override void OnParametersSet()
     {
         base.OnParametersSet();
-        Format = FormatPercentValue(Format);
-        //UpdateDisplayedValue();
+
+        _isFormatPercentValue = Format?.Equals("P", StringComparison.OrdinalIgnoreCase) ?? false;
+
+        if (Variant == Variant.Outlined)
+            Class += " outlined-generic-textfield";
     }
 
     private async Task KeyDownHandler(KeyboardEventArgs e)
@@ -82,28 +91,21 @@
         await OnKeyDown.InvokeAsync(e);
     }
 
-    private void OnValueChanged(T newValue)
+    private async Task OnValueChanged(T newValue)
     {
         if (EqualityComparer<T>.Default.Equals(newValue, ValueProperty))
             return;
 
-        ValueChangedHandler(newValue);
-        //UpdateDisplayedValue(); // Update displayed value
+        await _mudNumericField.Validate();
+
+        var totalValidationErrors = _mudNumericField.ValidationErrors.Count;
+
+        if (totalValidationErrors == 0)
+        {
+            ValueChangedHandler(newValue);
+            await _mudNumericField.BlurAsync();
+        }
     }
-
-    // private void UpdateDisplayedValue()
-    // {
-    //     if (ValueProperty == null)
-    //     {
-    //         _displayedValue = string.Empty;
-    //         return;
-    //     }
-
-    //     if (ValueProperty is IFormattable formattable)
-    //         _displayedValue = formattable.ToString(Format, Culture);
-    //     else
-    //         _displayedValue = ValueProperty?.ToString();
-    // }
 
     private static bool IsNumericType(Type underLyingType)
     {

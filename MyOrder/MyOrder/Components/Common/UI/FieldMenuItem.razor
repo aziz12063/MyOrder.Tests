@@ -5,9 +5,7 @@
 @if (FieldUtility.IsHidden(Field))
     return;
 
-<MudTooltip Text="@Field?.Description"
-            Inline="false"
-            RootStyle="width:100%;">
+<MarkupTooltip Text="@Field?.Description">
     <MudMenuItem Disabled="_disabled"
                  OnClick="OnClick"
                  Class="px-2"
@@ -28,7 +26,7 @@
             <MudText Typo="Typo.inherit" Color="_color">@Field.Name</MudText>
         }
     </MudMenuItem>
-</MudTooltip>
+</MarkupTooltip>
 
 
 @code {

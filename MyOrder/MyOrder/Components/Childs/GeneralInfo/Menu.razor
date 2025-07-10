@@ -132,11 +132,11 @@
             <FieldMenuItem Icon="@Icons.Material.Filled.EventNote"
                            Field="BasketActions?.Logs?.OrderDiary"
                            BrowseUrl="true"
-                           OnClickCallback="()=>{}" />
+                           OnClickCallback="() => { }" />
             <FieldMenuItem Icon="@Icons.Material.Outlined.Chat"
                            Field="BasketActions?.Logs?.EdiMessages"
                            BrowseUrl="true"
-                           OnClickCallback="()=>{}" />
+                           OnClickCallback="() => { }" />
         </AppbarMenuTemplate>
 
     </MudStack>
@@ -150,7 +150,6 @@
                             TransformOrigin="Origin.TopLeft">
             @{
                 var profileField = BasketActions?.System?.Profile;
-                var settingsField = BasketActions?.System?.Settings;
             }
             @if (profileField is not null)
             {
@@ -166,20 +165,15 @@
                             Client version: @VersionInfoService.InformationalVersion
                         </MudText>
                     </MudCardContent>
-                    @if (!FieldUtility.IsHidden(settingsField))
-                    {
-                        <MudCardActions Class="pt-0">
-                            <MudButton FullWidth="true"
-                                       Color="Color.Primary"
-                                       Variant="Variant.Text"
-                                       OnClick="async () => await OpenAdminPanel(settingsField?.Url)">
-                                @settingsField!.Name
-                            </MudButton>
-                        </MudCardActions>
-                    }
                 </MudCard>
             }
         </AppbarMenuTemplate>
+
+        <AppbarMenuItem Icon="@Icons.Material.Filled.AdminPanelSettings"
+                        ColorStyle="@AdminActionColorStyle"
+                        BasketActionsBase="BasketActions?.System"
+                        ItemTitle="@BasketActions?.System?.Settings?.Name"
+                        OnClickCallback="async _ => await OpenAdminPanel(BasketActions?.System?.Settings?.Url)" />
 
         <!-- Historique-->
         <AppbarMenuItem Icon="@Icons.Material.Filled.History"
@@ -207,6 +201,7 @@
     public const string LogsActionColorStyle = "color: var(--mud-palette-info-darken);";
 
     public const string SystemActionColorStyle = "color: var(--mud-palette-tertiary-darken);";
+    public const string AdminActionColorStyle = "color: var(--mud-palette-warning-darken);";
     public const string HistoryActionColorStyle = "color: var(--mud-palette-info-lighten);";
 
 
@@ -302,7 +297,7 @@
         if (string.IsNullOrWhiteSpace(url))
             return;
 
-        await JSRuntime.InvokeAsync<object>("open", url, "_blank");
+        await JSRuntime.InvokeVoidAsync("open", url, "_blank");
     }
 
     private void ToggleBasketHistoryPopover() => _basketHistoryPopOver?.TogglePopover();

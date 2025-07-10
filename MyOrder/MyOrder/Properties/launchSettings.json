@@ -24,7 +24,7 @@
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7017/",
       "launchBrowser": true,
-      "launchUrl": "Raja-fr/CreateBasket?AccountId=C0757012",
+      "launchUrl": "raja-fr/CreateBasket",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

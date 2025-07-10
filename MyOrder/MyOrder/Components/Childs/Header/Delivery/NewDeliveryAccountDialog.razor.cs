@@ -69,11 +69,4 @@ public partial class NewDeliveryAccountDialog : FluxorComponentBase<NewDeliveryA
             _ => string.Empty
         };
     }
-
-    private string GetFullAddress(Address? item)
-    {
-        var parts = new[] { item?.Building, item?.Street, item?.Locality }
-                        .Where(s => !string.IsNullOrWhiteSpace(s));
-        return string.Join(", ", parts);
-    }
 }

@@ -22,7 +22,9 @@
                             <MudText Typo="Typo.h6" Color="Color.Secondary" Class="pb-4 pl-2">@DeliveryAccountDraft!.AddressSectionLabel</MudText>
                             <MudText Typo="Typo.body1" Class="px-1">
                                 @DeliveryAccountDraft!.AccountId?.Value - @DeliveryAccountDraft!.Name?.Value <br />
+                                @DeliveryAccountDraft!.Recipient?.Value - @DeliveryAccountDraft!.Building?.Value<br />
                                 @DeliveryAccountDraft!.Street?.Value <br />
+                                @DeliveryAccountDraft!.Locality?.Value <br />
                                 @DeliveryAccountDraft!.Zipcode?.Value - @DeliveryAccountDraft!.City?.Value
                             </MudText>
                         </MudPaper>

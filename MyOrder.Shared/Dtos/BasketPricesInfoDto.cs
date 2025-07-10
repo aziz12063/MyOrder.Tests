@@ -53,7 +53,7 @@ public record BasketPricesInfoDto(
     Field<decimal?>? DiscountAmount,
 
     [property: DisplayOnlyField]
-    Field<decimal?>? AdditionalSalesAmount,
+    Field <string?>? SalesOrderInfo,
 
     [property: DisplayOnlyField]
     Field<decimal?>? TotalWeight,

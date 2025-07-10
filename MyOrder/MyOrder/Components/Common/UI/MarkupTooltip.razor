@@ -1,13 +1,22 @@
-﻿<MudTooltip RootStyle="width:100%">
-    <TooltipContent>
-        <MudText Typo="Typo.caption" Style="align-content:left !important;" Color="Color">
-            @FieldUtility.MarkupStringHelper(Text, false)
-        </MudText>
-    </TooltipContent>
-    <ChildContent>
-        @ChildContent
-    </ChildContent>
-</MudTooltip>
+﻿@if (!string.IsNullOrWhiteSpace(Text))
+{
+    <MudTooltip RootStyle="width:100%" Inline="false">
+        <TooltipContent>
+            <MudText Typo="Typo.caption"
+                     Color="Color"
+                     Style="align-content:left !important;">
+                @FieldUtility.MarkupStringHelper(Text, false)
+            </MudText>
+        </TooltipContent>
+        <ChildContent>
+            @ChildContent
+        </ChildContent>
+    </MudTooltip>
+}
+else
+{
+    @ChildContent
+}
 @code {
     [Parameter]
     public RenderFragment? ChildContent { get; set; }

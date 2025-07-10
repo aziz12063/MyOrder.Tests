@@ -129,8 +129,7 @@
                                             continue;
                                         <MudTooltip Text="@tag.Description" Inline>
                                             <MudIcon Icon="@LineTagIconHelper(tag.Value)"
-                                                     Size="Size.Small"
-                                                     Style="@($"color: {LineTagColorHelper(tag.Value)} !important; vertical-align: middle;")" />
+                                                     Style="@($"color: {LineTagColorHelper(tag.Value)} !important; vertical-align: middle; font-size: 1.5rem;")" />
                                         </MudTooltip>
                                     }
                                 }
@@ -143,9 +142,43 @@
                                     Editable="false"
                                     CellStyleFunc="ItemIdStyleFunc">
                         <CellTemplate>
-                            <MudTooltip Text="@context.Item.ItemId?.Description">
-                                @context.Item.ItemId?.Value
-                            </MudTooltip>
+                            <MudStack Row="true" Spacing="1">
+                                <MudTooltip Text="@context.Item.ItemId?.Description">
+                                    @context.Item.ItemId?.Value
+                                </MudTooltip>
+                                <MudTooltip>
+                                    <TooltipContent>
+                                        <MudIcon Icon="@Icons.Material.Filled.HideImage"
+                                                 Size="Size.Large"
+                                                 Color="Color.Dark" />
+                                    </TooltipContent>
+                                    <ChildContent>
+                                        <MudIconButton Icon="@Icons.Material.Filled.Image"
+                                                       Size="Size.Small"
+                                                       Color="Color.Primary"
+                                                       Href="@context.Item.ItemLink?.Url"
+                                                       Target="_blank"
+                                                       @onmouseover="_ => _visible = true"
+                                                       @onmouseleave="_ => _visible = false" />
+                                    </ChildContent>
+                                </MudTooltip>
+                                <MudIconButton Icon="@Icons.Material.Filled.Image"
+                                               Size="Size.Small"
+                                               Color="Color.Primary"
+                                               Href="@context.Item.ItemLink?.Url"
+                                               Target="_blank"
+                                               @onmouseover="_ => _visible = true"
+                                               @onmouseleave="_ => _visible = false" />
+                            </MudStack>
+                            <MudPopover Open="_visible"
+                                        Paper="true"
+                                        Delay="100"
+                                        Elevation="10"
+                                        AnchorOrigin="Origin.TopRight">
+                                <MudIcon Icon="@Icons.Material.Filled.HideImage"
+                                         Size="Size.Large"
+                                         Color="Color.Dark" />
+                            </MudPopover>
                         </CellTemplate>
                     </TemplateColumn>
 
@@ -188,7 +221,7 @@
                                     CellStyle="text-align:right" />
 
 
-                    <PropertyColumn Property="context => context.ReferencePrice.Value"
+                    <PropertyColumn Property="context => context.MarginRate.Value"
                                     Title="Marge"
                                     Editable="false"
                                     Format="#0 '%'"
@@ -236,3 +269,7 @@
         </MudItem>
     </MudGrid>
 </FetchActionTypeCascadingValue>
+
+@code {
+    private bool _visible = false;
+}

@@ -9,7 +9,6 @@ using MyOrder.Shared.Events;
 using MyOrder.Shared.Interfaces;
 using MyOrder.Shared.Utils;
 using MyOrder.Store.LinesUseCase;
-using MyOrder.Store.NewLineUseCase;
 using MyOrder.Utils;
 
 
@@ -192,9 +191,9 @@ public sealed partial class Lines : FluxorComponentBase<LinesState, FetchLinesAc
     private static string LineTagIconHelper(string? tag) =>
         tag switch
         {
-            LineWarning => Icons.Material.Filled.Warning,
-            LineNotification => Icons.Material.Filled.NotificationsActive,
-            LineOffered => Icons.Material.Filled.CardGiftcard,
+            LineWarning => Icons.Material.Filled.Error,
+            LineNotification => Icons.Material.TwoTone.Warning,
+            LineOffered => Icons.Material.TwoTone.CardGiftcard,
             LineDiscounted => Icons.Material.Filled.LocalOffer,
             LineInfo => Icons.Material.Filled.Info,
             _ => Icons.Material.Filled.QuestionMark
@@ -203,8 +202,8 @@ public sealed partial class Lines : FluxorComponentBase<LinesState, FetchLinesAc
     private static string LineTagColorHelper(string? tag) =>
         tag switch
         {
-            LineWarning => "#FFC107",
-            LineNotification => "#2196F3",
+            LineWarning => "#D44333",
+            LineNotification => "#FFC107",
             LineOffered => "#4CAF50",
             LineDiscounted => "#FF9800",
             LineInfo => "#2196F3",

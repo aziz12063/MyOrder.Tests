@@ -13,7 +13,6 @@ using MyOrder.Infrastructure.Resilience;
 using MyOrder.Services;
 using MyOrder.Shared.Interfaces;
 using MyOrder.Shared.Services;
-using MyOrder.Store.Middlewares.GlobalOperations;
 using Refit;
 using Serilog;
 
@@ -56,6 +55,7 @@ builder.Services.AddScoped<IModalService, ModalService>();
 builder.Services.AddScoped<IToastService, ToastService>();
 builder.Services.AddScoped<INotificationService, NotificationService>(); // App notifications (not basketnotifications)
 builder.Services.AddScoped<IClipboardService, ClipboardService>();
+builder.Services.AddScoped<AppFaultedTicket>();
 builder.Services.Configure<RouteConfig>(
     builder.Configuration.GetSection(RouteConfig.Routes));
 
@@ -81,8 +81,7 @@ RegisterRepositoriesWithRefitClient<IBasketItemsApiClient, IBasketItemsRepositor
 //Fluxor
 builder.Services.AddFluxor(options =>
 {
-    options.ScanAssemblies(typeof(Program).Assembly)
-    .AddMiddleware<BlockingOperationMiddleware>();
+    options.ScanAssemblies(typeof(Program).Assembly);
     if (builder.Environment.IsDevelopment())
         options.UseReduxDevTools();
 });

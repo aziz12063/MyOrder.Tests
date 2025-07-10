@@ -7,14 +7,13 @@ namespace MyOrder.Store.GlobalOperationsUseCase;
 public record GlobalOperationsState(
     OperationInfo? BlockingOperation,
     IReadOnlyDictionary<Guid, OperationInfo> NonBlockingOperations,
-    bool IsAppGloballyFaulted,
-    string GlobalFaultMessage,
     bool IsStateFaulted,
     string StateFaultMessage,
+    bool IsAppReloading,
     int NonBlockingConcurrentLimit = 3,
     BasketPublishingProgress? CurrentPublishProgress = null)
 {
     public bool IsGlobalBlocked => BlockingOperation != null;
 
-    public GlobalOperationsState() : this(default, new Dictionary<Guid, OperationInfo>(), false, string.Empty, false, string.Empty) { }
+    public GlobalOperationsState() : this(default, new Dictionary<Guid, OperationInfo>(), false, string.Empty, false) { }
 }

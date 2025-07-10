@@ -15,6 +15,7 @@ public record ResourcesState(
     List<BasketValueDto?> TaxGroups,
     List<BasketValueDto?> PaymentModes,
     List<BasketValueDto?> UpdateReasons,
+#warning Review the use of LogisticFlows
     List<BasketValueDto?> LogisticFlows,
     List<BasketValueDto?> Coupons,
     List<BasketValueDto?> WarrantyCostOptions,

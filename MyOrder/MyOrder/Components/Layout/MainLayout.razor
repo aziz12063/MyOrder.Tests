@@ -1,16 +1,8 @@
-﻿@using Fluxor
-@using MyOrder.Components.Childs
-@using MyOrder.Components.Childs.GeneralInfo
-@using MyOrder.Services
+﻿@using MyOrder.Components.Childs.GeneralInfo
 @using MyOrder.Shared.Interfaces
-@using MyOrder.Store.GeneralInfoUseCase
-@using MyOrder.Store.ResourcesUseCase
 
 @inherits LayoutComponentBase
-
-@inject NavigationManager NavigationManager
-@inject INotificationService NotificationService
-@inject IBasketService BasketService
+@inject INotificationService NotificationService // DO NOT REMOVE : This injection is necessary to initiate the service
 
 @* Required for MudBlazor framework *@
 <MudThemeProvider @ref="_themeProvider"

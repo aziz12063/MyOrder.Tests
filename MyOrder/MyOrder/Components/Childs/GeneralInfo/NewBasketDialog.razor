@@ -6,7 +6,8 @@
 @inject IState<OrderInfoState> orderInfoState
 
 <MudDialog TitleClass="pb-2"
-           ContentClass="pt-2">
+           ContentClass="pt-2"
+           ActionsClass="pt-0">
     <TitleContent>
         <MudText Typo="Typo.h5">Nouveau panier</MudText>
     </TitleContent>
@@ -21,8 +22,9 @@
                                   FullWidth="true"
                                   Label="Nouveau panier pour le client n°"
                                   Variant="Variant.Outlined"
-                                  Margin="Margin.Dense"
-                                  Disabled="_radioPosition != 1" />
+                                  Class="outlined-generic-textfield"
+                                  Disabled="_radioPosition != 1"
+                                  OnKeyDown="OnKeyDownHandler" />
                 </MudRadio>
                 <MudRadio Value="2">
                     <MudTextField @bind-Value="_contactId"
@@ -31,8 +33,9 @@
                                   FullWidth="true"
                                   Label="Nouveau panier pour le contact n°"
                                   Variant="Variant.Outlined"
-                                  Margin="Margin.Dense"
-                                  Disabled="_radioPosition != 2" />
+                                  Class="outlined-generic-textfield"
+                                  Disabled="_radioPosition != 2"
+                                  OnKeyDown="OnKeyDownHandler" />
                 </MudRadio>
             </MudStack>
         </MudRadioGroup>
@@ -68,6 +71,14 @@
             : string.IsNullOrWhiteSpace(_contactId);
     }
 
+    private void OnKeyDownHandler(KeyboardEventArgs args)
+    {
+        if (args.Key != "Enter" || _disabled)
+            return;
+
+        Submit();
+    }
+
     private void Submit()
     {
         if (_radioPosition == 1)
@@ -76,7 +87,9 @@
                 {
                     { "AccountId", _accountId! },
                     { "New", "1"}
-                }));
+                },
+                OperationName: $"Création d'un nouveau panier pour le client {_accountId}"
+            ));
         }
         if (_radioPosition == 2)
         {
@@ -84,7 +97,9 @@
                 {
                     { "ContactId", _contactId! },
                     { "New", "1"}
-                }));
+                },
+                OperationName: $"Création d'un nouveau panier pour le contact {_contactId}"
+            ));
         }
 
         MudDialog.Close(DialogResult.Ok(true));

@@ -57,7 +57,7 @@
                                 Property="item => item.Name ?? string.Empty" />
 
                 <PropertyColumn Title="Voie"
-                                Property="item => item.Street ?? string.Empty" />
+                                Property="item => item.GetAddressInlined()" />
 
                 <PropertyColumn Title="CP"
                                 Property="item => item.ZipCode ?? string.Empty" />

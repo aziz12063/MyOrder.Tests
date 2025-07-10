@@ -1,21 +1,12 @@
 ﻿@page "/devtest"
 
 @layout DefaultLayout
-<MudContainer MaxWidth="MaxWidth.ExtraSmall">
-    <MudStack Row Spacing="1" Justify="Justify.FlexStart">
-        <MudSelect T="int"
-                   Variant="Variant.Outlined">
-            @foreach (var item in Items)
-            {
-                <MudSelectItem Value="@item" />
 
-            }
-        </MudSelect>
-        <MudTooltip Text="Copier l'identifiant du client">
-            <MudIconButton Icon="@Icons.Material.Filled.ContentCopy" Size="Size.Medium" />
-        </MudTooltip>
-    </MudStack>
+<MudContainer MaxWidth="MaxWidth.ExtraSmall">
+    <GenericNumericField Field="Field"
+                         Format="P" />
 </MudContainer>
 @code {
-    private List<int> Items = [1, 2, 3];
+    private Field<int?> Field = new Field<int?>("TestField", 123, null, null, null, "RED", null, null, null, null, null);
+
 }

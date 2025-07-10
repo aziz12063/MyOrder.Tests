@@ -11,12 +11,6 @@
 
 @inherits FluxorComponent
 
-@if (State.Value.IsAppGloballyFaulted)
-{
-    <ApiErrorDisplay FaultMessage="@State.Value.GlobalFaultMessage" />
-    return;
-}
-
 <MudOverlay Visible="true" ZIndex="9999" DarkBackground="false">
     <MudElement HtmlTag="div" Class="d-flex flex-column align-center gap-6" Style="width:512px;">
         <MudProgressCircular Size="Size.Large" Indeterminate="true" />
@@ -50,7 +44,7 @@
             kvp => kvp.Value.FirstOrDefault() ?? string.Empty
         );
 
-        Dispatcher.Dispatch(new CreateBasketAction(postData));
+        Dispatcher.Dispatch(new CreateBasketAction(postData, "Création d'un nouveau panier"));
         base.OnInitialized();
     }
 }

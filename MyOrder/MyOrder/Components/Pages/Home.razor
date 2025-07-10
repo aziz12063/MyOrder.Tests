@@ -24,6 +24,6 @@
     protected override void OnInitialized()
     {
         BasketService.CompanyId = CompanyId;
-        Dispatcher.Dispatch(new CreateBasketAction(new())); //Send an empty OrderContext call
+        Dispatcher.Dispatch(new CreateBasketAction(new(), "Redirection vers le dernier panier")); //Send an empty OrderContext call
     }
 }

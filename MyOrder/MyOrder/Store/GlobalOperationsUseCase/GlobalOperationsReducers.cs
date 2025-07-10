@@ -1,4 +1,5 @@
 ﻿using Fluxor;
+using MyOrder.Store.ReloadUseCase;
 
 namespace MyOrder.Store.GlobalOperationsUseCase;
 
@@ -111,25 +112,6 @@ public static class GlobalOperationsReducers
         };
     }
 
-    /// <summary>
-    /// Fault the app globally. We catch only the first fault and ignore the rest.
-    /// </summary>
-    /// <param name="state"></param>
-    /// <param name="action"></param>
-    /// <returns></returns>
-    [ReducerMethod]
-    public static GlobalOperationsState OnFaultApp(GlobalOperationsState state, FaultAppAction action)
-    {
-        if(state.IsAppGloballyFaulted)
-            return state; // already faulted
-
-        return state with
-        {
-            IsAppGloballyFaulted = true,
-            GlobalFaultMessage = action.ErrorMessage
-        };
-    }
-
     [ReducerMethod]
     public static ExternalNavigationState ReduceOpenExternalLinkAction(
         ExternalNavigationState state,
@@ -139,6 +121,15 @@ public static class GlobalOperationsReducers
         {
             Url = action.Url,
             Target = action.Target
+        };
+    }
+
+    [ReducerMethod(typeof(ReloadAction))]
+    public static GlobalOperationsState ReduceReloadAction(GlobalOperationsState state)
+    {
+        return state with
+        {
+            IsAppReloading = true
         };
     }
 }

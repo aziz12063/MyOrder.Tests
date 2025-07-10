@@ -1,15 +1,13 @@
 trigger:
- branches:
-   include:
-     - Dev
+  branches:
+    include:
+      - Dev
 
 pool: RajaAgent
 
 variables:
   buildConfiguration: 'Release'
   publishDirectory: '$(Build.ArtifactStagingDirectory)\publish'
-  sitePhysicalPathIISQ: '\\rro-qviis10\WEB\MyOrderClient'
-  sitePhysicalPathIEEQ: '\\aliasieeq\WEB\MyOrderClient'
   CurrentSemVer: '1.0'
 
 name: '$(CurrentSemVer).$(Build.BuildId)-alpha'
@@ -26,7 +24,6 @@ stages:
             inputs:
               targetType: 'inline'
               script: |
-                # $env:BUILD_SOURCEBRANCHNAME might be something like 'refs/heads/Dev'
                 $cleanBranchName = $env:BUILD_SOURCEBRANCHNAME -replace 'refs/heads/', ''
                 Write-Host "##vso[task.setvariable variable=BranchName]$cleanBranchName"
 
@@ -38,10 +35,10 @@ stages:
             inputs:
               packageType: 'sdk'
               version: '8.x'
-              
+
           - script: dotnet --version
             displayName: 'Show active .NET SDK version'
-            
+
           - task: DotNetCoreCLI@2
             displayName: 'Restore Solution'
             inputs:
@@ -77,69 +74,14 @@ stages:
           - task: PublishPipelineArtifact@1
             inputs:
               targetPath: '$(publishDirectory)'
-              artifact: 'drop'
+              artifact: 'drop_newdepo'
 
-
-  - stage: Deploy
-    displayName: 'Deploy to IIS'
-    dependsOn: Build
-    jobs:
-      - deployment: DeployToIIS
-        displayName: 'Deploy to IIS Server'
-        environment: 'Development'
-        pool:
-          name: RajaAgent
-        strategy:
-          runOnce:
-            deploy:
-              steps:
-
-                # 1) Download zipped artifact
-                - download: current
-                  artifact: drop
-                  displayName: 'Download Artifacts (ZIP)'
-
-                # 2) Unzip into a clean folder
-                - task: ExtractFiles@1
-                  displayName: 'Unzip drop artifact'
-                  inputs:
-                    archiveFilePatterns: '$(Pipeline.Workspace)\drop\*.zip'
-                    destinationFolder: '$(Pipeline.Workspace)\extracted'
-                    cleanDestinationFolder: true
-                    
-                # 3) Deploy to IIS shares
-                - task: PowerShell@2
-                  displayName: 'Deploy New Build'
-                  inputs:
-                    targetType: 'inline'
-                    script: |
-                      $source            = "$(Pipeline.Workspace)\extracted"
-                      $destinationTmp    = "$(sitePhysicalPathIISQ)\_tmp"
-                      $destinationTmpNew = "$(sitePhysicalPathIEEQ)\_tmp"
-                      Write-Host "Deploying fresh build from $source"
-                      foreach ($dest in @($destinationTmp, $destinationTmpNew)) {
-                        Write-Host "Cleaning $dest"
-                        if (Test-Path $dest) { Remove-Item $dest -Recurse -Force }
-                        New-Item -ItemType Directory -Path $dest | Out-Null
-                        Write-Host "Robocopy $source → $dest"
-                        $rc = & robocopy $source $dest /MIR /FFT /Z /XA:H /W:5 /R:3
-                        # Robocopy return codes 0 or 1 mean success; anything >8 is a real error
-                        if ($rc -gt 8) {
-                          throw "Robocopy to $dest failed (exit code $rc)"
-                        }
-                      }
-                      Write-Host "Deployment to tmp location completed."
-                      exit 0
-
-                # 4) Trigger next release
-                - task: TriggerPipeline@2
-                  displayName: 'Trigger release for MyOrderClient'
-                  inputs:
-                    serviceConnection: 'TriggerRelease-DotNet'
-                    project: 'd2023a78-b18d-451a-b55f-c2f0d8645b95'
-                    Pipeline: 'Release'
-                    releaseDefinition: '13'
-                    Description: 'Start trigger release pipeline for MyOrderClient'
-                    Stages: 'DEV_IIS_Q'
-                    buildapiversion: '6.0'
-                    releaseapiversion: '6.0'
+          - task: TriggerPipeline@2
+            inputs:
+              serviceConnection: 'TriggerRelease-DotNet'
+              project: 'd2023a78-b18d-451a-b55f-c2f0d8645b95'
+              Pipeline: 'Release'
+              releaseDefinition: '15'
+              Description: 'Start trigger release pipeline for MyOrderClient'
+              buildapiversion: '6.0'
+              releaseapiversion: '6.0'

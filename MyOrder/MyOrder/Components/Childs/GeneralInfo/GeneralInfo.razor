@@ -4,9 +4,6 @@
 
 <MudImage Src="@_companyLogoSrc" Alt="Raja Group" Class="logo" />
 
-@if (GlobalOperationsState.Value.IsAppGloballyFaulted)
-    return;
-
 @if (!Initialized)
 {
     <MudStack Class="pl-8" Spacing="2">
@@ -23,7 +20,7 @@
             <b>@BasketGeneralInfo.OrderType @BasketGeneralInfo!.OrderId [@BasketGeneralInfo.OrderStatus]</b>
         </MudText>
         <MudText Typo="Typo.subtitle2" Class="d-flex" Color="Color.Dark">
-            <em>@BasketGeneralInfo.OrderDate?.ToString("g")</em> &nbsp; - @BasketGeneralInfo.SalesResponsible
+            @BasketGeneralInfo.OrderDate?.ToString("g") &nbsp; - @BasketGeneralInfo.SalesResponsible
         </MudText>
     </MudStack>
     <MudSpacer />

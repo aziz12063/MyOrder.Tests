@@ -16,6 +16,7 @@ public record BasketLineDto
     public bool? IsCustomLineNum { get; set; }
     public List<BasketValueDto?>? LineTags { get; set; }
     public Field<string?>? ItemId { get; set; }// RW
+    public Field<string?>? ItemLink { get; set; } // ItemLink.Value has the image URL for the item, and the ItemLink.Url has the URL to the item in Intershop
     public Field<string?>? ItemProperties { get; set; }
     public Field<string?>? ItemName { get; set; } // RW
     public Field<string?>? Description { get; set; }
@@ -27,6 +28,7 @@ public record BasketLineDto
     public Field<decimal?>? ReferencePrice { get; set; }
     public Field<int?>? ReferencePriceDiscount { get; set; }
     public Field<int?>? MarginRate { get; set; }
+    public Field<int?>? PurchasePrice { get; set; }
     public Field<string?>? ShortDiscountDescription { get; set; }
     public List<BasketValueDto?>? DiscountTypes { get; set; }
     public Field<BasketValueDto?>? DiscountType { get; set; }  //RW

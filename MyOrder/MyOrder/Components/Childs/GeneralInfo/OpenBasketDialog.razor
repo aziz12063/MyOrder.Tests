@@ -5,7 +5,9 @@
 @inject IDispatcher dispatcher
 
 <MudDialog TitleClass="pb-2"
-           ContentClass="pt-2">
+           ContentClass="pt-2"
+           ActionsClass="pt-0"
+           DefaultFocus="DefaultFocus.FirstChild">
     <TitleContent>
         <MudText Typo="Typo.h6">Ouvrir panier</MudText>
     </TitleContent>
@@ -16,7 +18,8 @@
                       FullWidth="true"
                       Label="Ouvrir Panier, Commande, Offre n°"
                       Variant="Variant.Outlined"
-                      Margin="Margin.Dense" />
+                      Class="outlined-generic-textfield"
+                      OnKeyDown="OnKeyDownHandler" />
     </DialogContent>
     <DialogActions>
         <MudButton Color="Color.Primary"
@@ -38,12 +41,22 @@
         _disabled = string.IsNullOrWhiteSpace(OrderId);
     }
 
+    private void OnKeyDownHandler(KeyboardEventArgs args)
+    {
+        if (args.Key != "Enter" || _disabled)
+            return;
+
+        Submit();
+    }
+
     private void Submit()
     {
         dispatcher.Dispatch(new CreateBasketAction(new Dictionary<string, string>()
             {
                 { "OrderId", OrderId! }
-            }));
+            },
+            OperationName: "Ouverture Panier/Commande/Offre"
+        ));
         MudDialog.Close(DialogResult.Ok(true));
     }
 

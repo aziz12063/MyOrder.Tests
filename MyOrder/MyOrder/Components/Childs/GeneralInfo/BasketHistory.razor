@@ -26,16 +26,16 @@
                                  Icon="@Icons.Material.Filled.Visibility"
                                  IconSize="Size.Small"
                                  IconColor="Color.Warning"
-                                 Disabled="true" />
-                }
-                else
-                {
-                    <MudListItem Text="@item!.Name"
-                                 Dense="true"
+                Disabled="true" />
+            }
+            else
+            {
+                <MudListItem Text="@item!.Name"
+                Dense="true"
                                  Icon="@Icons.Material.Rounded.KeyboardDoubleArrowRight"
                                  IconSize="Size.Small"
                                  IconColor="Color.Dark"
-                                 Href="@item!.Url" />
+                                 OnClick="_ => BasketHistoryItemClicked(item!.Url)"/>
                 }
             }
         </MudList>
@@ -69,6 +69,8 @@
 
 @code {
     private bool _openPopover = false;
+    [Inject]
+    private NavigationManager NavigationManager { get; set; } = null!;
 
     [Parameter, EditorRequired]
     public HistoryBasketActions? HistoryBasketActions { get; set; }
@@ -83,6 +85,19 @@
         LastOpenedBaskets = HistoryBasketActions?.LastOpenedBaskets;
         BasketHistoryField = HistoryBasketActions?.BasketHistory;
         BasketHistoryItems = LastOpenedBaskets?.Value;
+    }
+
+    private void BasketHistoryItemClicked(string? serverUrl)
+    {
+#warning Implement user toast if the URL is null or empty.
+        if (string.IsNullOrWhiteSpace(serverUrl))
+            return;
+
+        ClosePopover();
+
+        var uri = serverUrl.ToAppRelative(NavigationManager);
+
+        NavigationManager.NavigateTo(uri, forceLoad: true, replace: true);
     }
 
     public void TogglePopover() => _openPopover = !_openPopover;

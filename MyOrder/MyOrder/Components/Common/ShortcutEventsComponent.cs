@@ -3,17 +3,19 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using MyOrder.Shared.Events;
 using MyOrder.Shared.Interfaces;
+using MyOrder.Store.GlobalOperationsUseCase;
 using MyOrder.Store.ReloadUseCase;
 
 namespace MyOrder.Components.Common;
 
-public sealed class ShortcutEventsComponent : ComponentBase, IDisposable
+public sealed class ShortcutEventsComponent : ComponentBase, IAsyncDisposable
 {
 
     [Inject] IDispatcher Dispatcher { get; set; } = null!;
     [Inject] IJSRuntime JSRuntime { get; set; } = null!;
     [Inject] ILogger<ShortcutEventsComponent> Logger { get; set; } = null!;
     [Inject] IEventAggregator EventAggregator { get; set; } = null!;
+    [Inject] IState<GlobalOperationsState> GlobalOperationsState { get; set; } = null!;
 
     private DotNetObjectReference<ShortcutEventsComponent>? _dotNetHelper;
     private bool _handlersRegistered = false;
@@ -54,9 +56,16 @@ public sealed class ShortcutEventsComponent : ComponentBase, IDisposable
     [JSInvokable("F5Pressed")]
     public void F5Pressed()
     {
-        //TODO: Show a message to the user that the page is being refreshed, with a result of the action
-        Dispatcher.Dispatch(new ReloadAction());
-        Logger.LogDebug("F5 pressed and action dispatched.");
+        if (!GlobalOperationsState.Value.IsAppReloading && !GlobalOperationsState.Value.IsGlobalBlocked)
+        {
+            Dispatcher.Dispatch(new ReloadAction());
+            Logger.LogDebug("F5 pressed and action dispatched.");
+        }
+        else
+        {
+#warning Implement a user-friendly notification
+            Logger.LogDebug("F5 pressed but app is reloading or global operations are blocked.");
+        }
     }
 
     [JSInvokable("CtrlIPressed")]
@@ -66,14 +75,12 @@ public sealed class ShortcutEventsComponent : ComponentBase, IDisposable
         await EventAggregator.PublishAsync(new ShortcutTriggeredEvent(Shortcut.CtrlI));
     }
 
-    public void Dispose()
+    public async ValueTask DisposeAsync()
     {
-        // Only attempt to unregister if we previously registered
         if (_handlersRegistered && _dotNetHelper != null)
         {
-            // Tell JS to remove the event listeners
-            _ = JSRuntime.InvokeVoidAsync("unregisterCtrlIHandler");
-            _ = JSRuntime.InvokeVoidAsync("unregisterF5Handler");
+            await JSRuntime.InvokeVoidAsync("unregisterCtrlIHandler").AsTask();
+            await JSRuntime.InvokeVoidAsync("unregisterF5Handler").AsTask();
 
             // Dispose the .NET reference
             _dotNetHelper.Dispose();
@@ -82,14 +89,4 @@ public sealed class ShortcutEventsComponent : ComponentBase, IDisposable
             Logger.LogDebug("ShortcutEventsComponent: JS handlers unregistered, _dotNetHelper disposed.");
         }
     }
-
-    //public void Dispose()
-    //{
-    //    if (_dotNetHelper != null)
-    //    {
-    //        _dotNetHelper.Dispose();
-    //        _dotNetHelper = null;
-    //        Logger.LogDebug("_dotNetHelper disposed and set to null in Dispose()");
-    //    }
-    //}
 }

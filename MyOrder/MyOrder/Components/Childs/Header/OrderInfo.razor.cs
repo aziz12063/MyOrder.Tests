@@ -21,7 +21,7 @@ public sealed partial class OrderInfo : FluxorComponentBase<OrderInfoState, Fetc
     private List<BasketValueDto?>? SalesOrigins { get; set; }
     private List<BasketValueDto?>? WebOrigins => State.Value.WebOrigins;
     private List<BasketValueDto?>? SalesPools { get; set; }
-    private string SelectedClient => FieldUtility.SelectedAccount(BasketOrderInfo.Account?.Value);
+    private string SelectedClient => BasketOrderInfo.Account?.Value?.ToString() ?? string.Empty;
 
     private string AccountLandLine => BasketOrderInfo?.Account?.Value?.Phone ?? string.Empty;
     private string AccountCellularPhone => BasketOrderInfo?.Account?.Value?.CellularPhone ?? string.Empty;

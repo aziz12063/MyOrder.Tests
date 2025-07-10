@@ -11,4 +11,12 @@ public record Address(
     string? Locality,
     string? ZipCode,
     string? City,
-    string? Country);
+    string? Country)
+{
+    public string GetShortAddressInlined()
+    {
+        var parts = new[] { Building, Street, Locality }
+                        .Where(s => !string.IsNullOrWhiteSpace(s));
+        return string.Join(", ", parts);
+    }
+}

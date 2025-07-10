@@ -19,13 +19,32 @@
 
             <!--Remise sup-->
             <MudItem xs="6">
-                <GenericTextField Field="@BasketLine!.DiscountRate"
-                                  Format="P" />
+                <GenericNumericField Field="@BasketLine!.DiscountRate"
+                                     Format="P"
+                                     Variant="Variant.Outlined" 
+                                     HideSpinButton="true" />
             </MudItem>
             <!--PU HT-->
             <MudItem xs="6">
-                <GenericTextField Field="@BasketLine!.DiscountPrice"
-                                  Format="C" />
+                <GenericNumericField Field="@BasketLine!.DiscountPrice"
+                                     Format="C"
+                                     Variant="Variant.Outlined"
+                                     HideSpinButton="true" />
+            </MudItem>
+
+            <!--Marge-->
+            <MudItem xs="6">
+                <GenericNumericField Field="@BasketLine!.MarginRate"
+                                     Format="P"
+                                     Variant="Variant.Outlined"
+                                     HideSpinButton="true" />
+            </MudItem>
+            <!--PUMP-->
+            <MudItem xs="6">
+                <GenericNumericField Field="@BasketLine!.PurchasePrice"
+                                     Format="C"
+                                     Variant="Variant.Outlined"
+                                     HideSpinButton="true"/>
             </MudItem>
         </MudGrid>
 
@@ -41,7 +60,7 @@
             <Columns>
                 @if (BasketPrices?.QuantityVisible == true)
                 {
-                    <PropertyColumn Property="line => line == null? 0 : line.Quantity"
+                    <PropertyColumn Property="line => line == null ? 0 : line.Quantity"
                                     HeaderClass="pa-1 ma-1"
                                     CellClass="pa-1 ma-1"
                                     CellStyle="text-align: right">
@@ -52,7 +71,7 @@
                 }
                 @if (BasketPrices?.CatalogPriceVisible == true)
                 {
-                    <PropertyColumn Property="line => line == null? 0 : line.CatalogPrice"
+                    <PropertyColumn Property="line => line == null ? 0 : line.CatalogPrice"
                                     HeaderClass="pa-1 ma-1"
                                     CellClass="pa-1 ma-1"
                                     CellStyle="text-align: right"
@@ -64,7 +83,7 @@
                 }
                 @if (BasketPrices?.DiscountRateVisible == true)
                 {
-                    <PropertyColumn Property="line => line == null? 0 : line.DiscountPrice"
+                    <PropertyColumn Property="line => line == null ? 0 : line.DiscountPrice"
                                     HeaderClass="pa-1 ma-1"
                                     CellClass="pa-1 ma-1"
                                     CellStyle="text-align: right"
@@ -76,7 +95,7 @@
                 }
                 @if (BasketPrices?.MultiplePriceVisible == true)
                 {
-                    <PropertyColumn Property="line => line == null? 0 : line.MultiplePrice"
+                    <PropertyColumn Property="line => line == null ? 0 : line.MultiplePrice"
                                     HeaderClass="pa-1 ma-1"
                                     CellClass="pa-1 ma-1"
                                     CellStyle="text-align: right"
@@ -88,7 +107,7 @@
                 }
                 @if (BasketPrices?.DiscountRateVisible == true)
                 {
-                    <PropertyColumn Property="line => line == null? 0 : line.DiscountRate"
+                    <PropertyColumn Property="line => line == null ? 0 : line.DiscountRate"
                                     HeaderClass="pa-1 ma-1"
                                     CellClass="pa-1 ma-1"
                                     CellStyle="text-align: right"
@@ -100,7 +119,7 @@
                 }
                 @if (BasketPrices?.MarginRateVisible == true)
                 {
-                    <PropertyColumn Property="line => line == null? 0 : line.MarginRate"
+                    <PropertyColumn Property="line => line == null ? 0 : line.MarginRate"
                                     Title="% Marg."
                                     HeaderClass="pa-1 ma-1"
                                     CellClass="pa-1 ma-1"

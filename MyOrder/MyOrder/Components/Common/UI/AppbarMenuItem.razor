@@ -23,7 +23,9 @@
             <MudText Typo="Typo.subtitle2"
                      Align="Align.Center"
                      Class="mt-n1"
-                     Style="color: var(--mud-palette-dark-lighten)">@BasketActionsBase.MenuLabel</MudText>
+                     Style="color: var(--mud-palette-dark-lighten)">
+                @(ItemTitle ?? BasketActionsBase.MenuLabel)
+            </MudText>
         </MudStack>
     </MudButton>
 </MudBadge>
@@ -41,7 +43,14 @@
     [Parameter]
     public string ColorStyle { get; set; } = string.Empty;
 
+    /// <summary>
+    /// Optional title for the menu item. If not provided, BasketActionsBase.MenuLabel will be used instead.
+    /// </summary>
+    [Parameter]
+    public string? ItemTitle { get; set; } = null;
+
     public bool BadgeVisible { get; set; } = false;
+
     public Color BadgeColor { get; set; }
 
     private static readonly IReadOnlyDictionary<FieldDisplayStyle, int> SeverityMap =
@@ -107,5 +116,4 @@
             .OrderByDescending(s => SeverityMap.TryGetValue(s, out var lvl) ? lvl : 0)
             .First();
     }
-
 }

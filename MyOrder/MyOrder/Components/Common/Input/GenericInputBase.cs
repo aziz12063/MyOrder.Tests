@@ -69,9 +69,7 @@ public abstract class GenericInputBase<TValue> : ComponentBase
 
     protected string? FieldLabel() => HideLabel ? null : Field!.Name;
     protected static string? FormatPercentValue(string? format) =>
-        // CR> 17/04/2025 Provoque un bogue à la mise à jour de la donnée
-        format == "P" || format == "p" ? "0.##" : format;
-        //format == "P" || format == "p" ? "0.## '%'" : format;
+        format == "P" || format == "p" ? "#0 '%'" : format;
 
 }
 

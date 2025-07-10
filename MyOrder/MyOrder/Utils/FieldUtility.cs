@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
-using MyOrder.Shared.Dtos;
-using MyOrder.Shared.Dtos.SharedComponents;
 using MudBlazor;
-using System.Numerics;
 using MyOrder.Components.Common.UI;
+using MyOrder.Shared.Dtos.SharedComponents;
 using System.Globalization;
-using System.Text.Json;
+using System.Numerics;
 
 namespace MyOrder.Utils;
 
@@ -32,17 +30,21 @@ public static class FieldUtility
         FieldDisplayStyle.Success => Color.Success,
         _ => Color.Inherit
     };
-    public static string NullOrWhiteSpaceHelper(string? value) => string.IsNullOrWhiteSpace(value) ? string.Empty : value;
 
     public static string NullOrWhiteSpaceHelperWithDash(string? value)
         => string.IsNullOrWhiteSpace(value) ? "—" : value;
 
     public static MarkupString MarkupStringHelper(string? value, bool replaceWithDashIfEmpty = true) =>
-        string.IsNullOrWhiteSpace(value) 
+        string.IsNullOrWhiteSpace(value)
         ? replaceWithDashIfEmpty
-            ? new MarkupString("—") 
+            ? new MarkupString("—")
             : new MarkupString()
         : new MarkupString(value.Replace("\n", "<br />"));
+
+    public static MarkupString MarkupStringHelper(ICollection<string?>? strs, bool replaceWithDashIfEmpty = true) =>
+        strs is { Count: > 0 }
+        ? MarkupStringHelper(string.Join("<br />", strs), replaceWithDashIfEmpty)
+        : MarkupStringHelper((string?)null, replaceWithDashIfEmpty);
 
     public static string FormatValue(object? value, DisplayFieldFormat format)
     {
@@ -73,11 +75,11 @@ public static class FieldUtility
 
             DisplayFieldFormat.Weight
                 when decimal.TryParse(value.ToString(), NumberStyles.Any, culture, out var w)
-                => $"{w:0.##} kg",
+                => $"{w:0.###} kg",
 
             DisplayFieldFormat.Volume
                 when decimal.TryParse(value.ToString(), NumberStyles.Any, culture, out var v)
-                => $"{v:0.##}\u00A0m\u00B3",
+                => $"{v:0.######}\u00A0m\u00B3",
 
             DisplayFieldFormat.Date
                 when value is DateTime dtDate
@@ -115,46 +117,36 @@ public static class FieldUtility
     /// <returns>The numeric value or the default if null.</returns>
     public static T NullNumberHelper<T>(Field<T?>? field) where T : struct, INumber<T> =>
         field?.Value ?? T.Zero;
-    //field is null || field.Value is null ? T.Zero
-    //: field.Value;
 
-    public static decimal? NullOrWhiteSpaceHelper(decimal? value) => value == null || value == 0 ? 0 : value;// i will make the return non-nullable
-    public static int? NullOrWhiteSpaceHelper(int? value) => value == null || value == 0 ? 0 : value;// i will make the return non-nullable
-    public static bool NullOrWhiteSpaceHelper(bool? value) => value ?? false;// i will make the return non-nullable
+    //public static List<string>? CreateAddressList(AccountDto? account)
+    //{
+    //    if (account == null) return null;
 
-    public static string SelectedAccount(AccountDto? account) => account?.ToString() ?? string.Empty;
-    public static List<string>? CreateAddressList(AccountDto? account)
-    {
-        if (account == null) return null;
+    //    var address = new List<string>();
 
-        var address = new List<string>();
+    //    AddIfNotNullOrEmpty(account.Recipient);
+    //    AddIfNotNullOrEmpty(account.Building);
+    //    AddIfNotNullOrEmpty(account.Street);
+    //    AddIfNotNullOrEmpty(account.Locality);
+    //    AddIfNotNullOrEmpty($"{account.ZipCode} - {account.City}");
+    //    AddIfNotNullOrEmpty(account.Country);
 
-        AddIfNotNullOrEmpty(account.Recipient);
-        AddIfNotNullOrEmpty(account.Building);
-        AddIfNotNullOrEmpty(account.Street);
-        AddIfNotNullOrEmpty(account.Locality);
-        AddIfNotNullOrEmpty($"{account.ZipCode} - {account.City}");
-        AddIfNotNullOrEmpty(account.Country);
+    //    return address.Count > 0 ? address : null;
 
-        return address.Count > 0 ? address : null;
+    //    void AddIfNotNullOrEmpty(string? value)
+    //    {
+    //        if (!string.IsNullOrWhiteSpace(value))
+    //        {
+    //            address.Add(value);
+    //        }
+    //    }
+    //}
 
-        void AddIfNotNullOrEmpty(string? value)
-        {
-            if (!string.IsNullOrWhiteSpace(value))
-            {
-                address.Add(value);
-            }
-        }
-    }
-
-    public static string DisplayAddress(List<string?>? address) => address is var addressList && addressList != null
-        ? string.Join("\n", addressList)
-        : string.Empty;
+    //public static string DisplayAddress(List<string?>? address) => address is var addressList && addressList != null
+    //    ? string.Join("\n", addressList)
+    //    : string.Empty;
 
     public static string DisplayListNoSpace(List<string?>? list) => list is var newList && newList != null
         ? string.Join("\n", newList)
         : string.Empty;
-
-
-
 }

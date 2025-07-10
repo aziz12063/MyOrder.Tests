@@ -19,7 +19,7 @@
                 </MudField>
             </ChildContent>
             <TooltipContent>
-                <MudText Typo="Typo.caption">@((MarkupString)string.Join("<br />", TooltipAddress))</MudText>
+                <MudText Typo="Typo.caption">@(FieldUtility.MarkupStringHelper(TooltipAddress))</MudText>
             </TooltipContent>
         </MudTooltip>
     </MudItem>
@@ -40,51 +40,21 @@
     protected override void OnParametersSet()
     {
         DisplayedAddress = CreateDisplayedAddress(AccountField!.Value!);
-        TooltipAddress = CreateTooltipAddress(AccountField!.Value!);
+        TooltipAddress = AccountField!.Value!.GetAddressAsAList();
     }
-    #warning Infinished Code
-    public static List<string> CreateTooltipAddress(AccountDto account)
-    {
-        var address = new List<string>();
-
-        AddIfNotNullOrEmpty(account.Recipient);
-        AddIfNotNullOrEmpty(account.Building);
-        AddIfNotNullOrEmpty(account.Street);
-        AddIfNotNullOrEmpty(account.Locality);
-        AddIfNotNullOrEmpty($"{account.ZipCode} - {account.City}");
-        AddIfNotNullOrEmpty(account.Country);
-
-        return address.Count > 0 ? address : [];
-
-        void AddIfNotNullOrEmpty(string? value)
-        {
-            if (!string.IsNullOrWhiteSpace(value))
-            {
-                address.Add(value);
-            }
-        }
-    }
-
-
-    // AddIfNotNullOrEmpty(account.Recipient);
-    // AddIfNotNullOrEmpty(account.Building);
-    // AddIfNotNullOrEmpty(account.Street);
-    // AddIfNotNullOrEmpty(account.Locality);
-    // AddIfNotNullOrEmpty($"{account.ZipCode} - {account.City}");
-    // AddIfNotNullOrEmpty(account.Country);
 
     public static MarkupString CreateDisplayedAddress(AccountDto account)
     {
         var sb = new StringBuilder();
 
-        string firstLine = string.IsNullOrWhiteSpace(account.Street) ? " -- " : account.Street;
+        string firstLine = string.IsNullOrWhiteSpace(account.Street) ? " — " : account.Street;
 
         string secondLine = (string.IsNullOrWhiteSpace(account.ZipCode), string.IsNullOrWhiteSpace(account.City)) switch
         {
             (false, false) => $"{account.ZipCode} - {account.City}",
             (false, true) => account.ZipCode!,
             (true, false) => account.City!,
-            _ => " -- "
+            _ => " — "
         };
         sb.Append(firstLine);
         sb.Append("<br />");
