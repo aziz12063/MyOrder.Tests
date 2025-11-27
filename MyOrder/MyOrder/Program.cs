@@ -9,6 +9,7 @@ using MyOrder.Infrastructure.ApiClients;
 using MyOrder.Infrastructure.HttpHandlers;
 using MyOrder.Infrastructure.Repositories;
 using MyOrder.Infrastructure.Repositories.Implementations;
+using MyOrder.Infrastructure.Repositories.JsonImplementations;
 using MyOrder.Infrastructure.Resilience;
 using MyOrder.Services;
 using MyOrder.Shared.Interfaces;
@@ -66,17 +67,30 @@ builder.Services.AddTransient<InfrastructureFailureHandler>();
 builder.Services.AddTransient<UserNameHandler>();
 builder.Services.AddTransient<ApiMetricsHandler>();
 
-RegisterRepositoriesWithRefitClient<IBasketResourcesApiClient, IBasketResourcesRepository, BasketResourcesRepository>(builder);
-RegisterRepositoriesWithRefitClient<IGeneralInfoApiClient, IGeneralInfoRepository, GeneralInfoRepository>(builder);
-RegisterRepositoriesWithRefitClient<IBasketActionsApiClient, IBasketActionsRepository, BasketActionsRepository>(builder);
-RegisterRepositoriesWithRefitClient<IOrderInfoApiClient, IOrderInfoRepository, OrderInfoRepository>(builder);
-RegisterRepositoriesWithRefitClient<IDeliveryInfoApiClient, IDeliveryInfoRepository, DeliveryInfoRepository>(builder);
-RegisterRepositoriesWithRefitClient<IInvoiceInfoApiClient, IInvoiceInfoRepository, InvoiceInfoRepository>(builder);
-RegisterRepositoriesWithRefitClient<ITradeInfoApiClient, ITradeInfoRepository, TradeInfoRepository>(builder);
-RegisterRepositoriesWithRefitClient<IPricesInfoApiClient, IPricesInfoRepository, PricesInfoRepository>(builder);
-RegisterRepositoriesWithRefitClient<IOrderLinesApiClient, IOrderLinesRepository, OrderLinesRepository>(builder);
-RegisterRepositoriesWithRefitClient<INewOrderLineApiClient, INewOrderLineRepository, NewOrderLineRepository>(builder);
-RegisterRepositoriesWithRefitClient<IBasketItemsApiClient, IBasketItemsRepository, BasketItemsRepository>(builder);
+//RegisterRepositoriesWithRefitClient<IBasketResourcesApiClient, IBasketResourcesRepository, BasketResourcesRepository>(builder);
+//RegisterRepositoriesWithRefitClient<IGeneralInfoApiClient, IGeneralInfoRepository, GeneralInfoRepository>(builder);
+//RegisterRepositoriesWithRefitClient<IBasketActionsApiClient, IBasketActionsRepository, BasketActionsRepository>(builder);
+//RegisterRepositoriesWithRefitClient<IOrderInfoApiClient, IOrderInfoRepository, OrderInfoRepository>(builder);
+//RegisterRepositoriesWithRefitClient<IDeliveryInfoApiClient, IDeliveryInfoRepository, DeliveryInfoRepository>(builder);
+//RegisterRepositoriesWithRefitClient<IInvoiceInfoApiClient, IInvoiceInfoRepository, InvoiceInfoRepository>(builder);
+//RegisterRepositoriesWithRefitClient<ITradeInfoApiClient, ITradeInfoRepository, TradeInfoRepository>(builder);
+//RegisterRepositoriesWithRefitClient<IPricesInfoApiClient, IPricesInfoRepository, PricesInfoRepository>(builder);
+//RegisterRepositoriesWithRefitClient<IOrderLinesApiClient, IOrderLinesRepository, OrderLinesRepository>(builder);
+//RegisterRepositoriesWithRefitClient<INewOrderLineApiClient, INewOrderLineRepository, NewOrderLineRepository>(builder);
+//RegisterRepositoriesWithRefitClient<IBasketItemsApiClient, IBasketItemsRepository, BasketItemsRepository>(builder);
+
+//For consuming JSON files          
+RegisterRepositoriesWithRefitClient<IBasketResourcesApiClient, IBasketResourcesRepository, BasketRessourcesJsonRepository>(builder);
+RegisterRepositoriesWithRefitClient<IGeneralInfoApiClient, IGeneralInfoRepository, GeneralInfoJsonRepository>(builder);
+RegisterRepositoriesWithRefitClient<IBasketActionsApiClient, IBasketActionsRepository, BasketActionsJsonRepository>(builder);
+RegisterRepositoriesWithRefitClient<IOrderInfoApiClient, IOrderInfoRepository, OrderInfoJsonRepository>(builder);
+RegisterRepositoriesWithRefitClient<IDeliveryInfoApiClient, IDeliveryInfoRepository, DeliveryInfoJsonRepository>(builder);
+RegisterRepositoriesWithRefitClient<IInvoiceInfoApiClient, IInvoiceInfoRepository, InvoiceInfoJsonRepository>(builder);
+RegisterRepositoriesWithRefitClient<ITradeInfoApiClient, ITradeInfoRepository, TradeInfoJsonRepository>(builder);
+RegisterRepositoriesWithRefitClient<IPricesInfoApiClient, IPricesInfoRepository, PricesInfoJsonRepository>(builder);
+RegisterRepositoriesWithRefitClient<IOrderLinesApiClient, IOrderLinesRepository, OrderLinesJsonRepository>(builder);
+RegisterRepositoriesWithRefitClient<INewOrderLineApiClient, INewOrderLineRepository, NewOrderLineJsonRepository>(builder);
+RegisterRepositoriesWithRefitClient<IBasketItemsApiClient, IBasketItemsRepository, BasketItemsJsonRepository>(builder);
 
 //Fluxor
 builder.Services.AddFluxor(options =>
@@ -110,6 +124,10 @@ else
 }
 
 app.UseHttpsRedirection();
+
+//#warning "Just for testing purposes"
+//app.UseStatusCodePagesWithReExecute("/Error/{0}");
+
 
 app.UseStaticFiles();
 app.UseAntiforgery();
