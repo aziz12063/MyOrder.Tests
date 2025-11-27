@@ -1,0 +1,1199 @@
+{
+    "lines": [
+      {
+        "recId": 288624,
+        "lineNum": {
+          "name": "N° de ligne",
+          "status": "readWrite",
+          "displayStyle": "standard",
+          "value": 1,
+          "procedureCall": [
+            "UpdateOrderLinePropertyValue",
+            "288624",
+            "CustomerLineNum",
+            "System.Int32",
+            "<value>"
+          ]
+        },
+        "isCustomLineNum": false,
+        "lineTags": [],
+        "customerItemId": {
+          "name": "Code client",
+          "status": "readWrite",
+          "displayStyle": "standard",
+          "value": null,
+          "procedureCall": [
+            "UpdateOrderLinePropertyValue",
+            "288624",
+            "CustomerItemId",
+            "System.String",
+            "<value>"
+          ]
+        },
+        "itemId": {
+          "name": "Code article",
+          "status": "readOnly",
+          "displayStyle": "standard",
+          "value": "CAS12"
+        },
+        "itemProperties": {
+          "name": "Caractéristiques Produit",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": ""
+        },
+        "name": {
+          "name": "Description",
+          "status": "readOnly",
+          "displayStyle": "standard",
+          "value": "C.A SC10 27X19X12 BRUN"
+        },
+        "inventLocationId": {
+          "name": "Entrepôt",
+          "status": "readWrite",
+          "displayStyle": "standard",
+          "value": "PN2"
+        },
+        "salesQuantity": {
+          "name": "Quantité",
+          "status": "readWrite",
+          "displayStyle": "standard",
+          "value": 25,
+          "procedureCall": [
+            "UpdateOrderLinePropertyValue",
+            "288624",
+            "SalesQty",
+            "System.Double",
+            "<value>"
+          ]
+        },
+        "salesPrice": {
+          "name": "Prix unitaire",
+          "status": "readOnly",
+          "displayStyle": "standard",
+          "value": 1.11
+        },
+        "discountTypes": [
+          {
+            "value": "Default",
+            "description": "Prix Catalogue"
+          },
+          {
+            "value": "NoDiscount",
+            "description": "Pas de remise - Prix catalogue"
+          },
+          {
+            "value": "StandardDiscount",
+            "description": "Remise Standard (%)"
+          },
+          {
+            "value": "LastColumnDiscount",
+            "description": "Remise DC (%)"
+          },
+          {
+            "value": "MarginDiscount",
+            "description": "Remise / Marge (%)"
+          },
+          {
+            "value": "ManualPrice",
+            "description": "Prix manuel"
+          }
+        ],
+        "discountType": {
+          "name": "Tarification",
+          "status": "readWrite",
+          "displayStyle": "standard",
+          "value": {
+            "value": "Default",
+            "description": "Prix Catalogue"
+          },
+          "procedureCall": [
+            "UpdateOrderLinePropertyValue",
+            "288624",
+            "DiscountType",
+            "System.String",
+            "<<one of line discountTypes value>>"
+          ]
+        },
+        "marginRate": {
+          "name": "Marge",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 0
+        },
+        "referencePrice": {
+          "name": "Prix DC",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 0.81
+        },
+        "referencePriceDiscount": {
+          "name": "Remise DC",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": -27
+        },
+        "shortDiscountDescription": {
+          "name": "Tarification",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": "Catalogue"
+        },
+        "lineAmount": {
+          "name": "Montant HT",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 27.75
+        },
+        "updateReason": {
+          "name": "Motif Modif.",
+          "status": "readWrite",
+          "displayStyle": "standard",
+          "value": {
+            "value": "",
+            "description": "== Non renseigné =="
+          },
+          "procedureCall": [
+            "UpdateOrderLinePropertyValue",
+            "288624",
+            "RAJ_FreePriceReasonId",
+            "System.String",
+            "<<one of line lineUpdateReasons value>>"
+          ]
+        },
+        "isUpselling": {
+          "name": "Vente additionnelle",
+          "status": "hidden",
+          "displayStyle": "standard",
+          "value": false
+        },
+        "initialSalesQuantity": {
+          "name": "Qté initiale",
+          "status": "readOnly",
+          "displayStyle": "standard",
+          "value": 0
+        },
+        "multipleQuantity": {
+          "name": "Vendu par",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 25
+        },
+        "vatRate": {
+          "name": "Taux de TVA",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 0
+        },
+        "note": {
+          "name": "Note",
+          "status": "readWrite",
+          "displayStyle": "standard",
+          "value": null,
+          "procedureCall": [
+            "UpdateOrderLinePropertyValue",
+            "288624",
+            "Note",
+            "System.String",
+            "<value>"
+          ]
+        },
+        "productInfo": {
+          "name": "Informations produit",
+          "status": "readOnly",
+          "displayStyle": "standard",
+          "value": ""
+        },
+        "logisticFlow": {
+          "name": "Flux logistique",
+          "status": "readWrite",
+          "displayStyle": "standard",
+          "value": {
+            "value": "Stock",
+            "description": "Stock"
+          },
+          "procedureCall": [
+            "UpdateOrderLinePropertyValue",
+            "288624",
+            "MOMLogisticalFlow",
+            "System.String",
+            "<one of /logisticFlows value>"
+          ]
+        },
+        "physicalAvailableQuantity": {
+          "name": "Livré maintenant",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 25
+        },
+        "onOrderQuantity": {
+          "name": "A livrer plus tard",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 0
+        },
+        "paletteQuantity": {
+          "name": "Quantité/palette",
+          "status": "onlyForDisplay",
+          "displayStyle": "emphasize",
+          "value": 1100
+        },
+        "quantityAtPaletteThreshold": {
+          "name": "Diff Palette",
+          "status": "onlyForDisplay",
+          "displayStyle": "emphasize",
+          "value": 1075
+        },
+        "itemType": {
+          "name": "Type d'article",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": "Standard"
+        },
+        "deliveryDate": {
+          "name": "Date de liv.",
+          "status": "required",
+          "displayStyle": "warn",
+          "value": null,
+          "description": "Date calculée par le système",
+          "procedureCall": [
+            "UpdateOrderLinePropertyValue",
+            "288624",
+            "MyManualDeliveryDate",
+            "System.DateTime",
+            "<value>"
+          ]
+        },
+        "itemPhysicalInventQuantity": {
+          "name": "Stock total",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 2074
+        },
+        "itemReservPhysicalQuantity": {
+          "name": "Stock réservé",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 2074
+        },
+        "itemPhysicalAvailableQuantity": {
+          "name": "Stock disponible",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 0
+        },
+        "itemOnOrderQuantity": {
+          "name": "En commande",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 110052
+        },
+        "itemOrderedQuantity": {
+          "name": "Commandé total",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 0
+        },
+        "itemOrderedAvailableQuantity": {
+          "name": "Commandé disp.",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 0
+        },
+        "supplyFamily": {
+          "name": "Famille d'appro.",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": " - "
+        },
+        "itemManager": {
+          "name": "Gestionnaire",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": "Faizann HUSSAIN"
+        },
+        "transportMode": {
+          "name": "Mode de transport",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": "PAR DÉFAUT"
+        },
+        "purchaseId": {
+          "name": "Commande d'achat",
+          "status": "hidden",
+          "displayStyle": "standard",
+          "value": ""
+        },
+        "discountDescription": {
+          "name": "Description Tarif",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": "Prix Catalogue"
+        },
+        "discountRate": {
+          "name": "Remise sup.",
+          "status": "readOnly",
+          "displayStyle": "standard",
+          "value": 0
+        },
+        "discountPrice": {
+          "name": "PU HT",
+          "status": "readOnly",
+          "displayStyle": "standard",
+          "value": 1.11
+        },
+        "prices": {
+          "quantityVisible": true,
+          "catalogPriceVisible": true,
+          "discountPriceVisible": false,
+          "multiplePriceVisible": true,
+          "discountRateVisible": false,
+          "marginRateVisible": true,
+          "priceLines": [
+            {
+              "catalogPrice": 1.11,
+              "discountPrice": 1.11,
+              "discountRate": 0,
+              "isCurrent": true,
+              "marginRate": 1,
+              "multiplePrice": 0,
+              "quantity": 25
+            },
+            {
+              "catalogPrice": 1.04,
+              "discountPrice": 1.04,
+              "discountRate": 0,
+              "isCurrent": false,
+              "marginRate": 1,
+              "multiplePrice": 0,
+              "quantity": 100
+            },
+            {
+              "catalogPrice": 0.97,
+              "discountPrice": 0.97,
+              "discountRate": 0,
+              "isCurrent": false,
+              "marginRate": 1,
+              "multiplePrice": 0,
+              "quantity": 200
+            },
+            {
+              "catalogPrice": 0.92,
+              "discountPrice": 0.92,
+              "discountRate": 0,
+              "isCurrent": false,
+              "marginRate": 1,
+              "multiplePrice": 0,
+              "quantity": 400
+            },
+            {
+              "catalogPrice": 0.81,
+              "discountPrice": 0.81,
+              "discountRate": 0,
+              "isCurrent": false,
+              "marginRate": 1,
+              "multiplePrice": 0,
+              "quantity": 800
+            }
+          ]
+        }
+      },
+      {
+        "recId": 288625,
+        "lineNum": {
+          "name": "N° de ligne",
+          "status": "readWrite",
+          "displayStyle": "standard",
+          "value": 2,
+          "procedureCall": [
+            "UpdateOrderLinePropertyValue",
+            "288624",
+            "CustomerLineNum",
+            "System.Int32",
+            "<value>"
+          ]
+        },
+        "isCustomLineNum": false,
+        "lineTags": [],
+        "customerItemId": {
+          "name": "Code client",
+          "status": "readWrite",
+          "displayStyle": "standard",
+          "value": null,
+          "procedureCall": [
+            "UpdateOrderLinePropertyValue",
+            "288624",
+            "CustomerItemId",
+            "System.String",
+            "<value>"
+          ]
+        },
+        "itemId": {
+          "name": "Code article",
+          "status": "readOnly",
+          "displayStyle": "standard",
+          "value": "CAS13"
+        },
+        "itemProperties": {
+          "name": "Caractéristiques Produit",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": ""
+        },
+        "name": {
+          "name": "Description",
+          "status": "readOnly",
+          "displayStyle": "standard",
+          "value": "C.A SC10 27X19X12 BRUN"
+        },
+        "inventLocationId": {
+          "name": "Entrepôt",
+          "status": "readWrite",
+          "displayStyle": "standard",
+          "value": "PN3"
+        },
+        "salesQuantity": {
+          "name": "Quantité",
+          "status": "readWrite",
+          "displayStyle": "standard",
+          "value": 50,
+          "procedureCall": [
+            "UpdateOrderLinePropertyValue",
+            "288624",
+            "SalesQty",
+            "System.Double",
+            "<value>"
+          ]
+        },
+        "salesPrice": {
+          "name": "Prix unitaire",
+          "status": "readOnly",
+          "displayStyle": "standard",
+          "value": 2.15
+        },
+        "discountTypes": [
+          {
+            "value": "Default",
+            "description": "Prix Catalogue"
+          },
+          {
+            "value": "NoDiscount",
+            "description": "Pas de remise - Prix catalogue"
+          },
+          {
+            "value": "StandardDiscount",
+            "description": "Remise Standard (%)"
+          },
+          {
+            "value": "LastColumnDiscount",
+            "description": "Remise DC (%)"
+          },
+          {
+            "value": "MarginDiscount",
+            "description": "Remise / Marge (%)"
+          },
+          {
+            "value": "ManualPrice",
+            "description": "Prix manuel"
+          }
+        ],
+        "discountType": {
+          "name": "Tarification",
+          "status": "readWrite",
+          "displayStyle": "standard",
+          "value": {
+            "value": "Default",
+            "description": "Prix Catalogue"
+          },
+          "procedureCall": [
+            "UpdateOrderLinePropertyValue",
+            "288624",
+            "DiscountType",
+            "System.String",
+            "<<one of line discountTypes value>>"
+          ]
+        },
+        "marginRate": {
+          "name": "Marge",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 2
+        },
+        "referencePrice": {
+          "name": "Prix DC",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 1.81
+        },
+        "referencePriceDiscount": {
+          "name": "Remise DC",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": -28
+        },
+        "shortDiscountDescription": {
+          "name": "Tarification",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": "Catalogue"
+        },
+        "lineAmount": {
+          "name": "Montant HT",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 29.75
+        },
+        "updateReason": {
+          "name": "Motif Modif.",
+          "status": "readWrite",
+          "displayStyle": "standard",
+          "value": {
+            "value": "",
+            "description": "== Non renseigné =="
+          },
+          "procedureCall": [
+            "UpdateOrderLinePropertyValue",
+            "288624",
+            "RAJ_FreePriceReasonId",
+            "System.String",
+            "<<one of line lineUpdateReasons value>>"
+          ]
+        },
+        "isUpselling": {
+          "name": "Vente additionnelle",
+          "status": "hidden",
+          "displayStyle": "standard",
+          "value": false
+        },
+        "initialSalesQuantity": {
+          "name": "Qté initiale",
+          "status": "readOnly",
+          "displayStyle": "standard",
+          "value": 0
+        },
+        "multipleQuantity": {
+          "name": "Vendu par",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 50
+        },
+        "vatRate": {
+          "name": "Taux de TVA",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 0
+        },
+        "note": {
+          "name": "Note",
+          "status": "readWrite",
+          "displayStyle": "standard",
+          "value": null,
+          "procedureCall": [
+            "UpdateOrderLinePropertyValue",
+            "288624",
+            "Note",
+            "System.String",
+            "<value>"
+          ]
+        },
+        "productInfo": {
+          "name": "Informations produit",
+          "status": "readOnly",
+          "displayStyle": "standard",
+          "value": ""
+        },
+        "logisticFlow": {
+          "name": "Flux logistique",
+          "status": "readWrite",
+          "displayStyle": "standard",
+          "value": {
+            "value": "Stock",
+            "description": "Stock"
+          },
+          "procedureCall": [
+            "UpdateOrderLinePropertyValue",
+            "288624",
+            "MOMLogisticalFlow",
+            "System.String",
+            "<one of /logisticFlows value>"
+          ]
+        },
+        "physicalAvailableQuantity": {
+          "name": "Livré maintenant",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 25
+        },
+        "onOrderQuantity": {
+          "name": "A livrer plus tard",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 0
+        },
+        "paletteQuantity": {
+          "name": "Quantité/palette",
+          "status": "onlyForDisplay",
+          "displayStyle": "emphasize",
+          "value": 1100
+        },
+        "quantityAtPaletteThreshold": {
+          "name": "Diff Palette",
+          "status": "onlyForDisplay",
+          "displayStyle": "emphasize",
+          "value": 1075
+        },
+        "itemType": {
+          "name": "Type d'article",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": "Standard"
+        },
+        "deliveryDate": {
+          "name": "Date de liv.",
+          "status": "required",
+          "displayStyle": "warn",
+          "value": null,
+          "description": "Date calculée par le système",
+          "procedureCall": [
+            "UpdateOrderLinePropertyValue",
+            "288624",
+            "MyManualDeliveryDate",
+            "System.DateTime",
+            "<value>"
+          ]
+        },
+        "itemPhysicalInventQuantity": {
+          "name": "Stock total",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 2074
+        },
+        "itemReservPhysicalQuantity": {
+          "name": "Stock réservé",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 2074
+        },
+        "itemPhysicalAvailableQuantity": {
+          "name": "Stock disponible",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 0
+        },
+        "itemOnOrderQuantity": {
+          "name": "En commande",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 110052
+        },
+        "itemOrderedQuantity": {
+          "name": "Commandé total",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 0
+        },
+        "itemOrderedAvailableQuantity": {
+          "name": "Commandé disp.",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 0
+        },
+        "supplyFamily": {
+          "name": "Famille d'appro.",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": " - "
+        },
+        "itemManager": {
+          "name": "Gestionnaire",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": "Faizann HUSSAIN"
+        },
+        "transportMode": {
+          "name": "Mode de transport",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": "PAR DÉFAUT"
+        },
+        "purchaseId": {
+          "name": "Commande d'achat",
+          "status": "hidden",
+          "displayStyle": "standard",
+          "value": ""
+        },
+        "discountDescription": {
+          "name": "Description Tarif",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": "Prix Catalogue"
+        },
+        "discountRate": {
+          "name": "Remise sup.",
+          "status": "readOnly",
+          "displayStyle": "standard",
+          "value": 0
+        },
+        "discountPrice": {
+          "name": "PU HT",
+          "status": "readOnly",
+          "displayStyle": "standard",
+          "value": 1.11
+        },
+        "prices": {
+          "quantityVisible": true,
+          "catalogPriceVisible": true,
+          "discountPriceVisible": false,
+          "multiplePriceVisible": true,
+          "discountRateVisible": false,
+          "marginRateVisible": true,
+          "priceLines": [
+            {
+              "catalogPrice": 1.11,
+              "discountPrice": 1.11,
+              "discountRate": 0,
+              "isCurrent": true,
+              "marginRate": 1,
+              "multiplePrice": 0,
+              "quantity": 25
+            },
+            {
+              "catalogPrice": 1.04,
+              "discountPrice": 1.04,
+              "discountRate": 0,
+              "isCurrent": false,
+              "marginRate": 1,
+              "multiplePrice": 0,
+              "quantity": 100
+            },
+            {
+              "catalogPrice": 0.97,
+              "discountPrice": 0.97,
+              "discountRate": 0,
+              "isCurrent": false,
+              "marginRate": 1,
+              "multiplePrice": 0,
+              "quantity": 200
+            },
+            {
+              "catalogPrice": 0.92,
+              "discountPrice": 0.92,
+              "discountRate": 0,
+              "isCurrent": false,
+              "marginRate": 1,
+              "multiplePrice": 0,
+              "quantity": 400
+            },
+            {
+              "catalogPrice": 0.81,
+              "discountPrice": 0.81,
+              "discountRate": 0,
+              "isCurrent": false,
+              "marginRate": 1,
+              "multiplePrice": 0,
+              "quantity": 800
+            }
+          ]
+        }
+      },
+      {
+        "recId": 288635,
+        "lineNum": {
+          "name": "N° de ligne",
+          "status": "readWrite",
+          "displayStyle": "standard",
+          "value": 3,
+          "procedureCall": [
+            "UpdateOrderLinePropertyValue",
+            "288624",
+            "CustomerLineNum",
+            "System.Int32",
+            "<value>"
+          ]
+        },
+        "isCustomLineNum": false,
+        "lineTags": [],
+        "customerItemId": {
+          "name": "Code client",
+          "status": "readWrite",
+          "displayStyle": "standard",
+          "value": null,
+          "procedureCall": [
+            "UpdateOrderLinePropertyValue",
+            "288624",
+            "CustomerItemId",
+            "System.String",
+            "<value>"
+          ]
+        },
+        "itemId": {
+          "name": "Code article",
+          "status": "readOnly",
+          "displayStyle": "standard",
+          "value": "CAS11"
+        },
+        "itemProperties": {
+          "name": "Caractéristiques Produit",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": ""
+        },
+        "name": {
+          "name": "Description",
+          "status": "readOnly",
+          "displayStyle": "standard",
+          "value": "C.A SC10 27X19X12 BRUN"
+        },
+        "inventLocationId": {
+          "name": "Entrepôt",
+          "status": "readWrite",
+          "displayStyle": "standard",
+          "value": "PN3"
+        },
+        "salesQuantity": {
+          "name": "Quantité",
+          "status": "readWrite",
+          "displayStyle": "standard",
+          "value": 50,
+          "procedureCall": [
+            "UpdateOrderLinePropertyValue",
+            "288624",
+            "SalesQty",
+            "System.Double",
+            "<value>"
+          ]
+        },
+        "salesPrice": {
+          "name": "Prix unitaire",
+          "status": "readOnly",
+          "displayStyle": "standard",
+          "value": 2.15
+        },
+        "discountTypes": [
+          {
+            "value": "Default",
+            "description": "Prix Catalogue"
+          },
+          {
+            "value": "NoDiscount",
+            "description": "Pas de remise - Prix catalogue"
+          },
+          {
+            "value": "StandardDiscount",
+            "description": "Remise Standard (%)"
+          },
+          {
+            "value": "LastColumnDiscount",
+            "description": "Remise DC (%)"
+          },
+          {
+            "value": "MarginDiscount",
+            "description": "Remise / Marge (%)"
+          },
+          {
+            "value": "ManualPrice",
+            "description": "Prix manuel"
+          }
+        ],
+        "discountType": {
+          "name": "Tarification",
+          "status": "readWrite",
+          "displayStyle": "standard",
+          "value": {
+            "value": "Default",
+            "description": "Prix Catalogue"
+          },
+          "procedureCall": [
+            "UpdateOrderLinePropertyValue",
+            "288624",
+            "DiscountType",
+            "System.String",
+            "<<one of line discountTypes value>>"
+          ]
+        },
+        "marginRate": {
+          "name": "Marge",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 2
+        },
+        "referencePrice": {
+          "name": "Prix DC",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 1.81
+        },
+        "referencePriceDiscount": {
+          "name": "Remise DC",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": -28
+        },
+        "shortDiscountDescription": {
+          "name": "Tarification",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": "Catalogue"
+        },
+        "lineAmount": {
+          "name": "Montant HT",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 29.75
+        },
+        "updateReason": {
+          "name": "Motif Modif.",
+          "status": "readWrite",
+          "displayStyle": "standard",
+          "value": {
+            "value": "",
+            "description": "== Non renseigné =="
+          },
+          "procedureCall": [
+            "UpdateOrderLinePropertyValue",
+            "288624",
+            "RAJ_FreePriceReasonId",
+            "System.String",
+            "<<one of line lineUpdateReasons value>>"
+          ]
+        },
+        "isUpselling": {
+          "name": "Vente additionnelle",
+          "status": "hidden",
+          "displayStyle": "standard",
+          "value": false
+        },
+        "initialSalesQuantity": {
+          "name": "Qté initiale",
+          "status": "readOnly",
+          "displayStyle": "standard",
+          "value": 0
+        },
+        "multipleQuantity": {
+          "name": "Vendu par",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 50
+        },
+        "vatRate": {
+          "name": "Taux de TVA",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 0
+        },
+        "note": {
+          "name": "Note",
+          "status": "readWrite",
+          "displayStyle": "standard",
+          "value": null,
+          "procedureCall": [
+            "UpdateOrderLinePropertyValue",
+            "288624",
+            "Note",
+            "System.String",
+            "<value>"
+          ]
+        },
+        "productInfo": {
+          "name": "Informations produit",
+          "status": "readOnly",
+          "displayStyle": "standard",
+          "value": ""
+        },
+        "logisticFlow": {
+          "name": "Flux logistique",
+          "status": "readWrite",
+          "displayStyle": "standard",
+          "value": {
+            "value": "Stock",
+            "description": "Stock"
+          },
+          "procedureCall": [
+            "UpdateOrderLinePropertyValue",
+            "288624",
+            "MOMLogisticalFlow",
+            "System.String",
+            "<one of /logisticFlows value>"
+          ]
+        },
+        "physicalAvailableQuantity": {
+          "name": "Livré maintenant",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 25
+        },
+        "onOrderQuantity": {
+          "name": "A livrer plus tard",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 0
+        },
+        "paletteQuantity": {
+          "name": "Quantité/palette",
+          "status": "onlyForDisplay",
+          "displayStyle": "emphasize",
+          "value": 1100
+        },
+        "quantityAtPaletteThreshold": {
+          "name": "Diff Palette",
+          "status": "onlyForDisplay",
+          "displayStyle": "emphasize",
+          "value": 1075
+        },
+        "itemType": {
+          "name": "Type d'article",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": "Standard"
+        },
+        "deliveryDate": {
+          "name": "Date de liv.",
+          "status": "required",
+          "displayStyle": "warn",
+          "value": null,
+          "description": "Date calculée par le système",
+          "procedureCall": [
+            "UpdateOrderLinePropertyValue",
+            "288624",
+            "MyManualDeliveryDate",
+            "System.DateTime",
+            "<value>"
+          ]
+        },
+        "itemPhysicalInventQuantity": {
+          "name": "Stock total",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 2074
+        },
+        "itemReservPhysicalQuantity": {
+          "name": "Stock réservé",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 2074
+        },
+        "itemPhysicalAvailableQuantity": {
+          "name": "Stock disponible",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 0
+        },
+        "itemOnOrderQuantity": {
+          "name": "En commande",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 110052
+        },
+        "itemOrderedQuantity": {
+          "name": "Commandé total",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 0
+        },
+        "itemOrderedAvailableQuantity": {
+          "name": "Commandé disp.",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": 0
+        },
+        "supplyFamily": {
+          "name": "Famille d'appro.",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": " - "
+        },
+        "itemManager": {
+          "name": "Gestionnaire",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": "Faizann HUSSAIN"
+        },
+        "transportMode": {
+          "name": "Mode de transport",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": "PAR DÉFAUT"
+        },
+        "purchaseId": {
+          "name": "Commande d'achat",
+          "status": "hidden",
+          "displayStyle": "standard",
+          "value": ""
+        },
+        "discountDescription": {
+          "name": "Description Tarif",
+          "status": "onlyForDisplay",
+          "displayStyle": "standard",
+          "value": "Prix Catalogue"
+        },
+        "discountRate": {
+          "name": "Remise sup.",
+          "status": "readOnly",
+          "displayStyle": "standard",
+          "value": 0
+        },
+        "discountPrice": {
+          "name": "PU HT",
+          "status": "readOnly",
+          "displayStyle": "standard",
+          "value": 1.11
+        },
+        "prices": {
+          "quantityVisible": true,
+          "catalogPriceVisible": true,
+          "discountPriceVisible": false,
+          "multiplePriceVisible": true,
+          "discountRateVisible": false,
+          "marginRateVisible": true,
+          "priceLines": [
+            {
+              "catalogPrice": 1.11,
+              "discountPrice": 1.11,
+              "discountRate": 0,
+              "isCurrent": true,
+              "marginRate": 1,
+              "multiplePrice": 0,
+              "quantity": 25
+            },
+            {
+              "catalogPrice": 1.04,
+              "discountPrice": 1.04,
+              "discountRate": 0,
+              "isCurrent": false,
+              "marginRate": 1,
+              "multiplePrice": 0,
+              "quantity": 100
+            },
+            {
+              "catalogPrice": 0.97,
+              "discountPrice": 0.97,
+              "discountRate": 0,
+              "isCurrent": false,
+              "marginRate": 1,
+              "multiplePrice": 0,
+              "quantity": 200
+            },
+            {
+              "catalogPrice": 0.92,
+              "discountPrice": 0.92,
+              "discountRate": 0,
+              "isCurrent": false,
+              "marginRate": 1,
+              "multiplePrice": 0,
+              "quantity": 400
+            },
+            {
+              "catalogPrice": 0.81,
+              "discountPrice": 0.81,
+              "discountRate": 0,
+              "isCurrent": false,
+              "marginRate": 1,
+              "multiplePrice": 0,
+              "quantity": 800
+            }
+          ]
+        }
+      }
+
+    ]
+}

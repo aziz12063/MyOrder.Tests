@@ -1,0 +1,54 @@
+[
+    {
+        "value": " ",
+        "description": "-- Non renseigné --"
+    },
+    {
+        "value": "ADD LIGNE",
+        "description": "ADD LIGNE-LIGNE SUPP (CROSS)"
+    },
+    {
+        "value": "ADD QTE",
+        "description": "ADD QTE-QUANTITE SUPP (UP)"
+    },
+    {
+        "value": "BVN",
+        "description": "BVN-Offre de bienvenue"
+    },
+    {
+        "value": "CS",
+        "description": "CS-Conditions spéciales"
+    },
+    {
+        "value": "FS",
+        "description": "FS-Fabrication spéciale"
+    },
+    {
+        "value": "GCO",
+        "description": "GCO-Geste commercial"
+    },
+    {
+        "value": "OFF",
+        "description": "OFF-Offre de prix"
+    },
+    {
+        "value": "PRV",
+        "description": "PRV-Prix provisoire"
+    },
+    {
+        "value": "PRW",
+        "description": "PRW-Prix Web"
+    },
+    {
+        "value": "RPL",
+        "description": "RPL-Produit de remplacement"
+    },
+    {
+        "value": "VU",
+        "description": "VU-Vu avec superviseur"
+    },
+    {
+        "value": "XC",
+        "description": "XC-Concours"
+    }
+]

@@ -1,0 +1,301 @@
+{
+    "recId": 0,
+    "lineNum": {
+        "name": "N° de ligne",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": 0
+    },
+    "isCustomLineNum": false,
+    "lineTags": [],
+    "customerItemId": {
+        "name": "Code client",
+        "status": "readOnly",
+        "displayStyle": "standard",
+        "value": null
+    },
+    "itemId": {
+        "name": "Code article",
+        "status": "required",
+        "displayStyle": "warn",
+        "error": "Veuillez saisir un article",
+        "value": null,
+        "procedureCall": [
+            "UpdateOrderLinePropertyValue",
+            "0",
+            "ItemId",
+            "System.String",
+            "<value>"
+        ]
+    },
+    "itemProperties": {
+        "name": "Caractéristiques Produit",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": ""
+    },
+    "name": {
+        "name": "Description",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": null
+    },
+    "inventLocationId": {
+        "name": "Entrepôt",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": null
+    },
+    "salesQuantity": {
+        "name": "Quantité",
+        "status": "readOnly",
+        "displayStyle": "standard",
+        "value": 0
+    },
+    "salesPrice": {
+        "name": "Prix unitaire",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": 0
+    },
+    "discountTypes": [
+        {
+            "value": "Default",
+            "description": ""
+        },
+        {
+            "value": "NoDiscount",
+            "description": "Pas de remise - Prix catalogue"
+        },
+        {
+            "value": "StandardDiscount",
+            "description": "Remise Standard (%)"
+        },
+        {
+            "value": "LastColumnDiscount",
+            "description": "Remise DC (%)"
+        },
+        {
+            "value": "MarginDiscount",
+            "description": "Remise / Marge (%)"
+        },
+        {
+            "value": "ManualPrice",
+            "description": "Prix manuel"
+        }
+    ],
+    "discountType": {
+        "name": "Tarification",
+        "status": "readOnly",
+        "displayStyle": "standard",
+        "value": {
+            "value": "Default",
+            "description": ""
+        }
+    },
+    "marginRate": {
+        "name": "Marge",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": 0
+    },
+    "referencePrice": {
+        "name": "Prix DC",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": 0
+    },
+    "referencePriceDiscount": {
+        "name": "Remise DC",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": 0
+    },
+    "shortDiscountDescription": {
+        "name": "Tarification",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": null
+    },
+    "lineAmount": {
+        "name": "Montant HT",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": 0
+    },
+    "updateReason": {
+        "name": "Motif Modif.",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": null
+    },
+    "isUpselling": {
+        "name": "Vente additionnelle",
+        "status": "readOnly",
+        "displayStyle": "standard",
+        "value": false
+    },
+    "initialSalesQuantity": {
+        "name": "Qté initiale",
+        "status": "readOnly",
+        "displayStyle": "standard",
+        "value": 0
+    },
+    "multipleQuantity": {
+        "name": "Vendu par",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": 0
+    },
+    "vatRate": {
+        "name": "Taux de TVA",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": 20
+    },
+    "note": {
+        "name": "Note",
+        "status": "readOnly",
+        "displayStyle": "standard",
+        "value": null
+    },
+    "productInfo": {
+        "name": "Informations produit",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": null
+    },
+    "logisticFlow": {
+        "name": "Flux logistique",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": {
+            "value": "Blank",
+            "description": "Blank"
+        }
+    },
+    "physicalAvailableQuantity": {
+        "name": "Livré maintenant",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": 0
+    },
+    "onOrderQuantity": {
+        "name": "A livrer plus tard",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": 0
+    },
+    "paletteQuantity": {
+        "name": "Quantité/palette",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": 1
+    },
+    "quantityAtPaletteThreshold": {
+        "name": "Diff Palette",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": 0
+    },
+    "itemType": {
+        "name": "Type d'article",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": "Standard"
+    },
+    "deliveryDate": {
+        "name": "Date de liv.",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": null,
+        "description": "Date calculée par le système"
+    },
+    "itemPhysicalInventQuantity": {
+        "name": "Stock total",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": 0
+    },
+    "itemReservPhysicalQuantity": {
+        "name": "Stock réservé",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": 0
+    },
+    "itemPhysicalAvailableQuantity": {
+        "name": "Stock disponible",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": 0
+    },
+    "itemOnOrderQuantity": {
+        "name": "En commande",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": 0
+    },
+    "itemOrderedQuantity": {
+        "name": "Commandé total",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": 0
+    },
+    "itemOrderedAvailableQuantity": {
+        "name": "Commandé disp.",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": 0
+    },
+    "supplyFamily": {
+        "name": "Famille d'appro.",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": " - "
+    },
+    "itemManager": {
+        "name": "Gestionnaire",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": null
+    },
+    "transportMode": {
+        "name": "Mode de transport",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": "PAR DÉFAUT"
+    },
+    "purchaseId": {
+        "name": "Commande d'achat",
+        "status": "hidden",
+        "displayStyle": "standard",
+        "value": ""
+    },
+    "discountDescription": {
+        "name": "Description Tarif",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": null
+    },
+    "discountRate": {
+        "name": "Remise sup.",
+        "status": "readOnly",
+        "displayStyle": "standard",
+        "value": 0
+    },
+    "discountPrice": {
+        "name": "PU HT",
+        "status": "readOnly",
+        "displayStyle": "standard",
+        "value": 0
+    },
+    "prices": {
+        "quantityVisible": true,
+        "catalogPriceVisible": true,
+        "discountPriceVisible": false,
+        "multiplePriceVisible": false,
+        "discountRateVisible": false,
+        "marginRateVisible": false,
+        "priceLines": []
+    }
+}

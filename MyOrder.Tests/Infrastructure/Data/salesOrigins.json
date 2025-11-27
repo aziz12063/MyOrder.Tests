@@ -1,0 +1,46 @@
+[
+    {
+        "value": "",
+        "description": "-- Non renseigné --"
+    },
+    {
+        "value": "Entrant",
+        "description": "Tél Entrant"
+    },
+    {
+        "value": "E-mail",
+        "description": "E-mail"
+    },
+    {
+        "value": "Rajadrive",
+        "description": "RAJADRIVE"
+    },
+    {
+        "value": "Chat",
+        "description": "Chat"
+    },
+    {
+        "value": "E-proc",
+        "description": "E-procurement"
+    },
+    {
+        "value": "Sortant",
+        "description": "Tél Sortant"
+    },
+    {
+        "value": "Internet",
+        "description": "Internet"
+    },
+    {
+        "value": "EDI",
+        "description": "EDI"
+    },
+    {
+        "value": "Terrain",
+        "description": "Terrain"
+    },
+    {
+        "value": "Interne",
+        "description": "Interne"
+    }
+]

@@ -1,0 +1,171 @@
+{
+  "coupon": {
+    "name": "Code Promo",
+    "status": "readWrite",
+    "displayStyle": "standard",
+    "value": {
+      "value": "-20 % CAT",
+      "description": "-20 % CAT"
+    },
+    "procedureCall": [
+      "UpdateOrderTablePropertyValue",
+      "CampaignId",
+      "System.String",
+      "<one of /coupons value>"
+    ],
+    "isBlockingProcedure": true
+  },
+    "panelLabel": "Totaux et prix",
+    "freeShippingAmountThreshold": {
+        "name": "Diff Franco",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": null
+    },
+    "giftAmountThreshold": {
+        "name": "Diff KDO",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": null,
+        "description": "=== AJOUT DE CADEAU DÉSACTIVÉ ===\r\nSTOP CADEAUX ACTIVÉ SUR LE CONTACT"
+    },
+    "productsInfo": {
+        "name": "Dispo. Marchandise",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": "En stock"
+    },
+    "productsNetAmount": {
+        "name": "Marchandise HT",
+        "status": "onlyForDisplay",
+        "displayStyle": "emphasize",
+        "value": 27.75
+    },
+    "warrantyCostOption": {
+        "name": "Garantie optimale",
+        "status": "readWrite",
+        "displayStyle": "warn",
+        "value": {
+            "value": "Enabled",
+            "description": "GO activée"
+        },
+        "procedureCall": [
+            "UpdateOrderTablePropertyValue",
+            "WarrantyMode",
+            "System.String",
+            "<one of /warrantyCostOptions value>"
+        ]
+    },
+    "warrantyCostAmount": {
+        "name": "Montant GO",
+        "status": "onlyForDisplay",
+        "displayStyle": "warn",
+        "value": 1
+    },
+    "shippingCostOption": {
+        "name": "Frais de port",
+        "status": "readWrite",
+        "displayStyle": "emphasize",
+        "value": {
+            "value": "Standard",
+            "description": "Frais de livraison"
+        },
+        "procedureCall": [
+            "UpdateOrderTablePropertyValue",
+            "DeliveryFeeMode",
+            "System.String",
+            "<one of /shippingCostOptions value>"
+        ]
+    },
+    "shippingCostAmount": {
+        "name": "Montant FDP",
+        "status": "readWrite",
+        "displayStyle": "emphasize",
+        "value": 40,
+        "procedureCall": [
+            "UpdateOrderTablePropertyValue",
+            "DeliveryAmount",
+            "System.Double",
+            "<value>"
+        ]
+    },
+    "logisticInfo": {
+        "name": "Entrepôts de livraison",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": "PN2"
+    },
+    "totalNetAmount": {
+        "name": "Montant Total HT",
+        "status": "onlyForDisplay",
+        "displayStyle": "emphasize",
+        "value": 68.75
+    },
+    "vatAmount": {
+        "name": "Montant TVA",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": 0
+    },
+    "totalGrossAmount": {
+        "name": "Montant TTC",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": 68.75
+    },
+    "deliveryDates": {
+        "name": "Dates de livraison",
+        "status": "onlyForDisplay",
+        "displayStyle": "warn",
+        "value": "30/04/2025",
+        "description": "mercredi 30 avril\nLa livraison complète n'est disponible que si la marchandise est expédiée depuis un unique entrepôt de RAJA.\nCertaines lignes n'ont pas de délai de livraison et n'entrent pas dans le calcul de la date."
+    },
+    "orderDiscountRate": {
+        "name": "Remise Moyenne",
+        "status": "readWrite",
+        "displayStyle": "standard",
+        "value": 0,
+        "procedureCall": [
+            "UpdateOrderTablePropertyValue",
+            "MyDiscountPercent",
+            "System.Int32",
+            "<value>"
+        ]
+    },
+    "orderLastColumnDiscount": {
+        "name": "Remise Cde DC",
+        "status": "readWrite",
+        "displayStyle": "standard",
+        "value": false,
+        "procedureCall": [
+            "UpdateOrderTablePropertyValue",
+            "MyLastColumnDiscount",
+            "System.Boolean",
+            "<value>"
+        ]
+    },
+    "additionalSalesAmount": {
+        "name": "Ventes add.",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": 0
+    },
+    "discountAmount": {
+        "name": "Montant Remise",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": 0
+    },
+    "totalWeight": {
+        "name": "Poids",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": 2.8
+    },
+    "totalVolume": {
+        "name": "Volume",
+        "status": "onlyForDisplay",
+        "displayStyle": "standard",
+        "value": 0.025
+    }
+}

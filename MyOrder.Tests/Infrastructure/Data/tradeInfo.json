@@ -1,0 +1,77 @@
+{
+  "panelLabel": "Informations Commerciales",
+  "turnover": {
+    "name": "Chiffre d'affaire",
+    "status": "onlyForDisplay",
+    "displayStyle": "standard",
+    "value": [
+      {
+        "name": "Classe",
+        "ytd": "07",
+        "ytdN1": "",
+        "n1": "99",
+        "n2": "09"
+      },
+      {
+        "name": "CA. Com.",
+        "ytd": "2 496 €",
+        "ytdN1": "0 €",
+        "n1": "0 €",
+        "n2": "4 105 €"
+      },
+      {
+        "name": "CA. Fact.",
+        "ytd": "2 496 €",
+        "ytdN1": "0 €",
+        "n1": "0 €",
+        "n2": "4 105 €"
+      },
+      {
+        "name": "Marge",
+        "ytd": "68,35 %",
+        "ytdN1": "",
+        "n1": "0 %",
+        "n2": "65,47 %"
+      },
+      {
+        "name": "Evol. CA.",
+        "ytd": "9999 %",
+        "ytdN1": "",
+        "n1": "",
+        "n2": ""
+      }
+    ]
+  },
+  "contractSectionLabel": "Contrat en cours",
+  "contract": null,
+  "informationSectionLabel": "Informations générales",
+  "customerTags": [
+    {
+      "value": "vip",
+      "description": "Client VIP"
+    },
+    {
+      "value": "specialPrep",
+      "description": "Préparation spéciale"
+    },
+    {
+      "value": "export",
+      "description": "Client Export"
+    },
+    {
+      "value": "noGift",
+      "description": "Pas de cadeaux"
+    },
+    {
+      "value": "completeDelivery",
+      "description": "Livraison complète"
+    }
+  ],
+  "activityArea": {
+    "name": "Secteur d'activité",
+    "status": "onlyForDisplay",
+    "displayStyle": "standard",
+    "value": "8411Z",
+    "description": "Code NAF: 8411Z"
+  }
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "value": "vip",
+    "description": "Client VIP"
+  },
+  {
+    "value": "specialPrep",
+    "description": "Préparation spéciale"
+  },
+  {
+    "value": "export",
+    "description": "Client Export"
+  },
+  {
+    "value": "noGift",
+    "description": "Pas de cadeaux"
+  },
+  {
+    "value": "completeDelivery",
+    "description": "Livraison complète"
+  }
+]

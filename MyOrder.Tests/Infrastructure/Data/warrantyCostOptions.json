@@ -1,0 +1,14 @@
+[
+    {
+        "value": "Enabled",
+        "description": "GO activée"
+    },
+    {
+        "value": "Disabled",
+        "description": "GO désactivée"
+    },
+    {
+        "value": "Offered",
+        "description": "GO offerte"
+    }
+]

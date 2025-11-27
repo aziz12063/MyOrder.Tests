@@ -1,0 +1,12 @@
+[
+  {
+    "notificationId": 1,
+    "severity": "Info",
+    "message": "\u003cstrong\u003e[Commande]\u003c/strong\u003e Notes de commande: ND 04/09/12 BIEN NOTER CONTACT+SERVICE+TEL SUR CHAQUE CDE",
+    "createdDate": "2025-02-24 13:13:44",
+    "procedureCall": [
+      "RemoveLog",
+      "1"
+    ]
+  }
+]

@@ -1,0 +1,72 @@
+[
+  {
+    "reasonId": "06",
+    "description": "Limite de crédit dépassée",
+    "isActive": false,
+    "comment": "",
+    "userActive": false
+  },
+  {
+    "reasonId": "13",
+    "description": "Blocage commercial",
+    "isActive": false,
+    "comment": "",
+    "userActive": false
+  },
+  {
+    "reasonId": "15",
+    "description": "Client contentieux",
+    "isActive": false,
+    "comment": "",
+    "userActive": false
+  },
+  {
+    "reasonId": "16",
+    "description": "Client comptant",
+    "isActive": false,
+    "comment": "",
+    "userActive": false
+  },
+  {
+    "reasonId": "25",
+    "description": "Blocage PVF",
+    "isActive": false,
+    "comment": "",
+    "userActive": false
+  },
+  {
+    "reasonId": "26",
+    "description": "Annulation logistique",
+    "isActive": false,
+    "comment": "",
+    "userActive": false
+  },
+  {
+    "reasonId": "27",
+    "description": "Blocage FS",
+    "isActive": false,
+    "comment": "",
+    "userActive": false
+  },
+  {
+    "reasonId": "30",
+    "description": "Blocage RC Web",
+    "isActive": false,
+    "comment": "",
+    "userActive": false
+  },
+  {
+    "reasonId": "34",
+    "description": "Contrôle Crédit Client",
+    "isActive": false,
+    "comment": "",
+    "userActive": false
+  },
+  {
+    "reasonId": "37",
+    "description": "Commande Filiale RAJA",
+    "isActive": false,
+    "comment": "",
+    "userActive": false
+  }
+]

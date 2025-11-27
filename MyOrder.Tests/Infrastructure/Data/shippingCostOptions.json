@@ -1,0 +1,10 @@
+[
+    {
+        "value": "Standard",
+        "description": "Frais de livraison"
+    },
+    {
+        "value": "Offered",
+        "description": "Frais de liv. offerts"
+    }
+]

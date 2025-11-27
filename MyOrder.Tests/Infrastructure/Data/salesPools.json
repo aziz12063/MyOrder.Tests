@@ -1,0 +1,46 @@
+[
+    {
+        "value": "",
+        "description": "-- Non renseigné --"
+    },
+    {
+        "value": "CAT",
+        "description": "CAT - Commande de catalogues"
+    },
+    {
+        "value": "CCA",
+        "description": "CCA - Commande cadencée"
+    },
+    {
+        "value": "CGR",
+        "description": "CGR - Commande gratuite"
+    },
+    {
+        "value": "CNF",
+        "description": "CNF - Commande NEFAB"
+    },
+    {
+        "value": "CSE",
+        "description": "CSE - Commande CSE"
+    },
+    {
+        "value": "CWO",
+        "description": "CWO - Commande Welcome Office"
+    },
+    {
+        "value": "INT",
+        "description": "INT - Commande interne"
+    },
+    {
+        "value": "NEH",
+        "description": "NEH - Commande Nehia"
+    },
+    {
+        "value": "NOR",
+        "description": "NOR - Commande normale"
+    },
+    {
+        "value": "SPE",
+        "description": "SPE - Préparation spécifique"
+    }
+]

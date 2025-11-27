@@ -1,0 +1,38 @@
+[
+    {
+        "accountId": "-",
+        "name": "-- Aucune adresse renseignée --",
+        "recipient": null,
+        "building": null,
+        "street": null,
+        "locality": null,
+        "zipCode": null,
+        "city": null,
+        "county": null,
+        "country": null,
+        "email": null,
+        "phone": null,
+        "cellularPhone": null,
+        "blocked": false,
+        "lastOrderDate": null,
+        "isLinked": true
+    },
+    {
+        "accountId": "98677453",
+        "name": "QUARTIER GENERAL DU CORPS",
+        "recipient": "EUROPEEN G8 FISCAL",
+        "building": "",
+        "street": "BP 70082",
+        "locality": "",
+        "zipCode": "67020",
+        "city": "STRASBOURG CEDEX 1",
+        "county": null,
+        "country": null,
+        "email": "raja1234@raja.fr",
+        "phone": "0120281279",
+        "cellularPhone": "0120281279",
+        "blocked": false,
+        "lastOrderDate": null,
+        "isLinked": true
+    }
+]
